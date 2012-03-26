@@ -1,0 +1,5 @@
+      [paste.app_factory]
+      main = myproject:main
+      [console_scripts]
+      populate_MyProject = myproject.scripts.populate:main
+      

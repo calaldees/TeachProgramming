@@ -1,0 +1,74 @@
+<canvas id="canvas" width="640" height="480"></canvas>
+<script>
+    var canvas  = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    window.addEventListener('keydown', eventKeyDown, true);                     // Ver: 3
+    
+    var variables = {
+        "background_color": 'rgba(0,0,0,255)',
+        "player1_color"   : 'rgba(0,255,255,255)',                              // Ver: 2
+        "player2_color"   : 'rgba(0,0,255,255)',                                // Ver: 5
+        "player1_score"   : 0,                                                  // Ver: 6
+        "player2_score"   : 0,                                                  // Ver: 6
+    };
+    
+    function reset() {
+        variables.player1_x_pos   = 100,                                        // Ver: 2
+        variables.player1_y_pos   = 100,                                        // Ver: 2
+        variables.player1_x_move  =   1,                                        // Ver: 2
+        variables.player1_y_move  =   0,                                        // Ver: 2
+        variables.player2_x_pos   = canvas.width  - 100,                        // Ver: 5
+        variables.player2_y_pos   = canvas.height - 100,                        // Ver: 5
+        variables.player2_x_move  =  -1,                                        // Ver: 5
+        variables.player2_y_move  =   0,                                        // Ver: 5
+        context.fillStyle = variables.background_color;
+        context.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    
+    function eventKeyDown(event) {                                                                                         // Ver: 3
+        if (event.keyCode==38) {variables.player1_x_move =  0; variables.player1_y_move = -1;}  // Up arrow was pressed    // Ver: 3
+        if (event.keyCode==40) {variables.player1_x_move =  0; variables.player1_y_move =  1;}  // Down arrow was pressed  // Ver: 3
+        if (event.keyCode==37) {variables.player1_x_move = -1; variables.player1_y_move =  0;}  // Left arrow was pressed  // Ver: 3
+        if (event.keyCode==39) {variables.player1_x_move =  1; variables.player1_y_move =  0;}  // Right arrow was pressed // Ver: 3
+        // Check http://www.asquare.net/javascript/tests/KeyCode.html for more keycodes                                    // Ver: 5
+        if (event.keyCode==87) {variables.player2_x_move =  0; variables.player2_y_move = -1;} // Ver: 5
+        if (event.keyCode==83) {variables.player2_x_move =  0; variables.player2_y_move =  1;} // Ver: 5
+        if (event.keyCode==65) {variables.player2_x_move = -1; variables.player2_y_move =  0;} // Ver: 5
+        if (event.keyCode==68) {variables.player2_x_move =  1; variables.player2_y_move =  0;} // Ver: 5
+        if (event.keyCode==27) {clearInterval(interval_id); reset();                         }  // Escape was pressed      // Ver: 3
+    }                                                                                                                      // Ver: 3
+                                                                                                                           // Ver: 3
+    function timerEvent() {
+        variables.player1_x_pos = variables.player1_x_pos + variables.player1_x_move; // Ver: 2
+        variables.player1_y_pos = variables.player1_y_pos + variables.player1_y_move; // Ver: 2
+        variables.player2_x_pos = variables.player2_x_pos + variables.player2_x_move; // Ver: 5
+        variables.player2_y_pos = variables.player2_y_pos + variables.player2_y_move; // Ver: 5
+                                                                                      // Ver: 2
+        var pixel       = context.getImageData(variables.player1_x_pos, variables.player1_y_pos, 1, 1).data; // Ver: 4
+        var pixel_color = 'rgba('+pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]+')';                       // Ver: 4
+        if (pixel_color != variables.background_color) {                                                     // Ver: 4
+            variables.player2_score = variables.player2_score + 1                                            // Ver: 6
+            reset();                                                                                         // Ver: 4
+        }                                                                                                    // Ver: 4
+                                                                                                             // Ver: 4
+        var pixel       = context.getImageData(variables.player2_x_pos, variables.player2_y_pos, 1, 1).data; // Ver: 5
+        var pixel_color = 'rgba('+pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]+')';                       // Ver: 5
+        if (pixel_color != variables.background_color) {                                                     // Ver: 5
+            variables.player1_score = variables.player1_score + 1                                            // Ver: 6
+            reset();                                                                                         // Ver: 5
+        }                                                                                                    // Ver: 5
+                                                                                                             // Ver: 5
+        context.fillStyle = variables.player1_color;                               // Ver: 2
+        context.fillRect(variables.player1_x_pos, variables.player1_y_pos, 1, 1);  // Ver: 2
+        context.fillStyle = variables.player2_color;                               // Ver: 5
+        context.fillRect(variables.player2_x_pos, variables.player2_y_pos, 1, 1);  // Ver: 5
+                                                                                   // Ver: 2
+        if (variables.player1_score == 5 or variables.player2_score == 5) { // Ver: 6
+            clearInterval(interval_id);                                     // Ver: 6
+            reset();                                                        // Ver: 6
+        }                                                                   // Ver: 6
+    }
+    
+    reset();
+    var interval_id = setInterval(timerEvent, 1000/60);
+</script>

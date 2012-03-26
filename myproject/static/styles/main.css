@@ -1,0 +1,24 @@
+h1 {
+    font-size: 200%;
+}
+h2 {
+    font-size: 130%;
+}
+
+.code {
+
+}
+
+.code .section {
+    border: 1px solid #888;
+    margin: 1em;
+}
+
+.code .add {
+    color: green;
+    font-weight: bold;
+}
+.code .remove{
+    color: red;
+    font-weight: bold;
+}
