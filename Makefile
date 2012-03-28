@@ -22,7 +22,6 @@ setup: env
 	env/bin/python setup.py develop
 	#env/bin/populate_MyProject development.ini
 
-
 run:
 	#$(MAKE) env_activate
 	env/bin/pserve --reload development.ini
