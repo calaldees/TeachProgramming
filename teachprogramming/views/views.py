@@ -7,7 +7,8 @@ from ..models import (
     MyModel,
     )
 
-import teachprogramming.lib.make_ver as make_ver
+import teachprogramming.lib.make_ver  as make_ver
+import teachprogramming.lib.constants as constants
 
 
 @view_config(route_name='home', renderer='teachprogramming:templates/home.mako')
@@ -25,7 +26,7 @@ def project_doc(request):
 
 @view_config(route_name='project_code')
 def project_code(request):
-    code = '\n'.join( make_ver.make_ver('teachprogramming/static/projects/%(project)s.%(format)s' % request.matchdict, request.matchdict.get('version')) )
+    code = '\n'.join( make_ver.make_ver(constants.project_filename_dict % request.matchdict, request.matchdict.get('version')) )
     response = Response(code)
     response.headers['Content-type'] = "text/plain; charset=utf-8"
     return response

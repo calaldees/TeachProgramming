@@ -4,17 +4,17 @@
 import os
 import teachprogramming.lib.make_ver as make_ver
 
-project_filename = 'teachprogramming/static/projects/%s.%s'
+import teachprogramming.lib.constants as constants
 %>
 
 <%def name='show_ver(version)'>\
-<pre>${'\n'.join( make_ver.make_ver(project_filename % (project,format), version) )}</pre>
+<pre>${'\n'.join( make_ver.make_ver(constants.project_filename % (project,format), version) )}</pre>
 </%def>
 
 
 <%def name='show_diff(version)'>
     <%
-        diff = make_ver.get_diff(project_filename % (project,format), version)
+        diff = make_ver.get_diff(constants.project_filename % (project,format), version)
         line_classs = {'-':'remove', '+':'add'}
         open_section = False
     %>
@@ -36,6 +36,7 @@ project_filename = 'teachprogramming/static/projects/%s.%s'
     
     <button type="button" onclick="$(this).next().toggle();">Full code</button>
     <div class="hide">
+        <a href="/code/${project}.${format}/${version}">Version ${version}</a>
         ${show_ver(version)}
     </div>
 </%def>
@@ -43,21 +44,15 @@ project_filename = 'teachprogramming/static/projects/%s.%s'
 
 
 <%def name='body()'>
+    <!-- List all formats for this project -->
     <%
-        file_type_to_lang = dict(
-            py   = 'Python',
-            html = 'Javascript/HTML5',
-            vb   = 'VB.NET',
-            php  = 'PHP',
-            java = 'Java',
-        )
-        files = [file for file in os.listdir('teachprogramming/static/projects/') if file.startswith('%s.' % project)]
+        files = [file for file in os.listdir(constants.project_path) if file.startswith('%s.' % project)]
     %>
     <ul>
     % for file in files:
         <% 
             fileext            = make_ver.get_fileext(file) 
-            format_description = file_type_to_lang.get(fileext)
+            format_description = constants.file_type_to_lang.get(fileext)
             css_class = ''
             if fileext == format:
                 css_class = 'selected'
@@ -66,6 +61,7 @@ project_filename = 'teachprogramming/static/projects/%s.%s'
     % endfor
     </ul>
     
+    <!-- Documentation for this project -->
     ${next.body()}
     
 </%def>
