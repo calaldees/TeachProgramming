@@ -16,3 +16,14 @@ Getting Started
 - $venv/bin/populate_MyProject development.ini # AllanC - um ... populate_MyProject would not have been aquired in a pull, this needs investigating
 - $venv/bin/pserve development.ini
 
+Setup Virtualenv under linux
+----------------------------
+
+Reference - http://docs.pylonsproject.org/projects/pyramid/en/1.3-branch/narr/install.html
+sudo easy_install virtualenv
+virtualenv --no-site-packages env
+cd env
+bin/easy_install pyramid
+
+source env/bin/activate
+deactivate

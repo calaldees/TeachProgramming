@@ -1,2 +1,4 @@
 *.pyc
 MyProject.db
+*.egg-info
+env/
