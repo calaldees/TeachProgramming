@@ -6,10 +6,14 @@ from ..models import (
     MyModel,
     )
 
-@view_config(route_name='home', renderer='templates/mytemplate.pt')
-def my_view(request):
-    one = DBSession.query(MyModel).filter(MyModel.name=='one').first()
-    return {'one':one, 'project':'MyProject'}
+#@view_config(route_name='home', renderer='myproject:templates/mytemplate.pt')
+#def my_view(request):
+#    one = DBSession.query(MyModel).filter(MyModel.name=='one').first()
+#    return {'one':one, 'project':'MyProject'}
+
+@view_config(route_name='home', renderer='myproject:templates/home.mako')
+def home(request):
+    return {}
 
 @view_config(route_name='hello_world')
 def hello_world(request):
