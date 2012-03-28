@@ -5,7 +5,7 @@ help:
 	# test          -- run all nosetests
 	# blank-db      -- create a blank database
 	# run           -- run the site in development mode
-	# clean         -- reset the folder to clean git checkout
+	# clean         -- reset the folder to clean git checkout (removes virtual python env)
 
 env_activate:
 	source env/bin/activate
@@ -26,3 +26,8 @@ run:
 	#$(MAKE) env_activate
 	env/bin/pserve --reload development.ini
 	#$(MAKE) env_deactivate
+
+clean:
+	rm env -rf
+	rm *.egg-info -rf
+	#rm TeachProgramming.db
