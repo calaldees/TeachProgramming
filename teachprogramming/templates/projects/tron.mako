@@ -42,11 +42,16 @@ ${self.show_diff(6)}
 <h2>Part 4: Challenge Ideas</h2>
 <h3>Wrap around</h3>
 When you go off one side of the screen you appear the other side.
+<pre>
     if (player1_x_pos>=getWidth()-1) {player1_x_pos = 1;           }
     if (player1_x_pos<=1           ) {player1_x_pos = getWidth()-2;}
+</pre>
+
 <h3>3 players</h3>
 Add new keys (try I,J,K,L)
+
 <h3>Boost</h3>
+<pre>
 Pressing a button will make your line move twice as fast
     if (isKeyPressed(KeyEvent.VK_DOWN )) {player1_x_move=0; player1_y_move=1;}
     if (isKeyPressed(KeyEvent.VK_SPACE)) {
@@ -66,9 +71,10 @@ To limit people using this all the time, give them a limited about of booster fu
 
   public void reset() {
     player1_boost_fuel = 100;
-    
+</pre>
     
 <h3>Maze levels</h3>
+<pre>
 Maze is a one player game to get to the red exit.
 Create a set of level graphics 320 by 240 with a black background.
 
@@ -92,3 +98,4 @@ Maze2.png
   public void reset() {
     clearScreen();
     putImage(0,0,'Maze' + current_level + '.png');
+</pre>

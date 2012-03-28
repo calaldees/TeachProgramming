@@ -91,7 +91,7 @@ def make_ver(source, target_version=version_max, lang=None):
     return output #"\n".join(output)
 
 
-def get_diff(source, version, version_from=None, lang=None, n=2):
+def get_diff(source, version, version_from=None, lang=None, n=3):
     """
     n = number of lines of context
     """

@@ -44,6 +44,8 @@ import teachprogramming.lib.constants as constants
 
 
 <%def name='body()'>
+    <a href="/">Project List</a>
+    
     <!-- List all formats for this project -->
     <%
         files = [file for file in os.listdir(constants.project_path) if file.startswith('%s.' % project)]
