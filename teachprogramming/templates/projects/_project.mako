@@ -2,12 +2,12 @@
 
 <%! 
 import os
-import myproject.lib.make_ver 
+import teachprogramming.lib.make_ver as make_ver
 %>
 
 <%def name='show_diff(version)'>
     <%
-        diff = myproject.lib.make_ver.get_diff('myproject/static/projects/%s.%s' % (project,format), version)
+        diff = make_ver.get_diff('teachprogramming/static/projects/%s.%s' % (project,format), version)
         line_classs = {'-':'remove', '+':'add'}
         open_section = False
     %>
@@ -39,12 +39,12 @@ import myproject.lib.make_ver
             php  = 'PHP',
             java = 'Java',
         )
-        files = [file for file in os.listdir('myproject/static/projects/') if file.startswith('%s.' % project)]
+        files = [file for file in os.listdir('teachprogramming/static/projects/') if file.startswith('%s.' % project)]
     %>
     <ul>
     % for file in files:
         <% 
-            fileext = myproject.lib.make_ver.get_fileext(file) 
+            fileext            = make_ver.get_fileext(file) 
             format_description = file_type_to_lang.get(fileext)
             css_class = ''
             if fileext == format:

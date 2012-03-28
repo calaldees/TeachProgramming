@@ -1,4 +1,4 @@
 *.pyc
-MyProject.db
+TeachProgramming.db
 *.egg-info
 env/

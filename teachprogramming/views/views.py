@@ -11,7 +11,7 @@ from ..models import (
 #    one = DBSession.query(MyModel).filter(MyModel.name=='one').first()
 #    return {'one':one, 'project':'MyProject'}
 
-@view_config(route_name='home', renderer='myproject:templates/home.mako')
+@view_config(route_name='home', renderer='teachprogramming:templates/home.mako')
 def home(request):
     return {}
 
@@ -33,7 +33,7 @@ def mako_test(request):
 @view_config(route_name='project')
 def project(request):
     return render_to_response(
-        'myproject:templates/projects/%s.mako' % request.matchdict['project'], 
+        'teachprogramming:templates/projects/%s.mako' % request.matchdict['project'], 
         {'project':request.matchdict['project'], 
          'format' :request.matchdict['format' ],},
         request=request,

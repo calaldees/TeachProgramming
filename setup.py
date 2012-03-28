@@ -16,9 +16,9 @@ requires = [
     'waitress',
     ]
 
-setup(name='MyProject',
+setup(name='TeachProgramming',
       version='0.0',
-      description='MyProject',
+      description='A dynamic website to create cool programming activities',
       long_description=README + '\n\n' +  CHANGES,
       classifiers=[
         "Programming Language :: Python",
@@ -33,13 +33,13 @@ setup(name='MyProject',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
-      test_suite='myproject',
+      test_suite='teachprogramming',
       install_requires=requires,
       entry_points="""\
       [paste.app_factory]
-      main = myproject:main
+      main = teachprogramming:main
       [console_scripts]
-      populate_MyProject = myproject.scripts.populate:main
+      populate_TeachProgramming = teachprogramming.scripts.populate:main
       """,
       )
 
