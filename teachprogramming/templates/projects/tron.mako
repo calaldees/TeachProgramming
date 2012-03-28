@@ -18,7 +18,6 @@ ${self.show_diff(3)}
 
 
 
-
 <h2>Part 2: Collisions</h2>
 Get the pixel of where we are about to move to.
 If it is not black then we have hit an object so reset the players coordinate

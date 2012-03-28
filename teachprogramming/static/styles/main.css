@@ -5,6 +5,10 @@ h2 {
     font-size: 130%;
 }
 
+.hide {
+    display: none;
+}
+
 .code {
 
 }

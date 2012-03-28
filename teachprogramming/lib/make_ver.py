@@ -44,6 +44,11 @@ def make_ver(source, target_version=version_max, lang=None):
     lang   - language to process (optional - will try to aquire from filename automatically)
     
     """
+    #if not target_version:
+    #    target_version = 
+    target_version = int(target_version)
+    
+    
     # Open source file if string - otherwise assume source is a file object
     if isinstance(source, basestring):
         source = open(source, 'r')
