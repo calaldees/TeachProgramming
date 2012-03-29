@@ -74,13 +74,16 @@ To limit people using this all the time, give them a limited about of booster fu
 </pre>
     
 <h3>Maze levels</h3>
+
+<img src="/static/projects/Maze1.png"/>
+<img src="/static/projects/Maze2.png"/>
+
+
 <pre>
 Maze is a one player game to get to the red exit.
 Create a set of level graphics 320 by 240 with a black background.
 
-Maze1.png
 
-Maze2.png
 
   int current_level = 1;
 
