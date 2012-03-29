@@ -39,6 +39,16 @@
 <h2>Kinesthetic Activities</h2>
 <p>examples of talks and conveying concepts of computing in a physical way</p>
 
+<h2>Setup</h2>
+<p>How to setup/install the langauges for use on this site
+<ul>
+    <li>VB.NET</li>
+    <li>Java</li>
+    <li>Javascript/HTML5</li>
+    <li>Python</li>
+    <li>PHP</li>
+</ul>
+
 <h2>Contribute</h2>
 git repository
 contact@teachthisstufflikewellgood.net
