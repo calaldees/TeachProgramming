@@ -11,12 +11,8 @@ in a varity of differnt langauges.
 Getting Started
 ---------------
 
-Linux
+Linux & Windows
 - make setup
 - make run
 
-Windows
-- cd <directory containing this file>
-- $venv/bin/python setup.py develop
-- $venv/bin/populate_MyProject development.ini # AllanC - um ... populate_MyProject would not have been aquired in a pull, this needs investigating
-- $venv/bin/pserve development.ini
+(AllanC - TODO: Need instructions/script for setting up virtualenv in windows)
