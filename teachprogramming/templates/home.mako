@@ -1,17 +1,18 @@
 <%inherit file="/base.mako"/>
 
+<%!
+import teachprogramming.lib.resorce_helper as resorce_helper
+%>
+
 <h2>Game Projects</h2>
 <ul>
-    <li><a href="/project/tron.html"   >Tron</a></li>
-    <li><a href="/project/gravity.py"  >Gravity</a></li>
-    <li><a href="/project/whack.py"    >Whack</a></li>
-    <li><a href="/project/copter.py"   >Copter</a></li>
-    <li><a href="/project/physics.java">Physics</li>
-    <li><a href="/project/race.java"   >Race</a></li>
-    <li><a href="/project/pong.java"   >Pong</a></li>
-    <li><a href="/project/joust.java"  >Joust</a></li>
-    <li><a href="/project/munch.vb"    >Munch</a></li>
-    <li><a href="/project/stars.java"  >Stars</a><li>
+    % for project in resorce_helper.get_projects():
+        <li>${project.capitalize()}
+        % for fileext in resorce_helper.get_project_langs(project):
+            <a href="/project/${project}.${fileext}">${fileext}</a>
+        % endfor
+        </li>
+    % endfor
 </ul>
 
 <h2>Network Projects</h2>
