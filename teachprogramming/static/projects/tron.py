@@ -11,14 +11,14 @@ class callByRef:
 variables = callByRef(
     running           = True,
     background_colour = (  0,   0,   0, 255),
-    player1_color     = (  0, 255, 255     ), # Ver: 2
+    player1_color     = (255, 255,   0     ), # Ver: 2
     player1_x_pos     = None,                 # Ver: 2
-    player1_x_pos     = None,                 # Ver: 2
+    player1_y_pos     = None,                 # Ver: 2
     player1_x_move    = None,                 # Ver: 2
     player1_y_move    = None,                 # Ver: 2
-    player2_color     = (  0,   0, 255     ), # Ver: 5
+    player2_color     = (255,   0,   0     ), # Ver: 5
     player2_x_pos     = None,                 # Ver: 5
-    player2_x_pos     = None,                 # Ver: 5
+    player2_y_pos     = None,                 # Ver: 5
     player2_x_move    = None,                 # Ver: 5
     player2_y_move    = None,                 # Ver: 5
     player1_score     = 0, # Ver: 6
@@ -44,35 +44,35 @@ while variables.running:
         if event.type == pygame.QUIT:
             variables.running = False
             
-    keys = pygame.key.get_pressed()       # Ver: 3
-        if keys[pygame.K_UP    ]:         # Ver: 3
-            variables.player1_x_move =  0 # Ver: 3
-            variables.player1_y_move = -1 # Ver: 3
-        if keys[pygame.K_RIGHT ]:         # Ver: 3
-            variables.player1_x_move =  1 # Ver: 3
-            variables.player1_y_move =  0 # Ver: 3
-        if keys[pygame.K_LEFT  ]:         # Ver: 3
-            variables.player1_x_move = -1 # Ver: 3
-            variables.player1_y_move =  0 # Ver: 3
-        if keys[pygame.K_DOWN  ]:         # Ver: 3
-            variables.player1_x_move =  0 # Ver: 3
-            variables.player1_y_move =  1 # Ver: 3
-                                          # Ver: 5
-        if keys[pygame.K_W     ]:         # Ver: 5
-            variables.player2_x_move =  0 # Ver: 5
-            variables.player2_y_move = -1 # Ver: 5
-        if keys[pygame.K_D     ]:         # Ver: 5
-            variables.player2_x_move =  1 # Ver: 5
-            variables.player2_y_move =  0 # Ver: 5
-        if keys[pygame.K_A     ]:         # Ver: 5
-            variables.player2_x_move = -1 # Ver: 5
-            variables.player2_y_move =  0 # Ver: 5
-        if keys[pygame.K_S     ]:         # Ver: 5
-            variables.player2_x_move =  0 # Ver: 5
-            variables.player2_y_move =  1 # Ver: 5
-                                          # Ver: 5
-        if keys[pygame.K_ESCAPE]:         # Ver: 3
-            variables.running = False     # Ver: 3
+    keys = pygame.key.get_pressed()   # Ver: 3
+    if keys[pygame.K_UP    ]:         # Ver: 3
+        variables.player1_x_move =  0 # Ver: 3
+        variables.player1_y_move = -1 # Ver: 3
+    if keys[pygame.K_RIGHT ]:         # Ver: 3
+        variables.player1_x_move =  1 # Ver: 3
+        variables.player1_y_move =  0 # Ver: 3
+    if keys[pygame.K_LEFT  ]:         # Ver: 3
+        variables.player1_x_move = -1 # Ver: 3
+        variables.player1_y_move =  0 # Ver: 3
+    if keys[pygame.K_DOWN  ]:         # Ver: 3
+        variables.player1_x_move =  0 # Ver: 3
+        variables.player1_y_move =  1 # Ver: 3
+                                      # Ver: 5
+    if keys[pygame.K_w     ]:         # Ver: 5
+        variables.player2_x_move =  0 # Ver: 5
+        variables.player2_y_move = -1 # Ver: 5
+    if keys[pygame.K_d     ]:         # Ver: 5
+        variables.player2_x_move =  1 # Ver: 5
+        variables.player2_y_move =  0 # Ver: 5
+    if keys[pygame.K_a     ]:         # Ver: 5
+        variables.player2_x_move = -1 # Ver: 5
+        variables.player2_y_move =  0 # Ver: 5
+    if keys[pygame.K_s     ]:         # Ver: 5
+        variables.player2_x_move =  0 # Ver: 5
+        variables.player2_y_move =  1 # Ver: 5
+                                      # Ver: 5
+    if keys[pygame.K_ESCAPE]:         # Ver: 3
+        variables.running = False     # Ver: 3
                                           # Ver: 3
     variables.player1_x_pos = variables.player1_x_pos + variables.player1_x_move # Ver: 2
     variables.player1_y_pos = variables.player1_y_pos + variables.player1_y_move # Ver: 2
@@ -82,13 +82,13 @@ while variables.running:
                                                                                  # Ver: 5
     try   : player1_at_pixel = screen.get_at((variables.player1_x_pos, variables.player1_y_pos)) # Ver: 4
     except: player1_at_pixel = None                                                              # Ver: 4
-    if variables.player1_at_pixel != variables.background_colour:                                # Ver: 4
+    if player1_at_pixel != variables.background_colour:                                # Ver: 4
         variables.player2_score = variables.player2_score + 1                                    # Ver: 6
         reset()                                                                                  # Ver: 4
                                                                                                  # Ver: 4
     try   : player2_at_pixel = screen.get_at((variables.player2_x_pos, variables.player2_y_pos)) # Ver: 5
     except: player2_at_pixel = None                                                              # Ver: 5
-    if variables.player2_at_pixel != variables.background_colour:                                # Ver: 5
+    if player2_at_pixel != variables.background_colour:                                # Ver: 5
         variables.player1_score = variables.player1_score + 1                                    # Ver: 6
         reset()                                                                                  # Ver: 5
                                                                                                  # Ver: 5
