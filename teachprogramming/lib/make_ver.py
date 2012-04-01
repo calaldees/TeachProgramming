@@ -36,7 +36,7 @@ comment_tokens = dict(
 def get_fileext(filename):
     return re.search(r'\.([^\.]+)$', filename).group(1).lower()
 
-def make_ver(source, target_version=version_max, lang=None):
+def make_ver(source, target_version=version_max, lang=None, allow_hidden=False):
     """
     Doc required
     
@@ -65,6 +65,7 @@ def make_ver(source, target_version=version_max, lang=None):
     # Regex compile
     extract_ver = re.compile(r'(?P<code>.*)%s(.*?)Ver:\s*(?P<ver>\d\d?)(?:\s*to\s*(?P<ver_limit>\d\d?))?' % comment_token)
     remmed_line = re.compile(r'^\s*%s' % comment_token)
+    hidden_line = re.compile(r'^(?P<indent>\s*)(?P<code>.*)%s.*hidden.*' % comment_token)
     
     output = []
     # Process source file
@@ -75,23 +76,36 @@ def make_ver(source, target_version=version_max, lang=None):
         except: line_version       = version_min
         try   : line_version_limit = int(ver_match.group('ver_limit'))
         except: line_version_limit = version_max
+        hidden_match = hidden_line.match(line)
         
         # If lines version number in range or target version to be generated, print code
         if line_version <= target_version and target_version <= line_version_limit:
             try:
+                # Extract the code (without the version number data)
                 line = ver_match.group('code')
+                
+                # If the line starts with a comment then remove that first comment
+                # This is for lines that are not present and executed in the raw run of the file, but are interim steps
                 if remmed_line.match(line):
                     line = re.sub(comment_token, '', line, count=1)
+                    
+                # Check for hidden lines - these lines are removed when allow_hidden is True
+                if allow_hidden and hidden_match:
+                    line = hidden_match.group('indent') + comment_token + '...'
+                    if '...' in output[-1:][0]: # If the previous line was hidden then there is no need to repeat the '...'
+                        line = None
+                
             except: 
                 pass
             #print(line.rstrip())
-            output.append(line.rstrip())
+            if line:
+                output.append(line.rstrip())
     
     source.close()
     return output #"\n".join(output)
 
 
-def get_diff(source, version, version_from=None, lang=None, n=3):
+def get_diff(source, version, version_from=None, lang=None, n=3, allow_hidden=False):
     """
     n = number of lines of context
     """
@@ -99,8 +113,8 @@ def get_diff(source, version, version_from=None, lang=None, n=3):
     if not version_from:
         version_from = version - 1
     for line in difflib.unified_diff(
-        make_ver(source, version_from, lang=lang),
-        make_ver(source, version     , lang=lang),
+        make_ver(source, version_from, lang=lang, allow_hidden=allow_hidden),
+        make_ver(source, version     , lang=lang, allow_hidden=allow_hidden),
         n=n, ):
         diff.append(line)
     return diff

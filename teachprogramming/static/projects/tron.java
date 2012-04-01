@@ -32,15 +32,16 @@ public class Tron extends GameFrame {
   }
   
   public void timerEvent() {
-    if (isKeyPressed(KeyEvent.VK_LEFT )) {player1_x_move=-1; player1_y_move= 0;} // Ver: 3
-    if (isKeyPressed(KeyEvent.VK_RIGHT)) {player1_x_move= 1; player1_y_move= 0;} // Ver: 3
     if (isKeyPressed(KeyEvent.VK_UP   )) {player1_x_move= 0; player1_y_move=-1;} // Ver: 3
-    if (isKeyPressed(KeyEvent.VK_DOWN )) {player1_x_move= 0; player1_y_move= 1;} // Ver: 3
+    if (isKeyPressed(KeyEvent.VK_DOWN )) {player1_x_move= 0; player1_y_move= 1;} // Ver: 3 hidden
+    if (isKeyPressed(KeyEvent.VK_LEFT )) {player1_x_move=-1; player1_y_move= 0;} // Ver: 3 hidden
+    if (isKeyPressed(KeyEvent.VK_RIGHT)) {player1_x_move= 1; player1_y_move= 0;} // Ver: 3 hidden
+
                                                                                  // Ver: 3
     if (isKeyPressed(KeyEvent.VK_A    )) {player2_x_move=-1; player2_y_move= 0;} // Ver: 5
-    if (isKeyPressed(KeyEvent.VK_D    )) {player2_x_move= 1; player2_y_move= 0;} // Ver: 5
-    if (isKeyPressed(KeyEvent.VK_W    )) {player2_x_move= 0; player2_y_move=-1;} // Ver: 5
-    if (isKeyPressed(KeyEvent.VK_S    )) {player2_x_move= 0; player2_y_move= 1;} // Ver: 5
+    if (isKeyPressed(KeyEvent.VK_D    )) {player2_x_move= 1; player2_y_move= 0;} // Ver: 5 hidden
+    if (isKeyPressed(KeyEvent.VK_W    )) {player2_x_move= 0; player2_y_move=-1;} // Ver: 5 hidden
+    if (isKeyPressed(KeyEvent.VK_S    )) {player2_x_move= 0; player2_y_move= 1;} // Ver: 5 hidden
                                                                                  // Ver: 5
     player1_x_pos = player1_x_pos + player1_x_move; // Ver: 2
     player1_y_pos = player1_y_pos + player1_y_move; // Ver: 2

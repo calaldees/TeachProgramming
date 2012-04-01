@@ -90,35 +90,35 @@
             player1_y_move = -1        ' Ver: 3
         End If                         ' Ver: 3
         If e.KeyCode = Keys.Down Then  ' Ver: 3
-            player1_x_move = 0         ' Ver: 3
-            player1_y_move = 1         ' Ver: 3
-        End If                         ' Ver: 3
-        If e.KeyCode = Keys.Left Then  ' Ver: 3
-            player1_x_move = -1        ' Ver: 3
-            player1_y_move = 0         ' Ver: 3
-        End If                         ' Ver: 3
-        If e.KeyCode = Keys.Right Then ' Ver: 3
-            player1_x_move = 1         ' Ver: 3
-            player1_y_move = 0         ' Ver: 3
-        End If                         ' Ver: 3
-        ' Ver: 5
+            player1_x_move = 0         ' Ver: 3 hidden
+            player1_y_move = 1         ' Ver: 3 hidden
+        End If                         ' Ver: 3 hidden
+        If e.KeyCode = Keys.Left Then  ' Ver: 3 hidden
+            player1_x_move = -1        ' Ver: 3 hidden
+            player1_y_move = 0         ' Ver: 3 hidden
+        End If                         ' Ver: 3 hidden
+        If e.KeyCode = Keys.Right Then ' Ver: 3 hidden
+            player1_x_move = 1         ' Ver: 3 hidden
+            player1_y_move = 0         ' Ver: 3 hidden
+        End If                         ' Ver: 3 hidden
+        ' Ver: 3
         If e.KeyCode = Keys.W Then     ' Ver: 5
             player2_x_move = 0         ' Ver: 5
             player2_y_move = -1        ' Ver: 5
         End If ' Ver: 5
         If e.KeyCode = Keys.S Then     ' Ver: 5
-            player2_x_move = 0         ' Ver: 5
-            player2_y_move = 1         ' Ver: 5
-        End If                         ' Ver: 5
-        If e.KeyCode = Keys.A Then     ' Ver: 5
-            player2_x_move = -1        ' Ver: 5
-            player2_y_move = 0         ' Ver: 5
-        End If                         ' Ver: 5
-        If e.KeyCode = Keys.D Then     ' Ver: 5
-            player2_x_move = 1         ' Ver: 5
-            player2_y_move = 0         ' Ver: 5
-        End If                         ' Ver: 5
-        ' Ver: 3
+            player2_x_move = 0         ' Ver: 5 hidden
+            player2_y_move = 1         ' Ver: 5 hidden
+        End If                         ' Ver: 5 hidden
+        If e.KeyCode = Keys.A Then     ' Ver: 5 hidden
+            player2_x_move = -1        ' Ver: 5 hidden
+            player2_y_move = 0         ' Ver: 5 hidden
+        End If                         ' Ver: 5 hidden
+        If e.KeyCode = Keys.D Then     ' Ver: 5 hidden
+            player2_x_move = 1         ' Ver: 5 hidden
+            player2_y_move = 0         ' Ver: 5 hidden
+        End If                         ' Ver: 5 hidden
+        ' Ver: 5
     End Sub                            ' Ver: 3
     ' Ver: 3
 End Class

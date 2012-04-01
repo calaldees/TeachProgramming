@@ -49,27 +49,27 @@ while variables.running:
         variables.player1_x_move =  0 # Ver: 3
         variables.player1_y_move = -1 # Ver: 3
     if keys[pygame.K_RIGHT ]:         # Ver: 3
-        variables.player1_x_move =  1 # Ver: 3
-        variables.player1_y_move =  0 # Ver: 3
-    if keys[pygame.K_LEFT  ]:         # Ver: 3
-        variables.player1_x_move = -1 # Ver: 3
-        variables.player1_y_move =  0 # Ver: 3
-    if keys[pygame.K_DOWN  ]:         # Ver: 3
-        variables.player1_x_move =  0 # Ver: 3
-        variables.player1_y_move =  1 # Ver: 3
+        variables.player1_x_move =  1 # Ver: 3 hidden
+        variables.player1_y_move =  0 # Ver: 3 hidden
+    if keys[pygame.K_LEFT  ]:         # Ver: 3 hidden
+        variables.player1_x_move = -1 # Ver: 3 hidden
+        variables.player1_y_move =  0 # Ver: 3 hidden
+    if keys[pygame.K_DOWN  ]:         # Ver: 3 hidden
+        variables.player1_x_move =  0 # Ver: 3 hidden
+        variables.player1_y_move =  1 # Ver: 3 hidden
                                       # Ver: 5
-    if keys[pygame.K_w     ]:         # Ver: 5
+    if keys[pygame.K_w     ]:         # Ver: 5 
         variables.player2_x_move =  0 # Ver: 5
         variables.player2_y_move = -1 # Ver: 5
     if keys[pygame.K_d     ]:         # Ver: 5
-        variables.player2_x_move =  1 # Ver: 5
-        variables.player2_y_move =  0 # Ver: 5
-    if keys[pygame.K_a     ]:         # Ver: 5
-        variables.player2_x_move = -1 # Ver: 5
-        variables.player2_y_move =  0 # Ver: 5
-    if keys[pygame.K_s     ]:         # Ver: 5
-        variables.player2_x_move =  0 # Ver: 5
-        variables.player2_y_move =  1 # Ver: 5
+        variables.player2_x_move =  1 # Ver: 5 hidden
+        variables.player2_y_move =  0 # Ver: 5 hidden
+    if keys[pygame.K_a     ]:         # Ver: 5 hidden
+        variables.player2_x_move = -1 # Ver: 5 hidden
+        variables.player2_y_move =  0 # Ver: 5 hidden
+    if keys[pygame.K_s     ]:         # Ver: 5 hidden
+        variables.player2_x_move =  0 # Ver: 5 hidden
+        variables.player2_y_move =  1 # Ver: 5 hidden
                                       # Ver: 5
     if keys[pygame.K_ESCAPE]:         # Ver: 3
         variables.running = False     # Ver: 3
