@@ -73,7 +73,7 @@ while variables.running:
                                       # Ver: 5
     if keys[pygame.K_ESCAPE]:         # Ver: 3
         variables.running = False     # Ver: 3
-                                          # Ver: 3
+                                      # Ver: 3
     variables.player1_x_pos = variables.player1_x_pos + variables.player1_x_move # Ver: 2
     variables.player1_y_pos = variables.player1_y_pos + variables.player1_y_move # Ver: 2
                                                                                  # Ver: 2
@@ -82,13 +82,13 @@ while variables.running:
                                                                                  # Ver: 5
     try   : player1_at_pixel = screen.get_at((variables.player1_x_pos, variables.player1_y_pos)) # Ver: 4
     except: player1_at_pixel = None                                                              # Ver: 4
-    if player1_at_pixel != variables.background_colour:                                # Ver: 4
+    if player1_at_pixel != variables.background_colour:                                          # Ver: 4
         variables.player2_score = variables.player2_score + 1                                    # Ver: 6
         reset()                                                                                  # Ver: 4
                                                                                                  # Ver: 4
     try   : player2_at_pixel = screen.get_at((variables.player2_x_pos, variables.player2_y_pos)) # Ver: 5
     except: player2_at_pixel = None                                                              # Ver: 5
-    if player2_at_pixel != variables.background_colour:                                # Ver: 5
+    if player2_at_pixel != variables.background_colour:                                          # Ver: 5
         variables.player1_score = variables.player1_score + 1                                    # Ver: 6
         reset()                                                                                  # Ver: 5
                                                                                                  # Ver: 5

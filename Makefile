@@ -1,7 +1,7 @@
 
 help:
 	# Usage: make <target>, where target is
-	# setup         -- setup python egg
+	# setup         -- setup python egg & install dependencys/env if needed
 	# test          -- run all nosetests
 	# blank-db      -- create a blank database
 	# run           -- run the site in development mode
@@ -13,8 +13,13 @@ env_deactivate:
 	deactivate
 
 env:
+	if dpkg -s python3-setuptools ; then \
+	    echo python 3 already installed \
+	else \
+	    echo installing python 3 \
+	    sudo apt-get install python3-setuptools \
+	fi
 	# Reference - http://docs.pylonsproject.org/projects/pyramid/en/1.3-branch/narr/install.html
-	#sudo apt-get install python3-setuptools
 	virtualenv --no-site-packages -p python3 env
 	cd env;	bin/easy_install pyramid
 
@@ -26,6 +31,9 @@ run:
 	#$(MAKE) env_activate
 	env/bin/pserve --reload development.ini
 	#$(MAKE) env_deactivate
+
+project:
+	env/bin/python teachprogramming/static/projects/$(1).py
 
 clean:
 	rm env -rf

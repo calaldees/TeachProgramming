@@ -11,11 +11,12 @@ class callByRef:
             setattr(self, key, value)
 variables = callByRef(
     running           = True,
-    background_colour = (  0,   0,   0, 255),
+    color_background  = (  0,   0,   0, 255),
+    color_exit        = (255, 255,   0, 255),
     level_number      = 1,
     copter_image      = pygame.image.load("ship.gif"),
     copter_colision_points = [(0,0),(32,9),(17,2),(22,12),(2,12)],
-    background_images = None,
+    background_images = [],
     view_x_pos        = None,
     copter_x_pos      = None,
     copter_y_pos      = None,
@@ -23,24 +24,28 @@ variables = callByRef(
     copter_y_vel      = None,
 )
 
-def reset():
-    #pygame.draw.rect(screen, variables.background_colour, pygame.Rect(0, 0, screen.get_width(), screen.get_height()))
+def load_level(level_number):
     variables.background_images = []
-    variables.background_images.append(pygame.image.load("CopterLevel%d_bg2.png" % variables.level_number))
-    variables.background_images.append(pygame.image.load("CopterLevel%d_bg1.png" % variables.level_number))
-    variables.background_images.append(pygame.image.load("CopterLevel%d.png" % variables.level_number))    
-    
-    variables.view_x_pos       = 0
+    for layer in reversed(range(1,4)):
+        try   : variables.background_images.append(pygame.image.load("CopterLevel%d_layer%s.png" % (level_number,layer)))
+        except: pass
+    variables.background_images.append(pygame.image.load("CopterLevel%d.png" % level_number))
+
+
+def reset():
+    variables.view_x_pos        = 0
     
     variables.copter_x_pos      = 50.0
-    variables.copter_y_pos      = 50.0
+    variables.copter_y_pos      = screen.get_height()/2
     variables.copter_x_vel      = 0.0
     variables.copter_y_vel      = 0.0
 
+load_level(variables.level_number)
 reset()
 while variables.running:
     clock.tick(60)
-    screen.fill(variables.background_colour)
+    screen.fill(variables.color_background)
+    #pygame.draw.rect(screen, variables.background_colour, pygame.Rect(0, 0, screen.get_width(), screen.get_height()))
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -76,6 +81,9 @@ while variables.running:
         colision_point = (copter_pos[0]+colision_point[0], copter_pos[1]+colision_point[1])
         try   : pixel = variables.background_images[-1].get_at(colision_point)
         except: pixel = None
+        if pixel and pixel == variables.color_exit:
+            variables.level_number += 1
+            load_level(variables.level_number)
         if pixel and pixel[3] > 0:
             reset()
     
