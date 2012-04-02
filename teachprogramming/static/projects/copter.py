@@ -14,6 +14,7 @@ variables = callByRef(
     background_colour = (  0,   0,   0, 255),
     level_number      = 1,
     copter_image      = pygame.image.load("ship.gif"),
+    copter_colision_points = [(0,0),(32,9),(17,2),(22,12),(2,12)],
     background_images = None,
     view_x_pos        = None,
     copter_x_pos      = None,
@@ -31,8 +32,8 @@ def reset():
     
     variables.view_x_pos       = 0
     
-    variables.copter_x_pos      = 0.0
-    variables.copter_y_pos      = 0.0
+    variables.copter_x_pos      = 50.0
+    variables.copter_y_pos      = 50.0
     variables.copter_x_vel      = 0.0
     variables.copter_y_vel      = 0.0
 
@@ -52,9 +53,9 @@ while variables.running:
         variables.copter_y_vel += -0.1
     if keys[pygame.K_DOWN  ]:         
         variables.copter_y_vel +=  0.1
-    if keys[pygame.K_LEFT  ]:         
+    if keys[pygame.K_LEFT  ]:
         variables.copter_x_vel += -0.1
-    if keys[pygame.K_RIGHT ]:         
+    if keys[pygame.K_RIGHT ]:
         variables.copter_x_vel +=  0.1
 
     copter_rectangle = variables.copter_image.get_rect()
@@ -68,10 +69,17 @@ while variables.running:
     variables.copter_x_pos += variables.copter_x_vel
     variables.copter_y_pos += variables.copter_y_vel
     
-    
     variables.view_x_pos += 1
-
-    paralax_number = 0
+    
+    copter_pos = (int(variables.copter_x_pos+variables.view_x_pos), int(variables.copter_y_pos))
+    for colision_point in variables.copter_colision_points:
+        colision_point = (copter_pos[0]+colision_point[0], copter_pos[1]+colision_point[1])
+        try   : pixel = variables.background_images[-1].get_at(colision_point)
+        except: pixel = None
+        if pixel and pixel[3] > 0:
+            reset()
+    
+    paralax_number = 1
     for background_image in variables.background_images:
         background_rectangle   = background_image.get_rect()
         background_rectangle.x = background_rectangle.x - int(variables.view_x_pos/math.pow(2,len(variables.background_images)-paralax_number))

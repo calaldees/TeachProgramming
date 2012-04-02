@@ -14,7 +14,7 @@ import teachprogramming.lib.constants as constants
 
 <%def name='show_diff(version)'>
     <%
-        diff = make_ver.get_diff(constants.project_filename % (project,format), version, allow_hidden=True)
+        diff = make_ver.get_diff(constants.project_filename % (project,format), version, hidden_line_replacement='...more...')
         line_classs = {'-':'remove', '+':'add'}
         open_section = False
     %>

@@ -36,7 +36,7 @@ comment_tokens = dict(
 def get_fileext(filename):
     return re.search(r'\.([^\.]+)$', filename).group(1).lower()
 
-def make_ver(source, target_version=version_max, lang=None, allow_hidden=False):
+def make_ver(source, target_version=version_max, lang=None, hidden_line_replacement=None):
     """
     Doc required
     
@@ -90,9 +90,9 @@ def make_ver(source, target_version=version_max, lang=None, allow_hidden=False):
                     line = re.sub(comment_token, '', line, count=1)
                     
                 # Check for hidden lines - these lines are removed when allow_hidden is True
-                if allow_hidden and hidden_match:
-                    line = hidden_match.group('indent') + comment_token + '...'
-                    if '...' in output[-1:][0]: # If the previous line was hidden then there is no need to repeat the '...'
+                if hidden_line_replacement and hidden_match:
+                    line = hidden_match.group('indent') + comment_token + hidden_line_replacement
+                    if hidden_line_replacement in output[-1]: # If the previous line was hidden then there is no need to repeat the '...'
                         line = None
                 
             except: 
@@ -105,7 +105,7 @@ def make_ver(source, target_version=version_max, lang=None, allow_hidden=False):
     return output #"\n".join(output)
 
 
-def get_diff(source, version, version_from=None, lang=None, n=3, allow_hidden=False):
+def get_diff(source, version, version_from=None, lang=None, n=3, hidden_line_replacement=None):
     """
     n = number of lines of context
     """
@@ -113,8 +113,8 @@ def get_diff(source, version, version_from=None, lang=None, n=3, allow_hidden=Fa
     if not version_from:
         version_from = version - 1
     for line in difflib.unified_diff(
-        make_ver(source, version_from, lang=lang, allow_hidden=allow_hidden),
-        make_ver(source, version     , lang=lang, allow_hidden=allow_hidden),
+        make_ver(source, version_from, lang=lang, hidden_line_replacement=hidden_line_replacement),
+        make_ver(source, version     , lang=lang, hidden_line_replacement=hidden_line_replacement),
         n=n, ):
         diff.append(line)
     return diff
