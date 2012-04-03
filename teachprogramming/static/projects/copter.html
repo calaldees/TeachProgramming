@@ -1,11 +1,27 @@
 <canvas id="canvas" width="320" height="240"></canvas>
+<canvas id="c"      width="320" height="240" style="display: none;"></canvas>
 <script>
+    //netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
+
     var canvas  = document.getElementById('canvas');
     var context = canvas.getContext('2d');
+
+    var c = document.getElementById('c').getContext('2d'); //document.createElement('canvas', width="320", height="240").getContext('2d');
+    var copter_colision_points = [[0,0],[32,9],[17,2],[22,12],[2,12]];
+
+    var keys         = {27:'ESCAPE', 38:'UP', 40:'DOWN', 37:'LEFT', 39:'RIGHT'};
+    var keys_pressed = {};
+    for (key in keys) {keys_pressed[keys[key]]=false;}
     window.addEventListener('keydown', eventKeyDown, true);
+    window.addEventListener('keyup'  , eventKeyUp  , true);
+    function eventKeyDown(event) {if (event.keyCode in keys) {keys_pressed[keys[event.keyCode]]=true; }}
+    function eventKeyUp  (event) {if (event.keyCode in keys) {keys_pressed[keys[event.keyCode]]=false;}}
+    
     
     var variables = {
-        "background_color": 'rgba(0,0,0,255)',
+        "color_background": 'rgba(0,0,0,255)',
+        "color_exit"      : 'rgba(255,255,0,255)',
+        "level_number"    : 1,
     };
     
     function load_level(level_number) {
@@ -16,32 +32,76 @@
         }
         variables.background_images = new Array();
         for (layer=5 ; layer>0 ; layer--) {
-            load_background_image("CopterLevel"+level_number+"_layer"+layer+".png");
+            load_background_image("CopterLevel"+level_number+"_layer"+layer+".gif");
         }
-        load_background_image("CopterLevel"+level_number+".png");
+        load_background_image("CopterLevel"+level_number+".gif");
     }
     
     function reset() {
-        variables.view_x_pos = 0;
+        variables.view_x_pos   =  0;
+        variables.copter_x_pos = 50;
+        variables.copter_y_pos = canvas.height / 2;
+        variables.copter_x_vel =  0;
+        variables.copter_y_vel =  0;
+        
+        variables.copter_image = new Image();
+        variables.copter_image.src = "ship.gif";
     }
     
-    function eventKeyDown(event) {
-        if (event.keyCode==27) {clearInterval(interval_id); reset();}  // Escape was pressed
-    }
-
+    
     function timerEvent() {
-        context.fillStyle = variables.background_color;
+        context.fillStyle = variables.color_background;
         context.fillRect(0, 0, canvas.width, canvas.height);
+        
+        //console.log(keys_pressed);
+        if (keys_pressed.ESCAPE) {clearInterval(interval_id); reset();}  // Escape was pressed
+        if (keys_pressed.UP    ) {variables.copter_y_vel += -0.1;}  // Up arrow was pressed    
+        if (keys_pressed.DOWN  ) {variables.copter_y_vel +=  0.1;}  // Down arrow was pressed  
+        if (keys_pressed.LEFT  ) {variables.copter_x_vel += -0.1;}  // Left arrow was pressed  
+        if (keys_pressed.RIGHT ) {variables.copter_x_vel +=  0.1;}  // Right arrow was pressed
+        
+        variables.copter_x_vel  = variables.copter_x_vel * 0.99;
+        variables.copter_y_vel  = variables.copter_y_vel * 0.99;
+        variables.copter_y_vel += 0.025;
+        if (variables.copter_y_pos < 0 || variables.copter_y_pos > canvas.height-variables.copter_image.height) {
+            variables.copter_y_vel = -variables.copter_y_vel;
+        }
+        
+        variables.copter_x_pos += variables.copter_x_vel;
+        variables.copter_y_pos += variables.copter_y_vel;
         
         variables.view_x_pos += 1
         
+        
+        c.fillStyle = variables.color_background;
+        c.fillRect(0, 0, canvas.width, canvas.height);
+        c.drawImage(variables.background_images[variables.background_images.length-1], -variables.view_x_pos, 0);
+        
+        for (var i=0 ; i<copter_colision_points.length ; i++) {
+            var point       = copter_colision_points[i];
+            var pixel       = c.getImageData(variables.copter_x_pos+point[0], variables.copter_y_pos+point[1], 1, 1).data;
+            var pixel_color = 'rgba('+pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]+')';
+            if (pixel_color == variables.color_exit) {
+                console.log("EXIT!");
+                load_level(variables.level_number++);
+            }
+            if (pixel_color != variables.color_background) {
+                reset();
+            }
+        }
+        
+        
+        //for (var i=0 ; i<variables.background_images.length ; i++) {
         for (var i=0 ; i<variables.background_images.length ; i++) {
-            var offset_x = Math.round(variables.view_x_pos / Math.pow(2,variables.background_images.length-i));
+            var offset_x = Math.round(variables.view_x_pos / Math.pow(2,variables.background_images.length-1-i));
             context.drawImage(variables.background_images[i], -offset_x, 0);
         }
+        
+        context.drawImage(variables.copter_image, Math.round(variables.copter_x_pos), Math.round(variables.copter_y_pos));
     }
+
     
-    load_level(1);
+    load_level(variables.level_number);
     reset();
     var interval_id = setInterval(timerEvent, 1000/60);
 </script>

@@ -27,9 +27,9 @@ variables = callByRef(
 def load_level(level_number):
     variables.background_images = []
     for layer in reversed(range(1,4)):
-        try   : variables.background_images.append(pygame.image.load("CopterLevel%d_layer%s.png" % (level_number,layer)))
+        try   : variables.background_images.append(pygame.image.load("CopterLevel%d_layer%s.gif" % (level_number,layer)))
         except: pass
-    variables.background_images.append(pygame.image.load("CopterLevel%d.png" % level_number))
+    variables.background_images.append(pygame.image.load("CopterLevel%d.gif" % level_number))
 
 
 def reset():
@@ -62,9 +62,9 @@ while variables.running:
         variables.copter_x_vel += -0.1
     if keys[pygame.K_RIGHT ]:
         variables.copter_x_vel +=  0.1
-
+    
     copter_rectangle = variables.copter_image.get_rect()
-
+    
     variables.copter_x_vel  = variables.copter_x_vel * 0.99
     variables.copter_y_vel  = variables.copter_y_vel * 0.99
     variables.copter_y_vel += float(0.025)
@@ -84,7 +84,7 @@ while variables.running:
         if pixel and pixel == variables.color_exit:
             variables.level_number += 1
             load_level(variables.level_number)
-        if pixel and pixel[3] > 0:
+        if pixel and pixel != (255,255,255,255):
             reset()
     
     paralax_number = 1
