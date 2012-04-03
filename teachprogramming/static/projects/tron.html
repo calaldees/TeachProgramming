@@ -13,14 +13,14 @@
     };
     
     function reset() {
-        variables.player1_x_pos   = 100,                                        // Ver: 2
-        variables.player1_y_pos   = 100,                                        // Ver: 2
-        variables.player1_x_move  =   1,                                        // Ver: 2
-        variables.player1_y_move  =   0,                                        // Ver: 2
-        variables.player2_x_pos   = canvas.width  - 100,                        // Ver: 5
-        variables.player2_y_pos   = canvas.height - 100,                        // Ver: 5
-        variables.player2_x_move  =  -1,                                        // Ver: 5
-        variables.player2_y_move  =   0,                                        // Ver: 5
+        variables.player1_x_pos   = 100;                                        // Ver: 2
+        variables.player1_y_pos   = 100;                                        // Ver: 2
+        variables.player1_x_move  =   1;                                        // Ver: 2
+        variables.player1_y_move  =   0;                                        // Ver: 2
+        variables.player2_x_pos   = canvas.width  - 100;                        // Ver: 5
+        variables.player2_y_pos   = canvas.height - 100;                        // Ver: 5
+        variables.player2_x_move  =  -1;                                        // Ver: 5
+        variables.player2_y_move  =   0;                                        // Ver: 5
         context.fillStyle = variables.background_color;
         context.fillRect(0, 0, canvas.width, canvas.height);
     }
@@ -47,14 +47,14 @@
         var pixel       = context.getImageData(variables.player1_x_pos, variables.player1_y_pos, 1, 1).data; // Ver: 4
         var pixel_color = 'rgba('+pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]+')';                       // Ver: 4
         if (pixel_color != variables.background_color) {                                                     // Ver: 4
-            variables.player2_score = variables.player2_score + 1                                            // Ver: 6
+            variables.player2_score = variables.player2_score + 1;                                           // Ver: 6
             reset();                                                                                         // Ver: 4
         }                                                                                                    // Ver: 4
                                                                                                              // Ver: 4
         var pixel       = context.getImageData(variables.player2_x_pos, variables.player2_y_pos, 1, 1).data; // Ver: 5
         var pixel_color = 'rgba('+pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]+')';                       // Ver: 5
         if (pixel_color != variables.background_color) {                                                     // Ver: 5
-            variables.player1_score = variables.player1_score + 1                                            // Ver: 6
+            variables.player1_score = variables.player1_score + 1;                                           // Ver: 6
             reset();                                                                                         // Ver: 5
         }                                                                                                    // Ver: 5
                                                                                                              // Ver: 5

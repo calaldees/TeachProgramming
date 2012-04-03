@@ -1,0 +1,47 @@
+<canvas id="canvas" width="320" height="240"></canvas>
+<script>
+    var canvas  = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    window.addEventListener('keydown', eventKeyDown, true);
+    
+    var variables = {
+        "background_color": 'rgba(0,0,0,255)',
+    };
+    
+    function load_level(level_number) {
+        function load_background_image(filename) {
+            var background_image = new Image();
+            background_image.src = filename;
+            background_image.onload = function() {variables.background_images.push(this);}
+        }
+        variables.background_images = new Array();
+        for (layer=5 ; layer>0 ; layer--) {
+            load_background_image("CopterLevel"+level_number+"_layer"+layer+".png");
+        }
+        load_background_image("CopterLevel"+level_number+".png");
+    }
+    
+    function reset() {
+        variables.view_x_pos = 0;
+    }
+    
+    function eventKeyDown(event) {
+        if (event.keyCode==27) {clearInterval(interval_id); reset();}  // Escape was pressed
+    }
+
+    function timerEvent() {
+        context.fillStyle = variables.background_color;
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        
+        variables.view_x_pos += 1
+        
+        for (var i=0 ; i<variables.background_images.length ; i++) {
+            var offset_x = Math.round(variables.view_x_pos / Math.pow(2,variables.background_images.length-i));
+            context.drawImage(variables.background_images[i], -offset_x, 0);
+        }
+    }
+    
+    load_level(1);
+    reset();
+    var interval_id = setInterval(timerEvent, 1000/60);
+</script>
