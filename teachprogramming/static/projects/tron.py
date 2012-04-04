@@ -43,7 +43,7 @@ while variables.running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             variables.running = False
-            
+    
     keys = pygame.key.get_pressed()   # Ver: 3
     if keys[pygame.K_UP    ]:         # Ver: 3
         variables.player1_x_move =  0 # Ver: 3
@@ -99,7 +99,6 @@ while variables.running:
         variables.running = False                                    # Ver: 6
                                                                      # Ver: 6
     pygame.display.flip()
-
 
 pygame.quit()
                                # Ver: 6

@@ -21,9 +21,7 @@ else:
 
 
 # Constants
-version        = '0.0'
-version_max    = 100
-version_min    =   1
+version        = '0.1'
 comment_tokens = dict(
     js   = r'//',
     html = r'//',
@@ -36,7 +34,7 @@ comment_tokens = dict(
 def get_fileext(filename):
     return re.search(r'\.([^\.]+)$', filename).group(1).lower()
 
-def make_ver(source, target_version=version_max, lang=None, hidden_line_replacement=None):
+def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
     """
     Doc required
     
@@ -44,10 +42,13 @@ def make_ver(source, target_version=version_max, lang=None, hidden_line_replacem
     lang   - language to process (optional - will try to aquire from filename automatically)
     
     """
-    #if not target_version:
-    #    target_version = 
-    target_version = int(target_version)
-    
+    try: # Can take an integer arg for target versions, under this case, make the sequential set
+        target_versions = range(1,int(target_versions)+1)
+    except:
+        pass
+    if isinstance(target_versions, basestring):
+        target_versions = [ver.strip() for ver in target_version.split()]
+    target_versions = set(target_versions)
     
     # Open source file if string - otherwise assume source is a file object
     if isinstance(source, basestring):
@@ -63,41 +64,46 @@ def make_ver(source, target_version=version_max, lang=None, hidden_line_replacem
     comment_token = comment_tokens[lang]
 
     # Regex compile
-    extract_ver = re.compile(r'(?P<code>.*)%s(.*?)Ver:\s*(?P<ver>\d\d?)(?:\s*to\s*(?P<ver_limit>\d\d?))?' % comment_token)
-    remmed_line = re.compile(r'^\s*%s' % comment_token)
-    hidden_line = re.compile(r'^(?P<indent>\s*)(?P<code>.*)%s.*hidden.*' % comment_token)
+    extract_meta = re.compile(r'^((?P<indent>\s*)?P<code>.*)%s(.*?)(VER:(?P<ver>.*?)\s+|HIDE:(?P<hide>.*?)\s+)*' % comment_token)
+    #remmed_line = re.compile(r'^\s*%s' % comment_token)
+    ##hidden_line = re.compile(r'^(?P<indent>\s*)(?P<code>.*)%s.*hidden.*' % comment_token)
     
     output = []
     # Process source file
     for line in source:
-        # Extract version numbers from line
-        ver_match = extract_ver.match(line)
-        try   : line_version       = int(ver_match.group('ver')      )
-        except: line_version       = version_min
-        try   : line_version_limit = int(ver_match.group('ver_limit'))
-        except: line_version_limit = version_max
-        hidden_match = hidden_line.match(line)
+        # Extract meta data from line
+        meta_match = extract_meta.match(line)
         
-        # If lines version number in range or target version to be generated, print code
-        if line_version <= target_version and target_version <= line_version_limit:
-            try:
-                # Extract the code (without the version number data)
-                line = ver_match.group('code')
-                
-                # If the line starts with a comment then remove that first comment
-                # This is for lines that are not present and executed in the raw run of the file, but are interim steps
-                if remmed_line.match(line):
-                    line = re.sub(comment_token, '', line, count=1)
-                    
-                # Check for hidden lines - these lines are removed when allow_hidden is True
-                if hidden_line_replacement and hidden_match:
-                    line = hidden_match.group('indent') + comment_token + hidden_line_replacement
-                    if hidden_line_replacement in output[-1]: # If the previous line was hidden then there is no need to repeat the '...'
-                        line = None
-                
-            except: 
-                pass
-            #print(line.rstrip())
+        # Get versions set
+        line_versions = set(['1'])
+        if 'ver' in meta_match.groupdict():
+            line_versions = set([ver.strip() for ver in ver_match.group('ver').split(',')])
+        
+        # Like with the input for target_versions - if a single integer is provided, make the version set based on a sequential range
+        if len(line_versions)==1 and list(line_versions)[0].isdigit():
+            line_versions = set(range(int(line_versions.pop()),10))
+        
+        # If is the version requested is a union with the current line
+        if target_versions & line_versions:
+            
+            # Extract the code (without the version number data)
+            try   : line = ver_match.group('code')
+            except: pass
+            
+            # If the line starts with a comment then remove that first comment
+            # This is for lines that are not present and executed in the raw run of the file, but are interim steps
+            #if remmed_line.match(line):
+            #    line = re.sub(comment_token, '', line, count=1)
+            
+            if hidden_line_replacement and 'hide' in meta_match.groupdict():
+                line = meta_match.group('indent') + comment_token + hidden_line_replacement
+                if hidden_line_replacement in output[-1]: # If the previous line was hidden then there is no need to repeat the '...'
+                    line = None
+            
+            # Check for hidden lines - these lines are removed when hidden line replacement avalable
+            #if hidden_line_replacement and hidden_match:
+            #    line = hidden_match.group('indent') + comment_token + hidden_line_replacement
+            
             if line:
                 output.append(line.rstrip())
     
@@ -105,20 +111,39 @@ def make_ver(source, target_version=version_max, lang=None, hidden_line_replacem
     return output #"\n".join(output)
 
 
-def get_diff(source, version, version_from=None, lang=None, n=3, hidden_line_replacement=None):
+def get_diff(source, target_versions, prev_versions, lang=None, n=3, hidden_line_replacement=None):
     """
     n = number of lines of context
     """
     diff = []
-    if not version_from:
-        version_from = version - 1
     for line in difflib.unified_diff(
-        make_ver(source, version_from, lang=lang, hidden_line_replacement=hidden_line_replacement),
-        make_ver(source, version     , lang=lang, hidden_line_replacement=hidden_line_replacement),
+        make_ver(source, prev_versions  , lang=lang, hidden_line_replacement=hidden_line_replacement),
+        make_ver(source, target_versions, lang=lang, hidden_line_replacement=hidden_line_replacement),
         n=n, ):
         diff.append(line)
     return diff
 
+
+get_diff_seq_prev_version = []
+def get_diff_seq_clear():
+    global get_diff_seq_prev_version
+    get_diff_seq_prev_version = []
+def get_diff_seq(source, target_versions, lang=None, n=3, hidden_line_replacement=None):
+    """
+    Rather than having to specity the target and previous versions every time,
+    this method stores the previously generated version that was called and uses that as the previous version
+    """
+    global get_diff_seq_prev_version
+    prev_version   = get_diff_seq_prev_version
+    target_version = make_ver(source, target_versions, lang=lang, hidden_line_replacement=hidden_line_replacement)
+    get_diff_seq_prev_version = target_version
+    
+    diff = []
+    for line in difflib.unified_diff(prev_version, target_version, n=n):
+        diff.append(line)
+    
+    return diff
+    
 
 def get_args():
     import argparse

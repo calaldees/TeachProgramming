@@ -14,7 +14,7 @@ import teachprogramming.lib.constants as constants
 
 <%def name='show_diff(version)'>
     <%
-        diff = make_ver.get_diff(constants.project_filename % (project,format), version, hidden_line_replacement='...more...')
+        diff = make_ver.get_diff_seq(constants.project_filename % (project,format), version, hidden_line_replacement='...more...')
         line_classs = {'-':'remove', '+':'add'}
         open_section = False
     %>
@@ -37,13 +37,15 @@ import teachprogramming.lib.constants as constants
     <button type="button" onclick="$(this).next().toggle();">Full code</button>
     <div class="hide">
         <a href="/code/${project}.${format}/${version}">Version ${version}</a>
-        ${show_ver(version)}
+        ##${show_ver(version)}
     </div>
 </%def>
 
 
 
 <%def name='body()'>
+    <% make_ver.get_diff_seq_clear() %>
+
     <a href="/">Project List</a>
     
     <!-- List all formats for this project -->

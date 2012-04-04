@@ -68,8 +68,6 @@ while variables.running:
     variables.copter_x_vel  = variables.copter_x_vel * 0.99
     variables.copter_y_vel  = variables.copter_y_vel * 0.99
     variables.copter_y_vel += float(0.025)
-    if (variables.copter_y_pos < 0 or variables.copter_y_pos > screen.get_height()-copter_rectangle.height):
-        variables.copter_y_vel = -variables.copter_y_vel
     
     variables.copter_x_pos += variables.copter_x_vel
     variables.copter_y_pos += variables.copter_y_vel
