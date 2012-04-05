@@ -75,8 +75,8 @@ To limit people using this all the time, give them a limited about of booster fu
     
 <h3>Maze levels</h3>
 
-<img src="/static/projects/Maze1.png"/>
-<img src="/static/projects/Maze2.png"/>
+<img src="/static/projects/Maze1.gif"/>
+<img src="/static/projects/Maze2.gif"/>
 
 
 <pre>

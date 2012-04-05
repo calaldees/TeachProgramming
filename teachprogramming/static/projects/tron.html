@@ -56,6 +56,15 @@
         variables.player2_x_pos = variables.player2_x_pos + variables.player2_x_move; // VER: player2
         variables.player2_y_pos = variables.player2_y_pos + variables.player2_y_move; // VER: player2 HIDE
                                                                                       // VER: 2
+        if (variables.player1_x_pos<=0            ) {variables.player1_x_pos = canvas.width -1;} // VER: wrap
+        if (variables.player1_x_pos>=canvas.width ) {variables.player1_x_pos =               0;} // VER: wrap
+        if (variables.player1_y_pos<=0            ) {variables.player1_y_pos = canvas.height-1;} // VER: wrap
+        if (variables.player1_y_pos>=canvas.height) {variables.player1_y_pos =               0;} // VER: wrap
+        if (variables.player2_x_pos<=0            ) {variables.player2_x_pos = canvas.width -1;} // VER: wrap
+        if (variables.player2_x_pos>=canvas.width ) {variables.player2_x_pos =               0;} // VER: wrap
+        if (variables.player2_y_pos<=0            ) {variables.player2_y_pos = canvas.height-1;} // VER: wrap
+        if (variables.player2_y_pos>=canvas.height) {variables.player2_y_pos =               0;} // VER: wrap
+                                                                                                 // VER: wrap
         var pixel       = context.getImageData(variables.player1_x_pos, variables.player1_y_pos, 1, 1).data; // VER: 4
         var pixel_color = 'rgba('+pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]+')';                       // VER: 4
         if (pixel_color != variables.background_color) {                                                     // VER: 4

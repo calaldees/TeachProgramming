@@ -6,4 +6,4 @@
 
 ${self.show_diff(1)}
 
-<img src="/static/projects/CopterLevel1.png">
+<img src="/static/projects/CopterLevel1.gif">
