@@ -47,7 +47,7 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
     except:
         pass
     if isinstance(target_versions, basestring):
-        target_versions = [ver.strip() for ver in target_version.split()]
+        target_versions = [ver.strip() for ver in target_versions.split(',')]
     target_versions = set(target_versions)
     
     # Open source file if string - otherwise assume source is a file object
@@ -87,9 +87,9 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
         # If is the version requested is a union with the current line
         if target_versions & line_versions:
             # Removed matched metadata
-            line = extract_ver          .sub('', line)
-            line = extract_hide         .sub('', line)
-            line = extract_blank_comment.sub('', line)
+            line = extract_ver          .sub('' , line)
+            line = extract_hide         .sub('' , line)
+            line = extract_blank_comment.sub(' ', line) # blank comments still need to represent a line (the \n gets rstiped later but at least it triggers an append)
             
             # If the line starts with a comment then remove that first comment
             # This is for lines that are not present and executed in the raw run of the file, but are interim steps

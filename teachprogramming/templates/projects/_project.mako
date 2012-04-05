@@ -37,7 +37,7 @@ import teachprogramming.lib.constants as constants
     <button type="button" onclick="$(this).next().toggle();">Full code</button>
     <div class="hide">
         <a href="/code/${project}.${format}/${version}">Version ${version}</a>
-        ##${show_ver(version)}
+        ${show_ver(version)}
     </div>
 </%def>
 
