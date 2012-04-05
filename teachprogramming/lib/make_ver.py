@@ -22,6 +22,7 @@ else:
 
 # Constants
 version        = '0.1'
+version_max    = 20
 comment_tokens = dict(
     js   = r'//',
     html = r'//',
@@ -43,7 +44,7 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
     
     """
     try: # Can take an integer arg for target versions, under this case, make the sequential set
-        target_versions = range(1,int(target_versions)+1)
+        target_versions = [str(i) for i in range(1,int(target_versions)+1)]
     except:
         pass
     if isinstance(target_versions, basestring):
@@ -82,7 +83,7 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
         except: line_versions = set(['1'])
         # Like with the input for target_versions - if a single integer is provided, make the version set based on a sequential range
         if len(line_versions)==1 and list(line_versions)[0].isdigit():
-            line_versions = set(range(int(line_versions.pop()),10))
+            line_versions = set([str(i) for i in range(int(line_versions.pop()),version_max)])
         
         # If is the version requested is a union with the current line
         if target_versions & line_versions:

@@ -31,11 +31,11 @@ ${self.show_diff(4)}
 <h3>Player 2</h3>
 Can you add a second player?
 
-${self.show_diff(5)}
+${self.show_diff('1,2,3,4,5,player2')}
 
 <h3>Score</h3>
 
-${self.show_diff(6)}
+${self.show_diff('1,2,3,4,5,player2,score')}
 
 <h3>Background Obstacles</h3>
 
