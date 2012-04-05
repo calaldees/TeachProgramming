@@ -64,45 +64,45 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
     comment_token = comment_tokens[lang]
 
     # Regex compile
-    extract_meta = re.compile(r'^((?P<indent>\s*)?P<code>.*)%s(.*?)(VER:(?P<ver>.*?)\s+|HIDE:(?P<hide>.*?)\s+)*' % comment_token)
+    extract_code          = re.compile(r'^(?P<line>(?P<indent>\s*)(?P<code>.*?))(%s|$)(?P<comment>.*)' % comment_token) 
+    extract_ver           = re.compile(r'VER:\s*(?P<ver>.*?)(\s+|$)', flags=re.IGNORECASE)
+    extract_hide          = re.compile(r'HIDE|HIDDEN'               , flags=re.IGNORECASE)
+    extract_blank_comment = re.compile('\s*%s\s*$' % comment_token)
+    
     #remmed_line = re.compile(r'^\s*%s' % comment_token)
-    ##hidden_line = re.compile(r'^(?P<indent>\s*)(?P<code>.*)%s.*hidden.*' % comment_token)
     
     output = []
     # Process source file
     for line in source:
         # Extract meta data from line
-        meta_match = extract_meta.match(line)
+        code_match = extract_code.match(line)
         
         # Get versions set
-        line_versions = set(['1'])
-        if 'ver' in meta_match.groupdict():
-            line_versions = set([ver.strip() for ver in ver_match.group('ver').split(',')])
-        
+        try   : line_versions = set([ver.strip() for ver in extract_ver.search(code_match.group('comment')).group('ver').split(',')])
+        except: line_versions = set(['1'])
         # Like with the input for target_versions - if a single integer is provided, make the version set based on a sequential range
         if len(line_versions)==1 and list(line_versions)[0].isdigit():
             line_versions = set(range(int(line_versions.pop()),10))
         
         # If is the version requested is a union with the current line
         if target_versions & line_versions:
-            
-            # Extract the code (without the version number data)
-            try   : line = ver_match.group('code')
-            except: pass
+            # Removed matched metadata
+            line = extract_ver          .sub('', line)
+            line = extract_hide         .sub('', line)
+            line = extract_blank_comment.sub('', line)
             
             # If the line starts with a comment then remove that first comment
             # This is for lines that are not present and executed in the raw run of the file, but are interim steps
             #if remmed_line.match(line):
             #    line = re.sub(comment_token, '', line, count=1)
             
-            if hidden_line_replacement and 'hide' in meta_match.groupdict():
-                line = meta_match.group('indent') + comment_token + hidden_line_replacement
-                if hidden_line_replacement in output[-1]: # If the previous line was hidden then there is no need to repeat the '...'
-                    line = None
-            
-            # Check for hidden lines - these lines are removed when hidden line replacement avalable
-            #if hidden_line_replacement and hidden_match:
-            #    line = hidden_match.group('indent') + comment_token + hidden_line_replacement
+            try:
+                if hidden_line_replacement and extract_hide.search(code_match.group('comment')):
+                    line = code_match.group('indent') + comment_token + hidden_line_replacement
+                    if hidden_line_replacement in output[-1]: # If the previous line was hidden then there is no need to repeat the '...'
+                        line = None
+            except:
+                pass
             
             if line:
                 output.append(line.rstrip())
