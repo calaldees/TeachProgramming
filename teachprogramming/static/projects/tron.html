@@ -1,5 +1,14 @@
 <canvas id="canvas" width="640" height="480"></canvas>
 <script>
+    // VERNAME: base1           1
+    // VERNAME: base2           1,line
+    // VERNAME: base3           1,line,input
+    // VERNAME: base4           1,line,input,colide
+    // VERNAME: 2players        1,line,input,colide,player2
+    // VERNAME: 2players_score  1,line,input,colide,player2,score
+    // VERNAME: wrap            1,line,input,colide,wrap
+    // VERNAME: 2players_wrap   1,line,input,colide,player2,wrap
+    //
     var canvas  = document.getElementById('canvas');
     var context = canvas.getContext('2d');
     
@@ -7,7 +16,7 @@
     function start() {interval_id = setInterval(timerEvent, 1000/60);}
     function pause() {clearInterval(interval_id);}
     
-    // Check http://www.asquare.net/javascript/tests/KeyCode.html for more keycodes // VER: player2
+    //// Check http://www.asquare.net/javascript/tests/KeyCode.html for more keycodes // VER: player2
     var keys         = {27:'ESCAPE', 38:'UP', 40:'DOWN', 37:'LEFT', 39:'RIGHT', 87:'W', 83:'S', 65:'A', 68:'D'};
     var keys_pressed = {};
     function init_keys() {for (key in keys) {keys_pressed[keys[key]]=false;}}
@@ -18,7 +27,7 @@
     
     var variables = {
         "background_color": 'rgba(0,0,0,255)',
-        "player1_color"   : 'rgba(255,255,0,255)',                              // VER: 2
+        "player1_color"   : 'rgba(255,255,0,255)',                              // VER: line
         "player2_color"   : 'rgba(255,0,0,255)',                                // VER: player2
         "player1_score"   : 0,                                                  // VER: score
         "player2_score"   : 0,                                                  // VER: score
@@ -28,10 +37,10 @@
         init_keys();
         context.fillStyle = variables.background_color;
         context.fillRect(0, 0, canvas.width, canvas.height);
-        variables.player1_x_pos   = 100;                                        // VER: 2
-        variables.player1_y_pos   = 100;                                        // VER: 2
-        variables.player1_x_move  =   1;                                        // VER: 2
-        variables.player1_y_move  =   0;                                        // VER: 2
+        variables.player1_x_pos   = 100;                                        // VER: line
+        variables.player1_y_pos   = 100;                                        // VER: line
+        variables.player1_x_move  =   1;                                        // VER: line
+        variables.player1_y_move  =   0;                                        // VER: line
         variables.player2_x_pos   = canvas.width  - 100;                        // VER: player2
         variables.player2_y_pos   = canvas.height - 100;                        // VER: player2
         variables.player2_x_move  =  -1;                                        // VER: player2
@@ -40,39 +49,39 @@
 
     function timerEvent() {
         if (keys_pressed.ESCAPE) {pause(); reset();}
-                                                                                                 // VER: 3
-        if (keys_pressed.DOWN  ) {variables.player1_x_move =  0; variables.player1_y_move =  1;} // VER: 3
-        if (keys_pressed.RIGHT ) {variables.player1_x_move =  1; variables.player1_y_move =  0;} // VER: 3
-        if (keys_pressed.LEFT  ) {variables.player1_x_move = -1; variables.player1_y_move =  0;} // VER: 3 HIDE
-        if (keys_pressed.UP    ) {variables.player1_x_move =  0; variables.player1_y_move = -1;} // VER: 3 HIDE
-                                                                                                 // VER: 3
+                                                                                                 // VER: input
+        if (keys_pressed.DOWN  ) {variables.player1_x_move =  0; variables.player1_y_move =  1;} // VER: input
+        if (keys_pressed.RIGHT ) {variables.player1_x_move =  1; variables.player1_y_move =  0;} // VER: input
+        if (keys_pressed.LEFT  ) {variables.player1_x_move = -1; variables.player1_y_move =  0;} // VER: input HIDE
+        if (keys_pressed.UP    ) {variables.player1_x_move =  0; variables.player1_y_move = -1;} // VER: input HIDE
+                                                                                                 // VER: input
         if (keys_pressed.W     ) {variables.player2_x_move =  0; variables.player2_y_move = -1;} // VER: player2
         if (keys_pressed.S     ) {variables.player2_x_move =  0; variables.player2_y_move =  1;} // VER: player2 HIDE
         if (keys_pressed.A     ) {variables.player2_x_move = -1; variables.player2_y_move =  0;} // VER: player2 HIDE
         if (keys_pressed.D     ) {variables.player2_x_move =  1; variables.player2_y_move =  0;} // VER: player2 HIDE
                                                                                                  // VER: player2
-        variables.player1_x_pos = variables.player1_x_pos + variables.player1_x_move; // VER: 2
-        variables.player1_y_pos = variables.player1_y_pos + variables.player1_y_move; // VER: 2
+        variables.player1_x_pos = variables.player1_x_pos + variables.player1_x_move; // VER: line
+        variables.player1_y_pos = variables.player1_y_pos + variables.player1_y_move; // VER: line
         variables.player2_x_pos = variables.player2_x_pos + variables.player2_x_move; // VER: player2
         variables.player2_y_pos = variables.player2_y_pos + variables.player2_y_move; // VER: player2 HIDE
-                                                                                      // VER: 2
+                                                                                      // VER: line
         if (variables.player1_x_pos<=0            ) {variables.player1_x_pos = canvas.width -1;} // VER: wrap
-        if (variables.player1_x_pos>=canvas.width ) {variables.player1_x_pos =               0;} // VER: wrap
-        if (variables.player1_y_pos<=0            ) {variables.player1_y_pos = canvas.height-1;} // VER: wrap
-        if (variables.player1_y_pos>=canvas.height) {variables.player1_y_pos =               0;} // VER: wrap
-        if (variables.player2_x_pos<=0            ) {variables.player2_x_pos = canvas.width -1;} // VER: wrap
-        if (variables.player2_x_pos>=canvas.width ) {variables.player2_x_pos =               0;} // VER: wrap
-        if (variables.player2_y_pos<=0            ) {variables.player2_y_pos = canvas.height-1;} // VER: wrap
-        if (variables.player2_y_pos>=canvas.height) {variables.player2_y_pos =               0;} // VER: wrap
+        if (variables.player1_x_pos>=canvas.width ) {variables.player1_x_pos =               1;} // VER: wrap
+        if (variables.player1_y_pos<=0            ) {variables.player1_y_pos = canvas.height-1;} // VER: wrap HIDE
+        if (variables.player1_y_pos>=canvas.height) {variables.player1_y_pos =               1;} // VER: wrap HIDE
+        if (variables.player2_x_pos<=0            ) {variables.player2_x_pos = canvas.width -1;} // VER: player2,wrap
+        if (variables.player2_x_pos>=canvas.width ) {variables.player2_x_pos =               1;} // VER: player2,wrap
+        if (variables.player2_y_pos<=0            ) {variables.player2_y_pos = canvas.height-1;} // VER: player2,wrap HIDE
+        if (variables.player2_y_pos>=canvas.height) {variables.player2_y_pos =               1;} // VER: player2,wrap HIDE
                                                                                                  // VER: wrap
-        var pixel       = context.getImageData(variables.player1_x_pos, variables.player1_y_pos, 1, 1).data; // VER: 4
-        var pixel_color = 'rgba('+pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]+')';                       // VER: 4
-        if (pixel_color != variables.background_color) {                                                     // VER: 4
+        var pixel       = context.getImageData(variables.player1_x_pos, variables.player1_y_pos, 1, 1).data; // VER: colide
+        var pixel_color = 'rgba('+pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]+')';                       // VER: colide
+        if (pixel_color != variables.background_color) {                                                     // VER: colide
             variables.player2_score = variables.player2_score + 1;                                           // VER: score
-            alert("Player1 Crashed");                                                                        // VER: 4
-            reset();                                                                                         // VER: 4
-        }                                                                                                    // VER: 4
-                                                                                                             // VER: 4
+            alert("Player1 Crashed");                                                                        // VER: colide
+            reset();                                                                                         // VER: colide
+        }                                                                                                    // VER: colide
+                                                                                                             // VER: colide
         var pixel       = context.getImageData(variables.player2_x_pos, variables.player2_y_pos, 1, 1).data; // VER: player2
         var pixel_color = 'rgba('+pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]+')';                       // VER: player2 HIDE
         if (pixel_color != variables.background_color) {                                                     // VER: player2 HIDE
@@ -81,11 +90,11 @@
             reset();                                                                                         // VER: player2 HIDE
         }                                                                                                    // VER: player2 HIDE
                                                                                                              // VER: player2
-        context.fillStyle = variables.player1_color;                               // VER: 2
-        context.fillRect(variables.player1_x_pos, variables.player1_y_pos, 1, 1);  // VER: 2
+        context.fillStyle = variables.player1_color;                               // VER: line
+        context.fillRect(variables.player1_x_pos, variables.player1_y_pos, 1, 1);  // VER: line
         context.fillStyle = variables.player2_color;                               // VER: player2
         context.fillRect(variables.player2_x_pos, variables.player2_y_pos, 1, 1);  // VER: player2 HIDE
-                                                                                   // VER: 2
+                                                                                   // VER: line
         if (variables.player1_score == 5 || variables.player2_score == 5) { // VER: score
             pause();                                                        // VER: score
             reset();                                                        // VER: score

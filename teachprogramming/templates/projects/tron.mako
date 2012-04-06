@@ -4,17 +4,17 @@
 
 <h1>Tron</h1>
 
-${self.show_diff(1)}
+${self.show_diff(None, 'base1')}
 
 <h2>Part 1: Simple Line</h2>
 <h3>A Line that Moves</h3>
 
-${self.show_diff(2)}
+${self.show_diff('base1','base2')}
 
 <h3>Keyboard Input</h3>
 Replace the ? with 0, 1 or -1
 
-${self.show_diff(3)}
+${self.show_diff('base2','base3')}
 
 
 
@@ -22,7 +22,7 @@ ${self.show_diff(3)}
 Get the pixel of where we are about to move to.
 If it is not black then we have hit an object so reset the players coordinate
 
-${self.show_diff(4)}
+${self.show_diff('base3','base4')}
 
 
 
@@ -31,21 +31,18 @@ ${self.show_diff(4)}
 <h3>Player 2</h3>
 Can you add a second player?
 
-${self.show_diff('1,2,3,4,5,player2')}
+${self.show_diff('base4','2players')}
 
 <h3>Score</h3>
 
-${self.show_diff('1,2,3,4,5,player2,score')}
+${self.show_diff('2players','2players_score')}
 
 <h3>Background Obstacles</h3>
 
 <h2>Part 4: Challenge Ideas</h2>
 <h3>Wrap around</h3>
 When you go off one side of the screen you appear the other side.
-<pre>
-    if (player1_x_pos>=getWidth()-1) {player1_x_pos = 1;           }
-    if (player1_x_pos<=1           ) {player1_x_pos = getWidth()-2;}
-</pre>
+${self.show_diff('base4','wrap')}
 
 <h3>3 players</h3>
 Add new keys (try I,J,K,L)

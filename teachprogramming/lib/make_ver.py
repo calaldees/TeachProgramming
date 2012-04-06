@@ -34,6 +34,14 @@ comment_tokens = dict(
 
 def get_fileext(filename):
     return re.search(r'\.([^\.]+)$', filename).group(1).lower()
+    
+def get_ver_set(versions):
+    # Can take an integer arg for target versions, under this case, make the sequential set
+    try   : versions = [str(i) for i in range(1,int(versions)+1)]
+    except: pass
+    if isinstance(versions, basestring):
+        versions = [ver.strip() for ver in versions.split(',')]
+    return set(versions)
 
 def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
     """
@@ -43,13 +51,10 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
     lang   - language to process (optional - will try to aquire from filename automatically)
     
     """
-    try: # Can take an integer arg for target versions, under this case, make the sequential set
-        target_versions = [str(i) for i in range(1,int(target_versions)+1)]
-    except:
-        pass
-    if isinstance(target_versions, basestring):
-        target_versions = [ver.strip() for ver in target_versions.split(',')]
-    target_versions = set(target_versions)
+    output = []
+    if not target_versions:
+        return output
+    target_versions = get_ver_set(target_versions)
     
     # Open source file if string - otherwise assume source is a file object
     if isinstance(source, basestring):
@@ -63,30 +68,42 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
     if lang not in comment_tokens:
         raise Exception('lang %s is not supported' % lang)
     comment_token = comment_tokens[lang]
-
+    
     # Regex compile
-    extract_code          = re.compile(r'^(?P<line>(?P<indent>\s*)(?P<code>.*?))(%s|$)(?P<comment>.*)' % comment_token) 
+    extract_code          = re.compile(r'^(?P<line>(?P<indent>\s*)(?P<code>.*?))(%s|$)(?P<comment>.*)' % comment_token)
     extract_ver           = re.compile(r'VER:\s*(?P<ver>.*?)(\s+|$)', flags=re.IGNORECASE)
     extract_hide          = re.compile(r'HIDE|HIDDEN'               , flags=re.IGNORECASE)
+    extract_vername       = re.compile(r'VERNAME:\s*(?P<vername>.*?)\s+(?P<verpath>.*?)(\s+|$)', flags=re.IGNORECASE)
     extract_blank_comment = re.compile('\s*%s\s*$' % comment_token)
     
-    #remmed_line = re.compile(r'^\s*%s' % comment_token)
+    remmed_line = re.compile(r'^\s*%s' % comment_token)
     
-    output = []
+    # Pre process the source file trying to find a target_version path match
+    if len(target_versions)==1:
+        for line in source:
+            vername_match = extract_vername.search(line)
+            if vername_match and vername_match.group('vername') == list(target_versions)[0]:
+                target_versions = get_ver_set(vername_match.group('verpath'))
+        if hasattr(source, 'seek'):
+            source.seek(0)
+    
     # Process source file
     for line in source:
+        
         # Extract meta data from line
         code_match = extract_code.match(line)
         
-        # Get versions set
-        try   : line_versions = set([ver.strip() for ver in extract_ver.search(code_match.group('comment')).group('ver').split(',')])
-        except: line_versions = set(['1'])
-        # Like with the input for target_versions - if a single integer is provided, make the version set based on a sequential range
-        if len(line_versions)==1 and list(line_versions)[0].isdigit():
-            line_versions = set([str(i) for i in range(int(line_versions.pop()),version_max)])
+        # Get current line versions set
+        try   : line_versions = get_ver_set(extract_ver.search(code_match.group('comment')).group('ver'))
+        except: line_versions = get_ver_set(1)
+        
+        vername_match = extract_vername.search(line)
+        if vername_match:
+            line = '' # Always remove all VERNAME lines
         
         # If is the version requested is a union with the current line
-        if target_versions & line_versions:
+        if line_versions <= target_versions:
+            
             # Removed matched metadata
             line = extract_ver          .sub('' , line)
             line = extract_hide         .sub('' , line)
@@ -94,8 +111,8 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
             
             # If the line starts with a comment then remove that first comment
             # This is for lines that are not present and executed in the raw run of the file, but are interim steps
-            #if remmed_line.match(line):
-            #    line = re.sub(comment_token, '', line, count=1)
+            if remmed_line.match(line):
+                line = re.sub(comment_token, '', line, count=1)
             
             try:
                 if hidden_line_replacement and extract_hide.search(code_match.group('comment')):
@@ -112,7 +129,7 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
     return output #"\n".join(output)
 
 
-def get_diff(source, target_versions, prev_versions, lang=None, n=3, hidden_line_replacement=None):
+def get_diff(source, prev_versions, target_versions, lang=None, n=3, hidden_line_replacement=None):
     """
     n = number of lines of context
     """
@@ -122,27 +139,6 @@ def get_diff(source, target_versions, prev_versions, lang=None, n=3, hidden_line
         make_ver(source, target_versions, lang=lang, hidden_line_replacement=hidden_line_replacement),
         n=n, ):
         diff.append(line)
-    return diff
-
-
-get_diff_seq_prev_version = []
-def get_diff_seq_clear():
-    global get_diff_seq_prev_version
-    get_diff_seq_prev_version = []
-def get_diff_seq(source, target_versions, lang=None, n=3, hidden_line_replacement=None):
-    """
-    Rather than having to specity the target and previous versions every time,
-    this method stores the previously generated version that was called and uses that as the previous version
-    """
-    global get_diff_seq_prev_version
-    prev_version   = get_diff_seq_prev_version
-    target_version = make_ver(source, target_versions, lang=lang, hidden_line_replacement=hidden_line_replacement)
-    get_diff_seq_prev_version = target_version
-    
-    diff = []
-    for line in difflib.unified_diff(prev_version, target_version, n=n):
-        diff.append(line)
-    
     return diff
     
 
