@@ -73,19 +73,19 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
     extract_code          = re.compile(r'^(?P<line>(?P<indent>\s*)(?P<code>.*?))(%s|$)(?P<comment>.*)' % comment_token)
     extract_ver           = re.compile(r'VER:\s*(?P<ver>.*?)(\s+|$)', flags=re.IGNORECASE)
     extract_hide          = re.compile(r'HIDE|HIDDEN'               , flags=re.IGNORECASE)
-    extract_vername       = re.compile(r'VERNAME:\s*(?P<vername>.*?)\s+(?P<verpath>.*?)(\s+|$)', flags=re.IGNORECASE)
     extract_blank_comment = re.compile('\s*%s\s*$' % comment_token)
-    
+
     remmed_line = re.compile(r'^\s*%s' % comment_token)
-    
+
+    #extract_vername       = re.compile(r'VERNAME:\s*(?P<vername>.*?)\s+(?P<verpath>.*?)(\s+|$)', flags=re.IGNORECASE)    
     # Pre process the source file trying to find a target_version path match
-    if len(target_versions)==1:
-        for line in source:
-            vername_match = extract_vername.search(line)
-            if vername_match and vername_match.group('vername') == list(target_versions)[0]:
-                target_versions = get_ver_set(vername_match.group('verpath'))
-        if hasattr(source, 'seek'):
-            source.seek(0)
+    #if len(target_versions)==1:
+    #    for line in source:
+    #        vername_match = extract_vername.search(line)
+    #        if vername_match and vername_match.group('vername') == list(target_versions)[0]:
+    #            target_versions = get_ver_set(vername_match.group('verpath'))
+    #    if hasattr(source, 'seek'):
+    #        source.seek(0)
     
     # Process source file
     for line in source:
@@ -97,9 +97,9 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
         try   : line_versions = get_ver_set(extract_ver.search(code_match.group('comment')).group('ver'))
         except: line_versions = get_ver_set(1)
         
-        vername_match = extract_vername.search(line)
-        if vername_match:
-            line = '' # Always remove all VERNAME lines
+        #vername_match = extract_vername.search(line)
+        #if vername_match:
+        #    line = '' # Always remove all VERNAME lines
         
         # If is the version requested is a union with the current line
         if line_versions <= target_versions:

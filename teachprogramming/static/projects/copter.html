@@ -1,9 +1,9 @@
-<canvas id="canvas"           width="320" height="240"                       ></canvas>
-<canvas id="canvas_colisions" width="320" height="240" style="display: none;"></canvas>
+<canvas id="canvas" width="320" height="240"></canvas>
+<canvas id="canvas_colisions" width="320" height="240" style="display: none;"></canvas><!-- // VER:  colision -->
 <script>
     var canvas  = document.getElementById('canvas');
     var context = canvas.getContext('2d');
-
+    
     var interval_id;
     function start() {interval_id = setInterval(timerEvent, 1000/60);}
     function pause() {clearInterval(interval_id);}
@@ -16,9 +16,9 @@
     function eventKeyDown(event) {if (event.keyCode in keys) {keys_pressed[keys[event.keyCode]]=true; }}
     function eventKeyUp  (event) {if (event.keyCode in keys) {keys_pressed[keys[event.keyCode]]=false;}}
 
-    var colisions_context = document.getElementById('canvas_colisions').getContext('2d');
-    var copter_colision_points = [[0,0],[32,9],[17,2],[22,12],[2,12]];
-    
+    var colisions_context = document.getElementById('canvas_colisions').getContext('2d'); // VER: colision
+    var copter_colision_points = [[0,0],[32,9],[17,2],[22,12],[2,12]];                    // VER: colision
+                                                                                          // VER: colision
     var variables = {
         "color_background": 'rgba(0,0,0,255)',
         "color_exit"      : 'rgba(255,255,0,255)', // VER: levels
@@ -53,11 +53,15 @@
     }
     
     function timerEvent() {
-        context.fillStyle = variables.color_background;
+        context.fillStyle = variables.color_background;     
         context.fillRect(0, 0, canvas.width, canvas.height);
         
+        variables.view_x_pos += 1                                          // VER: background
+        //context.drawImage(variables.background_images[i], -offset_x, 0); // VER: background
+                                                                           // VER: background
         if (keys_pressed.ESCAPE) {pause(); reset();}
-        //if (keys_pressed.SPACE)) {variables.copter_y_pos+=-2;}
+        //if (keys_pressed.SPACE)) {variables.copter_y_pos+=-2;}   // VER: copter
+        //else                     {variables.copter_y_pos+= 1;}   // VER: copter
         
         if (keys_pressed.UP    ) {variables.copter_y_vel += -0.1;} // VER: physics
         if (keys_pressed.DOWN  ) {variables.copter_y_vel +=  0.1;} // VER: physics
@@ -68,31 +72,29 @@
         variables.copter_y_vel += 0.025;                           // VER: physics
         variables.copter_x_pos += variables.copter_x_vel;          // VER: physics
         variables.copter_y_pos += variables.copter_y_vel;          // VER: physics
-        
-        variables.view_x_pos += 1
-        
-        colisions_context.fillStyle = variables.color_background;
-        colisions_context.fillRect(0, 0, canvas.width, canvas.height);
-        colisions_context.drawImage(variables.background_images[variables.background_images.length-1], -variables.view_x_pos, 0);
-        for (var i=0 ; i<copter_colision_points.length ; i++) {
-            var point = copter_colision_points[i];
-            var pixel = colisions_context.getImageData(variables.copter_x_pos+point[0], variables.copter_y_pos+point[1], 1, 1).data;
-            var pixel_color = 'rgba('+pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]+')';
-            if (pixel_color == variables.color_exit) {
-                alert("Next Level");
-                load_level(variables.level_number++);
-            }
-            if (pixel_color != variables.color_background) {
-                reset();
-            }
-        }
-        
-        for (var i=0 ; i<variables.background_images.length ; i++) {
-            var offset_x = Math.round(variables.view_x_pos / Math.pow(2,variables.background_images.length-1-i));
-            context.drawImage(variables.background_images[i], -offset_x, 0);
-        }
-        
-        context.drawImage(variables.copter_image, Math.round(variables.copter_x_pos), Math.round(variables.copter_y_pos));
+                                                                   // VER: physics
+        colisions_context.fillStyle = variables.color_background;       // VER: colision
+        colisions_context.fillRect(0, 0, canvas.width, canvas.height);  // VER: colision
+        colisions_context.drawImage(variables.background_images[variables.background_images.length-1], -variables.view_x_pos, 0);  // VER: colision
+        for (var i=0 ; i<copter_colision_points.length ; i++) {         // VER: colision
+            var point = copter_colision_points[i];                      // VER: colision
+            var pixel = colisions_context.getImageData(variables.copter_x_pos+point[0], variables.copter_y_pos+point[1], 1, 1).data;  // VER: colision
+            var pixel_color = 'rgba('+pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]+')';  // VER: colision
+            if (pixel_color == variables.color_exit) {                  // VER: level
+                alert("Next Level");                                    // VER: level
+                load_level(variables.level_number++);                   // VER: level
+            }                                                           // VER: level
+            if (pixel_color != variables.color_background) {            // VER: colision
+                reset();                                                // VER: colision
+            }                                                           // VER: colision
+        }                                                               // VER: colision
+                                                                        // VER: colision
+        for (var i=0 ; i<variables.background_images.length ; i++) {                                              // VER: paralax
+            var offset_x = Math.round(variables.view_x_pos / Math.pow(2,variables.background_images.length-1-i)); // VER: paralax
+            context.drawImage(variables.background_images[i], -offset_x, 0);                                      // VER: paralax
+        }                                                                                                         // VER: paralax
+                                                                                                                  // VER: paralax
+        context.drawImage(variables.copter_image, Math.round(variables.copter_x_pos), Math.round(variables.copter_y_pos)); // VER: copter
     }
     
     load_level(variables.level_number);

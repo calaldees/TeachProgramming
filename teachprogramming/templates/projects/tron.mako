@@ -1,20 +1,32 @@
 ﻿<%inherit file="_project.mako"/>
 
+<%
+    vername = {
+        'base1'         :'1',
+        'base2'         :'1,line',
+        'base3'         :'1,line,input',
+        'base4'         :'1,line,input,colide',
+        '2players'      :'1,line,input,colide,player2',
+        '2players_score':'1,line,input,colide,player2,score',
+        'wrap'          :'1,line,input,colide,wrap',
+        '2players_wrap' :'1,line,input,colide,player2,wrap',
+    }
+%>
 
 
 <h1>Tron</h1>
 
-${self.show_diff(None, 'base1')}
+${self.show_diff(None, vername['base1'])}
 
 <h2>Part 1: Simple Line</h2>
 <h3>A Line that Moves</h3>
 
-${self.show_diff('base1','base2')}
+${self.show_diff(vername['base1'],vername['base2'])}
 
 <h3>Keyboard Input</h3>
 Replace the ? with 0, 1 or -1
 
-${self.show_diff('base2','base3')}
+${self.show_diff(vername['base2'],vername['base3'])}
 
 
 
@@ -22,7 +34,7 @@ ${self.show_diff('base2','base3')}
 Get the pixel of where we are about to move to.
 If it is not black then we have hit an object so reset the players coordinate
 
-${self.show_diff('base3','base4')}
+${self.show_diff(vername['base3'],vername['base4'])}
 
 
 
@@ -31,18 +43,18 @@ ${self.show_diff('base3','base4')}
 <h3>Player 2</h3>
 Can you add a second player?
 
-${self.show_diff('base4','2players')}
+${self.show_diff(vername['base4'],vername['2players'])}
 
 <h3>Score</h3>
 
-${self.show_diff('2players','2players_score')}
+${self.show_diff(vername['2players'],vername['2players_score'])}
 
 <h3>Background Obstacles</h3>
 
 <h2>Part 4: Challenge Ideas</h2>
 <h3>Wrap around</h3>
 When you go off one side of the screen you appear the other side.
-${self.show_diff('base4','wrap')}
+${self.show_diff(vername['base4'],vername['wrap'])}
 
 <h3>3 players</h3>
 Add new keys (try I,J,K,L)
