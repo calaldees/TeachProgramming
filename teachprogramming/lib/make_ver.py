@@ -36,6 +36,8 @@ def get_fileext(filename):
     return re.search(r'\.([^\.]+)$', filename).group(1).lower()
     
 def get_ver_set(versions):
+    if not versions:
+        return set()
     # Can take an integer arg for target versions, under this case, make the sequential set
     try   : versions = [str(i) for i in range(1,int(versions)+1)]
     except: pass
@@ -71,7 +73,7 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
     
     # Regex compile
     extract_code          = re.compile(r'^(?P<line>(?P<indent>\s*)(?P<code>.*?))(%s|$)(?P<comment>.*)' % comment_token)
-    extract_ver           = re.compile(r'VER:\s*(?P<ver>.*?)(\s+|$)', flags=re.IGNORECASE)
+    extract_ver           = re.compile(r'VER:\s*(?P<ver>.*?)(\s+|$)(not\s*(?P<ver_exclude>.*?(\s+|$)))?', flags=re.IGNORECASE)
     extract_hide          = re.compile(r'HIDE|HIDDEN'               , flags=re.IGNORECASE)
     extract_blank_comment = re.compile('\s*%s\s*$' % comment_token)
 
@@ -94,15 +96,19 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
         code_match = extract_code.match(line)
         
         # Get current line versions set
-        try   : line_versions = get_ver_set(extract_ver.search(code_match.group('comment')).group('ver'))
-        except: line_versions = get_ver_set(1)
+        line_versions    = get_ver_set(1)
+        exclude_versions = set()
+        ver_match = extract_ver.search(code_match.group('comment'))
+        if ver_match:
+            line_versions    = get_ver_set(ver_match.group('ver'        ))
+            exclude_versions = get_ver_set(ver_match.group('ver_exclude'))
         
         #vername_match = extract_vername.search(line)
         #if vername_match:
         #    line = '' # Always remove all VERNAME lines
         
         # If is the version requested is a union with the current line
-        if line_versions <= target_versions:
+        if line_versions <= target_versions and not exclude_versions & target_versions:
             
             # Removed matched metadata
             line = extract_ver          .sub('' , line)

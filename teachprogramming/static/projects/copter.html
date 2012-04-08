@@ -27,18 +27,18 @@
     
     function load_level(level_number) {                                                      // VER: background
         variables.background_images = new Array();                                           // VER: background
-        //var background_image = new Image();                                                // VER: background
-        //background_image.src = "CopterLevel"+level_number+".gif"                           // VER: background
-        //background_image.onload = function() {variables.background_images.push(this);}     // VER: background
-        function load_background_image(filename) {                                           // VER: paralx
-            var background_image = new Image();                                              // VER: paralx
-            background_image.src = filename;                                                 // VER: paralx
-            background_image.onload = function() {variables.background_images.push(this);}   // VER: paralx
-        }                                                                                    // VER: paralx
-        for (layer=5 ; layer>0 ; layer--) {                                                  // VER: paralx
-            load_background_image("CopterLevel"+level_number+"_layer"+layer+".gif");         // VER: paralx
-        }                                                                                    // VER: paralx
-        load_background_image("CopterLevel"+level_number+".gif");                            // VER: paralx
+        //var background_image = new Image();                                                // VER: background not paralax
+        //background_image.src = "CopterLevel"+level_number+".gif"                           // VER: background not paralax
+        //background_image.onload = function() {variables.background_images.push(this);}     // VER: background not paralax
+        function load_background_image(filename) {                                           // VER: paralax
+            var background_image = new Image();                                              // VER: paralax
+            background_image.src = filename;                                                 // VER: paralax
+            background_image.onload = function() {variables.background_images.push(this);}   // VER: paralax
+        }                                                                                    // VER: paralax
+        for (layer=5 ; layer>0 ; layer--) {                                                  // VER: paralax
+            load_background_image("CopterLevel"+level_number+"_layer"+layer+".gif");         // VER: paralax
+        }                                                                                    // VER: paralax
+        load_background_image("CopterLevel"+level_number+".gif");                            // VER: paralax
     }                                                                                        // VER: background
     
     function reset() {
@@ -56,13 +56,16 @@
         context.fillStyle = variables.color_background;     
         context.fillRect(0, 0, canvas.width, canvas.height);
         
-        variables.view_x_pos += 1                                          // VER: background
-        //context.drawImage(variables.background_images[i], -offset_x, 0); // VER: background
-                                                                           // VER: background
+        variables.view_x_pos += 1                                                                                 // VER: background
+        //context.drawImage(variables.background_images[i], -offset_x, 0);                                        // VER: background not paralax
+        for (var i=0 ; i<variables.background_images.length ; i++) {                                              // VER: paralax
+            var offset_x = Math.round(variables.view_x_pos / Math.pow(2,variables.background_images.length-1-i)); // VER: paralax
+            context.drawImage(variables.background_images[i], -offset_x, 0);                                      // VER: paralax
+        }                                                                                                         // VER: paralax
+                                                                                                                  // VER: background
         if (keys_pressed.ESCAPE) {pause(); reset();}
-        //if (keys_pressed.SPACE)) {variables.copter_y_pos+=-2;}   // VER: copter
-        //else                     {variables.copter_y_pos+= 1;}   // VER: copter
-        
+        //if (keys_pressed.SPACE)) {variables.copter_y_pos+=-2;}   // VER: copter not physics
+        //else                     {variables.copter_y_pos+= 1;}   // VER: copter not physics
         if (keys_pressed.UP    ) {variables.copter_y_vel += -0.1;} // VER: physics
         if (keys_pressed.DOWN  ) {variables.copter_y_vel +=  0.1;} // VER: physics
         if (keys_pressed.LEFT  ) {variables.copter_x_vel += -0.1;} // VER: physics
@@ -89,11 +92,6 @@
             }                                                           // VER: colision
         }                                                               // VER: colision
                                                                         // VER: colision
-        for (var i=0 ; i<variables.background_images.length ; i++) {                                              // VER: paralax
-            var offset_x = Math.round(variables.view_x_pos / Math.pow(2,variables.background_images.length-1-i)); // VER: paralax
-            context.drawImage(variables.background_images[i], -offset_x, 0);                                      // VER: paralax
-        }                                                                                                         // VER: paralax
-                                                                                                                  // VER: paralax
         context.drawImage(variables.copter_image, Math.round(variables.copter_x_pos), Math.round(variables.copter_y_pos)); // VER: copter
     }
     
