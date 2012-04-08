@@ -14,14 +14,14 @@ variables = callByRef(
     color_background  = (  0,   0,   0, 255),
     color_exit        = (255, 255,   0, 255), # VER: level
     level_number      = 1,
-    copter_image      = pygame.image.load("ship.gif"),             # VER: copter
-    copter_colision_points = [(0,0),(32,9),(17,2),(22,12),(2,12)], # VER: colision
     background_images = None, # VER: background
     view_x_pos        = None, # VER: background
+    copter_image      = pygame.image.load("ship.gif"), # VER: copter
     copter_x_pos      = None, # VER: copter
     copter_y_pos      = None, # VER: copter
     copter_x_vel      = None, # VER: physics
     copter_y_vel      = None, # VER: physics
+    copter_colision_points = [(0,0),(32,9),(17,2),(22,12),(2,12)], # VER: colision
 )
 
 def load_level(level_number):                                                                                             # VER: background
