@@ -19,6 +19,9 @@ import teachprogramming.lib.resorce_helper as resorce_helper
 <ul>
     <li>Paint</li>
     <li>Chat</li>
+    <li>NetRace</li>
+    <li>NetPong</li>
+    <li>NetCopter</li>
 </ul>
 
 <h2>Activities</h2>
@@ -51,5 +54,5 @@ import teachprogramming.lib.resorce_helper as resorce_helper
 </ul>
 
 <h2>Contribute</h2>
-git repository
+git repository link
 contact@teachthisstufflikewellgood.net

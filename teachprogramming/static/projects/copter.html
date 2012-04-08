@@ -21,7 +21,7 @@
                                                                                           // VER: colision
     var variables = {
         "color_background": 'rgba(0,0,0,255)',
-        "color_exit"      : 'rgba(255,255,0,255)', // VER: levels
+        "color_exit"      : 'rgba(255,255,0,255)', // VER: level
         "level_number"    : 1,
     };
     
@@ -68,8 +68,8 @@
         //else                     {variables.copter_y_pos+= 1;}   // VER: copter not physics
         if (keys_pressed.UP    ) {variables.copter_y_vel += -0.1;} // VER: physics
         if (keys_pressed.DOWN  ) {variables.copter_y_vel +=  0.1;} // VER: physics
-        if (keys_pressed.LEFT  ) {variables.copter_x_vel += -0.1;} // VER: physics
-        if (keys_pressed.RIGHT ) {variables.copter_x_vel +=  0.1;} // VER: physics
+        if (keys_pressed.LEFT  ) {variables.copter_x_vel += -0.1;} // VER: physics HIDE
+        if (keys_pressed.RIGHT ) {variables.copter_x_vel +=  0.1;} // VER: physics HIDE
         variables.copter_x_vel  = variables.copter_x_vel * 0.99;   // VER: physics
         variables.copter_y_vel  = variables.copter_y_vel * 0.99;   // VER: physics
         variables.copter_y_vel += 0.025;                           // VER: physics
@@ -95,7 +95,7 @@
         context.drawImage(variables.copter_image, Math.round(variables.copter_x_pos), Math.round(variables.copter_y_pos)); // VER: copter
     }
     
-    load_level(variables.level_number);
+    load_level(variables.level_number); // VER: background
     reset();
     start();
 </script>
