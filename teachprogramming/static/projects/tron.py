@@ -11,6 +11,8 @@ class callByRef:
 variables = callByRef(
     running           = True,
     background_colour = (  0,   0,   0, 255),
+    color_exit        = (255,   0,   0, 255), # VER: maze
+    level_number      = 1,                    # Ver: maze
     player1_color     = (255, 255,   0     ), # Ver: line
     player1_x_pos     = None,                 # Ver: line
     player1_y_pos     = None,                 # Ver: line
@@ -27,6 +29,8 @@ variables = callByRef(
 
 def reset():
     pygame.draw.rect(screen, variables.background_colour, pygame.Rect(0, 0, screen.get_width(), screen.get_height()))
+    #level_image = pygame.image.load("MazeLevel%d.gif" % level_number) # VER: maze
+    #screen.blit(level_image, level_image.get_rect())                  # VER: maze
     variables.player1_x_pos    = 100 # Ver: line
     variables.player1_y_pos    = 100 # Ver: line
     variables.player1_x_move   =   1 # Ver: line
@@ -91,6 +95,8 @@ while variables.running:
                                                                                                      # VER: wrap
     try   : player1_at_pixel = screen.get_at((variables.player1_x_pos, variables.player1_y_pos)) # Ver: colide
     except: player1_at_pixel = None                                                              # Ver: colide
+    if player1_at_pixel == variables.color_exit:                                                 # VER: maze
+        variables.level_number += 1                                                              # VER: maze
     if player1_at_pixel != variables.background_colour:                                          # Ver: colide
         variables.player2_score = variables.player2_score + 1                                    # Ver: score
         reset()                                                                                  # Ver: colide

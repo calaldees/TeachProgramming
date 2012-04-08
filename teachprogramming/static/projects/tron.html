@@ -18,6 +18,8 @@
     
     var variables = {
         "background_color": 'rgba(0,0,0,255)',
+        "color_exit"      : 'rgba(255,0,0,255)',                                // VER: maze
+        "level_number"    : 1,                                                  // VER: maze
         "player1_color"   : 'rgba(255,255,0,255)',                              // VER: line
         "player2_color"   : 'rgba(255,0,0,255)',                                // VER: player2
         "player1_score"   : 0,                                                  // VER: score
@@ -28,6 +30,11 @@
         init_keys();
         context.fillStyle = variables.background_color;
         context.fillRect(0, 0, canvas.width, canvas.height);
+        
+        //var level_image = new Image();                                          // VER: maze
+        //level_image.src = filename;                                             // VER: maze
+        //level_image.onload = function() {context.drawImage(this, 0, 0);}        // VER: maze
+                                                                                  // VER: maze
         variables.player1_x_pos   = 100;                                        // VER: line
         variables.player1_y_pos   = 100;                                        // VER: line
         variables.player1_x_move  =   1;                                        // VER: line
@@ -67,9 +74,13 @@
                                                                                                  // VER: wrap
         var pixel       = context.getImageData(variables.player1_x_pos, variables.player1_y_pos, 1, 1).data; // VER: colide
         var pixel_color = 'rgba('+pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]+')';                       // VER: colide
+        if (pixel_color == variables.color_exit) {                                                           // VER: maze
+            variables.level_number += 1;                                                                     // VER: maze
+            alert("Level complete");                                                                         // VER: maze
+        }                                                                                                    // VER: maze
         if (pixel_color != variables.background_color) {                                                     // VER: colide
             variables.player2_score = variables.player2_score + 1;                                           // VER: score
-            alert("Player1 Crashed");                                                                        // VER: colide
+            alert("Player1 Crashed");                                                                        // VER: colide not maze
             reset();                                                                                         // VER: colide
         }                                                                                                    // VER: colide
                                                                                                              // VER: colide

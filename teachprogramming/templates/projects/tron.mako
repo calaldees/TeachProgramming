@@ -10,6 +10,7 @@
         '2players_score':'1,line,input,colide,player2,score',
         'wrap'          :'1,line,input,colide,wrap',
         '2players_wrap' :'1,line,input,colide,player2,wrap',
+        'maze'          :'1,line,input,colide,maze',
     }
 %>
 
@@ -88,26 +89,7 @@ To limit people using this all the time, give them a limited about of booster fu
 <img src="/static/projects/Maze2.gif"/>
 
 
-<pre>
-Maze is a one player game to get to the red exit.
-Create a set of level graphics 320 by 240 with a black background.
+<p>Maze is a one player game to get to the red exit.</p>
+<p>Create a set of level graphics 640 by 480 with a black or transparent background.</p>
 
-
-
-  int current_level = 1;
-
-    if (Color.BLACK.equals(getPixel(player1_x_pos,player1_y_pos))) {
-      putPixel(player1_x_pos,player1_y_pos,Color.YELLOW);
-    }
-    else if (Color.RED.equals(getPixel(player1_x_pos,player1_y_pos))) {
-      current_level = current_level + 1;
-      reset();
-    }
-    else {
-      reset();
-    }
-
-  public void reset() {
-    clearScreen();
-    putImage(0,0,'Maze' + current_level + '.png');
-</pre>
+${self.show_diff(vername['base4'],vername['maze'])}
