@@ -4,6 +4,11 @@ from teachprogramming.lib.misc import random_string
 
 canvas_ids = re.compile(r'<canvas.*?id=["\'](.*?)["\']')
 
+javascript_activate_mouse = """
+    canvas.addEventListener('mouseover', function(event) {start();}, true);
+    canvas.addEventListener('mouseout' , function(event) {pause();}, true);
+"""
+
 
 def make_web_ver(source):
     """
@@ -49,6 +54,6 @@ console.log(start);
         source = re.sub(s,"%s_%s"%(s,random_string()),source)
     
     source = re.sub( '<script>','<script>(function () {', source)
-    source = re.sub('</script>','})();</script>'                 , source)
+    source = re.sub('start\(\);\s*</script>',javascript_activate_mouse+'})();</script>', source)
     
     return source

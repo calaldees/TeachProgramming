@@ -41,14 +41,15 @@ def ver_string(project, format, version):
         <pre>${ver_string(project, format, target_version)}</pre>
     </div>
     
-    <div class="demo">
-        ${make_web_ver.make_web_ver(ver_string(project, 'html', target_version)) | n}
-    </div>
-    
+    ${web_demo(target_version)}
 </%def>
 
     
-
+<%def name="web_demo(target_version)">
+    <div class="demo">
+        ${make_web_ver.make_web_ver(ver_string(project, 'html', target_version)) | n}
+    </div>
+</%def>
 
 
 <%def name='body()'>

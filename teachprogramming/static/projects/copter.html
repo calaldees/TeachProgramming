@@ -13,8 +13,8 @@
     function init_keys() {for (key in keys) {keys_pressed[keys[key]]=false;}}
     window.addEventListener('keydown', eventKeyDown, true);
     window.addEventListener('keyup'  , eventKeyUp  , true);
-    function eventKeyDown(event) {if (event.keyCode in keys) {keys_pressed[keys[event.keyCode]]=true; }}
-    function eventKeyUp  (event) {if (event.keyCode in keys) {keys_pressed[keys[event.keyCode]]=false;}}
+    function eventKeyDown(event) {if (event.keyCode in keys) {keys_pressed[keys[event.keyCode]]=true;  event.preventDefault();}}
+    function eventKeyUp  (event) {if (event.keyCode in keys) {keys_pressed[keys[event.keyCode]]=false; event.preventDefault();}}
     
     var colisions_context = document.getElementById('canvas_colisions').getContext('2d'); // VER: colision_single
     var copter_colision_points = [[0,0],[32,9],[17,2],[22,12],[2,12]];                    // VER: colision_multi
