@@ -17,29 +17,29 @@
 <h1>Copter</h1>
 
 <h2>Base</h2>
-${self.show_diff(None, vername['base1'])}
+##${self.show_diff(None, vername['base1'])}
 
 <h2>Background</h2>
 ${self.show_diff(vername['base1'], vername['background'])}
 
 <h2>Copter</h2>
-${self.show_diff(vername['background'], vername['copter'])}
+##${self.show_diff(vername['background'], vername['copter'])}
 
 <h2>Colide (Single Point)</h2>
-${self.show_diff(vername['copter'], vername['colision_single'])}
+##${self.show_diff(vername['copter'], vername['colision_single'])}
 
 <h2>Colide (Multi Point)</h2>
-${self.show_diff(vername['colision_single'], vername['colision_multi'])}
+##${self.show_diff(vername['colision_single'], vername['colision_multi'])}
 
 
 <h3>Level advancing</h3>
-${self.show_diff(vername['colision_single'], vername['level'])}
+##${self.show_diff(vername['colision_single'], vername['level'])}
 
 <h2>Physics</h2>
-${self.show_diff(vername['copter'], vername['physics'])}
+##${self.show_diff(vername['copter'], vername['physics'])}
 
 <h2>Paralax</h2>
-${self.show_diff(vername['background'], vername['paralax'])}
+##${self.show_diff(vername['background'], vername['paralax'])}
 
 
 <img src="/static/projects/CopterLevel1.gif">

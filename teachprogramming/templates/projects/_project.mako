@@ -2,14 +2,15 @@
 
 <%! 
 import os
-import teachprogramming.lib.make_ver as make_ver
 
-import teachprogramming.lib.constants as constants
+from teachprogramming.lib import make_ver, constants, make_web_ver
+
+
+def ver_string(project, format, version):
+    return '\n'.join( make_ver.make_ver(constants.project_filename % (project,format), version) )
+
 %>
 
-<%def name='show_ver(version)'>\
-<pre>${'\n'.join( make_ver.make_ver(constants.project_filename % (project,format), version) )}</pre>
-</%def>
 
 
 <%def name='show_diff(prev_version, target_version)'>
@@ -37,9 +38,16 @@ import teachprogramming.lib.constants as constants
     <button type="button" onclick="$(this).next().toggle();">Full code</button>
     <div class="hide">
         <a href="/code/${project}.${format}/${target_version}">Version ${target_version}</a>
-        ${show_ver(target_version)}
+        <pre>${ver_string(project, format, target_version)}</pre>
     </div>
+    
+    <div class="demo">
+        ${make_web_ver.make_web_ver(ver_string(project, 'html', target_version)) | n}
+    </div>
+    
 </%def>
+
+    
 
 
 

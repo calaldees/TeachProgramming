@@ -10,7 +10,8 @@ def main(global_config, **settings):
     DBSession.configure(bind=engine)
     config = Configurator(settings=settings)
     
-    config.add_static_view('static', 'static', cache_max_age=3600)
+    config.add_static_view('static'        , 'static'                , cache_max_age=3600)
+    config.add_static_view('project/images', 'static/projects/images')
     
     config.add_route('home', '/')
     config.add_route('project_doc' , '/project/{project}.{format}')
@@ -21,6 +22,8 @@ def main(global_config, **settings):
     #config.add_view('myproject.views.mako_test', route_name='mako_test')
     #config.add_route('hello_world', '/hello_world')
     #config.add_route('mako_test', '/mako_test/{one}/{two}') #'/prefix/{one}/{two}'
+
+
 
     config.scan()
     return config.make_wsgi_app()

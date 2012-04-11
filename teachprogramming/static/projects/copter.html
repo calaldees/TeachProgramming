@@ -1,7 +1,7 @@
-<canvas id="canvas" width="320" height="240"></canvas>
+<canvas id="canvas_element" width="320" height="240"></canvas>
 <canvas id="canvas_colisions" width="320" height="240" style="display: none;"></canvas><!-- // VER: colision_single -->
 <script>
-    var canvas  = document.getElementById('canvas');
+    var canvas  = document.getElementById('canvas_element');
     var context = canvas.getContext('2d');
     
     var interval_id;
@@ -15,7 +15,7 @@
     window.addEventListener('keyup'  , eventKeyUp  , true);
     function eventKeyDown(event) {if (event.keyCode in keys) {keys_pressed[keys[event.keyCode]]=true; }}
     function eventKeyUp  (event) {if (event.keyCode in keys) {keys_pressed[keys[event.keyCode]]=false;}}
-
+    
     var colisions_context = document.getElementById('canvas_colisions').getContext('2d'); // VER: colision_single
     var copter_colision_points = [[0,0],[32,9],[17,2],[22,12],[2,12]];                    // VER: colision_multi
                                                                                           // VER: colision_single
@@ -28,7 +28,7 @@
     function load_level(level_number) {                                                      // VER: background
         variables.background_images = new Array();                                           // VER: background
         //var background_image = new Image();                                                // VER: background not paralax
-        //background_image.src = "CopterLevel"+level_number+".gif"                           // VER: background not paralax
+        //background_image.src = "images/CopterLevel"+level_number+".gif"                    // VER: background not paralax
         //background_image.onload = function() {variables.background_images.push(this);}     // VER: background not paralax
         function load_background_image(filename) {                                           // VER: paralax
             var background_image = new Image();                                              // VER: paralax
@@ -36,9 +36,9 @@
             background_image.onload = function() {variables.background_images.push(this);}   // VER: paralax
         }                                                                                    // VER: paralax
         for (layer=5 ; layer>0 ; layer--) {                                                  // VER: paralax
-            load_background_image("CopterLevel"+level_number+"_layer"+layer+".gif");         // VER: paralax
+            load_background_image("images/CopterLevel"+level_number+"_layer"+layer+".gif");  // VER: paralax
         }                                                                                    // VER: paralax
-        load_background_image("CopterLevel"+level_number+".gif");                            // VER: paralax
+        load_background_image("images/CopterLevel"+level_number+".gif");                     // VER: paralax
     }                                                                                        // VER: background
     
     function reset() {
@@ -49,7 +49,7 @@
         variables.copter_x_vel =  0;                 // VER: physics
         variables.copter_y_vel =  0;                 // VER: physics
         variables.copter_image = new Image();        // VER: copter
-        variables.copter_image.src = "ship.gif";     // VER: copter
+        variables.copter_image.src = "images/ship.gif"; // VER: copter
     }
     
     function timerEvent() {
@@ -57,15 +57,16 @@
         context.fillRect(0, 0, canvas.width, canvas.height);
         
         variables.view_x_pos += 1                                                                                 // VER: background
-        //context.drawImage(variables.background_images[i], -offset_x, 0);                                        // VER: background not paralax
+        
+        //context.drawImage(variables.background_images[0], -variables.view_x_pos, 0);                            // VER: background not paralax
         for (var i=0 ; i<variables.background_images.length ; i++) {                                              // VER: paralax
             var offset_x = Math.round(variables.view_x_pos / Math.pow(2,variables.background_images.length-1-i)); // VER: paralax
             context.drawImage(variables.background_images[i], -offset_x, 0);                                      // VER: paralax
         }                                                                                                         // VER: paralax
                                                                                                                   // VER: background
         if (keys_pressed.ESCAPE) {pause(); reset();}
-        //if (keys_pressed.SPACE)) {variables.copter_y_pos+=-2;}   // VER: copter not physics
-        //else                     {variables.copter_y_pos+= 1;}   // VER: copter not physics
+        //if (keys_pressed.SPACE) {variables.copter_y_pos+=-2;}   // VER: copter not physics
+        //else                    {variables.copter_y_pos+= 1;}   // VER: copter not physics
         if (keys_pressed.UP    ) {variables.copter_y_vel += -0.1;} // VER: physics
         if (keys_pressed.DOWN  ) {variables.copter_y_vel +=  0.1;} // VER: physics
         if (keys_pressed.LEFT  ) {variables.copter_x_vel += -0.1;} // VER: physics HIDE
