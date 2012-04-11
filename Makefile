@@ -1,4 +1,5 @@
-
+PROJECTNAME    = tron
+TARGET_VERSION = 1,line,input
 help:
 	# Usage: make <target>, where target is
 	# setup         -- setup python egg & install dependencys/env if needed
@@ -6,6 +7,7 @@ help:
 	# blank-db      -- create a blank database
 	# run           -- run the site in development mode
 	# clean         -- reset the folder to clean git checkout (removes virtual python env)
+	# project <PROJECTNAME> <VERSION> -- run the python version of the project (using your system python install, make sure you have pygame installed)
 
 env_activate:
 	source env/bin/activate
@@ -33,7 +35,7 @@ run:
 	#$(MAKE) env_deactivate
 
 project:
-	env/bin/python teachprogramming/static/projects/$(1).py
+	cd teachprogramming/static/projects/; ../../../env/bin/python ../../lib/make_ver.py $(PROJECTNAME).py --target_version $(TARGET_VERSION) | python -
 
 clean:
 	rm env -rf

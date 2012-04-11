@@ -22,28 +22,17 @@ def make_web_ver(source):
     </script>
     
     and returns
-    <canvas id="thing_1" ... mouseover=  mouseout= >
+    <canvas id="thing_XRANDOMX" ... mouseover=  mouseout= >
     <script>
     (function (canvas_id) {
-    })('thing_1');
+        //some script stuff
+        //  all use of 'thing' now 'thing_XRANDOMX'
+        canvas.Eventstuff(to pause and start when mouse rolled over);
+    })();
     </script>
     
     The source canvas id's are pattern matched and those strings are REPLACED in the source below,
     the canvas.id name string should not appear ANYWHERE in the script code unless it is to be replaced
-    
-(function (canvas_id) {
-  var start = null;
-  var timer = setTimeout(rar);
-  function hello () {
-    start = new Date();
-    console.log(start);
-    window.document.getElementById('canvas_' + canvas_id);
-  }
-  hello();
-})(1);
-
-console.log(start);
-    
     
     """
     replace_strings = []

@@ -16,7 +16,7 @@ variables = callByRef(
     level_number      = 1,
     background_images = None, # VER: background
     view_x_pos        = None, # VER: background
-    copter_image      = pygame.image.load("ship.gif"), # VER: copter
+    copter_image      = pygame.image.load("images/ship.gif"), # VER: copter
     copter_x_pos      = None, # VER: copter
     copter_y_pos      = None, # VER: copter
     copter_x_vel      = None, # VER: physics
@@ -25,11 +25,11 @@ variables = callByRef(
 )
 
 def load_level(level_number):                                                                                             # VER: background
-    variables.background_images = []                                                                                      # VER: paralax
+    variables.background_images = []                                                                                      # VER: background
     for layer in reversed(range(1,4)):                                                                                    # VER: paralax
-        try   : variables.background_images.append(pygame.image.load("CopterLevel%d_layer%s.gif" % (level_number,layer))) # VER: paralax
+        try   : variables.background_images.append(pygame.image.load("images/CopterLevel%d_layer%s.gif" % (level_number,layer))) # VER: paralax
         except: pass                                                                                                      # VER: paralax
-    variables.background_images.append(pygame.image.load("CopterLevel%d.gif" % level_number))                             # VER: background
+    variables.background_images.append(pygame.image.load("images/CopterLevel%d.gif" % level_number))                      # VER: background
                                                                                                                           # VER: background
 def reset():
     #pass                                                  # VER: 1 not background
@@ -46,9 +46,9 @@ while variables.running:
     screen.fill(variables.color_background)
     
     variables.view_x_pos += 1                                               # VER: background
-    #background_rectangle   = background_images[-1].get_rect()              # VER: background not paralax
+    #background_rectangle   = variables.background_images[-1].get_rect()    # VER: background not paralax
     #background_rectangle.x = background_rectangle.x - variables.view_x_pos # VER: background not paralax
-    #screen.blit(background_image, background_rectangle)                    # VER: background not paralax
+    #screen.blit(variables.background_images[-1], background_rectangle)     # VER: background not paralax
     paralax_number = 1                                                      # VER: paralax
     for background_image in variables.background_images:                    # VER: paralax
         background_rectangle   = background_image.get_rect()                # VER: paralax

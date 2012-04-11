@@ -163,7 +163,7 @@ And that is how you version up!
     parser.add_argument('--version', action='version', version=version)
     parser.add_argument('source'               , type=argparse.FileType('r'), help='file to read')
     parser.add_argument('-o','--output'        , type=argparse.FileType('w'), help='File to output version too, if absent will output to STDIO') #default=argparse.SUPPRESS,
-    parser.add_argument('-v','--target_version', type=int                   , help='the target version', default=version_max) #default=argparse.SUPPRESS,
+    parser.add_argument('-v','--target_version',                              help='the target version', default='1') #default=argparse.SUPPRESS,
     return parser.parse_args()
     
 if __name__ == "__main__":
@@ -173,4 +173,4 @@ if __name__ == "__main__":
         args.output.write(output)
         args.output.close()
     else:
-        print(output)
+        print('\n'.join(output))
