@@ -21,7 +21,7 @@ variables = callByRef(
     copter_y_pos      = None, # VER: copter
     copter_x_vel      = None, # VER: physics
     copter_y_vel      = None, # VER: physics
-    copter_colision_points = [(0,0),(32,9),(17,2),(22,12),(2,12)], # VER: colision
+    copter_colision_points = [(0,0),(32,9),(17,2),(22,12),(2,12)], # VER: colision_multi
 )
 
 def load_level(level_number):                                                                                             # VER: background
@@ -76,17 +76,19 @@ while variables.running:
     variables.copter_x_pos += variables.copter_x_vel         # VER: physics
     variables.copter_y_pos += variables.copter_y_vel         # VER: physics
                                                              # VER: physics
-    copter_pos = (int(variables.copter_x_pos+variables.view_x_pos), int(variables.copter_y_pos)) # VER: colision
-    for colision_point in variables.copter_colision_points:                                      # VER: colision
-        colision_point = (copter_pos[0]+colision_point[0], copter_pos[1]+colision_point[1])      # VER: colision
-        try   : pixel = variables.background_images[-1].get_at(colision_point)                   # VER: colision
-        except: pixel = None                                                                     # VER: colision
+    copter_pos = (int(variables.copter_x_pos+variables.view_x_pos), int(variables.copter_y_pos)) # VER: colision_single
+    #with variables.copter_image.get_rect() as colision_rect:                                     # VER: colision_single not colision_multi
+        #colision_point = (colision_rect.width/2, colition_rect.height/2)                         # VER: colision_single not colision_multi
+    for colision_point in variables.copter_colision_points:                                      # VER: colision_multi
+        colision_point = (copter_pos[0]+colision_point[0], copter_pos[1]+colision_point[1])      # VER: colision_multi
+        try   : pixel = variables.background_images[-1].get_at(colision_point)                   # VER: colision_single
+        except: pixel = None                                                                     # VER: colision_single
         if pixel and pixel == variables.color_exit:                                              # VER: level
             variables.level_number += 1                                                          # VER: level
             load_level(variables.level_number)                                                   # VER: level
-        if pixel and pixel != (255,255,255,255):                                                 # VER: colision
-            reset()                                                                              # VER: colision
-                                                                                                 # VER: colision
+        if pixel and pixel != (255,255,255,255):                                                 # VER: colision_single
+            reset()                                                                              # VER: colision_single
+                                                                                                 # VER: colision_single
     copter_rectangle = variables.copter_image.get_rect()  # VER: copter
     copter_rectangle.x = int(variables.copter_x_pos)      # VER: copter
     copter_rectangle.y = int(variables.copter_y_pos)      # VER: copter

@@ -1,5 +1,5 @@
 <canvas id="canvas" width="320" height="240"></canvas>
-<canvas id="canvas_colisions" width="320" height="240" style="display: none;"></canvas><!-- // VER:  colision -->
+<canvas id="canvas_colisions" width="320" height="240" style="display: none;"></canvas><!-- // VER: colision_single -->
 <script>
     var canvas  = document.getElementById('canvas');
     var context = canvas.getContext('2d');
@@ -16,9 +16,9 @@
     function eventKeyDown(event) {if (event.keyCode in keys) {keys_pressed[keys[event.keyCode]]=true; }}
     function eventKeyUp  (event) {if (event.keyCode in keys) {keys_pressed[keys[event.keyCode]]=false;}}
 
-    var colisions_context = document.getElementById('canvas_colisions').getContext('2d'); // VER: colision
-    var copter_colision_points = [[0,0],[32,9],[17,2],[22,12],[2,12]];                    // VER: colision
-                                                                                          // VER: colision
+    var colisions_context = document.getElementById('canvas_colisions').getContext('2d'); // VER: colision_single
+    var copter_colision_points = [[0,0],[32,9],[17,2],[22,12],[2,12]];                    // VER: colision_multi
+                                                                                          // VER: colision_single
     var variables = {
         "color_background": 'rgba(0,0,0,255)',
         "color_exit"      : 'rgba(255,255,0,255)', // VER: level
@@ -76,22 +76,23 @@
         variables.copter_x_pos += variables.copter_x_vel;          // VER: physics
         variables.copter_y_pos += variables.copter_y_vel;          // VER: physics
                                                                    // VER: physics
-        colisions_context.fillStyle = variables.color_background;       // VER: colision
-        colisions_context.fillRect(0, 0, canvas.width, canvas.height);  // VER: colision
-        colisions_context.drawImage(variables.background_images[variables.background_images.length-1], -variables.view_x_pos, 0);  // VER: colision
-        for (var i=0 ; i<copter_colision_points.length ; i++) {         // VER: colision
-            var point = copter_colision_points[i];                      // VER: colision
-            var pixel = colisions_context.getImageData(variables.copter_x_pos+point[0], variables.copter_y_pos+point[1], 1, 1).data;  // VER: colision
-            var pixel_color = 'rgba('+pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]+')';  // VER: colision
+        colisions_context.fillStyle = variables.color_background;       // VER: colision_single
+        colisions_context.fillRect(0, 0, canvas.width, canvas.height);  // VER: colision_single
+        colisions_context.drawImage(variables.background_images[variables.background_images.length-1], -variables.view_x_pos, 0);  // VER: colision_single
+            //var point = [variables.copter_image.width/2, variables.copter_image.height/2]; // VER: colision_single not colision_multi
+        for (var i=0 ; i<copter_colision_points.length ; i++) {         // VER: colision_multi
+            var point = copter_colision_points[i];                      // VER: colision_multi
+            var pixel = colisions_context.getImageData(variables.copter_x_pos+point[0], variables.copter_y_pos+point[1], 1, 1).data;  // VER: colision_single
+            var pixel_color = 'rgba('+pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]+')';  // VER: colision_single
             if (pixel_color == variables.color_exit) {                  // VER: level
                 alert("Next Level");                                    // VER: level
                 load_level(variables.level_number++);                   // VER: level
             }                                                           // VER: level
-            if (pixel_color != variables.color_background) {            // VER: colision
-                reset();                                                // VER: colision
-            }                                                           // VER: colision
-        }                                                               // VER: colision
-                                                                        // VER: colision
+            if (pixel_color != variables.color_background) {            // VER: colision_single
+                reset();                                                // VER: colision_single
+            }                                                           // VER: colision_single
+        }                                                               // VER: colision_multi
+                                                                        // VER: colision_single
         context.drawImage(variables.copter_image, Math.round(variables.copter_x_pos), Math.round(variables.copter_y_pos)); // VER: copter
     }
     

@@ -26,3 +26,18 @@ h2 {
     color: red;
     font-weight: bold;
 }
+
+
+
+.icon16 {background-image:url(icons.png); display:inline-block; vertical-align:top;}
+.icon16 span {display: none;}
+.icon16 {width: 16px; height: 16px;}
+
+.icon16.i_java {background-position: -64px -0px;}
+.icon16.i_php  {background-position: -48px -0px;}
+.icon16.i_py   {background-position: -32px -0px;}
+.icon16.i_vb   {background-position: -16px -0px;}
+.icon16.i_html {background-position:  -0px -0px;}
+
+
+.projects_table th {display: none;}

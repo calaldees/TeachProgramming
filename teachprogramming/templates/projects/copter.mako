@@ -2,13 +2,15 @@
 
 <%
     vername = {
-        'base1'         :'1',
-        'background'    :'1,background',
-        'copter'        :'1,background,copter',
-        'colision'      :'1,background,copter,colision',
-        'level'         :'1,background,copter,colision,level',
-        'physics'       :'1,background,copter,physics',
-        'paralax'       :'1,background,paralax',
+        'base1'          :'1',
+        'background'     :'1,background',
+        'copter'         :'1,background,copter',
+        'colision_single':'1,background,copter,colision_single',
+        'colision_multi' :'1,background,copter,colision_single,colision_multi',
+        'level'          :'1,background,copter,colision_single,level',
+        'physics'        :'1,background,copter,physics',
+        'paralax'        :'1,background,paralax',
+
     }
 %>
 
@@ -23,11 +25,15 @@ ${self.show_diff(vername['base1'], vername['background'])}
 <h2>Copter</h2>
 ${self.show_diff(vername['background'], vername['copter'])}
 
-<h2>Colide</h2>
-${self.show_diff(vername['copter'], vername['colision'])}
+<h2>Colide (Single Point)</h2>
+${self.show_diff(vername['copter'], vername['colision_single'])}
+
+<h2>Colide (Multi Point)</h2>
+${self.show_diff(vername['colision_single'], vername['colision_multi'])}
+
 
 <h3>Level advancing</h3>
-${self.show_diff(vername['colision'], vername['level'])}
+${self.show_diff(vername['colision_single'], vername['level'])}
 
 <h2>Physics</h2>
 ${self.show_diff(vername['copter'], vername['physics'])}
