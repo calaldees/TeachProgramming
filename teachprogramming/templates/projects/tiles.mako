@@ -2,6 +2,6 @@
 
 
 
-<h1>Gravity</h1>
+<h1>Tiles</h1>
 
 ${self.show_diff(None,'1')}

@@ -29,9 +29,9 @@ def selected_class(a,b):
                     <a href="/project/${p}.${lang}" class="lang_icon lang_${lang} icon16 i_${lang}"><span>${lang}</span></a>
                 % endif
             % endfor
-        </tr>
+        </li>
         % endfor
-    </table>
+    </ul>
     
     <h2>Network Projects</h2>
     <ul>

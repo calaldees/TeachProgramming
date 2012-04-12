@@ -1,0 +1,77 @@
+<canvas id="canvas_element" width="320" height="240"></canvas>
+<script>
+    var canvas  = document.getElementById('canvas_element');
+    var context = canvas.getContext('2d');
+    
+    var interval_id;
+    function start() {interval_id = setInterval(timerEvent, 1000/10);}
+    function pause() {clearInterval(interval_id);}
+
+    var keys         = {27:'ESCAPE', 38:'UP', 40:'DOWN', 37:'LEFT', 39:'RIGHT', 32:'SPACE'};
+    var keys_pressed = {};
+    function init_keys() {for (key in keys) {keys_pressed[keys[key]]=false;}}
+    window.addEventListener('keydown', eventKeyDown, true);
+    window.addEventListener('keyup'  , eventKeyUp  , true);
+    function eventKeyDown(event) {if (event.keyCode in keys) {keys_pressed[keys[event.keyCode]]=true;  event.preventDefault();}}
+    function eventKeyUp  (event) {if (event.keyCode in keys) {keys_pressed[keys[event.keyCode]]=false; event.preventDefault();}}
+    
+    var variables = {
+        "color_background": 'rgba(0,0,0,255)',
+        "color_player"    : 'rgba(255,255,0,255)',
+        "color_block"     : 'rgba(0,255,255,255)',
+        "block_size"      : 20,
+    };
+    
+
+    function reset() {
+        init_keys();
+        variables.player_x_pos =  0;
+        variables.player_y_pos =  0;
+        
+        grid = new Array(canvas.height/variables.block_size);
+        for (y=0 ; y<grid.length ; y++){
+            grid[y]=new Array(canvas.width/variables.block_size);
+        }
+        
+        for (y=0 ; y<grid.length ; y++){
+            for (x=0 ; x<grid[y].length; x++) {
+                if (Math.random()<0.1) {
+                    grid[y][x] = 1;
+                }
+            }
+        }
+
+    }
+
+    function timerEvent() {
+        context.fillStyle = variables.color_background;     
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        
+        if (keys_pressed.ESCAPE) {pause();}
+        if (keys_pressed.UP    ) {variables.player_y_pos += -1;}
+        if (keys_pressed.DOWN  ) {variables.player_y_pos +=  1;}
+        if (keys_pressed.LEFT  ) {variables.player_x_pos += -1;}
+        if (keys_pressed.RIGHT ) {variables.player_x_pos +=  1;}
+        
+        if (variables.player_y_pos<0              ) {variables.player_y_pos=0;               }
+        if (variables.player_y_pos>=grid.length   ) {variables.player_y_pos=grid.length-1;   }
+        if (variables.player_x_pos<0              ) {variables.player_x_pos=0;               }
+        if (variables.player_x_pos>=grid[0].length) {variables.player_x_pos=grid[0].length-1;}
+        
+        grid[variables.player_y_pos][variables.player_x_pos] = 0;
+        
+        for (y=0 ; y<grid.length ; y++){
+            for (x=0 ; x<grid[y].length; x++) {
+                if (grid[y][x]==1) {
+                    context.fillStyle = variables.color_block;
+                    context.fillRect(x*variables.block_size, y*variables.block_size, variables.block_size, variables.block_size);
+                }
+            }
+        }
+        context.fillStyle = variables.color_player;
+        context.fillRect(variables.player_x_pos*variables.block_size, variables.player_y_pos*variables.block_size, variables.block_size, variables.block_size);
+    }
+    
+    reset();
+    start();
+</script>

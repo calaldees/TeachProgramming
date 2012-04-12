@@ -4,4 +4,4 @@
 
 <h1>Stars</h1>
 
-${self.show_diff(1)}
+${self.show_diff(None,'1')}

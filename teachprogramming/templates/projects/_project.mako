@@ -89,13 +89,17 @@ def make_web_ver(source):
 
 
 <%def name="web_demo(target_version)">
+    % try:
+    <% web_demo_code = make_web_ver(ver_string(project, 'html', target_version+',demo')) %>
     <div class="demo">
         <div class="demo_placeholder">
             <p>Hover mouse for demo</p>
             <p>(press escape to stop and reset)</p>
         </div>
-        ${make_web_ver(ver_string(project, 'html', target_version+',demo')) | n}
+        ${web_demo_code | n}
     </div>
+    % except:
+    % endtry    
 </%def>
 
 

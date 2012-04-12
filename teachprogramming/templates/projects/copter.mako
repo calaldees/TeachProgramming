@@ -45,4 +45,4 @@ ${self.show_diff(vername['copter'], vername['physics'])}
 ${self.show_diff(vername['background'], vername['paralax'])}
 
 
-<img src="/static/projects/CopterLevel1.gif">
+<img src="/static/projects/images/CopterLevel1.gif">
