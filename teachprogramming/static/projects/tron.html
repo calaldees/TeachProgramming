@@ -1,6 +1,6 @@
-<canvas id="canvas" width="640" height="480"></canvas>
+<canvas id="canvas_element" width="640" height="480"></canvas>
 <script>
-    var canvas  = document.getElementById('canvas');
+    var canvas  = document.getElementById('canvas_element');
     var context = canvas.getContext('2d');
     
     var interval_id;
@@ -13,8 +13,8 @@
     function init_keys() {for (key in keys) {keys_pressed[keys[key]]=false;}}
     window.addEventListener('keydown', eventKeyDown, true);
     window.addEventListener('keyup'  , eventKeyUp  , true);
-    function eventKeyDown(event) {if (event.keyCode in keys) {keys_pressed[keys[event.keyCode]]=true; }}
-    function eventKeyUp  (event) {if (event.keyCode in keys) {keys_pressed[keys[event.keyCode]]=false;}}
+    function eventKeyDown(event) {if (event.keyCode in keys) {keys_pressed[keys[event.keyCode]]=true;  event.preventDefault();}}
+    function eventKeyUp  (event) {if (event.keyCode in keys) {keys_pressed[keys[event.keyCode]]=false; event.preventDefault();}}
     
     var variables = {
         "background_color": 'rgba(0,0,0,255)',
@@ -32,15 +32,15 @@
         context.fillRect(0, 0, canvas.width, canvas.height);
         
         //var level_image = new Image();                                          // VER: maze
-        //level_image.src = filename;                                             // VER: maze
+        //level_image.src = "images/Maze"+variables.level_number+".gif";          // VER: maze
         //level_image.onload = function() {context.drawImage(this, 0, 0);}        // VER: maze
                                                                                   // VER: maze
-        variables.player1_x_pos   = 100;                                        // VER: line
-        variables.player1_y_pos   = 100;                                        // VER: line
+        variables.player1_x_pos   =  50;                                        // VER: line
+        variables.player1_y_pos   =  50;                                        // VER: line
         variables.player1_x_move  =   1;                                        // VER: line
         variables.player1_y_move  =   0;                                        // VER: line
-        variables.player2_x_pos   = canvas.width  - 100;                        // VER: player2
-        variables.player2_y_pos   = canvas.height - 100;                        // VER: player2
+        variables.player2_x_pos   = canvas.width  - 50;                         // VER: player2
+        variables.player2_y_pos   = canvas.height - 50;                         // VER: player2
         variables.player2_x_move  =  -1;                                        // VER: player2
         variables.player2_y_move  =   0;                                        // VER: player2
     }

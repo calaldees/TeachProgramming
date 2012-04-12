@@ -31,14 +31,14 @@ def reset():
     pygame.draw.rect(screen, variables.background_colour, pygame.Rect(0, 0, screen.get_width(), screen.get_height()))
     #level_image = pygame.image.load("MazeLevel%d.gif" % level_number) # VER: maze
     #screen.blit(level_image, level_image.get_rect())                  # VER: maze
-    variables.player1_x_pos    = 100 # Ver: line
-    variables.player1_y_pos    = 100 # Ver: line
+    variables.player1_x_pos    =  50 # Ver: line
+    variables.player1_y_pos    =  50 # Ver: line
     variables.player1_x_move   =   1 # Ver: line
     variables.player1_y_move   =   0 # Ver: line
-    variables.player2_x_pos    = screen.get_width()  - 100 # Ver: player2
-    variables.player2_y_pos    = screen.get_height() - 100 # Ver: player2
-    variables.player2_x_move   =  -1                       # Ver: player2
-    variables.player2_y_move   =   0                       # Ver: player2
+    variables.player2_x_pos    = screen.get_width()  - 50 # Ver: player2
+    variables.player2_y_pos    = screen.get_height() - 50 # Ver: player2
+    variables.player2_x_move   =  -1                      # Ver: player2
+    variables.player2_y_move   =   0                      # Ver: player2
 
 reset()
 while variables.running:
