@@ -27,6 +27,9 @@ h2 {
     font-weight: bold;
 }
 
+.demo                         {display: inline-block; position: relative;}
+.demo       .demo_placeholder {display: block;        position: absolute; top:0px; bottom:0px; left:0px; right:0px; background-color: #ff0000; opacity:0.4; filter:alpha(opacity=40);}
+.demo:hover .demo_placeholder {display: none; }
 
 
 .icon16 {background-image:url(icons.png); display:inline-block; vertical-align:top;}

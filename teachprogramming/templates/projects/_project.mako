@@ -47,6 +47,10 @@ def ver_string(project, format, version):
     
 <%def name="web_demo(target_version)">
     <div class="demo">
+        <div class="demo_placeholder">
+            <p>Hover mouse for demo</p>
+            <p>(press escape to stop and reset)</p>
+        </div>
         ${make_web_ver.make_web_ver(ver_string(project, 'html', target_version)) | n}
     </div>
 </%def>
