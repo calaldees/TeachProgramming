@@ -1,4 +1,4 @@
-<%inherit file="/base.mako"/>
+<%inherit file="/menu.mako"/>
 
 <%! 
 import os
@@ -87,7 +87,7 @@ def make_web_ver(source):
     ${web_demo(target_version)}
 </%def>
 
-    
+
 <%def name="web_demo(target_version)">
     <div class="demo">
         <div class="demo_placeholder">
@@ -100,8 +100,6 @@ def make_web_ver(source):
 
 
 <%def name='body()'>
-    <a href="/">Project List</a>
-    
     <!-- List all formats for this project -->
     <%
         files = [file for file in os.listdir(constants.project_path) if file.startswith('%s.' % project)]
@@ -115,7 +113,7 @@ def make_web_ver(source):
             if fileext == format:
                 css_class = 'selected'
         %>
-        <li><a href='/project/${project}.${fileext}' class='${css_class}'>${format_description}</a></li>
+        <li><a href='/project/${project}.${fileext}' class='${css_class}'><span class='icon16 i_${fileext}'></span>${format_description}</a></li>
     % endfor
     </ul>
     

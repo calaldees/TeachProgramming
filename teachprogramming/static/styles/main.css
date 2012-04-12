@@ -1,3 +1,4 @@
+/* Base -------------------------------*/
 h1 {
     font-size: 200%;
 }
@@ -9,15 +10,59 @@ h2 {
     display: none;
 }
 
-.code {
+/* Icons ----------------------------------*/
+.icon16 {background-image:url(icons.png); display:inline-block; vertical-align:top;}
+.icon16 span {display: none;}
+.icon16 {width: 16px; height: 16px; display: inline-block;}
 
+.icon16.i_java {background-position: -64px -0px;}
+.icon16.i_php  {background-position: -48px -0px;}
+.icon16.i_py   {background-position: -32px -0px;}
+.icon16.i_vb   {background-position: -16px -0px;}
+.icon16.i_html {background-position:  -0px -0px;}
+
+/* Layout ---------------------------------*/
+body {
+    font-size: 12px;
 }
 
+/* Menu */
+.menu {
+    float: left;
+    width: 200px;
+    background-color: #eeeeee;
+    -moz-border-radius: 5px;
+    -moz-border-radius-topleft   : 0px;
+    -moz-border-radius-bottomleft: 0px;
+}
+.menu .selected {
+    background-color: white;
+}
+.menu ul li a .selected {
+    background-color: red !important;
+}
+
+.menu ul li {
+    padding-top   : 4px;
+    padding-bottom: 4px;
+}
+.lang_icon   {position: absolute;}
+.lang_vb     {left: 116px;}
+.lang_java   {left: 132px;}
+.lang_py     {left: 148px;}
+.lang_html   {left: 164px;}
+
+/* main */
+.main {
+    margin-left: 200px;
+}
+
+/* Project --------------------------------*/
+.code {}
 .code .section {
     border: 1px solid #888;
     margin: 1em;
 }
-
 .code .add {
     color: green;
     font-weight: bold;
@@ -30,17 +75,6 @@ h2 {
 .demo                         {display: inline-block; position: relative;}
 .demo       .demo_placeholder {display: block;        position: absolute; top:0px; bottom:0px; left:0px; right:0px; background-color: #ff0000; opacity:0.4; filter:alpha(opacity=40);}
 .demo:hover .demo_placeholder {display: none; }
-
-
-.icon16 {background-image:url(icons.png); display:inline-block; vertical-align:top;}
-.icon16 span {display: none;}
-.icon16 {width: 16px; height: 16px;}
-
-.icon16.i_java {background-position: -64px -0px;}
-.icon16.i_php  {background-position: -48px -0px;}
-.icon16.i_py   {background-position: -32px -0px;}
-.icon16.i_vb   {background-position: -16px -0px;}
-.icon16.i_html {background-position:  -0px -0px;}
 
 
 .projects_table th {display: none;}
