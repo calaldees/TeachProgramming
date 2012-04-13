@@ -17,59 +17,62 @@
     
     var variables = {
         "color_background": 'rgba(0,0,0,255)',
-        "color_player"    : 'rgba(255,255,0,255)',
-        "color_block"     : 'rgba(0,255,255,255)',
-        "block_size"      : 20,
+        "color_player"    : 'rgba(255,255,0,255)', // VER: player
+        "color_block"     : 'rgba(0,255,255,255)', // VER: blocks
+        "block_size"      : 20,                    // VER: player
     };
     
 
     function reset() {
         init_keys();
-        variables.player_x_pos =  0;
-        variables.player_y_pos =  0;
         
-        grid = new Array(canvas.height/variables.block_size);
-        for (y=0 ; y<grid.length ; y++){
-            grid[y]=new Array(canvas.width/variables.block_size);
-        }
-        
-        for (y=0 ; y<grid.length ; y++){
-            for (x=0 ; x<grid[y].length; x++) {
-                if (Math.random()<0.1) {
-                    grid[y][x] = 1;
-                }
-            }
-        }
-
+        variables.player_x_pos =  0; // VER: player
+        variables.player_y_pos =  0; // VER: player
+                                     // VER: player
+        variables.grid = new Array(canvas.height/variables.block_size);     // VER: blocks
+        for (y=0 ; y<variables.grid.length ; y++){                          // VER: blocks
+            variables.grid[y]=new Array(canvas.width/variables.block_size); // VER: blocks
+        }                                                         // VER: blocks
+        variables.grid[2][2] = 1;                                 // VER: blocks not blocks_random
+        variables.grid[3][5] = 1;                                 // VER: blocks not blocks_random
+        variables.grid[4][9] = 1;                                 // VER: blocks not blocks_random
+        for (y=0 ; y<variables.grid.length ; y++){                // VER: blocks_random
+            for (x=0 ; x<variables.grid[y].length; x++) {         // VER: blocks_random
+                if (Math.random()<0.1) {                          // VER: blocks_random
+                    variables.grid[y][x] = 1;                     // VER: blocks_random
+                }                                                 // VER: blocks_random
+            }                                                     // VER: blocks_random
+        }                                                         // VER: blocks_random
     }
 
     function timerEvent() {
         context.fillStyle = variables.color_background;     
         context.fillRect(0, 0, canvas.width, canvas.height);
         
-        if (keys_pressed.ESCAPE) {pause();}
-        if (keys_pressed.UP    ) {variables.player_y_pos += -1;}
-        if (keys_pressed.DOWN  ) {variables.player_y_pos +=  1;}
-        if (keys_pressed.LEFT  ) {variables.player_x_pos += -1;}
-        if (keys_pressed.RIGHT ) {variables.player_x_pos +=  1;}
+        if (keys_pressed.ESCAPE) {reset(); pause();}
+        if (keys_pressed.UP    ) {variables.player_y_pos += -1;} // VER: player
+        if (keys_pressed.DOWN  ) {variables.player_y_pos +=  1;} // VER: player
+        if (keys_pressed.LEFT  ) {variables.player_x_pos += -1;} // VER: player
+        if (keys_pressed.RIGHT ) {variables.player_x_pos +=  1;} // VER: player
         
-        if (variables.player_y_pos<0              ) {variables.player_y_pos=0;               }
-        if (variables.player_y_pos>=grid.length   ) {variables.player_y_pos=grid.length-1;   }
-        if (variables.player_x_pos<0              ) {variables.player_x_pos=0;               }
-        if (variables.player_x_pos>=grid[0].length) {variables.player_x_pos=grid[0].length-1;}
-        
-        grid[variables.player_y_pos][variables.player_x_pos] = 0;
-        
-        for (y=0 ; y<grid.length ; y++){
-            for (x=0 ; x<grid[y].length; x++) {
-                if (grid[y][x]==1) {
-                    context.fillStyle = variables.color_block;
-                    context.fillRect(x*variables.block_size, y*variables.block_size, variables.block_size, variables.block_size);
-                }
-            }
-        }
-        context.fillStyle = variables.color_player;
-        context.fillRect(variables.player_x_pos*variables.block_size, variables.player_y_pos*variables.block_size, variables.block_size, variables.block_size);
+        if (variables.player_y_pos<0                        ) {variables.player_y_pos=0;                         } // VER: limit
+        if (variables.player_y_pos>=variables.grid.length   ) {variables.player_y_pos=variables.grid.length-1;   } // VER: limit
+        if (variables.player_x_pos<0                        ) {variables.player_x_pos=0;                         } // VER: limit
+        if (variables.player_x_pos>=variables.grid[0].length) {variables.player_x_pos=variables.grid[0].length-1;} // VER: limit
+                                                                                                                   // VER: limit
+        variables.grid[variables.player_y_pos][variables.player_x_pos] = 0; // VER: eat
+                                                                            // VER: eat
+        for (y=0 ; y<variables.grid.length ; y++){                          // VER: blocks
+            for (x=0 ; x<variables.grid[y].length; x++) {                   // VER: blocks
+                if (variables.grid[y][x]==1) {                              // VER: blocks
+                    context.fillStyle = variables.color_block;              // VER: blocks
+                    context.fillRect(x*variables.block_size, y*variables.block_size, variables.block_size, variables.block_size); // VER: blocks
+                }                                                           // VER: blocks
+            }                                                               // VER: blocks
+        }                                                                   // VER: blocks
+                                                                            // VER: blocks
+        context.fillStyle = variables.color_player;                                                                                                              // VER: player
+        context.fillRect(variables.player_x_pos*variables.block_size, variables.player_y_pos*variables.block_size, variables.block_size, variables.block_size);  // VER: player
     }
     
     reset();
