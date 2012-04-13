@@ -108,7 +108,7 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
         #    line = '' # Always remove all VERNAME lines
         
         # If is the version requested is a union with the current line
-        if line_versions <= target_versions and not exclude_versions & target_versions:
+        if line_versions & target_versions and not exclude_versions & target_versions:
             
             # Removed matched metadata
             line = extract_ver          .sub('' , line)

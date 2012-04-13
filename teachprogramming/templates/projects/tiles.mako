@@ -9,8 +9,9 @@
         'limit'         :'1,player,blocks,limit',
         'eat'           :'1,player,blocks,limit,eat',
         'images'        :'1,player,blocks,images',
-        'block_move'    :'1,player,blocks,blocks_random,limit,block_move',
+        'block_move'    :'1,player,blocks,block_move',
         'full'          :'1,player,blocks,blocks_random,block_move,limit,images',
+        'mines'         :'1,player,blocks,blocks_random,mines',
     }
 %>
 
@@ -40,3 +41,9 @@ ${self.show_diff(vername['limit'],vername['eat'])}
 
 <h2>images</h2>
 ${self.show_diff(vername['blocks'],vername['images'])}
+
+<h2>block_move</h2>
+${self.show_diff(vername['blocks'],vername['block_move'])}
+
+<h2>mines</h2>
+${self.show_diff(vername['blocks_random'],vername['mines'])}
