@@ -33,13 +33,13 @@
         for (y=0 ; y<variables.grid.length ; y++){                          // VER: blocks
             variables.grid[y]=new Array(canvas.width/variables.block_size); // VER: blocks
         }                                                         // VER: blocks
-        variables.grid[2][2] = 1;                                 // VER: blocks not blocks_random
-        variables.grid[3][5] = 1;                                 // VER: blocks not blocks_random
-        variables.grid[4][9] = 1;                                 // VER: blocks not blocks_random
+        variables.grid[2][2] = 'block';                                 // VER: blocks not blocks_random
+        variables.grid[3][5] = 'block';                                 // VER: blocks not blocks_random
+        variables.grid[4][9] = 'block';                                 // VER: blocks not blocks_random
         for (var y=0 ; y<variables.grid.length ; y++){            // VER: blocks_random
             for (var x=0 ; x<variables.grid[y].length; x++) {     // VER: blocks_random
                 if (Math.random()<0.1) {                          // VER: blocks_random
-                    variables.grid[y][x] = 1;                     // VER: blocks_random
+                    variables.grid[y][x] = 'block';               // VER: blocks_random
                 }                                                 // VER: blocks_random
             }                                                     // VER: blocks_random
         }                                                         // VER: blocks_random
@@ -60,6 +60,9 @@
         context.fillStyle = variables.color_background;     
         context.fillRect(0, 0, canvas.width, canvas.height);
         
+        var px = variables.player_x_pos; // VER: block_move
+        var py = variables.player_y_pos; // VER: block_move
+                                         // VER: block_move
         if (keys_pressed.ESCAPE) {reset(); pause();}
         if (keys_pressed.UP    ) {variables.player_y_pos += -1;} // VER: player
         if (keys_pressed.DOWN  ) {variables.player_y_pos +=  1;} // VER: player
@@ -71,15 +74,27 @@
         if (variables.player_x_pos<0                        ) {variables.player_x_pos=0;                         } // VER: limit
         if (variables.player_x_pos>=variables.grid[0].length) {variables.player_x_pos=variables.grid[0].length-1;} // VER: limit
                                                                                                                    // VER: limit
-        variables.grid[variables.player_y_pos][variables.player_x_pos] = 0; // VER: eat
-                                                                            // VER: eat
+        var g = variables.grid;                                                       // VER: block_move
+        var x = variables.player_x_pos;                                               // VER: block_move
+        var y = variables.player_y_pos;                                               // VER: block_move
+        if (g[y][x]=='block') {                                                       // VER: block_move
+            if (px<x && g[y][x+1]==undefined) {g[y][x+1]=g[y][x]; g[y][x]=undefined;} // VER: block_move
+            if (px>x && g[y][x-1]==undefined) {g[y][x-1]=g[y][x]; g[y][x]=undefined;} // VER: block_move
+            if (py<y && g[y+1][x]==undefined) {g[y+1][x]=g[y][x]; g[y][x]=undefined;} // VER: block_move
+            if (py>y && g[y-1][x]==undefined) {g[y-1][x]=g[y][x]; g[y][x]=undefined;} // VER: block_move
+        }                                                                             // VER: block_move
+        //variables.grid[variables.player_y_pos][variables.player_x_pos] = undefined; // VER: eat not block_move
+                                                                                      // VER: eat not block_move
         for (var y=0 ; y<variables.grid.length ; y++){                      // VER: blocks
             for (var x=0 ; x<variables.grid[y].length; x++) {               // VER: blocks
-                if (variables.grid[y][x]==1) {                              // VER: blocks
+                var block_name = variables.grid[y][x];                      // VER: blocks
+                if (block_name in variables.images) {                                                                // VER: images
+                    context.drawImage(variables.images[block_name], x*variables.block_size, y*variables.block_size); // VER: images
+                }                                                                                                    // VER: images
+                //if (block_name=='block') {                                  // VER: blocks not images
                     //context.fillStyle = variables.color_block;              // VER: blocks not images
                     //context.fillRect(x*variables.block_size, y*variables.block_size, variables.block_size, variables.block_size); // VER: blocks not images
-                    context.drawImage(variables.images.block, x*variables.block_size, y*variables.block_size); // VER: images
-                }                                                           // VER: blocks
+                //}                                                           // VER: blocks not images
             }                                                               // VER: blocks
         }                                                                   // VER: blocks
                                                                             // VER: blocks
