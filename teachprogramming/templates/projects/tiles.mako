@@ -8,7 +8,8 @@
         'blocks_random' :'1,player,blocks,blocks_random',
         'limit'         :'1,player,blocks,limit',
         'eat'           :'1,player,blocks,blocks_random,limit,eat',
-        'full'          :'1,player,blocks,blocks_random,limit,eat',
+        'images'        :'1,player,blocks,images',
+        'full'          :'1,player,blocks,blocks_random,limit,eat,images',
     }
 %>
 
@@ -30,8 +31,11 @@ ${self.show_diff(vername['player'],vername['blocks'])}
 <h3>Blocks Random</h3>
 ${self.show_diff(vername['blocks'],vername['blocks_random'])}
 
+<h2>eat</h2>
+${self.show_diff(vername['blocks_random'],vername['eat'])}
+
 <h2>limit</h2>
 ${self.show_diff(vername['blocks'],vername['limit'])}
 
-<h2>eat</h2>
-${self.show_diff(vername['blocks_random'],vername['eat'])}
+<h2>images</h2>
+${self.show_diff(vername['blocks'],vername['images'])}
