@@ -74,21 +74,10 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
     # Regex compile
     extract_code          = re.compile(r'^(?P<line>(?P<indent>\s*)(?P<code>.*?))(%s|$)(?P<comment>.*)' % comment_token)
     extract_ver           = re.compile(r'VER:\s*(?P<ver>.*?)(\s+|$)(not\s*(?P<ver_exclude>.*?(\s+|$)))?', flags=re.IGNORECASE)
-    extract_hide          = re.compile(r'HIDE|HIDDEN'               , flags=re.IGNORECASE)
+    extract_hide          = re.compile(r'HIDE')
     extract_blank_comment = re.compile('\s*%s\s*$' % comment_token)
+    remmed_line           = re.compile(r'^\s*%s' % comment_token)
 
-    remmed_line = re.compile(r'^\s*%s' % comment_token)
-
-    #extract_vername       = re.compile(r'VERNAME:\s*(?P<vername>.*?)\s+(?P<verpath>.*?)(\s+|$)', flags=re.IGNORECASE)    
-    # Pre process the source file trying to find a target_version path match
-    #if len(target_versions)==1:
-    #    for line in source:
-    #        vername_match = extract_vername.search(line)
-    #        if vername_match and vername_match.group('vername') == list(target_versions)[0]:
-    #            target_versions = get_ver_set(vername_match.group('verpath'))
-    #    if hasattr(source, 'seek'):
-    #        source.seek(0)
-    
     # Process source file
     for line in source:
         
@@ -112,7 +101,7 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
             
             # Removed matched metadata
             line = extract_ver          .sub('' , line)
-            line = extract_hide         .sub('' , line)
+            line = extract_hide         .sub('' , line) # bug: this is over zelus, HIDE anywhere in the line is removed, improve it chump!
             line = extract_blank_comment.sub(' ', line) # blank comments still need to represent a line (the \n gets rstiped later but at least it triggers an append)
             
             # If the line starts with a comment then remove that first comment

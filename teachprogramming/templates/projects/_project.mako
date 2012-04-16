@@ -50,6 +50,7 @@ def make_web_ver(source):
     
     source = re.sub( '<script>','<script>(function () {', source)
     source = re.sub('start\(\);\s*</script>',javascript_activate_mouse+'})();</script>', source)
+    source = re.sub('<!--<canvas','<canvas', source) # AllanC - SWEET HOLY HACK!!!! I needed a way to have the tron.html working as a static file, so I HAD to rem the 320,240 canvas out, this just makes it visible again
     
     return source
 %>

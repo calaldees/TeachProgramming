@@ -1,4 +1,5 @@
-<canvas id="canvas_element" width="640" height="480"></canvas>
+<canvas id="canvas_element" width="640" height="480"></canvas><!-- // VER: 1 not demo -->
+<!--<canvas id="canvas_element" width="320" height="240"></canvas><!-- Hack to get demo size alternate from static size // VER: demo -->
 <script>
     var canvas  = document.getElementById('canvas_element');
     var context = canvas.getContext('2d');
@@ -67,11 +68,11 @@
         if (variables.player1_x_pos>=canvas.width ) {variables.player1_x_pos =               1;} // VER: wrap
         if (variables.player1_y_pos<=0            ) {variables.player1_y_pos = canvas.height-1;} // VER: wrap HIDE
         if (variables.player1_y_pos>=canvas.height) {variables.player1_y_pos =               1;} // VER: wrap HIDE
-        if (variables.player2_x_pos<=0            ) {variables.player2_x_pos = canvas.width -1;} // VER: player2,wrap
-        if (variables.player2_x_pos>=canvas.width ) {variables.player2_x_pos =               1;} // VER: player2,wrap
-        if (variables.player2_y_pos<=0            ) {variables.player2_y_pos = canvas.height-1;} // VER: player2,wrap HIDE
-        if (variables.player2_y_pos>=canvas.height) {variables.player2_y_pos =               1;} // VER: player2,wrap HIDE
-                                                                                                 // VER: wrap
+        if (variables.player2_x_pos<=0            ) {variables.player2_x_pos = canvas.width -1;} // VER: wrap2
+        if (variables.player2_x_pos>=canvas.width ) {variables.player2_x_pos =               1;} // VER: wrap2
+        if (variables.player2_y_pos<=0            ) {variables.player2_y_pos = canvas.height-1;} // VER: wrap2 HIDE
+        if (variables.player2_y_pos>=canvas.height) {variables.player2_y_pos =               1;} // VER: wrap2 HIDE
+                                                                                                 // VER: wrap2
         var pixel       = context.getImageData(variables.player1_x_pos, variables.player1_y_pos, 1, 1).data; // VER: colide
         var pixel_color = 'rgba('+pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]+')';                       // VER: colide
         if (pixel_color == variables.color_exit) {                                                           // VER: maze

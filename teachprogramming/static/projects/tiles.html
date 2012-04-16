@@ -78,17 +78,17 @@
         var g = variables.grid;                                                            // VER: block_move,mines
         var x = variables.player_x_pos;                                                    // VER: block_move,mines
         var y = variables.player_y_pos;                                                    // VER: block_move,mines
-                                                            // VER: mines
-        if (g[y][x]=='mine') {alert('BOOM!'); reset();}     // VER: mines
-        else                 {g[y][x]='safe';}              // VER: mines
-        var mines_near = 0;                                 // VER: mines
-        for (var ay=y-1 ; ay<=y+1 ; ay++) {                 // VER: mines
-            for (var ax=x-1 ; ax<=x+1 ; ax++) {             // VER: mines
-                try        {if(g[ay][ax]=='mine') {mines_near+=1;}} // VER: mines
-                catch(err) {}                               // VER: mines
-            }                                               // VER: mines
-        }                                                   // VER: mines
-                                                            // VER: mines
+                                                              // VER: mines
+        //if (g[y][x]=='mine') {alert('BOOM!'); reset();}     // VER: mines
+        //else                 {g[y][x]='safe';}              // VER: mines
+        //var mines_near = 0;                                 // VER: mines
+        //for (var ay=y-1 ; ay<=y+1 ; ay++) {                 // VER: mines
+        //    for (var ax=x-1 ; ax<=x+1 ; ax++) {             // VER: mines
+        //       try        {if(g[ay][ax]=='mine') {mines_near+=1;}} // VER: mines
+        //        catch(err) {}                               // VER: mines
+        //    }                                               // VER: mines
+        //}                                                   // VER: mines
+                                                              // VER: mines
         if (g[y][x]=='block') {                                                            // VER: block_move
             if      (px<x && g[y][x+1]==undefined) {g[y][x+1]=g[y][x]; g[y][x]=undefined;} // VER: block_move
             else if (px>x && g[y][x-1]==undefined) {g[y][x-1]=g[y][x]; g[y][x]=undefined;} // VER: block_move
@@ -116,9 +116,9 @@
         //context.fillRect(variables.player_x_pos*variables.block_size, variables.player_y_pos*variables.block_size, variables.block_size, variables.block_size);  // VER: player not images
         context.drawImage(variables.images.smile, variables.player_x_pos*variables.block_size, variables.player_y_pos*variables.block_size); // VER: images
         
-        context.fillStyle = 'rgba(255,255,255,255)';             // VER: mines
-        context.font      = 'bold 30px sans-serif';              // VER: mines
-        context.fillText("Near "+mines_near+" mines" , 50, 50); // VER: mines
+        //context.fillStyle = 'rgba(255,255,255,255)';            // VER: mines
+        //context.font      = 'bold 30px sans-serif';             // VER: mines
+        //context.fillText("Near "+mines_near+" mines" , 50, 50); // VER: mines
 
     }
     
