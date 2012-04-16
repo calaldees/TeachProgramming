@@ -38,6 +38,9 @@ run:
 run_production:
 	env/bin/pserve production.ini
 
+shell:
+	env/bin/pshell development.ini
+
 project:
 	cd teachprogramming/static/projects/; ../../../env/bin/python ../../lib/make_ver.py $(PROJECTNAME).py --target_version $(TARGET_VERSION) | python -
 

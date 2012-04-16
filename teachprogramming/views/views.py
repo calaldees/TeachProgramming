@@ -1,6 +1,5 @@
 from pyramid.view import view_config
 from pyramid.renderers import render_to_response
-from pyramid.response import Response
 
 from ..models import (
     DBSession,
@@ -9,22 +8,27 @@ from ..models import (
 
 import teachprogramming.lib.make_ver  as make_ver
 import teachprogramming.lib.constants as constants
+from   teachprogramming.lib.web import etag
+
+import datetime
+default_http_cache_duration = datetime.timedelta(days=1)
+
 
 
 @view_config(route_name='home', renderer='teachprogramming:templates/home.mako')
 def home(request):
     return {}
 
-@view_config(route_name='project_doc')
+@view_config(route_name='project_doc', http_cache=default_http_cache_duration)
+@etag
 def project_doc(request):
     return render_to_response(
         'teachprogramming:templates/projects/%s.mako' % request.matchdict['project'], 
-        {'project':request.matchdict['project'], 
-         'format' :request.matchdict['format' ],},
+        request.matchdict,
         request=request,
     )
 
-@view_config(route_name='project_code')
+@view_config(route_name='project_code', http_cache=default_http_cache_duration)
 def project_code(request):
     code = '\n'.join( make_ver.make_ver(constants.project_filename_dict % request.matchdict, request.matchdict.get('version')) )
     response = Response(code)
