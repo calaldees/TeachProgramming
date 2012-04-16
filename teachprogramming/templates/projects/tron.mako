@@ -9,53 +9,135 @@
         '2players'      :'1,line,input,colide,player2',
         '2players_score':'1,line,input,colide,player2,score',
         'wrap'          :'1,line,input,colide,wrap',
-        '2players_wrap' :'1,line,input,colide,player2,wrap',
+        '2players_wrap' :'1,line,input,colide,player2,wrap,wrap2',
         'maze'          :'1,line,input,colide,maze',
+        
     }
 %>
 
 
 <h1>Tron</h1>
 
-${self.show_diff(None, vername['base1'])}
+demo
+${parent.web_demo(vername['2players_score'])}
+${parent.web_demo(vername['maze'])}
+
+
+<%self:code_section
+    prev_version   = "${None}"
+    target_version = "${vername['base1']}"
+>
+    <%def name="title()">
+        <h3>Base</h3>
+    </%def>
+    <%def name="code_before()">
+        <p>before</p>
+    </%def>
+</%self:code_section>
+
+
 
 <h2>Part 1: Simple Line</h2>
-<h3>A Line that Moves</h3>
 
-${self.show_diff(vername['base1'],vername['base2'])}
+<%self:code_section
+    prev_version   = "${vername['base1']}"
+    target_version = "${vername['base2']}"
+>
+    <%def name="title()">
+        <h3>A Line that Moves</h3>
+    </%def>
+    <%def name="code_before()">
+        <p>before</p>
+    </%def>
+    <%def name="code_after()">
+        <p>after</p>
+    </%def>
+</%self:code_section>
 
-<h3>Keyboard Input</h3>
-Replace the ? with 0, 1 or -1
+<%self:code_section
+    prev_version   = "${vername['base2']}"
+    target_version = "${vername['base3']}"
+>
+    <%def name="title()">
+        <h3>Keyboard Input</h3>
+    </%def>
+    <%def name="code_before()">
+        <p>Replace the ? with 0, 1 or -1</p>
+    </%def>
+</%self:code_section>
 
-${self.show_diff(vername['base2'],vername['base3'])}
+<%self:code_section
+    prev_version   = "${vername['base3']}"
+    target_version = "${vername['base4']}"
+>
+    <%def name="title()">
+        <h2>Part 2: Collisions</h2>
+    </%def>
+    <%def name="code_before()">
+        Get the pixel of where we are about to move to.
+        If it is not black then we have hit an object so reset the players coordinate
+    </%def>
+</%self:code_section>
 
 
 
-<h2>Part 2: Collisions</h2>
-Get the pixel of where we are about to move to.
-If it is not black then we have hit an object so reset the players coordinate
-
-${self.show_diff(vername['base3'],vername['base4'])}
 
 
 
 <h2>Part 3: Extras</h2>
 
-<h3>Player 2</h3>
-Can you add a second player?
 
-${self.show_diff(vername['base4'],vername['2players'])}
+<%self:code_section
+    prev_version   = "${vername['base4']}"
+    target_version = "${vername['2players']}"
+>
+    <%def name="title()">
+        <h3>Player 2</h3>
+    </%def>
+    <%def name="code_before()">
+        Can you add a second player?
+    </%def>
+</%self:code_section>
 
-<h3>Score</h3>
 
-${self.show_diff(vername['2players'],vername['2players_score'])}
+
+
+<%self:code_section
+    prev_version   = "${vername['2players']}"
+    target_version = "${vername['2players_score']}"
+>
+    <%def name="title()">
+        <h3>Score</h3>
+    </%def>
+    <%def name="code_before()">
+        Scoreing, reset after 5 deaths
+    </%def>
+</%self:code_section>
+
+
+
 
 <h3>Background Obstacles</h3>
 
 <h2>Part 4: Challenge Ideas</h2>
-<h3>Wrap around</h3>
-When you go off one side of the screen you appear the other side.
-${self.show_diff(vername['base4'],vername['wrap'])}
+
+
+<%self:code_section
+    prev_version   = "${vername['base4']}"
+    target_version = "${vername['wrap']}"
+>
+    <%def name="title()">
+        <h3>Wrap around</h3>
+    </%def>
+    <%def name="code_before()">
+        When you go off one side of the screen you appear the other side.
+    </%def>
+</%self:code_section>
+
+
+
+
+
 
 <h3>3 players</h3>
 Add new keys (try I,J,K,L)
@@ -82,14 +164,23 @@ To limit people using this all the time, give them a limited about of booster fu
   public void reset() {
     player1_boost_fuel = 100;
 </pre>
-    
-<h3>Maze levels</h3>
-
-<img src="/static/projects/Maze1.gif"/>
-<img src="/static/projects/Maze2.gif"/>
 
 
-<p>Maze is a one player game to get to the red exit.</p>
-<p>Create a set of level graphics 640 by 480 with a black or transparent background.</p>
+<%self:code_section
+    prev_version   = "${vername['base4']}"
+    target_version = "${vername['maze']}"
+>
+    <%def name="title()">
+        <h3>Maze levels</h3>
+    </%def>
+    <%def name="code_before()">
+        <p>Maze is a one player game to get to the red exit.</p>
+        <p>Create a set of level graphics 640 by 480 with a black or transparent background.</p>
+    </%def>
+    <%def name="code_after()">
+        <img src="images/Maze1.gif"/>
+        <img src="images/Maze2.gif"/>
+        <img src="images/Maze3.gif"/>
+    </%def>
+</%self:code_section>
 
-${self.show_diff(vername['base4'],vername['maze'])}

@@ -8,7 +8,7 @@
         'colision_single':'1,background,copter,colision_single',
         'colision_multi' :'1,background,copter,colision_single,colision_multi',
         'level'          :'1,background,copter,colision_single,level',
-        'physics'        :'1,background,copter,colision_single,physics',
+        'physics'        :'1,background,copter,physics',
         'paralax'        :'1,background,paralax',
         'full'           :'1,background,copter,physics,colision_single,colision_multi,paralax',
     }
@@ -19,30 +19,89 @@ demo
 ${parent.web_demo(vername['full'])}
 
 
-<h2>Base</h2>
-${self.show_diff(None, vername['base1'])}
-
-<h2>Background</h2>
-${self.show_diff(vername['base1'], vername['background'])}
-
-<h2>Copter</h2>
-${self.show_diff(vername['background'], vername['copter'])}
-
-<h2>Colide (Single Point)</h2>
-${self.show_diff(vername['copter'], vername['colision_single'])}
-
-<h2>Colide (Multi Point)</h2>
-${self.show_diff(vername['colision_single'], vername['colision_multi'])}
 
 
-<h3>Level advancing</h3>
-${self.show_diff(vername['colision_single'], vername['level'])}
 
-<h2>Physics</h2>
-${self.show_diff(vername['copter'], vername['physics'])}
+<%self:code_section
+    prev_version   = "${None}"
+    target_version = "${vername['base1']}"
+>
+    <%def name="title()">
+        <h2>Base</h2>
+    </%def>
+</%self:code_section>
 
-<h2>Paralax</h2>
-${self.show_diff(vername['background'], vername['paralax'])}
+<%self:code_section
+    prev_version   = "${vername['base1']}"
+    target_version = "${vername['background']}"
+>
+    <%def name="title()">
+        <h2>Background</h2>
+    </%def>
+</%self:code_section>
 
 
-<img src="/static/projects/images/CopterLevel1.gif">
+<%self:code_section
+    prev_version   = "${vername['background']}"
+    target_version = "${vername['copter']}"
+>
+    <%def name="title()">
+        <h2>Copter</h2>
+    </%def>
+</%self:code_section>
+
+
+<%self:code_section
+    prev_version   = "${vername['copter']}"
+    target_version = "${vername['colision_single']}"
+>
+    <%def name="title()">
+        <h2>Colide (Single Point)</h2>
+    </%def>
+</%self:code_section>
+
+
+<%self:code_section
+    prev_version   = "${vername['colision_single']}"
+    target_version = "${vername['colision_multi']}"
+>
+    <%def name="title()">
+        <h2>Colide (Multi Point)</h2>
+    </%def>
+</%self:code_section>
+
+
+<%self:code_section
+    prev_version   = "${vername['colision_single']}"
+    target_version = "${vername['level']}"
+>
+    <%def name="title()">
+        <h3>Level advancing</h3>
+    </%def>
+</%self:code_section>
+
+
+<%self:code_section
+    prev_version   = "${vername['copter']}"
+    target_version = "${vername['physics']}"
+>
+    <%def name="title()">
+        <h2>Physics</h2>
+    </%def>
+</%self:code_section>
+
+
+
+<%self:code_section
+    prev_version   = "${vername['background']}"
+    target_version = "${vername['paralax']}"
+>
+    <%def name="title()">
+        <h2>Paralax</h2>
+    </%def>
+</%self:code_section>
+
+
+
+
+##<img src="/static/projects/images/CopterLevel1.gif">

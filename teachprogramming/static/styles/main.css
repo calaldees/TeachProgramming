@@ -29,7 +29,7 @@ body {
 /* Menu */
 .menu {
     float: left;
-    width: 200px;
+    width: 150px;
     background-color: #eeeeee;
     -moz-border-radius: 5px;
     -moz-border-radius-topleft   : 0px;
@@ -43,22 +43,25 @@ body {
 }
 
 .menu ul li {
+    /*
     padding-top   : 4px;
     padding-bottom: 4px;
+    */
 }
 .lang_icon   {position: absolute;}
-.lang_vb     {left: 116px;}
-.lang_java   {left: 132px;}
-.lang_py     {left: 148px;}
-.lang_html   {left: 164px;}
+.lang_vb     {left: 96px;}
+.lang_java   {left: 112px;}
+.lang_py     {left: 128px;}
+.lang_html   {left: 80px;}
 
 /* main */
 .main {
-    margin-left: 200px;
+    margin-left : 150px;
+    margin-right: 320px;
 }
 
 /* Project --------------------------------*/
-.code {}
+.code {font-size: 10px;}
 .code .section {
     border: 1px solid #888;
     margin: 1em;
@@ -72,6 +75,10 @@ body {
     font-weight: bold;
 }
 
+.format_links    {float: right;}
+.format_links li {display: inline;}
+
+section .demo {position: absolute; right: 0px;}
 .demo                         {display: inline-block; position: relative;}
 .demo       .demo_placeholder {display: block;        position: absolute; top:0px; bottom:0px; left:0px; right:0px; background-color: #ff0000; opacity:0.4; filter:alpha(opacity=40);}
 .demo:hover .demo_placeholder {display: none; }

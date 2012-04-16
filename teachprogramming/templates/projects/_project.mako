@@ -58,6 +58,7 @@ def make_web_ver(source):
 
 
 <%def name='show_diff(prev_version, target_version)'>
+    
     <%
         diff = make_ver.get_diff(constants.project_filename % (project,format), prev_version, target_version, hidden_line_replacement='...more...')
         line_classs = {'-':'remove', '+':'add'}
@@ -79,13 +80,6 @@ def make_web_ver(source):
 
     </div> <!-- end code -->
     
-    <button type="button" onclick="$(this).next().toggle();">Full code</button>
-    <div class="hide">
-        <a href="/code/${project}.${format}/${target_version}">Version ${target_version}</a>
-        <pre>${ver_string(project, format, target_version)}</pre>
-    </div>
-    
-    ${web_demo(target_version)}
 </%def>
 
 
@@ -104,23 +98,64 @@ def make_web_ver(source):
 </%def>
 
 
+<%def name="format_links(target_version='')">
+    <div class="format_links">
+        <a name="${target_version}"></a>
+        <!-- List all formats for this version -->
+        <ul>
+        % for file in self.files:
+            <% 
+                fileext            = make_ver.get_fileext(file) 
+                format_description = constants.file_type_to_lang.get(fileext)
+                css_class = ''
+                if fileext == format:
+                    css_class = 'selected'
+            %>
+            <li><a href='/project/${project}.${fileext}#${target_version}' class='${css_class}' alt='${format_description}'><span class='icon16 i_${fileext}'></span></a></li>
+        % endfor
+        </ul>
+    </div>
+</%def>
+
+<%def name="full_code(target_version)">
+    <a href="/code/${project}.${format}/${target_version}" target="_blank">Full Code</a>
+    <%doc>
+    <button type="button" onclick="$(this).next().toggle();">Full code</button>
+    <div class="hide">
+        <a href="/code/${project}.${format}/${target_version}">Version ${target_version}</a>
+        <pre>${ver_string(project, format, target_version)}</pre>
+    </div>
+    </%doc>
+</%def>
+
+<%def name="code_section(prev_version, target_version)">
+<section>
+    ${format_links(target_version)}
+    ${caller.title()}
+    
+    ${web_demo(target_version)}
+    ${full_code(target_version)}
+    
+    % try:
+    ${caller.code_before()}
+    % except:
+    % endtry
+    
+    ${show_diff(prev_version, target_version)}
+    
+    % try:
+    ${caller.code_after()}
+    % except:
+    % endtry
+</section>
+</%def>
+
+
+
 <%def name='body()'>
-    <!-- List all formats for this project -->
     <%
-        files = [file for file in os.listdir(constants.project_path) if file.startswith('%s.' % project)]
+        self.files = [file for file in os.listdir(constants.project_path) if file.startswith('%s.' % project)]
     %>
-    <ul>
-    % for file in files:
-        <% 
-            fileext            = make_ver.get_fileext(file) 
-            format_description = constants.file_type_to_lang.get(fileext)
-            css_class = ''
-            if fileext == format:
-                css_class = 'selected'
-        %>
-        <li><a href='/project/${project}.${fileext}' class='${css_class}'><span class='icon16 i_${fileext}'></span>${format_description}</a></li>
-    % endfor
-    </ul>
     
     <!-- Documentation for this project -->
     ${next.body()}
