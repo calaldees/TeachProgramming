@@ -1,0 +1,57 @@
+<canvas id="canvas_element" width="640" height="480"></canvas><!-- // VER: 1 not demo -->
+<!--<canvas id="canvas_element" width="320" height="240"></canvas><!-- Hack to get demo size alternate from static size // VER: demo -->
+<script>
+    var canvas  = document.getElementById('canvas_element');
+    var context = canvas.getContext('2d');
+    
+    var interval_id;
+    function start() {interval_id = setInterval(timerEvent, 1000/60);}
+    function pause() {clearInterval(interval_id);}
+    
+    var variables = {
+        "color_background": 'rgba(0,0,0,255)',
+    }
+
+    function reset() {
+        variables.ball_x = 0
+        variables.ball_y = 0
+        variables.ball_image = new Image();
+        variables.ball_image.src = "images/smile.gif";
+        variables.click_count = 0;
+        variables.timer_ticks = 0;
+        draw();
+    }
+    
+    canvas.addEventListener('mousedown', eventMouseDown, true);
+    function eventMouseDown(event) {
+        var pixel       = context.getImageData(event.layerX, event.layerY, 1, 1).data;
+        var pixel_color = 'rgba('+pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]+')';
+        
+        if (pixel_color!=variables.background_color) {
+            variables.click_count += 1;
+            variables.ball_x = Math.floor(Math.random()*(canvas.width  - variables.ball_image.width ));
+            variables.ball_y = Math.floor(Math.random()*(canvas.height - variables.ball_image.height));
+            draw();
+        }
+        
+        if (variables.click_count==10) {
+            alert("your speed "+variables.timer_ticks);
+            reset();
+        }
+    }
+    
+    function draw() {
+        context.fillStyle = variables.color_background;
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        
+        context.drawImage(variables.ball_image, variables.ball_x, variables.ball_y);
+    }
+    
+    function timerEvent() {
+        variables.timer_ticks += 1;
+    }
+    
+    
+    reset();
+    start();
+</script>

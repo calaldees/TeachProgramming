@@ -153,6 +153,7 @@ def make_web_ver(source):
 
 
 <%def name='body()' cached="True" cache_key="${project}.${format}">
+    ##
     <%
         self.files = [file for file in os.listdir(constants.project_path) if file.startswith('%s.' % project)]
     %>

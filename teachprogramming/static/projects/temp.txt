@@ -1,0 +1,30 @@
+    /*
+    var mouse = {};
+    canvas.addEventListener('mousedown', eventMouseDown, true);
+    canvas.addEventListener('mouseup'  , eventMouseUp  , true);
+    canvas.addEventListener('mousemove', eventMouseMove, true);
+    function eventMouseDown(event) {mouse['B'+event.button]=true; }
+    function eventMouseUp(event)   {mouse['B'+event.button]=false;}
+    function eventMouseMove(event) {mouse['X']=event.layerX; mouse['Y']=event.layerY;}
+    */
+    
+    /*
+    //var mouse_release = {};
+    function eventMouseUp(event)   {mouse_release['B'+event.button]=true;  event.preventDefault();}
+    function eventRelease() {
+        for (key in mouse_release) {mouse[key]=false;}
+        mouse_release = {}
+        //for (key in keys_pressed) {if (keys_pressed[key]<0) {keys_pressed[key]=false;}}
+    }
+        //eventRelease();
+    */
+
+
+        /*
+        if (
+            mx>=ball_x && mx<(ball_x+ball_image.width)
+            &&
+            my>=ball_y && my<(ball_y+ball_image.height)
+        ) {
+        */
+
