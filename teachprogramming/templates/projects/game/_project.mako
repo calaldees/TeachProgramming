@@ -10,6 +10,14 @@ javascript_activate_mouse = """
     canvas.addEventListener('mouseout' , function(event) {pause();}, true);
 """
 
+from teachprogramming.lib      import make_ver, constants
+from teachprogramming.lib.misc import random_string
+
+
+def ver_string(project_type, project, format, version):
+    return '\n'.join( make_ver.make_ver(constants.project_filename % (project_type, project,format), version) )
+
+
 def make_web_ver(source):
     """
     Takes an html/javascript raw file and processes it so it can work indipendently in an html page with other examples
