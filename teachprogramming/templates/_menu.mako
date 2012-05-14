@@ -36,7 +36,7 @@ def selected_class(a,b):
     <h2>Network Projects</h2>
     <ul>
         <li>Paint</li>
-        <li>Chat</li>
+        <li><a href="/project/net/chat.html">Chat</a></li>
         <li>NetRace</li>
         <li>NetPong</li>
         <li>NetCopter</li>
