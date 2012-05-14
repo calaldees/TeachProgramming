@@ -13,9 +13,10 @@ javascript_activate_mouse = """
 from teachprogramming.lib      import make_ver, constants
 from teachprogramming.lib.misc import random_string
 
-
+# HACK!!! THIS IS DUPLICATED FROM THE PARENT ../_project.mako!!! REMOVE DUCPLICATION CHIMP!!!
 def ver_string(project_type, project, format, version):
     return '\n'.join( make_ver.make_ver(constants.project_filename % (project_type, project,format), version) )
+
 
 
 def make_web_ver(source):

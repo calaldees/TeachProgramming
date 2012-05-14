@@ -44,7 +44,7 @@ def selected_class(a,b):
     
     <h2>Web Projects</h2>
     <ul>
-        <li><a href="/static/projects/web/php.html">Simple Messagbord</a><li>
+        <li><a href="/project/web/php.html">Simple Messagbord</a><li>
         <li>Quiz Graphs<li>
         <li>Regex: rip from URL's</li>
         <li>Mobile App (jQueryMobile)</li>

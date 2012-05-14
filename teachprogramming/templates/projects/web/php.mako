@@ -1,7 +1,7 @@
-<%inherit file="/menu.mako"/>
+<%inherit file="_project.mako"/>
 
 <%
-    
+    path = 'teachprogramming/static/projects/web/'
 %>
 
 <html>
@@ -9,6 +9,7 @@
         <title>PHP</title>
     </head>
     <body>
+
 
 <h1>PHP Introduction Workshop</h1>
 <h2>Setup</h2>
@@ -28,23 +29,8 @@ Save it as testphp.php
 Go to the webpage http://localhost/testphp.php to test if PHP is working
 
 MyFirst PHP
-<pre>
-<?php
-$browser = $_SERVER[‘HTTP_USER_AGENT’];
-?>
-<html>
-<head>
-  <title>My First PHP page</title>
-</head>
+${self.t_include_file(path+'helloworld.php')}
 
-<body>
-
-<h1>My First PHP Page</h1>
-Yor browser is <?php echo $browser; ?>
-
-</body>
-</html>
-</pre>
 
 <h2>Task 2: Tell me my IP</h2>
 Get your webpage to tell you your IP address by creating a new variable
@@ -53,42 +39,14 @@ Task 3: Test the webserver
 Get a friend to visit your webserver by going to http://ipaddress/pagename.php what is their IP address?
 Form Input
 
-<pre>
-<html>
-<head>
-  <title>PHP test</title>
-</head>
-
-<body>
-
-
-
-</body>
-</html>
-</pre>
-
-<pre>
-<h1>Form Test</h1>
-
-<form action="" method="post">
-  Enter Username:<input type="text" name="username">
-  <input type="submit" value="button name">
-</form>
-
-your name is <?php echo $_POST["username"] ?>
-Task 4: If Statement
-Using the PHP code below can you make your page not like “pudding”?
-if ($_POST['username'] == "pudding") {
-  echo "I DONT LIKE PUDDING!";
-}
-else {
-  echo "your name is " . $_POST['username'];
-}
-</pre>
+${self.t_include_file(path+'form_test.php')}
 
 <h2>Simple Message Board</h2>
 
-<pre>
+
+${self.t_include_file(path+'messages.php')}
+
+<%doc>
 <h1>Simple Message Board</h1>
 
 <form action="" method="post">
@@ -124,10 +82,11 @@ Cookies are variables your web browser will remember every time you visit the pa
     $_COOKIE['username']=$_POST['username'];
   }
 ?>
-</pre>
+</%doc>
 
+${self.t_include_file(path+'cookie_test.php')}
 
-<pre>
+<%doc>
 <html>
 <head>
   <title>Cookie test</title>
@@ -192,18 +151,18 @@ last time you told me you were <?php echo ($_COOKIE['username']); ?>
   }
 
 ?>
-</pre>
+</%doc>
 
 <h3>Task 6: Logout</h3>
 <p>Can you make a logout button with help from the follow code</p>
-<pre>
+<%doc>
   if ($_POST['logout']!=null) {
     setcookie ("username", null, time()+36000);
     $_COOKIE['username'] = null;
   }
 
     echo "  Logout: <input type='checkbox' name='logout'        />";
-</pre>
+</%doc>
 
 <h2>Further PHP Workshop Ideas<h2>
 

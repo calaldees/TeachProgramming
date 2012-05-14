@@ -4,7 +4,16 @@
 
 import os
 
-from teachprogramming.lib      import make_ver, constants
+from teachprogramming.lib import make_ver, constants
+
+def ver_string(project_type, project, format, version):
+    return '\n'.join( make_ver.make_ver(constants.project_filename % (project_type, project,format), version) )
+
+def include_file_(filename):
+    source = open(filename, 'r')
+    data = source.read()
+    source.close()
+    return data
 
 %>
 
@@ -34,17 +43,23 @@ from teachprogramming.lib      import make_ver, constants
     
 </%def>
 
-<%def name="full_code(target_version)">
-    <a href="/code/${project}.${format}/${target_version}" target="_blank">Full Code</a>
-    <%doc>
+<%def name="full_code(target_version=None, code_inline=False)">
+    <% 
+        code_url = "/code/%(project_type)s/%(project)s.%(format)s/%(target_version)s" % {'project_type':project_type, 'project':project, 'format':format, 'target_version':target_version}
+    %>
+    <a href="${code_url}" target="_blank">Full Code</a>
+    % if code_inline:
     <button type="button" onclick="$(this).next().toggle();">Full code</button>
     <div class="hide">
-        <a href="/code/${project}.${format}/${target_version}">Version ${target_version}</a>
-        <pre>${ver_string(project, format, target_version)}</pre>
+        <a href="${code_url}">Version ${target_version}</a>
+        <pre>${ver_string(project_type, project, format, target_version)}</pre>
     </div>
-    </%doc>
+    % endif
 </%def>
 
+<%def name="t_include_file(filename)">
+    <pre>${include_file_(filename)}</pre>
+</%def>
 
 <%def name='body()'  cache_key="${project}.${format}">
     ## cached="True"
