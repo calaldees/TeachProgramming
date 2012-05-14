@@ -15,8 +15,8 @@ def main(global_config, **settings):
     
     config = Configurator(settings=settings)
     
-    config.add_static_view('static'        , 'static'                     ) #cache_max_age=3600
-    config.add_static_view('project/images', 'static/projects/game/images')
+    config.add_static_view('static'             , 'static'                     ) #cache_max_age=3600
+    config.add_static_view('project/game/images', 'static/projects/game/images')
     
     config.add_route('home', '/')
     config.add_route('project_doc' , '/project/{project_type}/{project}.{format}')
