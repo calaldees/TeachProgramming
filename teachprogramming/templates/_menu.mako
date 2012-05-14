@@ -79,8 +79,8 @@ def selected_class(a,b):
     </ul>
     
     <h2>Contribute</h2>
-    git repository link
-    contact@teachthisstufflikewellgood.net
+    <a href="http://github.com/calaldees/TeachProgramming">git repo</a>
+    calaldees@hotmail.com (need a domain contact@teachthisstufflikewellgood.net)
 </div>
 
 <div class="main">
