@@ -1,17 +1,12 @@
-from pyramid.view import view_config
+from pyramid.view      import view_config
 from pyramid.renderers import render_to_response
-
-from ..models import (
-    DBSession,
-    MyModel,
-    )
 
 import teachprogramming.lib.make_ver  as make_ver
 import teachprogramming.lib.constants as constants
-from   teachprogramming.lib.web import etag
+from   teachprogramming.lib.web       import etag, get_setting
 
 import datetime
-default_http_cache_duration = datetime.timedelta(days=1)
+default_http_cache_duration = datetime.timedelta(seconds=86400) #get_setting('web.cache.expire')
 
 
 
@@ -23,7 +18,7 @@ def home(request):
 @etag
 def project_doc(request):
     return render_to_response(
-        'teachprogramming:templates/projects/%s.mako' % request.matchdict['project'], 
+        'teachprogramming:templates/projects/%(project_type)s/%(project)s.mako' % request.matchdict, 
         request.matchdict,
         request=request,
     )
@@ -38,6 +33,12 @@ def project_code(request):
 
 
 # Old reference
+
+#from ..models import (
+#    DBSession,
+#    MyModel,
+#    )
+
 
 #@view_config(route_name='home', renderer='myproject:templates/mytemplate.pt')
 #def my_view(request):

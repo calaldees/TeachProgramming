@@ -11,7 +11,7 @@
     var variables = {
         "color_background": 'rgba(0,0,0,255)',
     }
-
+    
     function reset() {
         variables.ball_x = 0
         variables.ball_y = 0
@@ -27,7 +27,9 @@
         var pixel       = context.getImageData(event.layerX, event.layerY, 1, 1).data;
         var pixel_color = 'rgba('+pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]+')';
         
-        if (pixel_color!=variables.background_color) {
+        console.log(pixel_color);
+        console.log(variables.color_background);
+        if (pixel_color!=variables.color_background) {
             variables.click_count += 1;
             variables.ball_x = Math.floor(Math.random()*(canvas.width  - variables.ball_image.width ));
             variables.ball_y = Math.floor(Math.random()*(canvas.height - variables.ball_image.height));

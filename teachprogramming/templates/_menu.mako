@@ -1,4 +1,4 @@
-<%inherit file="/base.mako"/>
+<%inherit file="/_base.mako"/>
 
 <%!
 from teachprogramming.lib import resorce_helper, constants
@@ -16,17 +16,17 @@ def selected_class(a,b):
     <h2>Game Projects</h2>
         <!-- Projects -->
         <ul>
-        % for p in resorce_helper.get_projects():
+        % for p in resorce_helper.get_projects('game'):
         % if project==p:
         <li class="selected">
         % else:
         <li>
         % endif
             ${p.capitalize()}
-            <% fileexts = resorce_helper.get_project_langs(p) %>
+            <% fileexts = resorce_helper.get_project_langs('game',p) %>
             % for lang in constants.file_type_to_lang.keys():
                 % if lang in fileexts:
-                    <a href="/project/${p}.${lang}" class="lang_icon lang_${lang} icon16 i_${lang}"><span>${lang}</span></a>
+                    <a href="/project/game/${p}.${lang}" class="lang_icon lang_${lang} icon16 i_${lang}"><span>${lang}</span></a>
                 % endif
             % endfor
         </li>
@@ -42,11 +42,18 @@ def selected_class(a,b):
         <li>NetCopter</li>
     </ul>
     
+    <h2>Web Projects</h2>
+    <ul>
+        <li><a href="/static/projects/web/php.html">Simple Messagbord</a><li>
+        <li>Quiz Graphs<li>
+        <li>Regex: rip from URL's</li>
+        <li>Mobile App (jQueryMobile)</li>
+    </ul>
+    
     <h2>Activities</h2>
     <ul>
         <li>SMTP</li>
         <li>HTTP</li>
-        <li>Regex: rip from URL's</li>
         <li>iCal</li>
         <li>Google Maps</li>
     </ul>
