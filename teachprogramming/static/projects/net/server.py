@@ -2,13 +2,23 @@
 
 import re
 import hashlib, base64
-import SocketServer, threading, time
+import threading, time
+
+# Python 2.x compatability
+try:
+    import socketserver
+except ImportError as e:
+    import SocketServer as socketserver
 
 
 # Constants---------------------------------------------------------------------
 __version__ = 0.1
 recv_size   = 4096
 
+log_params = {}
+def log(catagory, msg):
+    if log_params[catagory]:
+        print(msg)
 
 # Binary Helpers ---------------------------------------------------------------
 
@@ -53,7 +63,6 @@ def websocket_frame_decode(data):
     """
     http://tools.ietf.org/html/rfc6455#section-5.2
     """
-
     # Convert data to python 'int's to use bitwise operators
     data = [ord(i) for i in data]
     
@@ -125,16 +134,16 @@ def websocket_frame_encode(data, opcode=OPCODE_TEXT, fin=True, masked=False):
 
 clients = {'websocket':[],'tcp':[],'udp':[]}
 
-def clients_send(data):
+def clients_send(data, source=None):
     """
     Send the data to all known clients
     """
     
-    print(data)
+    log('message', '%s:%s '%source + data)
     
     def send(client, data):
         try   : client.request.send(data)
-        except: print('error echoing to client')
+        except: print('error echoing to client %s:%s'%client.client_address)
     
     websocket_data_frame = websocket_frame_encode(data)
     for websocket_client in clients['websocket']:
@@ -148,64 +157,67 @@ def clients_send(data):
     
 
 
-class WebSocketEchoRequestHandler(SocketServer.BaseRequestHandler):
+class WebSocketEchoRequestHandler(socketserver.BaseRequestHandler):
     def setup(self):
-        print self.client_address, 'connected!'
         websocket_request = self.request.recv(recv_size)
-        websocket_key     = re.search(r'Sec-WebSocket-Key:\s?(.*)', websocket_request).group(1).strip()
-        websocket_accept  = base64.b64encode(hashlib.sha1('%s%s' % (websocket_key ,'258EAFA5-E914-47DA-95CA-C5AB0DC85B11')).digest())
-        self.request.send(websocket_handshake % {'websocket_accept':websocket_accept})
+        websocket_key     = re.search(r'Sec-WebSocket-Key:\s?(.*)', str(websocket_request)).group(1).strip()
+        websocket_accept  = base64.b64encode(hashlib.sha1(('%s%s'%(websocket_key ,'258EAFA5-E914-47DA-95CA-C5AB0DC85B11')).encode('utf-8')).digest()).decode('utf-8')
+        self.request.send((websocket_handshake % {'websocket_accept':websocket_accept}).encode('utf-8'))
         clients['websocket'].append(self)
+        log('connection','%s:%s connected' % self.client_address)
     
     def handle(self):
         while True:
+            time.sleep(0)
             data_recv = self.request.recv(recv_size)
+            
+            if not data_recv:
+                continue
             
             data, opcode = websocket_frame_decode(data_recv)
             if opcode == OPCODE_TEXT:
-                clients_send(data)
+                clients_send(data, self.client_address)
             elif opcode == OPCODE_CLOSE:
                 self.request.send(websocket_frame_encode(data, opcode=OPCODE_CLOSE))
                 break
             elif opcode == OPCODE_PING:
                 self.request.send(websocket_frame_encode(data, opcode=OPCODE_PONG ))
-            
-            time.sleep(0)
 
     def finish(self):
-        print self.client_address, 'disconnected!'
         clients['websocket'].remove(self)
+        log('connection','%s:%s disconnected' % self.client_address)
 
 
-class TCPEchoRequestHandler(SocketServer.BaseRequestHandler):
+class TCPEchoRequestHandler(socketserver.BaseRequestHandler):
     def setup(self):
-        print self.client_address, 'connected!'
         clients['tcp'].append(self)
+        log('connection','%s:%s connected' % self.client_address)
     
     def handle(self):
         while True:
             data = self.request.recv(recv_size)
             
             if data:
-                clients_send(data)
+                clients_send(data, self.client_address)
                 if data.strip() == 'exit':
                     break
             
             time.sleep(0)
     
     def finish(self):
-        print self.client_address, 'disconnected!'
         #self.request.send('bye ' + str(self.client_address) + '\n')
         clients['tcp'].remove(self)
+        log('connection','%s:%s disconnected' % self.client_address)
 
 
-class UDPEchoRequestHandler(SocketServer.BaseRequestHandler):
+class UDPEchoRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
         # TODO - clients need to register with the UDP handler
         data = self.request[0].strip()
         socket = self.request[1]
-        print("{} wrote:".format(self.client_address[0]))
-        print(data)
+        #log('message',"{} wrote:".format(self.client_address[0]))
+        #log('message',data)
+        client_send(data, self.client_address)
         socket.sendto(data.upper(), self.client_address)
 
 
@@ -214,6 +226,7 @@ class UDPEchoRequestHandler(SocketServer.BaseRequestHandler):
 
 servers = []
 def start_server(server):
+    server.allow_reuse_address = True
     server_thread = threading.Thread(target=server.serve_forever) 
     server_thread.daemon = True # Exit the server thread when the main thread terminates
     server_thread.start() # Start a thread with the server -- that thread will then start one more thread for each request
@@ -226,31 +239,50 @@ def stop_servers():
 
 # Command Line Arguments -------------------------------------------------------
 
+def bool_(value):
+    value = value.lower()
+    for t in ['yes', 'true','y']:
+        if t in value:
+            return True
+    return False
+
+
 def get_args():
     import argparse
     parser = argparse.ArgumentParser(
-        description = """Lightweight Echo server for UDP, TCP and WebSockets""",
-        epilog      = """@calaldees"""
+        prog        = "EchoMultiServe",
+        description = "Lightweight Echo server for UDP, TCP and WebSockets",
+        epilog      = "@calaldees"
     )
-    parser.add_argument('--version', action='version', version=__version__)
+    parser.add_argument('--version', action='version', version="%.2f"%__version__)
     parser.add_argument('-s','--serve', nargs='+', choices=['udp', 'tcp', 'websocket'], metavar='SERVER_TYPE', default=['udp','tcp','websocket'])
     parser.add_argument('-u','--udp_port'      , type=int, help='UDP port'      , default=9871)
     parser.add_argument('-t','--tcp_port'      , type=int, help='TCP port'      , default=9872)
     parser.add_argument('-w','--websocket_port', type=int, help='WebSocket port', default=9873)
+    parser.add_argument(     '--show_status'     , type=bool_, default=True , help='Display status')
+    parser.add_argument('-c','--show_connections', type=bool_, default=True , help='Display connections')
+    parser.add_argument('-m','--show_messages'   , type=bool_, default=False, help='Display messages recived')
     return parser.parse_args()
 
 # Main -------------------------------------------------------------------------
 
 if __name__ == "__main__":
     args = get_args()
+    log_params['status'    ] = args.show_status
+    log_params['message'   ] = args.show_messages
+    log_params['connection'] = args.show_connections
     for server_type in args.serve:
         if server_type=='websocket':
-            start_server(SocketServer.ThreadingTCPServer(('', args.websocket_port), WebSocketEchoRequestHandler))
+            start_server(socketserver.ThreadingTCPServer(('', args.websocket_port), WebSocketEchoRequestHandler))
+            log('status','WebSocket Server on %d' % args.websocket_port)
         if server_type=='tcp':
-            start_server(SocketServer.ThreadingTCPServer(('', args.tcp_port      ), TCPEchoRequestHandler      ))
+            start_server(socketserver.ThreadingTCPServer(('', args.tcp_port      ), TCPEchoRequestHandler      ))
+            log('status','TCP Server on %d' % args.tcp_port)
         if server_type=='udp':
-            start_server(SocketServer.UDPServer         (('', args.udp_port      ), UDPEchoRequestHandler      ))
+            start_server(socketserver.UDPServer         (('', args.udp_port      ), UDPEchoRequestHandler      ))
+            log('status','UDP Server on %d' % args.udp_port)
 
+    log('status','Server Running')
     while True:
         time.sleep(10)
 
