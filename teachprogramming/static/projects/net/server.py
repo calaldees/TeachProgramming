@@ -26,7 +26,7 @@ def ByteToHex( byteStr ):
     """
     Convert a byte string to it's hex string representation e.g. for output.
     """
-    return ''.join( [ "%02X " % ord( x ) for x in byteStr ] ).strip()
+    return ''.join( [ "%02X " % x for x in byteStr ] ).strip() #ord( x )
 
 def get_bit(number, bit):
     """
@@ -162,7 +162,9 @@ class WebSocketEchoRequestHandler(socketserver.BaseRequestHandler):
         websocket_request = self.request.recv(recv_size)
         websocket_key     = re.search(r'Sec-WebSocket-Key:\s?(.*)', str(websocket_request)).group(1).strip()
         websocket_accept  = base64.b64encode(hashlib.sha1(('%s%s'%(websocket_key ,'258EAFA5-E914-47DA-95CA-C5AB0DC85B11')).encode('utf-8')).digest()).decode('utf-8')
-        self.request.send((websocket_handshake % {'websocket_accept':websocket_accept}).encode('utf-8'))
+        handshake_return  = (websocket_handshake % {'websocket_accept':websocket_accept}).encode('utf-8')
+        self.request.send(handshake_return)
+        #print(handshake_return)
         clients['websocket'].append(self)
         log('connection','%s:%s connected' % self.client_address)
     
@@ -197,12 +199,12 @@ class TCPEchoRequestHandler(socketserver.BaseRequestHandler):
         while True:
             data = self.request.recv(recv_size)
             
-            if data:
-                clients_send(data, self.client_address)
-                if data.strip() == 'exit':
-                    break
-            
-            time.sleep(0)
+            if not data:
+                self.request.close()
+                
+            clients_send(data, self.client_address)
+                
+            #time.sleep(0)
     
     def finish(self):
         #self.request.send('bye ' + str(self.client_address) + '\n')
@@ -283,8 +285,11 @@ if __name__ == "__main__":
             log('status','UDP Server on %d' % args.udp_port)
 
     log('status','Server Running')
-    while True:
-        time.sleep(10)
+    try:
+        while True:
+            time.sleep(10)
+    finally:
+        stop_servers()
 
 #-------------------------------------------------------------------------------
 # Working

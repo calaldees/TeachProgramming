@@ -1,4 +1,5 @@
 *.pyc
+*.class
 TeachProgramming.db
 *.egg-info
 env/

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <script>
       window.onload = function() {
-        var s = new WebSocket("ws://localhost:9999/");
+        var s = new WebSocket("ws://localhost:9873/");
         s.onopen = function(e) { console.log("opened"); s.send('hello, whats up doc!');}
         s.onclose = function(e) { console.log("closed"); }
         s.onmessage = function(e) { console.log("got: " + e.data); }
