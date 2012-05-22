@@ -1,18 +1,39 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <title>Web Socket Example</title>
-    <meta charset="UTF-8">
-    <script>
-      window.onload = function() {
-        var s = new WebSocket("ws://localhost:9873/");
-        s.onopen = function(e) { console.log("opened"); s.send('hello, whats up doc!');}
-        s.onclose = function(e) { console.log("closed"); }
-        s.onmessage = function(e) { console.log("got: " + e.data); }
-      };
-    </script>
-  </head>
+    <head>
+        <title>Web Socket Example</title>
+        <meta charset="UTF-8">
+        <script>
+            window.onload = function() {
+                var text_area  = document.getElementById("text_area");
+                var text_field = document.getElementById('text_field');
+                var socket     = new WebSocket("ws://localhost:9873/");
+                
+                //text_area.readOnly = true;
+                text_field.addEventListener('keydown', textEventKeyDown, true);
+                
+                function textEventKeyDown(event) {
+                    if (event.keyCode==13) {
+                        socket.send(text_field.value+"\n");
+                        text_field.value = "";
+                    }
+                }
+                
+                function receive(msg) {
+                    //console.log("got: " + msg.data);
+                    text_area.value = text_area.value + msg.data;
+                    text_area.scrollTop = text_area.scrollHeight;
+                }
+                
+                //socket.onopen    = function(e) { console.log("opened"); send('hello, whats up doc!');}
+                //socket.onclose   = function(e) { console.log("closed"); }
+                socket.onmessage = receive;
+            };
+        </script>
+    </head>
     <body>
-      <div id="holder" style="width:600px; height:300px"></div>
+        <textarea id="text_area"  style="width:300px;" rows="15"></textarea>
+        <br/>
+        <input    id="text_field" style="width:300px;"         />
     </body>
 </html>

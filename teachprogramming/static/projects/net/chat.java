@@ -74,18 +74,19 @@ public class chat implements ActionListener {
         text_area = new JTextArea();
         text_area.setEditable(false);
         text_area.setLineWrap(true);
-        //frame.add(text_area,BorderLayout.CENTER);
         JScrollPane scroll = new JScrollPane(text_area, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         frame.add(scroll,BorderLayout.CENTER);
+        //frame.add(text_area,BorderLayout.CENTER);
         
         frame.pack();
+        frame.setSize(300,300);
         frame.setVisible(true);
         
         connect(host,port);
         //send("HelloWorld");
-        while (network_socket.isConnected()) {
-            send(console.nextLine());
-        }
+        //while (network_socket.isConnected()) {
+        //    send(console.nextLine());
+        //}
     }
 
     public static void main(String[] args) {new chat("localhost", 9872);}
