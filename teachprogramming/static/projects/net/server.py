@@ -4,6 +4,7 @@ import re
 import hashlib, base64
 import threading, time
 
+
 # Python 2.x compatability
 try:
     import socketserver
@@ -283,8 +284,20 @@ if __name__ == "__main__":
         if server_type=='udp':
             start_server(socketserver.UDPServer         (('', args.udp_port      ), UDPEchoRequestHandler      ))
             log('status','UDP Server on %d' % args.udp_port)
+    
+    ip = []    
+    #import socket
+    #ip = [ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1]
+    try:
+        # sudo apt-get install python-netifaces
+        from netifaces import interfaces, ifaddresses, AF_INET    
+        for ifaceName in interfaces():
+            ip += [i['addr'] for i in ifaddresses(ifaceName).setdefault(AF_INET, [{'addr':''}] )]
+            #print '%s: %s' % (ifaceName, ', '.join(addresses))
+    except:
+        pass
 
-    log('status','Server Running')
+    log('status','Server Running on %s' % (ip))
     try:
         while True:
             time.sleep(10)
