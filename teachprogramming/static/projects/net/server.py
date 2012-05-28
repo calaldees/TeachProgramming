@@ -55,12 +55,14 @@ OPCODE_CLOSE        =  8
 OPCODE_PING         =  9
 OPCODE_PONG         = 10
 
-websocket_handshake = """HTTP/1.1 101 Switching Protocols\r
+WEBSOCKET_HANDSHAKE_HYBI10 = """HTTP/1.1 101 Switching Protocols\r
 Upgrade: websocket\r
 Connection: Upgrade\r
 Sec-WebSocket-Accept: %(websocket_accept)s\r\n\r\n"""
 
-def websocket_frame_decode(data):
+# HYBI10 ----
+
+def websocket_frame_decode_hybi10(data):
     """
     http://tools.ietf.org/html/rfc6455#section-5.2
     """
@@ -107,7 +109,7 @@ def websocket_frame_decode(data):
     return payload_data, opcode
 
 
-def websocket_frame_encode(data, opcode=OPCODE_TEXT, fin=True, masked=False):
+def websocket_frame_encode_hybi10(data, opcode=OPCODE_TEXT, fin=True, masked=False):
     if not fin:
         raise Exception('unsuported fragmented frames')
     
@@ -130,6 +132,35 @@ def websocket_frame_encode(data, opcode=OPCODE_TEXT, fin=True, masked=False):
     
     return chr(control) + chr(payload_length) + data
 
+# HYBI00 ----
+
+WEBSOCKET_HANDSHAKE_HYBI00 = """HTTP/1.1 101 Web Socket Protocol Handshake\r
+Upgrade: WebSocket\r
+Connection: Upgrade\r
+WebSocket-Origin: %(origin)s\r
+WebSocket-Location: %(location)s\r
+WebSocket-Protocol: sample\r\n\r\n"""
+
+#GET /demo HTTP/1.1
+#Upgrade: WebSocket
+#Connection: Upgrade
+#Host: example.com
+#Origin: http://example.com
+#WebSocket-Protocol: sample
+
+#HTTP/1.1 101 Web Socket Protocol Handshake
+#Upgrade: WebSocket
+#Connection: Upgrade
+#WebSocket-Origin: http://example.com
+#WebSocket-Location: ws://example.com/demo
+#WebSocket-Protocol: sample
+
+def websocket_frame_decode_hybi00(data):
+    return data, OPCODE_TEXT
+    
+def websocket_frame_encode_hybi00(data):
+    return '\x00' + data + '\xff'
+
 
 # Connection Handlers ----------------------------------------------------------
 
@@ -146,9 +177,10 @@ def clients_send(data, source=None):
         try   : client.request.send(data)
         except: print('error echoing to client %s:%s'%client.client_address)
     
-    websocket_data_frame = websocket_frame_encode(data)
+    #websocket_data_frame_hybi00 = websocket_frame_encode_hybi00(data) # AllanC - could preprocess data frames here ... but thats an optimisation for later
+    #websocket_data_frame_hybi10 = websocket_frame_encode_hybi10(data)
     for websocket_client in clients['websocket']:
-        send(websocket_client, websocket_data_frame)
+        send(websocket_client, websocket_client.frame_encode_func(data))
         
     for tcp_client in clients['tcp']:
         send(tcp_client, data)
@@ -160,10 +192,25 @@ def clients_send(data, source=None):
 
 class WebSocketEchoRequestHandler(socketserver.BaseRequestHandler):
     def setup(self):
-        websocket_request = self.request.recv(recv_size)
-        websocket_key     = re.search(r'Sec-WebSocket-Key:\s?(.*)', str(websocket_request)).group(1).strip()
-        websocket_accept  = base64.b64encode(hashlib.sha1(('%s%s'%(websocket_key ,'258EAFA5-E914-47DA-95CA-C5AB0DC85B11')).encode('utf-8')).digest()).decode('utf-8')
-        handshake_return  = (websocket_handshake % {'websocket_accept':websocket_accept}).encode('utf-8')
+        websocket_request = str(self.request.recv(recv_size))
+        
+        # HyBi 10 handshake
+        if 'Sec-WebSocket-Key' in websocket_request:
+            websocket_key     = re.search(r'Sec-WebSocket-Key:\s?(.*)', websocket_request).group(1).strip()
+            websocket_accept  = base64.b64encode(hashlib.sha1(('%s%s'%(websocket_key ,'258EAFA5-E914-47DA-95CA-C5AB0DC85B11')).encode('utf-8')).digest()).decode('utf-8')
+            handshake_return  = (WEBSOCKET_HANDSHAKE_HYBI10 % {'websocket_accept':websocket_accept}).encode('utf-8')
+            self.frame_encode_func = websocket_frame_encode_hybi10
+            self.frame_decode_func = websocket_frame_decode_hybi10
+        
+        # HyBi 00 handshake
+        elif False:
+            print(websocket_request)
+            header_match = re.search(r'GET (?P<location>.*?) HTTP.*Origin:\s?(?P<origin>.*?)\s', websocket_request, flags=re.MULTILINE)
+            print(header_match.groupdict())
+            handshake_return  = (WEBSOCKET_HANDSHAKE_HYBI00 % {'origin':'TEMP', 'location':'TEMP'}).encode('utf-8')
+            self.frame_encode_func = websocket_frame_encode_hybi00
+            self.frame_decode_func = websocket_frame_decode_hybi00
+        
         self.request.send(handshake_return)
         #print(handshake_return)
         clients['websocket'].append(self)
@@ -177,14 +224,14 @@ class WebSocketEchoRequestHandler(socketserver.BaseRequestHandler):
             if not data_recv:
                 continue
             
-            data, opcode = websocket_frame_decode(data_recv)
+            data, opcode = self.frame_decode_func(data_recv)
             if opcode == OPCODE_TEXT:
                 clients_send(data, self.client_address)
             elif opcode == OPCODE_CLOSE:
-                self.request.send(websocket_frame_encode(data, opcode=OPCODE_CLOSE))
+                self.request.send(self.frame_encode_func(data, opcode=OPCODE_CLOSE))
                 break
             elif opcode == OPCODE_PING:
-                self.request.send(websocket_frame_encode(data, opcode=OPCODE_PONG ))
+                self.request.send(self.frame_encode_func(data, opcode=OPCODE_PONG ))
 
     def finish(self):
         clients['websocket'].remove(self)
