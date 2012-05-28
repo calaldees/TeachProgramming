@@ -94,7 +94,7 @@ def make_web_ver(source):
                 if fileext == format:
                     css_class = 'selected'
             %>
-            <li><a href='/project/${project}.${fileext}#${target_version}' class='${css_class}' alt='${format_description}'><span class='icon16 i_${fileext}'></span></a></li>
+            <li><a href='/project/${project_type}/${project}.${fileext}#${target_version}' class='${css_class}' alt='${format_description}'><span class='icon16 i_${fileext}'></span></a></li>
         % endfor
         </ul>
     </div>
