@@ -61,10 +61,10 @@ def include_file_(filename):
     <pre>${include_file_(filename)}</pre>
 </%def>
 
-<%def name='body()'  cache_key="${project}.${format}">
+<%def name='body()'  cache_key="%{project_type}/${project}.${format}">
     ## cached="True"
     <%
-        self.files = [file for file in os.listdir(constants.project_path) if file.startswith('%s.' % project)]
+        self.files = [file for file in os.listdir(os.path.join(constants.project_path,project_type)) if file.startswith('%s.' % project)]
     %>
     <!-- Documentation for this project -->
     ${next.body()}

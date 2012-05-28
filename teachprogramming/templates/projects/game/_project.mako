@@ -83,6 +83,9 @@ def make_web_ver(source):
         <a name="${target_version}"></a>
         <!-- List all formats for this version -->
         <ul>
+        % if not self.files:
+        No versions?
+        % endif
         % for file in self.files:
             <% 
                 fileext            = make_ver.get_fileext(file) 
