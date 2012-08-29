@@ -10,6 +10,38 @@ def selected_class(a,b):
 
 %>
 
+
+<div class="span3 affix_sidebar">
+    <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+            <li class="nav-header">Sidebar</li>
+            <li class="active"><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+            <li class="nav-header">Sidebar</li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+            <li class="nav-header">Sidebar</li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+        </ul>
+    </div><!--/.well -->
+</div>
+
+
+<div class="span9">
+    ${next.body()}
+</div>
+
+
+
+<%doc>
 <div class="menu">
     <a href="/">Home</a>
     
@@ -86,3 +118,4 @@ def selected_class(a,b):
 <div class="main">
     ${next.body()}
 </div>
+</%doc>

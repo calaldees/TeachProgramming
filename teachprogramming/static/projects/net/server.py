@@ -248,7 +248,8 @@ class TCPEchoRequestHandler(socketserver.BaseRequestHandler):
             data = self.request.recv(recv_size)
             
             if not data:
-                self.request.close()
+                #self.request.close()
+                break
                 
             clients_send(data, self.client_address)
                 
