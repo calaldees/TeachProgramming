@@ -3,3 +3,4 @@
 TeachProgramming.db
 *.egg-info
 env/
+*#
