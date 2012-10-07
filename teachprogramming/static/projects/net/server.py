@@ -19,7 +19,7 @@ recv_size   = 4096
 log_params = {}
 def log(catagory, msg):
     if log_params[catagory]:
-        print(msg)
+        print(msg.strip())
 
 # Binary Helpers ---------------------------------------------------------------
 
@@ -286,7 +286,8 @@ def start_server(server):
 
 def stop_servers():
     for server in servers:
-        server.shutdown()
+        #server.shutdown()
+        server.server_close()
 
 # Command Line Arguments -------------------------------------------------------
 
@@ -349,8 +350,10 @@ if __name__ == "__main__":
     try:
         while True:
             time.sleep(10)
-    finally:
-        stop_servers()
+    except KeyboardInterrupt as e:
+        pass
+    stop_servers()
+    print("")
 
 #-------------------------------------------------------------------------------
 # Working
