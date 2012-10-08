@@ -5,19 +5,19 @@
         <script>
             window.onload = function() {
                 var socket     = new WebSocket("ws://localhost:9873/");
-                var text_area  = document.getElementById("text_area");  // VER: recv
-                var text_field = document.getElementById('text_field'); // VER: send
-                                                                                // VER: gui_recv
-                text_area.readOnly = true;                                      // VER: gui_recv
-                                                                                // VER: gui_recv
+                                                                                // VER: gui
+                var text_field = document.getElementById('text_field');         // VER: gui
                 text_field.addEventListener('keydown', textEventKeyDown, true); // VER: gui
                 function textEventKeyDown(event) {                              // VER: gui
                     if (event.keyCode==13) {                                    // VER: gui
-                        socket.send(text_field.value+"\n");                     // VER: gui not gui_username
+                        //socket.send(text_field.value+"\n");                   // VER: gui not gui_username
                         socket.send("Yourname: "+text_field.value+"\n");        // VER:         gui_username
                         text_field.value = "";                                  // VER: gui
                     }                                                           // VER: gui
                 }                                                               // VER: gui
+                                                                                // VER: gui_recv
+                var text_area  = document.getElementById("text_area");          // VER: gui_recv
+                text_area.readOnly = true;                                      // VER: gui_recv
                                                                    // VER: recv                
                 function receive(msg) {                            // VER: recv
                     //console.log("got: " + msg.data);             // VER: recv not gui_recv
@@ -25,10 +25,9 @@
                     text_area.scrollTop = text_area.scrollHeight;  // VER: gui_scroll
                 }                                                  // VER: recv
                 socket.onmessage = receive;                        // VER: recv
-                                                                   // VER: recv
-                //socket.send("Hello I am Bob"); // VER: send_only
-                // //socket.onopen    = function(e) { console.log("opened"); send('hello, whats up doc!');}
-                // //socket.onclose   = function(e) { console.log("closed"); }
+                                                                                      // VER: send_one not gui
+                //socket.onopen = function(e) { socket.send("Hello I am Bob"+"\n"); } // VER: send_one not gui
+                //while (true) { socket.send(prompt()+"\n"); }                        // VER: send     not gui
             };
         </script>
     </head>

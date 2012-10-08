@@ -28,7 +28,7 @@ output_box.pack(fill=tkinter.BOTH, expand=1)                              # VER:
 input_box = tkinter.Entry(root)                                           # VER: gui
 input_box.pack(fill=tkinter.BOTH)                                         # VER: gui
 def handle_user_input(e):                                                 # VER: gui
-    sock.sendall((input_box.get()+'\n').encode('utf-8'))                  # VER: gui not gui_username
+    #sock.sendall((input_box.get()+'\n').encode('utf-8'))                 # VER: gui not gui_username
     sock.sendall(('Yourname:'+input_box.get()+'\n').encode('utf-8'))      # VER:         gui_username
     input_box.delete(0, tkinter.END)                                      # VER: gui
 input_box.bind("<KeyRelease-Return>", handle_user_input)                  # VER: gui

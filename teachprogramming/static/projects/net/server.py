@@ -174,8 +174,13 @@ def clients_send(data, source=None):
     log('message', '%s:%s '%source + data)
     
     def send(client, data):
-        try   : client.request.send(data)
-        except: print('error echoing to client %s:%s'%client.client_address)
+        try   :
+            client.request.send(data)
+        except:
+            #print('error echoing to client %s:%s'%client.client_address) # AllanC - HACK!!! Short term botch hid the errors!!
+            # Ideal behaviour, remove problem client!
+            pass
+            
     
     #websocket_data_frame_hybi00 = websocket_frame_encode_hybi00(data) # AllanC - could preprocess data frames here ... but thats an optimisation for later
     #websocket_data_frame_hybi10 = websocket_frame_encode_hybi10(data)
@@ -193,6 +198,8 @@ def clients_send(data, source=None):
 class WebSocketEchoRequestHandler(socketserver.BaseRequestHandler):
     def setup(self):
         websocket_request = str(self.request.recv(recv_size))
+        if not websocket_request: # Sometimes this method is called with no request after a real setup?! WTF? Abort
+            return
         
         # HyBi 10 handshake
         if 'Sec-WebSocket-Key' in websocket_request:
@@ -202,16 +209,20 @@ class WebSocketEchoRequestHandler(socketserver.BaseRequestHandler):
             self.frame_encode_func = websocket_frame_encode_hybi10
             self.frame_decode_func = websocket_frame_decode_hybi10
         
+        # HyBi 07 ?
+        
+        # hixie-75?
+        
         # HyBi 00 handshake
         elif False:
-            print(websocket_request)
             header_match = re.search(r'GET (?P<location>.*?) HTTP.*Origin:\s?(?P<origin>.*?)\s', websocket_request, flags=re.MULTILINE)
             print(header_match.groupdict())
             handshake_return  = (WEBSOCKET_HANDSHAKE_HYBI00 % {'origin':'TEMP', 'location':'TEMP'}).encode('utf-8')
             self.frame_encode_func = websocket_frame_encode_hybi00
             self.frame_decode_func = websocket_frame_decode_hybi00
-        
+            
         self.request.send(handshake_return)
+        
         #print(handshake_return)
         clients['websocket'].append(self)
         log('connection','%s:%s connected' % self.client_address)
@@ -286,8 +297,12 @@ def start_server(server):
 
 def stop_servers():
     for server in servers:
-        #server.shutdown()
-        server.server_close()
+        try   : server.server_close()
+        except: pass
+        try   : server.shutdown()
+        except: pass
+        try   : server.close()
+        except: pass
 
 # Command Line Arguments -------------------------------------------------------
 

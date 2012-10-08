@@ -2,7 +2,7 @@
 
 <h1>Network Chat System</h1>
 
-
+##python3 ~/code/TeachProgramming/teachprogramming/lib/make_ver.py chat.html --target_version 1,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll,gui_username > t.html
 
 <h2>Part 0: Setup</h2>
 Before we Begin
