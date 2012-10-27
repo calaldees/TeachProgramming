@@ -79,6 +79,7 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
     remmed_line           = re.compile(r'^\s*%s' % comment_token)
 
     # Process source file
+    #source.seek(0)
     for line in source:
         
         # Extract meta data from line
@@ -153,11 +154,17 @@ And that is how you version up!
     parser.add_argument('source'               , type=argparse.FileType('r'), help='file to read')
     parser.add_argument('-o','--output'        , type=argparse.FileType('w'), help='File to output version too, if absent will output to STDIO') #default=argparse.SUPPRESS,
     parser.add_argument('-v','--target_version',                              help='the target version', default='1') #default=argparse.SUPPRESS,
+    parser.add_argument('-d','--diff_version'  ,                              help='the target version diff only', default='1') #default=argparse.SUPPRESS,
     return parser.parse_args()
     
 if __name__ == "__main__":
     args = get_args()
-    output = make_ver(args.source, args.target_version)
+    if args.target_version:
+        output = make_ver(args.source, args.target_version)
+    if args.diff_version:
+        target_versions = [ver.strip() for ver in args.diff_version.split(',')]
+        prev_versions   = target_versions[:-1]
+        output = get_diff(args.source, prev_versions, target_versions, n=2)
     if args.output:
         args.output.write(output)
         args.output.close()

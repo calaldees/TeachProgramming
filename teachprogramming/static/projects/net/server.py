@@ -349,7 +349,7 @@ if __name__ == "__main__":
             start_server(socketserver.UDPServer         (('', args.udp_port      ), UDPEchoRequestHandler      ))
             log('status','UDP Server on %d' % args.udp_port)
     
-    ip = []    
+    ip = []
     #import socket
     #ip = [ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1]
     try:
