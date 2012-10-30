@@ -67,7 +67,12 @@ def websocket_frame_decode_hybi10(data):
     http://tools.ietf.org/html/rfc6455#section-5.2
     """
     # Convert data to python 'int's to use bitwise operators
-    data = [ord(i) for i in data]
+    #print(type(data[0]))
+    #import pdb
+    #pdb.set_trace()
+    # Python2.x needs to convert data to ints. Python3.x has them as int's already
+    if type(data[0])!=int:
+        data = [ord(i) for i in data]
     
     # Extract control bits
     fin            = get_bit(data[0], 8)
@@ -97,14 +102,16 @@ def websocket_frame_decode_hybi10(data):
         data_start_point += 4
     
     # Convert payload_data to python type
-    data_convert_function = chr #lambda i: i # AllanC - close frames can have data in, int's cant be concatinated with b''.join ... humm
+    data_convert_function = lambda i: i # AllanC - close frames can have data in, int's cant be concatinated with b''.join ... humm
     if opcode == OPCODE_TEXT:
-        data_convert_function = chr
+        pass
+    #    data_convert_function = chr
     if opcode == OPCODE_BINARY:
-        #raise Exception('untested binary characters')
+        raise Exception('untested binary characters')
         pass
     
-    payload_data = b''.join([data_convert_function(item^masking_key[index%4]) for index, item in enumerate(data[data_start_point:])])
+    payload_data = bytes([data_convert_function(item^masking_key[index%4]) for index, item in enumerate(data[data_start_point:])]) #b''.join(
+    # AllanC - !? what about binary data? here we are just using a string. Wont that error on some values? advice?s
     
     return payload_data, opcode
 
@@ -130,7 +137,7 @@ def websocket_frame_encode_hybi10(data, opcode=OPCODE_TEXT, fin=True, masked=Fal
     if masked:
         raise Exception('unsuported masked')
     
-    return chr(control) + chr(payload_length) + data
+    return bytes([control,payload_length]) + data
 
 # HYBI00 ----
 
@@ -171,7 +178,7 @@ def clients_send(data, source=None):
     Send the data to all known clients
     """
     
-    log('message', '%s:%s '%source + data)
+    log('message', '%s:%s '%source + str(data))
     
     def send(client, data):
         try   :
@@ -197,15 +204,17 @@ def clients_send(data, source=None):
 
 class WebSocketEchoRequestHandler(socketserver.BaseRequestHandler):
     def setup(self):
-        websocket_request = str(self.request.recv(recv_size))
+        websocket_request = self.request.recv(recv_size)
         if not websocket_request: # Sometimes this method is called with no request after a real setup?! WTF? Abort
             return
+        
+        websocket_request = str(websocket_request,'utf8')
         
         # HyBi 10 handshake
         if 'Sec-WebSocket-Key' in websocket_request:
             websocket_key     = re.search(r'Sec-WebSocket-Key:\s?(.*)', websocket_request).group(1).strip()
-            websocket_accept  = base64.b64encode(hashlib.sha1(('%s%s'%(websocket_key ,'258EAFA5-E914-47DA-95CA-C5AB0DC85B11')).encode('utf-8')).digest()).decode('utf-8')
-            handshake_return  = (WEBSOCKET_HANDSHAKE_HYBI10 % {'websocket_accept':websocket_accept}).encode('utf-8')
+            websocket_accept  = base64.b64encode(hashlib.sha1(websocket_key.encode('utf8')+b'258EAFA5-E914-47DA-95CA-C5AB0DC85B11').digest())
+            handshake_return  = WEBSOCKET_HANDSHAKE_HYBI10 % {'websocket_accept':str(websocket_accept,'utf8')}
             self.frame_encode_func = websocket_frame_encode_hybi10
             self.frame_decode_func = websocket_frame_decode_hybi10
         
@@ -217,11 +226,12 @@ class WebSocketEchoRequestHandler(socketserver.BaseRequestHandler):
         elif False:
             header_match = re.search(r'GET (?P<location>.*?) HTTP.*Origin:\s?(?P<origin>.*?)\s', websocket_request, flags=re.MULTILINE)
             print(header_match.groupdict())
-            handshake_return  = (WEBSOCKET_HANDSHAKE_HYBI00 % {'origin':'TEMP', 'location':'TEMP'}).encode('utf-8')
+            handshake_return  = (WEBSOCKET_HANDSHAKE_HYBI00 % {'origin':'TEMP', 'location':'TEMP'}).encode('utf8')
             self.frame_encode_func = websocket_frame_encode_hybi00
             self.frame_decode_func = websocket_frame_decode_hybi00
-            
-        self.request.send(handshake_return)
+        
+        self.request.send(handshake_return.encode('utf8'))
+        
         
         #print(handshake_return)
         clients['websocket'].append(self)
@@ -229,11 +239,11 @@ class WebSocketEchoRequestHandler(socketserver.BaseRequestHandler):
     
     def handle(self):
         while True:
-            time.sleep(0)
+            #time.sleep(0)
             data_recv = self.request.recv(recv_size)
             
             if not data_recv:
-                continue
+                break
             
             data, opcode = self.frame_decode_func(data_recv)
             if opcode == OPCODE_TEXT:
@@ -257,14 +267,9 @@ class TCPEchoRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
         while True:
             data = self.request.recv(recv_size)
-            
             if not data:
-                #self.request.close()
                 break
-                
             clients_send(data, self.client_address)
-                
-            #time.sleep(0)
     
     def finish(self):
         #self.request.send('bye ' + str(self.client_address) + '\n')
@@ -297,12 +302,14 @@ def start_server(server):
 
 def stop_servers():
     for server in servers:
-        try   : server.server_close()
-        except: pass
+        #import pdb
+        #pdb.set_trace()
+        #try   : server.server_close()
+        #except: pass
         try   : server.shutdown()
         except: pass
-        try   : server.close()
-        except: pass
+        #try   : server.close()
+        #except: pass
 
 # Command Line Arguments -------------------------------------------------------
 
@@ -354,13 +361,13 @@ if __name__ == "__main__":
     #ip = [ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1]
     try:
         # sudo apt-get install python-netifaces
-        from netifaces import interfaces, ifaddresses, AF_INET    
+        from netifaces import interfaces, ifaddresses, AF_INET
         for ifaceName in interfaces():
             ip += [i['addr'] for i in ifaddresses(ifaceName).setdefault(AF_INET, [{'addr':''}] )]
             #print '%s: %s' % (ifaceName, ', '.join(addresses))
     except:
         pass
-
+    
     log('status','Server Running on %s' % (ip))
     try:
         while True:
