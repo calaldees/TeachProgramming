@@ -1,4 +1,4 @@
-from pyramid.view      import view_config
+#from pyramid.view      import view_config
 from pyramid.renderers import render_to_response
 
 from teachprogramming.lib.web import etag, get_setting
@@ -19,17 +19,18 @@ def home(request):
     return render_static_mako_from_caller(request)
     #return {}
 
-#@view_config(route_name='activities', renderer='teachprogramming:templates/activities.mako')
 @etag
 def activities(request):
     return render_static_mako_from_caller(request)
 
-#@view_config(route_name='reference', renderer='teachprogramming:templates/reference.mako')
 @etag
 def reference(request):
     return render_static_mako_from_caller(request)
 
-#@view_config(route_name='contact', renderer='teachprogramming:templates/contact.mako')
 @etag
 def contact(request):
+    return render_static_mako_from_caller(request)
+
+@etag
+def projects(request):
     return render_static_mako_from_caller(request)

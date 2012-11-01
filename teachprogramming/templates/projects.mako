@@ -1,9 +1,14 @@
 <%inherit file="/_base.mako"/>
 
 <%
+    import teachprogramming.lib.resorce_helper as resorce_helper    
+%>
+
+<%def name="init()"><%
+    self.titlebar_active        = 'projects'
     self.text_title             = 'Projects'
     self.text_title_description = 'Pick a project and get coding!'
-%>
+%></%def>
 
 
 
@@ -11,11 +16,7 @@
         <!-- Projects -->
         <ul>
         % for p in resorce_helper.get_projects('game'):
-        % if project==p:
-        <li class="selected">
-        % else:
         <li>
-        % endif
             ${p.capitalize()}
         </li>
         % endfor
