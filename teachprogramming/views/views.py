@@ -10,13 +10,9 @@ default_http_cache_duration = datetime.timedelta(seconds=86400) #get_setting('we
 
 
 
-@view_config(route_name='home', renderer='teachprogramming:templates/home.mako')
-def home(request):
-    return {}
-
-@view_config(route_name='project_doc', http_cache=default_http_cache_duration)
+@view_config(route_name='project', http_cache=default_http_cache_duration)
 @etag
-def project_doc(request):
+def project(request):
     return render_to_response(
         'teachprogramming:templates/projects/%(project_type)s/%(project)s.mako' % request.matchdict, 
         request.matchdict,
@@ -24,6 +20,7 @@ def project_doc(request):
     )
 
 @view_config(route_name='project_code', http_cache=default_http_cache_duration)
+@etag
 def project_code(request):
     code = '\n'.join( make_ver.make_ver(constants.project_filename_dict % request.matchdict, request.matchdict.get('version')) )
     response = Response(code)

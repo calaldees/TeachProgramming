@@ -1,5 +1,6 @@
 
 #AllanC - TODO! Move paths to config! ... they are not constants!
+template_path         = 'teachprogramming/templates/'
 project_path          = 'teachprogramming/static/projects/'
 project_template_path = 'teachprogramming/templates/projects/'
 

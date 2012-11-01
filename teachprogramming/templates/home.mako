@@ -1,5 +1,11 @@
-<%inherit file="/_menu.mako"/>
+<%inherit file="/_sidebar.mako"/>
 
+
+<%def name="init()"><%
+    #self.titlebar_active        = 'about'
+    self.text_title             = 'Programming! Its Badass!!'
+    self.text_title_description = 'Ever dreamed of kicking ass ... well now you can.'
+%></%def>
 
 <div>
     <p>TeachProgramming</p>

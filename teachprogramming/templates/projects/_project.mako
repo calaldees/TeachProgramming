@@ -1,4 +1,4 @@
-<%inherit file="/_menu.mako"/>
+<%inherit file="/_sidebar.mako"/>
 
 <%!
 

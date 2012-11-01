@@ -18,10 +18,20 @@ def main(global_config, **settings):
     config.add_static_view('static'             , 'static'                     ) #cache_max_age=3600
     config.add_static_view('project/game/images', 'static/projects/game/images')
     
-    config.add_route('home', '/')
-    config.add_route('project_doc' , '/project/{project_type}/{project}.{format}')
+    # Plain Template routes  
+    from .lib.resorce_helper import get_templates
+    import teachprogramming.views.static_views as static_views
+    config.add_route('root', '/')
+    config.add_view(static_views.home, route_name='root')
+    for route_name in get_templates('.'):
+        #print ("register {0}".format(route_name))
+        config.add_route(route_name, '/{0}'.format(route_name))
+        config.add_view(getattr(static_views,route_name), route_name=route_name)
+
+    
+    config.add_route('project', '/projects/{project_type}/{project}.{format}')
     #config.add_route('project_code', '/code/{project}.{format}'          )
-    config.add_route('project_code', '/code/{project_type}/{project}.{format}/{version}')
+    config.add_route('project_code', '/projects/{project_type}/{project}.{format}/{version}')
     
     # Old for reference
     #config.add_view('myproject.views.mako_test', route_name='mako_test')

@@ -1,8 +1,9 @@
 ## -*- coding: utf-8 -*-
 <%
+    self.titlebar_active       = ''
     self.text_title             = 'Title'
     self.text_title_description = 'Test a little bit of make and shake'
-%>\
+%><%def name="init()"></%def>${self.init()}\
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -31,26 +32,61 @@
         ##<link rel="apple-touch-icon-precomposed"                 href="../assets/ico/apple-touch-icon-57-precomposed.png" >
     </head>
     
-    <body>
+    <body data-spy="scroll" data-target=".navbar">
         <!-- Navbar -->
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container-fluid">
+                    
                     <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="#">${project()}</a>
+                    
+                    
+                    <a class="brand" href="/">${project()}</a>
                     
                     <div class="nav-collapse collapse">
-                        <p class="navbar-text pull-right">
-                            Logged in as <a href="#" class="navbar-link">Username</a>
-                        </p>
+                        
+                        <ul class="nav pull-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                    <li><a tabindex="-1" href="#">Action</a></li>
+                                    <li><a tabindex="-1" href="#">Another action</a></li>
+                                    <li><a tabindex="-1" href="#">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a tabindex="-1" href="#">Separated link</a></li>
+                                    <%doc>
+                                        <% fileexts = resorce_helper.get_project_langs('game',p) %>
+                                        % for lang in constants.file_type_to_lang.keys():
+                                            % if lang in fileexts:
+                                                <a href="/project/game/${p}.${lang}" class="lang_icon lang_${lang} icon16 i_${lang}"><span>${lang}</span></a>
+                                            % endif
+                                        % endfor
+                                    </%doc>
+                                </ul>
+                            </li>
+                        </ul>
+                    
+                        ##<p class="navbar-text pull-right">
+                        ##    Logged in as <a href="#" class="navbar-link">Username</a>
+                        ##</p>
                         <ul class="nav">
-                            <li class="active"><a href="#"       >Home    </a></li>
-                            <li               ><a href="#about"  >Projects</a></li>
-                            <li               ><a href="#contact">Contact </a></li>
+                            <%
+                            titlebar = [
+                                #('/'          ,'about'     ),
+                                ('/projects'  ,'projects'  ),
+                                ('/activities','activities'),
+                                ('/reference' ,'reference' ),
+                                ('/contact'   ,'contact'   ),
+                            ]
+                            %>
+                            % for url, title in titlebar:
+                            <% class_active = ' class="active"' if self.titlebar_active==title else '' %>
+                            <li${class_active}><a href="${url}">${title.title()}</a></li>
+                            % endfor
                         </ul>
                     </div>
                 </div>
@@ -81,26 +117,10 @@
         </div>
         
         <!-- Scripts -->
-        <script type="text/javascript" src ="/static/site/jquery/jquery-1.8.0.min.js"   ></script>
-        ##<script type="text/javascript" src="/static/site/jquery/jquery-1.7.2.min.js"   ></script>
+        <script type="text/javascript" src="/static/site/jquery/jquery-1.8.0.min.js"   ></script>
         <script type="text/javascript" src="/static/site/bootstrap/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/static/site/prettify/prettify.js"></script>
-        <!--
-        <script src="assets/js/bootstrap-transition.js"></script>
-        <script src="assets/js/bootstrap-alert.js"></script>
-        <script src="assets/js/bootstrap-modal.js"></script>
-        <script src="assets/js/bootstrap-dropdown.js"></script>
-        <script src="assets/js/bootstrap-scrollspy.js"></script>
-        <script src="assets/js/bootstrap-tab.js"></script>
-        <script src="assets/js/bootstrap-tooltip.js"></script>
-        <script src="assets/js/bootstrap-popover.js"></script>
-        <script src="assets/js/bootstrap-button.js"></script>
-        <script src="assets/js/bootstrap-collapse.js"></script>
-        <script src="assets/js/bootstrap-carousel.js"></script>
-        <script src="assets/js/bootstrap-typeahead.js"></script>
-        <script src="assets/js/bootstrap-affix.js"></script>
-        -->
-        <script type="text/javascript" src="/static/site/main.js"></script>
+        <script type="text/javascript" src="/static/site/prettify/prettify.js"         ></script>
+        <script type="text/javascript" src="/static/site/main.js"                      ></script>
 
     </body>
     
