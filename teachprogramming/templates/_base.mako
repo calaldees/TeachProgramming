@@ -1,5 +1,7 @@
 ## -*- coding: utf-8 -*-
-<%
+<%!
+    from teachprogramming.lib.constants import file_type_to_lang
+%><%
     self.titlebar_active       = ''
     self.text_title             = 'Title'
     self.text_title_description = 'Test a little bit of make and shake'
@@ -32,7 +34,7 @@
         ##<link rel="apple-touch-icon-precomposed"                 href="../assets/ico/apple-touch-icon-57-precomposed.png" >
     </head>
     
-    <body data-spy="scroll" data-target=".navbar">
+    <body>
         <!-- Navbar -->
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
@@ -51,13 +53,12 @@
                         
                         <ul class="nav pull-right">
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language <b class="caret"></b></a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    <li><a tabindex="-1" href="#">Action</a></li>
-                                    <li><a tabindex="-1" href="#">Another action</a></li>
-                                    <li><a tabindex="-1" href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li><a tabindex="-1" href="#">Separated link</a></li>
+                                    % for ext, language in file_type_to_lang.items():
+                                    <li><a tabindex="-1" href="#${ext}">${language}</a></li>
+                                    % endfor
+                                    ##<li class="divider"></li>
                                     <%doc>
                                         <% fileexts = resorce_helper.get_project_langs('game',p) %>
                                         % for lang in constants.file_type_to_lang.keys():
@@ -113,7 +114,9 @@
         
         <!-- Body -->
         <div class="container-fluid">
-            ${next.body()}
+            <div class="row">
+                ${next.body()}
+            </div>
         </div>
         
         <!-- Scripts -->

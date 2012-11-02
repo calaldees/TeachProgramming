@@ -1,3 +1,3 @@
-$('#navbar').scrollspy();
+//$('#navbar').scrollspy();
 
-$('#menu_affix').affix();
+//$('#sidebar_affix').affix();
