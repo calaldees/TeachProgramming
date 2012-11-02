@@ -10,3 +10,13 @@ body {
 #sidebar_affix {
 
 }
+
+
+.affix {
+    position: fixed; 
+    top: 60px;
+    /* margin-left: 0px; */
+    /* width: 220px; */
+    /* left: 0px; */
+}
+
