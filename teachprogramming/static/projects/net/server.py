@@ -10,7 +10,7 @@ try:
     import socketserver
 except ImportError as e:
     import SocketServer as socketserver
-
+import socket
 
 # Constants---------------------------------------------------------------------
 __version__ = 0.1
@@ -178,7 +178,10 @@ def clients_send(data, source=None):
     Send the data to all known clients
     """
     
-    log('message', '%s:%s '%source + str(data))
+    log('message', '{0}:{1}'.format(source,data))
+    
+    if isinstance(data,str):
+        data = data.encode('utf8')
     
     def send(client, data):
         try   :
@@ -200,9 +203,17 @@ def clients_send(data, source=None):
     for udp_client in clients['udp']:
         pass
     
+def clients_close():
+    clients_send('Server Exiting','server')
+    
+    for client_group in clients.values():
+        for client in client_group:
+            client.connected = False
+            client.request.shutdown(socket.SHUT_RDWR)
 
 
 class WebSocketEchoRequestHandler(socketserver.BaseRequestHandler):
+    connected = True
     def setup(self):
         websocket_request = self.request.recv(recv_size)
         if not websocket_request: # Sometimes this method is called with no request after a real setup?! WTF? Abort
@@ -238,10 +249,9 @@ class WebSocketEchoRequestHandler(socketserver.BaseRequestHandler):
         log('connection','%s:%s connected' % self.client_address)
     
     def handle(self):
-        while True:
-            #time.sleep(0)
-            data_recv = self.request.recv(recv_size)
+        while self.connected:
             
+            data_recv = self.request.recv(recv_size)            
             if not data_recv:
                 break
             
@@ -260,12 +270,14 @@ class WebSocketEchoRequestHandler(socketserver.BaseRequestHandler):
 
 
 class TCPEchoRequestHandler(socketserver.BaseRequestHandler):
+    connected = True
+    
     def setup(self):
         clients['tcp'].append(self)
         log('connection','%s:%s connected' % self.client_address)
     
     def handle(self):
-        while True:
+        while self.connected:
             data = self.request.recv(recv_size)
             if not data:
                 break
@@ -278,6 +290,7 @@ class TCPEchoRequestHandler(socketserver.BaseRequestHandler):
 
 
 class UDPEchoRequestHandler(socketserver.BaseRequestHandler):
+    connected = True
     def handle(self):
         # TODO - clients need to register with the UDP handler
         data = self.request[0].strip()
@@ -291,9 +304,11 @@ class UDPEchoRequestHandler(socketserver.BaseRequestHandler):
 
 # Threaded Servers -------------------------------------------------------------
 
+class Server(socketserver.ThreadingTCPServer):
+    allow_reuse_address = True
+
 servers = []
 def start_server(server):
-    server.allow_reuse_address = True
     server_thread = threading.Thread(target=server.serve_forever) 
     server_thread.daemon = True # Exit the server thread when the main thread terminates
     server_thread.start() # Start a thread with the server -- that thread will then start one more thread for each request
@@ -301,15 +316,11 @@ def start_server(server):
     #print("Server loop running in thread:", server_thread.name)
 
 def stop_servers():
+    log('status','Server shutting down')
+    clients_close()
     for server in servers:
-        #import pdb
-        #pdb.set_trace()
-        #try   : server.server_close()
-        #except: pass
-        try   : server.shutdown()
-        except: pass
-        #try   : server.close()
-        #except: pass
+        server.shutdown()
+    
 
 # Command Line Arguments -------------------------------------------------------
 
@@ -347,10 +358,10 @@ if __name__ == "__main__":
     log_params['connection'] = args.show_connections
     for server_type in args.serve:
         if server_type=='websocket':
-            start_server(socketserver.ThreadingTCPServer(('', args.websocket_port), WebSocketEchoRequestHandler))
+            start_server(Server(('', args.websocket_port), WebSocketEchoRequestHandler))
             log('status','WebSocket Server on %d' % args.websocket_port)
         if server_type=='tcp':
-            start_server(socketserver.ThreadingTCPServer(('', args.tcp_port      ), TCPEchoRequestHandler      ))
+            start_server(Server(('', args.tcp_port      ), TCPEchoRequestHandler      ))
             log('status','TCP Server on %d' % args.tcp_port)
         if server_type=='udp':
             start_server(socketserver.UDPServer         (('', args.udp_port      ), UDPEchoRequestHandler      ))
@@ -376,52 +387,4 @@ if __name__ == "__main__":
         pass
     stop_servers()
     print("")
-
-#-------------------------------------------------------------------------------
-# Working
-#-------------------------------------------------------------------------------
-
-"""
-
-import time
-
-# Handle Connection
-def connection(client):
-    websocket_request = client.recv(4096)
-    websocket_key     = re.search(r'Sec-WebSocket-Key:\s?(.*)', websocket_request).group(1).strip()
-    websocket_accept  = base64.b64encode(hashlib.sha1('%s%s' % (websocket_key ,'258EAFA5-E914-47DA-95CA-C5AB0DC85B11')).digest())
-    client.send(handshake % {'websocket_accept':websocket_accept})
-    
-    while True:
-        data_recv = client.recv(4096)
-        
-        data, opcode = decode_frame(data_recv)
-        if opcode == OPCODE_TEXT:
-            #msg_send.append(data)
-            print(data)
-            client.send(encode_frame(data))
-        elif opcode == OPCODE_CLOSE:
-            break
-        elif opcode == OPCODE_PING:
-            client.send(encode_frame('pong', opcode=OPCODE_PONG))
-        
-        time.sleep(0)
-    
-    client.close()
-
-# Setup Server Socket
-
-import socket, threading
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-sock.bind(('', port))
-sock.listen(5)
-
-print "TCPServer Waiting for clients on port %d" % port
-while True:
-    client, address = sock.accept()
-    threading.Thread(target=connection, args=(client,)).start()
-"""
-#server = SocketServer.ThreadingTCPServer(('', port), WebSocketEchoRequestHandler)
-#server.serve_forever()
 
