@@ -3,14 +3,11 @@
 import re
 import hashlib, base64
 import threading, time
-
-
-# Python 2.x compatability
-try:
-    import socketserver
-except ImportError as e:
-    import SocketServer as socketserver
+import socketserver
 import socket
+
+import logging
+
 
 # Constants---------------------------------------------------------------------
 __version__ = 0.1
@@ -20,6 +17,10 @@ log_params = {}
 def log(catagory, msg):
     if log_params[catagory]:
         print(msg.strip())
+
+class TCPBaseServer(socketserver.ThreadingTCPServer):
+    allow_reuse_address = True
+
 
 # Binary Helpers ---------------------------------------------------------------
 
@@ -45,6 +46,19 @@ def get_bit(number, bit):
     """
     return number &  pow(2,bit-1) != 0
 
+# Other ------------------------------------------------------------------------
+
+    #ip = []
+    ##import socket
+    ##ip = [ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1]
+    #try:
+    #    # sudo apt-get install python-netifaces
+    #    from netifaces import interfaces, ifaddresses, AF_INET
+    #    for ifaceName in interfaces():
+    #        ip += [i['addr'] for i in ifaddresses(ifaceName).setdefault(AF_INET, [{'addr':''}] )]
+    #        #print '%s: %s' % (ifaceName, ', '.join(addresses))
+    #except:
+    #    pass
 
 # WebSocket --------------------------------------------------------------------
 
@@ -169,51 +183,35 @@ def websocket_frame_encode_hybi00(data):
     return '\x00' + data + '\xff'
 
 
+
 # Connection Handlers ----------------------------------------------------------
 
-clients = {'websocket':[],'tcp':[],'udp':[]}
-
-def clients_send(data, source=None):
-    """
-    Send the data to all known clients
-    """
-    
-    log('message', '{0}:{1}'.format(source,data))
-    
-    if isinstance(data,str):
-        data = data.encode('utf8')
-    
-    def send(client, data):
-        try   :
-            client.request.send(data)
-        except:
-            #print('error echoing to client %s:%s'%client.client_address) # AllanC - HACK!!! Short term botch hid the errors!!
-            # Ideal behaviour, remove problem client!
-            pass
-            
-    
-    #websocket_data_frame_hybi00 = websocket_frame_encode_hybi00(data) # AllanC - could preprocess data frames here ... but thats an optimisation for later
-    #websocket_data_frame_hybi10 = websocket_frame_encode_hybi10(data)
-    for websocket_client in clients['websocket']:
-        send(websocket_client, websocket_client.frame_encode_func(data))
+#if kwargs['udp_port']:
+#    self._register_server('udp'      , socketserver.UDPServer(('', kwargs['udp_port']), UDPEchoRequestHandler))
+class UDPEchoRequestHandler(socketserver.BaseRequestHandler):
+    def __init__(*args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.connected = True
         
-    for tcp_client in clients['tcp']:
-        send(tcp_client, data)
-    
-    for udp_client in clients['udp']:
-        pass
-    
-def clients_close():
-    clients_send('Server Exiting','server')
-    
-    for client_group in clients.values():
-        for client in client_group:
-            client.connected = False
-            client.request.shutdown(socket.SHUT_RDWR)
+    def handle(self):
+        # TODO - clients need to register with the UDP handler
+        data   = self.request[0].strip()
+        socket = self.request[1]
+        #log('message',"{} wrote:".format(self.client_address[0]))
+        #log('message',data)
+        client_send(data, self.client_address)
+        socket.sendto(data.upper(), self.client_address)
 
 
-class WebSocketEchoRequestHandler(socketserver.BaseRequestHandler):
-    connected = True
+
+
+class WebSocketRequestHandler(socketserver.BaseRequestHandler):
+    """
+    Abstract class, implement client wrapper create
+    this is not idea as this class has to be used with the client wrappers
+    Think about maybe applying customisable post setup, disconnect overlays to fire at end of methods
+    """
+    
     def setup(self):
         websocket_request = self.request.recv(recv_size)
         if not websocket_request: # Sometimes this method is called with no request after a real setup?! WTF? Abort
@@ -241,86 +239,281 @@ class WebSocketEchoRequestHandler(socketserver.BaseRequestHandler):
             self.frame_encode_func = websocket_frame_encode_hybi00
             self.frame_decode_func = websocket_frame_decode_hybi00
         
-        self.request.send(handshake_return.encode('utf8'))
-        
-        
+        self.request.send(handshake_return.encode('utf8'))    
         #print(handshake_return)
-        clients['websocket'].append(self)
-        log('connection','%s:%s connected' % self.client_address)
+        
+        self.client_wrapper = self.construct_client_wrapper_function() # automatically pass's self as it's a function, kind of annoying, because it isnt a method function
     
     def handle(self):
-        while self.connected:
-            
+        while True:
             data_recv = self.request.recv(recv_size)            
             if not data_recv:
                 break
-            
             data, opcode = self.frame_decode_func(data_recv)
             if opcode == OPCODE_TEXT:
-                clients_send(data, self.client_address)
+                self.client_wrapper.recv(data)
             elif opcode == OPCODE_CLOSE:
                 self.request.send(self.frame_encode_func(data, opcode=OPCODE_CLOSE))
                 break
             elif opcode == OPCODE_PING:
                 self.request.send(self.frame_encode_func(data, opcode=OPCODE_PONG ))
-
+            else:
+                raise Exception('Unknown Websocket OPCODE')
+    
     def finish(self):
-        clients['websocket'].remove(self)
-        log('connection','%s:%s disconnected' % self.client_address)
+        self.client_wrapper.disconnect()
+        
 
 
-class TCPEchoRequestHandler(socketserver.BaseRequestHandler):
-    connected = True
+class TCPRequestHandler(socketserver.BaseRequestHandler):
     
     def setup(self):
-        clients['tcp'].append(self)
-        log('connection','%s:%s connected' % self.client_address)
+        self.client_wrapper = self.construct_client_wrapper_function()
     
     def handle(self):
-        while self.connected:
+        while True:
             data = self.request.recv(recv_size)
             if not data:
                 break
-            clients_send(data, self.client_address)
+            self.client_wrapper.recv(data)
     
     def finish(self):
-        #self.request.send('bye ' + str(self.client_address) + '\n')
-        clients['tcp'].remove(self)
-        log('connection','%s:%s disconnected' % self.client_address)
+        self.client_wrapper.disconnect()
 
 
-class UDPEchoRequestHandler(socketserver.BaseRequestHandler):
-    connected = True
-    def handle(self):
-        # TODO - clients need to register with the UDP handler
-        data = self.request[0].strip()
-        socket = self.request[1]
-        #log('message',"{} wrote:".format(self.client_address[0]))
-        #log('message',data)
-        client_send(data, self.client_address)
-        socket.sendto(data.upper(), self.client_address)
+# Framework --------------------------------------------------------------------
 
+class ClientWrapper():
+    """
+    An abstract client class to standardise how clients interact
+    """
+    id  = ''
+    def __init__(self, server_wrapper, client_obj):
+        """
+        Instansiated upon a real client connection
+        ServerWrapper.connect(self) called to pass up handling of additional connection management
+        """
+        self.server     = server_wrapper
+        self.client_obj = client_obj
+        self.connect()
+        self.server.connect(self)
+    def disconnect(self):
+        self.server.disconnect(self)
+    def recv(self, data):
+        """
+        Pass's message up to server_wrapper
+        """
+        self.server.recv(data,self)
+        
+    # Abstract Methods ------
+    def send(self, data, source=None):
+        """
+        Required
+        Optional source object, could be another client, could be a server, could be none
+        """
+        pass
+    def close(self):
+        """
+        Required - close this connection
+        """
+        pass
+    def connect(self):
+        """
+        Optonal - override for connected additional behaviour
+        """
+        pass
 
-
-# Threaded Servers -------------------------------------------------------------
-
-class Server(socketserver.ThreadingTCPServer):
-    allow_reuse_address = True
-
-servers = []
-def start_server(server):
-    server_thread = threading.Thread(target=server.serve_forever) 
-    server_thread.daemon = True # Exit the server thread when the main thread terminates
-    server_thread.start() # Start a thread with the server -- that thread will then start one more thread for each request
-    servers.append(server)
-    #print("Server loop running in thread:", server_thread.name)
-
-def stop_servers():
-    log('status','Server shutting down')
-    clients_close()
-    for server in servers:
-        server.shutdown()
+class ServerWrapper():
     
+    def __init__(self, name, manager, **options):
+        self.clients     = []
+        self.server_obj  = None  # Set later at start_server_thread
+        self.name        = name
+        self.options     = options
+        self.manager     = manager
+        self.manager.servers[self.name] = self  # Register this server with manager
+    
+    def connect(self, client):
+        """
+        Child client has established a connection
+        """
+        print('add the client %s : %s' % (self.name, client.id) )
+        self.clients.append(client)
+        self.manager.connect(client)
+    
+    def disconnect(self, client):
+        """
+        Child client connection has dropped
+        """
+        self.manager.disconnect(client)
+        self.clients.remove(client)
+    
+    def send(self, data, source=None):
+        """
+        Send data to all connected clients
+        """
+        for client in self.clients:
+            client.send(data,source)
+        
+    def recv(self, data, source=None):
+        """
+        Data receved from child client
+        default pass data up to manager
+        """
+        self.manager.recv(data, source)
+        
+    def start_server_thread(self):
+        self.server_obj = self.get_server_obj()
+        self.server_thread = threading.Thread(target=self.server_obj.serve_forever)
+        self.server_thread.daemon = True   # Exit the server thread when the main thread terminates
+        self.server_thread.start()         # Start a thread with the server -- that thread will then start one more thread for each request
+        #print("Server loop running in thread:", server_thread.name)
+        #log('status','{0} Server on {1}'.format(name, server_obj.port))
+    
+    def close(self):
+        """
+        Close all client connections
+        and close server
+        The server will wait for all client connections to terminate and then exit the serve forever loop
+        """
+        for client in self.clients:
+            client.close()
+        self.close_server_obj()
+    
+    # Abstract methods ---------------
+    
+    def get_server_obj(self):
+        """
+        Required
+        A server_obj should implement serve_forever to be used in a thread
+        """
+        pass
+    def close_server_obj(self):
+        """
+        Required
+        """
+        pass
+
+    
+
+class ServerManager():
+    
+    def __init__(self, **options):
+        self.servers = {}
+    
+    def start(self):
+        for server in self.servers.values():
+            server.start_server_thread()
+        log('status','ServerManager: running')
+    
+    def stop(self):
+        log('status','ServerManager: shutting down')
+        for server in self.servers.values():
+            server.close()
+    
+    # Optional Override -----------------
+    
+    def connect(self, client):
+        pass
+    def disconnect(self, client):
+        pass
+    def send(self, data, source=None):
+        """
+        Send data to all subservers
+        """
+        for server in self.servers.values():
+            server.send(data, source)
+    
+    # Required override ------------------
+    
+    def recv(self, data):
+        """
+        to be overridden
+        """
+        pass
+
+
+
+# Server Implementations -------------------------------------------------------
+
+
+class TCPServerWrapper(ServerWrapper):
+    
+    def __init__(self, manager, **options):
+        super().__init__('tcp', manager, **options)
+
+    # Client Class ---------------
+    
+    class TCPClientWrapper(ClientWrapper):
+        def __init__(self, server_wrapper, client_obj):
+            self.id = str(client_obj.client_address)
+            super().__init__(server_wrapper, client_obj)
+        def send(self, data, source=None):
+            self.client_obj.request.send(data)
+        def close(self):
+            self.client_obj.request.shutdown(socket.SHUT_RDWR)
+    
+    # Server Implementation ----
+    
+    def get_server_obj(self):
+        if self.server_obj:
+            raise Exception("Server already running")
+        class Handler(TCPRequestHandler):
+            construct_client_wrapper_function = lambda client_obj: self.TCPClientWrapper(self, client_obj)
+        return TCPBaseServer(('', self.options['tcp_port']), Handler)
+    
+    def close_server_obj(self):
+        self.server_obj.shutdown()
+        self.server_obj = None
+
+
+class WebsocketServerWrapper(ServerWrapper):
+    
+    def __init__(self, manager, **options):
+        super().__init__('websocket', manager, **options)
+
+    # Client Class ---------------
+    
+    class WebsocetClientWrapper(ClientWrapper):
+        def __init__(self, server_wrapper, client_obj):
+            self.id = str(client_obj.client_address)
+            super().__init__(server_wrapper, client_obj)
+        def send(self, data, source=None):
+            self.client_obj.request.send(self.client_obj.frame_encode_func(data))
+        def close(self):
+            self.client_obj.request.send(self.client_obj.frame_encode_func(b'', opcode=OPCODE_CLOSE)) # ?? Close frame? not needed in all version of websockets
+            self.client_obj.request.shutdown(socket.SHUT_RDWR)
+    
+    # Server Implementation ----
+    
+    def get_server_obj(self):
+        if self.server_obj:
+            raise Exception("Server already running")
+        class Handler(WebSocketRequestHandler):
+            construct_client_wrapper_function = lambda client_obj: self.WebsocetClientWrapper(self, client_obj)
+        return TCPBaseServer(('', self.options['websocket_port']), Handler)
+    
+    def close_server_obj(self):
+        self.server_obj.shutdown()
+        self.server_obj = None
+
+
+# Manager Implementations ------------------------------------------------------
+
+class EchoServerManager(ServerManager):
+    def connect(self, client):
+        log('connection','%s connected'    % client.id)
+    def disconnect(self, client):
+        log('connection','%s disconnected' % client.id)
+    def recv(self, data, source=None):
+        log('message', '{0} - {1}'.format(source.id,str(data,'utf8')))
+        #if isinstance(data,str):
+        #    data = data.encode('utf8')
+        self.send(data, source)
+    def stop(self):
+        self.send(b'server_shutdown')
+        super().stop()
+
 
 # Command Line Arguments -------------------------------------------------------
 
@@ -331,7 +524,6 @@ def bool_(value):
             return True
     return False
 
-
 def get_args():
     import argparse
     parser = argparse.ArgumentParser(
@@ -340,7 +532,7 @@ def get_args():
         epilog      = "@calaldees"
     )
     parser.add_argument('--version', action='version', version="%.2f"%__version__)
-    parser.add_argument('-s','--serve', nargs='+', choices=['udp', 'tcp', 'websocket'], metavar='SERVER_TYPE', default=['udp','tcp','websocket'])
+    #parser.add_argument('-s','--serve', nargs='+', choices=['udp', 'tcp', 'websocket'], metavar='SERVER_TYPE', default=['udp','tcp','websocket'])
     parser.add_argument('-u','--udp_port'      , type=int, help='UDP port'      , default=9871)
     parser.add_argument('-t','--tcp_port'      , type=int, help='TCP port'      , default=9872)
     parser.add_argument('-w','--websocket_port', type=int, help='WebSocket port', default=9873)
@@ -356,35 +548,16 @@ if __name__ == "__main__":
     log_params['status'    ] = args.show_status
     log_params['message'   ] = args.show_messages
     log_params['connection'] = args.show_connections
-    for server_type in args.serve:
-        if server_type=='websocket':
-            start_server(Server(('', args.websocket_port), WebSocketEchoRequestHandler))
-            log('status','WebSocket Server on %d' % args.websocket_port)
-        if server_type=='tcp':
-            start_server(Server(('', args.tcp_port      ), TCPEchoRequestHandler      ))
-            log('status','TCP Server on %d' % args.tcp_port)
-        if server_type=='udp':
-            start_server(socketserver.UDPServer         (('', args.udp_port      ), UDPEchoRequestHandler      ))
-            log('status','UDP Server on %d' % args.udp_port)
-    
-    ip = []
-    #import socket
-    #ip = [ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1]
-    try:
-        # sudo apt-get install python-netifaces
-        from netifaces import interfaces, ifaddresses, AF_INET
-        for ifaceName in interfaces():
-            ip += [i['addr'] for i in ifaddresses(ifaceName).setdefault(AF_INET, [{'addr':''}] )]
-            #print '%s: %s' % (ifaceName, ', '.join(addresses))
-    except:
-        pass
-    
-    log('status','Server Running on %s' % (ip))
-    try:
-        while True:
-            time.sleep(10)
-    except KeyboardInterrupt as e:
-        pass
-    stop_servers()
-    print("")
 
+    options = vars(args)
+    manager = EchoServerManager(**options)
+    WebsocketServerWrapper(manager, **options)
+    TCPServerWrapper      (manager, **options)
+    try:
+        manager.start()
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt as e:
+        print("")
+    manager.stop()
+    print("")
