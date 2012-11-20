@@ -364,11 +364,13 @@ class ServerWrapper():
         
     def start_server_thread(self):
         self.server_obj = self.get_server_obj()
-        self.server_thread = threading.Thread(target=self.server_obj.serve_forever)
-        self.server_thread.daemon = True   # Exit the server thread when the main thread terminates
-        self.server_thread.start()         # Start a thread with the server -- that thread will then start one more thread for each request
+        if self.server_obj:
+            self.server_thread = threading.Thread(target=self.server_obj.serve_forever)
+            self.server_thread.daemon = True   # Exit the server thread when the main thread terminates
+            self.server_thread.start()         # Start a thread with the server -- that thread will then start one more thread for each request
         #print("Server loop running in thread:", server_thread.name)
-        #log('status','{0} Server on {1}'.format(name, server_obj.port))
+            #import pdb ; pdb.set_trace()
+            log('status','{0} Server on {1}'.format(self.name, self.server_obj.server_address))
     
     def close(self):
         """
@@ -398,8 +400,12 @@ class ServerWrapper():
 
 class ServerManager():
     
-    def __init__(self, **options):
+    def __init__(self, auto_setup_default_server_wrappers=True, **options):
         self.servers = {}
+        if auto_setup_default_server_wrappers:
+            WebsocketServerWrapper(self, **options)
+            TCPServerWrapper      (self, **options)
+            UDPServerWrapper      (self, **options)
     
     def start(self):
         for server in self.servers.values():
@@ -497,6 +503,17 @@ class WebsocketServerWrapper(ServerWrapper):
         self.server_obj.shutdown()
         self.server_obj = None
 
+class UDPServerWrapper(ServerWrapper):
+    
+    def __init__(self, manager, **options):
+        super().__init__('udp', manager, **options)
+
+    def get_server_obj(self):
+        return  #UDPServer(('', self.options['udp_port']), Handler)
+    
+    def close_server_obj(self):
+        pass
+
 
 # Manager Implementations ------------------------------------------------------
 
@@ -551,8 +568,6 @@ if __name__ == "__main__":
 
     options = vars(args)
     manager = EchoServerManager(**options)
-    WebsocketServerWrapper(manager, **options)
-    TCPServerWrapper      (manager, **options)
     try:
         manager.start()
         while True:

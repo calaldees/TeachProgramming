@@ -12,25 +12,27 @@ class callByRef:
 variables = callByRef(
     running           = True,
     color_background  = (  0,   0,   0, 255),
-    color_exit        = (255, 255,   0, 255), # VER: level
-    level_number      = 1,
-    background_images = None, # VER: background
-    view_x_pos        = None, # VER: background
+    color_exit        = (255, 255,   0, 255),                         # VER: level
+    level_number      = 1,                                            # VER: level
+    background_images = None,                                         # VER:                paralax
+    background_image  = pygame.image.load("images/CopterLevel1.gif"), # VER: background not paralax
+    view_x_pos        = None,                                         # VER: background
     copter_image      = pygame.image.load("images/ship.gif"), # VER: copter
-    copter_x_pos      = None, # VER: copter
-    copter_y_pos      = None, # VER: copter
+    copter_x_pos      = None,                                 # VER: copter
+    copter_y_pos      = None,                                 # VER: copter
     copter_x_vel      = None, # VER: physics
     copter_y_vel      = None, # VER: physics
     copter_colision_points = [(0,0),(32,9),(17,2),(22,12),(2,12)], # VER: colision_multi
 )
 
-def load_level(level_number):                                                                                             # VER: background
-    variables.background_images = []                                                                                      # VER: background
-    for layer in reversed(range(1,4)):                                                                                    # VER: paralax
+def load_level(level_number):                                                                                             # VER: level paralax
+    background_image = pygame.image.load("images/CopterLevel%s.gif" % level_number)                                       # VER: level not paralax
+    variables.background_images = []                                                                                      # VER: paralax
+    for layer in reversed(range(1,4)):                                                                                    # VER: paralax 
         try   : variables.background_images.append(pygame.image.load("images/CopterLevel%d_layer%s.gif" % (level_number,layer))) # VER: paralax
         except: pass                                                                                                      # VER: paralax
-    variables.background_images.append(pygame.image.load("images/CopterLevel%d.gif" % level_number))                      # VER: background
-                                                                                                                          # VER: background
+    variables.background_images.append(pygame.image.load("images/CopterLevel%d.gif" % level_number))                      # VER: paralax
+                                                                                                                          # VER: paralax
 def reset():
     #pass                                                  # VER: 1 not background
     variables.view_x_pos        = 0                        # VER: background
@@ -39,16 +41,16 @@ def reset():
     variables.copter_x_vel      = 0.0                      # VER: physics
     variables.copter_y_vel      = 0.0                      # VER: physics
 
-load_level(variables.level_number) # VER: background
+load_level(variables.level_number) # VER: level paralax
 reset()
 while variables.running:
     clock.tick(60)
     screen.fill(variables.color_background)
     
     variables.view_x_pos += 1                                               # VER: background
-    #background_rectangle   = variables.background_images[-1].get_rect()    # VER: background not paralax
+    #background_rectangle   = variables.background_image.get_rect()         # VER: background not paralax
     #background_rectangle.x = background_rectangle.x - variables.view_x_pos # VER: background not paralax
-    #screen.blit(variables.background_images[-1], background_rectangle)     # VER: background not paralax
+    #screen.blit(variables.background_image, background_rectangle)          # VER: background not paralax
     paralax_number = 1                                                      # VER: paralax
     for background_image in variables.background_images:                    # VER: paralax
         background_rectangle   = background_image.get_rect()                # VER: paralax
