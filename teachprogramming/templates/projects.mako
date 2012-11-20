@@ -17,7 +17,8 @@
         <ul>
         % for p in resorce_helper.get_projects('game'):
         <li>
-            ${p.capitalize()}
+            ##/{project_type}/{project}.{format}
+            <a href="${request.route_path('project', project_type='game', project=p, format='py')}">${p.capitalize()}</a>
         </li>
         % endfor
     </ul>

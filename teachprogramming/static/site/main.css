@@ -7,8 +7,8 @@ body {
     padding: 9px 0;
 }
 
-#sidebar_affix {
-
+.sidebar-nav-container {
+position: absolute;
 }
 
 

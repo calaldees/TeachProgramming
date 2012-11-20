@@ -13,8 +13,8 @@ def selected_class(a,b):
 </%doc>
 
 
-<div class="span3">
-    <div data-spy="affix" data-offset-top="125">
+##<div class="span3">
+    <div data-spy="affix" data-offset-top="130" class="span3 sidebar-nav-container">
         ##  affix-top="150" affix-bottom="0"
         <div class="well sidebar-nav">
             <ul class="nav nav-list">
@@ -29,11 +29,11 @@ def selected_class(a,b):
             </ul>
         </div><!--/.well -->
     </div>
-</div>
+##</div>
 
 
 
-<div class="span9" data-spy="scroll" data-target=".sidebar">
+<div class="offset3 span9" data-spy="scroll" data-target=".sidebar">
     ${next.body()}
 </div>
 
