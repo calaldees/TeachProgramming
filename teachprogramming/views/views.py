@@ -1,5 +1,6 @@
 from pyramid.view      import view_config
 from pyramid.renderers import render_to_response
+from pyramid.response  import Response
 
 import teachprogramming.lib.make_ver  as make_ver
 import teachprogramming.lib.constants as constants

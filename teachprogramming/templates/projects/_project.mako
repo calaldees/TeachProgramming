@@ -45,7 +45,8 @@ def include_file_(filename):
 
 <%def name="full_code(target_version=None, code_inline=False)">
     <% 
-        code_url = "/code/%(project_type)s/%(project)s.%(format)s/%(target_version)s" % {'project_type':project_type, 'project':project, 'format':format, 'target_version':target_version}
+        #code_url = "/code/%(project_type)s/%(project)s.%(format)s/%(target_version)s" % {'project_type':project_type, 'project':project, 'format':format, 'target_version':target_version}
+        code_url = request.route_path('project_code', project_type=project_type, project=project, format=format, version=target_version)
     %>
     <a href="${code_url}" target="_blank">Full Code</a>
     % if code_inline:
