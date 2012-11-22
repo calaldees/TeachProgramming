@@ -1,4 +1,4 @@
-<%inherit file="/_base.mako"/>
+<%inherit file="../_base.mako"/>
 
 <%
     import teachprogramming.lib.resorce_helper as resorce_helper    

@@ -1,4 +1,4 @@
-<%inherit file="/_sidebar.mako"/>
+<%inherit file="../_sidebar.mako"/>
 
 
 <%def name="init()"><%

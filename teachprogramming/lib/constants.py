@@ -1,8 +1,8 @@
 
 #AllanC - TODO! Move paths to config! ... they are not constants!
-template_path         = 'teachprogramming/templates/'
+template_path         = 'teachprogramming/templates/html/'
 project_path          = 'teachprogramming/static/projects/'
-project_template_path = 'teachprogramming/templates/projects/'
+project_template_path = 'teachprogramming/templates/html/projects/'
 
 project_filename      = project_path + '%s/%s.%s'
 project_filename_dict = project_path + '%(project_type)s/%(project)s.%(format)s'

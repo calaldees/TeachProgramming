@@ -1,27 +1,22 @@
-<%inherit file="/_sidebar.mako"/>
+<%inherit file="../_sidebar.mako"/>
 
-<%!
 
-import os
-
-from teachprogramming.lib import make_ver, constants
-
-def ver_string(project_type, project, format, version):
-    return '\n'.join( make_ver.make_ver(constants.project_filename % (project_type, project,format), version) )
-
-def include_file_(filename):
-    source = open(filename, 'r')
-    data = source.read()
-    source.close()
-    return data
-
-%>
-
+<%def name="sidebar()">
+    <% category = None %>
+    % for code_section in self.code_sections:
+        % if code_section['category']!=category:
+        <% category = code_section['category']%>
+        <li class="nav-header">${category}</li>
+        % endif
+        <li><a href="#${h.encode_id(code_section['title'])}">${code_section['title']}</a></li>
+        ##class="active"
+    % endfor
+</%def>
 
 <%def name='show_diff(prev_version, target_version)'>
     
     <%
-        diff = make_ver.get_diff(constants.project_filename % (project_type,project,format), prev_version, target_version, hidden_line_replacement='...more...')
+        diff = h.make_ver.get_diff(h.constants.project_filename % (project_type,project,format), prev_version, target_version, hidden_line_replacement='...more...')
         line_classs = {'-':'remove', '+':'add'}
         open_section = False
     %>
@@ -29,17 +24,18 @@ def include_file_(filename):
     % for line in diff:
         % if line.startswith('@@'):
             % if open_section:
-        </div>
+        </pre></div>
             % endif
             <% open_section = True %>
-        <div class='section'>
+        <div class='code_section'><pre>
         % elif not (line.startswith('---') or line.startswith('+++')):
-            <pre class='${line_classs.get(line[0:1])}'>${line}</pre>
+            <p class='${line_classs.get(line[0:1])}'>${line}</p>
         % endif
     % endfor
-        </div> <!-- end code section -->
+        </pre></div> <!-- end code section -->
 
     </div> <!-- end code -->
+
     
 </%def>
 
@@ -53,7 +49,7 @@ def include_file_(filename):
     <button type="button" onclick="$(this).next().toggle();">Full code</button>
     <div class="hide">
         <a href="${code_url}">Version ${target_version}</a>
-        <pre>${ver_string(project_type, project, format, target_version)}</pre>
+        <pre>${h.ver_string(project_type, project, format, target_version)}</pre>
     </div>
     % endif
 </%def>
@@ -64,9 +60,9 @@ def include_file_(filename):
 
 <%def name='body()'  cache_key="%{project_type}/${project}.${format}">
     ## cached="True"
-    <%
-        self.files = [file for file in os.listdir(os.path.join(constants.project_path,project_type)) if file.startswith('%s.' % project)]
-    %>
+    ##<%
+    ##    self.files = [file for file in os.listdir(os.path.join(h.constants.project_path,project_type)) if file.startswith('%s.' % project)]
+    ##%>
     <!-- Documentation for this project -->
     ${next.body()}
     

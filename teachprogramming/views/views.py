@@ -15,7 +15,7 @@ default_http_cache_duration = datetime.timedelta(seconds=86400) #get_setting('we
 @etag
 def project(request):
     return render_to_response(
-        'teachprogramming:templates/projects/%(project_type)s/%(project)s.mako' % request.matchdict, 
+        'teachprogramming:templates/html/projects/%(project_type)s/%(project)s.mako' % request.matchdict, 
         request.matchdict,
         request=request,
     )

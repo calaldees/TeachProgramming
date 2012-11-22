@@ -1,5 +1,10 @@
 from pyramid.config import Configurator
 from pyramid_beaker import set_cache_regions_from_settings
+import pyramid.events
+
+
+from .templates import helpers as template_helpers
+
 
 #from sqlalchemy import engine_from_config
 #from .models import DBSession
@@ -38,7 +43,12 @@ def main(global_config, **settings):
     #config.add_route('hello_world', '/hello_world')
     #config.add_route('mako_test', '/mako_test/{one}/{two}') #'/prefix/{one}/{two}'
 
+    # Events -------------------------------------------------------------------
+    config.add_subscriber(add_template_helpers_to_event, pyramid.events.BeforeRender)
 
+    # Return -------------------------------------------------------------------
     config.scan()
     return config.make_wsgi_app()
 
+def add_template_helpers_to_event(event):
+    event['h'] = template_helpers

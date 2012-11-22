@@ -8,7 +8,7 @@ import inspect
 def render_static_mako_from_caller(request):
     calling_method_name = inspect.stack()[1][3]
     return render_to_response(
-        'teachprogramming:templates/{0}.mako'.format(calling_method_name),
+        'teachprogramming:templates/html/static/{0}.mako'.format(calling_method_name),
         {},
         request=request,
     )

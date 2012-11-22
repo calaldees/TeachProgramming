@@ -1,4 +1,4 @@
-<%inherit file="/_base.mako"/>
+<%inherit file="_base.mako"/>
 
 <%doc>
 <%!

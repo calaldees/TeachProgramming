@@ -13,10 +13,6 @@ javascript_activate_mouse = """
 from teachprogramming.lib      import make_ver, constants
 from teachprogramming.lib.misc import random_string
 
-# HACK!!! THIS IS DUPLICATED FROM THE PARENT ../_project.mako!!! REMOVE DUCPLICATION CHIMP!!!
-def ver_string(project_type, project, format, version):
-    return '\n'.join( make_ver.make_ver(constants.project_filename % (project_type, project,format), version) )
-
 
 
 def make_web_ver(source):
@@ -64,7 +60,7 @@ def make_web_ver(source):
 
 <%def name="web_demo(target_version)">
     % try:
-    <% web_demo_code = make_web_ver(ver_string(project_type, project, 'html', target_version+',demo')) %>
+    <% web_demo_code = make_web_ver(h.ver_string(project_type, project, 'html', target_version+',demo')) %>
     <div class="demo">
         <div class="demo_placeholder">
             <p>Hover mouse for demo</p>
@@ -88,24 +84,44 @@ def make_web_ver(source):
         % endif
         % for file in self.files:
             <% 
-                fileext            = make_ver.get_fileext(file) 
-                format_description = constants.file_type_to_lang.get(fileext)
+                fileext            = h.make_ver.get_fileext(file) 
+                format_description = h.constants.file_type_to_lang.get(fileext)
                 css_class = ''
                 if fileext == format:
                     css_class = 'selected'
             %>
+            ## TODO: use route path? code_url = request.route_path('project_code', project_type=project_type, project=project, format=format, version=target_version)
             <li><a href='/project/${project_type}/${project}.${fileext}#${target_version}' class='${css_class}' alt='${format_description}'><span class='icon16 i_${fileext}'></span></a></li>
         % endfor
         </ul>
     </div>
 </%def>
 
+<%def name="code_section(prev_version, target_version, title, heading_level=2, render_before_func=None, render_after_func=None)">
+<section id='${h.encode_id(title)}'>
+    <h${heading_level}>${title.capitalize()}</h${heading_level}>
+    
+    ${web_demo(target_version)}
+    ${self.full_code(target_version)}
+    
+    % if render_before_function:
+    ${render_before_function()}
+    % endif
+    
+    ${self.show_diff(prev_version, target_version)}
+    
+    % if render_after_function:
+    ${render_after_function()}
+    % endif
+</section>
+</%def>
 
 
-<%def name="code_section(prev_version, target_version)">
+<%doc>
+<%def name="code_section(prev_version, target_version, title, heading_level=2)">
 <section>
-    ${format_links(target_version)}
-    ${caller.title()}
+    ##${format_links(target_version)}
+    <h${heading_level}>${title.capitalize()}</h${heading_level}>
     
     ${web_demo(target_version)}
     ${self.full_code(target_version)}
@@ -122,8 +138,8 @@ def make_web_ver(source):
     % except:
     % endtry
 </section>
-</%def>
-
+    </%def>
+</%doc>
 
 <%def name="body()">
 ${next.body()}

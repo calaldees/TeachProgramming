@@ -61,7 +61,7 @@
                                     ##<li class="divider"></li>
                                     <%doc>
                                         <% fileexts = resorce_helper.get_project_langs('game',p) %>
-                                        % for lang in constants.file_type_to_lang.keys():
+                                        % for lang in h.constants.file_type_to_lang.keys():
                                             % if lang in fileexts:
                                                 <a href="/project/game/${p}.${lang}" class="lang_icon lang_${lang} icon16 i_${lang}"><span>${lang}</span></a>
                                             % endif
