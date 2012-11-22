@@ -60,6 +60,6 @@
     <p>Enjoy!</p>
     
     <h2>Examples of the stuff you can build</h2>
-    <%namespace name="project" file="projects/_project.mako"/>
+    ##<%namespace name="project" file="projects/_project.mako"/>
     ##${project.web_demo(vername['full'])}
 </div>

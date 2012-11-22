@@ -17,7 +17,7 @@ def selected_class(a,b):
     <div data-spy="affix" data-offset-top="130" class="span3 sidebar-nav-container">
         ##  affix-top="150" affix-bottom="0"
         <div class="well sidebar-nav">
-            <ul class="nav nav-list">
+            <ul class="nav nav-list sidebar-nav-list">
                 <%def name="sidebar()">
                 <li class="nav-header">Example Heading</li>
                 <li class="active"><a href="#">to be overridden</a></li>
@@ -33,7 +33,7 @@ def selected_class(a,b):
 
 
 
-<div class="offset3 span9" data-spy="scroll" data-target=".sidebar">
+<div class="offset3 span9" data-spy="scroll" data-target=".sidebar-nav-list">
     ${next.body()}
 </div>
 

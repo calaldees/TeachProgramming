@@ -28,7 +28,7 @@ def main(global_config, **settings):
     import teachprogramming.views.static_views as static_views
     config.add_route('root', '/')
     config.add_view(static_views.home, route_name='root')
-    for route_name in get_templates('.'):
+    for route_name in get_templates('static'):
         #print ("register {0}".format(route_name))
         config.add_route(route_name, '/{0}'.format(route_name))
         config.add_view(getattr(static_views,route_name), route_name=route_name)
