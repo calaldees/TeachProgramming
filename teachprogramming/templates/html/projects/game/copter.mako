@@ -3,6 +3,7 @@
 <%def name="init()">
 <%
     vername = {
+        'blank'          :'',
         'base1'          :'1',
         'background'     :'1,background',
         'copter'         :'1,background,copter',
@@ -15,17 +16,6 @@
     }
     self.vername = vername
     
-    code_sections = [
-        dict(title='Base'                 , category='Base Compoents', heading_level=2, prev_version=None                      , target_version=vername[          'base1']),
-        dict(title='Background'           , category='Base Compoents', heading_level=2, prev_version=vername[          'base1'], target_version=vername[     'background']),
-        dict(title='Copter'               , category='Base Compoents', heading_level=2, prev_version=vername[     'background'], target_version=vername[         'copter']),
-        dict(title='Colide (Single Point)', category='Base Compoents', heading_level=2, prev_version=vername[         'copter'], target_version=vername['colision_single']),
-        dict(title='Level advancing'      , category='Choices'       , heading_level=2, prev_version=vername['colision_single'], target_version=vername[          'level']),
-        dict(title='Physics'              , category='Choices'       , heading_level=2, prev_version=vername[         'copter'], target_version=vername[        'physics']),
-        dict(title='Paralax'              , category='Advanced'      , heading_level=2, prev_version=vername[     'background'], target_version=vername[        'paralax']),
-        dict(title='Colide (Multi Point)' , category='Advanced'      , heading_level=2, prev_version=vername['colision_single'], target_version=vername[ 'colision_multi']),
-    ]
-    self.code_sections = code_sections
 
 %>
 </%def>
@@ -36,14 +26,71 @@
 demo
 ${parent.web_demo(self.vername['full'])}
 
-% for code_section in self.code_sections:
-    <%self:code_section
-        prev_version   = "${code_section[  'prev_version']}"
-        target_version = "${code_section['target_version']}"
-        title          = "${code_section[         'title']}"
-        heading_level  = "${code_section[ 'heading_level']}"
-    ></%self:code_section>
-% endfor
+## ----------------------------------------------
+<% self.category = 'Base Compoents' %>
 
+<%self:code_section
+    prev_version   = "blank"
+    target_version = "base1"
+    title          = "Base"    
+></%self:code_section>
+
+
+<%self:code_section
+    prev_version   = "base1"
+    target_version = "background"
+    title          = "Background"
+></%self:code_section>
+
+
+<%self:code_section
+    prev_version   = "background"
+    target_version = "copter"
+    title          = "Copter"
+></%self:code_section>
+
+
+<%self:code_section
+    prev_version   = "copter"
+    target_version = "colision_single"
+    title          = "Colide (Single Point)"
+></%self:code_section>
+
+
+## ----------------------------------------------
+<% self.category = 'Choices' %>
+
+
+<%self:code_section
+    prev_version   = "colision_single"
+    target_version = "level"
+    title          = "Level advancing"
+></%self:code_section>
+
+
+<%self:code_section
+    prev_version   = "copter"
+    target_version = "physics"
+    title          = "Physics"
+></%self:code_section>
+
+
+## ----------------------------------------------
+<% self.category = 'Advanced' %>
+
+
+<%self:code_section
+    prev_version   = "background"
+    target_version = "paralax"
+    title          = "Paralax"
+></%self:code_section>
+
+<%self:code_section
+    prev_version   = "colision_single"
+    target_version = "colision_multi"
+    title          = "Colide (Multi Point)"
+></%self:code_section>
+
+## ----------------------------------------------
 
 ##<img src="/static/projects/images/CopterLevel1.gif">

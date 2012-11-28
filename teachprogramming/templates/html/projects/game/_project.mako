@@ -97,49 +97,33 @@ def make_web_ver(source):
     </div>
 </%def>
 
-<%def name="code_section(prev_version, target_version, title, heading_level=2, render_before_func=None, render_after_func=None)">
+
+<%def name="code_section(prev_version, target_version, title, heading_level=2)">
+<%
+    try   : category = self.category
+    except: category = None
+    self.sidebar_content.append((title,category))
+%>
 <section id='${h.encode_id(title)}'>
     <h${heading_level}>${title.capitalize()}</h${heading_level}>
     
-    ${web_demo(target_version)}
-    ${self.full_code(target_version)}
+    ${web_demo(self.vername[target_version])}
+    ${self.full_code(self.vername[target_version])}
+
+    % try:
+    ${caller.before_code()}
+    % except:
+    % endtry
     
-    % if render_before_function:
-    ${render_before_function()}
-    % endif
+    ${self.show_diff(self.vername[prev_version], self.vername[target_version])}
     
-    ${self.show_diff(prev_version, target_version)}
-    
-    % if render_after_function:
-    ${render_after_function()}
-    % endif
+    % try:
+    ${caller.after_code()}
+    % except:
+    % endtry
 </section>
 </%def>
 
-
-<%doc>
-<%def name="code_section(prev_version, target_version, title, heading_level=2)">
-<section>
-    ##${format_links(target_version)}
-    <h${heading_level}>${title.capitalize()}</h${heading_level}>
-    
-    ${web_demo(target_version)}
-    ${self.full_code(target_version)}
-    
-    % try:
-    ${caller.code_before()}
-    % except:
-    % endtry
-    
-    ${self.show_diff(prev_version, target_version)}
-    
-    % try:
-    ${caller.code_after()}
-    % except:
-    % endtry
-</section>
-    </%def>
-</%doc>
 
 <%def name="body()">
 ${next.body()}

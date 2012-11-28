@@ -1,17 +1,6 @@
 <%inherit file="../_sidebar.mako"/>
 
 
-<%def name="sidebar()">
-    <% category = None %>
-    % for code_section in self.code_sections:
-        % if code_section['category']!=category:
-        <% category = code_section['category']%>
-        <li class="nav-header">${category}</li>
-        % endif
-        <li><a href="#${h.encode_id(code_section['title'])}">${code_section['title']}</a></li>
-        ##class="active"
-    % endfor
-</%def>
 
 <%def name='show_diff(prev_version, target_version)'>
     
