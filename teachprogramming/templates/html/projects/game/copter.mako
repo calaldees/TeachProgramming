@@ -15,8 +15,6 @@
         'full'           :'1,background,copter,physics,colision_single,colision_multi,paralax',
     }
     self.vername = vername
-    
-
 %>
 </%def>
 

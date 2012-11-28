@@ -52,8 +52,8 @@ def make_web_ver(source):
     source = re.sub('<!--<canvas','<canvas', source) # AllanC - SWEET HOLY HACK!!!! I needed a way to have the tron.html working as a static file, so I HAD to rem the 320,240 canvas out, this just makes it visible again
     
     return source
-%>
 
+%>
 
 
 
@@ -73,7 +73,7 @@ def make_web_ver(source):
     % endtry    
 </%def>
 
-
+<%doc>
 <%def name="format_links(target_version='')">
     <div class="format_links">
         <a name="${target_version}"></a>
@@ -96,15 +96,19 @@ def make_web_ver(source):
         </ul>
     </div>
 </%def>
+</%doc>
 
 
-<%def name="code_section(prev_version, target_version, title, heading_level=2)">
-<%
+<%def name="section_title(title)"><%
     try   : category = self.category
     except: category = None
     self.sidebar_content.append((title,category))
 %>
 <section id='${h.encode_id(title)}'>
+</%def>
+
+<%def name="code_section(prev_version, target_version, title, heading_level=2)">
+<% section_title(title) %>
     <h${heading_level}>${title.capitalize()}</h${heading_level}>
     
     ${web_demo(self.vername[target_version])}
