@@ -81,6 +81,7 @@
                                 ('/projects'  ,'projects'  ),
                                 ('/activities','activities'),
                                 ('/reference' ,'reference' ),
+                                ('/units'     ,'teaching units'),
                                 ('/contact'   ,'contact'   ),
                             ]
                             %>

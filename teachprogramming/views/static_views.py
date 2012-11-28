@@ -34,3 +34,7 @@ def contact(request):
 @etag
 def projects(request):
     return render_static_mako_from_caller(request)
+
+@etag
+def units(request):
+    return render_static_mako_from_caller(request)

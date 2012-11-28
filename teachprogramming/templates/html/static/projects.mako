@@ -10,23 +10,26 @@
     self.text_title_description = 'Pick a project and get coding!'
 %></%def>
 
-
+<% format='py' %>
 
     <h2>Game Projects</h2>
         <!-- Projects -->
-        <ul>
+    <ul>
         % for p in resorce_helper.get_projects('game'):
         <li>
-            ##/{project_type}/{project}.{format}
-            <a href="${request.route_path('project', project_type='game', project=p, format='py')}">${p.capitalize()}</a>
+            <a href="${request.route_path('project', project_type='game', project=p, format=format)}">${p.capitalize()}</a>
         </li>
         % endfor
     </ul>
     
     <h2>Network Projects</h2>
     <ul>
+        % for p in resorce_helper.get_projects('net'):
+        <li>
+            <a href="${request.route_path('project', project_type='net', project=p, format=format)}">${p.capitalize()}</a>
+        </li>
+        % endfor
         <li>Paint</li>
-        <li><a href="/project/net/chat.html">Chat</a></li>
         <li>NetRace</li>
         <li>NetPong</li>
         <li>NetCopter</li>
@@ -34,7 +37,12 @@
     
     <h2>Web Projects</h2>
     <ul>
-        <li><a href="/project/web/php.html">Simple Messagbord</a><li>
+        % for p in resorce_helper.get_projects('web'):
+        <li>
+            <a href="${request.route_path('project', project_type='web', project=p, format=format)}">${p.capitalize()}</a>
+        </li>
+        % endfor
+        ##<li><a href="/project/web/php.html">Simple Messagbord</a><li>
         <li>Quiz Graphs<li>
         <li>Regex: rip from URL's</li>
         <li>Mobile App (jQueryMobile)</li>

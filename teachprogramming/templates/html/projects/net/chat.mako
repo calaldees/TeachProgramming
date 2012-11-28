@@ -1,8 +1,38 @@
 <%inherit file="_project.mako"/>
 
+
+<%def name="init()">
+<%
+    vername = {
+        'blank'         :'',
+        '1'             :'1',
+        'full'          :'1,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll,gui_username',
+    }
+    self.vername = vername
+%>
+</%def>
+
+
+
+
 <h1>Network Chat System</h1>
 
 ##python3 ~/code/TeachProgramming/teachprogramming/lib/make_ver.py chat.html --target_version 1,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll,gui_username > t.html
+
+
+<%self:code_section
+    prev_version   = "blank"
+    target_version = "full"
+    title          = "Full Test"    
+>
+    <%def name="before_code()">
+        <p>RARAR</p>
+    </%def>
+</%self:code_section>
+
+
+
+
 
 <h2>Part 0: Setup</h2>
 Before we Begin

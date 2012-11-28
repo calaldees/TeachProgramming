@@ -1,10 +1,10 @@
 <%inherit file="../_base.mako"/>
 
-<%
+<%def name="init()"><%
     self.titlebar_active        = 'reference'
     self.text_title             = 'Notes'
     self.text_title_description = 'Straighforward slimline notes and tips to get you setup'
-%>
+%></%def>
 
     <h2>Reference</h2>
     <p>These will be replaced with html dynamic versions in time</p>

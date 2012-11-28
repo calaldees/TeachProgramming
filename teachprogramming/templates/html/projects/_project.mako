@@ -47,6 +47,16 @@
     <pre>${include_file_(filename)}</pre>
 </%def>
 
+
+<%def name="section_title(title)"><%
+    try   : category = self.category
+    except: category = None
+    self.sidebar_content.append((title,category))
+%>
+<section id='${h.encode_id(title)}'>
+</%def>
+
+
 <%def name='body()'  cache_key="%{project_type}/${project}.${format}">
     ## cached="True"
     ##<%

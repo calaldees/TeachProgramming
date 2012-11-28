@@ -99,16 +99,8 @@ def make_web_ver(source):
 </%doc>
 
 
-<%def name="section_title(title)"><%
-    try   : category = self.category
-    except: category = None
-    self.sidebar_content.append((title,category))
-%>
-<section id='${h.encode_id(title)}'>
-</%def>
-
 <%def name="code_section(prev_version, target_version, title, heading_level=2)">
-<% section_title(title) %>
+<% self.section_title(title) %>
     <h${heading_level}>${title.capitalize()}</h${heading_level}>
     
     ${web_demo(self.vername[target_version])}
