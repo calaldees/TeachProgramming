@@ -3,29 +3,31 @@
 
 
 <%def name='show_diff(prev_version, target_version)'>
-    
+
     <%
         diff = h.make_ver.get_diff(h.constants.project_filename % (project_type,project,format), prev_version, target_version, hidden_line_replacement='...more...')
-        line_classs = {'-':'remove', '+':'add'}
+        line_classs = {'-':'code_remove', '+':'code_add'}
         open_section = False
     %>
-    <div class='code'>
+    ##<div class='code'>
+<pre>
     % for line in diff:
         % if line.startswith('@@'):
             % if open_section:
-        </pre></div>
+</pre>
+<pre>
+        ##</pre></div>
             % endif
             <% open_section = True %>
-        <div class='code_section'><pre>
+        ##<div class='code_section'><pre>
         % elif not (line.startswith('---') or line.startswith('+++')):
-            <p class='${line_classs.get(line[0:1])}'>${line}</p>
+##<p class='${line_classs.get(line[0:1])}'>${line}</p>
+<span class="${line_classs.get(line[0:1])}">${line[1:]}</span>
         % endif
     % endfor
-        </pre></div> <!-- end code section -->
-
-    </div> <!-- end code -->
-
-    
+        ##</pre></div> <!-- end code section -->
+    ##</div> <!-- end code -->
+</pre>
 </%def>
 
 <%def name="full_code(target_version=None, code_inline=False)">
@@ -55,6 +57,28 @@
 %>
 <section id='${h.encode_id(title)}'>
 </%def>
+
+
+<%def name="code_section(prev_version, target_version, title, heading_level=2)">
+<% self.section_title(title) %>
+    <h${heading_level}>${title.capitalize()}</h${heading_level}>
+    
+    ${self.full_code(self.vername[target_version])}
+    
+    % try:
+    ${caller.before_code()}
+    % except:
+    % endtry
+    
+    ${self.show_diff(self.vername[prev_version], self.vername[target_version])}
+    
+    % try:
+    ${caller.after_code()}
+    % except:
+    % endtry
+</section>
+</%def>
+
 
 
 <%def name='body()'  cache_key="%{project_type}/${project}.${format}">

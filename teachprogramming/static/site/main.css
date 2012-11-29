@@ -23,3 +23,11 @@ position: absolute;
     /* left: 0px; */
 }
 
+.code_add {
+    color: green;
+    font-weight: bold;
+}
+.code_remove {
+    color: red;
+    text-decoration: line-through;
+}

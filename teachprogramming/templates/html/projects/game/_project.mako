@@ -4,16 +4,15 @@
 
 import re
 
+from teachprogramming.lib      import make_ver, constants
+from teachprogramming.lib.misc import random_string
+
+
 canvas_ids = re.compile(r'<canvas.*?id=["\'](.*?)["\']')
 javascript_activate_mouse = """
     canvas.addEventListener('mouseover', function(event) {start();}, true);
     canvas.addEventListener('mouseout' , function(event) {pause();}, true);
 """
-
-from teachprogramming.lib      import make_ver, constants
-from teachprogramming.lib.misc import random_string
-
-
 
 def make_web_ver(source):
     """
@@ -105,7 +104,7 @@ def make_web_ver(source):
     
     ${web_demo(self.vername[target_version])}
     ${self.full_code(self.vername[target_version])}
-
+    
     % try:
     ${caller.before_code()}
     % except:
