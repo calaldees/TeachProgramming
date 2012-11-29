@@ -2,6 +2,10 @@
 
 <%def name="init()">
 <%
+    self.titlebar_active        = 'projects'
+    self.text_title             = 'Copter'
+    self.text_title_description = 'Classic cave flying action'
+
     vername = {
         'blank'          :'',
         'base1'          :'1',
@@ -19,8 +23,6 @@
 </%def>
 
 
-
-<h1>Copter</h1>
 demo
 ${parent.web_demo(self.vername['full'])}
 

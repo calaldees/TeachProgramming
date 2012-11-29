@@ -2,6 +2,10 @@
 
 <%def name="init()">
 <%
+    self.titlebar_active        = 'projects'
+    self.text_title             = 'Tron'
+    self.text_title_description = 'Head to head line drawing action or Maze'
+
     vername = {
         'blank'         :'',
         'base1'         :'1',
@@ -18,8 +22,6 @@
 %>
 </%def>
 
-
-<h1>Tron</h1>
 
 demo
 ${parent.web_demo(self.vername['2players_score'])}

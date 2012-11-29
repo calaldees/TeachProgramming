@@ -3,6 +3,10 @@
 
 <%def name="init()">
 <%
+    self.titlebar_active        = 'projects'
+    self.text_title             = 'Chat'
+    self.text_title_description = 'Send messages to the other side of the planet (or just the person across the room)'
+
     vername = {
         'blank'         :'',
         '1'             :'1',
@@ -13,9 +17,6 @@
 </%def>
 
 
-
-
-<h1>Network Chat System</h1>
 
 ##python3 ~/code/TeachProgramming/teachprogramming/lib/make_ver.py chat.html --target_version 1,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll,gui_username > t.html
 
