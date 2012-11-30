@@ -10,30 +10,113 @@
     vername = {
         'blank'         :'',
         '1'             :'1',
+        'send_one'      :'1,send_one',
+        'send'          :'1,send_one,send',
+        'recv'          :'1,send_one,send,recv',
+        'send_recv'     :'1,send_one,send,recv,send_recv',
+        'gui'           :'1,send_one,send,recv,send_recv,gui',
+        'gui_recv'      :'1,send_one,send,recv,send_recv,gui,gui_recv',
+        'gui_scroll'    :'1,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll',
+        'gui_username'  :'1,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll,gui_username',
         'full'          :'1,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll,gui_username',
     }
     self.vername = vername
 %>
 </%def>
 
-
+## ----------------------------------------------
+<% self.section_title('Setup') %>
+  <h2>Setup</h2>
+  <p>Explanation of IP adress</p>
+  <p>Download <a href="/static/projects/net/server.py">server.py</a> (only in python, quite compicated, if you think this is discraceful then build up some code kung fu and submit additional server implementations on github)</p>
+  <p>start the server - examples</p>
+  <p>replace localhost with server address</p>
+  <p><a href="#">Lesson Plan</a> for teachers</p>
+</section>
 
 ##python3 ~/code/TeachProgramming/teachprogramming/lib/make_ver.py chat.html --target_version 1,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll,gui_username > t.html
+
+## ----------------------------------------------
+<% self.category = 'Console Interface' %>
 
 
 <%self:code_section
     prev_version   = "blank"
-    target_version = "full"
-    title          = "Full Test"    
+    target_version = "send_one"
+    title          = "Send (one message)"
 >
-    <%def name="before_code()">
-        <p>RARAR</p>
+    <%def name="before_code_py()">
+        <p>before_py</p>
     </%def>
+
+    <%def name="before_code()">
+        <p>before</p>
+    </%def>
+
 </%self:code_section>
 
 
+<%self:code_section
+    prev_version   = "send_one"
+    target_version = "send"
+    title          = "Send messages"
+>
+</%self:code_section>
 
 
+<%self:code_section
+    prev_version   = "send"
+    target_version = "recv"
+    title          = "Receive messages"
+>
+</%self:code_section>
+
+
+<%self:code_section
+    prev_version   = "recv"
+    target_version = "send_recv"
+    title          = "Send and Recice messages"
+>
+</%self:code_section>
+
+
+## ----------------------------------------------
+<% self.category = 'Graphical User Interface' %>
+
+
+<%self:code_section
+    prev_version   = "send_recv"
+    target_version = "gui"
+    title          = "GUI"
+>
+</%self:code_section>
+
+<%self:code_section
+    prev_version   = "gui"
+    target_version = "gui_recv"
+    title          = "GUI Receve"
+>
+</%self:code_section>
+
+
+<%self:code_section
+    prev_version   = "gui_recv"
+    target_version = "gui_scroll"
+    title          = "GUI Receve (Scrolling)"
+>
+</%self:code_section>
+
+<%self:code_section
+    prev_version   = "gui_scroll"
+    target_version = "gui_username"
+    title          = "GUI with Username"
+>
+</%self:code_section>
+
+
+## Old Java Worksheet ----------------------------------------------------------
+
+<%doc>
 
 <h2>Part 0: Setup</h2>
 Before we Begin
@@ -292,3 +375,6 @@ You write it
   }
 …
 </pre>
+
+
+</%doc>

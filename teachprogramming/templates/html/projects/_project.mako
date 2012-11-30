@@ -65,17 +65,25 @@
     
     ${self.full_code(self.vername[target_version])}
     
-    % try:
-    ${caller.before_code()}
-    % except:
-    % endtry
+    <%
+        def render_by_method_name(method_name_prefix):
+            """
+            Reflect on the 'caller' to find+execute methods named
+            'before_code_py' or 'before_code_vb'
+            This enabled templates to define langauge level messages
+            """
+            for lang in list(h.constants.file_type_to_lang.keys()) + ['']:
+                render_method_name = '{0}{1}'.format(method_name_prefix,'_'+lang if lang else '')
+                try:
+                    getattr(caller, render_method_name)()
+                except:
+                    pass
+            return ''
+    %>
     
+    ${render_by_method_name('before_code')}
     ${self.show_diff(self.vername[prev_version], self.vername[target_version])}
-    
-    % try:
-    ${caller.after_code()}
-    % except:
-    % endtry
+    ${render_by_method_name('after_code')}
 </section>
 </%def>
 
