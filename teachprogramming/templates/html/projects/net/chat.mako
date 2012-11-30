@@ -10,15 +10,16 @@
     vername = {
         'blank'         :'',
         '1'             :'1',
-        'send_one'      :'1,send_one',
-        'send'          :'1,send_one,send',
-        'recv'          :'1,send_one,send,recv',
-        'send_recv'     :'1,send_one,send,recv,send_recv',
-        'gui'           :'1,send_one,send,recv,send_recv,gui',
-        'gui_recv'      :'1,send_one,send,recv,send_recv,gui,gui_recv',
-        'gui_scroll'    :'1,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll',
-        'gui_username'  :'1,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll,gui_username',
-        'full'          :'1,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll,gui_username',
+        'connect'       :'1,connect',
+        'send_one'      :'1,connect,send_one',
+        'send'          :'1,connect,send_one,send',
+        'recv'          :'1,connect,send_one,send,recv',
+        'send_recv'     :'1,connect,send_one,send,recv,send_recv',
+        'gui'           :'1,connect,send_one,send,recv,send_recv,gui',
+        'gui_recv'      :'1,connect,send_one,send,recv,send_recv,gui,gui_recv',
+        'gui_scroll'    :'1,connect,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll',
+        'gui_username'  :'1,connect,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll,gui_username',
+        'full'          :'1,connect,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll,gui_username',
     }
     self.vername = vername
 %>
@@ -26,12 +27,12 @@
 
 ## ----------------------------------------------
 <% self.section_title('Setup') %>
-  <h2>Setup</h2>
-  <p>Explanation of IP adress</p>
-  <p>Download <a href="/static/projects/net/server.py">server.py</a> (only in python, quite compicated, if you think this is discraceful then build up some code kung fu and submit additional server implementations on github)</p>
-  <p>start the server - examples</p>
-  <p>replace localhost with server address</p>
-  <p><a href="#">Lesson Plan</a> for teachers</p>
+    <h2>Setup</h2>
+    <p>Explanation of IP adress</p>
+    <p>Download <a href="/static/projects/net/server.py">server.py</a> (only in python, quite compicated, if you think this is discraceful then build up some code kung fu and submit additional server implementations on github)</p>
+    <p>start the server - examples</p>
+    <p>replace localhost with server address</p>
+    <p><a href="#">Lesson Plan</a> for teachers</p>
 </section>
 
 ##python3 ~/code/TeachProgramming/teachprogramming/lib/make_ver.py chat.html --target_version 1,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll,gui_username > t.html
@@ -39,20 +40,51 @@
 ## ----------------------------------------------
 <% self.category = 'Console Interface' %>
 
-
 <%self:code_section
     prev_version   = "blank"
-    target_version = "send_one"
-    title          = "Send (one message)"
+    target_version = "1"
+    title          = "Base"
 >
     <%def name="before_code_py()">
-        <p>before_py</p>
+        <p>Create a file called chat.py</p>
     </%def>
 
-    <%def name="before_code()">
-        <p>before</p>
+    <%def name="before_code_html()">
+        <p>Create a file called chat.html</p>
     </%def>
+    <%def name="after_code_html()">
+        <p>Open chat.html in firefox</p>
+        <p>Reload the page each addition by pressing CTRL+F5</p>
+    </%def>
+</%self:code_section>
 
+
+<%self:code_section
+    prev_version   = "1"
+    target_version = "connect"
+    title          = "Connect"
+>
+    <%def name="before_code_py()">
+        <p>Replace localhost with the servers IP address example: 192.168.0.1</p>
+    </%def>
+    
+    <%def name="before_code_html()">
+        <p>Replace localhost with the servers IP address example: ws://192.168.0.1:9873/</p>
+    </%def>
+    <%def name="after_code()">
+        <p>Look at the server to see if your IP address connected</p>
+    </%def>
+</%self:code_section>
+
+
+<%self:code_section
+    prev_version   = "connect"
+    target_version = "send_one"
+    title          = "Connect + send one message"
+>
+    <%def name="after_code()">
+        <p>Look at the server to see if it received your message</p>
+    </%def>
 </%self:code_section>
 
 
@@ -61,6 +93,9 @@
     target_version = "send"
     title          = "Send messages"
 >
+    <%def name="before_code_py()">
+        <p>Press CTRL+C to exit</p>
+    </%def>
 </%self:code_section>
 
 
@@ -69,6 +104,9 @@
     target_version = "recv"
     title          = "Receive messages"
 >
+    <%def name="before_code_html()">
+        <p>Tools->Web Developer->Web Console</p>
+    </%def>
 </%self:code_section>
 
 
@@ -136,11 +174,11 @@ import GameLib.Net.AbstractNetworkConnection;
 
 public class ????? extends AbstractNetworkConnection {
 
-  public ?????() {
-   networkConnect("?network address?");
-  }
-
-  public static void main(String[] args) {new ????();}
+    public ?????() {
+        networkConnect("?network address?");
+    }
+  
+    public static void main(String[] args) {new ????();}
 }
 </pre>
 <p>Note: ???? must be the name of the file (CASE SENSETIVE) e.g if your file is called “ChatClient.java” ????? would be “ChatClient”</p>
@@ -154,12 +192,12 @@ public class ????? extends AbstractNetworkConnection {
 <pre>
 public class ?????? extends AbstractNetworkConnection {
 
-  public ?????() {
-   networkConnect("?network address?");
-   networkSend("Hello everyone! Mr.T has connected");
-  }
+    public ?????() {
+        networkConnect("?network address?");
+        networkSend("Hello everyone! Mr.T has connected");
+    }
 
-  public static void main(String[] args) {new ????();}
+    public static void main(String[] args) {new ????();}
 }
 </pre>
 
@@ -169,11 +207,11 @@ public class ?????? extends AbstractNetworkConnection {
 <h3>Receiving messages and displaying them</h3>
 
 <pre>
-  public void networkRecieve(String message) {
-    System.out.println(message);
-  }
-
-  public static void main(String[] args) {new ????();}
+    public void networkRecieve(String message) {
+        System.out.println(message);
+    }
+  
+    public static void main(String[] args) {new ????();}
 </pre>
 <p>THINK! Where would you put this code? Look at the indentation.</p>
 <p>NOW! With your friends try connecting and disconnecting and try to see each others connect message.</p>

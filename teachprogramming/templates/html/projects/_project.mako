@@ -31,7 +31,7 @@
 </%def>
 
 <%def name="full_code(target_version=None, code_inline=False)">
-    <% 
+    <%
         #code_url = "/code/%(project_type)s/%(project)s.%(format)s/%(target_version)s" % {'project_type':project_type, 'project':project, 'format':format, 'target_version':target_version}
         code_url = request.route_path('project_code', project_type=project_type, project=project, format=format, version=target_version)
     %>
@@ -72,8 +72,7 @@
             'before_code_py' or 'before_code_vb'
             This enabled templates to define langauge level messages
             """
-            for lang in list(h.constants.file_type_to_lang.keys()) + ['']:
-                render_method_name = '{0}{1}'.format(method_name_prefix,'_'+lang if lang else '')
+            for render_method_name in [method_name_prefix+'_'+format, method_name_prefix]:
                 try:
                     getattr(caller, render_method_name)()
                 except:
@@ -89,11 +88,8 @@
 
 
 
-<%def name='body()'  cache_key="%{project_type}/${project}.${format}">
+<%def name='body()'  cache_key="project/%{project_type}/${project}.${format}">
     ## cached="True"
-    ##<%
-    ##    self.files = [file for file in os.listdir(os.path.join(h.constants.project_path,project_type)) if file.startswith('%s.' % project)]
-    ##%>
     <!-- Documentation for this project -->
     ${next.body()}
     
