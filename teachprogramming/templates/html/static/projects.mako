@@ -1,8 +1,5 @@
 <%inherit file="../_base.mako"/>
 
-<%
-    import teachprogramming.lib.resorce_helper as resorce_helper    
-%>
 
 <%def name="init()"><%
     self.titlebar_active        = 'projects'
@@ -15,7 +12,7 @@
     <h2>Game Projects</h2>
         <!-- Projects -->
     <ul>
-        % for p in resorce_helper.get_projects('game'):
+        % for p in h.get_projects('game'):
         <li>
             <a href="${request.route_path('project', project_type='game', project=p, format=format)}">${p.capitalize()}</a>
         </li>
@@ -24,7 +21,7 @@
     
     <h2>Network Projects</h2>
     <ul>
-        % for p in resorce_helper.get_projects('net'):
+        % for p in h.get_projects('net'):
         <li>
             <a href="${request.route_path('project', project_type='net', project=p, format=format)}">${p.capitalize()}</a>
         </li>
@@ -37,7 +34,7 @@
     
     <h2>Web Projects</h2>
     <ul>
-        % for p in resorce_helper.get_projects('web'):
+        % for p in h.get_projects('web'):
         <li>
             <a href="${request.route_path('project', project_type='web', project=p, format=format)}">${p.capitalize()}</a>
         </li>

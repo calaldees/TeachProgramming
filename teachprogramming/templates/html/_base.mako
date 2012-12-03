@@ -1,7 +1,5 @@
 ## -*- coding: utf-8 -*-
-<%!
-    from teachprogramming.lib.constants import file_type_to_lang
-%><%
+<%
     self.titlebar_active       = ''
     self.text_title             = 'Title'
     self.text_title_description = 'Test a little bit of make and shake'
@@ -10,7 +8,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>${project()}</title>
+        <title>${project_title()}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="Allan Callaghan">
@@ -46,29 +44,35 @@
                     </a>
                     
                     
-                    <a class="brand" href="/">${project()}</a>
+                    <a class="brand" href="/">${project_title()}</a>
                     
                     <div class="nav-collapse collapse">
+                    
+                        <ul class="nav pull-right lang_select">
+                            <%
+                                try:
+                                    avalable_langs = h.get_project_langs(project_type, project)
+                                except:
+                                    avalable_langs = []
+                            %>
+                            % for lang, language_name in h.langs():
+                                % if lang in avalable_langs:
+                                <li class='avalable'  ><a tabindex="-1" href="${request.current_route_path(format=lang)}"><i class="icon-lang-${lang}"></i><span>${language_name}</span></a></li>
+                                % else:
+                                <li class='unavalable'><i class="icon-lang-${lang}"></i><span>${language_name}</span></li>
+                                % endif
+                            % endfor
+                            ##<li class="divider"></li>
+                        </ul>
                         
+                        <%doc>
                         <ul class="nav pull-right">
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language <b class="caret"></b></a>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    % for ext, language in file_type_to_lang.items():
-                                    <li><a tabindex="-1" href="${request.current_route_path(format=ext)}"><i class="icon-lang-${ext}"></i>${language}</a></li>
-                                    % endfor
-                                    ##<li class="divider"></li>
-                                    <%doc>
-                                        <% fileexts = resorce_helper.get_project_langs('game',p) %>
-                                        % for lang in h.constants.file_type_to_lang.keys():
-                                            % if lang in fileexts:
-                                                <a href="/project/game/${p}.${lang}" class="lang_icon lang_${lang} icon16 i_${lang}"><span>${lang}</span></a>
-                                            % endif
-                                        % endfor
-                                    </%doc>
-                                </ul>
+                                ##<a href="#" class="dropdown-toggle" data-toggle="dropdown">Language <b class="caret"></b></a>
+                                ##<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                             </li>
                         </ul>
+                        </%doc>
                     
                         ##<p class="navbar-text pull-right">
                         ##    Logged in as <a href="#" class="navbar-link">Username</a>
@@ -129,4 +133,4 @@
     
 </html>
 
-<%def name="project()">Learn Programming</%def>
+<%def name="project_title()">Learn Programming</%def>

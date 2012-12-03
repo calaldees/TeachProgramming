@@ -2,7 +2,6 @@
 
 <%doc>
 <%!
-from teachprogramming.lib import resorce_helper, constants
 
 def selected_class(a,b):
     if a==b:

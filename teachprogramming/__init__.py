@@ -24,7 +24,7 @@ def main(global_config, **settings):
     config.add_static_view('projects/game/images', 'static/projects/game/images')
     
     # Plain Template routes  
-    from .lib.resorce_helper import get_templates
+    from .templates.helpers import get_templates
     import teachprogramming.views.static_views as static_views
     config.add_route('root', '/')
     config.add_view(static_views.home, route_name='root')

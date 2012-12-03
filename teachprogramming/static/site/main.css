@@ -35,9 +35,10 @@ position: absolute;
 /* Icons */
 [class^="icon-lang"], [class*=" icon-lang"] {
     background-image: url("/static/site/icons.png");
-    width : 16px;
-    height: 16px;
-    
+    /*
+    width : 14px;
+    height: 14px;
+    */
 }
 .icon-lang-pas  {background-position: -80px -0px;}
 .icon-lang-java {background-position: -64px -0px;}
@@ -45,3 +46,16 @@ position: absolute;
 .icon-lang-py   {background-position: -32px -0px;}
 .icon-lang-vb   {background-position: -16px -0px;}
 .icon-lang-html {background-position:  -0px -0px;}
+
+.lang_select li {display: inline;}
+.lang_select li span {display: none;}
+.lang_select .unavalable {}
+.lang_select .avalable   {border: 1px dashed green;}
+
+
+/*
+.navbar ul .lang_avalable {
+    background-color: #ff5533;
+    border: 1px dashed green;
+}
+*/
