@@ -9,7 +9,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!-- Meta -->
         <meta charset="utf-8">
         <title>${project()}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +22,7 @@
         
         <!-- IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
-            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
         
         <!-- Fav and touch icons -->
@@ -56,7 +55,7 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language <b class="caret"></b></a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
                                     % for ext, language in file_type_to_lang.items():
-                                    <li><a tabindex="-1" href="#${ext}">${language}</a></li>
+                                    <li><a tabindex="-1" href="${request.current_route_path(format=ext)}"><i class="icon-lang-${ext}"></i>${language}</a></li>
                                     % endfor
                                     ##<li class="divider"></li>
                                     <%doc>
