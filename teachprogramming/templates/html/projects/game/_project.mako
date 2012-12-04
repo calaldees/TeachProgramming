@@ -51,26 +51,35 @@ def make_web_ver(source):
     source = re.sub('<!--<canvas','<canvas', source) # AllanC - SWEET HOLY HACK!!!! I needed a way to have the tron.html working as a static file, so I HAD to rem the 320,240 canvas out, this just makes it visible again
     
     return source
-
 %>
 
+## Demos ---------------------------------------
 
-
+<%def name="web_demos(*target_versions)">
+    <ul class="thumbnails">
+    % for target_version in target_versions:
+        <li class="span4"><div class="thumbnail">
+        ${web_demo(target_version)}
+        </div></li>
+    % endfor
+    </ul>
+</%def>
 
 <%def name="web_demo(target_version)">
     % try:
-    <% web_demo_code = make_web_ver(h.ver_string(project_type, project, 'html', target_version+',demo')) %>
-    <div class="demo">
-        <div class="demo_placeholder">
-            <p>Hover mouse for demo</p>
-            <p>(press escape to stop and reset)</p>
+        <div class="demo">
+            <div class="demo_placeholder">
+                <p>Hover mouse for demo</p>
+                <p>(press escape to stop and reset)</p>
+            </div>
+            ${make_web_ver(h.ver_string(project_type, project, 'html', self.vername[target_version]+',demo')) | n}
         </div>
-        ${web_demo_code | n}
-    </div>
     % except Exception as e:
         <p>BROKEN!! ${e}</p>
-    % endtry    
+    % endtry
 </%def>
+
+
 
 <%doc>
 <%def name="format_links(target_version='')">
@@ -100,22 +109,26 @@ def make_web_ver(source):
 
 <%def name="code_section(prev_version, target_version, title, heading_level=2)">
 <% self.section_title(title) %>
-    <h${heading_level}>${title.capitalize()}</h${heading_level}>
-    
-    ${web_demo(self.vername[target_version])}
-    ${self.full_code(self.vername[target_version])}
-    
-    % try:
-    ${caller.before_code()}
-    % except:
-    % endtry
-    
-    ${self.show_diff(self.vername[prev_version], self.vername[target_version])}
-    
-    % try:
-    ${caller.after_code()}
-    % except:
-    % endtry
+<h${heading_level}>${title.capitalize()}</h${heading_level}>
+<div class="row">
+    <div class="span6">
+        % try:
+        ${caller.before_code()}
+        % except:
+        % endtry
+        
+        ${self.show_diff(prev_version, target_version)}
+        
+        % try:
+        ${caller.after_code()}
+        % except:
+        % endtry
+    </div>
+    <div class="span3">
+        ${web_demo(target_version)}
+        ${self.full_code(target_version)}
+    </div>
+</div>
 </section>
 </%def>
 

@@ -3,8 +3,10 @@
 
 
 <%def name='show_diff(prev_version, target_version)'>
-
     <%
+        prev_version   = self.vername[prev_version]
+        target_version = self.vername[target_version]
+    
         diff = h.make_ver.get_diff(h.constants.project_filename % (project_type,project,format), prev_version, target_version, hidden_line_replacement='...more...')
         line_classs = {'-':'code_remove', '+':'code_add'}
         open_section = False
@@ -32,6 +34,7 @@
 
 <%def name="full_code(target_version=None, code_inline=False)">
     <%
+        target_version = self.vername[target_version]
         #code_url = "/code/%(project_type)s/%(project)s.%(format)s/%(target_version)s" % {'project_type':project_type, 'project':project, 'format':format, 'target_version':target_version}
         code_url = request.route_path('project_code', project_type=project_type, project=project, format=format, version=target_version)
     %>
@@ -63,7 +66,7 @@
 <% self.section_title(title) %>
     <h${heading_level}>${title.capitalize()}</h${heading_level}>
     
-    ${self.full_code(self.vername[target_version])}
+    ${self.full_code(target_version)}
     
     <%
         def render_by_method_name(method_name_prefix):
@@ -81,7 +84,7 @@
     %>
     
     ${render_by_method_name('before_code')}
-    ${self.show_diff(self.vername[prev_version], self.vername[target_version])}
+    ${self.show_diff(prev_version, target_version)}
     ${render_by_method_name('after_code')}
 </section>
 </%def>

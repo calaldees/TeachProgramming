@@ -18,8 +18,10 @@ def selected_class(a,b):
 % if self.sidebar_content:
 <div data-spy="affix" data-offset-top="130" class="span3 sidebar-nav-container">
     ##  affix-top="150" affix-bottom="0"
-    <div class="well sidebar-nav">
-        <ul class="nav nav-list sidebar-nav-list">
+    <div class="well well-small">
+        ##sidebar-nav
+        <ul class="nav nav-list">
+            ##sidebar-nav-list
             <%def name="sidebar()">
                 <% current_category = None %>
                 % for title, category in  self.sidebar_content :

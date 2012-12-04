@@ -10,17 +10,17 @@ body {
 }
 */
 
-.sidebar-nav-container {
-position: absolute;
-}
-
-
+.sidebar-nav-container {position: absolute;}
 .affix {
     position: fixed; 
     top: 60px;
     /* margin-left: 0px; */
     /* width: 220px; */
     /* left: 0px; */
+}
+
+pre {
+    font-size: smaller;
 }
 
 .code_add {

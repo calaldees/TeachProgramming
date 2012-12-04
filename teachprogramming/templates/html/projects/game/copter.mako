@@ -24,7 +24,7 @@
 
 
 demo
-${parent.web_demo(self.vername['full'])}
+${parent.web_demos('full')}
 
 ## ----------------------------------------------
 <% self.category = 'Base Compoents' %>

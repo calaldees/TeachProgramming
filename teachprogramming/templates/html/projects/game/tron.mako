@@ -23,9 +23,9 @@
 </%def>
 
 
-demo
-${parent.web_demo(self.vername['2players_score'])}
-${parent.web_demo(self.vername['maze'])}
+
+${parent.web_demos('2players_score','maze')}
+
 
 
 
