@@ -5,12 +5,12 @@ project_path          = 'teachprogramming/static/projects/'
 project_template_path = 'teachprogramming/templates/html/projects/'
 
 project_filename      = project_path + '%s/%s.%s'
-project_filename_dict = project_path + '%(project_type)s/%(project)s.%(format)s'
+project_filename_dict = project_path + '%(project_type)s/%(project)s.%(lang)s'
 
 file_type_to_lang = dict(
     py   = 'Python',
     html = 'Javascript/HTML5',
-    js   = 'Javascript',
+    #js   = 'Javascript',
     vb   = 'VB.NET',
     php  = 'PHP',
     java = 'Java',

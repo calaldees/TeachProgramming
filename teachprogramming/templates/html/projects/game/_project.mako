@@ -81,31 +81,6 @@ def make_web_ver(source):
 
 
 
-<%doc>
-<%def name="format_links(target_version='')">
-    <div class="format_links">
-        <a name="${target_version}"></a>
-        <!-- List all formats for this version -->
-        <ul>
-        % if not self.files:
-        No versions?
-        % endif
-        % for file in self.files:
-            <% 
-                fileext            = h.make_ver.get_fileext(file) 
-                format_description = h.constants.file_type_to_lang.get(fileext)
-                css_class = ''
-                if fileext == format:
-                    css_class = 'selected'
-            %>
-            ## TODO: use route path? code_url = request.route_path('project_code', project_type=project_type, project=project, format=format, version=target_version)
-            <li><a href='/project/${project_type}/${project}.${fileext}#${target_version}' class='${css_class}' alt='${format_description}'><span class='icon16 i_${fileext}'></span></a></li>
-        % endfor
-        </ul>
-    </div>
-</%def>
-</%doc>
-
 
 <%def name="code_section(prev_version, target_version, title, heading_level=2)">
 <% self.section_title(title) %>

@@ -17,7 +17,6 @@ def render_static_mako_from_caller(request):
 @etag
 def home(request):
     return render_static_mako_from_caller(request)
-    #return {}
 
 @etag
 def activities(request):

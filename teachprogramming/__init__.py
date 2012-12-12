@@ -34,9 +34,8 @@ def main(global_config, **settings):
         config.add_view(getattr(static_views,route_name), route_name=route_name)
 
     
-    config.add_route('project', '/projects/{project_type}/{project}.{format}')
-    #config.add_route('project_code', '/code/{project}.{format}'          )
-    config.add_route('project_code', '/projects/{project_type}/{project}.{format}/{version}')
+    config.add_route('project'     , '/projects/{project_type}/{project}.{selected_lang}')
+    config.add_route('project_code', '/projects/{project_type}/{project}.{selected_lang}/{version}')
     
     # Old for reference
     #config.add_view('myproject.views.mako_test', route_name='mako_test')
@@ -52,3 +51,4 @@ def main(global_config, **settings):
 
 def add_template_helpers_to_event(event):
     event['h'] = template_helpers
+    event['selected_lang'] = 'py'

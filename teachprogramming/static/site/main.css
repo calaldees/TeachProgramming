@@ -47,10 +47,13 @@ pre {
 .icon-lang-vb   {background-position: -16px -0px;}
 .icon-lang-html {background-position:  -0px -0px;}
 
+/*
 .lang_select li {display: inline;}
 .lang_select li span {display: none;}
 .lang_select .unavalable {}
 .lang_select .avalable   {border: 1px dashed green;}
+.lang_select .current    {background-color: red;}
+*/
 
 
 /*

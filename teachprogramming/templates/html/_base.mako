@@ -3,6 +3,7 @@
     self.titlebar_active       = ''
     self.text_title             = 'Title'
     self.text_title_description = 'Test a little bit of make and shake'
+
 %><%def name="init()"></%def>${self.init()}\
 <!DOCTYPE html>
 <html lang="en">
@@ -14,9 +15,10 @@
         <meta name="author" content="Allan Callaghan">
         
         <!-- Styles -->
-        <link href="/static/site/bootstrap/css/bootstrap.css"            rel="stylesheet">
-        <link href="/static/site/main.css"                               rel="stylesheet">
-        <link href="/static/site/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="/static/site/bootstrap/css/bootstrap.css"            rel="stylesheet"/>
+        <link href="/static/site/prettify/prettify.css"                  rel="stylesheet"/>
+        <link href="/static/site/main.css"                               rel="stylesheet"/>
+        <link href="/static/site/bootstrap/css/bootstrap-responsive.css" rel="stylesheet"/>
         
         <!-- IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
@@ -47,22 +49,31 @@
                     <a class="brand" href="/">${project_title()}</a>
                     
                     <div class="nav-collapse collapse">
-                    
+                        
                         <ul class="nav pull-right lang_select">
-                            <%
-                                try:
-                                    avalable_langs = h.get_project_langs(project_type, project)
-                                except:
-                                    avalable_langs = []
-                            %>
-                            % for lang, language_name in h.langs():
-                                % if lang in avalable_langs:
-                                <li class='avalable'  ><a tabindex="-1" href="${request.current_route_path(format=lang)}"><i class="icon-lang-${lang}"></i><span>${language_name}</span></a></li>
-                                % else:
-                                <li class='unavalable'><i class="icon-lang-${lang}"></i><span>${language_name}</span></li>
-                                % endif
-                            % endfor
-                            ##<li class="divider"></li>
+                            
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-lang-${selected_lang}"></i>${h.constants.file_type_to_lang[selected_lang]}<b class="caret"></b></a>
+                                <ul class="dropdown-menu">                            
+                                <%
+                                    try:
+                                        avalable_langs = h.get_project_langs(project_type, project)
+                                    except:
+                                        avalable_langs = []
+                                %>
+                                % for lang, language_name in h.langs():
+                                    % if lang in avalable_langs:
+                                    <% _class = 'current' if lang==selected_lang else '' %>
+                                    <li class='avalable ${_class}'><a tabindex="-1" href="${request.current_route_path(selected_lang=lang)}"><i class="icon-lang-${lang}"></i><span>${language_name}</span></a></li>
+                                    % else:
+                                    <li class='unavalable'><i class="icon-lang-${lang}"></i><span>${language_name}</span></li>
+                                    % endif
+                                % endfor
+                                ##<li class="divider"></li>
+                                
+                                </ul>
+                            </li>
+
                         </ul>
                         
                         <%doc>
@@ -127,6 +138,10 @@
         <script type="text/javascript" src="/static/site/jquery/jquery-1.8.0.min.js"   ></script>
         <script type="text/javascript" src="/static/site/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="/static/site/prettify/prettify.js"         ></script>
+        <script type="text/javascript">
+            //<pre class="prettyprint linenums">
+            window.prettyPrint && prettyPrint();
+        </script>
         <script type="text/javascript" src="/static/site/main.js"                      ></script>
 
     </body>
