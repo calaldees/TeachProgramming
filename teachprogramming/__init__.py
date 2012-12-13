@@ -51,4 +51,3 @@ def main(global_config, **settings):
 
 def add_template_helpers_to_event(event):
     event['h'] = template_helpers
-    event['selected_lang'] = 'py'
