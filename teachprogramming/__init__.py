@@ -1,9 +1,11 @@
 from pyramid.config import Configurator
 from pyramid_beaker import set_cache_regions_from_settings
+from pyramid.session import UnencryptedCookieSessionFactoryConfig
 import pyramid.events
 
 
 from .templates import helpers as template_helpers
+
 
 
 #from sqlalchemy import engine_from_config
@@ -18,7 +20,9 @@ def main(global_config, **settings):
     #engine = engine_from_config(settings, 'sqlalchemy.')
     #DBSession.configure(bind=engine)
     
-    config = Configurator(settings=settings)
+    session_factory = UnencryptedCookieSessionFactoryConfig('teachprogramming')
+    
+    config = Configurator(settings=settings, session_factory=session_factory)
     
     config.add_static_view('static'              , 'static'                     ) #cache_max_age=3600
     config.add_static_view('projects/game/images', 'static/projects/game/images')

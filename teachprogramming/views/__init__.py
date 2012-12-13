@@ -23,8 +23,11 @@ def base(target, *args, **kwargs):
     """
     request = request_from_args(args)
     
-    if not request.matchdict.get('selected_lang'):
-        request.matchdict['selected_lang'] = 'py'
+    if 'selected_lang' not in request.matchdict:
+        request.matchdict['selected_lang'] = request.session.get('selected_lang','py')
+    if request.matchdict.get('selected_lang') != request.session.get('selected_lang'):
+        request.session  ['selected_lang'] = request.matchdict.get('selected_lang','py')
+
     
     print(request.matchdict)
     result = target(*args, **kwargs)
