@@ -36,7 +36,6 @@ while v.running:
     colision_point = (v.copter_x_pos + v.view_x_pos, v.copter_y_pos)
     try   : pixel = v.background_image.get_at(colision_point)
     except: pixel = None
-    print(pixel)
     if pixel and pixel != (255,255,255,255):
          v.view_x_pos   =   0
          v.copter_x_pos =  50

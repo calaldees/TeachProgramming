@@ -35,8 +35,9 @@
     
     <body>
         <!-- Navbar -->
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
+        <div class="navbar navbar-fixed-top">
+            ## navbar-inverse
+            <div class="navbar-inner navbar-lang-${selected_lang}">
                 <div class="container-fluid">
                     
                     <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
