@@ -40,6 +40,8 @@ def main(global_config, **settings):
     
     config.add_route('project'     , '/projects/{project_type}/{project}.{selected_lang}')
     config.add_route('project_code', '/projects/{project_type}/{project}.{selected_lang}/{version}')
+    config.add_route('select_language_redirect', '/select_language_redirect/{selected_lang}')
+    
     
     # Old for reference
     #config.add_view('myproject.views.mako_test', route_name='mako_test')

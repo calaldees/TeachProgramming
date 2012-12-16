@@ -1,6 +1,7 @@
 from pyramid.view      import view_config
 from pyramid.renderers import render_to_response
 from pyramid.response  import Response
+from pyramid.httpexceptions import HTTPFound
 
 from . import web, etag
 import teachprogramming.lib.make_ver  as make_ver
@@ -24,7 +25,12 @@ def project(request):
 @etag
 @web
 def project_code(request):
-    code = '\n'.join( make_ver.make_ver(constants.project_filename_dict % request.matchdict, request.matchdict.get('version')) )
+    code = '\n'.join( make_ver.make_ver(constants.project_filename_dict.format(**request.matchdict), target_versions=request.matchdict['version'], lang=request.matchdict['selected_lang'] ) )
     response = Response(code)
     response.headers['Content-type'] = "text/plain; charset=utf-8"
     return response
+
+@view_config(route_name='select_language_redirect')
+def select_language_redirect(request):
+    request.session['selected_lang'] = request.matchdict['selected_lang'] #request.params.get('selected_lang', default_language)
+    return HTTPFound(location=request.referer)

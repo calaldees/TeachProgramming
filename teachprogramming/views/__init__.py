@@ -23,12 +23,12 @@ def base(target, *args, **kwargs):
     """
     request = request_from_args(args)
     
-    default_language = get_setting('default_langage', request)
+    default_language = get_setting('default_language', request)
     if 'selected_lang' not in request.matchdict:
         request.matchdict['selected_lang'] = request.session.get('selected_lang'  ,default_language)
     if request.matchdict.get('selected_lang') != request.session.get('selected_lang'):
         request.session  ['selected_lang'] = request.matchdict.get('selected_lang',default_language)
-
+    
     result = target(*args, **kwargs)
     
     # Enable Pyramid GZip on all responses - NOTE! In a production this should be handled by nginx for performance!

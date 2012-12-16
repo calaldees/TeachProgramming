@@ -93,9 +93,15 @@
 <%def name='body()'  cache_key="project/%{project_type}/${project}.${selected_lang}">
     ## cached="True"
     <!-- Documentation for this project -->
-    % if selected_lang in h.get_project_langs(project_type, project):
+    <% project_langs = h.get_project_langs(project_type, project) %>
+    % if selected_lang in project_langs:
         ${next.body()}
     % else:
-        No project for this lang
+    <p>This project is avalable in</p>
+        <ul>
+            % for lang in project_langs:
+            <li><a href="${request.route_path('project', project_type=project_type, project=project, selected_lang=lang)}">${h.constants.file_type_to_lang[lang]}</a></li>
+            % endfor
+        </ul>
     % endif
 </%def>

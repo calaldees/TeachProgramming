@@ -5,7 +5,7 @@ project_path          = 'teachprogramming/static/projects/'
 project_template_path = 'teachprogramming/templates/html/projects/'
 
 project_filename      = project_path + '%s/%s.%s'
-project_filename_dict = project_path + '%(project_type)s/%(project)s.%(lang)s'
+project_filename_dict = project_path + '{project_type}/{project}.{selected_lang}'
 
 file_type_to_lang = dict(
     py   = 'Python',

@@ -63,11 +63,12 @@
                                         avalable_langs = []
                                 %>
                                 % for lang, language_name in h.langs():
-                                    % if lang in avalable_langs:
                                     <% _class = 'current' if lang==selected_lang else '' %>
+                                    % if lang in avalable_langs:
                                     <li class='avalable ${_class}'><a tabindex="-1" href="${request.current_route_path(selected_lang=lang)}"><i class="icon-lang-${lang}"></i><span>${language_name}</span></a></li>
                                     % else:
-                                    <li class='unavalable'><i class="icon-lang-${lang}"></i><span>${language_name}</span></li>
+                                    ##<li class='unavalable'><i class="icon-lang-${lang}"></i><span>${language_name}</span></li>
+                                    <li class='unavalable ${_class}'><a tabindex="-1" href="${request.route_path('select_language_redirect', selected_lang=lang)}"><i class="icon-lang-${lang}"></i><span>${language_name}</span></a></li>
                                     % endif
                                 % endfor
                                 ##<li class="divider"></li>
