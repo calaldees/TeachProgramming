@@ -1,24 +1,29 @@
 <%inherit file="_project.mako"/>
 
+<%def name="init()">
 <%
+    self.titlebar_active        = 'projects'
+    self.text_title             = 'Whack'
+    self.text_title_description = 'Whack a wham'
+
     vername = {
+        'blank'          :'',
         'full'           :'1',
     }
+    self.vername = vername
 %>
+</%def>
 
-<h1>Whack</h1>
+
 demo
-${parent.web_demo(vername['full'])}
+${parent.web_demos('full')}
 
 
-
-
+<% self.category = 'Base Compoents' %>
 
 <%self:code_section
-    prev_version   = "${None}"
-    target_version = "${vername['full']}"
->
-    <%def name="title()">
-        <h2>Base</h2>
-    </%def>
-</%self:code_section>
+    prev_version   = "blank"
+    target_version = "full"
+    title          = "Full"
+></%self:code_section>
+
