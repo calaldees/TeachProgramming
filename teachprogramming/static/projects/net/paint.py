@@ -23,7 +23,7 @@ def connection(sock):                                       # VER: network
             break                                           # VER: network
         data = json.loads(data_recv)                        # VER: network
         #print(data_recv)                                   # VER: network NOT draw_line_network, draw_pixel_network
-        if data.get('comment')=='pixel':                            # VER: draw_pixel_network
+        if data.get('command')=='pixel':                            # VER: draw_pixel_network
             screen.set_at(tuple(data['pos'], tuple(data['color']))) # VER: draw_pixel_network
         if data.get('command')=='line':                                                                         # VER: draw_line_network
             pygame.draw.line(screen, tuple(data['color']), tuple(data['last_pos']), tuple(data['current_pos'])) # VER: draw_line_network
@@ -56,7 +56,7 @@ while v.running:
     #if pygame.mouse.get_pressed():                            # VER: draw_pixel NOT draw_line, draw_pixel_network
     #    screen.set_at(pygame.mouse.get_pos(), v.my_pen_color) # VER: draw_pixel NOT draw_line, draw_pixel_network
                                                                                  # VER: draw_line
-    if v.last_draw_pos:                                                          # VER: draw_line
+    if v.last_draw_pos and v.last_draw_pos!=pygame.mouse.get_pos(): # VER: draw_line
         #pygame.draw.line(screen, (0,255,255), v.last_draw_pos, mouse.get_pos()) # VER: draw_line NOT draw_line_network
         send(dict(                                  # VER: draw_line_network
             command     = 'line'                ,   # VER: draw_line_network
