@@ -12,8 +12,8 @@ class callByRef:
 v = callByRef(
     running           = True,
     color_background  = (  0,   0,   0, 255),
-    last_draw_pos     = None,                   # VER: draw_line
     my_pen_color      = (255, 255, 255),        # VER: draw_pixel
+    last_draw_pos     = None,                   # VER: draw_line
 )
                                                             # VER: network
 def connection(sock):                                       # VER: network
@@ -48,14 +48,11 @@ while v.running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             v.running = False
-        elif event.type == pygame.MOUSEBUTTONDOWN: # VER: draw_line
-            v.last_draw_pos = event.pos            # VER: draw_line
-        elif event.type == pygame.MOUSEBUTTONUP:   # VER: draw_line
-            v.last_draw_pos = None                 # VER: draw_line
-    #                                                          # VER: draw_pixel NOT draw_line, draw_pixel_network
-    #if pygame.mouse.get_pressed():                            # VER: draw_pixel NOT draw_line, draw_pixel_network
-    #    screen.set_at(pygame.mouse.get_pos(), v.my_pen_color) # VER: draw_pixel NOT draw_line, draw_pixel_network
-                                                                                 # VER: draw_line
+        elif event.type == pygame.MOUSEBUTTONDOWN:                  # VER: draw_line
+            v.last_draw_pos = event.pos                             # VER: draw_line
+        elif event.type == pygame.MOUSEBUTTONUP:                    # VER: draw_line
+            v.last_draw_pos = None                                  # VER: draw_line
+                                                                    # VER: draw_line
     if v.last_draw_pos and v.last_draw_pos!=pygame.mouse.get_pos(): # VER: draw_line
         #pygame.draw.line(screen, (0,255,255), v.last_draw_pos, mouse.get_pos()) # VER: draw_line NOT draw_line_network
         send(dict(                                  # VER: draw_line_network
@@ -64,8 +61,12 @@ while v.running:
             last_pos    = v.last_draw_pos       ,   # VER: draw_line_network
             current_pos = pygame.mouse.get_pos(),   # VER: draw_line_network
         ))                                          # VER: draw_line_network
-        v.last_draw_pos = pygame.mouse.get_pos()  # VER: draw_line
-    
+        v.last_draw_pos = pygame.mouse.get_pos()    # VER: draw_line
+                                                    # VER: draw_line
+    #                                                          # VER: draw_pixel NOT draw_line, draw_pixel_network
+    #if pygame.mouse.get_pressed():                            # VER: draw_pixel NOT draw_line, draw_pixel_network
+    #    screen.set_at(pygame.mouse.get_pos(), v.my_pen_color) # VER: draw_pixel NOT draw_line, draw_pixel_network
+    #                                                          # VER: draw_pixel NOT draw_line, draw_pixel_network
     pygame.display.flip()
 
 pygame.quit()

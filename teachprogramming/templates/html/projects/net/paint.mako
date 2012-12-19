@@ -12,8 +12,7 @@
         '1'                 :'1',
         'draw_pixel'        :'1,draw_pixel',
         'draw_line'         :'1,draw_pixel,draw_line',
-        'network'           :'1,draw_pixel,draw_line',
-        'draw_pixel_network':'1,draw_pixel,network,draw_pixel_network',
+        'network'           :'1,draw_pixel,draw_line,network',
         'draw_line_network' :'1,draw_pixel,draw_line,network,draw_line_network',
         'select_color_keys' :'',
         'paint_images'      :'',
@@ -72,12 +71,6 @@
 >
 </%self:code_section>
 
-<%self:code_section
-    prev_version   = "network"
-    target_version = "draw_pixel_network"
-    title          = "Draw pixel network"
->
-</%self:code_section>
 
 <%self:code_section
     prev_version   = "network"
