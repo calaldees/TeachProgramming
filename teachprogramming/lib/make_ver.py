@@ -45,12 +45,19 @@ def get_ver_set(versions):
         versions = [ver.strip() for ver in versions.split(',')]
     return set(versions)
 
-def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
+def make_ver(source, target_versions, lang=None, hidden_line_replacement=None, close_file_on_exit=False):
     """
     Doc required
     
     source - string filename or file object
     lang   - language to process (optional - will try to aquire from filename automatically)
+    hidden_line_replacement - when line is removed with HIDE - it can be replaced with a placeholder
+    close_file_on_exit - optional - not needed in any normal operation
+    
+    returns a list of strings - each line is an element
+    
+    cCc VER: item1,item2 NOT item3,item4
+    HIDE - anywhere in line - removes whole line
     
     """
     output = []
@@ -61,6 +68,7 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
     # Open source file if string - otherwise assume source is a file object
     if isinstance(source, basestring):
         source = open(source, 'r')
+        close_file_on_exit = True
     # Setup comment_token for correct language
     if not lang:
         try:
@@ -71,16 +79,38 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
         raise Exception('lang %s is not supported' % lang)
     comment_token = comment_tokens[lang]
     
-    # Regex compile
-    extract_code          = re.compile(r'^(?P<line>(?P<indent>\s*)(?P<code>.*?))(%s|$)(?P<comment>.*)' % comment_token)
+    # Regex compile - for this language based on comment_token
+    extract_code          = re.compile(r'^(?P<line>(?P<indent>\s*)(?P<code>.*?))({0}|$)(?P<comment>.*)'.format(comment_token))
     extract_ver           = re.compile(r'VER:\s*(?P<ver>.*?)(\s+|$)(not\s*(?P<ver_exclude>.*?(\s+|$)))?', flags=re.IGNORECASE)
+    extract_vername       = re.compile(r'VERNAME:\s*(?P<vername>.*?)(\s+|$)')
     extract_hide          = re.compile(r'HIDE')
-    extract_blank_comment = re.compile('\s*%s\s*$' % comment_token)
-    remmed_line           = re.compile(r'^\s*%s' % comment_token)
+    extract_blank_comment = re.compile('\s*{0}\s*$'.format(comment_token))
+    remmed_line           = re.compile(r'^\s*{0}'.format(comment_token))
+    
 
-    # Process source file
-    #source.seek(0)
+    # if source is a file object - double check we are ready for reading
+    #  (this is handy when processing a single file multiple times)
+
+    
+    # preprocess vernames in file?
+    # attempt vername extraction from .ver file companion?
+    try   : source.seek(0)
+    except: pass
     for line in source:
+        vername_match = extract_vername.search(line)
+        if vername_match:
+            vername_match.group('vername')
+            # todo - split by ',' and index under name
+
+    try   : source.seek(0)
+    except: pass    
+    # Process source file
+    for line in source:
+        
+        # Always remove all VERNAME lines
+        vername_match = extract_vername.search(line)
+        if vername_match:
+            break # no need to process the line any further
         
         # Extract meta data from line
         code_match = extract_code.match(line)
@@ -93,20 +123,16 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
             line_versions    = get_ver_set(ver_match.group('ver'        ))
             exclude_versions = get_ver_set(ver_match.group('ver_exclude'))
         
-        #vername_match = extract_vername.search(line)
-        #if vername_match:
-        #    line = '' # Always remove all VERNAME lines
-        
         # If is the version requested is a union with the current line
         if line_versions & target_versions and not exclude_versions & target_versions:
             
             # Removed matched metadata
             line = extract_ver          .sub('' , line)
-            line = extract_hide         .sub('' , line) # bug: this is over zelus, HIDE anywhere in the line is removed, improve it chump!
+            line = extract_hide         .sub('' , line) # bug?: this is over zelus, HIDE anywhere in the line is removed, improve it chump!
             line = extract_blank_comment.sub(' ', line) # blank comments still need to represent a line (the \n gets rstiped later but at least it triggers an append)
             
             # If the line starts with a comment then remove that first comment
-            # This is for lines that are not present and executed in the raw run of the file, but are interim steps
+            # This is for lines that are not present and executed in the raw run of the file, but are interim steps in the overall progression
             if remmed_line.match(line):
                 line = re.sub(comment_token, '', line, count=1)
             
@@ -121,7 +147,10 @@ def make_ver(source, target_versions, lang=None, hidden_line_replacement=None):
             if line:
                 output.append(line.rstrip())
     
-    source.close()
+    # Tidy up - either close or reset file
+    if close_file_on_exit:
+        source.close()
+    
     return output #"\n".join(output)
 
 

@@ -22,7 +22,7 @@ def connection(sock):                                       # VER: network
         if not data_recv:                                   # VER: network
             break                                           # VER: network
         data = json.loads(data_recv)                        # VER: network
-        #print(data_recv)                                   # VER: network NOT draw_line_network, draw_pixel_network
+        #print(data_recv)                                   # VER: network NOT draw_line_network,draw_pixel_network
         if data.get('command')=='pixel':                            # VER: draw_pixel_network
             screen.set_at(tuple(data['pos'], tuple(data['color']))) # VER: draw_pixel_network
         if data.get('command')=='line':                                                                         # VER: draw_line_network
@@ -41,7 +41,7 @@ def send(message):                                          # VER: network
 screen.fill(v.color_background)
 while v.running:
     clock.tick(60)
-
+    
     keys = pygame.key.get_pressed()
     if keys[pygame.K_ESCAPE]: v.running = False
     
@@ -63,10 +63,10 @@ while v.running:
         ))                                          # VER: draw_line_network
         v.last_draw_pos = pygame.mouse.get_pos()    # VER: draw_line
                                                     # VER: draw_line
-    #                                                          # VER: draw_pixel NOT draw_line, draw_pixel_network
-    #if pygame.mouse.get_pressed():                            # VER: draw_pixel NOT draw_line, draw_pixel_network
-    #    screen.set_at(pygame.mouse.get_pos(), v.my_pen_color) # VER: draw_pixel NOT draw_line, draw_pixel_network
-    #                                                          # VER: draw_pixel NOT draw_line, draw_pixel_network
+    #                                                          # VER: draw_pixel NOT draw_line,draw_pixel_network
+    #if pygame.mouse.get_pressed():                            # VER: draw_pixel NOT draw_line,draw_pixel_network
+    #    screen.set_at(pygame.mouse.get_pos(), v.my_pen_color) # VER: draw_pixel NOT draw_line,draw_pixel_network
+    #                                                          # VER: draw_pixel NOT draw_line,draw_pixel_network
     pygame.display.flip()
 
 pygame.quit()
