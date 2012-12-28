@@ -65,14 +65,14 @@ def make_web_ver(source):
     </ul>
 </%def>
 
-<%def name="web_demo(target_version)">
+<%def name="web_demo(ver_name)">
     % try:
         <div class="demo">
             <div class="demo_placeholder">
                 <p>Hover mouse for demo</p>
                 <p>(press escape to stop and reset)</p>
             </div>
-            ${make_web_ver(h.ver_string(project_type, project, 'html', self.vername[target_version]+',demo')) | n}
+            ${make_web_ver(h.ver_string(project_type, project, 'html', ver_name=ver_name, ver_path='demo')) | n}
         </div>
     % except Exception as e:
         <p>BROKEN!! ${e}</p>

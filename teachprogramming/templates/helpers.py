@@ -8,8 +8,8 @@ def langs():
     """
     return constants.file_type_to_lang.items()
 
-def ver_string(project_type, project, lang, version):
-    return '\n'.join( make_ver.make_ver(constants.project_filename % (project_type, project, lang), version) )
+def ver_string(project_type, project, lang, ver_name, ver_path=None):
+    return '\n'.join( make_ver.make_ver(constants.project_filename % (project_type, project, lang), ver_name=ver_name, ver_path=ver_path) )
 
 def include_file_(filename):
     source = open(filename, 'r')

@@ -6,19 +6,6 @@
     self.text_title             = 'Copter'
     self.text_title_description = 'Classic cave flying action'
 
-    vername = {
-        'blank'          :'',
-        'base1'          :'1',
-        'background'     :'1,background',
-        'copter'         :'1,background,copter',
-        'colision_single':'1,background,copter,colision_single',
-        'colision_multi' :'1,background,copter,colision_single,colision_multi',
-        'level'          :'1,background,copter,colision_single,level',
-        'physics'        :'1,background,copter,physics',
-        'paralax'        :'1,background,paralax',
-        'full'           :'1,background,copter,physics,colision_single,colision_multi,paralax',
-    }
-    self.vername = vername
 %>
 </%def>
 
@@ -30,14 +17,14 @@ ${parent.web_demos('full')}
 <% self.category = 'Base Compoents' %>
 
 <%self:code_section
-    prev_version   = "blank"
-    target_version = "base1"
-    title          = "Base"    
+    prev_version   = ""
+    target_version = "base"
+    title          = "Base"
 ></%self:code_section>
 
 
 <%self:code_section
-    prev_version   = "base1"
+    prev_version   = "base"
     target_version = "background"
     title          = "Background"
 ></%self:code_section>

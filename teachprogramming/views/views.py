@@ -25,7 +25,7 @@ def project(request):
 @etag
 @web
 def project_code(request):
-    code = '\n'.join( make_ver.make_ver(constants.project_filename_dict.format(**request.matchdict), target_versions=request.matchdict['version'], lang=request.matchdict['selected_lang'] ) )
+    code = '\n'.join( make_ver.make_ver(constants.project_filename_dict.format(**request.matchdict), ver_name=request.matchdict['version'], lang=request.matchdict['selected_lang'] ) )
     response = Response(code)
     response.headers['Content-type'] = "text/plain; charset=utf-8"
     return response

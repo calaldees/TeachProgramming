@@ -1,0 +1,9 @@
+VERNAME: base            base
+VERNAME: background      base,background
+VERNAME: copter          base,background,copter
+VERNAME: colision_single base,background,copter,colision_single
+VERNAME: colision_multi  base,background,copter,colision_single,colision_multi
+VERNAME: level           base,background,copter,colision_single,level
+VERNAME: physics         base,background,copter,physics
+VERNAME: paralax         base,background,paralax
+VERNAME: full            base,background,copter,physics,colision_single,colision_multi,paralax

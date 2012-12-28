@@ -2,12 +2,17 @@
 
 
 
-<%def name='show_diff(prev_version, target_version)'>
+<%def name='show_diff(prev_ver_name, target_ver_name)'>
     <%
-        prev_version   = self.vername[prev_version]
-        target_version = self.vername[target_version]
+        ##prev_version   = self.vername[prev_version]
+        ##target_version = self.vername[target_version]
     
-        diff = h.make_ver.get_diff(h.constants.project_filename % (project_type,project,selected_lang), prev_version, target_version, hidden_line_replacement='...more...')
+        diff = h.make_ver.get_diff(
+            h.constants.project_filename % (project_type,project,selected_lang),
+            prev_ver_name  ,
+            target_ver_name,
+            hidden_line_replacement='...more...'
+        )
         line_classs = {'-':'code_remove', '+':'code_add'}
         open_section = False
     %>
@@ -32,10 +37,10 @@
 </pre>
 </%def>
 
-<%def name="full_code(target_version=None, code_inline=False)">
+<%def name="full_code(ver_name=None, code_inline=False)">
     <%
-        target_version = self.vername[target_version]
-        code_url = request.route_path('project_code', project_type=project_type, project=project, selected_lang=selected_lang, version=target_version)
+        #target_version = self.vername[target_version]
+        code_url = request.route_path('project_code', project_type=project_type, project=project, selected_lang=selected_lang, version=ver_name)
     %>
     <a href="${code_url}" target="_blank">Full Code</a>
     % if code_inline:
@@ -61,11 +66,11 @@
 </%def>
 
 
-<%def name="code_section(prev_version, target_version, title, heading_level=2)">
+<%def name="code_section(prev_ver_name, target_ver_name, title, heading_level=2)">
 <% self.section_title(title) %>
     <h${heading_level}>${title.capitalize()}</h${heading_level}>
     
-    ${self.full_code(target_version)}
+    ${self.full_code(target_ver_name)}
     
     <%
         def render_by_method_name(method_name_prefix):
@@ -83,7 +88,7 @@
     %>
     
     ${render_by_method_name('before_code')}
-    ${self.show_diff(prev_version, target_version)}
+    ${self.show_diff(prev_ver_name, target_ver_name)}
     ${render_by_method_name('after_code')}
 </section>
 </%def>
