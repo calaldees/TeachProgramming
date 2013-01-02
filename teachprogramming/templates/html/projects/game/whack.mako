@@ -5,24 +5,17 @@
     self.titlebar_active        = 'projects'
     self.text_title             = 'Whack'
     self.text_title_description = 'Whack a wham'
-
-    vername = {
-        'blank'          :'',
-        'full'           :'1',
-    }
-    self.vername = vername
 %>
 </%def>
 
 
-demo
 ${parent.web_demos('full')}
 
 
 <% self.category = 'Base Compoents' %>
 
 <%self:code_section
-    prev_ver_name   = "blank"
+    prev_ver_name   = ""
     target_ver_name = "full"
     title          = "Full"
 ></%self:code_section>

@@ -1,5 +1,15 @@
 <%inherit file="_project.mako"/>
 
+
+<%def name="init()">
+<%
+    self.titlebar_active        = 'projects'
+    self.text_title             = 'Message'
+    self.text_title_description = 'Run your own message board ... deal with your users, with an iron fist'
+
+%>
+</%def>
+
 <%
     path = 'teachprogramming/static/projects/web/'
 %>
@@ -29,7 +39,7 @@ Save it as testphp.php
 Go to the webpage http://localhost/testphp.php to test if PHP is working
 
 MyFirst PHP
-${self.t_include_file(path+'helloworld.php')}
+${h.include_file_(path+'helloworld.php')}
 
 
 <h2>Task 2: Tell me my IP</h2>
@@ -39,12 +49,12 @@ Task 3: Test the webserver
 Get a friend to visit your webserver by going to http://ipaddress/pagename.php what is their IP address?
 Form Input
 
-${self.t_include_file(path+'form_test.php')}
+${h.include_file_(path+'form_test.php')}
 
 <h2>Simple Message Board</h2>
 
 
-${self.t_include_file(path+'messages.php')}
+${h.include_file_(path+'messages.php')}
 
 <%doc>
 <h1>Simple Message Board</h1>
@@ -84,7 +94,7 @@ Cookies are variables your web browser will remember every time you visit the pa
 ?>
 </%doc>
 
-${self.t_include_file(path+'cookie_test.php')}
+${h.include_file_(path+'cookie_test.php')}
 
 <%doc>
 <html>

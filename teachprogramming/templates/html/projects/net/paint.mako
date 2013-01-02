@@ -72,31 +72,31 @@
 <% self.category = 'Paint Features' %>
 
 <%self:code_section
-    prev_ver_name   = "blank"
-    target_ver_name = "blank"
+    prev_ver_name   = "base"
+    target_ver_name = "base"
     title          = "Select Color (with keys)"
 >
 </%self:code_section>
 
 
 <%self:code_section
-    prev_ver_name   = "blank"
-    target_ver_name = "blank"
+    prev_ver_name   = "base"
+    target_ver_name = "base"
     title          = "Erasor"
 >
 </%self:code_section>
 
 
 <%self:code_section
-    prev_ver_name   = "blank"
-    target_ver_name = "blank"
+    prev_ver_name   = "base"
+    target_ver_name = "base"
     title          = "Clear"
 >
 </%self:code_section>
 
 <%self:code_section
-    prev_ver_name   = "blank"
-    target_ver_name = "blank"
+    prev_ver_name   = "base"
+    target_ver_name = "base"
     title          = "Images"
 >
 </%self:code_section>
@@ -107,8 +107,8 @@
 
 
 <%self:code_section
-    prev_ver_name   = "blank"
-    target_ver_name = "blank"
+    prev_ver_name   = "base"
+    target_ver_name = "base"
     title          = "GUI"
 >
 </%self:code_section>
