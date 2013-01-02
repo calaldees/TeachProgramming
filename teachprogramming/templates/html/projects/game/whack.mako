@@ -22,8 +22,8 @@ ${parent.web_demos('full')}
 <% self.category = 'Base Compoents' %>
 
 <%self:code_section
-    prev_version   = "blank"
-    target_version = "full"
+    prev_ver_name   = "blank"
+    target_ver_name = "full"
     title          = "Full"
 ></%self:code_section>
 

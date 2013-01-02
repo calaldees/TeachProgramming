@@ -35,5 +35,6 @@ def get_project_langs(project_type=None, project=None, **kwargs):
     path     = os.path.join(constants.project_path,project_type)
     files    = [file for file in os.listdir(path) if file.startswith('%s.' % project)]
     fileexts = [make_ver.get_fileext(file) for file in files]
+    fileexts = [ext for ext in fileexts if ext in constants.file_type_to_lang.keys()]
     return fileexts
 

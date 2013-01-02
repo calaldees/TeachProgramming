@@ -55,11 +55,11 @@ def make_web_ver(source):
 
 ## Demos ---------------------------------------
 
-<%def name="web_demos(*target_versions)">
+<%def name="web_demos(*target_ver_names)">
     <ul class="thumbnails">
-    % for target_version in target_versions:
+    % for target_ver_name in target_ver_names:
         <li class="span4"><div class="thumbnail">
-        ${web_demo(target_version)}
+        ${web_demo(target_ver_name)}
         </div></li>
     % endfor
     </ul>
@@ -82,7 +82,7 @@ def make_web_ver(source):
 
 
 
-<%def name="code_section(prev_version, target_version, title, heading_level=2)">
+<%def name="code_section(prev_ver_name, target_ver_name, title, heading_level=2)">
 <% self.section_title(title) %>
 <h${heading_level}>${title.capitalize()}</h${heading_level}>
 <div class="row">
@@ -92,7 +92,7 @@ def make_web_ver(source):
         % except:
         % endtry
         
-        ${self.show_diff(prev_version, target_version)}
+        ${self.show_diff(prev_ver_name, target_ver_name)}
         
         % try:
         ${caller.after_code()}
@@ -100,8 +100,8 @@ def make_web_ver(source):
         % endtry
     </div>
     <div class="span3">
-        ${web_demo(target_version)}
-        ${self.full_code(target_version)}
+        ${web_demo(target_ver_name)}
+        ${self.full_code(target_ver_name)}
     </div>
 </div>
 </section>

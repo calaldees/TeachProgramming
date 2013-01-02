@@ -17,29 +17,29 @@ ${parent.web_demos('full')}
 <% self.category = 'Base Compoents' %>
 
 <%self:code_section
-    prev_version   = ""
-    target_version = "base"
+    prev_ver_name    = ""
+    target_ver_name = "base"
     title          = "Base"
 ></%self:code_section>
 
 
 <%self:code_section
-    prev_version   = "base"
-    target_version = "background"
+    prev_ver_name   = "base"
+    target_ver_name = "background"
     title          = "Background"
 ></%self:code_section>
 
 
 <%self:code_section
-    prev_version   = "background"
-    target_version = "copter"
+    prev_ver_name   = "background"
+    target_ver_name = "copter"
     title          = "Copter"
 ></%self:code_section>
 
 
 <%self:code_section
-    prev_version   = "copter"
-    target_version = "colision_single"
+    prev_ver_name   = "copter"
+    target_ver_name = "colision_single"
     title          = "Colide (Single Point)"
 ></%self:code_section>
 
@@ -49,15 +49,15 @@ ${parent.web_demos('full')}
 
 
 <%self:code_section
-    prev_version   = "colision_single"
-    target_version = "level"
+    prev_ver_name   = "colision_single"
+    target_ver_name = "level"
     title          = "Level advancing"
 ></%self:code_section>
 
 
 <%self:code_section
-    prev_version   = "copter"
-    target_version = "physics"
+    prev_ver_name   = "copter"
+    target_ver_name = "physics"
     title          = "Physics"
 ></%self:code_section>
 
@@ -67,14 +67,14 @@ ${parent.web_demos('full')}
 
 
 <%self:code_section
-    prev_version   = "background"
-    target_version = "paralax"
+    prev_ver_name   = "background"
+    target_ver_name = "paralax"
     title          = "Paralax"
 ></%self:code_section>
 
 <%self:code_section
-    prev_version   = "colision_single"
-    target_version = "colision_multi"
+    prev_ver_name   = "colision_single"
+    target_ver_name = "colision_multi"
     title          = "Colide (Multi Point)"
 ></%self:code_section>
 

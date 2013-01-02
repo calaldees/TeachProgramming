@@ -4,8 +4,8 @@
 
 <%def name='show_diff(prev_ver_name, target_ver_name)'>
     <%
-        ##prev_version   = self.vername[prev_version]
-        ##target_version = self.vername[target_version]
+        ##prev_ver_name   = self.vername[prev_ver_name]
+        ##target_ver_name = self.vername[target_ver_name]
     
         diff = h.make_ver.get_diff(
             h.constants.project_filename % (project_type,project,selected_lang),
@@ -39,15 +39,15 @@
 
 <%def name="full_code(ver_name=None, code_inline=False)">
     <%
-        #target_version = self.vername[target_version]
+        #target_ver_name = self.vername[target_ver_name]
         code_url = request.route_path('project_code', project_type=project_type, project=project, selected_lang=selected_lang, version=ver_name)
     %>
     <a href="${code_url}" target="_blank">Full Code</a>
     % if code_inline:
     <button type="button" onclick="$(this).next().toggle();">Full code</button>
     <div class="hide">
-        <a href="${code_url}">Version ${target_version}</a>
-        <pre>${h.ver_string(project_type, project, selected_lang, target_version)}</pre>
+        <a href="${code_url}">Version ${target_ver_name}</a>
+        <pre>${h.ver_string(project_type, project, selected_lang, target_ver_name)}</pre>
     </div>
     % endif
 </%def>

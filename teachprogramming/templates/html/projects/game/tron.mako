@@ -1,4 +1,4 @@
-﻿<%inherit file="_project.mako"/>
+<%inherit file="_project.mako"/>
 
 <%def name="init()">
 <%
@@ -6,19 +6,6 @@
     self.text_title             = 'Tron'
     self.text_title_description = 'Head to head line drawing action or Maze'
 
-    vername = {
-        'blank'         :'',
-        'base1'         :'1',
-        'base2'         :'1,line',
-        'base3'         :'1,line,input',
-        'base4'         :'1,line,input,colide',
-        '2players'      :'1,line,input,colide,player2',
-        '2players_score':'1,line,input,colide,player2,score',
-        'wrap'          :'1,line,input,colide,wrap',
-        '2players_wrap' :'1,line,input,colide,player2,wrap,wrap2',
-        'maze'          :'1,line,input,colide,maze',
-    }
-    self.vername = vername
 %>
 </%def>
 
@@ -30,8 +17,8 @@ ${parent.web_demos('2players_score','maze')}
 
 
 <%self:code_section
-    prev_version   = "blank"
-    target_version = "base1"
+    prev_ver_name   = ""
+    target_ver_name = "base1"
     title          = "Base"    
 >
     <%def name="before_code()">
@@ -46,8 +33,8 @@ ${parent.web_demos('2players_score','maze')}
 
 
 <%self:code_section
-    prev_version   = "base1"
-    target_version = "base2"
+    prev_ver_name   = "base1"
+    target_ver_name = "base2"
     title          = "A Line that Moves"
     heading_level  = "3"
 >
@@ -58,8 +45,8 @@ ${parent.web_demos('2players_score','maze')}
 
 
 <%self:code_section
-    prev_version   = "base2"
-    target_version = "base3"
+    prev_ver_name   = "base2"
+    target_ver_name = "base3"
     title          = "Keyboard Input"
     heading_level  = "3"
 >
@@ -69,8 +56,8 @@ ${parent.web_demos('2players_score','maze')}
 </%self:code_section>
 
 <%self:code_section
-    prev_version   = "base3"
-    target_version = "base4"
+    prev_ver_name   = "base3"
+    target_ver_name = "base4"
     title          = "Part 2: Collisions"
 >
     <%def name="before_code()">
@@ -87,8 +74,8 @@ ${parent.web_demos('2players_score','maze')}
 <h2>Part 2: Choices</h2>
 
 <%self:code_section
-    prev_version   = "base4"
-    target_version = "2players"
+    prev_ver_name   = "base4"
+    target_ver_name = "2players"
     title          = "Player 2"
     heading_level  = "3"
 >
@@ -98,8 +85,8 @@ ${parent.web_demos('2players_score','maze')}
 </%self:code_section>
 
 <%self:code_section
-    prev_version   = "2players"
-    target_version = "2players_score"
+    prev_ver_name   = "2players"
+    target_ver_name = "2players_score"
     title          = "Score"
     heading_level  = "3"
 >
@@ -111,8 +98,8 @@ ${parent.web_demos('2players_score','maze')}
 
 
 <%self:code_section
-    prev_version   = "base4"
-    target_version = "wrap"
+    prev_ver_name   = "base4"
+    target_ver_name = "wrap"
     title          = "Wrap around"
     heading_level  = "3"
 >
@@ -124,8 +111,8 @@ ${parent.web_demos('2players_score','maze')}
 
 
 <%self:code_section
-    prev_version   = "base4"
-    target_version = "maze"
+    prev_ver_name   = "base4"
+    target_ver_name = "maze"
     title          = "Maze levels"
     heading_level  = "3"
 >

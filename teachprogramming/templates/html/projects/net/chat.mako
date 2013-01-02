@@ -7,21 +7,6 @@
     self.text_title             = 'Chat'
     self.text_title_description = 'Send messages to the other side of the planet (or just the person across the room)'
 
-    vername = {
-        'blank'         :'',
-        '1'             :'1',
-        'connect'       :'1,connect',
-        'send_one'      :'1,connect,send_one',
-        'send'          :'1,connect,send_one,send',
-        'recv'          :'1,connect,send_one,send,recv',
-        'send_recv'     :'1,connect,send_one,send,recv,send_recv',
-        'gui'           :'1,connect,send_one,send,recv,send_recv,gui',
-        'gui_recv'      :'1,connect,send_one,send,recv,send_recv,gui,gui_recv',
-        'gui_scroll'    :'1,connect,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll',
-        'gui_username'  :'1,connect,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll,gui_username',
-        'full'          :'1,connect,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll,gui_username',
-    }
-    self.vername = vername
 %>
 </%def>
 
@@ -35,14 +20,14 @@
     <p><a href="#">Lesson Plan</a> for teachers</p>
 </section>
 
-##python3 ~/code/TeachProgramming/teachprogramming/lib/make_ver.py chat.html --target_version 1,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll,gui_username > t.html
+##python3 ~/code/TeachProgramming/teachprogramming/lib/make_ver.py chat.html --target_ver_name 1,send_one,send,recv,send_recv,gui,gui_recv,gui_scroll,gui_username > t.html
 
 ## ----------------------------------------------
 <% self.category = 'Console Interface' %>
 
 <%self:code_section
-    prev_version   = "blank"
-    target_version = "1"
+    prev_ver_name   = ""
+    target_ver_name = "base"
     title          = "Base"
 >
     <%def name="before_code_py()">
@@ -60,8 +45,8 @@
 
 
 <%self:code_section
-    prev_version   = "1"
-    target_version = "connect"
+    prev_ver_name   = "base"
+    target_ver_name = "connect"
     title          = "Connect"
 >
     <%def name="before_code_py()">
@@ -78,8 +63,8 @@
 
 
 <%self:code_section
-    prev_version   = "connect"
-    target_version = "send_one"
+    prev_ver_name   = "connect"
+    target_ver_name = "send_one"
     title          = "Connect + send one message"
 >
     <%def name="after_code()">
@@ -89,8 +74,8 @@
 
 
 <%self:code_section
-    prev_version   = "send_one"
-    target_version = "send"
+    prev_ver_name   = "send_one"
+    target_ver_name = "send"
     title          = "Send messages"
 >
     <%def name="before_code_py()">
@@ -100,8 +85,8 @@
 
 
 <%self:code_section
-    prev_version   = "send"
-    target_version = "recv"
+    prev_ver_name   = "send"
+    target_ver_name = "recv"
     title          = "Receive messages"
 >
     <%def name="before_code_html()">
@@ -111,8 +96,8 @@
 
 
 <%self:code_section
-    prev_version   = "recv"
-    target_version = "send_recv"
+    prev_ver_name   = "recv"
+    target_ver_name = "send_recv"
     title          = "Send and Recice messages"
 >
 </%self:code_section>
@@ -123,30 +108,30 @@
 
 
 <%self:code_section
-    prev_version   = "send_recv"
-    target_version = "gui"
+    prev_ver_name   = "send_recv"
+    target_ver_name = "gui"
     title          = "GUI"
 >
 </%self:code_section>
 
 <%self:code_section
-    prev_version   = "gui"
-    target_version = "gui_recv"
+    prev_ver_name   = "gui"
+    target_ver_name = "gui_recv"
     title          = "GUI Receve"
 >
 </%self:code_section>
 
 
 <%self:code_section
-    prev_version   = "gui_recv"
-    target_version = "gui_scroll"
+    prev_ver_name   = "gui_recv"
+    target_ver_name = "gui_scroll"
     title          = "GUI Receve (Scrolling)"
 >
 </%self:code_section>
 
 <%self:code_section
-    prev_version   = "gui_scroll"
-    target_version = "gui_username"
+    prev_ver_name   = "gui_scroll"
+    target_ver_name = "gui_username"
     title          = "GUI with Username"
 >
 </%self:code_section>

@@ -1,0 +1,9 @@
+VERNAME: base1          base
+VERNAME: base2          base,line
+VERNAME: base3          base,line,input
+VERNAME: base4          base,line,input,colide
+VERNAME: 2players       base,line,input,colide,player2
+VERNAME: 2players_score base,line,input,colide,player2,score
+VERNAME: wrap           base,line,input,colide,wrap
+VERNAME: 2players_wrap  base,line,input,colide,player2,wrap,wrap2
+VERNAME: maze           base,line,input,colide,maze
