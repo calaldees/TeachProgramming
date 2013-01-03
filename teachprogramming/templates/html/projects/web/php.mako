@@ -4,9 +4,8 @@
 <%def name="init()">
 <%
     self.titlebar_active        = 'projects'
-    self.text_title             = 'Message'
-    self.text_title_description = 'Run your own message board ... deal with your users, with an iron fist'
-
+    self.text_title             = 'PHP'
+    self.text_title_description = 'php bits'
 %>
 </%def>
 

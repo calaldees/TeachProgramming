@@ -1,0 +1,8 @@
+VERNAME: base           base
+VERNAME: textarea       base,textarea
+VERNAME: save_message   base,textarea,save_message
+VERNAME: show_messages  base,textarea,save_message,show_messages
+VERNAME: username       base,textarea,save_message,show_messages,username
+VERNAME: login          base,textarea,save_message,show_messages,username,login
+VERNAME: logout         base,textarea,save_message,show_messages,username,login,logout
+VERNAME: full           base,textarea,save_message,show_messages,username,login,logout
