@@ -38,7 +38,7 @@ def selected_class(a,b):
     </div><!--/.well -->
 </div>
 
-<div class="offset3 span9" data-spy="scroll" data-target=".sidebar-nav-list">
+<div class="offset3 span9">
     ${body_capture | n}
 </div>
 % else:

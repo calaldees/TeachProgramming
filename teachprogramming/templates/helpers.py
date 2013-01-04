@@ -1,4 +1,5 @@
 import os
+import re
 
 from teachprogramming.lib import make_ver, constants
 
@@ -22,7 +23,7 @@ def encode_id(title):
     Safe encoder to transform 'title' string to 'id' string. Remove spaces and lowercase 
     """
     # TODO urlencode
-    return title.lower().replace(' ','_').replace("'",'_')
+    return re.sub(r'[^0-9a-zA-Z]','_',title.lower()) #.replace(' ','_').replace("'",'_').replace(":","_")
 
 def get_templates(template_folder, template_path=constants.template_path):
     path = os.path.join(template_path, template_folder)

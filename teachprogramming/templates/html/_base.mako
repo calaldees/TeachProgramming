@@ -33,7 +33,7 @@
         ##<link rel="apple-touch-icon-precomposed"                 href="../assets/ico/apple-touch-icon-57-precomposed.png" >
     </head>
     
-    <body>
+    <body data-spy="scroll" data-target=".sidebar-nav-container" data-offset="40">
         <!-- Navbar -->
         <div class="navbar navbar-fixed-top">
             ## navbar-inverse
