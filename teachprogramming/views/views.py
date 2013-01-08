@@ -25,12 +25,12 @@ def project(request):
 @etag
 @web
 def project_code(request):
-    code = '\n'.join( make_ver.make_ver(constants.project_filename_dict.format(**request.matchdict), ver_name=request.matchdict['version'], lang=request.matchdict['selected_lang'] ) )
+    code = '\n'.join( make_ver.make_ver(constants.project_filename_dict.format(**request.matchdict), ver_name=request.matchdict['version'], lang=request.params['language'] ) )
     response = Response(code)
     response.headers['Content-type'] = "text/plain; charset=utf-8"
     return response
 
-@view_config(route_name='select_language_redirect')
-def select_language_redirect(request):
-    request.session['selected_lang'] = request.matchdict['selected_lang'] #request.params.get('selected_lang', default_language)
-    return HTTPFound(location=request.referer)
+#@view_config(route_name='select_language_redirect')
+#def select_language_redirect(request):
+#    request.session['selected_lang'] = request.matchdict['selected_lang'] #request.params.get('selected_lang', default_language)
+#    return HTTPFound(location=request.referer)

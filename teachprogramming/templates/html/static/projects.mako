@@ -14,7 +14,7 @@
     <ul>
         % for p in h.get_projects('game'):
         <li>
-            <a href="${request.route_path('project', project_type='game', project=p, selected_lang=selected_lang)}">${p.capitalize()}</a>
+            <a href="${request.route_path('project', project_type='game', project=p, _query=dict(selected_lang=selected_lang))}">${p.capitalize()}</a>
         </li>
         % endfor
     </ul>
@@ -23,10 +23,9 @@
     <ul>
         % for p in h.get_projects('net'):
         <li>
-            <a href="${request.route_path('project', project_type='net', project=p, selected_lang=selected_lang)}">${p.capitalize()}</a>
+            <a href="${request.route_path('project', project_type='net', project=p, _query=dict(selected_lang=selected_lang))}">${p.capitalize()}</a>
         </li>
         % endfor
-        <li>Paint</li>
         <li>NetRace</li>
         <li>NetPong</li>
         <li>NetCopter</li>
@@ -36,7 +35,7 @@
     <ul>
         % for p in h.get_projects('web'):
         <li>
-            <a href="${request.route_path('project', project_type='web', project=p, selected_lang=selected_lang)}">${p.capitalize()}</a>
+            <a href="${request.route_path('project', project_type='web', project=p, _query=dict(selected_lang=selected_lang))}">${p.capitalize()}</a>
         </li>
         % endfor
         ##<li><a href="/project/web/php.html">Simple Messagbord</a><li>

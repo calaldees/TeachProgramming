@@ -105,7 +105,7 @@
     <p>This project is avalable in</p>
         <ul>
             % for lang in project_langs:
-            <li><a href="${request.route_path('project', project_type=project_type, project=project, selected_lang=lang)}">${h.constants.file_type_to_lang[lang]}</a></li>
+            <li><a href="${request.route_path('project', project_type=project_type, project=project, _query=dict(selected_lang=lang))}">${h.constants.file_type_to_lang[lang]}</a></li>
             % endfor
         </ul>
     % endif

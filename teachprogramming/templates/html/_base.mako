@@ -33,11 +33,11 @@
         ##<link rel="apple-touch-icon-precomposed"                 href="../assets/ico/apple-touch-icon-57-precomposed.png" >
     </head>
     
-    <body data-spy="scroll" data-target=".sidebar-nav-container" data-offset="40">
+    <body data-spy="scroll" data-target=".sidebar-nav-container" data-offset="60">
         <!-- Navbar -->
         <div class="navbar navbar-fixed-top">
-            ## navbar-inverse
-            <div class="navbar-inner navbar-lang-${selected_lang}">
+            ## navbar-inverse ##navbar-lang-${selected_lang}
+            <div class="navbar-inner">
                 <div class="container-fluid">
                     
                     <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -47,7 +47,7 @@
                     </a>
                     
                     
-                    <a class="brand" href="/">${project_title()}</a>
+                    <a class="brand" href="${request.route_path('root', _query=dict(selected_lang=selected_lang))}">${project_title()}</a>
                     
                     <div class="nav-collapse collapse">
                         
@@ -65,11 +65,14 @@
                                 % for lang, language_name in h.langs():
                                     <% _class = 'current' if lang==selected_lang else '' %>
                                     % if lang in avalable_langs:
-                                    <li class='avalable ${_class}'><a tabindex="-1" href="${request.current_route_path(selected_lang=lang)}"><i class="icon-lang-${lang}"></i><span>${language_name}</span></a></li>
+                                    <li class='avalable ${_class}'>
                                     % else:
                                     ##<li class='unavalable'><i class="icon-lang-${lang}"></i><span>${language_name}</span></li>
-                                    <li class='unavalable ${_class}'><a tabindex="-1" href="${request.route_path('select_language_redirect', selected_lang=lang)}"><i class="icon-lang-${lang}"></i><span>${language_name}</span></a></li>
+                                    <li class='unavalable ${_class}'>
                                     % endif
+                                        <a tabindex="-1" href="${request.current_route_path(_query=dict(selected_lang=lang))}" onclick="apply_active_anchor($(this)); return true;"><i class="icon-lang-${lang}"></i><span>${language_name}</span></a>
+                                        ##<a tabindex="-1" href="${request.route_path('select_language_redirect', selected_lang=lang)}"><i class="icon-lang-${lang}"></i><span>${language_name}</span></a>
+                                    </li>
                                 % endfor
                                 ##<li class="divider"></li>
                                 
@@ -94,16 +97,16 @@
                             <%
                             titlebar = [
                                 #('/'          ,'about'     ),
-                                ('/projects'  ,'projects'  ),
-                                ('/activities','activities'),
-                                ('/reference' ,'reference' ),
-                                ('/units'     ,'teaching units'),
-                                ('/contact'   ,'contact'   ),
+                                ('projects'  ,'projects'  ),
+                                ('activities','activities'),
+                                ('reference' ,'reference' ),
+                                ('units'     ,'teaching units'),
+                                ('contact'   ,'contact'   ),
                             ]
                             %>
-                            % for url, title in titlebar:
+                            % for route_path, title in titlebar:
                             <% class_active = ' class="active"' if self.titlebar_active==title else '' %>
-                            <li${class_active}><a href="${url}">${title.title()}</a></li>
+                            <li${class_active}><a href="${request.route_path(route_path, _query=dict(selected_lang=selected_lang))}">${title.title()}</a></li>
                             % endfor
                         </ul>
                     </div>
