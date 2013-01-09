@@ -4,22 +4,30 @@ body {
     padding-bottom: 40px;
 }
 
-
+/* A piss poor attempt at making the titlebar reflect the language */
+/* .navbar-inner */
 .navbar-lang-vb {
+    /*
     background-color: rgb(34, 164, 232);
     background-image: linear-gradient(to bottom, rgb(255, 255, 255), rgb(34, 164, 232));
     border: 1px solid rgb(13,45,127);
+    */
 }
 .navbar-lang-py {
+    /*
     background-color: rgb(255, 219, 75);
     background-image: linear-gradient(to bottom, rgb(255, 255, 255), rgb(255, 219, 75));
     border: 1px solid rgb(55,115,165);
+    */
 }
 .navbar-lang-html {
+    /*
     background-color: rgb(229,75,38);
     background-image: linear-gradient(to bottom, rgb(255, 255, 255), rgb(229, 75, 38));
     border: 1px solid rgb(150,50,25);
+    */
 }
+
 
 
 

@@ -29,7 +29,8 @@ def base(target, *args, **kwargs):
     #if request.matchdict.get('selected_lang') != request.session.get('selected_lang'):
     #    request.session  ['selected_lang'] = request.matchdict.get('selected_lang',default_language)
     
-    request.matchdict['selected_lang'] = request.params.get('selected_lang', get_setting('default_language', request))
+    if 'selected_lang' not in request.matchdict:
+        request.matchdict['selected_lang'] = request.params.get('selected_lang', get_setting('default_language', request))
     
     result = target(*args, **kwargs)
     

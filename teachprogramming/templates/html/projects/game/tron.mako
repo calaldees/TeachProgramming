@@ -19,7 +19,7 @@ ${parent.web_demos('2players_score','maze')}
 <%self:code_section
     prev_ver_name   = ""
     target_ver_name = "base1"
-    title          = "Base"    
+    title           = "Base"
 >
     <%def name="before_code()">
         <p>before</p>
@@ -58,7 +58,8 @@ ${parent.web_demos('2players_score','maze')}
 <%self:code_section
     prev_ver_name   = "base3"
     target_ver_name = "base4"
-    title          = "Part 2: Collisions"
+    title          = "Collisions"
+    heading_level  = "3"
 >
     <%def name="before_code()">
         Get the pixel of where we are about to move to.
@@ -108,6 +109,8 @@ ${parent.web_demos('2players_score','maze')}
     </%def>
 </%self:code_section>
 
+
+<% self.category = 'Maze' %>
 
 
 <%self:code_section

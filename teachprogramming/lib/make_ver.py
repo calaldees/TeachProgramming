@@ -84,7 +84,7 @@ def make_ver(source, ver_path=None, ver_name=None, lang=None, hidden_line_replac
     
     # Regex compile - for this language based on comment_token
     extract_code          = re.compile(r'^(?P<line>(?P<indent>\s*)(?P<code>.*?))({0}|$)(?P<comment>.*)'.format(comment_token))
-    extract_ver           = re.compile(r'VER:\s*(?P<ver>.*?)(\s+|$)(not\s*(?P<ver_exclude>.*?(\s+|$)))?', flags=re.IGNORECASE)
+    extract_ver           = re.compile(r'VER:\s*(?P<ver>.*?)(\s+|$)(NOT\s*(?P<ver_exclude>.*?(\s+|$)))?', flags=re.IGNORECASE)
     extract_vername       = re.compile(r'VERNAME:\s*(?P<vername>.*?)\s+(?P<versions>.*?)(\s+|$)')
     extract_hide          = re.compile(r'HIDE')
     extract_blank_comment = re.compile('\s*{0}\s*$'.format(comment_token))
@@ -122,7 +122,7 @@ def make_ver(source, ver_path=None, ver_name=None, lang=None, hidden_line_replac
         if not ver_name_resolved_to_ver_path:
             raise Exception('No ver_path could be found for {0}'.format(ver_name))
         
-        # Merge with current ver_path (will be empty set if not specifyed)
+        # Merge with current ver_path (ver_path guaranteed to be empty set if it wasnt specifyed)
         ver_path |= ver_name_resolved_to_ver_path
 
     # if source is a file object - double check we are ready for reading

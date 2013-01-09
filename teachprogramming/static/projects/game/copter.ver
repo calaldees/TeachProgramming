@@ -6,4 +6,4 @@ VERNAME: colision_multi  base,background,copter,colision_single,colision_multi
 VERNAME: level           base,background,copter,colision_single,level
 VERNAME: physics         base,background,copter,physics
 VERNAME: paralax         base,background,paralax
-VERNAME: full            base,background,copter,physics,colision_single,colision_multi,paralax
+VERNAME: full            base,background,copter,physics,colision_single,colision_multi,paralax,level

@@ -15,7 +15,7 @@ variables = callByRef(
     color_exit        = (255, 255,   0, 255),                         # VER: level
     level_number      = 1,                                            # VER: level
     background_images = None,                                         # VER:                paralax
-    background_image  = pygame.image.load("images/CopterLevel1.gif"), # VER: background not paralax
+    #background_image  = pygame.image.load("images/CopterLevel1.gif"), # VER: background not paralax
     view_x_pos        = None,                                         # VER: background
     copter_image      = pygame.image.load("images/ship.gif"), # VER: copter
     copter_x_pos      = None,                                 # VER: copter
@@ -65,8 +65,8 @@ while variables.running:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_ESCAPE    ]:
         variables.running = False
-    #if keys[pygame.K_SPACE ]: variables.copter_y_pos += -2  # VER: copter not physics
-    #else                    : variables.copter_y_pos +=  1  # VER: copter not physics
+    #if keys[pygame.K_SPACE ]: variables.copter_y_pos += -2  # VER: copter NOT physics
+    #else                    : variables.copter_y_pos +=  1  # VER: copter NOT physics
     if keys[pygame.K_UP    ]: variables.copter_y_vel += -0.1 # VER: physics
     if keys[pygame.K_DOWN  ]: variables.copter_y_vel +=  0.1 # VER: physics
     if keys[pygame.K_LEFT  ]: variables.copter_x_vel += -0.1 # VER: physics HIDE
@@ -92,8 +92,10 @@ while variables.running:
             reset()                                                                              # VER: colision_single
                                                                                                  # VER: colision_single
     copter_rectangle = variables.copter_image.get_rect()  # VER: copter
-    copter_rectangle.x = int(variables.copter_x_pos)      # VER: copter
-    copter_rectangle.y = int(variables.copter_y_pos)      # VER: copter
+    #copter_rectangle.x = variables.copter_x_pos          # VER: copter NOT physics
+    #copter_rectangle.y = variables.copter_y_pos          # VER: copter NOT physics
+    copter_rectangle.x = int(variables.copter_x_pos)      # VER: pyhsics
+    copter_rectangle.y = int(variables.copter_y_pos)      # VER: pyhsics
     screen.blit(variables.copter_image, copter_rectangle) # VER: copter
                                                           # VER: copter
     pygame.display.flip()

@@ -73,6 +73,7 @@ def make_web_ver(source):
                 <p>(press escape to stop and reset)</p>
             </div>
             ${make_web_ver(h.ver_string(project_type, project, 'html', ver_name=ver_name, ver_path='demo')) | n}
+            <p>${self.full_code(ver_name)}</p>
         </div>
     % except Exception as e:
         <p>BROKEN!! ${e}</p>

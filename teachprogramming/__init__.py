@@ -39,7 +39,7 @@ def main(global_config, **settings):
 
     
     config.add_route('project'     , '/projects/{project_type}/{project}') # .{selected_lang}
-    config.add_route('project_code', '/projects/{project_type}/{project}/{version}') #.{selected_lang}
+    config.add_route('project_code', '/projects/{project_type}/{project}/{selected_lang}/{version}/')
     #config.add_route('select_language_redirect', '/select_language_redirect/{selected_lang}')
     
     

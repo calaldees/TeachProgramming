@@ -37,9 +37,9 @@ while v.running:
     try   : pixel = v.background_image.get_at(colision_point)
     except: pixel = None
     if pixel and pixel != (255,255,255,255):
-         v.view_x_pos   =   0
-         v.copter_x_pos =  50
-         v.copter_y_pos = 100
+        v.view_x_pos   =   0
+        v.copter_x_pos =  50
+        v.copter_y_pos = 100
 
     v.view_x_pos += 1
     rectangle   = v.background_image.get_rect()
