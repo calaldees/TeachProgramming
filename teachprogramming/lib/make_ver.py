@@ -46,7 +46,7 @@ def get_ver_set(versions):
         versions = [ver.strip() for ver in versions.split(',')]
     return set(versions)
 
-def make_ver(source, ver_path=None, ver_name=None, lang=None, hidden_line_replacement=None, close_file_on_exit=False):
+def make_ver(source, ver_path=None, ver_name=None, lang=None, hidden_line_replacement=None, close_file_on_exit=False, process_additional_metafiles=True):
     """
     Doc required
     
@@ -85,27 +85,37 @@ def make_ver(source, ver_path=None, ver_name=None, lang=None, hidden_line_replac
     # Regex compile - for this language based on comment_token
     extract_code          = re.compile(r'^(?P<line>(?P<indent>\s*)(?P<code>.*?))({0}|$)(?P<comment>.*)'.format(comment_token))
     extract_ver           = re.compile(r'VER:\s*(?P<ver>.*?)(\s+|$)(NOT\s*(?P<ver_exclude>.*?(\s+|$)))?', flags=re.IGNORECASE)
-    extract_vername       = re.compile(r'VERNAME:\s*(?P<vername>.*?)\s+(?P<versions>.*?)(\s+|$)')
+    extract_vername       = re.compile(r'VERNAME:\s*(?P<vername>.*?)\s+(?P<versions>.*?)(\s+|$)'        , flags=re.IGNORECASE)
+    extract_replace       = re.compile(r'REPLACE:\s*(?P<replace>.*?)\s*WITH\s*(?P<replacement>.*?)\s*FOR\s*(?P<ver_names>.*?)(\s+|$)', flags=re.IGNORECASE)
     extract_hide          = re.compile(r'HIDE')
     extract_blank_comment = re.compile('\s*{0}\s*$'.format(comment_token))
     remmed_line           = re.compile(r'^\s*{0}'.format(comment_token))
     
+    # Variables used in line processing
     ver_path = get_ver_set(ver_path)
+    replacements = {}
     
     # If no complete ver_path provided, try to look one up with ver_name from any vernames in:
     #  current source file or project_name.ver file    
-    if ver_name:
+    if process_additional_metafiles:
         ver_paths = {}
-        def extract_ver_name(line):
+        def extract_data(line):
+            # VERNAME
             vername_match = extract_vername.search(line)
             if vername_match:
                 ver_paths[vername_match.group('vername')] = get_ver_set(vername_match.group('versions'))
+            # REPLACE
+            replace_match = extract_replace.search(line)
+            if replace_match:
+                ver_names = get_ver_set(replace_match.group('ver_names'))
+                for replacement_ver_name_key in ver_names:
+                    replacements[replacement_ver_name_key] = replacements.get(replacement_ver_name_key,[]) + [(replace_match.group('replace'), replace_match.group('replacement'))]
         
         # preprocess vernames in file?
         try   : source.seek(0)
         except: pass
         for line in source:
-            extract_ver_name(line)
+            extract_data(line)
         
         # attempt vername extraction from .ver file companion?
         # BUG! BROKEN! Reluctant qualifyer my ***ing arse!!! this regex only matchs to the first '.' FIX IT SLUT!!!
@@ -113,7 +123,7 @@ def make_ver(source, ver_path=None, ver_name=None, lang=None, hidden_line_replac
         
         with open(ver_filename, 'r') as ver_file:
             for line in ver_file:
-                extract_ver_name(line)
+                extract_data(line)
                 
         # Once all ver_paths have been extracted, try and match the ver_name with all known paths
         ver_name_resolved_to_ver_path = ver_paths.get(ver_name, None)
@@ -124,7 +134,7 @@ def make_ver(source, ver_path=None, ver_name=None, lang=None, hidden_line_replac
         
         # Merge with current ver_path (ver_path guaranteed to be empty set if it wasnt specifyed)
         ver_path |= ver_name_resolved_to_ver_path
-
+    
     # if source is a file object - double check we are ready for reading
     #  (this is handy when processing a single file multiple times)
     try   : source.seek(0)
@@ -132,10 +142,11 @@ def make_ver(source, ver_path=None, ver_name=None, lang=None, hidden_line_replac
     # Process source file
     for line in source:
         
-        # Always remove all VERNAME lines
-        vername_match = extract_vername.search(line)
-        if vername_match:
-            continue # no need to process the line any further
+        # Always remove all VERNAME and REPLACE lines
+        for extractor in [extract_vername, extract_replace]: #TODO: this could be tied to a PREPROCESSOR list from when the files were preprocessed rather than duplicating the names here
+            match = extractor.search(line)
+            if match:
+                continue # no need to process the line any further
         
         # Extract meta data from line
         code_match = extract_code.match(line)
@@ -149,12 +160,18 @@ def make_ver(source, ver_path=None, ver_name=None, lang=None, hidden_line_replac
             exclude_versions = get_ver_set(ver_match.group('ver_exclude'))
         
         # If is the version requested is a union with the current line
-        if line_versions & ver_path and not exclude_versions & ver_path:
+        if line_versions < ver_path and not exclude_versions & ver_path:
             
             # Removed matched metadata
             line = extract_ver          .sub('' , line)
             line = extract_hide         .sub('' , line) # bug?: this is over zelus, HIDE anywhere in the line is removed, improve it chump!
             line = extract_blank_comment.sub(' ', line) # blank comments still need to represent a line (the \n gets rstiped later but at least it triggers an append)
+            
+            # If the vernames acive have a replacement overide, then apply that replacement
+            #for replacement_vername in (ver_path - exclude_versions): #& replacements.keys()
+                #for replace, replacement in replacements.get(replacement_vername,[]):
+            for replace, replacement in replacements.get(ver_name,[]):
+                line = re.sub(replace, replacement, line)
             
             # If the line starts with a comment then remove that first comment
             # This is for lines that are not present and executed in the raw run of the file, but are interim steps in the overall progression

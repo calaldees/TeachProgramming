@@ -21,6 +21,7 @@
                                                                                           // VER: colision_single
     var variables = {
         "color_background": 'rgba(0,0,0,255)',
+        //"color_background": 'rgba(0,0,255,255)',   // VER: fish_background
         "color_exit"      : 'rgba(255,255,0,255)', // VER: level
         "level_number"    : 1,                     // VER: level
     };
@@ -79,7 +80,7 @@
         variables.copter_y_vel += 0.025;                           // VER: physics
         variables.copter_x_pos += variables.copter_x_vel;          // VER: physics
         variables.copter_y_pos += variables.copter_y_vel;          // VER: physics
-                                                                   // VER: physics
+                                                                   // VER: copter
         colisions_context.fillStyle = variables.color_background;       // VER: colision_single
         colisions_context.fillRect(0, 0, canvas.width, canvas.height);  // VER: colision_single
         //colisions_context.drawImage(variables.background_image, -variables.view_x_pos, 0);  // VER: colision_single NOT paralax

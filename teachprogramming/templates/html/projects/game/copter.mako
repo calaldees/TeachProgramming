@@ -11,7 +11,7 @@
 
 
 demo
-${parent.web_demos('full')}
+${parent.web_demos('fish_full','full')}
 
 ## ----------------------------------------------
 <% self.category = 'Base Compoents' %>
@@ -56,7 +56,7 @@ ${parent.web_demos('full')}
 
 
 <%self:code_section
-    prev_ver_name   = "copter"
+    prev_ver_name   = "colision_single"
     target_ver_name = "physics"
     title          = "Physics"
 ></%self:code_section>

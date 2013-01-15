@@ -102,7 +102,7 @@ def make_web_ver(source):
     </div>
     <div class="span3">
         ${web_demo(target_ver_name)}
-        ${self.full_code(target_ver_name)}
+        ##${self.full_code(target_ver_name)}
     </div>
 </div>
 </section>

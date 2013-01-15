@@ -4,6 +4,9 @@ VERNAME: copter          base,background,copter
 VERNAME: colision_single base,background,copter,colision_single
 VERNAME: colision_multi  base,background,copter,colision_single,colision_multi
 VERNAME: level           base,background,copter,colision_single,level
-VERNAME: physics         base,background,copter,physics
+VERNAME: physics         base,background,copter,colision_single,physics
 VERNAME: paralax         base,background,paralax
 VERNAME: full            base,background,copter,physics,colision_single,colision_multi,paralax,level
+VERNAME: fish_full       base,background,copter,colision_single,fish_background
+REPLACE: CopterLevel WITH FishLevel FOR fish_full
+REPLACE: ship.gif WITH fish.gif FOR fish_full
