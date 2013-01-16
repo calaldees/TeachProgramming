@@ -1,10 +1,14 @@
 ## -*- coding: utf-8 -*-
+<%def name="init()"></%def>
+
+<%def name="project_title()">Learn Programming</%def>
+
+<%def name="body(*args, **kwargs)" cached="True" cache_key="${request.path_qs}">\
 <%
-    self.titlebar_active       = ''
+    self.titlebar_active        = ''
     self.text_title             = 'Title'
     self.text_title_description = 'Test a little bit of make and shake'
-
-%><%def name="init()"></%def>${self.init()}\
+%>${self.init()}\
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -152,5 +156,4 @@
     </body>
     
 </html>
-
-<%def name="project_title()">Learn Programming</%def>
+</%def>

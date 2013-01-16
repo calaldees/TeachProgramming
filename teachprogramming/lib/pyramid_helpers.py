@@ -34,27 +34,31 @@ def request_from_args(args):
     assert request
     return request
 
+def _etag_render_fun_default(request):
+    import pdb ; pdb.set_trace()
+    return "-".join([request.route_name, str(request.matchdict), str(request.params)]) #target.__name__
+
 def etag(etag_render_func):
     def etag(f, *args, **kwargs):
         request = request_from_args(args)
         
         etag_enabled = get_setting('server.etag_enabled', request, return_type=bool)
         
-        if (etag_enabled):
+        if etag_enabled:
             if etag_render_func:
                 etag = etag_render_func(request)
             else:
-                etag = "%s %s" % (target.__name__, str(request.params) )
+                etag = _etag_render_fun_default(request)
             if etag and etag in request.if_none_match:
                 log.debug('etag matched - aborting render - %s' % etag)
                 raise exception_response(304)
         
         result = f(*args, **kwargs) # Execute the wrapped function
         
-        if (etag_enabled):
+        if etag_enabled:
             log.debug('etag set - %s' % etag)
             result.etag = etag
-            
+        
         return result
     return decorator(etag)
 

@@ -28,7 +28,7 @@ env:
 
 setup: env
 	env/bin/python setup.py develop
-	env/bin/python easy_install 'zope.interface==3.8.0'
+	#env/bin/python easy_install 'zope.interface==3.8.0' # Unnneded as zope has been fixed
 	#env/bin/populate_MyProject development.ini
 
 run:

@@ -16,11 +16,12 @@ requires = [
     'waitress',
     'pyramid_beaker',
     'decorator',
+    'zope.interface',
     ]
 
 setup(name='TeachProgramming',
-      version='0.0',
-      description='A dynamic website to create cool programming activities',
+      version='0.1',
+      description='A dynamic website to showcase cool programming activities',
       long_description=README + '\n\n' +  CHANGES,
       classifiers=[
         "Programming Language :: Python",
@@ -28,10 +29,10 @@ setup(name='TeachProgramming',
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
         ],
-      author='',
-      author_email='',
-      url='',
-      keywords='web wsgi bfg pylons pyramid',
+      author='Allan Callaghan',
+      author_email='calaldees@gmail.com',
+      url='calaldees.dreamhosters.com',
+      keywords='web pylons pyramid teach learn',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
@@ -44,4 +45,3 @@ setup(name='TeachProgramming',
       populate_TeachProgramming = teachprogramming.scripts.populate:main
       """,
       )
-
