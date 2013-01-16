@@ -159,8 +159,17 @@ def make_ver(source, ver_path=None, ver_name=None, lang=None, hidden_line_replac
             line_versions    = get_ver_set(ver_match.group('ver'        ))
             exclude_versions = get_ver_set(ver_match.group('ver_exclude'))
         
+        # HOLY HACK!!! **** ME!! - Some projects have multiple VERNAME's vername1,vername2
+        #    in some projects this means AND both of these versions
+        #    in others it means OR either of these versions.
+        #    THIS NEEDS FIXING! Adding hard coded versions to trigger this here is not a long term solution
+        if ver_path & {'block_move','mines'}:
+            include_line = (line_versions & ver_path)
+        else:
+            include_line = (line_versions==ver_path or line_versions<ver_path)
+        
         # If is the version requested is a union with the current line
-        if line_versions < ver_path and not exclude_versions & ver_path:
+        if include_line and not exclude_versions & ver_path: # WTF!!! Single element sets are not entirely a subset!! DA FUCK!!
             
             # Removed matched metadata
             line = extract_ver          .sub('' , line)

@@ -13,8 +13,8 @@ def connection(sock):                                 # VER: recv
         output_box.yview(tkinter.END)                 # VER: gui_scroll
     sock.close()                                      # VER: recv
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.connect(("localhost", 9872))
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # VER: connect
+sock.connect(("localhost", 9872))                        # VER: connect
 #connection(sock)                                          # VER: recv not send_recv
                                                            # VER: send_recv
 thread = threading.Thread(target=connection, args=(sock,)) # VER: send_recv
