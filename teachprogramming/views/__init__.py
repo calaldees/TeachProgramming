@@ -42,13 +42,6 @@ def base(target, *args, **kwargs):
 
 
 #-------------------------------------------------------------------------------
-# eTag override (until it can be implemented fully)
-#-------------------------------------------------------------------------------
-@decorator
-def etag(target, *args, **kwargs):
-    return target(*args,**kwargs)
-
-#-------------------------------------------------------------------------------
 # Web - the decorators merged
 #-------------------------------------------------------------------------------
 # Reference - http://stackoverflow.com/questions/2182858/how-can-i-pack-serveral-decorators-into-one

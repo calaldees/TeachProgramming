@@ -47,16 +47,17 @@ def random_string(length=8):
     return r
 
 
-    
-def normalize_datetime(d, accuracy='hour'):
+_normalize_datetime_lookup = {
+    'minute': lambda d: d.replace(microsecond=0, second=0),
+    'hour'  : lambda d: d.replace(microsecond=0, second=0, minute=0),
+    'day'   : lambda d: d.replace(microsecond=0, second=0, minute=0, hour=0),
+    'week'  : lambda d: d.replace(microsecond=0, second=0, minute=0, hour=0) - datetime.timedelta(days=d.weekday()),
+}
+def normalize_datetime(d=None, accuracy='hour'):
     """
     Normalizez datetime down to hour or day
     Dates are immutable (thank god)
     """
-    if   accuracy=='hour':
-        return d.replace(minute=0, second=0, microsecond=0)
-    elif accuracy=='day' :
-        return d.replace(minute=0, second=0, microsecond=0, hour=0)
-    elif accuracy=='week':
-        return d.replace(minute=0, second=0, microsecond=0, hour=0) - datetime.timedelta(days=d.weekday())
-    return d
+    if not d:
+        d = datetime.datetime.now()
+    return _normalize_datetime_lookup[accuracy](d)

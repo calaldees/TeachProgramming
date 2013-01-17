@@ -12,7 +12,7 @@ default_http_cache_duration = datetime.timedelta(seconds=86400) #get_setting('we
 
 
 @view_config(route_name='project', http_cache=default_http_cache_duration)
-@etag
+@etag()
 @web
 def project(request):
     return render_to_response(
@@ -22,7 +22,7 @@ def project(request):
     )
 
 @view_config(route_name='project_code', http_cache=default_http_cache_duration)
-@etag
+@etag()
 @web
 def project_code(request):
     code = '\n'.join( make_ver.make_ver(constants.project_filename_dict.format(**request.matchdict), ver_name=request.matchdict['version'], lang=request.matchdict['selected_lang'] ) )

@@ -12,32 +12,32 @@ def render_static_mako_from_caller(request):
         request=request,
     )
 
-@etag
+@etag()
 @web
 def home(request):
     return render_static_mako_from_caller(request)
 
-@etag
+@etag()
 @web
 def activities(request):
     return render_static_mako_from_caller(request)
 
-@etag
+@etag()
 @web
 def reference(request):
     return render_static_mako_from_caller(request)
 
-@etag
+@etag()
 @web
 def contact(request):
     return render_static_mako_from_caller(request)
 
-@etag
+@etag()
 @web
 def projects(request):
     return render_static_mako_from_caller(request)
 
-@etag
+@etag()
 @web
 def units(request):
     return render_static_mako_from_caller(request)

@@ -34,21 +34,41 @@ def request_from_args(args):
     assert request
     return request
 
-def _etag_render_fun_default(request):
-    import pdb ; pdb.set_trace()
-    return "-".join([request.route_name, str(request.matchdict), str(request.params)]) #target.__name__
 
-def etag(etag_render_func):
+def _etag_render_func_default(request):
+    return "-".join([
+        request.path_qs,
+        normalize_datetime(accuracy=get_setting('server.etag_expire', request)).ctime(), # use epoc here instead
+        # request.POST ??,
+        # request.session_id ??,
+    ])
+
+def etag(etag_render_func=_etag_render_func_default):
+    """
+    eTag decorator
+    
+    use:
+    
+    @etag()
+    def my_route_view(request):
+        pass
+    
+    by default this will use the request.route_qs + expire time as the etag
+    
+    You can specify a function to generate an etag string, this is passed the single argument 'request'
+    
+    @etag(lambda request: request.path_qs)
+    def my_route_view(request):
+        pass
+    
+    """
     def etag(f, *args, **kwargs):
         request = request_from_args(args)
         
         etag_enabled = get_setting('server.etag_enabled', request, return_type=bool)
         
         if etag_enabled:
-            if etag_render_func:
-                etag = etag_render_func(request)
-            else:
-                etag = _etag_render_fun_default(request)
+            etag = etag_render_func(request)
             if etag and etag in request.if_none_match:
                 log.debug('etag matched - aborting render - %s' % etag)
                 raise exception_response(304)
@@ -61,28 +81,3 @@ def etag(etag_render_func):
         
         return result
     return decorator(etag)
-
-#@decorator
-#def etag(target, *args, **kwargs):
-#    """
-#    Pyramid has no etag decorator .. WTF!!!! ..
-#    this is my first revision - needs params, but it works for the one case im using it for at the moment
-#    """
-#    assert isinstance(args[0], pyramid.request.Request)
-#    request = args[0]
-#    
-#    etag_enabled = get_setting('etag_enabled', request, return_type=bool)
-#    if (etag_enabled):
-#        etag = "%s %s %s" % (target.__name__, str(request.matchdict), str(normalize_datetime(datetime.datetime.now(), get_setting('etag_expire',request))) )
-#        log.debug('etag matched - aborting render - %s' % etag)
-#        if etag in request.if_none_match:
-#            raise exception_response(304)
-#    
-#    result = target(*args, **kwargs) # Execute the wrapped function
-#    
-#    if (etag_enabled):
-#        log.debug('etag set - %s' % etag)
-#        result.etag = etag
-#        
-#    return result
-
