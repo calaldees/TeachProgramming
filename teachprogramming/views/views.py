@@ -19,6 +19,7 @@ def project(request):
         'teachprogramming:templates/html/projects/%(project_type)s/%(project)s.mako' % request.matchdict, 
         request.matchdict,
         request=request,
+        # cache= ?? pass to mako template?
     )
 
 @view_config(route_name='project_code', http_cache=default_http_cache_duration)
@@ -26,9 +27,10 @@ def project(request):
 @web
 def project_code(request):
     code = '\n'.join( make_ver.make_ver(constants.project_filename_dict.format(**request.matchdict), ver_name=request.matchdict['version'], lang=request.matchdict['selected_lang'] ) )
-    response = Response(code)
-    response.headers['Content-type'] = "text/plain; charset=utf-8"
-    return response
+    request.response.text = code
+    # TODO: cache this response with beaker/dogpile?
+    request.response.content_type = "text/plain"
+    return request.response
 
 #@view_config(route_name='select_language_redirect')
 #def select_language_redirect(request):

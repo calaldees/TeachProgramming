@@ -3,6 +3,7 @@ import re
 
 from teachprogramming.lib import make_ver, constants
 
+
 def langs():
     """
     Tuples of ext, lang_name

@@ -16,7 +16,7 @@ def selected_class(a,b):
 <% body_capture = capture(next.body) %>
 
 % if self.sidebar_content:
-<div data-spy="affix" data-offset-top="130" class="span3 sidebar-nav-container">
+<div data-spy="affix" data-offset-top="100" class="span3 sidebar-nav-container">
     ##  affix-top="150" affix-bottom="0"
     <div class="well well-small">
         ##sidebar-nav
