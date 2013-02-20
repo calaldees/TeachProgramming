@@ -553,9 +553,9 @@ def get_args():
     parser.add_argument('-u','--udp_port'      , type=int, help='UDP port'      , default=9871)
     parser.add_argument('-t','--tcp_port'      , type=int, help='TCP port'      , default=9872)
     parser.add_argument('-w','--websocket_port', type=int, help='WebSocket port', default=9873)
-    parser.add_argument(     '--show_status'     , type=bool_, default=True , help='Display status')
-    parser.add_argument('-c','--show_connections', type=bool_, default=True , help='Display connections')
-    parser.add_argument('-m','--show_messages'   , type=bool_, default=False, help='Display messages recived')
+    parser.add_argument('-s','--hide_status'     , action='store_false', default=True , help='Display status')
+    parser.add_argument('-c','--hide_connections', action='store_false', default=True , help='Display connections')
+    parser.add_argument('-m','--show_messages'   , action='store_true' , default=False, help='Display messages recived')
     return parser.parse_args()
 
 # Main -------------------------------------------------------------------------
