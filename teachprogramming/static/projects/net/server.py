@@ -337,7 +337,7 @@ class ServerWrapper():
         """
         Child client has established a connection
         """
-        print('add the client %s : %s' % (self.name, client.id) )
+        #log('connection','add the client %s : %s' % (self.name, client.id)) # unneeded as echo server implmenting class handles logging
         self.clients.append(client)
         self.manager.connect(client)
     
@@ -519,7 +519,7 @@ class UDPServerWrapper(ServerWrapper):
 
 class EchoServerManager(ServerManager):
     def connect(self, client):
-        log('connection','%s connected'    % client.id)
+        log('connection','%s connected'    % client.id)  # TODO - add logging of what type of client it was
     def disconnect(self, client):
         log('connection','%s disconnected' % client.id)
     def recv(self, data, source=None):
@@ -562,9 +562,10 @@ def get_args():
 
 if __name__ == "__main__":
     args = get_args()
-    log_params['status'    ] = args.show_status
+    
+    log_params['status'    ] = args.hide_status
     log_params['message'   ] = args.show_messages
-    log_params['connection'] = args.show_connections
+    log_params['connection'] = args.hide_connections
 
     options = vars(args)
     manager = EchoServerManager(**options)
