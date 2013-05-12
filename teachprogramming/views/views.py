@@ -8,7 +8,7 @@ import teachprogramming.lib.make_ver  as make_ver
 import teachprogramming.lib.constants as constants
 
 import datetime
-default_http_cache_duration = datetime.timedelta(seconds=86400) #get_setting('web.cache.expire')
+default_http_cache_duration = datetime.timedelta(seconds=0) #get_setting('web.cache.expire') 86400
 
 
 @view_config(route_name='project', http_cache=default_http_cache_duration)
