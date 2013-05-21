@@ -12,6 +12,7 @@ canvas_ids = re.compile(r'<canvas.*?id=["\'](.*?)["\']')
 javascript_activate_mouse = """
     canvas.addEventListener('mouseover', function(event) {start();}, true);
     canvas.addEventListener('mouseout' , function(event) {pause();}, true);
+    timerEvent();
 """
 
 def make_web_ver(source):
@@ -22,6 +23,10 @@ def make_web_ver(source):
     <canvas id="thing" ...>
     <script>
         //some script stuff
+        function timerEvent() {
+            ...
+        }
+        //
         start();
     </script>
     
@@ -32,6 +37,7 @@ def make_web_ver(source):
         //some script stuff
         //  all use of 'thing' now 'thing_XRANDOMX'
         canvas.Eventstuff(to pause and start when mouse rolled over);
+        timerEvent(); // this is to tick ONE timer to poplate the first frame
     })();
     </script>
     
