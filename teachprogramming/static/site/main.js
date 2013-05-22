@@ -8,9 +8,9 @@ function apply_active_anchor($a) {
     });
 }
 
-function scrollTo ($el) {
+function scrollTo ($el, offset) {
     $('html, body').animate({
-        scrollTop: $el.offset().top
+        scrollTop: $el.offset().top + offset
     }, 500);
 } 
 
@@ -23,7 +23,7 @@ $(document).ready(function() {
         href  = $(this).prop('href'),
         $hash = $(href.substr(href.indexOf('#')));
         console.log($hash);
-        scrollTo($hash);
+        scrollTo($hash, -50);
         return false;
     });
 });
