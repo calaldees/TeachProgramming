@@ -20,9 +20,13 @@ def main(global_config, **settings):
     #engine = engine_from_config(settings, 'sqlalchemy.')
     #DBSession.configure(bind=engine)
     
+    
+    
     session_factory = UnencryptedCookieSessionFactoryConfig('teachprogramming')
     
     config = Configurator(settings=settings, session_factory=session_factory)
+    
+    config.include('pyramid_mako')  # The mako.directories value is updated in the scan for addons. We trigger the import here to include the correct folders.
     
     config.add_static_view('static'              , 'static'                     ) #cache_max_age=3600
     config.add_static_view('projects/game/images', 'static/projects/game/images')
