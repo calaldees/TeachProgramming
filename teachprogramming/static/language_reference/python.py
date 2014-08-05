@@ -6,8 +6,8 @@ http://docs.python.org/py3k/  # VER: help
 """
 
 
-def hello_world():
-    print("Hello World")  # VER: hello_world
+
+print("Hello World")  # VER: hello_world
 
 
 def read_line_from_console():
