@@ -31,6 +31,11 @@ def define_constats():
 
 
 def arithmetic():
+    xpos = 0
+    item_price = 0
+    quant = 0
+    count = 0
+
     xpos = xpos + 1                  # VER: arithmetic
     distance = 3 / 4                 # VER: arithmetic
     total_cost = item_price * quant  # VER: arithmetic
@@ -39,6 +44,8 @@ def arithmetic():
 
 
 def if_statement():
+    username = 'bob'
+    count = 3
     if count >= 5 and username == "Jim":  # VER: if
         print("Yes")                      # VER: if
     elif username == "admin":             # VER: if
@@ -53,8 +60,9 @@ def if_statement_more():
 
 
 def for_loop():
-    for i in range(0, len(username)):  # VER: for_loop
-        print(username[i])             # VER: for_loop
+    username = 'bob'                    # VER: for_loop
+    for i in range(0, len(username)):   # VER: for_loop
+        print(username[i])              # VER: for_loop
 
 
 def while_loop():
@@ -97,6 +105,8 @@ def file_read():
 
 
 def string_concatination():
+    forename = ''
+    surname = ''
     fullname = forename + " " + surname                     # VER: string_concatination
     fullname = "%s %s" % (forename, surname)  # Alternate   # VER: string_concatination
 
@@ -121,73 +131,105 @@ def function_with_return_value():
         else:           # VER: function_with_return_value
             return b    # VER: function_with_return_value
 
-#Everything is a reference
 
-names = []
-names.insert(0,"Bob")
-names.insert(1,"Foo")
-names.insert(2,"Rah")
-for name in names:
-  print(name)
-print ("array size is %s" % len(names))
-grid = {}  #Not really a 2D array (it's a hash)
-for x in range(10): #Fill the grid with 0's
-  for y in range(10):
-    grid[(x,y)] = 0
-grid[(5,5)] = 1
-list = []
-list.append("Bill")
-list.append("Ben")
-list.append("Bob")
-list.remove("Ben")
-list.pop()
-list.insert(0,"Kim")
-for name in list:
-  print(name)
-print("list size is %s" % len(list))
-dict = {}
-dict["Joe"] = 77
-dict["Jane"] = 51
-for key in dict.keys():
-  print("Key: %s Value: %s" % (key,dict[key]))
+def define_fixed_array():
+    names = []              # VER: define_fixed_array
+    names.insert(0,"Bob")   # VER: define_fixed_array
+    names.insert(1,"Foo")   # VER: define_fixed_array
+    names.insert(2,"Rah")   # VER: define_fixed_array
+    for name in names:      # VER: define_fixed_array
+        print(name)         # VER: define_fixed_array
+    print ("array size is %s" % len(names)) # VER: define_fixed_array
 
-#todo add contains
-try:
-  #thing that may error
-except:
-  #what to do if things go wrong
-csv_line_test = "Jane,09/09/1989,Female,Blue"
-line_split = csv_line_test.split(",")
-import random
 
-new_num = random.randint(0, 100)
-new_fraction = random.random()
-todo
-class Star:
-  x = 0
-  y = 0
-  speed = 0
-...
-s = Star()
-s.x = 100
-from datetime import date
+def define_2d_arrays():
+    grid = {}  # Not really a 2D array (it's a dictioary)   # VER: define_2d_arrays
+    for x in range(10):  # Fill the grid with 0's           # VER: define_2d_arrays
+        for y in range(10):                                 # VER: define_2d_arrays
+            grid[(x, y)] = 0                                # VER: define_2d_arrays
+    grid[(5, 5)] = 1                                        # VER: define_2d_arrays
 
-class Student:
-  forename = ""
-  surname  = ""
-  dob      = date.today()
 
-students = []
-filename = "c:\\test.csv"
+def linked_list():
+    list = []               # VER: linked_list
+    list.append("Bill")     # VER: linked_list
+    list.append("Ben")      # VER: linked_list
+    list.append("Bob")      # VER: linked_list
+    list.remove("Ben")      # VER: linked_list
+    list.pop()              # VER: linked_list
+    list.insert(0, "Kim")   # VER: linked_list
+    for name in list:       # VER: linked_list
+        print(name)         # VER: linked_list
+    print("list size is %s" % len(list))    # VER: linked_list
 
-with open(filename, 'r') as file:
-  for line in file:
-    line_split = line.split(",")
-    new_student = Student()
-    new_student.forname = line_split[0]
-    new_student.surname = line_split[1]
-    new_student.date    = line_split[2] #rrr
-    students.append(new_student)
-print("Loaded %s students" % len(students))
-from time import sleep
-sleep(1)
+
+def define_map():
+    dict = {}                                           # VER: define_map
+    dict["Joe"] = 77                                    # VER: define_map
+    dict["Jane"] = 51                                   # VER: define_map
+    for key in dict.keys():                             # VER: define_map
+        print("Key: %s Value: %s" % (key, dict[key]))   # VER: define_map
+    #todo add contains
+
+
+def error_handling():
+    try:                                # VER: error_handling
+        #thing that may error           # VER: error_handling
+        pass
+    except:                             # VER: error_handling
+        #what to do if things go wrong  # VER: error_handling
+        pass
+
+
+def split_strings():
+    csv_line_test = "Jane,09/09/1989,Female,Blue"   # VER: split_strings
+    line_split = csv_line_test.split(",")           # VER: split_strings
+
+
+def random_number():
+    import random                       # VER: random_number
+    new_num = random.randint(0, 100)    # VER: random_number
+    new_fraction = random.random()      # VER: random_number
+
+
+def switch():
+    #todo
+    pass
+
+
+def _class():
+    class Star:     # VER: class
+        x = 0       # VER: class
+        y = 0       # VER: class
+        speed = 0   # VER: class
+    #...            # VER: class
+    s = Star()      # VER: class
+    s.x = 100       # VER: class
+
+
+def read_csv_into_array_of_classs():
+    from datetime import date                       # VER: read_csv
+                                                    # VER: read_csv
+    class Student:                                  # VER: read_csv
+        forename = ""                               # VER: read_csv
+        surname  = ""                               # VER: read_csv
+        dob      = date.today()                     # VER: read_csv
+                                                    # VER: read_csv
+    students = []                                   # VER: read_csv
+    filename = "test.csv"                           # VER: read_csv
+                                                    # VER: read_csv
+    with open(filename, 'r') as file:               # VER: read_csv
+        for line in file:                           # VER: read_csv
+            line_split = line.split(",")            # VER: read_csv
+            new_student = Student()                 # VER: read_csv
+            new_student.forname = line_split[0]     # VER: read_csv
+            new_student.surname = line_split[1]     # VER: read_csv
+            new_student.date    = line_split[2] #better way needed  # VER: read_csv
+            students.append(new_student)            # VER: read_csv
+    print("Loaded %s students" % len(students))     # VER: read_csv
+
+
+def sleep():
+    from time import sleep  # VER: sleep
+    sleep(1)                # VER: sleep
+
