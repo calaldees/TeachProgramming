@@ -82,7 +82,7 @@ def make_web_ver(source):
             <p>${self.full_code(ver_name)}</p>
         </div>
     % except Exception as e:
-        <p>BROKEN!! ${e}</p>
+        <p>BROKEN!! ${str(e)}</p>
     % endtry
 </%def>
 
@@ -91,7 +91,7 @@ def make_web_ver(source):
 
 <%def name="code_section(prev_ver_name, target_ver_name, title, heading_level=2)">
 <% self.section_title(title) %>
-<h${heading_level}>${title.capitalize()}</h${heading_level}>
+<h${str(heading_level)}>${str(title.capitalize())}</h${str(heading_level)}>
 <div class="row">
     <div class="span6">
         % try:
