@@ -13,8 +13,11 @@ file_write
 file_read
 string_concatination
 convert_string_to_interger_and_back
-function
+convert_double_to_string_and_back
+_function
 function_with_return_value
+function_with_params_by_reference
+function_with_params_by_value
 define_fixed_array
 define_2d_arrays
 linked_list

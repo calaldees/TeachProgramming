@@ -47,12 +47,13 @@ def arithmetic():
 def if_statement():
     username = 'bob'
     count = 3
-    if count >= 5 and username == "Jim":  # VER: if
-        print("Yes")                      # VER: if
-    elif username == "admin":             # VER: if
-        print("Admin")                    # VER: if
-    else:                                 # VER: if
-        print("No")                       # VER: if
+
+    if count >= 5 and username == "Jim":  # VER: if_statement
+        print("Yes")                      # VER: if_statement
+    elif username == "admin":             # VER: if_statement
+        print("Admin")                    # VER: if_statement
+    else:                                 # VER: if_statement
+        print("No")                       # VER: if_statement
 
 
 def if_statement_more():
@@ -71,6 +72,13 @@ def while_loop():
     while count < 10:                 # VER: while_loop
         print("Count is {0}".format(count))  # VER: while_loop
         count = count + 2             # VER: while_loop
+
+
+def until_loop():
+    """
+    Not implemented in python
+    """
+    pass
 
 
 def for_each_loop():
@@ -117,8 +125,10 @@ def convert_string_to_interger_and_back():
     sum = 5 + int('5')                      # VER: conert_string_to_interger_and_back
     print(str(sum))                         # VER: conert_string_to_interger_and_back
 
+def convert_double_to_string_and_back():
+    pass
 
-def function():
+def _function():
     def say_hello():        # VER: function
         print("Hello")      # VER: function
         print("Goodbye")    # VER: function
