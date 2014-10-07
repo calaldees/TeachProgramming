@@ -1,4 +1,10 @@
 public class Java {
+    /*
+    Java                                                                        // VER: title
+    java.sun.com                                                                // VER: download
+    Java SE (Standard Edition) JDK (Java Development Kit)                       // VER: download
+    http://java.sun.com/docs/books/tutorial/                                    // VER: help
+    */
     
     void hello_world() {
         //public class HelloWorld {                                             // VER: hello_world
