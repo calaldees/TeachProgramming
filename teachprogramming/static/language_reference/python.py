@@ -6,12 +6,13 @@ http://docs.python.org/py3k/  # VER: help
 """
 
 
-
-print("Hello World")  # VER: hello_world
+def hello_world():
+    print("Hello World")  # VER: hello_world
 
 
 def read_line_from_console():
-    username = raw_input()  # VER: read_line_from_console
+    input = lambda: None
+    username = input()  # VER: read_line_from_console
 
 
 def comment():
@@ -68,14 +69,14 @@ def for_loop():
 def while_loop():
     count = 0                         # VER: while_loop
     while count < 10:                 # VER: while_loop
-        print("Count is %s") % count  # VER: while_loop
+        print("Count is {0}".format(count))  # VER: while_loop
         count = count + 2             # VER: while_loop
 
 
 def for_each_loop():
     names = ("Bob", "Ben", "Bill", "Borris", "Bin")  # VER: for_each_loop
     for name in names:                               # VER: for_each_loop
-        print name                                   # VER: for_each_loop
+        print(name)                                  # VER: for_each_loop
 
 
 def file_write():
@@ -97,11 +98,11 @@ def file_read():
             line_count += 1                                 # VER: file_read
                                                             # VER: file_read
     # Alternate way of reading file                         # VER: file_read
-    file = open("in.txt", 'r')                              # VER: file_read
-    for line in file:                                       # VER: file_read
-        print("Line " + str(line_count) + ": " + line)      # VER: file_read
-        line_count += 1                                     # VER: file_read
-    file.close()                                            # VER: file_read
+    #file = open("in.txt", 'r')                              # VER: file_read
+    #for line in file:                                       # VER: file_read
+    #    print("Line " + str(line_count) + ": " + line)      # VER: file_read
+    #    line_count += 1                                     # VER: file_read
+    #file.close()                                            # VER: file_read
 
 
 def string_concatination():
@@ -111,11 +112,10 @@ def string_concatination():
     fullname = "%s %s" % (forename, surname)  # Alternate   # VER: string_concatination
 
 
-def conert_string_to_interger_and_back():
-    sum = int("5") + int(input())           # VER: conert_string_to_interger_and_back
+def convert_string_to_interger_and_back():
+    lambda input: 5
+    sum = 5 + int('5')                      # VER: conert_string_to_interger_and_back
     print(str(sum))                         # VER: conert_string_to_interger_and_back
-    #Python has a cool string formatter     # VER: conert_string_to_interger_and_back
-    print("The number is %s then %s" % sum, 27)  # VER: conert_string_to_interger_and_back
 
 
 def function():
@@ -233,3 +233,18 @@ def sleep():
     from time import sleep  # VER: sleep
     sleep(1)                # VER: sleep
 
+
+if __name__ == "__main__":
+    def title(title):
+        print('-{0}-'.format(title))
+    # Run all functions in order
+    with open('_function_order.txt', 'r') as file:
+        for function_name in file:
+            function_name = function_name.strip()
+            title(function_name)
+            locals()[function_name]()
+    # Print output of written files
+    for filename in ('out.txt',):
+        title(filename)
+        with open(filename, 'r') as f:
+            print(f.read())
