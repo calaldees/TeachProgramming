@@ -8,6 +8,7 @@ if_statement
 if_statement_more
 for_loop
 while_loop
+until_loop
 for_each_loop
 file_write
 file_read
@@ -25,7 +26,7 @@ define_map
 error_handling
 split_strings
 random_number
-switch
+_switch
 _class
 read_csv_into_array_of_classs
-sleep
+_sleep

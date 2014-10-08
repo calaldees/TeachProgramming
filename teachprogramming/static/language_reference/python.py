@@ -114,11 +114,11 @@ def file_read():
 
 
 def string_concatination():
-    forename = ''
-    surname = ''
+    forename = 'bob'
+    surname = 'jones'
     fullname = forename + " " + surname                     # VER: string_concatination
     fullname = "%s %s" % (forename, surname)  # Alternate   # VER: string_concatination
-
+    print(fullname)
 
 def convert_string_to_interger_and_back():
     lambda input: 5
@@ -142,6 +142,7 @@ def function_with_return_value():
             return a    # VER: function_with_return_value
         else:           # VER: function_with_return_value
             return b    # VER: function_with_return_value
+    print(biggest(1, 2))
 
 
 def define_fixed_array():
@@ -245,6 +246,8 @@ def sleep():
     from time import sleep  # VER: sleep
     sleep(1)                # VER: sleep
 
+
+#-------------------------------------------------------------------------------
 
 if __name__ == "__main__":
     def title(title):

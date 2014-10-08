@@ -317,6 +317,8 @@ Module VisualBasic
         hello_world()
         function_with_params_by_reference()
         function_with_params_by_value()
+        Dim command as String = "hello_world"
+        'Call command()
     End Sub
 
 End Module
