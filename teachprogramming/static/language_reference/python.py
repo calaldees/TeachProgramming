@@ -125,8 +125,10 @@ def convert_string_to_interger_and_back():
     sum = 5 + int('5')                      # VER: conert_string_to_interger_and_back
     print(str(sum))                         # VER: conert_string_to_interger_and_back
 
+
 def convert_double_to_string_and_back():
     pass
+
 
 def _function():
     def say_hello():        # VER: function
@@ -144,9 +146,9 @@ def function_with_return_value():
 
 def define_fixed_array():
     names = []              # VER: define_fixed_array
-    names.insert(0,"Bob")   # VER: define_fixed_array
-    names.insert(1,"Foo")   # VER: define_fixed_array
-    names.insert(2,"Rah")   # VER: define_fixed_array
+    names.insert(0, "Bob")  # VER: define_fixed_array
+    names.insert(1, "Foo")  # VER: define_fixed_array
+    names.insert(2, "Rah")  # VER: define_fixed_array
     for name in names:      # VER: define_fixed_array
         print(name)         # VER: define_fixed_array
     print ("array size is %s" % len(names)) # VER: define_fixed_array
