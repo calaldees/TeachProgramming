@@ -224,6 +224,12 @@ Module VisualBasic
     End Sub
     
     Sub define_map()
+        Dim dict As New Dictionary(Of String, String)
+        dict.Add("Joe", 77)
+        dict.Add("Jane", 51)
+        For Each key as String In dict.Keys
+          Console.WriteLine("Key: " + key + " Value: " + dict(key))
+        Next
     End Sub
     
     Sub error_handling()
