@@ -1,3 +1,10 @@
+/*
+Java                                                                        // VER: title
+java.sun.com                                                                // VER: download
+Java SE (Standard Edition) JDK (Java Development Kit)                       // VER: download
+http://java.sun.com/docs/books/tutorial/                                    // VER: help
+*/
+
 import java.util.Scanner; //Add at top of file                                  // VER: read_line_from_console
 
 import java.io.BufferedReader; //Add at top of file                             // VER: read_file
@@ -5,12 +12,6 @@ import java.io.FileReader;                                                      
 
 
 public class Java {
-    /*
-    Java                                                                        // VER: title
-    java.sun.com                                                                // VER: download
-    Java SE (Standard Edition) JDK (Java Development Kit)                       // VER: download
-    http://java.sun.com/docs/books/tutorial/                                    // VER: help
-    */
 
     Scanner console = new Scanner(System.in);                                   // VER: read_line_from_console
     
@@ -41,6 +42,8 @@ public class Java {
             System.err.println("Error: " + e.getMessage());                     // VER: read_file
         }                                                                       // VER: read_file
     }
+    
+    //--------------------------------------------------------------------------
     
     public static void main(String[] args) {
         Java j = new Java();

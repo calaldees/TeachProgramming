@@ -120,8 +120,8 @@ def string_concatination():
     fullname = "%s %s" % (forename, surname)  # Alternate   # VER: string_concatination
     print(fullname)
 
+
 def convert_string_to_interger_and_back():
-    lambda input: 5
     sum = 5 + int('5')                      # VER: conert_string_to_interger_and_back
     print(str(sum))                         # VER: conert_string_to_interger_and_back
 
@@ -134,15 +134,16 @@ def _function():
     def say_hello():        # VER: function
         print("Hello")      # VER: function
         print("Goodbye")    # VER: function
+    say_hello()             # VER: function
 
 
 def function_with_return_value():
-    def biggest(a, b):  # VER: function_with_return_value
-        if a > b:       # VER: function_with_return_value
-            return a    # VER: function_with_return_value
-        else:           # VER: function_with_return_value
-            return b    # VER: function_with_return_value
-    print(biggest(1, 2))
+    def biggest(a, b):      # VER: function_with_return_value
+        if a > b:           # VER: function_with_return_value
+            return a        # VER: function_with_return_value
+        else:               # VER: function_with_return_value
+            return b        # VER: function_with_return_value
+    print(biggest(1, 2))    # VER: function_with_return_value
 
 
 def define_fixed_array():
@@ -152,7 +153,7 @@ def define_fixed_array():
     names.insert(2, "Rah")  # VER: define_fixed_array
     for name in names:      # VER: define_fixed_array
         print(name)         # VER: define_fixed_array
-    print ("array size is %s" % len(names)) # VER: define_fixed_array
+    print("array size is %s" % len(names))  # VER: define_fixed_array
 
 
 def define_2d_arrays():
@@ -197,6 +198,7 @@ def error_handling():
 def split_strings():
     csv_line_test = "Jane,09/09/1989,Female,Blue"   # VER: split_strings
     line_split = csv_line_test.split(",")           # VER: split_strings
+    print(line_split[1])
 
 
 def random_number():

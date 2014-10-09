@@ -243,6 +243,7 @@ Module VisualBasic
     Sub split_strings()
         Const csv_line_test as String = "Jane,09/09/1989,Female,Blue"   ' VER: split_strings
         Dim line_split As String() = csv_line_test.Split(",")                       ' VER: split_strings
+        Console.WriteLine(line_split(1))
     End Sub
     
     Sub random_number()
