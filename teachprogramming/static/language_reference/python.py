@@ -218,6 +218,7 @@ def _class():
     #...            # VER: class
     s = Star()      # VER: class
     s.x = 100       # VER: class
+    print(s.x)
 
 
 def read_csv_into_array_of_classs():
@@ -250,16 +251,25 @@ def sleep():
 #-------------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    def title(title):
-        print('-{0}-'.format(title))
-    # Run all functions in order
+    # Aquire functions to run from file
+    functions = []
     with open('_function_order.txt', 'r') as file:
         for function_name in file:
-            function_name = function_name.strip()
-            title(function_name)
-            locals()[function_name]()
+            functions.append(function_name.strip())
+
+    def title(title):
+        print('-{0}-'.format(title))
+
+    # Run all functions in order
+    for function_name in funtions:
+        title(function_name)
+        if function_name not in locals():
+            print('UNIMPLEMENTED')
+            continue
+        locals()[function_name]()
+
     # Print output of written files
-    for filename in ('out.txt',):
-        title(filename)
-        with open(filename, 'r') as f:
-            print(f.read())
+    #for filename in ('out.txt',):
+    #    title(filename)
+    #    with open(filename, 'r') as f:
+    #        print(f.read())

@@ -220,13 +220,14 @@ function _switch() {
 }
 
 function _class() {
-    class Star {
-        public $x;
-        public $y;
-        public $speed;
-    }
-    $s = new Star();
-    $s->x = 100;
+    class Star {            # VER: class
+        public $x;          # VER: class
+        public $y;          # VER: class
+        public $speed;      # VER: class
+    }                       # VER: class
+    $s = new Star();        # VER: class
+    $s->x = 100;            # VER: class
+    echo $s->x."\n";
 }
 
 function read_csv_into_array_of_classs() {
