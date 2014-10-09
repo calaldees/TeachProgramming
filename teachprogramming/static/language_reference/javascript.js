@@ -170,7 +170,7 @@ function _sleep() {
 
 //------------------------------------------------------------------------------
 
-var functions = ["hello_world", "test"];
+var functions = read("_function_order.txt", "text").split("\n");
 
 for (var i in functions) {
     var function_name = functions[i];
