@@ -261,7 +261,7 @@ if __name__ == "__main__":
         print('-{0}-'.format(title))
 
     # Run all functions in order
-    for function_name in funtions:
+    for function_name in functions:
         title(function_name)
         if function_name not in locals():
             print('UNIMPLEMENTED')
