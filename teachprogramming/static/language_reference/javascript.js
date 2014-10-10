@@ -2,7 +2,10 @@
 Javascript      // VER: title
 */
 
-console = {log: print};
+console = {
+    log: print,
+    error: print
+};
 
 //------------------------------------------------------------------------------
 
@@ -89,11 +92,29 @@ function for_each_loop() {
 }
 
 function file_write() {
-    
+    // javascript cannot write to local files because of the security model
+    // write to persistant local page storeage
+    var localStorage = {"out.txt": ""};
+    var line_to_write = "Append to end of file";             // VER: file_write
+    localStorage["out.txt"] += line_to_write + "\n";         // VER: file_write
 }
 
 function file_read() {
+    // javascript cannot access local files unless selected by the user
+    // demo needed
     
+    // Can read files within an AJAX callback, this also works for files on webserver
+    // demo needed
+    
+    // read from persistant local page storeage
+    var localStorage = {"in.txt": read("in.txt", "text")};
+    var line_count = 0;                                     // VER: file_read
+    lines = localStorage["in.txt"].split("\n");             // VER: file_read
+    for (var line_num in lines) {                           // VER: file_read
+        var line = lines[line_num];                         // VER: file_read
+        console.log("Line " + line_count + ": " + line);    // VER: file_read
+        line_count += 1;                                    // VER: file_read
+    }                                                       // VER: file_read
 }
 
 function string_concatination() {
@@ -198,7 +219,8 @@ function split_strings() {
 }
 
 function random_number() {
-    
+    var new_num = Math.round(Math.random() * 100);
+    var new_fraction = Math.random()
 }
 
 function _switch() {
@@ -206,15 +228,43 @@ function _switch() {
 }
 
 function _class() {
-    
+    // This is totally wrong
+    var star = {    // VER: class
+        x: 0,       // VER: class
+        y: 0,       // VER: class
+        speed: 0    // VER: class
+    }               // VER: class
+    var s = {};     // VER: class
 }
 
 function read_csv_into_array_of_classs() {
+    var file_data = read("test.csv", "text");
     
+    var students = []                               // VER: read_csv
+    var filename = "test.csv"                       // VER: read_csv
+                                                    // VER: read_csv
+    // var file_data = "AJAX or localStorage"       // VER: read_csv
+    lines = file_data.split("\n");                  // VER: read_csv
+    for (var line_num in lines) {                   // VER: read_csv
+        var line = lines[line_num];                 // VER: read_csv
+        var line_split = line.split(",");           // VER: read_csv
+        var new_student = {                         // VER: read_csv
+            'forname': line_split[0],               // VER: read_csv
+            'surname': line_split[1],               // VER: read_csv
+            'date'   : line_split[2] //parse needed // VER: read_csv
+        };                                          // VER: read_csv
+        students.push(new_student);                 // VER: read_csv
+    }                                               // VER: read_csv
+    console.log("Loaded %s students" % students.length);  // VER: read_csv
 }
 
 function _sleep() {
-    
+    // setTimeout is a browser thing and is not avalable
+    function setTimeout(f, timeout) {f();}
+    function after_sleep() {                        // VAR: sleep
+        console.log("slept for a second");          // VAR: sleep
+    }                                               // VAR: sleep
+    var timeout = setTimeout(after_sleep, 1000);    // VAR: sleep
 }
 
 //------------------------------------------------------------------------------
@@ -227,6 +277,7 @@ for (var i in functions) {
     try {
         this[function_name]();
     } catch(e) {
-        console.log(e);
+        console.error(function_name);
+        console.error(e);
     }
 }

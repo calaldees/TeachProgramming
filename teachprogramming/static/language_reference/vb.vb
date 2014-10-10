@@ -310,6 +310,7 @@ Module VisualBasic
     
     Sub sleep()
         Threading.Thread.Sleep(1000)    ' VER: sleep
+        Console.WriteLine("slept for a second")
     End Sub
     
     '---------------------------------------------------------------------------
