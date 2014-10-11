@@ -1,4 +1,4 @@
-test: python vb php javascript java
+test: python vb php javascript java ruby
 
 javascript:
 	js javascript.js
@@ -14,6 +14,9 @@ vb:
 
 php:
 	php php.php
+
+ruby:
+	ruby ruby.rb
 
 mono-basic:
 	git clone git@github.com:mono/mono-basic.git

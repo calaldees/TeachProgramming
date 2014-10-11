@@ -11,8 +11,9 @@ def hello_world():
 
 
 def read_line_from_console():
-    input = lambda: None
+    input = lambda: 'bob'
     username = input()  # VER: read_line_from_console
+    print(username)
 
 
 def comment():
