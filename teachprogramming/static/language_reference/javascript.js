@@ -100,6 +100,7 @@ function file_write() {
 }
 
 function file_read() {
+    // File Select
     // javascript cannot access local files unless selected by the user
     var document = {
         getElementById: function(elementId) {
@@ -107,21 +108,31 @@ function file_read() {
                 addEventListener: function(event, func) {},
             };
         },
-    }
-    //<input type="file" id="fileInput">                            // VER: file_read_alternate
-    //<script type="text/javascript">                               // VER: file_read_alternate
-            var fileInput = document.getElementById('fileInput');   // VER: file_read_alternate
-            fileInput.addEventListener('change', function(e) {      // VER: file_read_alternate
-                var reader = new FileReader();                      // VER: file_read_alternate
-                reader.onload = function(e) {                       // VER: file_read_alternate
-                        console.log(reader.result);                 // VER: file_read_alternate
-                }                                                   // VER: file_read_alternate
-                reader.readAsText(fileInput.files[0]);              // VER: file_read_alternate
-            });                                                     // VER: file_read_alternate
-    //</script>                                                     // VER: file_read_alternate
+    };
+    //<input type="file" id="fileInput">                        // VER: file_read_alternate_select
+    //<script type="text/javascript">                           // VER: file_read_alternate_select
+        var fileInput = document.getElementById('fileInput');   // VER: file_read_alternate_select
+        fileInput.addEventListener('change', function(e) {      // VER: file_read_alternate_select
+            var reader = new FileReader();                      // VER: file_read_alternate_select
+            reader.onload = function(e) {                       // VER: file_read_alternate_select
+                console.log(reader.result);                     // VER: file_read_alternate_select
+            }                                                   // VER: file_read_alternate_select
+            reader.readAsText(fileInput.files[0]);              // VER: file_read_alternate_select
+        });                                                     // VER: file_read_alternate_select
+    //</script>                                                 // VER: file_read_alternate_select
 
+    // Ajax
     // Can read files within an AJAX callback, this also works for files on webserver
-    // demo needed
+    function readTextFile(file, callback) {                 // VER: file_read_alternate
+        var request = new XMLHttpRequest();                 // VER: file_read_alternate
+        request.open("GET", file, false);                   // VER: file_read_alternate
+        request.onreadystatechange = function() {           // VER: file_read_alternate
+            if (request.readyState === 4 && (request.status === 200 || request.status == 0)) {  // VER: file_read_alternate
+                callback(request.responseText);             // VER: file_read_alternate
+            }                                               // VER: file_read_alternate
+        }                                                   // VER: file_read_alternate
+        request.send(null);                                 // VER: file_read_alternate
+    };                                                      // VER: file_read_alternate
     
     // read from persistant local page storeage
     var localStorage = {"in.txt": read("in.txt", "text")};
