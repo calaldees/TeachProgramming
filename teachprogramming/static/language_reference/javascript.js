@@ -101,8 +101,25 @@ function file_write() {
 
 function file_read() {
     // javascript cannot access local files unless selected by the user
-    // demo needed
-    
+    var document = {
+        getElementById: function(elementId) {
+            return {
+                addEventListener: function(event, func) {},
+            };
+        },
+    }
+    //<input type="file" id="fileInput">                            // VER: file_read_alternate
+    //<script type="text/javascript">                               // VER: file_read_alternate
+            var fileInput = document.getElementById('fileInput');   // VER: file_read_alternate
+            fileInput.addEventListener('change', function(e) {      // VER: file_read_alternate
+                var reader = new FileReader();                      // VER: file_read_alternate
+                reader.onload = function(e) {                       // VER: file_read_alternate
+                        console.log(reader.result);                 // VER: file_read_alternate
+                }                                                   // VER: file_read_alternate
+                reader.readAsText(fileInput.files[0]);              // VER: file_read_alternate
+            });                                                     // VER: file_read_alternate
+    //</script>                                                     // VER: file_read_alternate
+
     // Can read files within an AJAX callback, this also works for files on webserver
     // demo needed
     
