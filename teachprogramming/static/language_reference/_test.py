@@ -28,6 +28,7 @@ LANGAUGES = {
 
 DEFAULT_SCRIPT_HEADER_IDENTIFYER = '-(.*)-'
 DEFAULT_SCRIPT_HEADER_IDENTIFYER_REGEX = re.compile(DEFAULT_SCRIPT_HEADER_IDENTIFYER)
+DEFAULT_EXPECTED_OUTPUT_FILENAME = '_expected_output.txt'
 
 #-------------------------------------------------------------------------------
 # Variables
@@ -56,6 +57,11 @@ def parse_langauge_output(text, header_identifyer=DEFAULT_SCRIPT_HEADER_IDENTIFY
         else:
             data[current_heading].append(line)
     return {k: '\n'.join(v) for k, v in data.items()}
+
+
+def get_expected_output_dict(expected_output_filename=DEFAULT_EXPECTED_OUTPUT_FILENAME, **kwargs):
+    with open(expected_output_filename, 'r') as f:
+        return parse_langauge_output(f.read())
 
 
 def test_language(language, expected_output_dict, **kwargs):
@@ -99,8 +105,7 @@ def test_langauges(languages=LANGAUGES, **kwargs):
     Load and parse the expected_output
     Iterate through the languages
     """
-    with open('_expected_output.txt', 'r') as f:
-        expected_output_dict = parse_langauge_output(f.read())
+    expected_output_dict = get_expected_output_dict(**kwargs)
     test_log = {}
     for language in languages:
         test_log[language] = test_language(language, expected_output_dict, **kwargs)
@@ -120,6 +125,7 @@ def get_args():
     )
     parser.add_argument('-l', '--languages', nargs='*', help='list of languages to generate', choices=LANGAUGES|set(('all',)), default='all')
     parser.add_argument('--header_identifyer', action='store', help='regex to identify sections titles', default=DEFAULT_SCRIPT_HEADER_IDENTIFYER)
+    parser.add_argument('--expected_output_filename', action='store', help='filename of expected output', default=DEFAULT_EXPECTED_OUTPUT_FILENAME)
     parser.add_argument('--log_level', default=logging.INFO, type=int)
     parser.add_argument('--version', action='version', version=VERSION)
 
