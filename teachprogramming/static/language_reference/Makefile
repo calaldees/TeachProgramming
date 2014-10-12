@@ -1,4 +1,7 @@
-test: python vb php javascript java ruby
+test:
+	python _test.py
+
+test_console: python vb php javascript java ruby
 
 javascript:
 	js javascript.js

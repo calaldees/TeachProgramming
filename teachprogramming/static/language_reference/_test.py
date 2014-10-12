@@ -40,7 +40,12 @@ DEFAULT_SCRIPT_HEADER_IDENTIFYER_REGEX = re.compile(DEFAULT_SCRIPT_HEADER_IDENTI
 
 def parse_langauge_output(text, header_identifyer=DEFAULT_SCRIPT_HEADER_IDENTIFYER_REGEX, **kwargs):
     """
-    Take plain text and do stuff
+    Take the full console output of a language run
+    Iterate through each line looking for a heading identifyer (to use as the dict key)
+    Index the output snippets under the correct heading/dict key
+
+    Any lines read before the first heading is identifyed are placed under the 'None'
+    key and are ignored in comparisons yet still avalable for debugging
     """
     data = defaultdict(list)
     current_heading = None
@@ -54,6 +59,14 @@ def parse_langauge_output(text, header_identifyer=DEFAULT_SCRIPT_HEADER_IDENTIFY
 
 
 def test_language(language, expected_output_dict, **kwargs):
+    """
+    Given a language string
+    Run the corresponding Makefile target and capture the output
+    Parse the output into a dict
+    Compare the parsed grouped output with the expected output and log differences
+    """
+    test_log = {}
+
     # Run the language script and capture output
     output = subprocess.Popen(
         CMD_RUN_LANGUAGE_SCRIPT.format(language=language),
@@ -72,18 +85,26 @@ def test_language(language, expected_output_dict, **kwargs):
         single_line = lambda text: '^'.join((text or '').split('\n'))
         try:
             assert expected_output_text == language_output_text, '{0}:{1}: {2} != {3}'.format(language, function_name, single_line(expected_output_text), single_line(language_output_text))
+            log.info('{0}:{1}: ok'.format(language, function_name))
         except AssertionError as ae:
-            print ae
+            log.warn(ae)
+            test_log[function_name] = ae
+
+    return test_log
 
 
 def test_langauges(languages=LANGAUGES, **kwargs):
     """
-    Do more stuff
+    Given a list of languages to test for correct operation
+    Load and parse the expected_output
+    Iterate through the languages
     """
     with open('_expected_output.txt', 'r') as f:
-        expected_output = parse_langauge_output(f.read())
+        expected_output_dict = parse_langauge_output(f.read())
+    test_log = {}
     for language in languages:
-        test_language(language, expected_output, **kwargs)
+        test_log[language] = test_language(language, expected_output_dict, **kwargs)
+    return test_log
 
 
 #-------------------------------------------------------------------------------
@@ -116,6 +137,6 @@ if __name__ == "__main__":
 
     logging.basicConfig(level=args.log_level)
 
-    log.info('Creating sheet {0}'.format(args.languages))
+    log.info('Testing langauge output {0}'.format(args.languages))
     test_langauges(**vars(args))
 
