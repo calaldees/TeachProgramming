@@ -35,14 +35,16 @@ DEFAULT_PATH = '../static/language_reference/'
 @lru_cache(maxsize=32)
 def get_function_name_list(function_list_filename=DEFAULT_FUNCTION_LIST_FILENAME, default_path=DEFAULT_PATH, **kwargs):
     function_name_list = []
-    ff = os.path.join(default_path, function_list_filename)
-    with open(ff, 'r') as f:
+    function_list_filename_path = os.path.join(default_path, function_list_filename)
+    log.info('Getting function_list: {0}'.format(function_list_filename_path))
+    with open(function_list_filename_path, 'r') as f:
         for line in f:
             function_name_list.append(line)
     return function_name_list
 
 
 def generate_language(language_filename, function_name_list, default_path=DEFAULT_PATH, **kwargs):
+    log.info('Extracting version snippets for {0}'.format(language_filename))
     return {
         function_name: make_ver(os.path.join(default_path, language_filename), function_name, process_additional_metafiles=False)
         for function_name in function_name_list
