@@ -1,5 +1,5 @@
 test:
-	python _test.py
+	python3 _test.py
 
 test_console: python vb php javascript java ruby
 

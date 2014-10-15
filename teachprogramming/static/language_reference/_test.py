@@ -50,17 +50,15 @@ def parse_langauge_output(text, header_identifyer=DEFAULT_SCRIPT_HEADER_IDENTIFY
     Any lines read before the first heading is identifyed are placed under the 'None'
     key and are ignored in comparisons yet still avalable for debugging
     """
+    assert isinstance(text, str)
     data = defaultdict(list)
     current_heading = None
-    try:
-        for line in text.split('\n'):
-            match = header_identifyer.match(line)
-            if match and match.group(1):
-                current_heading = match.group(1)
-            else:
-                data[current_heading].append(line)
-    except Exception:
-        import pdb ; pdb.set_trace()
+    for line in text.split('\n'):
+        match = header_identifyer.match(line)
+        if match and match.group(1):
+            current_heading = match.group(1)
+        else:
+            data[current_heading].append(line)
     return {k: '\n'.join(v) for k, v in data.items()}
 
 
@@ -82,14 +80,12 @@ def test_language(language, expected_output_dict, **kwargs):
     # Run the language script and capture output
     cmd = CMD_RUN_LANGUAGE_SCRIPT.format(language=language, **kwargs)
     log.debug(cmd)
-    output = subprocess.Popen(
+    output = str(subprocess.Popen(
         cmd,
         shell=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
-    ).stdout.read()
-    output = str(output)
-    #assert isinstance(output, str)
+    ).stdout.read())
 
     # Parse the captured output into a dict
     language_output = parse_langauge_output(output, **kwargs)
