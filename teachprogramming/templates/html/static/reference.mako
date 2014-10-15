@@ -10,6 +10,7 @@
     <p>These will be replaced with html dynamic versions in time</p>
     <ul>
         <li><a href="/static/docs/LanguageCheetSheet.odt">Language Cheet Sheet</a> Do the same stuff in VB.NET, Python, Java, PHP</li>
+        <li><a href="/language_reference">Dynamic Language Reference</a>
         <li><a href="/static/docs/unit1-projects.odt">Projects for A-Level spec</a></li>
     </ul>
 

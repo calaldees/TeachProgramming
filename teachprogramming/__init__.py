@@ -41,12 +41,11 @@ def main(global_config, **settings):
         config.add_route(route_name, '/{0}'.format(route_name))
         config.add_view(getattr(static_views,route_name), route_name=route_name)
 
-    
     config.add_route('project'     , '/projects/{project_type}/{project}') # .{selected_lang}
     config.add_route('project_code', '/projects/{project_type}/{project}/{selected_lang}/{version}/')
     #config.add_route('select_language_redirect', '/select_language_redirect/{selected_lang}')
-    
-    
+    config.add_route('language_reference', '/language_reference')
+
     # Old for reference
     #config.add_view('myproject.views.mako_test', route_name='mako_test')
     #config.add_route('hello_world', '/hello_world')

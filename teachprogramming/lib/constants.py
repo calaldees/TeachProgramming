@@ -15,3 +15,12 @@ file_type_to_lang = dict(
     php  = 'PHP',
     java = 'Java',
 )
+
+LANGAUAGES = {
+    'python',
+    'javascript',
+    'php',
+    'ruby',
+    'java',
+    'vb',
+}

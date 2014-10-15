@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import re
 import subprocess
 from collections import defaultdict
@@ -15,9 +16,9 @@ log = logging.getLogger(__name__)
 
 VERSION = "0.0"
 
-CMD_RUN_LANGUAGE_SCRIPT = """make {language}"""
+CMD_RUN_LANGUAGE_SCRIPT = """cd {default_path} && make {language}"""
 
-LANGAUGES = {
+LANGUAGES = {
     'python',
     'javascript',
     'php',
@@ -26,6 +27,7 @@ LANGAUGES = {
     'vb',
 }
 
+DEFAULT_PATH = '.'
 DEFAULT_SCRIPT_HEADER_IDENTIFYER = '-(.*)-'
 DEFAULT_SCRIPT_HEADER_IDENTIFYER_REGEX = re.compile(DEFAULT_SCRIPT_HEADER_IDENTIFYER)
 DEFAULT_EXPECTED_OUTPUT_FILENAME = '_expected_output.txt'
@@ -50,17 +52,20 @@ def parse_langauge_output(text, header_identifyer=DEFAULT_SCRIPT_HEADER_IDENTIFY
     """
     data = defaultdict(list)
     current_heading = None
-    for line in text.split('\n'):
-        match = header_identifyer.match(line)
-        if match and match.group(1):
-            current_heading = match.group(1)
-        else:
-            data[current_heading].append(line)
+    try:
+        for line in text.split('\n'):
+            match = header_identifyer.match(line)
+            if match and match.group(1):
+                current_heading = match.group(1)
+            else:
+                data[current_heading].append(line)
+    except Exception:
+        import pdb ; pdb.set_trace()
     return {k: '\n'.join(v) for k, v in data.items()}
 
 
-def get_expected_output_dict(expected_output_filename=DEFAULT_EXPECTED_OUTPUT_FILENAME, **kwargs):
-    with open(expected_output_filename, 'r') as f:
+def get_expected_output_dict(expected_output_filename=DEFAULT_EXPECTED_OUTPUT_FILENAME, default_path=DEFAULT_PATH, **kwargs):
+    with open(os.path.join(default_path, expected_output_filename), 'r') as f:
         return parse_langauge_output(f.read())
 
 
@@ -71,15 +76,20 @@ def test_language(language, expected_output_dict, **kwargs):
     Parse the output into a dict
     Compare the parsed grouped output with the expected output and log differences
     """
+    log.info('Testing {0}'.format(language))
     test_log = {}
 
     # Run the language script and capture output
+    cmd = CMD_RUN_LANGUAGE_SCRIPT.format(language=language, **kwargs)
+    log.debug(cmd)
     output = subprocess.Popen(
-        CMD_RUN_LANGUAGE_SCRIPT.format(language=language),
+        cmd,
         shell=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
     ).stdout.read()
+    output = str(output)
+    #assert isinstance(output, str)
 
     # Parse the captured output into a dict
     language_output = parse_langauge_output(output, **kwargs)
@@ -99,7 +109,7 @@ def test_language(language, expected_output_dict, **kwargs):
     return test_log
 
 
-def test_langauges(languages=LANGAUGES, **kwargs):
+def test_langauges(languages=LANGUAGES, **kwargs):
     """
     Given a list of languages to test for correct operation
     Load and parse the expected_output
@@ -123,7 +133,8 @@ def get_args():
         description="""Import media to local Db""",
         epilog=""""""
     )
-    parser.add_argument('-l', '--languages', nargs='*', help='list of languages to generate', choices=LANGAUGES|set(('all',)), default='all')
+    parser.add_argument('-l', '--languages', nargs='*', help='list of languages to generate', choices=LANGUAGES|set(('all',)), default='all')
+    parser.add_argument('-p', '--default_path', action='store', help='path', default=DEFAULT_PATH)
     parser.add_argument('--header_identifyer', action='store', help='regex to identify sections titles', default=DEFAULT_SCRIPT_HEADER_IDENTIFYER)
     parser.add_argument('--expected_output_filename', action='store', help='filename of expected output', default=DEFAULT_EXPECTED_OUTPUT_FILENAME)
     parser.add_argument('--log_level', default=logging.INFO, type=int)
@@ -132,7 +143,7 @@ def get_args():
     args = parser.parse_args()
 
     if 'all' in args.languages:
-        args.languages = LANGAUGES
+        args.languages = LANGUAGES
     args.header_identifyer = re.compile(args.header_identifyer)
 
     return args
