@@ -52,6 +52,5 @@ project:
 	cd teachprogramming/static/projects/; ../../../env/bin/python ../../lib/make_ver.py $(PROJECTNAME).py --target_version $(TARGET_VERSION) | python -
 
 clean:
-	rm env -rf
-	rm *.egg-info -rf
-	#rm TeachProgramming.db
+	rm -rf env
+	rm -rf *.egg-info
