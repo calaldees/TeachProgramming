@@ -5,8 +5,11 @@ Description
 -----------
 
 A dynamic website structure to showcase exiting simple programming projects
-in a varity of differnt langauges.
+in a variety of different languages.
 
+THIS REPO IS MESS AND NEEDS SOME SERIOUS REWORKING!
+There is peril here.
+It is not a finished masterpiece.
 
 Getting Started
 ---------------
