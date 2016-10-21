@@ -1,5 +1,9 @@
 #!/usr/bin/python
 
+# chmod 755 /cgi-bin/messages.py
+# chmod 755 /cgi-bin/web_cgi.py
+# python -m CGIHTTPServer 8000
+
 from web_cgi import Webpage, env
 w = Webpage()
 
@@ -30,25 +34,25 @@ else:
     print("  Logout: <input type='checkbox' name='logout'        />")
     print("          <input type='submit'   value='Post Message' />")
     print("</form>")
-    
+
     messageboard_filename = "messages.txt"
-    
-    #If there is a message then append it to the end of the file
+
+    # If there is a message then append it to the end of the file
     if 'message' in w.params:
         file = open(messageboard_filename, 'a')
-        file.write("<p>%s: %s</p>\n" % (w.cookie['username'].value,w.params['message']))
+        file.write("<p>%s: %s</p>\n" % (w.cookie['username'].value, w.params['message']))
         file.close()
-    
+
     try:
-        #Open the file in read mode
+        # Open the file in read mode
         file = open(messageboard_filename, 'r')
         text = file.read()
         file.close()
 
-        #Print the text file
+        # Print the text file
         print(text)
     except:
         pass
-    
+
 print("")
 print("</body></html>")
