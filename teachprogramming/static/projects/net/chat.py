@@ -1,7 +1,12 @@
 import socket, threading, time
-                            # VER: gui
-import tkinter              # VER: gui
-import tkinter.scrolledtext # VER: gui_recv
+                                        # VER: gui
+try:                                    # VER: gui
+    import tkinter                      # VER: gui
+    import tkinter.scrolledtext         # VER: gui_recv
+except ImportError:                     # VER: gui
+    import Tkinter as tkinter           # VER: gui
+    import ScrolledText as scrolledtext # VER gui_recv
+    tkinter.scrolledtext = scrolledtext # VER gui_recv
                                                       # VER: recv
 def connection(sock):                                 # VER: recv
     while True:                                       # VER: recv
