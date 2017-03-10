@@ -12,9 +12,12 @@
     <head>
         <title>PHP Message Board</title>
     </head>
-    
+
     <body>
         <h1>Message Board</h1>
+        <!-- Launch server on OSX with
+        python -m webbrowser -t "http://localhost:8000/messages.php" && touch messages.txt && php -S 127.0.0.1:8000 -t .
+        -->
 
 <?php                                                                           # VER: textarea
     if ($_COOKIE['username']==null) {                                           # VER: login
