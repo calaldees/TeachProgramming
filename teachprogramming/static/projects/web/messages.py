@@ -1,8 +1,10 @@
 #!/usr/bin/python
 
+# ln -s ./ cgi-bin
 # chmod 755 /cgi-bin/messages.py
 # chmod 755 /cgi-bin/web_cgi.py
 # python -m CGIHTTPServer 8000
+# python -m webbrowser -t "http://localhost:8000/cgi-bin/messages.py"
 
 from web_cgi import Webpage, env
 w = Webpage()
