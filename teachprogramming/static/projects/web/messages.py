@@ -18,7 +18,7 @@ print("")
 print("<h1>Message Board</h1>")
 print("")
                                                                         # VER: login
-if True:                                                                # VER: textarea NOT login
+#if True:                                                               # VER: textarea NOT login
 if 'username' not in w.cookie:                                          # VER: login
     print("<form action='' method='post'>")                             # VER: login
     print("  Username:<input type='text' name='username' />")           # VER: login
@@ -27,10 +27,10 @@ if 'username' not in w.cookie:                                          # VER: l
 else:                                                                   # VER: login
     print("<p>you are logged in as %s" % w.cookie['username'].value)    # VER: login
     print("<form action='' method='post'>")                             # VER: textarea
-    #print("  Username:<input type='text' name='username' />")    # VER: username NOT login
-    print("  Message:<input type='textarea' name='message'/>")   # VER: textarea
-    print("  Logout: <input type='checkbox' name='logout' />")   # VER: logout
-    print("  <input type='submit'   value='Post Message'  />")   # VER: textarea
+    #print("  Username:<input type='text' name='username' />")          # VER: username NOT login
+    print("  Message:<textarea name='message'></textarea>")             # VER: textarea
+    print("  Logout: <input type='checkbox' name='logout' />")          # VER: logout
+    print("  <input type='submit'   value='Post Message'  />")          # VER: textarea
     print("</form>")                                                    # VER: textarea
                                                                                               # VER: save_message
     messageboard_filename = "messages.txt"                                                    # VER: save_message
