@@ -27,7 +27,7 @@ if 'username' not in w.cookie:                                          # VER: l
 else:                                                                   # VER: login
     print("<p>you are logged in as %s" % w.cookie['username'].value)    # VER: login
     print("<form action='' method='post'>")                             # VER: textarea
-    #print("  Username:<input type='text' name='username'  />")    # VER: username NOT login
+    #print("  Username:<input type='text' name='username' />")    # VER: username NOT login
     print("  Message:<input type='textarea' name='message'/>")   # VER: textarea
     print("  Logout: <input type='checkbox' name='logout' />")   # VER: logout
     print("  <input type='submit'   value='Post Message'  />")   # VER: textarea
