@@ -39,7 +39,7 @@ else:                                                                   # VER: l
     if 'message' in w.params:                                                                 # VER: save_message
         file = open(messageboard_filename, 'a')                                               # VER: save_message
         #file.write("<p>%s</p>\n" % (w.params['message']))                                    # VER: save_message NOT username
-        #file.write("<p>%s: %s</p>\n" % (w.params['username'].value, w.params['message']))    # VER: username     NOT login
+        #file.write("<p>%s: %s</p>\n" % (w.params['username'], w.params['message']))    # VER: username     NOT login
         file.write("<p>%s: %s</p>\n" % (w.cookie['username'].value, w.params['message']))     # VER: login
         file.close()                                                                          # VER: save_message
                                                       # VER: show_messages
