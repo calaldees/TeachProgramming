@@ -30,7 +30,7 @@
         echo "<p>you are logged in as ".$_COOKIE['username'];                   # VER: login
         echo "<form action='' method='post'>";                                  # VER: textarea
         #echo "  Username:<input type='text' name='username'          />";      # VER: username NOT login
-        echo "  Message :<textarea' name='message'></textarea>";                # VER: textarea
+        echo "  Message :<textarea name='message'></textarea>";                 # VER: textarea
         echo "  Logout  :<input type='checkbox' name='logout'        />";       # VER: logout
         echo "           <input type='submit'   value='Post Message' />";       # VER: textarea
         echo "</form>";                                                         # VER: textarea
