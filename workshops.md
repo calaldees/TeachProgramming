@@ -30,28 +30,63 @@ Chat
 RAW HTTP
 --------
 
+telnet www.bbc.co.uk 80
+
     GET / HTTP/1.1
     Host: www.bbc.co.uk
-
-
-    telnet www.bbc.co.uk 80
-
 
 
 curl "http://localhost:9872/"
 
 
+
+
+
 MessageBoard
 ------------
 
-Webserver
+Previously - How computers communicate
+  - Plain text editor
+  - Terminal
+    - ls
+    - cd
+    - python
+    - ctrl+c
+  - Terminology
+    - socket
+    - server
+    - ip address
+    - port
 
-open - read/append
-touch - cat
 
-GET/POST
+MessageBoard
+  - files - open - read/append
+  - Terminal
+    - touch
+    - cat
+    - curl
+    - telnet
+  - Terminology
+    - Webserver
+    - Cookie
+    - HTTP GET/POST
+  - Discussion
+    - Web Security
 
-Telnet post
+
+telnet localhost 8000
+
+    GET /messages.php HTTP/1.1
+
+
+    POST /messages.php HTTP/1.1
+    Cookie: username=Test
+    Content-Type: application/x-www-form-urlencoded
+    Content-Length: 13
+
+    message=Hello
+
+
 
 Youtube embed
 Alert
