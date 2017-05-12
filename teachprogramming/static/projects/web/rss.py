@@ -1,10 +1,16 @@
 import os
 import re
-import urllib
-import urllib2
 import datetime
 import json
-from collections import namedtuple
+import base64
+import time
+
+try:
+    import urllib.request
+    urlopen = urllib.request.urlopen
+except ImportError:
+    import urllib2
+    urlopen = urllib2.urlopen
 
 try:
     import html  # python3
@@ -15,21 +21,20 @@ except ImportError:
         #escape = HTMLParser().escape
 
 
-_safe_encode_url = urllib.base64.urlsafe_b64encode
-_get_url = lambda url: urllib2.urlopen(url).read().decode('utf8')
+def _safe_encode_url(url):
+    return base64.urlsafe_b64encode(url.encode('utf8')).decode('utf8')
 
 
-def get_url(url, cache=True):
-    if cache:
-        PATH_CACHE = 'cache'
-        cache_filename = os.path.join(PATH_CACHE, _safe_encode_url(url))
-        if os.path.exists(cache_filename):
+def get_url(url, cache_path='cache', cache_seconds=60*60):
+    if cache_path:
+        cache_filename = os.path.join(cache_path, _safe_encode_url(url))
+        if os.path.exists(cache_filename) and (os.stat(cache_filename).st_mtime > time.time() - cache_seconds):
             with open(cache_filename, 'r') as filehandle:
                 return filehandle.read().decode('utf8')
-    data = _get_url(url)
-    if data and cache:
+    data = urlopen(url).read().decode('utf8')
+    if data and cache_path:
         try:
-            os.makedirs(PATH_CACHE)
+            os.makedirs(cache_path)
         except:
             pass
         with open(cache_filename, 'w') as filehandle:
@@ -41,13 +46,12 @@ def get_json(*args, **kwargs):
     return json.loads(get_url(*args, **kwargs))
 
 
-LatLon = namedtuple('LatLon', ('latitude', 'longitude'))
 def postcode_to_lat_long(postcode):
     data = get_json('http://api.postcodes.io/postcodes/{}'.format(postcode))
-    return LatLon(
-        data['result'].get('latitude'),
-        data['result'].get('longitude'),
-    )
+    return {
+        'latitude': data['result'].get('latitude'),
+        'longitude': data['result'].get('longitude'),
+    }
 
 
 def get_user_tweets(username):
@@ -72,9 +76,9 @@ def get_user_tweets(username):
     return tweets
 
 
-def get_local_crime(latlon):
+def get_local_crime(latlon_dict):
     crimes = []
-    for crime in get_json('https://data.police.uk/api/crimes-at-location?lat={latitude}&lng={longitude}'.format(**vars(latlon))):
+    for crime in get_json('https://data.police.uk/api/crimes-at-location?lat={latitude}&lng={longitude}'.format(**latlon_dict)):
         crimes.append({
             'title': crime['category'],
             'description': '',
@@ -86,9 +90,12 @@ def get_local_crime(latlon):
 
 def get_tube_disruptions(line):
     data = get_json('https://api.tfl.gov.uk/Line/'+line)
-    return [
-
-    ]
+    return [{
+        'title': '{} Disruptions'.format(line),
+        'description': '',
+        'link': '',
+        'datetime': datetime.datetime.now(),
+    }]
 
 
 def get_local_weather(postcode):
