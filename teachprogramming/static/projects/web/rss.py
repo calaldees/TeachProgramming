@@ -1,9 +1,11 @@
+## -*- coding: utf-8 -*-
 import os
 import re
 import datetime
 import json
 import base64
 import time
+from itertools import chain
 
 try:
     import urllib.request
@@ -25,7 +27,7 @@ def _safe_encode_url(url):
     return base64.urlsafe_b64encode(url.encode('utf8')).decode('utf8')
 
 
-def get_url(url, cache_path='cache', cache_seconds=60*60):
+def get_url(url, cache_path='cache', cache_seconds=60*60*100):
     if cache_path:
         cache_filename = os.path.join(cache_path, _safe_encode_url(url))
         if os.path.exists(cache_filename) and (os.stat(cache_filename).st_mtime > time.time() - cache_seconds):
@@ -64,7 +66,7 @@ def get_user_tweets(username):
         re.finditer(r'data-time="(.*?)"', twitter_html),
         re.finditer(r'data-permalink-path="(.*?)"', twitter_html),
     ):
-        tweet_html = tweet_match.group(1)
+        tweet_html = html.unescape(tweet_match.group(1))
         tweet_html_stripped = re.sub(r'<.*?>', '', tweet_html)
         tweets.append({
             'title': tweet_html_stripped,
@@ -76,14 +78,43 @@ def get_user_tweets(username):
     return tweets
 
 
+def get_ebay_items(search):
+    """
+    #timeMs="1494872979000"
+    #imgurl="https://i.ebayimg.com/thumbs/images/g/XmMAAOSw8w1X7i3B/s-l225.jpg" class="img load-img"
+    #<h3 class="lvtitle"><a href="http://www.ebay.co.uk/itm/SAMURAI-X-COLLECTION-DVD-Box-Set-Manga-Rurouni-Kenshin-/201913818403?hash=item2f03005d23:g:XmMAAOSw8w1X7i3B"  class="vip" title="Click this link to access SAMURAI X COLLECTION DVD Box Set Manga Rurouni Kenshin">SAMURAI X COLLECTION DVD Box Set Manga Rurouni Kenshin</a></h3>
+    #<li class="lvprice prc"><span  class="bold">£39.99</span></li>
+    """
+    EBAY_ITEMS_URL = 'http://www.ebay.co.uk/sch/i.html?_nkw='
+    ebay_html = get_url(EBAY_ITEMS_URL + search)
+
+    items = []
+    for title_match, price_match in zip(
+        re.finditer(r'<h3 class="lvtitle"><a href="(.*?)\?.*?>(.*?)</a>\s*</h3>', ebay_html),
+        #re.finditer(r'timeMs="(\d*?)"', ebay_html),
+        #re.finditer(r'imgurl="(.*?)"', ebay_html),  # \s*class="img load-img"
+        re.finditer(r'lvprice.*?([.\d]*)</span', ebay_html, flags=re.DOTALL + re.MULTILINE),
+    ):
+        items.append({
+            'title': title_match.group(2),
+            'description': price_match.group(1),
+            'datetime': datetime.datetime.now(),
+            'link': title_match.group(1),
+            'image': '',
+        })
+    return items
+
+
+
 def get_local_crime(latlon_dict):
+    crime_items = get_json('https://data.police.uk/api/crimes-at-location?lat={latitude}&lng={longitude}'.format(**latlon_dict))
     crimes = []
-    for crime in get_json('https://data.police.uk/api/crimes-at-location?lat={latitude}&lng={longitude}'.format(**latlon_dict)):
+    for crime in crime_items:
         crimes.append({
             'title': crime['category'],
             'description': '',
             'datetime': datetime.datetime.strptime(crime['month'], '%Y-%m'),
-            'link': '',
+            'link': '',  #crime['id']
         })
     return crimes
 
@@ -113,12 +144,12 @@ def format_rss(rss_items, **kwargs):
     def format_rss_item(rss_item):
         rss_item['pubDate'] = rss_item['datetime'].strftime(RSS_DATE_FORMAT)
         return u"""
-        <item>
-        <title>{title}</title>
-        <description>{description}</description>
-        <link>{link}</link>
-        <pubDate>{pubDate}</pubDate>
-        </item>
+            <item>
+                <title>{title}</title>
+                <description>{description}</description>
+                <link>{link}</link>
+                <pubDate>{pubDate}</pubDate>
+            </item>
         """.format(**rss_item)
 
     return u"""<?xml version="1.0" encoding="utf-8"?>
@@ -141,17 +172,30 @@ def format_rss(rss_items, **kwargs):
     )
 
 
-def save_rss(rss_items, filename='rss.xml', **kwargs):
-    rss_items = sorted(rss_items, key=lambda rss_item: rss_item.get('datetime'), reverse=True)
-    rss_string = format_rss(rss_items, **kwargs)
+def save_csv(items, filename='rss.csv', **kwargs):
+    import csv
+    FIELDNAMES = ('title', 'description', 'link', 'datetime')
+    with open('names.csv', 'w') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=FIELDNAMES)
+        writer.writeheader()
+        for item in items:
+            writer.writerow({field: item.get(field) for field in FIELDNAMES})
+
+
+def save_rss(items, filename='rss.xml', **kwargs):
+    rss_string = format_rss(items, **kwargs)
     with open(filename, 'w') as filehandle:
         filehandle.write(rss_string.encode('utf8'))
 
 
 if __name__ == "__main__":
-    save_rss(
-        get_user_tweets('calaldees') +
-        get_local_crime(postcode_to_lat_long('ct1 1ys')) +
-        get_tube_disruptions('piccadilly')
+    items = chain(
+        get_user_tweets('calaldees'),
+        get_local_crime(postcode_to_lat_long('ct1 1ys')),
+        get_tube_disruptions('piccadilly'),
+        get_ebay_items('kenshin')[:5],
         #get_local_weather('CT1 1YS')
     )
+    items = sorted(items, key=lambda item: item.get('datetime'), reverse=True)
+    save_csv(items)
+    save_rss(items)
