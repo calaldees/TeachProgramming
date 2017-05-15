@@ -11,8 +11,7 @@ try:
     import urllib.request
     urlopen = urllib.request.urlopen
 except ImportError:
-    import urllib2
-    urlopen = urllib2.urlopen
+    from urllib2 import urlopen
 
 try:
     import html  # python3
@@ -79,12 +78,6 @@ def get_user_tweets(username):
 
 
 def get_ebay_items(search):
-    """
-    #timeMs="1494872979000"
-    #imgurl="https://i.ebayimg.com/thumbs/images/g/XmMAAOSw8w1X7i3B/s-l225.jpg" class="img load-img"
-    #<h3 class="lvtitle"><a href="http://www.ebay.co.uk/itm/SAMURAI-X-COLLECTION-DVD-Box-Set-Manga-Rurouni-Kenshin-/201913818403?hash=item2f03005d23:g:XmMAAOSw8w1X7i3B"  class="vip" title="Click this link to access SAMURAI X COLLECTION DVD Box Set Manga Rurouni Kenshin">SAMURAI X COLLECTION DVD Box Set Manga Rurouni Kenshin</a></h3>
-    #<li class="lvprice prc"><span  class="bold">£39.99</span></li>
-    """
     EBAY_ITEMS_URL = 'http://www.ebay.co.uk/sch/i.html?_nkw='
     ebay_html = get_url(EBAY_ITEMS_URL + search)
 
@@ -175,11 +168,11 @@ def format_rss(rss_items, **kwargs):
 def save_csv(items, filename='rss.csv', **kwargs):
     import csv
     FIELDNAMES = ('title', 'description', 'link', 'datetime')
-    with open('names.csv', 'w') as csvfile:
+    with open(filename, 'wb') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=FIELDNAMES)
         writer.writeheader()
         for item in items:
-            writer.writerow({field: item.get(field) for field in FIELDNAMES})
+            writer.writerow({field: unicode(item.get(field, '')).encode('utf8') for field in FIELDNAMES})
 
 
 def save_rss(items, filename='rss.xml', **kwargs):
