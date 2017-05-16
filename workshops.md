@@ -109,11 +109,38 @@ SMTP
 https://users.cs.cf.ac.uk/Dave.Marshall/PERL/node175.html
 
 
+
+Realtime graphics and input
+---------------------------
+
+* Event loop
+* Image Manipulation
+  * Transparency
+* Web security (chrome)
+
+
 API
 ---
 
 https://openweathermap.org/api
 url='http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b1b15e88fa797225412429c1c50c122a1'
+
+
+
+Data Transform: Input -> Output
+Data Source:
+  - REGEX (html)
+  - API (json)
+
+Read into dict/lists
+
+Data Output:
+  - RSS (template)
+  - CSV (library)
+
+Scraping is BAD! - API keys
+Beautiful Soup
+
 
 
 C/C++ Language Sheet
