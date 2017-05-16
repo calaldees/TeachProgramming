@@ -8,7 +8,14 @@
     function start() {interval_id = setInterval(timerEvent, 1000/60);}
     function pause() {clearInterval(interval_id);}
 
-    var keys         = {27:'ESCAPE', 38:'UP', 40:'DOWN', 37:'LEFT', 39:'RIGHT', 32:'SPACE'};
+    var keys         = {
+        27:'ESCAPE',
+        38:'UP',    // VER: physics
+        40:'DOWN',  // VER: physics
+        37:'LEFT',  // VER: physics
+        39:'RIGHT', // VER: physics
+        32:'SPACE'
+    };
     var keys_pressed = {};
     function init_keys() {for (key in keys) {keys_pressed[keys[key]]=false;}}
     window.addEventListener('keydown', eventKeyDown, true);
