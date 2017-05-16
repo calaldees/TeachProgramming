@@ -30,8 +30,10 @@ def get_url(url, cache_path='cache', cache_seconds=60*60*100):
     if cache_path:
         cache_filename = os.path.join(cache_path, _safe_encode_url(url))
         if os.path.exists(cache_filename) and (os.stat(cache_filename).st_mtime > time.time() - cache_seconds):
+            print('Cache: ' + url)
             with open(cache_filename, 'r') as filehandle:
                 return filehandle.read().decode('utf8')
+    print('External: ' + url)
     data = urlopen(url).read().decode('utf8')
     if data and cache_path:
         try:
@@ -168,6 +170,7 @@ def format_rss(rss_items, **kwargs):
 
 
 def save_csv(items, filename='data.csv', **kwargs):
+    print('Output: ' + filename)
     import csv
     FIELDNAMES = ('title', 'description', 'link', 'datetime')
     with open(filename, 'wb') as csvfile:
@@ -178,6 +181,7 @@ def save_csv(items, filename='data.csv', **kwargs):
 
 
 def save_rss(items, filename='data.xml', **kwargs):
+    print('Output: ' + filename)
     rss_string = format_rss(items, **kwargs)
     with open(filename, 'w') as filehandle:
         filehandle.write(rss_string.encode('utf8'))
