@@ -119,20 +119,22 @@ Realtime graphics and input
 * Web security (chrome)
 
 
-API
+Data
 ---
 
-https://openweathermap.org/api
-url='http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b1b15e88fa797225412429c1c50c122a1'
-
-
+(Questionably Titled - Mining Data Not Data Mining)
+Data Aggregation - Definition
+Data Mining - Definition
 
 Data Transform: Input -> Output
-Data Source:
-  - REGEX (html)
-  - API (json)
 
-Read into dict/lists
+Data Source:
+  - REGEX (html) [twitter, ebay]
+  - API (json) [postcode, police crimes, tfl]
+
+Read into 'data structures'
+  - dict
+  - lists
 
 Data Output:
   - RSS (template)
@@ -140,6 +142,8 @@ Data Output:
 
 Scraping is BAD! - API keys
 Beautiful Soup
+https://openweathermap.org/api
+url='http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b1b15e88fa797225412429c1c50c122a1'
 
 
 
@@ -167,3 +171,208 @@ is the smartest way in C, but the most confusing for the people who dont underst
 I'd like to see all this compared with Java
 side by side :slightly_smiling_face:
 when will you be able to show us? :slightly_smiling_face:
+
+
+Theory
+------
+
+Theory – What happens when you type google.com - What a computer actually is – Prepare to have your mind blown (a high octane enlightening talk)
+(adders/multiplexers,
+
+[ACTIVITY]
+https://medium.freecodecamp.com/the-biggest-codebases-in-history-a128bb3eea73
+
+
+-- Data --
+
+Binary
+Data types
+integer (unsigned/singed)
+hex
+floating point
+ASCII
+Images (bitmap/vector) Font Rasterisation
+
+compression, (run length, lossy)
+JPG example [ACTIVITY]
+
+
+Data is code - code is data
+
+Von Neumann architecture (date is code and vice versa)
+Turing complete machines
+Emulators
+
+
+ -- Hardware --
+
+And (transister)
+Or
+Not
+
+Adder
+Multiplexer
+
+Fetch execute cycle
+
+
+Low level
+Syncronious/Asyncrontouls
+Serial/parallal
+Parity
+Signal Noise
+Stop bit
+
+Conrol bus
+
+
+
+MAR -> Address bus
+MBR -> data bus
+PCU
+ PC
+ CIR -> Instruction decoder -> control circits -> control bus
+ALU
+Registers
+
+8bit macine
+16 bit machine
+clock rate
+instruction sets
+
+
+-- Cryptography --
+
+Cryptography RSA
+Key exchange problem
+CA [Activity]
+https/rsa
+
+
+-- Networks --
+
+WIFI
+OSI model
+7 layer network stack (wifi is different the ethernet),
+switch/hub-bus/csmacd
+gateways
+routing
+traceroute
+packet switched netwok
+tcp/ip
+load balancing
+
+internet, webbrowser and www
+
+DNS Lookup
+DHCP
+
+
+Traceroute [ACTIVITY] - http://www.ip2location.com/free/traceroute
+Transatlantic cable - http://www.submarinecablemap.com/#/
+
+
+-- Data Representation --
+
+set operators
+arrays 1d 2d 3d
+linked list
+stack
+queue
+graphs (directed/undirected) (adjacency list
+trees
+
+
+-- Langauages --
+
+assembly
+Compiler
+Interpriter
+
+imperitive
+functional
+event
+oo -> inhertence
+parallel (channels)
+
+arethmetic operators
+
+
+
+--- Algorithums ---
+
+linear search
+Binary search
+
+Sorting algorithums
+ https://www.youtube.com/watch?v=BeoCbJPuvSE
+ https://www.youtube.com/watch?v=kPRA0W1kECg
+bubblesort
+quicksort (pivot)
+
+Algorithus
+ - line crossing
+ - traveling salesman
+ - shortest path
+ - pathfinding
+ levenstine distance
+
+recursive algoithums - fibonarchi
+
+ p -> np
+
+How many times can you fold a peice of paper before reaching the moon
+http://scienceblogs.com/startswithabang/2009/08/31/paper-folding-to-the-moon/
+
+
+-- Storage --
+
+
+SSD
+Spinning HD (track, sector
+Raid
+Parity
+
+-- OS --
+
+operating systems
+Single core thredding/scheduling
+single core
+multicore - paralisation
+dining philosophers
+
+
+-- Protocols --
+
+protocols
+http
+ftp
+smtp
+imap
+
+
+-- Content --
+
+css separarte content from how it looks
+
+
+-- Databases--
+
+databases
+index's
+sql
+primary key - forigen key
+postgis
+
+
+-- Software engeniering --
+
+Tests
+
+-- Experimental --
+
+gentic algorithums - where the solution is unknown
+http://rednuht.org/genetic_cars_2/ [ACTIVITY]
+
+perceptron - AI
+
