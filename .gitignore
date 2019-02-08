@@ -7,3 +7,4 @@ TeachProgramming.db
 *.egg-info
 env/
 *#
+**/.pytest_cache/
