@@ -42,7 +42,7 @@ def _conway_load(filehandle):
     for y, line in enumerate(filehandle):
         height = y + 1
         width = max(width, len(line))
-        for x, i in enumerate(line.strip()):
+        for x, i in enumerate(line.rstrip()):
             if not (i == '.' or i == ' '):
                 state[(x, y)] = True
     return (state, width, height)
