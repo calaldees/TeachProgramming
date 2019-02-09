@@ -2,6 +2,7 @@ from collections import defaultdict
 import re
 from itertools import groupby
 from functools import partial
+from pprint import pprint
 
 
 def _load_file_data(filehandle):
@@ -30,18 +31,23 @@ def load_file_data(filename):
         return _load_file_data(filehandle)
 
 
-def detect_language_by_letter_frequency(language_letter_frequency_data, text):
+def _detect_language_by_letter_frequency(language_letter_frequency_data, text):
     text = text.lower()
     text = re.sub('\W', '', text)  # Remove all non-word characters
-    text = re.sub('\d', '', text)
+    text = re.sub('\d', '', text)  # Remove all digits (because digits are apparently word characters?)
     text_letter_frequency = {letter: len(tuple(letter_list))/len(text) for letter, letter_list in groupby(sorted(text))}
-    return sorted({
+    return {
         language: sum({
             letter: abs(letter_frequency - text_letter_frequency.get(letter, 0))
             for letter, letter_frequency in language_letter_frequency.items()
         }.values())
         for language, language_letter_frequency in language_letter_frequency_data.items()
-    }.items(), key=lambda i: i[1])[0][0]
+    }
+def detect_language_by_letter_frequency(language_letter_frequency_data, text):
+    pprint(text)
+    langauge_frequencys = _detect_language_by_letter_frequency(language_letter_frequency_data, text)
+    pprint(langauge_frequencys)
+    return sorted(langauge_frequencys.items(), key=lambda i: i[1])[0][0]
 
 language_letter_frequency_data = load_file_data('langauge_frequeny.txt')
 
@@ -55,6 +61,6 @@ text2 = """
 L’émulateur peut faire fonctionner quelques jeux, mais très moyennement dans la plupart des cas. L’objectif de l’auteur est d’atteindre un niveau de qualité qui permettra à quiconque de jouer son jeu favori PlayStation 2 sur son PC.
 """
 
-from pprint import pprint
+
 pprint(detect_language(text))
 pprint(detect_language(text2))

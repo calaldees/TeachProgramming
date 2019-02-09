@@ -14,6 +14,7 @@ class Variables():
     color_cell_alive = (255, 255, 255)
     view_x = 0
     view_y = 0
+    move = 4
 v = Variables()
 
 
@@ -40,11 +41,10 @@ if __name__ == "__main__":
         if keys[pygame.K_ESCAPE]:
             v.running = False
 
-        MOVE = 4
-        if keys[pygame.K_UP   ]: v.view_y += -MOVE
-        if keys[pygame.K_DOWN ]: v.view_y +=  MOVE
-        if keys[pygame.K_LEFT ]: v.view_x += -MOVE
-        if keys[pygame.K_RIGHT]: v.view_x +=  MOVE
+        if keys[pygame.K_UP   ]: v.view_y += -v.move
+        if keys[pygame.K_DOWN ]: v.view_y +=  v.move
+        if keys[pygame.K_LEFT ]: v.view_x += -v.move
+        if keys[pygame.K_RIGHT]: v.view_x +=  v.move
 
         for i in conway._state:
             x, y = i
