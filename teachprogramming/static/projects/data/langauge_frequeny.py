@@ -61,6 +61,22 @@ text2 = """
 L’émulateur peut faire fonctionner quelques jeux, mais très moyennement dans la plupart des cas. L’objectif de l’auteur est d’atteindre un niveau de qualité qui permettra à quiconque de jouer son jeu favori PlayStation 2 sur son PC.
 """
 
+text3 ="""
+Du har tappat ditt ord och din papperslapp,
+du barfotabarn i livet.
+Så sitter du åter på handlar'ns trapp 
+och gråter så övergivet.
+Vad var det för ord – var det långt eller kort, 
+var det väl eller illa skrivet?
+Tänk efter nu – förr'n vi föser dig bort,
+du barfotabarn i livet.
+"""
+
+text4 = """
+Sein Büro betrat der Direktor gestern um 10 Uhr mit einem Schirm in der Hand.
+"""
 
 pprint(detect_language(text))
 pprint(detect_language(text2))
+pprint(detect_language(text3))
+pprint(detect_language(text4))
