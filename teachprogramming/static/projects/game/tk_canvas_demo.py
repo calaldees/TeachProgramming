@@ -40,7 +40,8 @@ class AnimationDemo(TkAnimationFrame):
         """
         """
         super().startup()
-        self.root.bind("<Key>", lambda event: print(event.char))
+        self.root.bind("<Key>", lambda event: print(f'KeyDown-{event.char}'))
+        self.root.bind("<KeyRelease>", lambda event: print(f'KeyUp-{event.char}'))
         def click(event):
             print(event.x)
         def motion(event):
