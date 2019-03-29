@@ -1,4 +1,3 @@
-#from tkinter import Tk, Canvas, ALL, PhotoImg
 import tkinter
 import time
 
@@ -6,21 +5,28 @@ import time
 class TkAnimationFrame():
     def __init__(self, width=640, height=480, frames_per_second=30):
         self.frames_per_second = frames_per_second
+
         self.root = tkinter.Tk()
         self.canvas = tkinter.Canvas(self.root, width=width, height=height)
         self.canvas.pack()
+
+        self.input = set()
+        self.root.bind("<Key>", lambda event: self.input.add(event.keysym))
+        self.root.bind("<KeyRelease>", lambda event: self.input.remove(event.keysym))
+
         self.startup()
         self.animation_thread()
         self.root.mainloop()
 
     def animation_thread(self):
         frame = 0
-        while True:
-            self.animation_frame(frame)
-            frame += 1
+        while 'Escape' not in self.input:
+            self.loop(frame)
             self.canvas.update()
             time.sleep(1/self.frames_per_second)
             self.canvas.delete(tkinter.ALL)
+            frame += 1
+        self.root.destroy()
 
     def startup(self):
         """
@@ -28,20 +34,16 @@ class TkAnimationFrame():
         """
         pass
 
-    def animation_frame(self, frame):
+    def loop(self, frame):
         """
         http://zetcode.com/gui/tkinter/drawing/
         """
-        raise Exception('Please override animation_frame')
+        raise Exception('Please override loop')
 
 
 class AnimationDemo(TkAnimationFrame):
     def startup(self):
-        """
-        """
         super().startup()
-        self.root.bind("<Key>", lambda event: print(f'KeyDown-{event.char}'))
-        self.root.bind("<KeyRelease>", lambda event: print(f'KeyUp-{event.char}'))
         def click(event):
             print(event.x)
         def motion(event):
@@ -51,7 +53,7 @@ class AnimationDemo(TkAnimationFrame):
 
         self.img = tkinter.PhotoImage(file="images/fish.gif")
 
-    def animation_frame(self, frame):
+    def loop(self, frame):
         c = self.canvas
         c.create_rectangle(0, 0, c.winfo_width(), c.winfo_height(), outline="#000", fill="#000")
 
@@ -64,6 +66,8 @@ class AnimationDemo(TkAnimationFrame):
         x = self.root.winfo_pointerx() - self.root.winfo_rootx()
         y = self.root.winfo_pointery() - self.root.winfo_rooty()
         c.create_image(x, y, image=self.img, anchor=tkinter.NW)
+
+        #print(self.input)
 
 
 AnimationDemo()
