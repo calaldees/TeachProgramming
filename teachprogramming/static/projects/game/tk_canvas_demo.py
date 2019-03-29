@@ -13,6 +13,10 @@ class TkAnimationFrame():
         self.input = set()
         self.root.bind("<Key>", lambda event: self.input.add(event.keysym))
         self.root.bind("<KeyRelease>", lambda event: self.input.remove(event.keysym))
+        self.mouse_x, self.mouse_y = (0, 0)
+        def mouse_motion(event):
+            self.mouse_x, self.mouse_y = (event.x, event.y)
+        self.root.bind('<Motion>', mouse_motion)
 
         self.startup()
         self.animation_thread()
@@ -45,11 +49,8 @@ class AnimationDemo(TkAnimationFrame):
     def startup(self):
         super().startup()
         def click(event):
-            print(event.x)
-        def motion(event):
-            print(event.y)
-        self.canvas.bind("<Button-1>", click)
-        self.canvas.bind('<Motion>', motion)
+            print(event)
+        self.canvas.bind("<Button>", click)
 
         self.img = tkinter.PhotoImage(file="images/fish.gif")
 
@@ -63,9 +64,7 @@ class AnimationDemo(TkAnimationFrame):
         t = frame % c.winfo_height()
         c.create_line(t, t, t+10, t+10, fill="red")
 
-        x = self.root.winfo_pointerx() - self.root.winfo_rootx()
-        y = self.root.winfo_pointery() - self.root.winfo_rooty()
-        c.create_image(x, y, image=self.img, anchor=tkinter.NW)
+        c.create_image(self.mouse_x, self.mouse_y, image=self.img, anchor=tkinter.NW)
 
         #print(self.input)
 
