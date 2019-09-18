@@ -23,12 +23,11 @@ def cypher_ceaser(text, offset=1):
     >>> cypher_ceaser('a b c', -1)
     'z a b'
     """
-    text = text.lower()
     def _offset_letter(letter):
         if letter not in LETTERS:
             return letter
         return LETTERS[(LETTERS.index(letter) + offset) % len(LETTERS)]
-    return ''.join(map(_offset_letter, text))
+    return ''.join(map(_offset_letter, text.lower()))
 
 
 from itertools import cycle
