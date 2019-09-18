@@ -18,7 +18,7 @@ Training Tasks (Grade E to D)
 6. Read in a phrase from a user. If the phrase exists in a file print “Phrase exists”
 7. Read a CSV file. Print the highest number
     * example format `5,12,983,43,2,7,11,42`
-8. Generate the following sequence under 200. `1,1,2,3,5,8,13,21,etc`.
+8. Fibonacci Sequence: Generate the following sequence under 200. `1,1,2,3,5,8,13,21,etc`.
     * Add the previous 2 numbers, e.g. 2+3=5 3+5=8
 
 
@@ -217,6 +217,7 @@ British Informatics Olympiad: [Optional Projects]
 * [British Informatics Olympiad 2010: Round One Exam](https://www.olympiad.org.uk/papers/2010/bio/bio-10-exam.pdf)
     * Q1 Anagram Numbers (A Grade)
     * Q2 Die Tipping (Degree/Professional)
+
 If you can complete 'Die Tipping' or 'Puzzle Game' you can work as a professional developer.
 
 
