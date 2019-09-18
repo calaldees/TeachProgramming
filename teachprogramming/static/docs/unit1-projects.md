@@ -1,0 +1,227 @@
+A-Level Computing: Module 1 Projects
+====================================
+
+* These are all the projects for the year.
+* Tasks can be attempted in any order.
+* Every task maps to theory spec.
+
+
+Training Tasks (Grade E to D)
+-----------------------------
+1. Ask the user a username and then ask for the password. If the username and password are correct give a message and exit. Else ask 3 for the correct one 3 times then exit
+2. Read a list of numbers from a file. Print the sum of all the numbers
+3. Create a program that reads a line from the user. If the line starts with `S`. Add that line to a text file
+4. Create a program that counts from 0 to 100 missing out all numbers devisable by 4
+5. Ask the user for 5 words. Print out a rubbish sentence putting between 10 and 20 random words together
+6. Read in a phrase from a user. If the phrase exists in a file print “Phrase exists”
+7. Read a CSV file. Print the highest number
+    * example format `5,12,983,43,2,7,11,42`
+8. Generate the following sequence under 200. `1,1,2,3,5,8,13,21,etc`.
+    * Add the previous 2 numbers, e.g. 2+3=5 3+5=8
+
+
+Calculator (D Grade)
+--------------------
+
+* Write a calculator program that
+    * Takes text input and calculates the answer
+    * The input will be in the format
+        * `<NUMBER><SPACE><OPERATOR><SPACE><NUMBER>`
+        * Operators are `+-*/`
+    * The output should never be longer than 3 decimal places
+
+```
+> 1 + 2
+3
+> 3.14 * 2
+6.28
+> 2 / 3
+0.667
+```
+
+### Hints
+* This project will require
+    * Parsing strings to Real numbers (number with decimal points) and data types (double and float)
+    * Logic to decide what operator to use
+
+
+Validation (E to C Grade)
+-------------------------
+
+Data that is entered can be incorrect. E.g “Monkey” is not a valid postcode, “Callaghan53” is not a valid surname.
+
+You must write a program that can validate the following
+* Surname (E Grade)
+* Postcode (D Grade) (full http://en.wikipedia.org/wiki/Postcodes_in_the_United_Kingdom B Grade)
+* ISBN 10 code (http://en.wikipedia.org/wiki/Check_digit) (C Grade)
+
+### Hints
+This project is designed to get you to
+* Use “Modula Arithmetic”
+* Consider careful test data
+* The ISBN code should work with either dashes and spaces in the number or not
+
+
+Word Reverser (D to C Grade)
+----------------------------
+Create a program that reads in a plain text file and reverses all the letters of the words but keeps the words in the correct order and writes this back to a new file. For example:
+
+> The quick brown fox
+
+would be converted to
+
+> ehT kciuq nworb xof
+
+### Extension (C Grade)
+The user should be able to use the program from the command line in the following way
+
+```bash
+python my_reverse.py in.txt processed_words.txt
+```
+or
+```bash
+php my_reverse.php in.txt processed_words.txt
+```
+etc
+
+This project will test: Algorithm design, Loops, File Handling, Command line (individual research into language documentation)
+
+
+Multi Format Converter (C Grade)
+--------------------------------
+Write a program that converts from one number format to another
+* Binary to Denary (and/or vice versa)
+* HEX to Denary (and/or vice versa)
+* 3Bit Grey Code (and/or vice versa) http://en.wikipedia.org/wiki/Grey_code
+
+### Hints
+* This project will assess Grey Codes, Suitable Test data and Algorithm design
+    * To convert to and from grey codes I suggest a lookup table and the use of a Linear Search.
+
+
+Bubble Sort & Linear Search (C to A Grade)
+------------------------------------------
+1.	Read a set of names and address from a CSV file and output a sorted CSV file in surname order. (Define your own contents/fields)
+2.	Search for a specific surname and output selected records to a CSV file
+
+### Extension (A Grade)
+The user can select what field to sort by and what field to search with e.g. first name, town, city, DOB, etc
+
+### Hints
+* This project will assess your algorithm design, CSV handling, Bubble Sort understanding and Linear Search Understanding.
+
+
+2D Arrays & Algorithm Design (B to A Grade)
+-------------------------------------------
+* Your program should
+    * Display a possible state for a game of "Connect 4" (ASCII text grid)
+    * A message indicating if a player has won.
+
+The game does not have to playable. It just needs to report if a player has won give a known board state.
+
+```
+........
+........
+..R.....
+..R...Y.
+RRY.RYYR
+```
+
+### Extension (A Grade Level)
+* Make the game playable for 2 players
+
+### Hints
+* This project is designed to get you to use 2D Arrays and Pseudo Code design
+
+
+Vector Graphics Format (B Grade)
+--------------------------------
+Create a vector graphics render that uses the following CSV file
+
+```csv
+circle,0.0,0.0,1.0,1.0,YELLOW
+rectangle,0.2,0.7,0.6,0.1,RED
+circle,0.3,0.4,0.1,0.1,BLACK
+circle,0.6,0.4,0.1,0.1,BLACK
+line,0.2,0.3,0.4,0.2,BLACK
+line,0.8,0.3,0.6,0.2,BLACK
+image,0.45,0.45,0.1,0.2,nose.png
+```
+
+### Hints
+* The file should draw a smiley face with a red mouth and a bitmap nose
+* Read in the file line at a time, split it and draw it
+* Try implementing a function at a time e.g. git it just drawing the circles first then move on to the others.
+* The values relate to the size of the screen.
+    * E.g. if the screen was width 1000 and the value was given 0.2 the co-ordinate would be 200
+* Remember values with decimal points are Real numbers (doubles or floats and not integers)
+* This allows the vector graphic to be rendered at ANY resolution
+* Each line is in the format TYPE,X,Y,WIDTH,HEIGHT,DETAIL
+
+
+British Informatics Olympiad: [Optional Projects]
+-------------------------------------------------
+* [British Informatics Olympiad 2009: Round One Exam](https://www.olympiad.org.uk/papers/2009/bio/bio09-exam.pdf)
+    * Q1 Digit Word (A Grade)
+    * Q2 Puzzle Game (Degree/Professional)
+* [British Informatics Olympiad 2010: Round One Exam](https://www.olympiad.org.uk/papers/2010/bio/bio-10-exam.pdf)
+    * Q1 Anagram Numbers (A Grade)
+    * Q2 Die Tipping (Degree/Professional)
+
+
+Documenting Each Project
+========================
+
+Each project should take on average 2 weeks.
+For each project the following needs to be submitted.
+Use these headings. Every word below is from the spec and needs to be used by you in the exam.
+
+* Analysis
+    * Understand the problem
+        * An English description of what, why and who
+    * Define the problem
+        * Bullet Points of what it must do
+    * Define the boundaries
+        * Any limits or restrictions (hardware, software, size of data input, time constraints)
+* Design
+    * Plan Code Solution
+        * Design Sketch of interface
+        * Algorithm design
+            * Structured English -> Pseudo Code -> High level code
+            * Showing - Sequence, Assignment, Selection, Repetition
+* Test Data
+    * List test data + how you will test
+* Implementation (creating it)
+    * Printout of code listing labelling the following
+        * Variable identification
+            * fixed value (constant)
+            * stepper
+            * most recent holder
+            * most wanted holder
+            * gatherer
+            * transformation
+            * follower
+        * Definitions of
+            * type (your own)
+            * variable
+            * constant
+            * Procedure/Function/Subroutine
+        * Assignment (=)
+        * Iteration (For, Do, While)
+        * Selection (IF)
+        * Procedure and Function calling
+        * Arithmetic operators (+-*/)
+        * Relational Operators (<,>,>=,<=,==)
+        * Boolean/Logical Operators (AND,OR,NOT)
+        * Use of any built in functions
+            * split, substring, val
+* Testing
+    * Check Solution
+        * Method of testing solution
+            * Dry run testing (testing on paper)
+            * Black box testing
+            * White box testing
+        * Test data
+            * Normal (typical)
+            * Boundary/limit
+            * Erroneous
