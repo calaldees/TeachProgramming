@@ -1,9 +1,11 @@
-A-Level Computing: Module 1 Projects
-====================================
+AS-Level Computing: Projects
+============================
 
-* These are all the projects for the year.
-* Tasks can be attempted in any order.
-* Every task maps to theory spec.
+[AQA A-Level Computing - Specification](https://filestore.aqa.org.uk/resources/computing/specifications/AQA-7516-7517-SP-2015.PDF)
+
+* These are all the projects for the year (180 guided learning hours)
+* Tasks can be attempted in any order (self directed/ownership)
+* Every task maps to theory specification
 
 
 Training Tasks (Grade E to D)
@@ -20,50 +22,8 @@ Training Tasks (Grade E to D)
     * Add the previous 2 numbers, e.g. 2+3=5 3+5=8
 
 
-Calculator (D Grade)
---------------------
-
-* Write a calculator program that
-    * Takes text input and calculates the answer
-    * The input will be in the format
-        * `<NUMBER><SPACE><OPERATOR><SPACE><NUMBER>`
-        * Operators are `+-*/`
-    * The output should never be longer than 3 decimal places
-
-```
-> 1 + 2
-3
-> 3.14 * 2
-6.28
-> 2 / 3
-0.667
-```
-
-### Hints
-* This project will require
-    * Parsing strings to Real numbers (number with decimal points) and data types (double and float)
-    * Logic to decide what operator to use
-
-
-Validation (E to C Grade)
--------------------------
-
-Data that is entered can be incorrect. E.g “Monkey” is not a valid postcode, “Callaghan53” is not a valid surname.
-
-You must write a program that can validate the following
-* Surname (E Grade)
-* Postcode (D Grade) (full http://en.wikipedia.org/wiki/Postcodes_in_the_United_Kingdom B Grade)
-* ISBN 10 code (http://en.wikipedia.org/wiki/Check_digit) (C Grade)
-
-### Hints
-This project is designed to get you to
-* Use “Modula Arithmetic”
-* Consider careful test data
-* The ISBN code should work with either dashes and spaces in the number or not
-
-
-Word Reverser (D to C Grade)
-----------------------------
+Word Reverser (D Grade)
+-----------------------
 Create a program that reads in a plain text file and reverses all the letters of the words but keeps the words in the correct order and writes this back to a new file. For example:
 
 > The quick brown fox
@@ -72,7 +32,7 @@ would be converted to
 
 > ehT kciuq nworb xof
 
-### Extension (C Grade)
+### Extension (C Grade) - Command Line Options
 The user should be able to use the program from the command line in the following way
 
 ```bash
@@ -84,7 +44,84 @@ php my_reverse.php in.txt processed_words.txt
 ```
 etc
 
-This project will test: Algorithm design, Loops, File Handling, Command line (individual research into language documentation)
+### Techniques
+This project will assess Algorithm design, Loops, File Handling, Command line (individual research into language documentation)
+
+
+Calculator (D Grade)
+--------------------
+
+* Write a calculator program that
+    * Takes text input and calculates the answer
+    * The input will be in the format
+        * `<NUMBER><SPACE><OPERATOR><SPACE><NUMBER>`
+        * Support the following mathematical operators `+-*/%`
+    * The output should never be longer than 3 decimal places
+
+```
+> 1 + 2
+3
+> 3.14 * 2
+6.28
+> 2 / 3
+0.667
+```
+
+### Extension (C Grade)
+
+* If the first number is not inputted, use the answer from the previous step automatically
+
+### Techniques
+This project is designed to get you to understand
+* String splitting, Parsing strings, Float/Double/Real datatypes, Rounding, Mathematical Operators
+
+
+Validation (E to C Grade)
+-------------------------
+
+Data that is entered can be incorrect. E.g “Monkey” is not a valid postcode, “Smith53” is not a valid surname.
+
+You must write a program that can validate the following
+* Surname (E Grade)
+* Parity Bit (D Grade)
+* Credit Card Number - with or without spaces (D Grade)
+* Postcode (D Grade) (full http://en.wikipedia.org/wiki/Postcodes_in_the_United_Kingdom B Grade)
+* ISBN 10 code (http://en.wikipedia.org/wiki/Check_digit) (C Grade)
+
+### Techniques
+This project is designed to get you to
+* Use "Modula Arithmetic"
+* Consider careful test data
+* The ISBN code should work with either dashes and spaces in the number or not
+
+
+Caesar Cipher (C Grade)
+-----------------------
+Create a program to encoding/decoding messages.
+```
+    >>> cypher_ceaser('abc', 1)
+    'bcd'
+    >>> cypher_ceaser('hello', 1)
+    'ifmmp'
+    >>> cypher_ceaser('ifmmp', -1)
+    'hello'
+    >>> cypher_ceaser('xyz', 1)
+    'yza'
+```
+
+### Extension (B Grade) - Vigenere Cipher
+Takes a string 'key' to rotate each letter.
+```
+    >>> cypher_vigenere('abc', 'a')
+    'abc'
+    >>> cypher_vigenere('abc', 'b')
+    'bcd'
+    >>> cypher_vigenere('abc', 'abc')
+    'ace'
+    >>> cypher_vigenere('bcd', 'b', sub)
+    'abc'
+```
+Vernam cipher (one-time pad) is key-length == message-length
 
 
 Multi Format Converter (C Grade)
@@ -94,21 +131,35 @@ Write a program that converts from one number format to another
 * HEX to Denary (and/or vice versa)
 * 3Bit Grey Code (and/or vice versa) http://en.wikipedia.org/wiki/Grey_code
 
-### Hints
+### Techniques
 * This project will assess Grey Codes, Suitable Test data and Algorithm design
     * To convert to and from grey codes I suggest a lookup table and the use of a Linear Search.
 
 
-Bubble Sort & Linear Search (C to A Grade)
-------------------------------------------
-1.	Read a set of names and address from a CSV file and output a sorted CSV file in surname order. (Define your own contents/fields)
+Networking (C Grade)
+--------------------
+* Create a program to
+    * Parse and IPv4 address e.g. `192.168.0.12`
+        * return what 'Class' of address it is (A, B, C)
+        * return True or False if it is within a known subnet e.g. `255.255.127.0`
+
+### Techniques
+This project is designed to get you to
+* Understand the binary structure of network address
+* Understand network terminology/features
+
+
+Bubble Sort, Records and Linear Search (C to A Grade)
+-----------------------------------------------------
+1.	Read a set of names and address from a CSV file and output a sorted CSV file in surname order.
 2.	Search for a specific surname and output selected records to a CSV file
 
-### Extension (A Grade)
-The user can select what field to sort by and what field to search with e.g. first name, town, city, DOB, etc
+### Extension (B Grade)
+* The user can select what field to sort by and what field to search with e.g. first name, town, city, DOB, etc
+* Parse String Dates
 
-### Hints
-* This project will assess your algorithm design, CSV handling, Bubble Sort understanding and Linear Search Understanding.
+### Techniques
+* This project will assess your algorithm design, CSV handling, Records(dictionaries/associative-arrays/maps) Bubble Sort understanding and Linear Search Understanding.
 
 
 2D Arrays & Algorithm Design (B to A Grade)
@@ -116,8 +167,7 @@ The user can select what field to sort by and what field to search with e.g. fir
 * Your program should
     * Display a possible state for a game of "Connect 4" (ASCII text grid)
     * A message indicating if a player has won.
-
-The game does not have to playable. It just needs to report if a player has won give a known board state.
+* The game does not have to playable. It just needs to report if a player has won given a known board state.
 
 ```
 ........
@@ -130,7 +180,7 @@ RRY.RYYR
 ### Extension (A Grade Level)
 * Make the game playable for 2 players
 
-### Hints
+### Techniques
 * This project is designed to get you to use 2D Arrays and Pseudo Code design
 
 
@@ -151,7 +201,7 @@ image,0.45,0.45,0.1,0.2,nose.png
 ### Hints
 * The file should draw a smiley face with a red mouth and a bitmap nose
 * Read in the file line at a time, split it and draw it
-* Try implementing a function at a time e.g. git it just drawing the circles first then move on to the others.
+* Try implementing a function at a time e.g. get it just drawing the circles first then move on to the others.
 * The values relate to the size of the screen.
     * E.g. if the screen was width 1000 and the value was given 0.2 the co-ordinate would be 200
 * Remember values with decimal points are Real numbers (doubles or floats and not integers)
@@ -167,6 +217,7 @@ British Informatics Olympiad: [Optional Projects]
 * [British Informatics Olympiad 2010: Round One Exam](https://www.olympiad.org.uk/papers/2010/bio/bio-10-exam.pdf)
     * Q1 Anagram Numbers (A Grade)
     * Q2 Die Tipping (Degree/Professional)
+If you can complete 'Die Tipping' or 'Puzzle Game' you can work as a professional developer.
 
 
 Documenting Each Project
@@ -183,45 +234,35 @@ Use these headings. Every word below is from the spec and needs to be used by yo
         * Bullet Points of what it must do
     * Define the boundaries
         * Any limits or restrictions (hardware, software, size of data input, time constraints)
+* Test Planning
+    * List test data + describe expected inputs and outputs
+        * Normal (typical)
+        * Boundary/limit
+        * Erroneous
+    * DO NOT PROCEED TO DESIGN WITHOUT DOING THIS! SERIOUSLY!
 * Design
-    * Plan Code Solution
-        * Design Sketch of interface
-        * Algorithm design
-            * Structured English -> Pseudo Code -> High level code
+    * Plan Code Solution - Algorithm design
+        * Structured English -> Pseudo Code -> High level code
             * Showing - Sequence, Assignment, Selection, Repetition
-* Test Data
-    * List test data + how you will test
 * Implementation (creating it)
     * Printout of code listing labelling the following
-        * Variable identification
-            * fixed value (constant)
-            * stepper
-            * most recent holder
-            * most wanted holder
-            * gatherer
-            * transformation
-            * follower
-        * Definitions of
-            * type (your own)
-            * variable
-            * constant
-            * Procedure/Function/Subroutine
+        * Data types
+            Integer, Real/Float/Double, Boolean, Character, String, Date/Time, Records (Dicts, Maps, Associative-Arrays), Arrays (or equivalent)
+        * Variable declaration
+        * Constant declaration
+        * Procedure/Function/Subroutine
         * Assignment (=)
         * Iteration (For, Do, While)
+            * Sequence
         * Selection (IF)
         * Procedure and Function calling
-        * Arithmetic operators (+-*/)
+            * Return
+        * Arithmetic operators (+-*/%), integer-division
         * Relational Operators (<,>,>=,<=,==)
-        * Boolean/Logical Operators (AND,OR,NOT)
+        * Boolean/Logical Operators (AND,OR,NOT,XOR)
         * Use of any built in functions
-            * split, substring, val
+            * split, substring, val, string formatting, round
+        * String conversions (Integer, Float, Date)
+        * Exceptions
 * Testing
     * Check Solution
-        * Method of testing solution
-            * Dry run testing (testing on paper)
-            * Black box testing
-            * White box testing
-        * Test data
-            * Normal (typical)
-            * Boundary/limit
-            * Erroneous
