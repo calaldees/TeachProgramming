@@ -2,10 +2,11 @@
 Elavation
 
 http://www.shadedrelief.com/natural3/pages/extra.html
+https://karczmarczuk.users.greyc.fr/TEACH/Imagerie.old/Images/elev_bump_8k.jpg
 """
 from PIL import Image
 
-IMAGE_FILENAME = 'C:/Users/calal/temp/elev_bump_8k.jpg'
+IMAGE_FILENAME = './elev_bump_8k.jpg'
 
 SEA_LEVEL_BASE = 24
 SCALE_FACTOR = 12

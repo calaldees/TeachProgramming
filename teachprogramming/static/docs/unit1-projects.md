@@ -22,6 +22,40 @@ Training Tasks (Grade E to D)
     * Add the previous 2 numbers, e.g. 2+3=5 3+5=8
 
 
+Filesize Calculator (E Grade)
+-----------------------------
+TODO
+Display the filesize in bytes of
+* Bitmap Image: width, height, bit's per pixel
+* Sound Sample: bits, channels, frequency, duration
+* Uncompressed Video: image_size, frames per second, duration
+### Extension (D Grade) - Combine
+Combine with Humanise task to report filesize in a human readable form
+### Extension (C Grade) - Combine
+Combine with Humanise and select the largest corresponding power. e.g. 1.2Gb
+
+
+Humanise Strings (D Grade)
+--------------------------
+TODO
+Know the names, symbols and corresponding powers of 2 for the binary prefixes:
+bi=2
+* kibi, Ki - 2^10
+* mebi, Mi - 2^20
+* gibi, Gi - 2^30
+* tebi, Ti - 2^40
+Know the names, symbols and corresponding powers of 10 for the decimal prefixes:
+* kilo, k - 10^3
+* mega, M - 10^6
+* giga, G - 10^9
+* tera, T - 10^12
+
+
+MIDI notes (E Grade)
+--------------------
+Play from code 'Twinkle Twinkle Little Star' by sending MIDI notes to a synthesizer
+
+
 Word Reverser (D Grade)
 -----------------------
 Create a program that reads in a plain text file and reverses all the letters of the words but keeps the words in the correct order and writes this back to a new file. For example:
@@ -81,7 +115,7 @@ Validation (E to C Grade)
 
 Data that is entered can be incorrect. E.g “Monkey” is not a valid postcode, “Smith53” is not a valid surname.
 
-You must write a program that can validate the following
+You must write functions that can validate the following
 * Surname (E Grade)
 * Parity Bit (D Grade)
 * Credit Card Number - with or without spaces (D Grade)
@@ -97,28 +131,28 @@ This project is designed to get you to
 
 Caesar Cipher (C Grade)
 -----------------------
-Create a program to encoding/decoding messages.
-```
-    >>> cypher_ceaser('abc', 1)
+Create a program to encode/decode messages.
+```python
+    >>> cypher_ceaser(1, 'abc')
     'bcd'
-    >>> cypher_ceaser('hello', 1)
+    >>> cypher_ceaser(1, 'hello')
     'ifmmp'
-    >>> cypher_ceaser('ifmmp', -1)
+    >>> cypher_ceaser(-1, 'ifmmp')
     'hello'
-    >>> cypher_ceaser('xyz', 1)
+    >>> cypher_ceaser(1, 'xyz')
     'yza'
 ```
 
 ### Extension (B Grade) - Vigenere Cipher
 Takes a string 'key' to rotate each letter.
-```
-    >>> cypher_vigenere('abc', 'a')
+```python
+    >>> cypher_vigenere('a', 'abc')
     'abc'
-    >>> cypher_vigenere('abc', 'b')
+    >>> cypher_vigenere('b', 'abc')
     'bcd'
     >>> cypher_vigenere('abc', 'abc')
     'ace'
-    >>> cypher_vigenere('bcd', 'b', sub)
+    >>> cypher_vigenere('b', 'bcd', sub)
     'abc'
 ```
 Vernam cipher (one-time pad) is key-length == message-length
@@ -160,6 +194,24 @@ Bubble Sort, Records and Linear Search (C to A Grade)
 
 ### Techniques
 * This project will assess your algorithm design, CSV handling, Records(dictionaries/associative-arrays/maps) Bubble Sort understanding and Linear Search Understanding.
+
+
+2D Arrays & RLE Encoding (Grade B)
+----------------------------------
+Read the ConwayRLE format and display the result as ASCII
+http://www.conwaylife.com/wiki/RLE
+```python
+    >>> load_conway((
+    ...     '#C This is a glider.',
+    ...     'x = 3, y = 3',
+    ...     'bo$2bo$3o!',
+    ... ))
+    '.#.'
+    '..#'
+    '###'
+```
+### Techniques
+* This project is designed to get you to use 2D Arrays and read/understand/parse an externally specified file format.
 
 
 2D Arrays & Algorithm Design (B to A Grade)

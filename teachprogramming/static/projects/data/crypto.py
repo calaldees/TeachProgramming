@@ -37,6 +37,8 @@ def cypher_vigenere(text, keyword, letter_shift_operator=add):
     """
     >>> cypher_vigenere('abc', 'a')
     'abc'
+    >>> cypher_vigenere('abc', 'b')
+    'bcd'
     >>> cypher_vigenere('abc', 'bb')
     'bcd'
     >>> cypher_vigenere('abc', 'abc')
