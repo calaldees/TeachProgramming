@@ -7,11 +7,19 @@ Given a passphrase can a message be encrypted/decrypted
 This is an exercise for string manipulation and ascii
 """
 
-import re
+def cypher_ceaser_ascii(text, offset=1):
+    """
+    >>> cypher_ceaser('abc', 1)
+    'bcd'
+    >>> cypher_ceaser_ascii('hello', 1)
+    'ifmmp'
+    >>> cypher_ceaser('xyz', 1)
+    'yza'
+    """
+    return ''.join(chr(((ord(letter)+offset-97)%26)+97) for letter in text)
+
 
 LETTERS = 'abcdefghijklmnopqrstuvwxyz'
-
-
 def cypher_ceaser(text, offset=1):
     """
     >>> cypher_ceaser('abc', 1)
@@ -33,22 +41,22 @@ def cypher_ceaser(text, offset=1):
 from itertools import cycle
 from operator import add, sub
 
-def cypher_vigenere(text, keyword, letter_shift_operator=add):
+def cypher_vigenere(key, text, letter_shift_operator=add):
     """
-    >>> cypher_vigenere('abc', 'a')
+    >>> cypher_vigenere('a', 'abc')
     'abc'
-    >>> cypher_vigenere('abc', 'b')
+    >>> cypher_vigenere('b', 'abc')
     'bcd'
-    >>> cypher_vigenere('abc', 'bb')
+    >>> cypher_vigenere('bb', 'abc')
     'bcd'
     >>> cypher_vigenere('abc', 'abc')
     'ace'
-    >>> cypher_vigenere('bcd', 'b', sub)
+    >>> cypher_vigenere('b', 'bcd', sub)
     'abc'
-    >>> cypher_vigenere('hello! i was a dog that sat on a log', 'pizza')
-    'wmkko! h wpa z swf twis spb nn i kov'
-    >>> cypher_vigenere('wmkko! h wpa z swf twis spb nn i kov', 'pizza', sub)
-    'hello! i was a dog that sat on a log'
+    >>> cypher_vigenere('pizza', 'hello i was a dog that sat on a log')
+    'wmkko q vah z ddo shpb rai nm p kng'
+    >>> cypher_vigenere('pizza', 'wmkko q vah z ddo shpb rai nm p kng', sub)
+    'hello i was a dog that sat on a log'
     """
     text = text.lower()
     def _offset_letter(letter_tuple):
@@ -58,9 +66,15 @@ def cypher_vigenere(text, keyword, letter_shift_operator=add):
         return LETTERS[
             letter_shift_operator(
                 LETTERS.index(letter),
-                LETTERS.index(keyword_letter),
+                keyword_letter if isinstance(keyword_letter, int) else LETTERS.index(keyword_letter),
             ) % len(LETTERS)
         ]
+    key_sequence = key if isinstance(key, (str, list, tuple)) else (key, )
     return ''.join(
-        map(_offset_letter, zip(text, cycle(keyword)))
+        map(_offset_letter, zip(text, cycle(key_sequence)))
     )
+
+# Quick hack to make `cypher.md` doctests example work
+from functools import partial
+encode = partial(cypher_vigenere, letter_shift_operator=add)
+decode = partial(cypher_vigenere, letter_shift_operator=sub)
