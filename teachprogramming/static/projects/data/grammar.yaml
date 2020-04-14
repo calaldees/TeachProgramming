@@ -1,0 +1,94 @@
+# https://www.englishclub.com/grammar/sentence/what-is-a-sentence.htm
+# https://www.englishclub.com/grammar/sentence/sentence-structure.htm
+
+# Words ------------------------------------------------------------------------
+verb: # Action verbs, express what is happening (do, work). State verbs express a situation (be, have)
+    - bites
+    - eats
+    - eat
+    - knows
+    - speak
+adjective: # tells us more about a noun
+    - nice
+    - horrible
+    - big
+    - red
+adverbs: # tell us more about verbs
+    - happily
+    - kindly
+    - extremely
+pronoun:
+    - you
+    - ours
+    - some
+noun: # a person, place or thing
+    - man
+    - woman
+    - teacher
+    - home
+    - office
+    - town
+    - table
+    - car
+    - monkey
+    - music
+    - love
+    - cake
+prepositions:
+    - at
+    - in
+    - under
+    - by
+    - from
+coordinating_conjunction:
+    - and
+    - but
+    - or
+    - nor
+    - for
+    - yet
+    - so
+subordinating_conjunction:
+    - after
+    - although
+    - as
+    - because
+    - before
+    - how
+    - if
+    - once
+    - since
+    - than
+    - that
+    - though
+    - till
+    - until
+    - when
+    - where
+    - whether
+    - while
+relative_pronouns:
+    - that
+    - which
+    - who
+    - whom
+    - whose
+determiners:
+    - the
+    - an
+    - this
+# Structure --------------------------------------------------------------------
+subject:
+    - determiners noun
+    - i
+independent_clause:
+    - subject verb
+dependent_clause:
+    - subject verb
+compound_sentence:
+    - independent_clause coordinating_conjunction independent_clause
+complex_sentence:
+    - independent_clause subordinating_conjunction dependent_clause
+    - independent_clause relative_pronouns dependent_clause
+compound_complex_sentence:
+    - compound_sentence coordinating_conjunction compound_sentence
