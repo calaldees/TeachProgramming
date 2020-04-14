@@ -51,8 +51,8 @@ Know the names, symbols and corresponding powers of 10 for the decimal prefixes:
 * tera, T - 10^12
 
 
-MIDI notes (E Grade)
---------------------
+MIDI notes (E Grade) (Optional)
+-------------------------------
 Play from code 'Twinkle Twinkle Little Star' by sending MIDI notes to a synthesizer
 
 
