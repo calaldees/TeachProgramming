@@ -8,6 +8,7 @@ verb: # Action verbs, express what is happening (do, work). State verbs express 
     - eat
     - knows
     - speak
+    - like
 adjective: # tells us more about a noun
     - nice
     - horrible
