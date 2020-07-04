@@ -17,7 +17,7 @@ image_src = Image.open(IMAGE_FILENAME)
 image_src = image_src.crop(CROP_UNITED_KINGDOM)
 image_des = Image.new('RGB', (image_src.width, image_src.height), 0x000000)
 
-sea_level = 0
+sea_level = 10
 
 # TODO - sea_level to meters function
 

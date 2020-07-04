@@ -22,7 +22,7 @@ if __name__ == "__main__":
     pygame.init()
     RESOLUTION = (640, 480)
     screen = pygame.display.set_mode(RESOLUTION)
-    pygame.display.set_mode(RESOLUTION, pygame.FULLSCREEN, 16)
+    pygame.display.set_mode(RESOLUTION, 0, 16)
     clock  = pygame.time.Clock()
 
 

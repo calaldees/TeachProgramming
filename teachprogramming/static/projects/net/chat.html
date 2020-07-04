@@ -17,23 +17,25 @@
                 }                                                               // VER: gui
                                                                                 // VER: gui_recv
                 var text_area  = document.getElementById("text_area");          // VER: gui_recv
-                text_area.readOnly = true;                                      // VER: gui_recv
-                                                                   // VER: recv                
+                                                                   // VER: recv
                 function receive(msg) {                            // VER: recv
                     //console.log("got: " + msg.data);             // VER: recv not gui_recv
                     text_area.value = text_area.value + msg.data;  // VER: gui_recv
                     text_area.scrollTop = text_area.scrollHeight;  // VER: gui_scroll
                 }                                                  // VER: recv
-                socket.onmessage = receive;                        // VER: recv
-                                                                                      // VER: send_one not gui
-                //socket.onopen = function(e) { socket.send("Hello I am Bob"+"\n"); } // VER: send_one not gui
-                //while (true) { socket.send(prompt()+"\n"); }                        // VER: send     not gui
+                socket.addEventListener('message', receive);       // VER: recv
+                                                          // VER: send_one not gui
+                //function open() {                       // VER: send_one not gui
+                //    socket.send("Hello I am Bob"+"\n"); // VER: send_one not gui
+                //}                                       // VER: send_one not gui
+                //socket.addEventListener('open', open);  // VER: send_one not gui
+                //while (true) { socket.send(prompt()+"\n"); }   // VER: send     not gui
             };
         </script>
     </head>
     <body>
         <h1>Chat Client</h1>
-        <textarea id="text_area"  style="width:300px;" rows="15"></textarea><!-- VER: gui_recv -->
+        <textarea id="text_area"  style="width:300px;" rows="15"  readonly></textarea><!-- VER: gui_recv -->
         <br/>                                                               <!-- VER: gui_recv -->
         <input    id="text_field" style="width:300px;"         />           <!-- VER: gui      -->
     </body>

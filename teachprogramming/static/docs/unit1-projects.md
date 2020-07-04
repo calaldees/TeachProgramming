@@ -6,26 +6,29 @@ AS-Level Computing: Projects
 * These are all the projects for the year (180 guided learning hours)
 * Tasks can be attempted in any order (self directed/ownership)
 * Every task maps to theory specification
+* You may use any language for each task
+    * It is recommended that you use a least 2 languages
 
 
 Training Tasks (Grade E to D)
 -----------------------------
-1. Ask the user a username and then ask for the password. If the username and password are correct give a message and exit. Else ask 3 for the correct one 3 times then exit
+1. Ask the user a username and then ask for the password. If the username and password are correct give a message `approved` and exit. After 3 incorrect attempts, print `denied` and exit
 2. Read a list of numbers from a file. Print the sum of all the numbers
-3. Create a program that reads a line from the user. If the line starts with `S`. Add that line to a text file
-4. Create a program that counts from 0 to 100 missing out all numbers devisable by 4
-5. Ask the user for 5 words. Print out a rubbish sentence putting between 10 and 20 random words together
-6. Read in a phrase from a user. If the phrase exists in a file print “Phrase exists”
-7. Read a CSV file. Print the highest number
+3. Create a program that counts from 0 to 30 missing out all numbers devisable by 4
+4. Create a program that reads a line from the user. If the line starts with `S`. Add that line to a text file
+5. Ask the user for 5 words. Print out a rubbish sentence putting between 10 and 20 of these words together
+6. Create a program that takes user input and converts a 12h time e.g. `4:53pm`, `6:00am` into into a 24h time e.g. `16:53`, `06:00`
+7. Read in a phrase from a user. If the phrase exists in a file print “Phrase exists”
+8. Read a CSV file. Print the highest number
     * example format `5,12,983,43,2,7,11,42`
-8. Fibonacci Sequence: Generate the following sequence under 200. `1,1,2,3,5,8,13,21,etc`.
+9. Fibonacci Sequence: Generate the following sequence under 200. `1,1,2,3,5,8,13,21,etc`
     * Add the previous 2 numbers, e.g. 2+3=5 3+5=8
 
 
 Filesize Calculator (E Grade)
 -----------------------------
 TODO
-Display the filesize in bytes of
+Calculate and Display the filesize in bytes of
 * Bitmap Image: width, height, bit's per pixel
 * Sound Sample: bits, channels, frequency, duration
 * Uncompressed Video: image_size, frames per second, duration
@@ -54,6 +57,12 @@ Know the names, symbols and corresponding powers of 10 for the decimal prefixes:
 MIDI notes (E Grade) (Optional)
 -------------------------------
 Play from code 'Twinkle Twinkle Little Star' by sending MIDI notes to a synthesizer
+TODO: add `sleep` to cheat sheet
+TODO: add example of playing 1 midi note to cheat sheet
+
+### Extension (D Grade)
+* Enable the tune to be transposed up or down
+* Pass a tempo in bpm
 
 
 Word Reverser (D Grade)
@@ -70,11 +79,11 @@ would be converted to
 The user should be able to use the program from the command line in the following way
 
 ```bash
-python my_reverse.py in.txt processed_words.txt
+    python my_reverse.py in.txt processed_words.txt
 ```
 or
 ```bash
-php my_reverse.php in.txt processed_words.txt
+    php my_reverse.php in.txt processed_words.txt
 ```
 etc
 
@@ -93,12 +102,12 @@ Calculator (D Grade)
     * The output should never be longer than 3 decimal places
 
 ```
-> 1 + 2
-3
-> 3.14 * 2
-6.28
-> 2 / 3
-0.667
+    >>> 1 + 2
+    3
+    >>> 3.14 * 2
+    6.28
+    >>> 2 / 3
+    0.667
 ```
 
 ### Extension (C Grade)
@@ -107,7 +116,13 @@ Calculator (D Grade)
 
 ### Techniques
 This project is designed to get you to understand
-* String splitting, Parsing strings, Float/Double/Real datatypes, Rounding, Mathematical Operators
+* String splitting, Parsing strings, Float/Double/Real data-types, Rounding, Mathematical Operators
+
+### Extension (Experience)
+
+* In VB.NET
+    * Create a GUI calculator with buttons for each digit/operation.
+        * each digit will append to a `display` textbox/string
 
 
 Validation (E to C Grade)
@@ -119,7 +134,7 @@ You must write functions that can validate the following
 * Surname (E Grade)
 * Parity Bit (D Grade)
 * Credit Card Number - with or without spaces (D Grade)
-* Postcode (D Grade) (full http://en.wikipedia.org/wiki/Postcodes_in_the_United_Kingdom B Grade)
+* Postcode (D Grade) (Optional B Grade - full http://en.wikipedia.org/wiki/Postcodes_in_the_United_Kingdom)
 * ISBN 10 code (http://en.wikipedia.org/wiki/Check_digit) (C Grade)
 
 ### Techniques
@@ -222,11 +237,11 @@ http://www.conwaylife.com/wiki/RLE
 * The game does not have to playable. It just needs to report if a player has won given a known board state.
 
 ```
-........
-........
-..R.....
-..R...Y.
-RRY.RYYR
+    ........
+    ........
+    ..R.....
+    ..R...Y.
+    RRY.RYYR
 ```
 
 ### Extension (A Grade Level)
@@ -241,13 +256,13 @@ Vector Graphics Format (B Grade)
 Create a vector graphics render that uses the following CSV file
 
 ```csv
-circle,0.0,0.0,1.0,1.0,YELLOW
-rectangle,0.2,0.7,0.6,0.1,RED
-circle,0.3,0.4,0.1,0.1,BLACK
-circle,0.6,0.4,0.1,0.1,BLACK
-line,0.2,0.3,0.4,0.2,BLACK
-line,0.8,0.3,0.6,0.2,BLACK
-image,0.45,0.45,0.1,0.2,nose.png
+    circle,0.0,0.0,1.0,1.0,YELLOW
+    rectangle,0.2,0.7,0.6,0.1,RED
+    circle,0.3,0.4,0.1,0.1,BLACK
+    circle,0.6,0.4,0.1,0.1,BLACK
+    line,0.2,0.3,0.4,0.2,BLACK
+    line,0.8,0.3,0.6,0.2,BLACK
+    image,0.45,0.45,0.1,0.2,nose.png
 ```
 
 ### Hints
@@ -270,15 +285,16 @@ British Informatics Olympiad: [Optional Projects]
     * Q1 Anagram Numbers (A Grade)
     * Q2 Die Tipping (Degree/Professional)
 
-If you can complete 'Die Tipping' or 'Puzzle Game' you can work as a professional developer.
+If you can complete _Die Tipping_ or _Puzzle Game_ you can work as a professional developer. You are better than some university graduates.
 
 
 Documenting Each Project
 ========================
 
-Each project should take on average 2 weeks.
-For each project the following needs to be submitted.
-Use these headings. Every word below is from the spec and needs to be used by you in the exam.
+* Each project should take on average 2 weeks
+* For 4 projects the following documentation needs to be submitted
+    * (The process will help you for all projects, but is not formally required)
+* Use these headings. Every word below is from the spec and needs to be used by you in the exam
 
 * Analysis
     * Understand the problem
@@ -288,7 +304,7 @@ Use these headings. Every word below is from the spec and needs to be used by yo
     * Define the boundaries
         * Any limits or restrictions (hardware, software, size of data input, time constraints)
 * Test Planning
-    * List test data + describe expected inputs and outputs
+    * List test data (describe expected inputs and expected outputs)
         * Normal (typical)
         * Boundary/limit
         * Erroneous

@@ -20,3 +20,6 @@ def draw_tree_recursive(t, size=100, branches=3, total_angle=120, depth=2):
 draw_tree_recursive(t)
 
 import pdb ; pdb.set_trace()
+
+
+# TODO: consider stack implementation

@@ -71,6 +71,24 @@ class ConwayFactory():
         return (state, width, height)
 
     @staticmethod
+    def _parse_cells(filehandle):
+        """
+        TODO: `.cells` format is a formal format on conway wiki and should be implemented
+        Maybe the txt parser can be updated to use cells
+        (
+            '! comment',
+            '.O.',
+            'OOO',
+            '..O',
+            '',
+            'OO',
+            'O',
+            '',
+        )
+        """
+        pass
+
+    @staticmethod
     def _parse_rle(filehandle):
         r"""
         http://www.conwaylife.com/wiki/RLE
@@ -123,7 +141,10 @@ def conway_display(conway):
 
 
 if __name__ == "__main__":
-    conway = ConwayFactory.conway_from_file('conway.txt')
+    import sys
+    filename = sys.argv[1] if len(sys.argv) == 2 else 'conway.txt'
+
+    conway = ConwayFactory.conway_from_file(filename)
     conway_display(conway)
 
     import time
