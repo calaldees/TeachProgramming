@@ -7,7 +7,7 @@ AS-Level Computing: Projects
 * Tasks can be attempted in any order (self directed/ownership)
 * Every task maps to theory specification
 * You may use any language for each task
-    * It is recommended that you use a least 2 languages
+    * It is recommended that you use a least 2 languages (one static, one dynamic)
 
 
 Training Tasks (Grade E to D)
@@ -31,11 +31,12 @@ TODO
 Calculate and Display the filesize in bytes of
 * Bitmap Image: width, height, bit's per pixel
 * Sound Sample: bits, channels, frequency, duration
-* Uncompressed Video: image_size, frames per second, duration
+* Uncompressed Video: image_size, bit-depth, frames per second, duration
 ### Extension (D Grade) - Combine
-Combine with Humanise task to report filesize in a human readable form
+* Combine with Humanise task to report filesize in a human readable form
 ### Extension (C Grade) - Combine
-Combine with Humanise and select the largest corresponding power. e.g. 1.2Gb
+* Combine with Humanise and select the largest corresponding power. e.g. 1.2Gb
+* Refer to humanise via an `import`
 
 
 Humanise Strings (D Grade)

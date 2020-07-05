@@ -2,7 +2,7 @@
 Python  # VER: title
 www.python.org  # VER: download
 Python 3 or higher  # VER: download
-http://docs.python.org/py3k/  # VER: help
+http://docs.python.org/3/  # VER: help
 """
 
 

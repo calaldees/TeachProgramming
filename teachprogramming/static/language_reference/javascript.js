@@ -14,7 +14,7 @@ function hello_world() {
 }
 
 function read_line_from_console() {
-    
+    // in browser?  prompt("Please enter your name", "Harry Potter");
 }
 
 function comment() {
