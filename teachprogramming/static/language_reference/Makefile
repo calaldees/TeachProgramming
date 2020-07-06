@@ -1,25 +1,60 @@
-test:
-	python3 _test.py
+# Variables --------------------------------------------------------------------
 
-test_console: python vb php javascript java ruby
+PATH_LANGAUGES := languages
 
-javascript:
+
+# Main -------------------------------------------------------------------------
+
+assert_language_output:
+	python3 assert_language_output.py
+
+run_all: python vb php javascript java ruby rust c
+
+language_reference.json: assert_language_output
+	python3 language_reference.py
+
+
+# Langauages -------------------------------------------------------------------
+
+__fake_assert_target:
+	# unittest
+
+javascript:  # requires spidermonkey
+	cd ${PATH_LANGAUGES}/$@ && \
 	js javascript.js
 
 python:
-	python python.py
+	cd ${PATH_LANGAUGES}/$@ && \
+	python3 python.py
 
 java:
-	javac Java.java && java Java
+	cd ${PATH_LANGAUGES}/$@ && \
+	javac Java.java && \
+	java Java
 
 vb:
-	vbnc vb.vb && mono vb.exe
+	cd ${PATH_LANGAUGES}/$@ && \
+	vbnc vb.vb && \
+	mono vb.exe
 
 php:
+	cd ${PATH_LANGAUGES}/$@ && \
 	php php.php
 
 ruby:
+	cd ${PATH_LANGAUGES}/$@ && \
 	ruby ruby.rb
+
+rust:
+	# TODO
+
+c:
+	cd ${PATH_LANGAUGES}/$@ && \
+	gcc -Wall c.c -o c
+	./c
+
+
+# Install Languages ------------------------------------------------------------
 
 mono-basic:
 	git clone git@github.com:mono/mono-basic.git
@@ -29,6 +64,9 @@ mono-basic:
 
 install:
 	brew install mono spidermonkey
+
+
+# Clean ------------------------------------------------------------------------
 
 clean:
 	rm *.class

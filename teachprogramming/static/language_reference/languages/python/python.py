@@ -1,5 +1,5 @@
 """
-Python  # VER: title
+python3  # VER: title
 www.python.org  # VER: download
 Python 3 or higher  # VER: download
 http://docs.python.org/3/  # VER: help
@@ -254,11 +254,6 @@ def sleep():
 #-------------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    # Aquire functions to run from file
-    functions = []
-    with open('_function_order.txt', 'r') as file:
-        for function_name in file:
-            functions.append(function_name.strip())
 
     def title(title):
         print('-{0}-'.format(title))
@@ -270,9 +265,3 @@ if __name__ == "__main__":
             print('UNIMPLEMENTED')
             continue
         locals()[function_name]()
-
-    # Print output of written files
-    #for filename in ('out.txt',):
-    #    title(filename)
-    #    with open(filename, 'r') as f:
-    #        print(f.read())
