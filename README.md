@@ -1,6 +1,41 @@
 TeachProgramming
 ================
 
+History
+-------
+
+Years ago I created this repo to store a range of code I used for teaching young people how to code.
+
+It evolved into a dynamic website that showed the incremental code for small games in a range of languages. Next to the code was runnable browser based html5 version of what the code would look like.
+
+Over the years I added more coding examples. Many of these new examples were not visual or interactive like the game ideas.
+
+One resource stood out. A language cheat sheet for multiple languages. This was a binary file (openoffice document) that was periodicity updated.
+Many of the code examples did not actually work. They had never been through a compiler/interpreter and caused much frustration for learners.
+
+Eventually these code snippets made their way into runnable code files. The concept to build the cheat sheet from these was never completed.
+
+
+The Plan
+--------
+
+This repo is a mess. The pyramid webserver project needs to be disposed of.
+The new plan is to make a data API that can serve all of the versions of the programs (as complete programs or diffs) so that they can be rendered (hopefully trivially) by a frontend.
+The same technology that can show incremental bits of games in multiple languages could also be used for the generating the cheat sheet.
+
+Step 1: create data api
+Step 2: consider how to display the data (online or printable)
+
+I'm not going to start a whole new repository because I think the journey is reasonably interesting.
+I will move this repo out into an organization so that other can collaborate on it.
+I will move it once it's been tidied up a bit.
+
+
+Old README.MD
+=============
+
+This will be removed in time.
+
 Description
 -----------
 
