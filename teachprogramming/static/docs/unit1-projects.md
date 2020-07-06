@@ -286,7 +286,8 @@ British Informatics Olympiad: [Optional Projects]
     * Q1 Anagram Numbers (A Grade)
     * Q2 Die Tipping (Degree/Professional)
 
-If you can complete _Die Tipping_ or _Puzzle Game_ you can work as a professional developer. You are better than some university graduates.
+If you can complete _Die Tipping_ or _Puzzle Game_ you can work as a professional developer.
+You are better than some university graduates.
 
 
 Documenting Each Project
@@ -331,8 +332,21 @@ Documenting Each Project
         * Relational Operators (<,>,>=,<=,==)
         * Boolean/Logical Operators (AND,OR,NOT,XOR)
         * Use of any built in functions
-            * split, substring, val, string formatting, round
+            * split, join, substring, val, string formatting, round
         * String conversions (Integer, Float, Date)
         * Exceptions
 * Testing
     * Check Solution
+
+
+Suggestions
+-----------
+
+* Touch the mouse as little as possible
+* Learn to use your IDE's advanced hotkeys
+* linter
+* debugger
+* version control
+* write your automated tests before you implement your feature
+    * use `assert`
+* Standard Library - attempt to read it
