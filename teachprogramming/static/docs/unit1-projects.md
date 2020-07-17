@@ -12,14 +12,17 @@ AS-Level Computing: Projects
 
 Training Tasks (Grade E to D)
 -----------------------------
-1. Ask the user a username and then ask for the password. If the username and password are correct give a message `approved` and exit. After 3 incorrect attempts, print `denied` and exit
+1. Ask the user for a username and then ask for the password. If the username and password are correct give a message `approved` and exit. After 3 incorrect attempts, print `denied` and exit.
+    * Extension: delay for 2 seconds on incorrect password
 2. Read a list of numbers from a file. Print the sum of all the numbers
 3. Create a program that counts from 0 to 30 missing out all numbers devisable by 4
-4. Create a program that reads a line from the user. If the line starts with `S`. Add that line to a text file
+    * Program must only have one print statement
+4. Create a program that reads a line from the user. If the line starts with `S`. Append that line to the bottom of a text file.
 5. Ask the user for 5 words. Print out a rubbish sentence putting between 10 and 20 of these words together
-6. Create a program that takes user input and converts a 12h time e.g. `4:53pm`, `6:00am` into into a 24h time e.g. `16:53`, `06:00`
+6. Create a program that takes user input and converts a 12h time (e.g. `4:53pm`, `6:00am`) into into a 24h time (e.g. `16:53`, `06:00`)
 7. Read in a phrase from a user. If the phrase exists in a file print “Phrase exists”
-8. Read a CSV file. Print the highest number
+    * This should ignore case
+8. Read a multiline CSV file. Print the highest number
     * example format `5,12,983,43,2,7,11,42`
 9. Fibonacci Sequence: Generate the following sequence under 200. `1,1,2,3,5,8,13,21,etc`
     * Add the previous 2 numbers, e.g. 2+3=5 3+5=8
@@ -27,15 +30,19 @@ Training Tasks (Grade E to D)
 
 Filesize Calculator (E Grade)
 -----------------------------
-TODO
-Calculate and Display the filesize in bytes of
+
+Create a program to calculate and display the filesize in bytes of
 * Bitmap Image: width, height, bit's per pixel
 * Sound Sample: bits, channels, frequency, duration
 * Uncompressed Video: image_size, bit-depth, frames per second, duration
-### Extension (D Grade) - Combine
+### Verify
+* Compare your program's output with the size of an actual uncompressed file (bmp, wav)
+* Are they different? Why are they different?
+### Extension (D Grade)
 * Combine with Humanise task to report filesize in a human readable form
-### Extension (C Grade) - Combine
+### Extension (C Grade)
 * Combine with Humanise and select the largest corresponding power. e.g. 1.2Gb
+### Extension (B Grade)
 * Refer to humanise via an `import`
 
 
@@ -76,7 +83,14 @@ would be converted to
 
 > ehT kciuq nworb xof
 
-### Extension (C Grade) - Command Line Options
+Running the program twice should return to the original text.
+
+### Extension (C Grade)
+Ensure the first letter is capitalized if the original word had a capital letter.
+
+> Eht kciuq nworb xof
+
+### Extension (B Grade) - Command Line Options
 The user should be able to use the program from the command line in the following way
 
 ```bash
@@ -119,7 +133,7 @@ Calculator (D Grade)
 This project is designed to get you to understand
 * String splitting, Parsing strings, Float/Double/Real data-types, Rounding, Mathematical Operators
 
-### Extension (Experience)
+### Extension (GUI Experience)
 
 * In VB.NET
     * Create a GUI calculator with buttons for each digit/operation.
@@ -344,9 +358,9 @@ Suggestions
 
 * Touch the mouse as little as possible
 * Learn to use your IDE's advanced hotkeys
-* linter
-* debugger
-* version control
-* write your automated tests before you implement your feature
+* Setup your IDE to use a linter
+* Use a debugger
+* Use version control
+* Write your automated tests before you implement your feature
     * use `assert`
 * Standard Library - attempt to read it
