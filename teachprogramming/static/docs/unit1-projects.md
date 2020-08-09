@@ -16,7 +16,7 @@ Training Tasks (Grade E to D)
     * Extension: delay for 2 seconds on incorrect password
 2. Read a list of numbers from a file. Print the sum of all the numbers
 3. Create a program that counts from 0 to 30 missing out all numbers devisable by 4
-    * Program must only have one print statement
+    * Program must only have one `print()` statement
 4. Create a program that reads a line from the user. If the line starts with `S`. Append that line to the bottom of a text file.
 5. Ask the user for 5 words. Print out a rubbish sentence putting between 10 and 20 of these words together
 6. Create a program that takes user input and converts a 12h time (e.g. `4:53pm`, `6:00am`) into into a 24h time (e.g. `16:53`, `06:00`)
