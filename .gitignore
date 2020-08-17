@@ -1,10 +1,9 @@
 .vscode
 *.DS_Store
-*.pyc
+*.py[cod]
 *.class
 *.exe
-TeachProgramming.db
+
 *.egg-info
-env/
 *#
 **/.pytest_cache/

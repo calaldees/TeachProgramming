@@ -23,7 +23,12 @@ Training Tasks (Grade E to D)
 7. Read in a phrase from a user. If the phrase exists in a file print “Phrase exists”
     * This should ignore case
 8. Read a multiline CSV file. Print the highest number
-    * example format `5,12,983,43,2,7,11,42`
+    * example file
+        * ```
+            5,12,983,43,2,7,11,42
+            3,1,4924,23,4
+            1,2,3
+        ```
 9. Fibonacci Sequence: Generate the following sequence under 200. `1,1,2,3,5,8,13,21,etc`
     * Add the previous 2 numbers, e.g. 2+3=5 3+5=8
 
