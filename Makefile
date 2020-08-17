@@ -7,3 +7,8 @@ build:
 	docker build \
 		--tag ${DOCKER_IMAGE} \
 	.
+
+.PHONY: example
+example:
+	python3 teachprogramming/lib/make_ver.py teachprogramming/static/projects/game/tron.py --ver_name base4
+	python3 teachprogramming/lib/make_ver.py teachprogramming/static/projects/game/tron.py --ver_name base4 --ver_prev base3
