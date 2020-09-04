@@ -10,35 +10,41 @@ class ProjectVersions():
     We can lazily evaluate each version
 
     >>> import os
-    >>> import tempdir
+    >>> import tempfile
     >>> td = tempfile.TemporaryDirectory()
-    >>> filenames = {}
+    >>> filenames = set()
     >>> def write_file(filename, data):
     ...     filename = os.path.join(td.name, filename)
     ...     with open(filename, 'wt') as filehandle:
     ...         _ = filehandle.write(data)
     ...     filenames.add(filename)
     >>> write_file('test.py', '''
-    ... 
+    ... print('Hello World')
     ... ''')
     >>> write_file('test.js', '''
-    ... 
+    ... console.log("Hello World")
     ... ''')
-    >>> write_file('test.java', '''
-    ... 
+    >>> write_file('Test.java', '''
+    ... public class Test {
+    ...     public Test() {
+    ...         System.out.println("Hello World");
+    ...     }
+    ...     public static void main(String[] args) {new Test();}   
+    ... }
     ... ''')
     >>> write_file('test.ver', '''
-    ... 
+    ... VERNAME: base           base
     ... ''')
 
     >>> p = ProjectVersions(filenames)
+    >>> p.data
 
     >>> td.cleanup()
 
     """
     def __init__(self, filenames):
-        files = {
-            f.suffix().strip('.'): f.open(encoding='utf8').read()
+        self.files = {
+            f.suffix.strip('.'): f.open(encoding='utf8').read()
             for f in map(Path, filenames)
         }
     
@@ -54,4 +60,4 @@ class ProjectVersions():
         """
         Output as dict structure
         """
-        pass
+        return self.files
