@@ -30,6 +30,11 @@ I'm not going to start a whole new repository because I think the journey is rea
 I will move this repo out into an organization so that other can collaborate on it.
 I will move it once it's been tidied up a bit.
 
+Other similar projects?
+-----------------------
+
+https://github.com/algorithm-archivists/algorithm-archive
+
 
 Old README.MD
 =============
