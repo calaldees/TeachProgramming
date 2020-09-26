@@ -3,6 +3,8 @@ BASE_NAME_LOOKUP = ('','K','M','G','T','P')
 
 def humanise(size, base=1000, base_str='B'):
     """
+    https://en.wikipedia.org/wiki/Mebibyte
+
     >>> humanise(0)
     '0.0B'
     >>> humanise(1000)
