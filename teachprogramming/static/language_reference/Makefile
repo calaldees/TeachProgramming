@@ -37,6 +37,14 @@ vb:
 	vbnc vb.vb && \
 	mono vb.exe
 
+csharp:
+	# https://www.mono-project.com/docs/getting-started/mono-basics/
+	# https://kozmicluis.com/compile-c-sharp-command-line/
+	# https://stackoverflow.com/questions/8264323/how-to-compile-a-visual-studio-c-sharp-project-with-mono
+	cd ${PATH_LANGAUGES}/$@ && \
+	msc hello.cs && \
+	mono hello.exe
+
 php:
 	cd ${PATH_LANGAUGES}/$@ && \
 	php php.php
@@ -55,6 +63,10 @@ c:
 
 
 # Install Languages ------------------------------------------------------------
+
+mono-csharp:
+	# mono-complete  270MB?
+	sudo apt-get install mono-mcs -y
 
 mono-basic:
 	git clone git@github.com:mono/mono-basic.git
