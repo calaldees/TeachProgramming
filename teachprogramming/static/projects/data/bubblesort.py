@@ -1,9 +1,9 @@
 
-def bubbelsort(data):
+def bubblesort(data):
     """
-    >>> bubbelsort(['a', 'b', 'c', 'd'])
+    >>> bubblesort(['a', 'b', 'c', 'd'])
     ['a', 'b', 'c', 'd']
-    >>> bubbelsort(['b', 'd', 'c', 'a'])
+    >>> bubblesort(['b', 'd', 'c', 'a'])
     ['a', 'b', 'c', 'd']
     """
     items_have_changed = True
@@ -23,4 +23,4 @@ def bubbelsort(data):
     return data
 
 if __name__ == '__main__':
-    print(bubbelsort(['b', 'd', 'c', 'a']))
+    print(bubblesort(['b', 'd', 'c', 'a']))

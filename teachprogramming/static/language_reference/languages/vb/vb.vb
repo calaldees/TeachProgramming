@@ -1,9 +1,9 @@
 'Visual Basic                                        ' VER: title
-'Visual Basic .NET Express                           ' VER: download
-'http://www.microsoft.com/express/vb/Default.aspx    ' VER: download
-'www.dreamspark.com
-'http://www.homeandlearn.co.uk/                      ' VER: help
-'http://www.functionx.com/vbnet/                     ' VER: help
+'Visual Studio Comunity                              ' VER: download
+'https://visualstudio.microsoft.com/downloads/       ' VER: download
+
+'https://docs.microsoft.com/en-us/dotnet/visual-basic/programming-guide/language-features/ ' VER: help
+
 Imports System.Collections.Generic
 
 Module VisualBasic
