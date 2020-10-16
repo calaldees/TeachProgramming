@@ -69,7 +69,7 @@ function bubbleSort(data) {
     return data
 }
 
-data = ['b', 'd', 'c', 'a'];
+let data = ['b', 'd', 'c', 'a'];
 data = bubbleSort(data);
 console.log(data);
 ```
