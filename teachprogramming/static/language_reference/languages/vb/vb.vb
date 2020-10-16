@@ -3,6 +3,7 @@
 'https://visualstudio.microsoft.com/downloads/       ' VER: download
 
 'https://docs.microsoft.com/en-us/dotnet/visual-basic/programming-guide/language-features/ ' VER: help
+'https://docs.microsoft.com/en-us/dotnet/visual-basic/language-reference/ ' VER: help
 
 Imports System.Collections.Generic
 
