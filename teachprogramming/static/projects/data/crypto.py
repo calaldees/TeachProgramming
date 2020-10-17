@@ -153,6 +153,8 @@ def cypher_vigenere(key, text, letter_shift_operator=add):
     'ace'
     >>> cypher_vigenere('b', 'bcd', sub)
     'abc'
+    >>> cypher_vigenere('abc', 'z a b', sub)
+    'z y a'
     >>> cypher_vigenere('pizza', 'hello i was a dog that sat on a log')
     'wmkko q vah z ddo shpb rai nm p kng'
     >>> cypher_vigenere('pizza', 'wmkko q vah z ddo shpb rai nm p kng', sub)

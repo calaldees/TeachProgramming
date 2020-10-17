@@ -1,3 +1,19 @@
+"""
+Worthy of note
+https://docs.python.org/3/reference/lexical_analysis.html#integer-literals
+Python has binary, oct and hex representation builtin - integer literals
+
+https://www.programiz.com/python-programming/numbers
+https://docs.python.org/3/reference/lexical_analysis.html#string-and-bytes-literals
+
+also Fraction and Decimal
+"""
+t1 = 0xff
+t2 = 0b101101
+t3 = b'\xff'
+
+''
+
 def baseconvert(number, fromdigits, todigits):
     """
     http://pastebin.com/f54dd69d6

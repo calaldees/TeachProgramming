@@ -164,9 +164,11 @@ This project is designed to get you to
 * The ISBN code should work with either dashes and spaces in the number or not
 
 
-Caesar Cipher (C Grade)
------------------------
+Cypher (D to A Grade)
+---------------------
 Create a program to encode/decode messages.
+
+### Grade D
 ```python
     >>> cypher_ceaser(1, 'abc')
     'bcd'
@@ -178,7 +180,13 @@ Create a program to encode/decode messages.
     'yza'
 ```
 
-### Extension (B Grade) - Vigenere Cipher
+### Grade C
+```python
+    >>> cypher_ceaser(-1, 'a b c')
+    'z a b'
+```
+
+### B Grade - Vigenere Cipher
 Takes a string 'key' to rotate each letter.
 ```python
     >>> cypher_vigenere('a', 'abc')
@@ -189,8 +197,19 @@ Takes a string 'key' to rotate each letter.
     'ace'
     >>> cypher_vigenere('b', 'bcd', sub)
     'abc'
+    >>> cypher_vigenere('abc', 'z a b', sub)
+    'z y a'
+    >>> cypher_vigenere('pizza', 'hello i was a dog that sat on a log')
+    'wmkko q vah z ddo shpb rai nm p kng'
+    >>> cypher_vigenere('pizza', 'wmkko q vah z ddo shpb rai nm p kng', sub)
+    'hello i was a dog that sat on a log'
 ```
-Vernam cipher (one-time pad) is key-length == message-length
+
+### A Grade
+Operate Vigenere on a plain bytes and encode/decode a binary file
+
+### todo
+[Vernam cipher](https://isaaccomputerscience.org/concepts/data_encrypt_vernam) (one-time pad) is key-length==message-length is unbreakable encryption
 
 
 Multi Format Converter (C Grade)
@@ -218,14 +237,25 @@ This project is designed to get you to
 * Understand network terminology/features
 
 
-Bubble Sort, Records and Linear Search (C to A Grade)
+Sorting Records and Linear Search (C to A Grade)
 -----------------------------------------------------
 1.	Read a set of names and address from a CSV file and output a sorted CSV file in surname order.
 2.	Search for a specific surname and output selected records to a CSV file
 
-### Extension (B Grade)
+### Grade E
+* Implement Linear Search
+
+### Grade D
+* Implement Bubble Sort
+
+### Grade C
+* Implement Binary Search (to return a single found surname)
 * The user can select what field to sort by and what field to search with e.g. first name, town, city, DOB, etc
 * Parse String Dates
+
+### Grade B
+* Return multiple surnames from binary search
+* Implement QuickSort
 
 ### Techniques
 * This project will assess your algorithm design, CSV handling, Records(dictionaries/associative-arrays/maps) Bubble Sort understanding and Linear Search Understanding.
