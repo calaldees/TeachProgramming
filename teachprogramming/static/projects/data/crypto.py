@@ -111,6 +111,26 @@ def cypher_ceaser_3(text, offset=1):
     return ''.join(map(_offset_letter, text.lower()))
 
 
+import io
+def cypher_ceaser(src, des, offset=1, _buffer=65535):
+    """
+    >>> src = io.BytesIO(b"abc")
+    >>> des = io.BytesIO()
+    >>> cypher_ceaser(src, des, offset=1)
+    >>> des.getvalue()
+    b'bcd'
+
+    >>> src.seek(0)
+    0
+    >>> des.seek(0)
+    0
+    >>> cypher_ceaser(des, src, offset=-1)
+    >>> src.getvalue()
+    b'abc'
+    """
+    while data := src.read(_buffer):
+        des.write(bytes((d + offset) % 255 for d in data))
+
 
 from itertools import cycle
 from operator import add, sub
