@@ -113,7 +113,7 @@ def cypher_ceaser_3(text, offset=1):
 
 import io
 def cypher_ceaser(src, des, offset=1, _buffer=65535):
-    """
+    r"""
     >>> src = io.BytesIO(b"abc")
     >>> des = io.BytesIO()
     >>> cypher_ceaser(src, des, offset=1)
@@ -127,9 +127,15 @@ def cypher_ceaser(src, des, offset=1, _buffer=65535):
     >>> cypher_ceaser(des, src, offset=-1)
     >>> src.getvalue()
     b'abc'
+
+    >>> src = io.BytesIO(b"\xfe\xff\x00\x01")
+    >>> des = io.BytesIO()
+    >>> cypher_ceaser(src, des, offset=1)
+    >>> des.getvalue()
+    b'\xff\x00\x01\x02'
     """
     while data := src.read(_buffer):
-        des.write(bytes((d + offset) % 255 for d in data))
+        des.write(bytes((d + offset) % 256 for d in data))
 
 
 from itertools import cycle
