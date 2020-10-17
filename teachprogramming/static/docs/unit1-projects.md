@@ -237,16 +237,15 @@ This project is designed to get you to
 * Understand network terminology/features
 
 
-Sorting Records and Linear Search (C to A Grade)
------------------------------------------------------
-1.	Read a set of names and address from a CSV file and output a sorted CSV file in surname order.
-2.	Search for a specific surname and output selected records to a CSV file
-
-### Grade E
-* Implement Linear Search
+Sorting and Searching Records (Grade D to B)
+--------------------------------------------
+1.	Read a set of names and address from a CSV file and output a new CSV file in surname order
+2.	Search for a specific surname and output selected records to a new CSV file
 
 ### Grade D
+* Read CSV into a data structure in memory
 * Implement Bubble Sort
+* Implement Linear Search
 
 ### Grade C
 * Implement Binary Search (to return a single found surname)
@@ -258,7 +257,7 @@ Sorting Records and Linear Search (C to A Grade)
 * Implement QuickSort
 
 ### Techniques
-* This project will assess your algorithm design, CSV handling, Records(dictionaries/associative-arrays/maps) Bubble Sort understanding and Linear Search Understanding.
+* This project will assess your algorithm design, CSV handling, Records(dictionaries/associative-arrays/maps) Bubble Sort understanding and Linear/Binary Search Understanding
 
 
 2D Arrays & RLE Encoding (Grade B)
