@@ -1,4 +1,4 @@
-Imports System.Collections.Generic
+Imports System.Collections.Generic  ' required for Dictionary
 
 
 Module VisualBasic
@@ -50,6 +50,7 @@ Module VisualBasic
         End If
     End Function
 
+    ' dicts cant be set at compile time in vb<10
     ' https://stackoverflow.com/questions/3771922/add-keys-values-to-dictionary-at-declaration
     Dim LOOKUP_HEX_TO_INTEGER = New Dictionary(Of String, Integer) 'From {{ "Test1", 1 }, { "Test1", 2}}
     Function Hex2Dec(ByRef s As String) as Integer
@@ -61,19 +62,12 @@ Module VisualBasic
     End Function
 
 
-    Public Class Form1
-        Public item As String
-        Public Sub New(ByVal item As String)
-            Me.item = item
-        End Sub
-    End Class
-
     Sub Main()
+        ' Populate LOOKUP_HEX_TO_INTEGER at runtime as dicts cant be set at compile-time in vb<10
         For i As Integer = 0 to LOOKUP_INTEGER_TO_HEX.Length-1
             LOOKUP_HEX_TO_INTEGER(LOOKUP_INTEGER_TO_HEX(i)) = i
         Next
 
-        'Dim f = New Form1("test")
         Console.WriteLine("Hello " + Dec2Bin(9))
         Console.WriteLine("Hello " + Dec2Hex(23487))
         Console.WriteLine("Hello " + Hex2Dec("5BBF").toString())
