@@ -9,26 +9,99 @@ This is an exercise for string manipulation and ascii
 
 def cypher_ceaser_ascii(text, offset=1):
     """
-    >>> cypher_ceaser('abc', 1)
+    >>> cypher_ceaser_ascii('abc', 1)
     'bcd'
     >>> cypher_ceaser_ascii('hello', 1)
     'ifmmp'
-    >>> cypher_ceaser('xyz', 1)
+    >>> cypher_ceaser_ascii('xyz', 1)
     'yza'
     """
     return ''.join(chr(((ord(letter)+offset-97)%26)+97) for letter in text)
 
 
 LETTERS = 'abcdefghijklmnopqrstuvwxyz'
-def cypher_ceaser(text, offset=1):
+
+
+def cypher_ceaser_0(text, offset=1):
     """
-    >>> cypher_ceaser('abc', 1)
+    >>> cypher_ceaser_0('abc', 1)
     'bcd'
-    >>> cypher_ceaser('hello', 1)
+    >>> cypher_ceaser_0('hello', 1)
     'ifmmp'
-    >>> cypher_ceaser('xyz', 1)
+    >>> cypher_ceaser_0('xyz', 1)
     'yza'
-    >>> cypher_ceaser('a b c', -1)
+    >>> cypher_ceaser_0('a b c', -1)
+    'z a b'
+    """
+    def getIndexFromLetter(letter):
+        for i in range(len(LETTERS)):
+            if LETTERS[i] == letter:
+                return i
+        return -1
+
+    def getLetterFromIndex(index):
+        return LETTERS[index]
+
+    output = ''
+    for letter in text:
+        letter_index = getIndexFromLetter(letter)
+        if letter_index < 0:
+            new_letter = ' '
+        else:
+            letter_index = (letter_index + offset) % len(LETTERS)
+            new_letter = getLetterFromIndex(letter_index)
+        output = output + new_letter
+    return output
+
+
+
+def cypher_ceaser_1(text, offset=1):
+    """
+    >>> cypher_ceaser_1('abc', 1)
+    'bcd'
+    >>> cypher_ceaser_1('hello', 1)
+    'ifmmp'
+    >>> cypher_ceaser_1('xyz', 1)
+    'yza'
+    >>> cypher_ceaser_1('a b c', -1)
+    'z a b'
+    """
+    output = ''
+    for letter in text:
+        if letter in LETTERS:
+            letter_index = LETTERS.index(letter)
+            letter_index = (letter_index + offset) % len(LETTERS)
+            letter = LETTERS[letter_index]
+        output = output + letter
+    return output
+
+def cypher_ceaser_2(text, offset=1):
+    """
+    >>> cypher_ceaser_2('abc', 1)
+    'bcd'
+    >>> cypher_ceaser_2('hello', 1)
+    'ifmmp'
+    >>> cypher_ceaser_2('xyz', 1)
+    'yza'
+    >>> cypher_ceaser_2('a b c', -1)
+    'z a b'
+    """
+    output = ''
+    for letter in text:
+        if letter in LETTERS:
+            letter = LETTERS[(LETTERS.index(letter) + offset) % len(LETTERS)]
+        output += letter
+    return output
+
+def cypher_ceaser_3(text, offset=1):
+    """
+    >>> cypher_ceaser_3('abc', 1)
+    'bcd'
+    >>> cypher_ceaser_3('hello', 1)
+    'ifmmp'
+    >>> cypher_ceaser_3('xyz', 1)
+    'yza'
+    >>> cypher_ceaser_3('a b c', -1)
     'z a b'
     """
     def _offset_letter(letter):
@@ -36,6 +109,7 @@ def cypher_ceaser(text, offset=1):
             return letter
         return LETTERS[(LETTERS.index(letter) + offset) % len(LETTERS)]
     return ''.join(map(_offset_letter, text.lower()))
+
 
 
 from itertools import cycle
