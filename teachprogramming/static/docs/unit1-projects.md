@@ -10,7 +10,7 @@ AS-Level Computing: Projects
     * It is recommended that you use a least 2 languages (one static, one dynamic)
 
 
-Training Tasks (Grade E to D)
+Training Tasks (Grade E)
 -----------------------------
 1. Ask the user for a username and then ask for the password. If the username and password are correct give a message `approved` and exit. After 3 incorrect attempts, print `denied` and exit.
     * Extension: delay for 2 seconds on incorrect password
@@ -40,31 +40,15 @@ Create a program to calculate and display the filesize in bytes of
 * Bitmap Image: width, height, bit's per pixel
 * Sound Sample: bits, channels, frequency, duration
 * Uncompressed Video: image_size, bit-depth, frames per second, duration
+
 ### Verify
 * Compare your program's output with the size of an actual uncompressed file (bmp, wav)
 * Are they different? Why are they different?
-### Extension (D Grade)
-* Combine with Humanise task to report filesize in a human readable form
-### Extension (C Grade)
-* Combine with Humanise and select the largest corresponding power. e.g. 1.2Gb
-### Extension (B Grade)
-* Refer to humanise via an `import`
 
-
-Humanise Strings (D Grade)
---------------------------
-TODO
-Know the names, symbols and corresponding powers of 2 for the binary prefixes:
-bi=2
-* kibi, Ki - 2^10
-* mebi, Mi - 2^20
-* gibi, Gi - 2^30
-* tebi, Ti - 2^40
-Know the names, symbols and corresponding powers of 10 for the decimal prefixes:
-* kilo, k - 10^3
-* mega, M - 10^6
-* giga, G - 10^9
-* tera, T - 10^12
+### B Grade
+* Combine with _Humanise task_ to report filesize in a human readable form
+    * select the largest corresponding power. e.g. 1.2Gb
+* Refer to humanise library via an `import`
 
 
 MIDI notes (E Grade) (Optional)
@@ -73,7 +57,7 @@ Play from code 'Twinkle Twinkle Little Star' by sending MIDI notes to a synthesi
 TODO: add `sleep` to cheat sheet
 TODO: add example of playing 1 midi note to cheat sheet
 
-### Extension (D Grade)
+### D Grade
 * Enable the tune to be transposed up or down
 * Pass a tempo in bpm
 
@@ -90,12 +74,12 @@ would be converted to
 
 Running the program twice should return to the original text.
 
-### Extension (C Grade)
+### C Grade
 Ensure the first letter is capitalized if the original word had a capital letter.
 
 > Eht kciuq nworb xof
 
-### Extension (B Grade) - Command Line Options
+### B Grade - Command Line Options
 The user should be able to use the program from the command line in the following way
 
 ```bash
@@ -130,16 +114,21 @@ Calculator (D Grade)
     0.667
 ```
 
-### Extension (C Grade)
-
-* If the first number is not inputted, use the answer from the previous step automatically
-
 ### Techniques
 This project is designed to get you to understand
 * String splitting, Parsing strings, Float/Double/Real data-types, Rounding, Mathematical Operators
 
-### Extension (GUI Experience)
+### C Grade
 
+* If the first number is not input, use the answer from the previous step automatically
+```
+    >>> 1 + 2
+    3
+    >>> + 7
+    10
+```
+
+### Extension (GUI Experience)
 * In VB.NET
     * Create a GUI calculator with buttons for each digit/operation.
         * each digit will append to a `display` textbox/string
@@ -156,19 +145,35 @@ You must write functions that can validate the following
 * Credit Card Number - with or without spaces (D Grade)
 * Postcode (D Grade) (Optional B Grade - full http://en.wikipedia.org/wiki/Postcodes_in_the_United_Kingdom)
 * ISBN 10 code (http://en.wikipedia.org/wiki/Check_digit) (C Grade)
+    * The ISBN code should work with either dashes and spaces in the number or not
 
 ### Techniques
 This project is designed to get you to
 * Use "Modula Arithmetic"
 * Consider careful test data
-* The ISBN code should work with either dashes and spaces in the number or not
+
+
+Humanise Strings (D Grade)
+--------------------------
+TODO
+Know the names, symbols and corresponding powers of 2 for the binary prefixes:
+bi=2
+* kibi, Ki - 2^10
+* mebi, Mi - 2^20
+* gibi, Gi - 2^30
+* tebi, Ti - 2^40
+Know the names, symbols and corresponding powers of 10 for the decimal prefixes:
+* kilo, k - 10^3
+* mega, M - 10^6
+* giga, G - 10^9
+* tera, T - 10^12
 
 
 Cypher (D to A Grade)
 ---------------------
 Create a program to encode/decode messages.
 
-### Grade D
+### D Grade
 ```python
     >>> cypher_ceaser(1, 'abc')
     'bcd'
@@ -180,7 +185,7 @@ Create a program to encode/decode messages.
     'yza'
 ```
 
-### Grade C
+### C Grade
 ```python
     >>> cypher_ceaser(-1, 'a b c')
     'z a b'
@@ -214,10 +219,10 @@ Operate Vigenere on a plain bytes and encode/decode a binary file
 
 Multi Format Converter (C Grade)
 --------------------------------
-Write a program that converts from one number format to another
-* Binary to Denary (and/or vice versa)
-* HEX to Denary (and/or vice versa)
-* 3Bit Grey Code (and/or vice versa) http://en.wikipedia.org/wiki/Grey_code
+Write a program that converts strings from one number format to another.
+* Binary to Denary (and vice versa)
+* HEX to Denary (and vice versa)
+* 3Bit Grey Code (and vice versa) http://en.wikipedia.org/wiki/Grey_code
 
 ### Techniques
 * This project will assess Grey Codes, Suitable Test data and Algorithm design
@@ -260,7 +265,7 @@ Sorting and Searching Records (Grade D to B)
 * This project will assess your algorithm design, CSV handling, Records(dictionaries/associative-arrays/maps) Bubble Sort understanding and Linear/Binary Search Understanding
 
 
-2D Arrays & RLE Encoding (Grade B)
+2D Arrays & RLE Encoding (Grade B to A)
 ----------------------------------
 Read the ConwayRLE format and display the result as ASCII
 http://www.conwaylife.com/wiki/RLE
@@ -276,6 +281,9 @@ http://www.conwaylife.com/wiki/RLE
 ```
 ### Techniques
 * This project is designed to get you to use 2D Arrays and read/understand/parse an externally specified file format.
+
+### Grade A
+Implement Conways game of life in ASCII text
 
 
 2D Arrays & Algorithm Design (B to A Grade)
@@ -293,7 +301,7 @@ http://www.conwaylife.com/wiki/RLE
     RRY.RYYR
 ```
 
-### Extension (A Grade Level)
+### Grade A
 * Make the game playable for 2 players
 
 ### Techniques
@@ -338,13 +346,15 @@ If you can complete _Die Tipping_ or _Puzzle Game_ you can work as a professiona
 You are better than some university graduates.
 
 
-Documenting Each Project
-========================
+Project Documenting
+===================
 
 * Each project should take on average 2 weeks
 * For 4 projects the following documentation needs to be submitted
     * (The process will help you for all projects, but is not formally required)
-* Use these headings. Every word below is from the spec and needs to be used by you in the exam
+* Use these headings. Every word below is from the spec and needs to be used by you in the exa
+* 2 project submissions must be in a static language
+* 2 projects submissions be in a dynamic language
 
 * Analysis
     * Understand the problem
@@ -358,6 +368,7 @@ Documenting Each Project
         * Normal (typical)
         * Boundary/limit
         * Erroneous
+    * Consider an average of 10 items of test data
     * DO NOT PROCEED TO DESIGN WITHOUT DOING THIS! SERIOUSLY!
 * Design
     * Plan Code Solution - Algorithm design
@@ -393,8 +404,10 @@ Suggestions
 * Touch the mouse as little as possible
 * Learn to use your IDE's advanced hotkeys
 * Setup your IDE to use a linter
-* Use a debugger
+* Use a debugger (not just `print`)
 * Use version control
 * Write your automated tests before you implement your feature
+    * Write your tests as functions before you start
     * use `assert`
+    * [Test Driven Development](https://en.wikipedia.org/wiki/Test-driven_development)
 * Standard Library - attempt to read it
