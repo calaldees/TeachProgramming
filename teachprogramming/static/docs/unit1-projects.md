@@ -259,7 +259,7 @@ Sorting and Searching Records (Grade D to B)
 
 ### Grade B
 * Return multiple surnames from binary search
-* Implement QuickSort
+* Implement MergeSort
 
 ### Techniques
 * This project will assess your algorithm design, CSV handling, Records(dictionaries/associative-arrays/maps) Bubble Sort understanding and Linear/Binary Search Understanding
