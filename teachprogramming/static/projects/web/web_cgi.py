@@ -19,7 +19,23 @@ w.print_headers()
 import sys, os, pickle          # System imports
 import cgi                      # For accessing web form data
 import cgitb; cgitb.enable()    # If there is an error in the script show it as an HTML page for web debugging
-import Cookie                   # Cookie's - WAIT! Maybe we should tell the EU and the user, we are breaking the law, such a filthy criminal I am
+
+# Cookie's - we should tell the EU and the user, we are currently breaking the law
+try:
+    from http.cookies import SimpleCookie
+except ImportError:  # python2 fallback
+    from Cookie import SimpleCookie
+
+import time
+try:
+    import hashlib
+    def new_id():
+        return hashlib.sha1(str(time.time()).encode('utf8')).hexdigest()
+except ImportError:  # python2 fallback
+    import sha
+    def new_id():
+        return sha.new(str(time.time())).hexdigest()
+
 
 env = os.environ
 
@@ -42,7 +58,7 @@ class Webpage():
         self.params = form(cgi.FieldStorage())  # Get web form data as form
 
         # Setup webpage variables
-        self.cookie  = Cookie.SimpleCookie(env.get('HTTP_COOKIE',''))
+        self.cookie  = SimpleCookie(env.get('HTTP_COOKIE',''))
         self.session = {}
         self.headers = {'Content-type':'text/html'}
 
@@ -51,8 +67,7 @@ class Webpage():
             self.session_id = self.cookie['sid'].value
             del self.cookie['sid']
         else:
-            import sha, time
-            self.session_id = sha.new(str(time.time())).hexdigest()
+            self.session_id = new_id()
             self.cookie['sid'] = self.session_id
             
         # Load session_id file

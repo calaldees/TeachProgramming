@@ -1,4 +1,10 @@
-#!/usr/bin/python
+#!/usr/bin/python3
+
+# touch messages.py && chmod 744 messages.py && curl -O https://raw.githubusercontent.com/calaldees/TeachProgramming/master/teachprogramming/static/projects/web/web_cgi.py && chmod 755 web_cgi.py && ln -s ./ cgi-bin && touch messages.txt   # VER: run_notes
+# python -m CGIHTTPServer 8000       # python2  # VER: run_notes
+# python3 -m http.server --cgi 8000  # python3  # VER: run_notes
+# http://localhost:8000/cgi-bin/messages.py     # VER: run_notes
+
 
 from web_cgi import Webpage, env
 w = Webpage()

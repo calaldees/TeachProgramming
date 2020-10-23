@@ -136,3 +136,7 @@ map, reduce, filter
 immutable lists (and manipulation)
 
 depth first search - breth first search
+
+perfect tictactoe ai?
+
+web-cgi?
