@@ -5,14 +5,45 @@ https://www.geeksforgeeks.org/canonical-huffman-coding/
 """
 
 import typing
-from functools import reduce
+from functools import reduce, total_ordering
+from itertools import zip_longest, tee
 from collections import defaultdict
 from queue import PriorityQueue
 
+
+def pairwise(iterable, fillvalue=None):
+    """
+    https://stackoverflow.com/a/5434936/3356840
+    s -> (s0,s1), (s1,s2), (s2, s3), ...
+
+    >>> tuple(pairwise((1,2,3)))
+    ((1, 2), (2, 3), (3, None))
+    """
+    a, b = tee(iterable)
+    next(b, None)
+    return zip_longest(a, b, fillvalue=fillvalue)
+def is_last(iterable):
+    """
+    >>> tuple(is_last('123'))
+    (('1', False), ('2', False), ('3', True))
+    """
+    return ((a, True if b is None else False) for a, b in pairwise(iterable))
+
+
+
+@total_ordering
 class Tree():
     def __init__(self, left=None, right=None):
         self.left = left
         self.right = right
+
+    def __cmp__(self, other):
+        return False
+    def __eq__(self, other):
+        return self is other
+    def __lt__(self, other):
+        return False
+
     def depth_of_nodes(self):
         """
         >>> t = Tree(left='C', right=Tree(left=Tree(left='D', right='A'), right='B'))
@@ -64,27 +95,33 @@ def _convert_to_PriorityQueue(fa) -> PriorityQueue:
         return q
     return reduce(_, fa.items(), PriorityQueue())
 
-def _build_tree(data):
+def _build_tree_from_data(data):
     """
-    >>> t = _build_tree(b'ABCD' + b'A'*9 + b'C'*14 + b'D'*6)
+    # WeightTreeItem(weight=33, item=)
+    >>> t = _build_tree_from_data(b'ABCD' + b'A'*9 + b'C'*14 + b'D'*6)
     >>> t
-    WeightTreeItem(weight=33, item=<huffman.Tree object at 0x...>)
-    >>> chr(t.item.left)
+    <huffman.Tree object at 0x...>
+    >>> chr(t.left)
     'C'
-    >>> t.item.right
+    >>> t.right
     <huffman.Tree object at 0x...>
     """
     q = _convert_to_PriorityQueue(_frequency_analysis(data))
     while q.qsize() > 1:
         a, b = q.get(), q.get()
         q.put(WeightTreeItem(a.weight + b.weight, Tree(a.item, b.item)))
-    return q.get()
+    return q.get().item
 
-def _normalise_tree_depths(tree):
+def _normalise_tree_depths(tree) -> tuple[int]:
     """
+    A dataset of every possible 0-255 byte is uniform. Each key length in the tree will be 8-bits
+    >>> t = _build_tree_from_data(bytes(range(256)))
+    >>> assert _normalise_tree_depths(t) == (8,)*256
+
     #>>> t = Tree(left=3, right=Tree(left=Tree(left=4, right=1), right=2))
-    >>> t = _build_tree(bytes(range(256)))
-    >>> _normalise_tree_depths(t)
+    # +bytes(range(128)
+    #>>> from itertools import groupby
+    #>>> tuple((i, sum(1 for x in ll)) for i, ll in groupby(sorted(_normalise_tree_depths(t))))
     """
     i_depth = sorted((i, depth) for depth, i in sorted(tree.depth_of_nodes()))
     def pop_if_match(i):
@@ -95,6 +132,51 @@ def _normalise_tree_depths(tree):
                 return _depth
         return 0
     return tuple(pop_if_match(i) for i in range(256))
+
+def _build_tree_from_normalised_depths(normalised_depths) -> Tree:
+    """
+    #>>> t = _build_tree_from_normalised_depths((1, 2, 3))
+    >>> t = _build_tree_from_normalised_depths((8,)*255)
+    >>> t
+    <huffman.Tree object at 0x...>
+    >>> t.right
+    'mpp'
+    """
+    # Take a list of 'bitlengths' in order for 0-255 and make a sorted bitdepth->character list
+    assert len(normalised_depths) == 255
+    normalised_character_to_huffman_binary_code = []
+    previous_code = None
+    for depth, character in sorted(zip(
+        normalised_depths,
+        range(256),
+    )):
+        if previous_code is None:
+            previous_code = '0' * depth
+            huffman_code = previous_code
+        else:
+            #huffman_code = "{0:b}".format(int(previous_code, base=2)+1)
+            assert False, 'this needs to be some kind of shift bollox - finished this'
+        if depth > len(previous_code):
+            huffman_code += '0'*(depth-len(previous_code))
+        normalised_character_to_huffman_binary_code.append((
+            character,
+            huffman_code,
+        ))
+        #breakpoint()
+        previous_code = huffman_code
+    # Build Tree
+    root = Tree()
+    for character, huffman_code in normalised_character_to_huffman_binary_code:
+        t = root
+        for binary_digit, _is_last in is_last(huffman_code):
+            if binary_digit == '0':
+                t.left = t.left or (character if _is_last else Tree())
+                t = t.left
+            if binary_digit == '1':
+                t.right = t.right or (character if _is_last else Tree())
+                t = t.right
+    #breakpoint()
+    return root
 
 
 def encode(data: bytes) -> bytes:
