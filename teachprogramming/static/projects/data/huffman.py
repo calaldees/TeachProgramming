@@ -6,7 +6,7 @@ https://www.geeksforgeeks.org/canonical-huffman-coding/
 
 import typing
 from functools import reduce, total_ordering
-from itertools import zip_longest, tee
+from itertools import zip_longest, tee, groupby
 from collections import defaultdict
 from queue import PriorityQueue
 
@@ -36,6 +36,9 @@ class Tree():
     def __init__(self, left=None, right=None):
         self.left = left
         self.right = right
+
+    def __str__(self):
+        return f'({str(self.left)},{str(self.right)})'
 
     def __cmp__(self, other):
         return False
@@ -112,16 +115,16 @@ def _build_tree_from_data(data):
         q.put(WeightTreeItem(a.weight + b.weight, Tree(a.item, b.item)))
     return q.get().item
 
-def _normalise_tree_depths(tree) -> tuple[int]:
+def _normalise_depths_from_tree(tree) -> tuple[int]:
     """
     A dataset of every possible 0-255 byte is uniform. Each key length in the tree will be 8-bits
     >>> t = _build_tree_from_data(bytes(range(256)))
-    >>> assert _normalise_tree_depths(t) == (8,)*256
+    >>> assert _normalise_depths_from_tree(t) == (8,)*256
 
     #>>> t = Tree(left=3, right=Tree(left=Tree(left=4, right=1), right=2))
     # +bytes(range(128)
     #>>> from itertools import groupby
-    #>>> tuple((i, sum(1 for x in ll)) for i, ll in groupby(sorted(_normalise_tree_depths(t))))
+    #>>> tuple((i, sum(1 for x in ll)) for i, ll in groupby(sorted(_normalise_depths_from_tree(t))))
     """
     i_depth = sorted((i, depth) for depth, i in sorted(tree.depth_of_nodes()))
     def pop_if_match(i):
@@ -133,37 +136,36 @@ def _normalise_tree_depths(tree) -> tuple[int]:
         return 0
     return tuple(pop_if_match(i) for i in range(256))
 
-def _build_tree_from_normalised_depths(normalised_depths) -> Tree:
+def _tree_from_normalised_depths(normalised_depths) -> Tree:
     """
-    #>>> t = _build_tree_from_normalised_depths((1, 2, 3))
-    >>> t = _build_tree_from_normalised_depths((8,)*255)
+    #>>> t = _tree_from_normalised_depths((1, 2, 3))
+    >>> normalised_depths = (8,)*256
+    >>> t = _tree_from_normalised_depths(normalised_depths)
     >>> t
     <huffman.Tree object at 0x...>
-    >>> t.right
-    'mpp'
+    >>> import re
+    >>> frozenset(map(str,range(256))) == frozenset(re.findall('\d+', str(t)))
+    True
+    >>> _normalise_depths_from_tree(t) == normalised_depths
+    True
     """
     # Take a list of 'bitlengths' in order for 0-255 and make a sorted bitdepth->character list
-    assert len(normalised_depths) == 255
+    assert len(normalised_depths) == 256, 'must have a depth for each character 0-255'
+
     normalised_character_to_huffman_binary_code = []
-    previous_code = None
+    huffman_code = ''
     for depth, character in sorted(zip(
         normalised_depths,
         range(256),
     )):
-        if previous_code is None:
-            previous_code = '0' * depth
-            huffman_code = previous_code
-        else:
-            #huffman_code = "{0:b}".format(int(previous_code, base=2)+1)
-            assert False, 'this needs to be some kind of shift bollox - finished this'
-        if depth > len(previous_code):
-            huffman_code += '0'*(depth-len(previous_code))
-        normalised_character_to_huffman_binary_code.append((
-            character,
-            huffman_code,
-        ))
-        #breakpoint()
-        previous_code = huffman_code
+        huffman_code_length = len(huffman_code) or depth
+        huffman_code = ("{0:b}".format(int(huffman_code, base=2)+1) if huffman_code else '').zfill(huffman_code_length)
+        if depth > len(huffman_code):
+            huffman_code += '0'*(depth-len(huffman_code))
+        normalised_character_to_huffman_binary_code.append((character, huffman_code))
+
+    len(frozenset(b for a,b in normalised_character_to_huffman_binary_code)) == len(normalised_character_to_huffman_binary_code), 'we have conflicting binary representations of huffman_codes'
+
     # Build Tree
     root = Tree()
     for character, huffman_code in normalised_character_to_huffman_binary_code:
@@ -175,8 +177,23 @@ def _build_tree_from_normalised_depths(normalised_depths) -> Tree:
             if binary_digit == '1':
                 t.right = t.right or (character if _is_last else Tree())
                 t = t.right
-    #breakpoint()
+
     return root
+
+def _normalise_depths_to_bytes(normalised_depths):
+    r"""
+    >>> _normalise_depths_to_bytes(range(16))
+    b'\x01#Eg\x89\xab\xcd\xef'
+    """
+    #assert len(normalised_depths) == 256
+    return bytes.fromhex(''.join('{:x}'.format(i) for i in normalised_depths))
+def _bytes_to_normalise_depths(data):
+    r"""
+    >>> _bytes_to_normalise_depths(b'\x01#Eg\x89\xab\xcd\xef')
+    (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
+    """
+    #assert len(data) == 128
+    return tuple(int(c, base=16) for c in data.hex())
 
 
 def encode(data: bytes) -> bytes:
