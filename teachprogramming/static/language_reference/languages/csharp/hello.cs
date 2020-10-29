@@ -1,5 +1,6 @@
+// sudo apt-get install mono-mcs -y
 // bash shortcut
-// function cs { mcs "$1" && mono "${1%.*}.exe" && rm "${1%.*}.exe"; }
+// function csharp { mcs "$1" && clear && mono "${1%.*}.exe" && rm "${1%.*}.exe"; }
 
 using System;
 

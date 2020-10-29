@@ -146,7 +146,7 @@ def _build_tree_from_data(data):
         q.put(WeightTreeItem(a.weight + b.weight, Tree(a.item, b.item)))
     return q.get().item
 
-def _normalise_depths_from_tree(tree) -> tuple[int]:
+def _normalise_depths_from_tree(tree: Tree) -> tuple[int]:
     """
     A dataset of every possible 0-255 byte is uniform. Each key length in the tree will be 8-bits
     >>> t = _build_tree_from_data(bytes(range(256)))
@@ -167,7 +167,7 @@ def _normalise_depths_from_tree(tree) -> tuple[int]:
         return 0
     return tuple(pop_if_match(i) for i in range(256))
 
-def _tree_from_normalised_depths(normalised_depths) -> Tree:
+def _tree_from_normalised_depths(normalised_depths: tuple[int]) -> Tree:
     """
     #>>> t = _tree_from_normalised_depths((1, 2, 3))
     >>> normalised_depths = (8,)*256
@@ -211,14 +211,14 @@ def _tree_from_normalised_depths(normalised_depths) -> Tree:
 
     return root
 
-def _normalise_depths_to_bytes(normalised_depths):
+def _normalise_depths_to_bytes(normalised_depths: tuple[int]) -> bytes:
     r"""
     >>> _normalise_depths_to_bytes(range(16))
     b'\x01#Eg\x89\xab\xcd\xef'
     """
     #assert len(normalised_depths) == 256
     return bytes.fromhex(''.join('{:x}'.format(i) for i in normalised_depths))
-def _bytes_to_normalise_depths(data):
+def _bytes_to_normalise_depths(data: bytes) -> tuple[int]:
     r"""
     >>> _bytes_to_normalise_depths(b'\x01#Eg\x89\xab\xcd\xef')
     (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
