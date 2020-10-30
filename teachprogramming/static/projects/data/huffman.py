@@ -2,8 +2,11 @@
 https://en.wikipedia.org/wiki/Huffman_coding
 https://en.wikipedia.org/wiki/Canonical_Huffman_code
 https://www.geeksforgeeks.org/canonical-huffman-coding/
+
+docker run -it --name python3.9 --volume $PWD:/code/:ro python:alpine /bin/sh
 """
 
+import io
 import typing
 from functools import reduce, total_ordering
 from itertools import zip_longest, tee, groupby
@@ -29,6 +32,32 @@ def is_last(iterable):
     """
     return ((a, True if b is None else False) for a, b in pairwise(iterable))
 
+
+def bytes_iterator(source, chunksize=8192):
+    """
+    https://stackoverflow.com/a/1035456
+    
+    >>> tuple(bytes_iterator(b"abc"))
+    (97, 98, 99)
+    >>> tuple(bytes_iterator(io.BytesIO(b"abc")))
+    (97, 98, 99)
+    """
+    if isinstance(source, bytes):
+        for b in source:
+            yield b
+        return
+    while data := source.read(chunksize):
+        for b in data:
+            yield b
+def bit_iterator(byte):
+    """
+    >>> tuple(bit_iterator(15))
+    (0, 0, 0, 0, 1, 1, 1, 1)
+    >>> tuple(bit_iterator(129))
+    (1, 0, 0, 0, 0, 0, 0, 1)
+    """
+    for i in range(7, -1, -1):
+        yield 1 if byte & pow(2, i) else 0
 
 
 @total_ordering
@@ -97,6 +126,8 @@ def _convert_to_PriorityQueue(fa) -> PriorityQueue:
         q.put(WeightTreeItem(weight, key))
         return q
     return reduce(_, fa.items(), PriorityQueue())
+
+# ------------------------------------------------------------------------------
 
 def _build_tree_from_data(data):
     """
@@ -196,16 +227,35 @@ def _bytes_to_normalise_depths(data):
     return tuple(int(c, base=16) for c in data.hex())
 
 
-def encode(data: bytes) -> bytes:
+def _encode(source) -> bytes:
     """
-    >>> encode(b'AAAAACGTTATGCCTA')
+    >>> tuple(_encode(b'abc'))
     b''
     """
-    return b''
+    normalised_depths = _normalise_depths_from_tree(_build_tree_from_data(bytes_iterator(source)))
+    yield from iter(_normalise_depths_to_bytes(normalised_depths))
+    root = _tree_from_normalised_depths(normalised_depths)
+    if hasattr(source, 'seek'):
+        source.seek(0)
 
-def decode(data: bytes) -> bytes:
+
+
+def _decode(data: bytes) -> bytes:
     """
-    >>> decode(b'')
+    >>> _decode(b'')
     b'AAAAACGTTATGCCTA'
     """
     return b''
+    t = root
+    for byte in bytes_iterator(source):
+        for bit in bit_iterator(byte):
+            if bit:
+                t = t.left
+            else:
+                t = t.right
+            if isinstance(t, Tree):
+                continue
+            else:
+                yield t
+                t = root
+
