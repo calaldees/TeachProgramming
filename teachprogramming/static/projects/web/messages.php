@@ -1,9 +1,9 @@
 <?php                                                               # VER: login
-    if ($_POST['logout']!=null) {                                   # VER: logout
+    if (isset($_POST['logout'])) {                                   # VER: logout
         setcookie ("username", null, time()+36000);                 # VER: logout
         $_COOKIE['username'] = null;                                # VER: logout
     }                                                               # VER: logout
-    if ($_POST['username']!=null) {                                 # VER: login
+    if (isset($_POST['username'])) {                                 # VER: login
         setcookie ("username", $_POST['username'], time()+36000);   # VER: login
         $_COOKIE['username']=$_POST['username'];                    # VER: login
     }                                                               # VER: login
@@ -15,8 +15,10 @@
 
     <body>
         <h1>Message Board</h1>
-        <!-- Launch server on OSX with
-        python -m webbrowser -t "http://localhost:8000/messages.php" && touch messages.txt && php -S 127.0.0.1:8000 -t .
+        <!-- Launch server on linux/osx with
+            touch messages.txt
+            php -S 0.0.0.0:8000 -d display_errors=on -t .
+            python -m webbrowser -t "http://localhost:8000/messages.php"
         -->
 
 <?php                                                                           # VER: textarea
