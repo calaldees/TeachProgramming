@@ -3,7 +3,7 @@ import time
 
 
 class TkAnimationFrame():
-    def __init__(self, width=640, height=480, frames_per_second=30):
+    def __init__(self, width=640, height=480, frames_per_second=60):
         self.frames_per_second = frames_per_second
 
         self.root = tkinter.Tk()
@@ -25,7 +25,7 @@ class TkAnimationFrame():
     def animation_thread(self):
         frame = 0
         while 'Escape' not in self.input:
-            self.loop(frame)
+            self.loop(self.canvas, frame)
             self.canvas.update()
             time.sleep(1/self.frames_per_second)
             self.canvas.delete(tkinter.ALL)
@@ -38,7 +38,7 @@ class TkAnimationFrame():
         """
         pass
 
-    def loop(self, frame):
+    def loop(self, canvas, frame):
         """
         http://zetcode.com/gui/tkinter/drawing/
         """
@@ -54,8 +54,8 @@ class AnimationDemo(TkAnimationFrame):
 
         self.img = tkinter.PhotoImage(file="images/fish.gif")
 
-    def loop(self, frame):
-        c = self.canvas
+    def loop(self, canvas, frame):
+        c = canvas
         c.create_rectangle(0, 0, c.winfo_width(), c.winfo_height(), outline="#000", fill="#000")
 
         t = frame % c.winfo_width()
