@@ -58,6 +58,22 @@ def bit_iterator(byte):
     """
     for i in range(7, -1, -1):
         yield 1 if byte & pow(2, i) else 0
+def iter_to_byte(data):
+    """
+    >>> iter_to_byte((0,0,0,0,0,0,0,0))
+    0
+    >>> iter_to_byte((0,0,0,0,0,0,0,1))
+    1
+    >>> iter_to_byte((1,0,0,0,0,0,0,0))
+    128
+    >>> iter_to_byte((1,1,1,1,1,1,1,1))
+    255
+    >>> iter_to_byte((0,0,0,0,1,1,1,1))
+    15
+    >>> iter_to_byte((1,0,0,0,0,0,0,1))
+    129
+    """
+    raise NotImplementedError()
 
 
 @total_ordering
@@ -93,6 +109,26 @@ class Tree():
                 stack.append((depth+1, i.right))
             else:
                 yield (depth, i.right)
+
+    @property
+    def dict(self):
+        """
+        >>> t = Tree(left='C', right=Tree(left=Tree(left='D', right='A'), right='B'))
+        >>> t.dict
+        {'C': (0,), 'D': (1, 0, 0), 'A': (1, 0, 1), 'B': (1, 1)}
+        """
+        d = {}
+        stack = [("", self)]
+        while stack:
+            path, i = stack.pop()
+            if isinstance(i, self.__class__):
+                stack.append((path+"1", i.right))
+                stack.append((path+"0", i.left))
+            else:
+                d[i] = tuple(0 if c=="0" else 1 for c in path)
+        return d
+
+
 
 def _frequency_analysis(data: bytes) -> dict[str, int]:
     """
@@ -215,6 +251,8 @@ def _normalise_depths_to_bytes(normalised_depths: tuple[int]) -> bytes:
     r"""
     >>> _normalise_depths_to_bytes(range(16))
     b'\x01#Eg\x89\xab\xcd\xef'
+
+    I'm encoding each bit depth into 4 bits (16 values) - this may not be enough - need to investigate!
     """
     #assert len(normalised_depths) == 256
     return bytes.fromhex(''.join('{:x}'.format(i) for i in normalised_depths))
@@ -229,33 +267,46 @@ def _bytes_to_normalise_depths(data: bytes) -> tuple[int]:
 
 def _encode(source) -> bytes:
     """
+    >>> tuple(bytes_iterator(io.BytesIO(b"abc")))
+    (97, 98, 99)
     >>> tuple(_encode(b'abc'))
     b''
     """
     normalised_depths = _normalise_depths_from_tree(_build_tree_from_data(bytes_iterator(source)))
     yield from iter(_normalise_depths_to_bytes(normalised_depths))
-    root = _tree_from_normalised_depths(normalised_depths)
+    lookup = _tree_from_normalised_depths(normalised_depths).dict
+
     if hasattr(source, 'seek'):
         source.seek(0)
 
+    def _bit_stream(source):
+        for byte in bytes_iterator(source):
+            yield from lookup[byte]
+    it = _bit_stream(source)
+    b = 'NonNull'
+    while any(b):
+        b = tuple(next(it) for b in range(8))
+        yield iter_to_byte(b)
 
 
-def _decode(data: bytes) -> bytes:
-    """
-    >>> _decode(b'')
-    b'AAAAACGTTATGCCTA'
-    """
-    return b''
-    t = root
-    for byte in bytes_iterator(source):
-        for bit in bit_iterator(byte):
-            if bit:
-                t = t.left
-            else:
-                t = t.right
-            if isinstance(t, Tree):
-                continue
-            else:
-                yield t
-                t = root
+
+
+# def _decode(data: bytes) -> bytes:
+#     """
+#     >>> _decode(b'')
+#     b'AAAAACGTTATGCCTA'
+#     """
+#     return b''
+#     t = root
+#     for byte in bytes_iterator(source):
+#         for bit in bit_iterator(byte):
+#             if bit:
+#                 t = t.left
+#             else:
+#                 t = t.right
+#             if isinstance(t, Tree):
+#                 continue
+#             else:
+#                 yield t
+#                 t = root
 
