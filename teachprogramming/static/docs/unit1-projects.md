@@ -119,7 +119,6 @@ This project is designed to get you to understand
 * String splitting, Parsing strings, Float/Double/Real data-types, Rounding, Mathematical Operators
 
 ### C Grade
-
 * If the first number is not input, use the answer from the previous step automatically
 ```
     >>> 1 + 2
@@ -132,6 +131,9 @@ This project is designed to get you to understand
 * In VB.NET
     * Create a GUI calculator with buttons for each digit/operation.
         * each digit will append to a `display` textbox/string
+
+### A2 (Professional)
+* Consider reverse polish and brackets (a stack?)
 
 
 Validation (E to C Grade)
@@ -214,7 +216,8 @@ Takes a string 'key' to rotate each letter.
 Operate Vigenere on a plain bytes and encode/decode a binary file
 
 ### todo
-[Vernam cipher](https://isaaccomputerscience.org/concepts/data_encrypt_vernam) (one-time pad) is key-length==message-length is unbreakable encryption
+* [Vernam cipher](https://isaaccomputerscience.org/concepts/data_encrypt_vernam) (one-time pad) is key-length==message-length is unbreakable encryption
+    * xor binary
 
 
 Multi Format Converter (C Grade)

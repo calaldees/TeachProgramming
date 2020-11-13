@@ -58,19 +58,19 @@ def bit_iterator(byte):
     """
     for i in range(7, -1, -1):
         yield 1 if byte & pow(2, i) else 0
-def iter_to_byte(data):
+def bit_iter_to_byte(data):
     """
-    >>> iter_to_byte((0,0,0,0,0,0,0,0))
+    >>> bit_iter_to_byte((0,0,0,0,0,0,0,0))
     0
-    >>> iter_to_byte((0,0,0,0,0,0,0,1))
+    >>> bit_iter_to_byte((0,0,0,0,0,0,0,1))
     1
-    >>> iter_to_byte((1,0,0,0,0,0,0,0))
+    >>> bit_iter_to_byte((1,0,0,0,0,0,0,0))
     128
-    >>> iter_to_byte((1,1,1,1,1,1,1,1))
+    >>> bit_iter_to_byte((1,1,1,1,1,1,1,1))
     255
-    >>> iter_to_byte((0,0,0,0,1,1,1,1))
+    >>> bit_iter_to_byte((0,0,0,0,1,1,1,1))
     15
-    >>> iter_to_byte((1,0,0,0,0,0,0,1))
+    >>> bit_iter_to_byte((1,0,0,0,0,0,0,1))
     129
     """
     raise NotImplementedError()
@@ -92,10 +92,11 @@ class Tree():
     def __lt__(self, other):
         return False
 
+    @property
     def depth_of_nodes(self):
         """
         >>> t = Tree(left='C', right=Tree(left=Tree(left='D', right='A'), right='B'))
-        >>> tuple(t.depth_of_nodes())
+        >>> tuple(t.depth_of_nodes)
         ((1, 'C'), (2, 'B'), (3, 'D'), (3, 'A'))
         """
         stack = [(1, self)]
@@ -193,7 +194,7 @@ def _normalise_depths_from_tree(tree: Tree) -> tuple[int]:
     #>>> from itertools import groupby
     #>>> tuple((i, sum(1 for x in ll)) for i, ll in groupby(sorted(_normalise_depths_from_tree(t))))
     """
-    i_depth = sorted((i, depth) for depth, i in sorted(tree.depth_of_nodes()))
+    i_depth = sorted((i, depth) for depth, i in sorted(tree.depth_of_nodes)
     def pop_if_match(i):
         if i_depth:
             _i, _depth = i_depth[0]

@@ -12,7 +12,6 @@ t1 = 0xff
 t2 = 0b101101
 t3 = b'\xff'
 
-''
 
 def baseconvert(number, fromdigits, todigits):
     """

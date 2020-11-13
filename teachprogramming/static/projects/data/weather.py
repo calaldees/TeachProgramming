@@ -1,3 +1,17 @@
+"""
+Concept for getting hourly weather data into python.
+
+It may be possible to download 4gb (compressed) of a years worth of data and mirror it locally on school servers.
+The files are named from weather station id numbers. It would be good to see these on a map.
+
+TODO:
+Investigate how to put multiple flags on a browser map - this could be a precursor to data layers? maybe heatmap?
+Investigate offline generation of map images too
+Can we put pins in a map where the weather stations are available?
+What can we do historically? - there is data here back to 1900
+My example below only extracts temperature - is there more we can do? wind direction?
+"""
+
 import os
 import csv
 import re
@@ -16,6 +30,9 @@ def load_neic_csv_into_data(filename, data):
     Parser for
     * [National Centers for Environmental Information (US)](https://www.ncei.noaa.gov/)
         * [global hourly](https://www.ncei.noaa.gov/data/global-hourly/)
+
+    Weather station id list?
+    https://www.metoffice.gov.uk/hadobs/hadisdh/data/PosthomogIDPHAt_anoms8110_goodsHadISDH.4.2.0.2019f_JAN2020.txt
     """
     log.debug(f'load {filename}')
     with open(filename, encoding='utf-8') as csvfile:
@@ -76,9 +93,9 @@ def main():
     for filename in get_csv_files(args['path']):
         load_neic_csv_into_data(filename, data)
 
-    #pprint(data)
-    #latlon = data.values().__iter__().__next__().keys().__iter__().__next__()
-    #open_browser(latlon)
+    pprint(data)
+    latlon = data.values().__iter__().__next__().keys().__iter__().__next__()
+    open_browser(latlon)
 
 
 if __name__ == "__main__":
