@@ -22,7 +22,7 @@
         -->
 
 <?php                                                                           # VER: textarea
-    if ($_COOKIE['username']==null) {                                           # VER: login
+    if (!isset($_COOKIE['username'])) {                                           # VER: login
         echo "<form action='' method='post'>";                                  # VER: login
         echo "  Username:<input type='text' name='username' />";                # VER: login
         echo "  <input type='submit' value='Login' />";                         # VER: login
@@ -40,7 +40,7 @@
         $messageboard_filename = "messages.txt";                                  # VER: save_message
                                                                                   # VER: save_message
         #If there is a message then append it to the end of the file              # VER: save_message
-        if ($_POST['message']) {                                                  # VER: save_message
+        if (isset($_POST['message'])) {                                                  # VER: save_message
             $file = fopen($messageboard_filename, "a"); #Open file in append mode # VER: save_message
             #fwrite($file, "<p>".$_POST['message']."</p>\n");                           # VER: save_message NOT username
             #fwrite($file, "<p>".$_POST['username'].": ".$_POST['message']."</p>\n");   # VER: username     NOT login
