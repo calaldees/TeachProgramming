@@ -8,6 +8,7 @@ docker run -it --name python3.9 --volume $PWD:/code/:ro python:alpine /bin/sh
 
 import io
 import typing
+import struct
 from functools import reduce, total_ordering
 from itertools import zip_longest, tee, groupby
 from collections import defaultdict
@@ -276,8 +277,9 @@ def _encode(source) -> bytes:
     """
     >>> tuple(bytes_iterator(io.BytesIO(b"abc")))
     (97, 98, 99)
-    >>> tuple(_encode(b'abc'))
-    b''
+    
+    #>>> tuple(_encode(b'abc'))
+    #b''
     """
     normalised_depths = _normalise_depths_from_tree(_build_tree_from_data(bytes_iterator(source)))
     yield from iter(_normalise_depths_to_bytes(normalised_depths))
@@ -288,39 +290,44 @@ def _encode(source) -> bytes:
         source.seek(0)
     else:
         length = len(source)
-    #yield length  # as 16bit usinged int? use struct?
+    yield from struct.pack('H', length)  #length as 16bit usinged int
 
     def _bit_stream(source):
         # reading bytes from the source, lookup the huffman tuple (0,1)'s (should be less than 8 bits)
-        # this is a continuious stream of these lookups
+        # this is a continuous stream of these lookups
         for byte in bytes_iterator(source):
             yield from lookup[byte]
     it = _bit_stream(source)
     b = 'NonNull'
     while any(b):
         # Convert batches of 8 bits at a time back to bytes
-        b = tuple(next(it) for b in range(8))
+        b = tuple(next(it, None) for b in range(8))
         yield bit_iter_to_byte(b)
 
 
+def _decode(data: bytes) -> bytes:
+    """
+    >>> bytes(_decode(bytes(_encode(b'abc'))))
+    b'abc'
+    """
+    if isinstance(data, bytes):
+        data = io.BytesIO(data)
+    root = _tree_from_normalised_depths(_bytes_to_normalise_depths(data.read(128)))
+    length = struct.unpack('H', data.read(2))[0]
 
-
-# def _decode(data: bytes) -> bytes:
-#     """
-#     >>> _decode(b'')
-#     b'AAAAACGTTATGCCTA'
-#     """
-#     return b''
-#     t = root
-#     for byte in bytes_iterator(source):
-#         for bit in bit_iterator(byte):
-#             if bit:
-#                 t = t.left
-#             else:
-#                 t = t.right
-#             if isinstance(t, Tree):
-#                 continue
-#             else:
-#                 yield t
-#                 t = root
-
+    pos = 0
+    t = root
+    for byte in bytes_iterator(data):
+        for bit in bit_iterator(byte):
+            if bit:
+                t = t.left
+            else:
+                t = t.right
+            if isinstance(t, Tree):
+                continue
+            else:
+                yield t
+                t = root
+                pos += 1
+                if pos >= length - 1:
+                    break
