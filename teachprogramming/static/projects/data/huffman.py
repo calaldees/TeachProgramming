@@ -73,7 +73,13 @@ def bit_iter_to_byte(data):
     >>> bit_iter_to_byte((1,0,0,0,0,0,0,1))
     129
     """
-    raise NotImplementedError()
+    data = tuple(data)
+    l = len(data)
+    assert l == 8
+    byte = 0
+    for i in range(l):
+        byte |= pow(2, 7 - i) if data[i] else 0
+    return byte
 
 
 @total_ordering
@@ -194,7 +200,7 @@ def _normalise_depths_from_tree(tree: Tree) -> tuple[int]:
     #>>> from itertools import groupby
     #>>> tuple((i, sum(1 for x in ll)) for i, ll in groupby(sorted(_normalise_depths_from_tree(t))))
     """
-    i_depth = sorted((i, depth) for depth, i in sorted(tree.depth_of_nodes)
+    i_depth = sorted((i, depth) for depth, i in sorted(tree.depth_of_nodes))
     def pop_if_match(i):
         if i_depth:
             _i, _depth = i_depth[0]
@@ -278,16 +284,23 @@ def _encode(source) -> bytes:
     lookup = _tree_from_normalised_depths(normalised_depths).dict
 
     if hasattr(source, 'seek'):
+        length = source.tell()
         source.seek(0)
+    else:
+        length = len(source)
+    #yield length  # as 16bit usinged int? use struct?
 
     def _bit_stream(source):
+        # reading bytes from the source, lookup the huffman tuple (0,1)'s (should be less than 8 bits)
+        # this is a continuious stream of these lookups
         for byte in bytes_iterator(source):
             yield from lookup[byte]
     it = _bit_stream(source)
     b = 'NonNull'
     while any(b):
+        # Convert batches of 8 bits at a time back to bytes
         b = tuple(next(it) for b in range(8))
-        yield iter_to_byte(b)
+        yield bit_iter_to_byte(b)
 
 
 
