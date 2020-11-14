@@ -382,6 +382,6 @@ def get_args():
 if __name__ == "__main__":
     args = get_args()
     if args.mode == 'encode':
-        _encode(args.input, args.output)
+        args.output.write(bytes(_encode(args.input)))
     elif args.mode == 'decode':
-        _decode(args.input, args.output)
+        args.output.write(bytes(_decode(args.input)))
