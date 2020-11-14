@@ -7,18 +7,20 @@ import base64
 import time
 from itertools import chain
 
-try:
-    import urllib.request
-    urlopen = urllib.request.urlopen
-except ImportError:
-    from urllib2 import urlopen
+#try:
+import urllib.request
+urlopen = urllib.request.urlopen
+from urllib.parse import quote
+#except ImportError:
+#    from urllib2 import urlopen
 
-try:
-    import html  # python3
-except ImportError:
-    from HTMLParser import HTMLParser  # python2 fallback
-    class html():
-        unescape = HTMLParser().unescape
+
+#try:
+import html  # python3
+#except ImportError:
+#    from HTMLParser import HTMLParser  # python2 fallback
+#    class html():
+#        unescape = HTMLParser().unescape
         #escape = HTMLParser().escape
 
 
@@ -32,7 +34,7 @@ def get_url(url, cache_path='cache', cache_seconds=60*60*100):
         if os.path.exists(cache_filename) and (os.stat(cache_filename).st_mtime > time.time() - cache_seconds):
             print('Cache: ' + url)
             with open(cache_filename, 'r') as filehandle:
-                return filehandle.read().decode('utf8')
+                return filehandle.read()  #.decode('utf8')
     print('External: ' + url)
     data = urlopen(url).read().decode('utf8')
     if data and cache_path:
@@ -41,7 +43,7 @@ def get_url(url, cache_path='cache', cache_seconds=60*60*100):
         except:
             pass
         with open(cache_filename, 'w') as filehandle:
-            filehandle.write(data.encode('utf8'))
+            filehandle.write(data)  # .encode('utf8')
     return data
 
 
@@ -50,7 +52,7 @@ def get_json(*args, **kwargs):
 
 
 def postcode_to_lat_long(postcode):
-    data = get_json('http://api.postcodes.io/postcodes/{}'.format(postcode))
+    data = get_json(f'http://api.postcodes.io/postcodes/{quote(postcode)}')
     return {
         'latitude': data['result'].get('latitude'),
         'longitude': data['result'].get('longitude'),
@@ -58,6 +60,10 @@ def postcode_to_lat_long(postcode):
 
 
 def get_user_tweets(username):
+    """
+    OLD!
+    Will not work with current twitter - have to use API - (hope without authentication?)
+    """
     TWITTER_URL = 'http://twitter.com/'
 
     twitter_html = get_url(TWITTER_URL + username)
@@ -80,6 +86,10 @@ def get_user_tweets(username):
 
 
 def get_ebay_items(search):
+    """
+    OLD
+    Page has changed - can't be used - suspect apikey required
+    """
     EBAY_ITEMS_URL = 'http://www.ebay.co.uk/sch/i.html?LH_Auction=1&_nkw='
     ebay_html = get_url(EBAY_ITEMS_URL + search)
 
@@ -173,26 +183,26 @@ def save_csv(items, filename='data.csv', **kwargs):
     print('Output: ' + filename)
     import csv
     FIELDNAMES = ('title', 'description', 'link', 'datetime')
-    with open(filename, 'wb') as csvfile:
+    with open(filename, 'w') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=FIELDNAMES)
         writer.writeheader()
         for item in items:
-            writer.writerow({field: unicode(item.get(field, '')).encode('utf8') for field in FIELDNAMES})
+            writer.writerow({field: item.get(field, '') for field in FIELDNAMES})  #.encode('utf8')
 
 
 def save_rss(items, filename='data.xml', **kwargs):
     print('Output: ' + filename)
     rss_string = format_rss(items, **kwargs)
     with open(filename, 'w') as filehandle:
-        filehandle.write(rss_string.encode('utf8'))
+        filehandle.write(rss_string)  #.encode('utf8')
 
 
 if __name__ == "__main__":
     items = chain(
-        get_user_tweets('calaldees'),
+        #get_user_tweets('calaldees'),
         get_local_crime(postcode_to_lat_long('ct1 1ys')),
         get_tube_disruptions('piccadilly'),
-        get_ebay_items('kenshin')[:5],
+        #get_ebay_items('kenshin')[:5],
         #get_local_weather('CT1 1YS')
     )
     items = sorted(items, key=lambda item: item.get('datetime'), reverse=True)
