@@ -4,6 +4,7 @@ https://en.wikipedia.org/wiki/Canonical_Huffman_code
 https://www.geeksforgeeks.org/canonical-huffman-coding/
 
 docker run -it --name python3.9 --volume $PWD:/code/:ro python:alpine /bin/sh
+    pytest --doctest-modules huffman.py
 """
 
 import io
@@ -175,7 +176,20 @@ def _convert_to_PriorityQueue(fa) -> PriorityQueue:
 
 def _build_tree_from_data(data):
     """
-    # WeightTreeItem(weight=33, item=)
+    >>> t = _build_tree_from_data(b'a')
+    >>> t
+    <huffman.Tree object at 0x...>
+    >>> t.left
+    97
+
+    >>> t = _build_tree_from_data(b'aabb')
+    >>> t
+    <huffman.Tree object at 0x...>
+    >>> t.left
+    97
+    >>> t.right
+    98
+
     >>> t = _build_tree_from_data(b'ABCD' + b'A'*9 + b'C'*14 + b'D'*6)
     >>> t
     <huffman.Tree object at 0x...>
@@ -185,6 +199,8 @@ def _build_tree_from_data(data):
     <huffman.Tree object at 0x...>
     """
     q = _convert_to_PriorityQueue(_frequency_analysis(data))
+    if q.qsize() == 1:
+        return Tree(q.get().item, 0)  # special case - single item -> returns a tree with a dummy right node
     while q.qsize() > 1:
         a, b = q.get(), q.get()
         q.put(WeightTreeItem(a.weight + b.weight, Tree(a.item, b.item)))
@@ -275,9 +291,6 @@ def _bytes_to_normalise_depths(data: bytes) -> tuple[int]:
 
 def _encode(source) -> bytes:
     """
-    >>> tuple(bytes_iterator(io.BytesIO(b"abc")))
-    (97, 98, 99)
-    
     #>>> tuple(_encode(b'abc'))
     #b''
     """
@@ -309,6 +322,23 @@ def _decode(data: bytes) -> bytes:
     """
     >>> bytes(_decode(bytes(_encode(b'abc'))))
     b'abc'
+    >>> bytes(_decode(bytes(_encode(b'aaaaaa'))))
+    b'aaaaaa'
+
+    >>> msg = b'There once was a dog in a bog with a log'
+    >>> msg_encoded = bytes(_encode(msg))
+    >>> msg_decoded = bytes(_decode(msg_encoded))
+    >>> msg_decoded == msg
+    True
+
+    >>> msg = b'a' * 1000
+    >>> msg_encoded = bytes(_encode(msg))
+    >>> msg_decoded = bytes(_decode(msg_encoded))
+    >>> msg_decoded == msg
+    True
+    >>> len(msg)/3 > len(msg_encoded)
+    True
+
     """
     if isinstance(data, bytes):
         data = io.BytesIO(data)
@@ -320,14 +350,38 @@ def _decode(data: bytes) -> bytes:
     for byte in bytes_iterator(data):
         for bit in bit_iterator(byte):
             if bit:
-                t = t.left
-            else:
                 t = t.right
+            else:
+                t = t.left
             if isinstance(t, Tree):
                 continue
             else:
                 yield t
+                if pos >= length - 1:
+                    return
                 t = root
                 pos += 1
-                if pos >= length - 1:
-                    break
+
+
+
+def get_args():
+    import argparse
+    parser = argparse.ArgumentParser(
+        prog        = "Huffman Compressor",
+        description = "Learning activity to implement a huffman compressor",
+        epilog      = "@calaldees"
+    )
+
+    parser.add_argument('mode', type=str, choices=('encode', 'decode'))
+    parser.add_argument('input', type=argparse.FileType('rb'))
+    parser.add_argument('output', type=argparse.FileType('wb'))
+
+    return parser.parse_args()
+
+
+if __name__ == "__main__":
+    args = get_args()
+    if args.mode == 'encode':
+        _encode(args.input, args.output)
+    elif args.mode == 'decode':
+        _decode(args.input, args.output)
