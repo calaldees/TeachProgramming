@@ -356,6 +356,13 @@ def _decode(data: bytes) -> bytes:
     >>> len(msg)/1.5 > len(msg_encoded)
     True
 
+    >>> import random
+    >>> msg = random.randbytes(8192)
+    >>> msg_encoded = bytes(_encode(msg))
+    >>> msg_decoded = bytes(_decode(msg_encoded))
+    >>> msg_decoded == msg
+    True
+
     """
     if isinstance(data, bytes):
         data = io.BytesIO(data)
