@@ -43,6 +43,8 @@ def bytes_iterator(source, chunksize=8192):
     (97, 98, 99)
     >>> tuple(bytes_iterator(io.BytesIO(b"abc")))
     (97, 98, 99)
+    >>> tuple(bytes_iterator(io.BytesIO(b"abcdef"), chunksize=2))
+    (97, 98, 99, 100, 101, 102)
     """
     if isinstance(source, bytes):
         for b in source:
@@ -305,17 +307,23 @@ def _encode(source) -> bytes:
         length = len(source)
     yield from struct.pack('H', length)  #length as 16bit usinged int
 
+    #global num_bytes_in
+    #num_bytes_in = 0
     def _bit_stream(source):
+        global num_bytes_in
         # reading bytes from the source, lookup the huffman tuple (0,1)'s (should be less than 8 bits)
         # this is a continuous stream of these lookups
         for byte in bytes_iterator(source):
             yield from lookup[byte]
+            #num_bytes_in += 1
     it = _bit_stream(source)
-    b = 'NonNull'
-    while any(b):
+    b = tuple()
+    num_bytes_out = 0
+    while None not in b:
         # Convert batches of 8 bits at a time back to bytes
         b = tuple(next(it, None) for b in range(8))
         yield bit_iter_to_byte(b)
+        num_bytes_out += 1
 
 
 def _decode(data: bytes) -> bytes:
@@ -337,6 +345,15 @@ def _decode(data: bytes) -> bytes:
     >>> msg_decoded == msg
     True
     >>> len(msg)/3 > len(msg_encoded)
+    True
+
+    >>> with open(__file__, 'rb') as filehandle:
+    ...     msg = filehandle.read()
+    >>> msg_encoded = bytes(_encode(msg))
+    >>> msg_decoded = bytes(_decode(msg_encoded))
+    >>> msg_decoded == msg
+    True
+    >>> len(msg)/1.5 > len(msg_encoded)
     True
 
     """
