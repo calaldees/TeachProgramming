@@ -20,6 +20,12 @@ Extension:
         * talk about the problems of expressing data as logic (e.g 3+ if statements)
     * Maybe the tuple of data could be loaded from JSON and shared with other students?
 * sea_level(0-255) to meters function?
+
+Quick Setup: bash commands
+    curl -O "https://raw.githubusercontent.com/calaldees/TeachProgramming/master/teachprogramming/static/projects/data/elavation.py"
+    curl -O "https://karczmarczuk.users.greyc.fr/TEACH/Imagerie.old/Images/elev_bump_8k.jpg"
+    pip3 install pillow
+    python3 elavation.py
 """
 from PIL import Image  # `pip3 install pillow`  # https://pillow.readthedocs.io/
 
@@ -32,7 +38,7 @@ image_src = Image.open(IMAGE_FILENAME)
 image_src = image_src.crop(CROP_UNITED_KINGDOM)
 image_des = Image.new('RGB', (image_src.width, image_src.height), 0x000000)
 
-sea_level = 10  # change this and see what happens
+sea_level = 2  # change this and see what happens
 
 for y in range(image_src.height):
     for x in range(image_src.width):
@@ -44,3 +50,4 @@ for y in range(image_src.height):
         image_des.putpixel((x, y), c)
 
 image_des.show()
+#image_des.save('elavation_uk.png')
