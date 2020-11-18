@@ -1,13 +1,18 @@
 """
 Elavation
+How much of the UK will be flooded when the sea level rises?
 
 Earth land height data - a greyscale image
-http://www.shadedrelief.com/natural3/pages/extra.html
+Download (place in script folder)
 https://karczmarczuk.users.greyc.fr/TEACH/Imagerie.old/Images/elev_bump_8k.jpg
+Source Image Reference
+http://www.shadedrelief.com/natural3/pages/extra.html
 
 The TIFFs and high ultra high res images will take too long to process in python.
 Using the 8k(low res) and UK crop means the processing in python will take 3 seconds on a normal machine.
 The jpg will have compression artifacts - this is good disscussion point with students.
+
+You will need to install `pillow` image library (see below)
 
 Extension:
 * Have 4 or 5 colours to signify different heights.
@@ -16,7 +21,7 @@ Extension:
     * Maybe the tuple of data could be loaded from JSON and shared with other students?
 * sea_level(0-255) to meters function?
 """
-from PIL import Image  # `pip install pillow`  # https://pillow.readthedocs.io/
+from PIL import Image  # `pip3 install pillow`  # https://pillow.readthedocs.io/
 
 IMAGE_FILENAME = './elev_bump_8k.jpg'
 
