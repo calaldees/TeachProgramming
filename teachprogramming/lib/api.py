@@ -1,5 +1,7 @@
 import os
 import logging
+from pathlib import Path
+from typing import NamedTuple
 
 import falcon
 
@@ -25,15 +27,34 @@ def fast_scan(root, path=None, exclude_filter=_default_exclude_filter, select_fi
             yield from fast_scan(root, os.path.join(path, f.name), exclude_filter=exclude_filter, select_filter=select_filter)
 
 
+class FileWrapper():
+    def __init__(self, f):
+        self.f = f
+        self.p = Path(f.path)
+    @property
+    def project(self):
+        return self.p.stem
+
+
+class FileCollection():
+    def __init__(self, path):
+        self.path = path
+        self.files = tuple(Path(f.path) for f in fast_scan(path))
+    @property
+    def file_list(self):
+        return tuple(str(f.relative_to(self.path)) for f in self.files)
+
+
 # Request Handler --------------------------------------------------------------
 
 class IndexResource():
     def __init__(self, path):
-        self.path = path
+        #self.path = path
+        self.files = FileCollection(path)
     def on_get(self, request, response):
         response.media = {
             'version': 'test',
-            'files': tuple(d.path for d in fast_scan(self.path)),
+            'files': self.files.file_list,
         }
         response.status = falcon.HTTP_200
 
