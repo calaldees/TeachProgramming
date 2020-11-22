@@ -63,7 +63,11 @@ class ProjectResource():
         response.media = {'projects': self.files.projects}
         response.status = falcon.HTTP_200
     def on_get(self, request, response, path):
-        response.media = ProjectVersions(self.files.project_files(path)).data
+        pv = ProjectVersions(self.files.project_files(path))
+        response.media = {
+            'versions': pv.versions,
+            'languages': pv.data,
+        }
         response.status = falcon.HTTP_200
 
 # Setup App -------------------------------------------------------------------
