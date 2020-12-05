@@ -2,6 +2,7 @@ import math
 import random
 import itertools
 from types import MappingProxyType
+from typing import NamedTuple
 
 import pygame as pg
 
@@ -9,12 +10,12 @@ from pygame_test import GameBase
 
 
 class Zoomer():
-    def __init__(self):
-        self.size_min = 3
-        self.size_max = 30
+    def __init__(self, size_min=8, size_max=30):
+        self.size_min = size_min
+        self.size_max = size_max
         self.colors = (
-            (0,0,0),
-            (255,255,255),
+            pg.Color('#4c2e6b'), #(0,0,0), 
+            pg.Color('#894c6b'), #(255,255,255),  
         )
     def render(self, sf, frame, pos=None):
         sf_w = sf.get_width()
@@ -36,17 +37,17 @@ class Zoomer():
                     (
                         x + (s * cx),
                         y + (s * cy),
-                        s, s,
+                        s+1, s+1,
                     )
                 )
 
 class Stars():
-    class Star():
-        def __init__(self, x, y, s):
-            self.x = x
-            self.y = y
-            self.s = s
+    class Star(NamedTuple):
+        x: int
+        y: int
+        s: int
     def __init__(self, width, height, density=0.001, layers=4):
+        self.layers = layers
         self.stars = tuple(
             self.Star(
                 random.randint(0, width),
@@ -57,8 +58,15 @@ class Stars():
         )
     def render(self, sf, frame):
         sf_w = sf.get_width()
+        #sf_h = sf.get_height()
         for s in self.stars:
-            pg.draw.rect(sf, 'white', ((s.x + (-frame * s.s)) % sf_w , s.y, s.s, 1))
+            _x_true = (s.x + (-frame * s.s))
+            _x = _x_true % sf_w
+            #_y_overflow_multiplier = -((_x_true - _x) / sf_w) + 1
+            _y = s.y #(s.y * _y_overflow_multiplier) % sf_h
+            color = ( ((s.s/self.layers)*190)+64 ,) * 3
+            pg.draw.line(sf, color, (_x, _y,), (_x-s.s, _y))
+        #print(f'{_x=} {_y_overflow_multiplier=}')
 
 
 def font_loader(filename, sequence='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', size=8):
@@ -80,7 +88,7 @@ class Font():
     def render(self, sf, text, x, y):
         for i, character in enumerate(text):
             sf.blit(self.font[character], (x+(i*(self.size+self.spacing)), y))
-    def scroll(self, sf, frame, text, x, y, width=128, speed=1, func_y=lambda x: 0):
+    def scroll(self, sf, frame, text, x, y, width=128, func_y=lambda x: 0):
         start_char = (frame // self.size) % len(text)
         num_visible_chars = width // self.size
         visible_text = text[start_char : start_char + num_visible_chars]
@@ -95,24 +103,33 @@ class Font():
 
 class Game(GameBase):
     def __init__(self):
-        self.x = int(320/2)
-        self.y = int(180/2)
+        #self.x = int(320/2)
+        #self.y = int(180/2)
         self.zoomer = Zoomer()
         self.stars = Stars(320, 180)
         self.font = Font('images/font.png')
         super().__init__()
     def loop(self, screen, frame):
-        if self.keys[pg.K_UP]:
-            self.y += -1
-        if self.keys[pg.K_DOWN]:
-            self.y += 1
-        if self.keys[pg.K_RIGHT]:
-            self.x += 1
-        if self.keys[pg.K_LEFT]:
-            self.x += -1
+        # if self.keys[pg.K_UP]:
+        #     self.y += -1
+        # if self.keys[pg.K_DOWN]:
+        #     self.y += 1
+        # if self.keys[pg.K_RIGHT]:
+        #     self.x += 1
+        # if self.keys[pg.K_LEFT]:
+        #     self.x += -1
 
-        self.zoomer.render(screen, frame, pos=(self.x, self.y))
-        self.stars.render(screen, frame)
+        z_w = screen.get_width()/2
+        z_h = screen.get_height()
+        zoomer_surface = screen.subsurface(0,0, z_w, z_h)
+        self.zoomer.render(zoomer_surface, frame, pos=(
+            math.sin((frame%200/200)*math.pi*2) * (z_w/2),
+            math.cos((frame%166/166)*math.pi*2) * (z_h/2),
+        ))
+
+        stars_surface = screen.subsurface(320/2,0, 320/2, 180)
+        self.stars.render(stars_surface, frame)
+
         def func_y(x):
             return math.sin(x/32) * 16
         self.font.scroll(screen, frame, '                                  MY FIRST EVER DEMO MOCK UP       CHECK OUT THIS SCROLLING TEXT          TIME TO TRY SOME MORE COOL OLD SKOOL IDEAS         ', 0, screen.get_height()/2, width=screen.get_width(), func_y=func_y)
