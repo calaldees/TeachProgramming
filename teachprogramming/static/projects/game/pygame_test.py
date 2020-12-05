@@ -33,6 +33,7 @@ class Game(GameBase):
     def __init__(self):
         self.x = 100
         self.y = 100
+        self.image = pg.image.load('ball.png')
         super().__init__()
     def loop(self, screen, frame):
         if self.keys[pg.K_UP]:
@@ -43,7 +44,18 @@ class Game(GameBase):
             self.x += 1
         if self.keys[pg.K_LEFT]:
             self.x += -1
-        pg.draw.rect(screen, 'green', (self.x, self.y, 70, 40), 2, border_radius=15)
+
+        #pg.draw.rect(screen, 'green', (self.x, self.y, 70, 40), 2, border_radius=15)
+        screen.blit(self.image, (self.x, self.y))
+
+
+        # Task DVD menu
+        # 1.) Square edged red rectangle - 50 50
+        # 2.) It moves automatically (in the x direction only)
+        # 3.) It bounces left and right from the edges of the screen
+        # 4.) DVD screensaver - bounces of top bottom left right
+        # 5.) Make the rectangle an image
+        # 6.) Remove any hard coded values for width/height/imagesize/etc
 
 if __name__ == '__main__':
     Game()

@@ -43,16 +43,14 @@ base case?
 ## Finite state machines
 
 ```mermaid
-stateDiagram-v2
-%%    [*] --> S0
-%%    S0 --> S0 : A/D
-%%    S0 --> S0 : B/E
-%%    S0 --> S0 : C/F
+    stateDiagram-v2
 
-%% pg148
-%% AQA Computer Science : Bob Reeves
-%% Finite State Machines with Outputs
-%% The Mealy machine performing a right shift
+    %% pg148
+    %% AQA Computer Science : Bob Reeves
+    %% Finite State Machines with Outputs
+    %% The Mealy machine performing a right shift
+
+
     [*] --> S0
     S0 --> S1 : 1/0
     S0 --> S2 : 0/0
@@ -62,6 +60,7 @@ stateDiagram-v2
     S2 --> S1 : 1/0
     S2 --> S2 : 0/0
 ```
+
 
 reverse polish notation
 
