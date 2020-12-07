@@ -88,8 +88,7 @@ class Stars():
     def render(self, sf, frame):
         sf_w = sf.get_width()
         for s in self.stars:
-            _x_true = (s.x + (-frame * s.s))
-            _x = _x_true % sf_w
+            _x = (s.x + (-frame * s.s)) % sf_w
             color = ( ((s.s/self.layers) * 255),) * 3
             pg.draw.line(sf, color, (_x, s.y), (_x - s.s, s.y))
 
@@ -99,8 +98,8 @@ class Font():
     def font_loader(filename, sequence='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', size=8):
         """
         https://nfggames.com/games/fontmaker/index.php
+        TODO: If filename not exist - auto download the font PNG - this will run with just the `py` file
         """
-        # TODO: If filename not exist - auto download the font PNG - this will run with just the `py` file
         image = pg.image.load(filename)
         return MappingProxyType({
             character: image.subsurface((i*size, 0, size, size))
