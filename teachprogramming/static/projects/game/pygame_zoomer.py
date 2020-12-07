@@ -7,19 +7,44 @@ from functools import partial
 
 import pygame as pg
 
-from pygame_test import GameBase
-
 random.seed(0)
+
+
+class GameBase():  # Copy & Pasted rather than imported
+    def __init__(self, title="pg", resolution=(320,180), fps=60, color_background='black'):
+        pg.init()
+        pg.display.set_caption(title)
+        screen = pg.display.set_mode(resolution, pg.SCALED | pg.RESIZABLE)
+        clock = pg.time.Clock()
+        frame = 0
+        self.running = True
+        while self.running:
+            clock.tick(fps)
+            self.keys = pg.key.get_pressed()
+            for event in pg.event.get():
+                if event.type == pg.QUIT or self.keys[pg.K_ESCAPE]:
+                    self.running = False
+                if event.type == pg.VIDEORESIZE:
+                    pg.display._resize_event(event)
+                if (self.keys[pg.K_RALT] or self.keys[pg.K_LALT]) and self.keys[pg.K_RETURN]:
+                    pg.display.toggle_fullscreen()
+            screen.fill(color_background)
+            self.loop(screen, frame)
+            pg.display.flip()
+            frame += 1
+        self.quit()
+        pg.quit()
+    def loop(self, screen, frame):
+        raise NotImplementedError('override loop method')
+    def quit(self):
+        pass  # override to shutdown
 
 
 class Zoomer():
     def __init__(self, size_min=8, size_max=30):
         self.size_min = size_min
         self.size_max = size_max
-        self.colors = (
-            pg.Color('#4c2e6b'),
-            pg.Color('#894c6b'),
-        )
+        self.colors = (pg.Color('#4c2e6b'), pg.Color('#894c6b'))
     @staticmethod
     def frame_to_progress(frame, ratio=100):
         return math.sin((frame % ratio / ratio) * math.pi * 2)
@@ -33,7 +58,6 @@ class Zoomer():
         )
         p = (fp(360) + 1) / 2  # progress 0 to 1 from frame
         s = self.size_min + (p * self.size_max)  # size of square
-
         c_width = int(((sf_w / s) + 4) / 2)  # squares in x for surface
         c_height = int(((sf_h / s) + 4) / 2)  # squares in y for surface
         width_shift = int((x - (sf_w / 2)) / s) # shift for x pos
@@ -43,11 +67,7 @@ class Zoomer():
                 pg.draw.rect(
                     sf,
                     self.colors[(cx+cy) % len(self.colors)],
-                    (
-                        x + (s * cx),
-                        y + (s * cy),
-                        s+1, s+1,
-                    )
+                    (x + (s * cx), y + (s * cy), s+1, s+1),
                 )
 
 class Stars():
@@ -67,30 +87,28 @@ class Stars():
         )
     def render(self, sf, frame):
         sf_w = sf.get_width()
-        #sf_h = sf.get_height()
         for s in self.stars:
             _x_true = (s.x + (-frame * s.s))
             _x = _x_true % sf_w
-            #_y_overflow_multiplier = -((_x_true - _x) / sf_w) + 1
-            _y = s.y #(s.y * _y_overflow_multiplier) % sf_h
-            color = ( ((s.s/self.layers)*255) ,) * 3
-            pg.draw.line(sf, color, (_x, _y,), (_x-s.s, _y))
-
-
-def font_loader(filename, sequence='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', size=8):
-    """
-    https://nfggames.com/games/fontmaker/index.php
-    """
-    image = pg.image.load(filename)
-    return MappingProxyType({
-        character: image.subsurface((i*size, 0, size, size))
-        for i, character in enumerate(sequence)
-    })
+            color = ( ((s.s/self.layers) * 255),) * 3
+            pg.draw.line(sf, color, (_x, s.y), (_x - s.s, s.y))
 
 
 class Font():
+    @staticmethod
+    def font_loader(filename, sequence='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', size=8):
+        """
+        https://nfggames.com/games/fontmaker/index.php
+        """
+        # TODO: If filename not exist - auto download the font PNG - this will run with just the `py` file
+        image = pg.image.load(filename)
+        return MappingProxyType({
+            character: image.subsurface((i*size, 0, size, size))
+            for i, character in enumerate(sequence)
+        })
+
     def __init__(self, filename, size=8, spacing=1):
-        self.font = font_loader(filename, size=size)
+        self.font = self.font_loader(filename, size=size)
         self.size = size
         self.spacing = spacing
     def render(self, sf, text, x, y):
@@ -101,20 +119,17 @@ class Font():
         num_visible_chars = width // self.size
         visible_text = text[start_char : start_char + num_visible_chars]
         for i, character in enumerate(visible_text):
-            if character == ' ':
-                continue
-            _x = x + (i*(self.size+self.spacing)) - (frame % self.size)
-            sf.blit(self.font[character], (
-                _x,
-                y + func_y(_x),
-            ))
+            if character in self.font.keys():
+                _x = x + (i*(self.size+self.spacing)) - (frame % self.size)
+                sf.blit(self.font[character], (_x, y + func_y(_x)))
+
 
 class Demo(GameBase):
     def __init__(self, resolution=(320,180)):
         self.zoomer = Zoomer()
         self.stars = Stars(resolution[0]/2, resolution[1])
         self.font = Font('images/font.png')
-        super().__init__(resolution=resolution)
+        super().__init__(title='Demo', resolution=resolution)
     def loop(self, screen, frame):
         width = screen.get_width()
         _width = screen.get_width()/2
@@ -128,7 +143,7 @@ class Demo(GameBase):
             'MY FIRST EVER DEMO MOCK UP',
             'CHECK OUT THIS SCROLLING TEXT',
             'ALL THE EFFECTS ARE FUNCTIONAL AND HAVE ZERO STATE BETWEEN FRAMES',
-            'NOT BAD FOR 100ISH LINES OF PYTHON AND PYGAME',
+            'NOT BAD FOR 150ISH LINES OF PYTHON AND PYGAME',
             'TIME TO TRY SOME MORE COOL OLD SKOOL IDEAS',
         ))
         def func_y(x):
