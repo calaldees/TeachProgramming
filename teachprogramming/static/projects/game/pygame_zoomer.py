@@ -3,10 +3,13 @@ import random
 import itertools
 from types import MappingProxyType
 from typing import NamedTuple
+from functools import partial
 
 import pygame as pg
 
 from pygame_test import GameBase
+
+random.seed(0)
 
 
 class Zoomer():
@@ -14,15 +17,21 @@ class Zoomer():
         self.size_min = size_min
         self.size_max = size_max
         self.colors = (
-            pg.Color('#4c2e6b'), #(0,0,0), 
-            pg.Color('#894c6b'), #(255,255,255),  
+            pg.Color('#4c2e6b'),
+            pg.Color('#894c6b'),
         )
+    @staticmethod
+    def frame_to_progress(frame, ratio=100):
+        return math.sin((frame % ratio / ratio) * math.pi * 2)
     def render(self, sf, frame, pos=None):
+        fp = partial(self.frame_to_progress, frame)
         sf_w = sf.get_width()
         sf_h = sf.get_height()
-        x, y = pos or (sf_w/2, sf_h/2)  # todo use sin/cos for auto x/y from frame?
-
-        p = (math.sin(((frame % 360)/360)*math.pi*2) + 1) / 2  # progress 0 to 1 from frame
+        x, y = pos or (
+            fp(200) * (sf_w/2),
+            fp(166) * (sf_h/2),
+        )
+        p = (fp(360) + 1) / 2  # progress 0 to 1 from frame
         s = self.size_min + (p * self.size_max)  # size of square
 
         c_width = int(((sf_w / s) + 4) / 2)  # squares in x for surface
@@ -46,14 +55,14 @@ class Stars():
         x: int
         y: int
         s: int
-    def __init__(self, width, height, density=0.001, layers=4):
+    def __init__(self, width, height, density=0.0015, layers=4):
         self.layers = layers
         self.stars = tuple(
             self.Star(
                 random.randint(0, width),
                 random.randint(0, height),
                 random.randint(1, layers),
-            ) 
+            )
             for r in range(int(width * height * density))
         )
     def render(self, sf, frame):
@@ -64,9 +73,8 @@ class Stars():
             _x = _x_true % sf_w
             #_y_overflow_multiplier = -((_x_true - _x) / sf_w) + 1
             _y = s.y #(s.y * _y_overflow_multiplier) % sf_h
-            color = ( ((s.s/self.layers)*190)+64 ,) * 3
+            color = ( ((s.s/self.layers)*255) ,) * 3
             pg.draw.line(sf, color, (_x, _y,), (_x-s.s, _y))
-        #print(f'{_x=} {_y_overflow_multiplier=}')
 
 
 def font_loader(filename, sequence='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', size=8):
@@ -101,41 +109,32 @@ class Font():
                 y + func_y(_x),
             ))
 
-class Game(GameBase):
-    def __init__(self):
-        #self.x = int(320/2)
-        #self.y = int(180/2)
+class Demo(GameBase):
+    def __init__(self, resolution=(320,180)):
         self.zoomer = Zoomer()
-        self.stars = Stars(320, 180)
+        self.stars = Stars(resolution[0]/2, resolution[1])
         self.font = Font('images/font.png')
-        super().__init__()
+        super().__init__(resolution=resolution)
     def loop(self, screen, frame):
-        # if self.keys[pg.K_UP]:
-        #     self.y += -1
-        # if self.keys[pg.K_DOWN]:
-        #     self.y += 1
-        # if self.keys[pg.K_RIGHT]:
-        #     self.x += 1
-        # if self.keys[pg.K_LEFT]:
-        #     self.x += -1
+        width = screen.get_width()
+        _width = screen.get_width()/2
+        height = screen.get_height()
 
-        z_w = screen.get_width()/2
-        z_h = screen.get_height()
-        zoomer_surface = screen.subsurface(0,0, z_w, z_h)
-        self.zoomer.render(zoomer_surface, frame, pos=(
-            math.sin((frame%200/200)*math.pi*2) * (z_w/2),
-            math.cos((frame%166/166)*math.pi*2) * (z_h/2),
+        self.zoomer.render(screen.subsurface(0, 0, _width, height), frame)
+        self.stars.render(screen.subsurface(_width, 0, _width, height), frame)
+
+        text = '                '.join((
+            '                     ',
+            'MY FIRST EVER DEMO MOCK UP',
+            'CHECK OUT THIS SCROLLING TEXT',
+            'ALL THE EFFECTS ARE FUNCTIONAL AND HAVE ZERO STATE BETWEEN FRAMES',
+            'NOT BAD FOR 100ISH LINES OF PYTHON AND PYGAME',
+            'TIME TO TRY SOME MORE COOL OLD SKOOL IDEAS',
         ))
-
-        stars_surface = screen.subsurface(320/2,0, 320/2, 180)
-        self.stars.render(stars_surface, frame)
-
         def func_y(x):
             return math.sin(x/32) * 16
-        self.font.scroll(screen, frame, '                                  MY FIRST EVER DEMO MOCK UP       CHECK OUT THIS SCROLLING TEXT          TIME TO TRY SOME MORE COOL OLD SKOOL IDEAS         ', 0, screen.get_height()/2, width=screen.get_width(), func_y=func_y)
-        self.font.render(screen, 'HELLO', 100, 100)
-
+        self.font.scroll(screen, frame, text, 0, height/2, width=width, func_y=func_y)
 
 
 if __name__ == '__main__':
-    Game()
+    Demo()
