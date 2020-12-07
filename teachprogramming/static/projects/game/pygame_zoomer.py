@@ -114,7 +114,7 @@ class Font():
         for i, character in enumerate(text):
             sf.blit(self.font[character], (x+(i*(self.size+self.spacing)), y))
     def scroll(self, sf, frame, text, x, y, width=128, func_y=lambda x: 0):
-        start_char = (frame // self.size) % len(text)
+        start_char = int(frame / self.size) % len(text)
         num_visible_chars = width // self.size
         visible_text = text[start_char : start_char + num_visible_chars]
         for i, character in enumerate(visible_text):
@@ -128,8 +128,9 @@ class Demo(GameBase):
         self.zoomer = Zoomer()
         self.stars = Stars(resolution[0]/2, resolution[1])
         self.font = Font('images/font.png')
-        super().__init__(title='Demo', resolution=resolution)
+        super().__init__(title='Demo', resolution=resolution, fps=60)
     def loop(self, screen, frame):
+        frame = frame / 1  # change the divisor for change of speed. We can render fractional frames!
         width = screen.get_width()
         _width = screen.get_width()/2
         height = screen.get_height()
