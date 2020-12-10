@@ -31,7 +31,10 @@ function renderProject(data) {
         e.insertAdjacentHTML('beforeend', `<h2>${language}</h2>`);
         if (!_version_code) {continue;}
         for (const [version, code] of Object.entries(_version_code)) {
-            hostElement.insertAdjacentHTML('beforeend', `<h3>${version}</h3><pre>${code}</pre>`);
+            hostElement.insertAdjacentHTML('beforeend', `<h3>${version}</h3>`);
+            const pre = document.createElement('pre');
+            pre.append(document.createTextNode(code));
+            hostElement.append(pre);
         }
     }
 }
