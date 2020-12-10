@@ -4,6 +4,8 @@ import itertools
 from types import MappingProxyType
 from typing import NamedTuple
 from functools import partial
+from pathlib import Path
+import urllib.request
 
 import pygame as pg
 
@@ -95,12 +97,20 @@ class Stars():
 
 class Font():
     @staticmethod
-    def font_loader(filename, sequence='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', size=8):
+    def font_loader(filename, sequence='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', size=8, font_name='aof2'):
         """
         https://nfggames.com/games/fontmaker/index.php
-        TODO: If filename not exist - auto download the font PNG - this will run with just the `py` file
+        https://nfggames.com/system/arcade/arcade.php/y-pabom/z-0/x-ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890
         """
-        image = pg.image.load(filename)
+        filename = Path(filename)
+        # Download font if it does not exist
+        if not filename.exists():
+            filename.parent.mkdir(parents=True, exist_ok=True)
+            url = f'https://nfggames.com/system/arcade/arcade.php/y-{font_name}/z-{(size/8)-1}/x-{sequence}'
+            with urllib.request.urlopen(url) as url_request, filename.open(mode='wb') as filehandle:
+                filehandle.write(url_request.read())
+        # Load font to dict
+        image = pg.image.load(str(filename))
         return MappingProxyType({
             character: image.subsurface((i*size, 0, size, size))
             for i, character in enumerate(sequence)
