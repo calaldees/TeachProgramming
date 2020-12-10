@@ -1,0 +1,15 @@
+<!DOCTYPE html><html>
+<head>
+    <meta charset="utf-8" />
+    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
+    <title>TeachProgramming</title>
+</head>
+<body>
+<h1>TeachProgramming</h1>
+<script type="module">
+const urlParams = new URLSearchParams(window.location.search);
+fetch('/project/')
+    .then(response => response.json())
+    .then(data => console.log(data));
+//http://localhost:8000/project/game/copter
+</script></body></html>

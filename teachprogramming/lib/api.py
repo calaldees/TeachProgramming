@@ -51,10 +51,9 @@ class FileCollection():
 
 class IndexResource():
     def on_get(self, request, response):
-        response.media = {
-            'hello': 'world',
-        }
-        response.status = falcon.HTTP_200
+        #response.media = {'hello': 'world'}
+        #response.status = falcon.HTTP_200
+        raise falcon.HTTPFound('/static/index.html')
 
 class ProjectResource():
     def __init__(self, path):
@@ -75,6 +74,7 @@ class ProjectResource():
 def create_wsgi_app(path=None, **kwargs):
     app = falcon.API()
     app.add_route(r'/', IndexResource())
+    app.add_static_route('/static', str(Path('static').resolve()))
     _falcon_helpers.add_sink(app, 'project', ProjectResource(path), func_path_normalizer=_falcon_helpers.func_path_normalizer_no_extension)
     _falcon_helpers.update_json_handlers(app)
     return app
