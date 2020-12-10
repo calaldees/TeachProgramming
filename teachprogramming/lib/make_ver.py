@@ -17,6 +17,8 @@ comment_tokens = dict(
     java = r'//',
     vb   =  '\'',
     php  =   '#',
+    c    = r'//',
+    cpp  = r'//',
 )
 unversioned_vername = 'base'
 
