@@ -23,6 +23,9 @@ twos compement?
 transpositional cypher
 
 language frequency alalysis project
+* [Line drawing algorithm](https://en.wikipedia.org/wiki/Line_drawing_algorithm)
+
+Auto video edit project?
 
 assembler -> fetch execute
 
