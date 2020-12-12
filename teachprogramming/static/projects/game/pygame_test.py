@@ -4,12 +4,15 @@ class GameBase():
     def __init__(self, title="pg", resolution=(320,180), fps=60, color_background='black'):
         pg.init()
         pg.display.set_caption(title)
-        screen = pg.display.set_mode(resolution, pg.SCALED | pg.RESIZABLE)
-        clock = pg.time.Clock()
+        self.screen = pg.display.set_mode(resolution, pg.SCALED | pg.RESIZABLE)
+        self.clock = pg.time.Clock()
+        self.fps = fps
+        self.color_background = color_background
+    def run(self):
         frame = 0
         self.running = True
         while self.running:
-            clock.tick(fps)
+            self.clock.tick(self.fps)
             self.keys = pg.key.get_pressed()
             for event in pg.event.get():
                 if event.type == pg.QUIT or self.keys[pg.K_ESCAPE]:
@@ -18,8 +21,8 @@ class GameBase():
                     pg.display._resize_event(event)
                 if (self.keys[pg.K_RALT] or self.keys[pg.K_LALT]) and self.keys[pg.K_RETURN]:
                     pg.display.toggle_fullscreen()
-            screen.fill(color_background)
-            self.loop(screen, frame)
+            self.screen.fill(self.color_background)
+            self.loop(self.screen, frame)
             pg.display.flip()
             frame += 1
         self.quit()
@@ -58,4 +61,4 @@ class Game(GameBase):
         # 6.) Remove any hard coded values for width/height/imagesize/etc
 
 if __name__ == '__main__':
-    Game()
+    Game().run()

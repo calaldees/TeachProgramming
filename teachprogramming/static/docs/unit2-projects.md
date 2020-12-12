@@ -5,6 +5,9 @@ for dna text string
 sound 
 sinwave
 squarewave
+triangle wave
+https://mdoege.github.io/PySynth/
+https://github.com/mdoege/PySynth
 
 flowchart
 
