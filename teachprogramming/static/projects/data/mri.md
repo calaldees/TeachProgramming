@@ -23,4 +23,13 @@ The goal is to create a set of activities for GCSE level Computing students to v
         * old site [openfmri.org](https://openfmri.org/dataset/)
     * [UK BioBank data](https://www.fmrib.ox.ac.uk/ukbiobank/)
         * [Papaya view of BioBank rfMRI_ICA_d25_good_nodes](https://www.fmrib.ox.ac.uk/ukbiobank/group_means/rfMRI_ICA_d25_good_nodes.html)
+            * [T1_T2FLAIR_fMRI.nii.gz](https://www.fmrib.ox.ac.uk/ukbiobank/group_means/ukb/T1_T2FLAIR_fMRI.nii.gz)
+            * [rfMRI_ICA_d25_good_nodes.nii.gz](https://www.fmrib.ox.ac.uk/ukbiobank/group_means/ukb/rfMRI_ICA_d25_good_nodes.nii.gz)
+        * [Demo](https://www.fmrib.ox.ac.uk/ukbiobank/group_means/WINpapaya/GeneralTemplate/?path=%22../data/General/edge_list_d25.csv%22&param=0;2;Red%20Overlay;Blue%20Overlay;3;15;(0,0,0))
+            * [brain_image.gz](https://www.fmrib.ox.ac.uk/ukbiobank/group_means/WINpapaya/brain_image.gz)
     * [DataLad](https://www.datalad.org/) Scientific Data Community? Explorable versioned data? API for data?
+
+```bash
+pip3 install nibabel
+curl -O "https://www.fmrib.ox.ac.uk/ukbiobank/group_means/WINpapaya/brain_image.gz"
+```

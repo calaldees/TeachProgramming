@@ -3,6 +3,8 @@
 *.py[cod]
 *.class
 *.exe
+*.zip
+*.gz
 
 *.egg-info
 *#
