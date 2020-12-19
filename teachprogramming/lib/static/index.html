@@ -42,11 +42,13 @@ function renderProject(data) {
 if (urlParams.has(QUERY_STRING_project)) {
     fetch(`/project/${urlParams.get(QUERY_STRING_project)}`)
         .then(response => response.json())
-        .then(renderProject);
+        .then(renderProject)
+    .catch(err => console.error(err)); // Never forget the final catch!
 } else {
     fetch('/project/')
         .then(response => response.json())
-        .then(renderProjects);
+        .then(renderProjects)
+    .catch(err => console.error(err)); // Never forget the final catch!
 }
 
 </script></body></html>

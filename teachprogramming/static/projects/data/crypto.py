@@ -1,4 +1,7 @@
 """
+Free eBook Python
+* [THE CAESAR CIPHER](https://inventwithpython.com/cracking/chapter5.html)
+
 placeholder for 'passphrase' cypher exercise
 https://en.wikipedia.org/wiki/Frequency_analysis
 
