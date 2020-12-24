@@ -15,5 +15,6 @@ TODO
     * dont build + get url in one method - prefer reuse
     * doctests help conceptulise this
 * 'static' bad
-
+* reflection
+    * in dynamic languages you need to know what `type` something is
 

@@ -33,3 +33,6 @@ The goal is to create a set of activities for GCSE level Computing students to v
 pip3 install nibabel
 curl -O "https://www.fmrib.ox.ac.uk/ukbiobank/group_means/WINpapaya/brain_image.gz"
 ```
+
+Consider javascript viewer - may need arraybuffer?
+https://javascript.programmingpedia.net/en/tutorial/417/binary-data

@@ -17,6 +17,10 @@ def maths_error_with_doctest(a, b):
     >>> maths_error_with_doctest(3, "bob")
     Traceback (most recent call last):
     TypeError: ...
+    >>> maths_error_with_doctest(3, "bob")
+    Traceback (most recent call last):
+    T...
+
 
     "..." is a wildcard catchall in dcotest
 

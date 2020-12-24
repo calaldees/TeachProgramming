@@ -106,7 +106,12 @@ Project Ideas
 https://blog.compass-security.com/wp-content/uploads/2019/10/hacking_tools_cheat_sheet_v1.0.pdf
 https://github.com/CountablyInfinite/oscp_cheatsheet
 https://github.com/kobs0N/Hacking-Cheatsheet
-
+* Planets circle in 3d - functional position based on date/time - 3d? texture? sphere?
+    * https://www.solarsystemscope.com/
+* Satelite orbits? - plot in 3d?
+[orbit viewer](http://stuffin.space/)
+[Orbit Dataset](https://www.ucsusa.org/resources/satellite-database)
+[Orbit descriptions](https://earthobservatory.nasa.gov/features/OrbitsCatalog)
 
 My Hacks
 --------
