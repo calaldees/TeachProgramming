@@ -296,6 +296,36 @@ function _sleep() {
 }
 
 //------------------------------------------------------------------------------
+// Unsorted
+
+function list_comprehentions() {
+    let data1 = [1,2,3,4,5,6];
+    let data2 = data1
+        .filter(
+            (i) => i >= 3  // function(i) {return i >= 3;}
+        ).map(
+            (i) => i * 2  // function(i) {return i * 2;}
+        );
+}
+
+function dict_comprehention() {
+    let data3 = {
+        'a': 1,
+        'b': 2,
+        'c': 3,
+    }
+    let data4 = Object.fromEntries(
+        Object.entries(data3)
+            .filter(
+                ([k, v]) => v >= 2  // function([k, v]) {return v >= 2;}
+            )
+            .map(
+                ([k, v]) => [v + 10, k]  // function([k, v]) {return [v + 10, k];}
+            )
+    );
+}
+
+//------------------------------------------------------------------------------
 
 var functions = read("_function_order.txt", "text").split("\n");
 

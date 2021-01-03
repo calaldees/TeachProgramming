@@ -253,6 +253,30 @@ def sleep():
 
 #-------------------------------------------------------------------------------
 
+# Unsorted
+
+def list_comprehentino():
+    data1 = [1,2,3,4,5,6]
+    data2 = [
+        i * 2
+        for i in data1
+        if i >= 3
+    ]
+
+def dict_comprehention():
+    data3 = {
+        'a': 1,
+        'b': 2,
+        'c': 3,
+    }
+    data4 = {
+        v + 10: k
+        for k, v in data3.items()
+        if v >= 2
+    }
+
+#-------------------------------------------------------------------------------
+
 if __name__ == "__main__":
 
     def title(title):
