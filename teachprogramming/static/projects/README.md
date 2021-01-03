@@ -72,10 +72,13 @@ Project Ideas
     * planning permission? local council?
 * DMX lights?
     * ?
+    * [Trans-Siberian Orchestra - Wizards in Winter (Official Music Video)](https://www.youtube.com/watch?v=pWBjl-jPcVM)
+    * [SyncroLight](https://www.syncrolight.co.uk/) - Commercial software and hardware
 * More sources of data!
     * visulisation (maybe hand drawn)
 * Gathering student data
 * XKCD - what colour is this?
+    * Web Survey
 * Price scraper?
     * interquatile range?
 * FF7 Game vote? - channel socket? quiz?
@@ -109,9 +112,25 @@ https://github.com/kobs0N/Hacking-Cheatsheet
 * Planets circle in 3d - functional position based on date/time - 3d? texture? sphere?
     * https://www.solarsystemscope.com/
 * Satelite orbits? - plot in 3d?
-[orbit viewer](http://stuffin.space/)
-[Orbit Dataset](https://www.ucsusa.org/resources/satellite-database)
-[Orbit descriptions](https://earthobservatory.nasa.gov/features/OrbitsCatalog)
+    * [orbit viewer](http://stuffin.space/)
+    * [Orbit Dataset](https://www.ucsusa.org/resources/satellite-database)
+    * [Orbit descriptions](https://earthobservatory.nasa.gov/features/OrbitsCatalog)
+    * [Japan developing wooden satellites to cut space junk](https://www.bbc.co.uk/news/business-55463366)
+* Tools
+    * [DiveTools2](https://scuba.shish.io/)
+        * [DiveTools Source](https://github.com/shish/divetools2)
+    * Nursing
+        * [The Royal Marsden Manual of Clinical Nursing Procedures, Professional Edition, 9th](https://www.amazon.co.uk/Marsden-Clinical-Nursing-Procedures-Professional/dp/1118745922)
+        * [Malnutrition Universal Screening Tool](https://www.bapen.org.uk/pdfs/must/must_full.pdf)
+* Pitch Trainer
+    * single note?
+    * chord?
+* Flash card - spaced repetition
+    * database?
+* ChatBot
+    * 
+* Robot vacuum cleaner?
+    * lego robotic? or simulated?
 
 My Hacks
 --------

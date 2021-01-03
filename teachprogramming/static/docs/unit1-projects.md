@@ -144,10 +144,10 @@ Data that is entered can be incorrect. E.g “Monkey” is not a valid postcode,
 You must write functions that can validate the following
 * Surname (E Grade)
 * Parity Bit (D Grade)
-* Credit Card Number - with or without spaces (D Grade)
 * Postcode (D Grade) (Optional B Grade - full http://en.wikipedia.org/wiki/Postcodes_in_the_United_Kingdom)
 * ISBN 10 code (http://en.wikipedia.org/wiki/Check_digit) (C Grade)
     * The ISBN code should work with either dashes and spaces in the number or not
+* Credit Card Number - with or without spaces - [Luhn algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm) (C Grade)
 
 ### Techniques
 This project is designed to get you to
@@ -243,7 +243,7 @@ Networking (C Grade)
 This project is designed to get you to
 * Understand the binary structure of network address
 * Understand network terminology/features
-
+* further reading [Fun with IP address parsing](https://blog.dave.tf/post/ip-addr-parsing/)
 
 Sorting and Searching Records (Grade D to B)
 --------------------------------------------
@@ -262,7 +262,7 @@ Sorting and Searching Records (Grade D to B)
 
 ### Grade B
 * Return multiple surnames from binary search
-* Implement MergeSort
+* Implement one of MergeSort, Quicksort, Insertion-sort
 
 ### Techniques
 * This project will assess your algorithm design, CSV handling, Records(dictionaries/associative-arrays/maps) Bubble Sort understanding and Linear/Binary Search Understanding
