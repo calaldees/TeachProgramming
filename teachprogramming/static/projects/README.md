@@ -132,6 +132,17 @@ https://github.com/kobs0N/Hacking-Cheatsheet
 * Robot vacuum cleaner?
     * lego robotic? or simulated?
 
+Windows Form Games?
+------------------
+
+* 0's and X's
+* Snakes and ladders
+* Connect 4
+* Minesweeper
+* Street car racer? mouse input - sleep?
+* Tron
+
+
 My Hacks
 --------
 * heatmap api?
