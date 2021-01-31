@@ -74,6 +74,7 @@ Project Ideas
     * ?
     * [Trans-Siberian Orchestra - Wizards in Winter (Official Music Video)](https://www.youtube.com/watch?v=pWBjl-jPcVM)
     * [SyncroLight](https://www.syncrolight.co.uk/) - Commercial software and hardware
+* Drive LED scrolling display with serial? or color changing led strips?
 * More sources of data!
     * visulisation (maybe hand drawn)
 * Gathering student data
@@ -99,8 +100,19 @@ Project Ideas
 * Simple Raytrace?
 * AI
     * [Coding Train shape recognition](https://www.youtube.com/watch?v=3MqJzMvHE3E)
-* SMTP Client?
+* SMTP Client - in different languages - desktop and web?
     * Email server in docker conainer
+    * https://www.siteground.co.uk/tutorials/email/protocols-pop3-smtp-imap/
+    * [POP](https://en.wikipedia.org/wiki/Post_Office_Protocol) - write an email server?
+        * backed by folders, sql, redis (code abstraction layer?)
+        * different language implementation interfacing with different storage
+        * load test harness? deploy to cloud?
+        * Possible refernce implementaion
+            * https://mailu.io/1.7/
+            * https://hub.docker.com/r/tvial/docker-mailserver https://tvi.al/simple-mail-server-with-docker/
+            * https://poste.io/
+            * https://www.axigen.com/docker-mail-server/
+    * [IMAP](https://en.wikipedia.org/wiki/Internet_Message_Access_Protocol)
 * Fuzzer? Known vulverbility
     * https://manpages.ubuntu.com/manpages/trusty/en/man1/zzuf.1.html
     * https://www.mankier.com/1/sfuzz

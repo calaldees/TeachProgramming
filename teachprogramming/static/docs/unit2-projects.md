@@ -1,3 +1,19 @@
+Unit 2?
+======
+
+This is not really unit 2 .. it's just a catch-all for other stuff
+
+isPrime
+-------
+
+Create a function that takes an integer and returns true if the number is prime.
+https://en.wikipedia.org/wiki/Primality_test
+
+
+```python
+
+```
+
 huffman encoding
 encoder and decoder
 for dna text string
