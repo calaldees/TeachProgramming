@@ -283,7 +283,7 @@ graphs (directed/undirected) (adjacency list
 trees
 
 
--- Langauages --
+-- Languages --
 
 assembly
 Compiler

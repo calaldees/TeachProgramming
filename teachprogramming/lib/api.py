@@ -44,7 +44,7 @@ class FileCollection():
     def projects(self):
         return {str(f.relative_to(self.path)).replace('.ver','') for f in self.files if f.suffix == '.ver'}
     def project_files(self, project):
-        return {str(f) for f in self.files if project+'.' in str(f)}
+        return {str(f) for f in self.files if f'{project}.' in str(f)}
 
 
 # Request Handler --------------------------------------------------------------
@@ -54,6 +54,23 @@ class IndexResource():
         #response.media = {'hello': 'world'}
         #response.status = falcon.HTTP_200
         raise falcon.HTTPFound('/static/index.html')
+
+class LanguageReferenceResource():
+    def on_get(self, request, response):
+        # Some temp hard coded nonsese to test to proof of concept
+        pv = ProjectVersions(tuple(
+            Path('../static/language_reference/languages/' + f)
+            for f in (
+                'python/python.py',
+                'javascript/javascript.js',
+                'vb/vb.vb',
+            )
+        ))
+        response.media = {
+            'versions': pv.versions,
+            'languages': pv.data,
+        }
+        response.status = falcon.HTTP_200
 
 class ProjectResource():
     def __init__(self, path):
@@ -75,6 +92,7 @@ def create_wsgi_app(path=None, **kwargs):
     app = falcon.API()
     app.add_route(r'/', IndexResource())
     app.add_static_route('/static', str(Path('static').resolve()))
+    app.add_route(r'/language_reference', LanguageReferenceResource())
     _falcon_helpers.add_sink(app, 'project', ProjectResource(path), func_path_normalizer=_falcon_helpers.func_path_normalizer_no_extension)
     _falcon_helpers.update_json_handlers(app)
     return app

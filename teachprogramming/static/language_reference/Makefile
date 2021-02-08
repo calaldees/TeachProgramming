@@ -14,7 +14,7 @@ language_reference.json: assert_language_output
 	python3 language_reference.py
 
 
-# Langauages -------------------------------------------------------------------
+# Languages -------------------------------------------------------------------
 
 __fake_assert_target:
 	# unittest

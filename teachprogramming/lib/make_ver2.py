@@ -1,4 +1,5 @@
 import re
+from itertools import chain
 from functools import cached_property
 from pathlib import Path
 from types import MappingProxyType
@@ -39,6 +40,21 @@ def parse_legacy_version_data(data):
         for match in RE_VERNAME.finditer(data)
     })
 
+RE_VER = re.compile(r'VER:\s*(?P<ver>.*?)(\s+|$)(NOT\s*(?P<ver_exclude>.*?(\s+|$)))?', flags=re.IGNORECASE)
+def extract_versions_from_data(data):
+    r"""
+    >>> sorted(extract_versions_from_data('''
+    ... # Some code
+    ... const TT = `ABC`;  // VER:test3      Gotta be a thing I'm sure
+    ... function abc(x,y,z) {  // VER: test1
+    ...     return x + y + z;  //    VER:          test2
+    ... }  // VER: test1
+    ... '''))
+    ['test1', 'test2', 'test3']
+    """
+    return {match.group('ver') for match in RE_VER.finditer(data)}
+
+
 
 
 class ProjectVersions():
@@ -57,22 +73,23 @@ class ProjectVersions():
     ...     filenames = set()
     ...     def write_file(filename, data):
     ...         filename = os.path.join(td.name, filename)
-    ...         with open(filename, 'wt') as filehandle:
+    ...         with open(filename, 'wt', encoding='utf8') as filehandle:
     ...            _ = filehandle.write(data)
     ...         filenames.add(filename)
     ...     write_file('test.py', '''
     ... print('Hello World')
+    ... print('Hello Test')  # VER: test4
     ... ''')
     ...     write_file('test.js', '''
-    ... console.log("Hello World")
+    ... console.log("Hello World")    // VER: test4
     ... ''')
     ...     write_file('Test.java', '''
-    ... public class Test {
-    ...     public Test() {
-    ...         System.out.println("Hello World");
-    ...     }
-    ...     public static void main(String[] args) {new Test();}
-    ... }
+    ... public class Test {                          // VER: test1
+    ...     public Test() {                          // VER: test2
+    ...         System.out.println("Hello World");   // VER: test3
+    ...     }                                        // VER: test2
+    ...     public static void main(String[] args) {new Test();}  // VER: test2
+    ... }  // VER: test1
     ... ''')
     ...     write_file('test.ver', '''
     ... VERNAME: base           base
@@ -86,6 +103,10 @@ class ProjectVersions():
     >>> p.versions['base']
     ('base',)
     >>> p.data['py']['base']
+    "\nprint('Hello World')"
+
+    >>> sorted(p._version_from_ver_tags_in_files().keys())
+    ['test1', 'test2', 'test3', 'test4']
 
     """
     def __init__(self, filenames):
@@ -109,12 +130,31 @@ class ProjectVersions():
             raise NotImplementedError('yaml version file format not implemented')
         if {'ver',} & file_exts:
             return parse_legacy_version_data(self.files['ver'])
-        raise Exception()
+        return self._version_from_ver_tags_in_files()
+    def _version_from_ver_tags_in_files(self):
+        """
+        If no versions list explicitly given - extract all files for VER markers in all files
+        Each vername is a standalone version
+        """
+        return {
+            vername: vername
+            for vername in set(chain.from_iterable(
+                extract_versions_from_data(data)
+                for data in self.files.values()
+            ))
+        }
 
     #@lru_cache?
     def langauge(self, language):
         return MappingProxyType({
-            ver_name: '\n'.join(make_ver(io.StringIO(self.files[language]), ver_path=ver_path, lang=language, process_additional_metafiles=False))
+            ver_name: '\n'.join(
+                make_ver(
+                    io.StringIO(self.files[language]), 
+                    ver_path=ver_path,
+                    lang=language,
+                    process_additional_metafiles=False,
+                )
+            )
             for ver_name, ver_path in self.versions.items()
         })
 

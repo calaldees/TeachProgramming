@@ -5,7 +5,6 @@ import os
 from functools import lru_cache
 
 from .make_ver import make_ver
-#from .constants import LANGAUAGES
 
 LANGUAGES = {
     'python.py',
