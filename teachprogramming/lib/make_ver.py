@@ -19,6 +19,9 @@ comment_tokens = dict(
     php  =   '#',
     c    = r'//',
     cpp  = r'//',
+    rb   =   '#',
+    txt  =   '#',
+    cs   = r'//',
 )
 unversioned_vername = 'base'
 

@@ -3,6 +3,15 @@
     <meta charset="utf-8" />
     <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
     <title>TeachProgramming</title>
+    <style>
+        table {
+            border-spacing: 0;
+            border-collapse: collapse;
+        }
+        table td {
+            border: 1px solid black;
+        }
+    </style>
 </head>
 <body>
 <h1>Language Reference</h1>
@@ -27,14 +36,16 @@ function renderLanguageReference(data) {
     }
     table.appendChild(table_headings);
 
-    for (let version_row of Object.keys(data.versions)) {
+    for (let version_row of data.versions) {
         const table_row = document.createElement('tr');
         const table_row_name = document.createElement('td');
         table_row_name.textContent = version_row;
         table_row.appendChild(table_row_name);
         for (let [language, code] of Object.entries(data.languages)) {
             const table_cell = document.createElement('td');
-            table_cell.textContent = code[version_row];
+            const pre = document.createElement('pre');
+            pre.append(document.createTextNode(code[version_row]));
+            table_cell.append(pre);
             table_row.appendChild(table_cell);
         }
         table.appendChild(table_row);
@@ -44,7 +55,7 @@ function renderLanguageReference(data) {
 }
 
 
-fetch(`/language_reference`)
+fetch(`/language_reference.json`)
     .then(response => response.json())
     .then(renderLanguageReference)
 .catch(err => console.error(err));

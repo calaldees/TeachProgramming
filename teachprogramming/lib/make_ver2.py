@@ -1,9 +1,10 @@
 import re
 from itertools import chain
-from functools import cached_property
+from functools import cached_property, reduce
+from collections import defaultdict
 from pathlib import Path
 from types import MappingProxyType
-
+from contextlib import contextmanager
 import io
 try:  # pytest has it one one, running from the cmdline another ?? wha?
     from make_ver import make_ver  # TODO: deprecate and reimplement
@@ -57,6 +58,40 @@ def extract_versions_from_data(data):
 
 
 
+@contextmanager
+def _testfiles():
+    import os
+    import tempfile
+    td = tempfile.TemporaryDirectory()
+    filenames = set()
+    def write_file(filename, data):
+        filename = os.path.join(td.name, filename)
+        with open(filename, 'wt', encoding='utf8') as filehandle:
+           _ = filehandle.write(data)
+        filenames.add(filename)
+    write_file('test.py', '''
+print('Hello World')
+print('Hello Test')  # VER: test4
+''')
+    write_file('test.js', '''
+console.log("Hello World")    // VER: hello_world
+''')
+    write_file('Test.java', '''
+public class Test {                          // VER: test1
+    public Test() {                          // VER: test2
+        System.out.println("Hello World");   // VER: hello_world
+    }                                        // VER: test2
+    public static void main(String[] args) {new Test();}  // VER: test2
+}  // VER: test1
+''')
+    write_file('test.ver', '''
+VERNAME: base           base
+''')
+    yield filenames
+    td.cleanup()
+
+
+
 class ProjectVersions():
     r"""
     make_ver2
@@ -64,50 +99,13 @@ class ProjectVersions():
     read in a project and have all permutations of that project in an object
     We can lazily evaluate each version
 
-    >>> from contextlib import contextmanager
-    >>> @contextmanager
-    ... def testfiles():
-    ...     import os
-    ...     import tempfile
-    ...     td = tempfile.TemporaryDirectory()
-    ...     filenames = set()
-    ...     def write_file(filename, data):
-    ...         filename = os.path.join(td.name, filename)
-    ...         with open(filename, 'wt', encoding='utf8') as filehandle:
-    ...            _ = filehandle.write(data)
-    ...         filenames.add(filename)
-    ...     write_file('test.py', '''
-    ... print('Hello World')
-    ... print('Hello Test')  # VER: test4
-    ... ''')
-    ...     write_file('test.js', '''
-    ... console.log("Hello World")    // VER: test4
-    ... ''')
-    ...     write_file('Test.java', '''
-    ... public class Test {                          // VER: test1
-    ...     public Test() {                          // VER: test2
-    ...         System.out.println("Hello World");   // VER: test3
-    ...     }                                        // VER: test2
-    ...     public static void main(String[] args) {new Test();}  // VER: test2
-    ... }  // VER: test1
-    ... ''')
-    ...     write_file('test.ver', '''
-    ... VERNAME: base           base
-    ... ''')
-    ...     yield filenames
-    ...     td.cleanup()
-
-    >>> with testfiles() as filenames:
+    >>> with _testfiles() as filenames:
     ...     p = ProjectVersions(filenames)
 
     >>> p.versions['base']
     ('base',)
     >>> p.data['py']['base']
     "\nprint('Hello World')"
-
-    >>> sorted(p._version_from_ver_tags_in_files().keys())
-    ['test1', 'test2', 'test3', 'test4']
-
     """
     def __init__(self, filenames):
         self.files = MappingProxyType({
@@ -130,19 +128,7 @@ class ProjectVersions():
             raise NotImplementedError('yaml version file format not implemented')
         if {'ver',} & file_exts:
             return parse_legacy_version_data(self.files['ver'])
-        return self._version_from_ver_tags_in_files()
-    def _version_from_ver_tags_in_files(self):
-        """
-        If no versions list explicitly given - extract all files for VER markers in all files
-        Each vername is a standalone version
-        """
-        return {
-            vername: vername
-            for vername in set(chain.from_iterable(
-                extract_versions_from_data(data)
-                for data in self.files.values()
-            ))
-        }
+        raise Exception('no version information')
 
     #@lru_cache?
     def langauge(self, language):
@@ -156,6 +142,103 @@ class ProjectVersions():
                 )
             )
             for ver_name, ver_path in self.versions.items()
+        })
+
+    @cached_property
+    def data(self):
+        return MappingProxyType({l: self.langauge(l) for l in self.langauges})
+
+
+
+class LanguageVersions():
+    r"""
+
+    >>> with _testfiles() as filenames:
+    ...     l = LanguageVersions(filenames)
+
+    >>> l.versions
+    ['hello_world', 'test1', 'test2', 'test4']
+    >>> l.data['py']['test4']
+    "print('Hello Test')"
+    """
+
+    VERSION_ORDER = [  # TODO: these should be moved eventually
+        'title',
+        'hello_world',
+        'read_line_from_console',
+        'comment',
+        'define_variables',
+        'define_constats',
+        'arithmetic',
+        'if_statement',
+        'if_statement_more',
+        'for_loop',
+        'while_loop',
+        'until_loop',
+        'for_each_loop',
+        'file_write',
+        'file_read',
+        'string_concatination',
+        'convert_string_to_interger_and_back',
+        'convert_double_to_string_and_back',
+        'function',
+        'function_with_return_value',
+        'function_with_params_by_reference',
+        'function_with_params_by_value',
+        'define_fixed_array',
+        'define_2d_arrays',
+        'list',
+        'define_map',
+        'error_handling',
+        'split_strings',
+        'random_number',
+        'class',
+        'read_csv_into_array_of_classs',
+        'sleep',
+    ]
+
+    def __init__(self, filenames):
+        def _amalgamate_files_with_same_extension(acc, f):
+            with f.open(encoding='utf8') as _f:
+                acc[f.suffix.strip('.')] += _f.read()
+            return acc
+        self.files = MappingProxyType(dict(
+            reduce(
+                _amalgamate_files_with_same_extension,
+                map(Path, filenames),
+                defaultdict(str)
+            )
+        ))
+        self.data  # generate cache on object creation
+
+    @cached_property
+    def langauges(self):
+        return frozenset(self.files.keys()) - frozenset({'ver', 'yaml', 'yml', 'md'})
+
+    @cached_property
+    def versions(self):
+        """
+        extract all files for VER markers in all files
+        Each vername is a standalone version
+        """
+        version_order_set = frozenset(self.VERSION_ORDER)
+        self_versions_set = frozenset(chain.from_iterable(
+            extract_versions_from_data(data)
+            for data in self.files.values()
+        ))
+        return [ver for ver in self.VERSION_ORDER if ver in self_versions_set] + sorted(self_versions_set - version_order_set)
+
+    def langauge(self, language):
+        return MappingProxyType({
+            ver: '\n'.join(
+                make_ver(
+                    io.StringIO(self.files[language]), 
+                    ver_path=ver,
+                    lang=language,
+                    process_additional_metafiles=False,
+                )
+            )
+            for ver in self.versions
         })
 
     @cached_property
