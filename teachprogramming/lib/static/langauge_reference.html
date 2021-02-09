@@ -1,0 +1,52 @@
+<!DOCTYPE html><html>
+<head>
+    <meta charset="utf-8" />
+    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
+    <title>TeachProgramming</title>
+</head>
+<body>
+<h1>Language Reference</h1>
+<div id="main"></div>
+<script type="module">
+
+//const QUERY_STRING_project = 'project';
+const urlParams = new URLSearchParams(window.location.search);
+const hostElement = document.getElementById('main') || document.getElementsByTagName('body').item(0);
+
+
+function renderLanguageReference(data) {
+    //console.log(data);
+    const table = document.createElement('table');
+
+    const table_headings = document.createElement('tr');
+    table_headings.appendChild(document.createElement('th'));
+    for (let language of Object.keys(data.languages)) {
+        const table_heading = document.createElement('th');
+        table_heading.textContent = language;
+        table_headings.appendChild(table_heading);
+    }
+    table.appendChild(table_headings);
+
+    for (let version_row of Object.keys(data.versions)) {
+        const table_row = document.createElement('tr');
+        const table_row_name = document.createElement('td');
+        table_row_name.textContent = version_row;
+        table_row.appendChild(table_row_name);
+        for (let [language, code] of Object.entries(data.languages)) {
+            const table_cell = document.createElement('td');
+            table_cell.textContent = code[version_row];
+            table_row.appendChild(table_cell);
+        }
+        table.appendChild(table_row);
+    }
+
+    hostElement.appendChild(table);
+}
+
+
+fetch(`/language_reference`)
+    .then(response => response.json())
+    .then(renderLanguageReference)
+.catch(err => console.error(err));
+
+</script></body></html>
