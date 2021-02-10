@@ -4,32 +4,84 @@
     <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
     <title>TeachProgramming</title>
     <style>
+        #navigation a {
+            margin-right: 1em;
+        }
+
         table {
             border-spacing: 0;
             border-collapse: collapse;
+            border:solid #000 !important;
+            border-width:1px 0 0 1px !important;
         }
-        table td {
-            border: 1px solid black;
+        table td, th {
+            /* border: 1px solid black; */
+            border:solid #000 !important;
+            border-width:0 1px 1px 0 !important;
+            vertical-align: top;
+        }
+
+        @media print {
+            @page {
+                margin: 1em;
+            }
+            #navigation {  /* and (min-width: 500px) */
+                display: none;
+            }
+            table { page-break-inside:auto }
+            tr    { page-break-inside:avoid; page-break-after:auto }
         }
     </style>
 </head>
 <body>
-<h1>Language Reference</h1>
+<div id="navigation"></div>
 <div id="main"></div>
 <script type="module">
 
-//const QUERY_STRING_project = 'project';
-const urlParams = new URLSearchParams(window.location.search);
-const hostElement = document.getElementById('main') || document.getElementsByTagName('body').item(0);
 
+//const QUERY_STRING_project = 'project';
+//const urlParams = new URLSearchParams(window.location.search);
+
+const navigationElement = document.getElementById('navigation');
+const mainElement = document.getElementById('main') || document.getElementsByTagName('body').item(0);
+
+let _data;
+window.onhashchange = function() {
+    renderLanguageReference(_data);
+}
 
 function renderLanguageReference(data) {
-    //console.log(data);
+    const languages = window.location.hash.replace('#','').split(',').filter((i)=>typeof(i)==="string" && i.length);
+
+    // Clear existing html
+    navigationElement.innerHTML = '';
+    mainElement.innerHTML = '';
+
+    // Build navigation
+    function nav_a(language, languages) {
+        const a = document.createElement('a');
+        a.href = `#${languages.join(",")}`;
+        a.textContent = language;
+        return a;
+    }
+    for (let language of Object.keys(data.languages)) {
+        navigationElement.appendChild(nav_a(
+            language,
+            languages.indexOf(language) < 0 ? languages.concat([language]) : languages.filter((i)=>i!=language),
+        ));
+    }
+
+    // Build Table
     const table = document.createElement('table');
 
-    const table_headings = document.createElement('tr');
+    
+    const table_headings = document.createElement('thead');
+    //const table_headings_ = document.createElement('thead');
+    //document.createElement('tr');
+    
     table_headings.appendChild(document.createElement('th'));
     for (let language of Object.keys(data.languages)) {
+        if (languages.indexOf(language) < 0) {continue;}  // skip languages not in url-hash
         const table_heading = document.createElement('th');
         table_heading.textContent = language;
         table_headings.appendChild(table_heading);
@@ -42,6 +94,7 @@ function renderLanguageReference(data) {
         table_row_name.textContent = version_row;
         table_row.appendChild(table_row_name);
         for (let [language, code] of Object.entries(data.languages)) {
+            if (languages.indexOf(language) < 0) {continue;}  // skip languages not in url-hash
             const table_cell = document.createElement('td');
             const pre = document.createElement('pre');
             pre.append(document.createTextNode(code[version_row]));
@@ -51,12 +104,13 @@ function renderLanguageReference(data) {
         table.appendChild(table_row);
     }
 
-    hostElement.appendChild(table);
+    mainElement.appendChild(table);
 }
 
 
 fetch(`/language_reference.json`)
     .then(response => response.json())
+    .then((data)=>_data=data)
     .then(renderLanguageReference)
 .catch(err => console.error(err));
 

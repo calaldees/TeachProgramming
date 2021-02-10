@@ -6,6 +6,9 @@ from pathlib import Path
 from types import MappingProxyType
 from contextlib import contextmanager
 import io
+
+
+# Using the old `make_ver` under the hood as a transition. It needs re-writing
 try:  # pytest has it one one, running from the cmdline another ?? wha?
     from make_ver import make_ver  # TODO: deprecate and reimplement
 except ImportError:
