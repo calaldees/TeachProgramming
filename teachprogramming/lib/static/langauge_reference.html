@@ -84,8 +84,7 @@ function renderLanguageReference(data) {
     //document.createElement('tr');
     
     table_headings.appendChild(document.createElement('th'));
-    for (let language of Object.keys(data.languages)) {
-        if (languages.indexOf(language) < 0) {continue;}  // skip languages not in url-hash
+    for (let language of languages) {
         const table_heading = document.createElement('th');
         table_heading.textContent = language;
         table_headings.appendChild(table_heading);
@@ -97,8 +96,8 @@ function renderLanguageReference(data) {
         const table_row_name = document.createElement('td');
         table_row_name.textContent = version_row;
         table_row.appendChild(table_row_name);
-        for (let [language, code] of Object.entries(data.languages)) {
-            if (languages.indexOf(language) < 0) {continue;}  // skip languages not in url-hash
+        for (let language of languages) {
+            const code = data.languages[language];
             const table_cell = document.createElement('td');
             const pre = document.createElement('pre');
             pre.append(document.createTextNode(code[version_row]));
