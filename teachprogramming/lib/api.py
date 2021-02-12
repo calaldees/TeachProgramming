@@ -57,20 +57,28 @@ class IndexResource():
         raise falcon.HTTPFound('/static/index.html')
 
 class LanguageReferenceResource():
-    def on_get(self, request, response):
-        lv = LanguageVersions(fast_scan('../static/language_reference/languages/'))
+    def __init__(self, path):
+        self.files = FileCollection(path)
+        self.lv = LanguageVersions(fast_scan(path))
+    def on_get(self, request, response):        
         response.media = {
-            'versions': lv.versions,
-            'languages': lv.data,
+            'versions': self.lv.versions,
+            'languages': self.lv.data,
         }
         response.status = falcon.HTTP_200
 
+class ProjectListResource():
+    def __init__(self, path):
+        self.files = FileCollection(path)
+    def on_get(self, request, response):
+        response.media = {'projects': self.files.projects}
+        response.status = falcon.HTTP_200
 class ProjectResource():
     def __init__(self, path):
         self.files = FileCollection(path)
-    def on_index(self, request, response):
-        response.media = {'projects': self.files.projects}
-        response.status = falcon.HTTP_200
+    #def on_index(self, request, response):
+    #    response.media = {'projects': self.files.projects}
+    #    response.status = falcon.HTTP_200
     def on_get(self, request, response, path):
         pv = ProjectVersions(self.files.project_files(path))
         response.media = {
@@ -81,14 +89,34 @@ class ProjectResource():
 
 # Setup App -------------------------------------------------------------------
 
-def create_wsgi_app(path=None, **kwargs):
+def create_wsgi_app(project_path=None, language_path=None, **kwargs):
     app = falcon.API()
     app.add_route(r'/', IndexResource())
-    app.add_static_route('/static', str(Path('static').resolve()))
-    app.add_route(r'/language_reference.json', LanguageReferenceResource())
-    _falcon_helpers.add_sink(app, 'project', ProjectResource(path), func_path_normalizer=_falcon_helpers.func_path_normalizer_no_extension)
+    app.add_static_route(r'/static', str(Path('static').resolve()))
+    app.add_route(r'/api/v1/language_reference.json', LanguageReferenceResource(language_path))
+    app.add_route(r'/api/v1/projects.json', ProjectListResource(project_path))
+    _falcon_helpers.add_sink(app, r'/api/v1/projects/', ProjectResource(project_path), func_path_normalizer=_falcon_helpers.func_path_normalizer_no_extension)
     _falcon_helpers.update_json_handlers(app)
     return app
+
+# Export ----------------------------------------------------------------------
+
+def export():
+    from falcon import testing
+    test_client = testing.TestClient(app)
+    def read_write(url):
+        log.info(url)
+        path = Path(url.strip('/'))
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open('wt', encoding="utf-8") as filehandle:
+            data = test_client.simulate_get(url)
+            filehandle.write(data.text)
+            return data.json
+    read_write('/api/v1/language_reference.json')
+    projects = read_write('/api/v1/projects.json')['projects']
+    for project in projects:
+        read_write(f'/api/v1/projects/{project}.json')
+
 
 # Commandlin Args -------------------------------------------------------------
 
@@ -102,10 +130,13 @@ def get_args():
         ''',
     )
 
-    parser.add_argument('path', action='store', default='./', help='')
+    parser.add_argument('project_path', action='store', default='./', help='')
+    parser.add_argument('language_path', action='store', default='./', help='')
 
     parser.add_argument('--host', action='store', default='0.0.0.0', help='')
     parser.add_argument('--port', action='store', default=8000, type=int, help='')
+
+    parser.add_argument('--export', action='store_true')
 
     parser.add_argument('--log_level', action='store', type=int, help='loglevel of output to stdout', default=logging.INFO)
 
@@ -120,9 +151,15 @@ if __name__ == '__main__':
     logging.basicConfig(level=kwargs['log_level'])
 
     from wsgiref import simple_server
-    httpd = simple_server.make_server(kwargs['host'], kwargs['port'], create_wsgi_app(**kwargs))
+    app = create_wsgi_app(**kwargs)
+
+    if kwargs['export']:
+        export()
+        exit()
+
     try:
         log.info(f'start {kwargs}')
+        httpd = simple_server.make_server(kwargs['host'], kwargs['port'], app)
         httpd.serve_forever()
     except KeyboardInterrupt:
         pass

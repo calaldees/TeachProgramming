@@ -112,7 +112,7 @@ function renderLanguageReference(data) {
 }
 
 
-fetch(`/language_reference.json`)
+fetch(`/api/v1/language_reference.json`)
     .then(response => response.json())
     .then((data)=>_data=data)
     .then(renderLanguageReference)

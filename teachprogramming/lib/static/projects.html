@@ -40,12 +40,12 @@ function renderProject(data) {
 }
 
 if (urlParams.has(QUERY_STRING_project)) {
-    fetch(`/project/${urlParams.get(QUERY_STRING_project)}`)
+    fetch(`/api/v1/projects/${urlParams.get(QUERY_STRING_project)}.json`)
         .then(response => response.json())
         .then(renderProject)
     .catch(err => console.error(err)); // Never forget the final catch!
 } else {
-    fetch('/project/')
+    fetch('/api/v1/projects.json')
         .then(response => response.json())
         .then(renderProjects)
     .catch(err => console.error(err)); // Never forget the final catch!
