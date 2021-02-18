@@ -1,0 +1,43 @@
+<!-- Chrome Canvas Fullscreen - F11 to toggle fullscreen -->
+<body style="margin: 0;">
+<canvas id="canvas" width="480" height="270" style="image-rendering: pixelated; object-fit: contain; width:100%; max-width: 100%; height: 100%; max-height: 100%;">
+</canvas>
+<script type="module">
+    const canvas = document.getElementById('canvas');
+    const c = canvas.getContext('2d');
+    c.fillStyle = 'black';
+    c.fillRect(0, 0, canvas.width, canvas.height);
+    //c.translate(0.5, 0.5);  //? needed for line aliasing?
+    const w = canvas.width;
+    const h = canvas.height;
+    const _w = w/2;
+    const _h = h/2;
+
+    function line(x1,y1,x2,y2) {
+        c.beginPath();
+        c.moveTo(Math.floor(x1)+0.5, Math.floor(y1)+0.5);
+        c.lineTo(Math.floor(x2)+0.5, Math.floor(y2)+0.5);
+        c.stroke();
+    }
+    function drawAxis() {
+        line(_w, 0, _w, h);
+        line(0, _h, w, _h);
+    }
+    function pixel(x, y) {c.fillRect(Math.floor(_w+x), Math.floor(_h-y), 1, 1);}
+    
+    
+    c.fillStyle = 'rgb(255, 255, 255)';
+    c.strokeStyle = 'rgb(255, 255, 255)';
+
+    drawAxis();
+
+    //let y = -20; //canvas.height / 2;
+    for (let x=-_w ; x<_w ; x++) {
+        pixel(x, ((x*x)/100)-60 );
+    }
+
+    for (let x=-_w ; x<_w ; x++) {
+        pixel(x, Math.sin(x/30)*_h );
+    }
+</script>
+</body>

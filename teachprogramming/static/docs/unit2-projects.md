@@ -3,6 +3,10 @@ Unit 2?
 
 This is not really unit 2 .. it's just a catch-all for other stuff
 
+* [ECT Python Program: Theme Park Ride](https://docs.google.com/document/d/1_Hu-ZJz2p4dyYzyYgjZeORWuLX8PVfcFn7i8MZpPFHM/edit)
+> Word problem on estimation:  There are 90 people in line at a theme park ride. Every 5 minutes, 40 people get on the ride and 63 join the line. Estimate how long it would take for 600 people to be in line.
+
+
 isPrime
 -------
 
