@@ -7,27 +7,46 @@
     const c = canvas.getContext('2d');
     c.fillStyle = 'black';
     c.fillRect(0, 0, canvas.width, canvas.height);
-    //c.translate(0.5, 0.5);  //? needed for line aliasing?
     const w = canvas.width;
     const h = canvas.height;
     const _w = w/2;
     const _h = h/2;
+    //c.transform(1, 0, 0, -1, 0, h);  // flip the y axis
+    c.translate(_w-1, _h-1);  // 0,0 is middle of screen
 
+    function pixel(x, y) {c.fillRect(Math.floor(x), -Math.floor(y), 1, 1);}
     function line(x1,y1,x2,y2) {
         c.beginPath();
-        c.moveTo(Math.floor(x1)+0.5, Math.floor(y1)+0.5);
-        c.lineTo(Math.floor(x2)+0.5, Math.floor(y2)+0.5);
+        c.moveTo(Math.floor(x1)+0.5, -Math.floor(y1)+0.5);
+        c.lineTo(Math.floor(x2)+0.5, -Math.floor(y2)+0.5);
         c.stroke();
     }
-    function drawAxis() {
-        line(_w, 0, _w, h);
-        line(0, _h, w, _h);
-    }
-    function pixel(x, y) {c.fillRect(Math.floor(_w+x), Math.floor(_h-y), 1, 1);}
-    
-    
+
     c.fillStyle = 'rgb(255, 255, 255)';
     c.strokeStyle = 'rgb(255, 255, 255)';
+    c.font = `${Math.floor(h/30)}px Arial`;
+
+
+    function drawAxis() {
+        line(-_w, 0, +_w, 0);  // x axis
+        line(0, -_h, 0, _h);  // y axis
+
+        // Ticks and Text
+        const marker_width = 2;
+        const font_margin = 8;
+        const marker_spacing = 20;
+        function axis(a, max, scale) {
+            for (let i=0 ; i<max ; i+=marker_spacing) {
+                line(a ? i*scale : -marker_width, a ? -marker_width : i*scale , a ? i*scale : marker_width, a ? marker_width: i*scale);
+                c.fillText(i*scale, a ? i*scale : font_margin, -(a ? font_margin : i*scale));
+            }
+        }
+        axis(false, _h, 1);
+        axis(false, _h, -1);
+        axis(true, _w, 1);
+        axis(true, _w, -1);
+    }
+
 
     drawAxis();
 

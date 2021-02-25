@@ -1,9 +1,10 @@
 AS-Level Computing: Projects
 ============================
 
-[AQA A-Level Computing - Specification](https://filestore.aqa.org.uk/resources/computing/specifications/AQA-7516-7517-SP-2015.PDF)
+* [AQA A-Level Computing - Specification](https://filestore.aqa.org.uk/resources/computing/specifications/AQA-7516-7517-SP-2015.PDF)
+    * 180 guided learning hours (school) + homework
 
-* These are all the projects for the year (180 guided learning hours)
+* These are all the projects for the year 
 * Tasks can be attempted in any order (self directed/ownership)
 * Every task maps to theory specification
 * You may use any language for each task
@@ -28,7 +29,7 @@ Training Tasks (Grade E)
             5,12,983,43,2,7,11,42
             3,1,4924,23,4
             1,2,3
-        ```
+          ```
 9. Fibonacci Sequence: Generate the following sequence under 200. `1,1,2,3,5,8,13,21,etc`
     * Add the previous 2 numbers, e.g. 2+3=5 3+5=8
 
@@ -372,7 +373,8 @@ Project Documenting
         * Boundary/limit
         * Erroneous
     * Consider an average of 10 items of test data
-    * DO NOT PROCEED TO DESIGN WITHOUT DOING THIS! SERIOUSLY!
+    * Write an automated test with `assert` or `doctests`
+    * DO NOT PROCEED TO DESIGN WITHOUT DOING THIS! SERIOUSLY! KNOW THE SPEC OF WHAT YOU ARE WRITING!
 * Design
     * Plan Code Solution - Algorithm design
         * Structured English -> Pseudo Code -> High level code
@@ -404,13 +406,16 @@ Project Documenting
 Suggestions
 -----------
 
+* Have a development flow where; view code and output on a single screen at the same time
 * Touch the mouse as little as possible
+    * Use hotkeys to switch between code and output
 * Learn to use your IDE's advanced hotkeys
 * Setup your IDE to use a linter
-* Use a debugger (not just `print`)
+* Use a debugger (not just `print`) (breakpoint, step into, step over, watch variable values)
 * Use version control
-* Write your automated tests before you implement your feature
+* Write automated tests before you implement your feature/function
     * Write your tests as functions before you start
-    * use `assert`
+    * use `assert` or [doctests](https://docs.python.org/3/library/doctest.html)
     * [Test Driven Development](https://en.wikipedia.org/wiki/Test-driven_development)
-* Standard Library - attempt to read it
+* Know how to access your language standard library documentation
+

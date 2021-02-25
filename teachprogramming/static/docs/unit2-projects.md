@@ -18,6 +18,8 @@ https://en.wikipedia.org/wiki/Primality_test
 
 ```
 
+Using and/or/not to drive a seven segment display from a 4 bit number
+
 huffman encoding
 encoder and decoder
 for dna text string
