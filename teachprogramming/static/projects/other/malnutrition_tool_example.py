@@ -1,3 +1,7 @@
+# Waterlow Pressure Area Risk Assessment
+# http://www.healthcareimprovementscotland.org/programmes/patient_safety/tissue_viability_resources/waterlow_risk_assessment_chart.aspx
+# http://www.judy-waterlow.co.uk/downloads/Waterlow%20Score%20Card-front.pdf
+
 # Example - Nursing Student code for "Malnutrition Universal Screening Tool"
 # https://www.bapen.org.uk/pdfs/must/must_full.pdf
 # (This is the student example as found)

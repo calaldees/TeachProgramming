@@ -69,3 +69,9 @@ Other references
 https://twitter.com/ID_AA_Carmack/status/1202980347295612929
 https://github.com/jackpal/Dandy-Dungeon
 https://github.com/nanochess/Invaders
+
+
+* [Updating “101 Basic Computer Games” for 2021](https://discourse.codinghorror.com/t/updating-101-basic-computer-games-for-2021/7927)
+    * Project to implement lots of old BASIC games in multiple modern languages
+    * [BASIC Computer Games](http://www.vintage-basic.net/games.html) 1978 Book
+    * [basic-computer-games](https://github.com/coding-horror/basic-computer-games)

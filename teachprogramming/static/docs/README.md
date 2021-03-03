@@ -16,7 +16,7 @@ How to teach Computing
     * Theory covered by practical tasks
 * Public repos
     * Version control
-    * Transparancy
+    * Transparency
 * Automated tests
     * doctests
     * auto assessment to spec?
@@ -26,6 +26,9 @@ How to teach Computing
     * Actually create something
     * Sense of achievement
     * Accessible independently
+* Theory guided by regular interleaving of exam questions on paper
+* Sometimes don't even tell them what the lesson is about - just show them some code and Predict, Run, Investigate (PRIMM)
+    * E.g. by ref or by val example
 * Final self directed Personal project (A-level project)
     * Culmination of skills
     * Create a game?
@@ -55,7 +58,7 @@ How to teach Computing
 
 
 * Principles
-    * Theory _when needed_ and interesting dynamic
+    * Theory (lectures) _when needed_ and interesting dynamic
     * Creativity/Choice
         * Hard timetable, tasks are authoritative and hierarchical - this establish's a non desireable mode of thinking
     * Developer Culture

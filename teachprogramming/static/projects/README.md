@@ -123,14 +123,8 @@ https://github.com/CountablyInfinite/oscp_cheatsheet
 https://github.com/kobs0N/Hacking-Cheatsheet
 * Planets circle in 3d - functional position based on date/time - 3d? texture? sphere?
     * https://www.solarsystemscope.com/
-* Didnt know where to put this .. but OH MY GOD
-    * [This New 10 Terapixel Image of the Night Sky Contains 1 Billion Galaxies](https://kottke.org/21/02/10-terapixel-image-of-the-night-sky)
-        * [viewer](https://viewer.legacysurvey.org/#IC%202442)
-* Satelite orbits? - plot in 3d?
-    * [orbit viewer](http://stuffin.space/)
-    * [Orbit Dataset](https://www.ucsusa.org/resources/satellite-database)
-    * [Orbit descriptions](https://earthobservatory.nasa.gov/features/OrbitsCatalog)
-    * [Japan developing wooden satellites to cut space junk](https://www.bbc.co.uk/news/business-55463366)
+    * See other space data for sattelites
+    * https://css-orbit.kobeff.repl.co/ https://repl.it/talk/share/CSS-Solar-System/119400
 * Tools
     * [DiveTools2](https://scuba.shish.io/)
         * [DiveTools Source](https://github.com/shish/divetools2)
