@@ -91,25 +91,15 @@ class MainClass {
         return data;
     }
     int quickSortPartition(string[] data, int lo, int hi) {
-        string pivot = data[(hi+lo)/2];
-        int i = lo - 1;
-        int j = hi + 1;
+        string pivot = data[(lo+hi)/2];
         while (true) {
-            do {
-                i++;
-            }
-            while (String.Compare(data[i], pivot) == -1);
-            do {
-                j--;
-            }
-            while (String.Compare(data[j], pivot) == 1);
-            if (i>=j) {
-                return j;
-            }
-            string a = data[i];
-            string b = data[j];
-            data[i] = b;
-            data[j] = a;
+            while (String.Compare(data[lo], pivot) == -1) {lo++;}
+            while (String.Compare(data[hi], pivot) == 1) {hi--;}
+            if (lo>=hi) {return hi;}
+            string v_lo = data[lo];
+            string v_hi = data[hi];
+            data[lo] = v_hi;
+            data[hi] = v_lo;
         }
     }
 
