@@ -5,7 +5,7 @@ class MainClass {
     public static void Main (string[] args) {new MainClass();}
     public MainClass() {
         string[] data = new string[]{"h", "b", "d", "g", "e", "c", "a", "f"};
-        data = mergeSort(data);
+        data = quickSort(data);
         Console.WriteLine(String.Join(",", data));
     }
 
@@ -78,5 +78,39 @@ class MainClass {
         return cc;
     }
     public static int IntPow(int x, int pow) {return (int)Math.Pow(x, pow);}
+
+
+    string[] quickSort(string[] data) {
+        return quickSort(data, 0, data.Length-1);
+    }
+    string[] quickSort(string[] data, int lo, int hi) {
+        if (lo >= hi) {return data;}
+        int p = quickSortPartition(data, lo, hi);
+        quickSort(data, lo, p);
+        quickSort(data, p+1, hi);
+        return data;
+    }
+    int quickSortPartition(string[] data, int lo, int hi) {
+        string pivot = data[(hi+lo)/2];
+        int i = lo - 1;
+        int j = hi + 1;
+        while (true) {
+            do {
+                i++;
+            }
+            while (String.Compare(data[i], pivot) == -1);
+            do {
+                j--;
+            }
+            while (String.Compare(data[j], pivot) == 1);
+            if (i>=j) {
+                return j;
+            }
+            string a = data[i];
+            string b = data[j];
+            data[i] = b;
+            data[j] = a;
+        }
+    }
 
 }
