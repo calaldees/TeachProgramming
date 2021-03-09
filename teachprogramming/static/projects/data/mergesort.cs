@@ -86,18 +86,25 @@ class MainClass {
     string[] quickSort(string[] data, int lo, int hi) {
         if (lo >= hi) {return data;}
         int p = quickSortPartition(data, lo, hi);
-        quickSort(data, lo, p);
+        //Console.WriteLine($"a p:{p}");
+        quickSort(data, lo, p-1);
+        //Console.WriteLine("b");
         quickSort(data, p+1, hi);
+        //Console.WriteLine("c");
         return data;
     }
     int quickSortPartition(string[] data, int lo, int hi) {
-        string pivot = data[(lo+hi)/2];
+        int p = (lo+hi)/2;
+        string pivot = data[p];
+        Console.WriteLine($"p:{p} pivot:{pivot} lo:{lo} hi:{hi} data:{String.Join("", data)}");
         while (true) {
-            while (String.Compare(data[lo], pivot) == -1) {lo++;}
-            while (String.Compare(data[hi], pivot) == 1) {hi--;}
+            while (lo<hi && String.Compare(data[lo], pivot) == -1) {lo++;} ;
+            while (hi>lo && String.Compare(data[hi], pivot) ==  1) {hi--;};
+            Console.WriteLine($"lo:{lo} hi:{hi}");
             if (lo>=hi) {return hi;}
             string v_lo = data[lo];
             string v_hi = data[hi];
+            Console.WriteLine($"swap lo:{v_lo} hi:{v_hi}");
             data[lo] = v_hi;
             data[hi] = v_lo;
         }
