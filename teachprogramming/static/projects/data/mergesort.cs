@@ -5,6 +5,8 @@ class MainClass {
     public static void Main (string[] args) {new MainClass();}
     public MainClass() {
         string[] data = new string[]{"h", "b", "d", "g", "g", "c", "a", "f"};
+        //data = bubbleSort(data);
+        //data = mergeSort(data);
         data = quickSort(data);
         Console.WriteLine(String.Join(",", data));
     }
@@ -33,6 +35,7 @@ class MainClass {
 
     string[] mergeSort(string[] data) {
         string[][] lists = new string[data.Length][];
+        // TODO: this is an abomination and it not the correct methodology for the mergesort, we should reuse the existing arrays
         // Break every data item into it's own array
         for (int i=0 ; i<data.Length ; i++) {
             lists[i] = new string[]{data[i]};
@@ -52,7 +55,7 @@ class MainClass {
         //Console.WriteLine("Done");
         return lists[0];
     }
-    string[] mergeSortedLists(string[] aa, string[] bb) {
+    string[] mergeSortedLists(string[] aa, string[] bb) {  // To be a real merge sort we should pass `cc` here and it should already be the correct length
         //Console.WriteLine($"mergeSortedLists {String.Join("", aa)} {String.Join("", bb)}");
         string[] cc = new string[aa.Length + bb.Length];
         int ia = 0;
@@ -62,7 +65,7 @@ class MainClass {
             string va = ia<aa.Length ? aa[ia] : null;
             string vb = ib<bb.Length ? bb[ib] : null;
             //Console.WriteLine($"aa={ia}/{aa.Length} bb={ib}/{bb.Length} cc={ic}/{cc.Length} {String.Join("", aa)} {String.Join("", bb)} {String.Join("", cc)} va:{va} vb:{vb} va^vb:{String.Compare(va, vb)} va^vb:{String.Compare(vb, va)}");
-            if (vb == null || va !=null && String.Compare(va, vb) == -1) {
+            if (vb == null || va !=null && String.Compare(va, vb) == -1 || va == vb) {
                 //Console.WriteLine("aa inc");
                 cc[ic] = va;
                 ia++;
@@ -86,26 +89,23 @@ class MainClass {
     string[] quickSort(string[] data, int lo, int hi) {
         if (lo >= hi) {return data;}
         int p = quickSortPartition(data, lo, hi);
-        //Console.WriteLine($"a p:{p}");
         quickSort(data, lo, p);
-        //Console.WriteLine("b");
         quickSort(data, p+1, hi);
-        //Console.WriteLine("c");
         return data;
     }
     int quickSortPartition(string[] data, int lo, int hi) {
         int p = (lo+hi)/2;
         string pivot = data[p];
-        Console.WriteLine($"p:{p} pivot:{pivot} lo:{lo} hi:{hi} data:{String.Join("", data)}");
+        //Console.WriteLine($"p:{p} pivot:{pivot} lo:{lo} hi:{hi} data:{String.Join("", data)}");
         while (true) {
-            while (lo<hi && String.Compare(data[lo], pivot) == -1) {lo++;} ;
+            while (lo<hi && String.Compare(data[lo], pivot) == -1) {lo++;};
             while (hi>lo && String.Compare(data[hi], pivot) ==  1) {hi--;};
-            Console.WriteLine($"lo:{lo} hi:{hi}");
+            //Console.WriteLine($"lo:{lo} hi:{hi}");
             if (lo>=hi) {return hi;}
             string v_lo = data[lo];
             string v_hi = data[hi];
-            if (v_lo == v_hi) {lo++; hi--; continue;}
-            Console.WriteLine($"swap lo:{v_lo} hi:{v_hi}");
+            if (v_lo == v_hi) {lo++; hi--; continue;} // if elements are the same, skip both items
+            //Console.WriteLine($"swap lo:{v_lo} hi:{v_hi}");
             data[lo] = v_hi;
             data[hi] = v_lo;
         }
