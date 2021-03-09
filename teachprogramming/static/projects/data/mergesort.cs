@@ -4,7 +4,7 @@ class MainClass {
 
     public static void Main (string[] args) {new MainClass();}
     public MainClass() {
-        string[] data = new string[]{"h", "b", "d", "g", "e", "c", "a", "f"};
+        string[] data = new string[]{"h", "b", "d", "g", "g", "c", "a", "f"};
         data = quickSort(data);
         Console.WriteLine(String.Join(",", data));
     }
@@ -87,7 +87,7 @@ class MainClass {
         if (lo >= hi) {return data;}
         int p = quickSortPartition(data, lo, hi);
         //Console.WriteLine($"a p:{p}");
-        quickSort(data, lo, p-1);
+        quickSort(data, lo, p);
         //Console.WriteLine("b");
         quickSort(data, p+1, hi);
         //Console.WriteLine("c");
@@ -104,6 +104,7 @@ class MainClass {
             if (lo>=hi) {return hi;}
             string v_lo = data[lo];
             string v_hi = data[hi];
+            if (v_lo == v_hi) {lo++; hi--; continue;}
             Console.WriteLine($"swap lo:{v_lo} hi:{v_hi}");
             data[lo] = v_hi;
             data[hi] = v_lo;
