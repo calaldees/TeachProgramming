@@ -36,3 +36,5 @@ curl -O "https://www.fmrib.ox.ac.uk/ukbiobank/group_means/WINpapaya/brain_image.
 
 Consider javascript viewer - may need arraybuffer?
 https://javascript.programmingpedia.net/en/tutorial/417/binary-data
+
+TODO: dump data from medial format into 3d array of plain bytes

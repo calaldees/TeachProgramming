@@ -66,6 +66,7 @@ How to teach Computing
     * No competition / hierarchy / judgement
         * Their progress is under their own ownership
     * Participate in community
+    * Convey principles/concepts over Tooling (be explicit about this to learners)
 
 
 > Seymour Papert introduced the Logo language in the 1970s and watched how children got excited by computing and learned how to think computationally. He attuned Logo to children's interests; even so, it still took students time to move from the fascination of the introduction to the ability to program useful computations regularly.

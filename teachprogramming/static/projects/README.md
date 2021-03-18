@@ -123,7 +123,7 @@ https://github.com/CountablyInfinite/oscp_cheatsheet
 https://github.com/kobs0N/Hacking-Cheatsheet
 * Planets circle in 3d - functional position based on date/time - 3d? texture? sphere?
     * https://www.solarsystemscope.com/
-    * See other space data for sattelites
+    * See other space data for satellites
     * https://css-orbit.kobeff.repl.co/ https://repl.it/talk/share/CSS-Solar-System/119400
 * Tools
     * [DiveTools2](https://scuba.shish.io/)
