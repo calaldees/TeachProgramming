@@ -24,6 +24,12 @@ https://en.wikipedia.org/wiki/Primality_test
 
 ```
 
+
+* [pages.github.com](https://pages.github.com/)
+  * [Creating a GitHub Pages site with Jekyll](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/creating-a-github-pages-site-with-jekyll)
+  * [GitHub Pages and DNS](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site)
+  * [Getting Started with GitHub Pages](https://guides.github.com/features/pages/)
+
 Using and/or/not to drive a seven segment display from a 4 bit number
 
 huffman encoding
@@ -98,8 +104,11 @@ base case?
 
 reverse polish notation
 
-queue
-stack
+* implement (in static language) (generics?)
+  * list
+  * queue
+  * stack
+  * Test harness? 100000 items and timing performance?
 graph (weighted directed/undirected)
  traversal
 tree (root, connected, undirected) binary
