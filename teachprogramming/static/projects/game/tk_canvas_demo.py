@@ -24,12 +24,16 @@ class TkAnimationFrame():
 
     def animation_thread(self):
         frame = 0
+        time_start = time.time()
         while 'Escape' not in self.input:
             self.loop(self.canvas, frame)
             self.canvas.update()
-            time.sleep(1/self.frames_per_second)
-            self.canvas.delete(tkinter.ALL)
             frame += 1
+            time_next_frame = frame / self.frames_per_second
+            time_elapsed = time.time() - time_start
+            time_sleep = time_next_frame - time_elapsed
+            time.sleep(max(0, time_sleep))
+            self.canvas.delete(tkinter.ALL)
         self.root.destroy()
 
     def startup(self):
