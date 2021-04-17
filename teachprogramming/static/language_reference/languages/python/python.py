@@ -3,6 +3,8 @@ python3  # VER: title
 www.python.org  # VER: download
 Python 3 or higher  # VER: download
 http://docs.python.org/3/  # VER: help
+
+python my_file.py  # VER: run
 """
 
 
@@ -28,7 +30,7 @@ def define_variables():
     email_errors = True  # VER: define_variables
 
 
-def define_constats():
+def define_constants():
     GRAVITY = 9.81  # VER: define_constants
 
 
@@ -43,6 +45,12 @@ def arithmetic():
     total_cost = item_price * quant  # VER: arithmetic
     remainder = 14 % 11              # VER: arithmetic
     count += 1                       # VER: arithmetic
+
+    print(xpos)
+    print(distance)
+    print(total_cost)
+    print(remainder)
+    print(count)
 
 
 def if_statement():
