@@ -68,6 +68,28 @@ public class CSharp {
     Console.WriteLine(count);
   }
 
+  void if_statement() {
+    string username = "bob";
+    int count = 3;
+
+    if (count >= 5 && username == "Jim") {                                      // VER: if_statement
+      Console.WriteLine("Yes");                                                 // VER: if_statement
+    }                                                                           // VER: if_statement
+    else if (username == "admin") {                                             // VER: if_statement
+      Console.WriteLine("Admin");                                               // VER: if_statement
+    }                                                                           // VER: if_statement
+    else {                                                                      // VER: if_statement
+      Console.WriteLine("No");                                                  // VER: if_statement
+    }
+  }
+
+  void for_loop() {
+    string username = "Jim";
+    for (int i=0 ; i < username.Length ; i++) {                                 // VER: for_loop
+      Console.WriteLine(username[i]);                                           // VER: for_loop
+    }                                                                           // VER: for_loop
+  }
+
 
   public static void Main(string[] args) {new CSharp();}
   CSharp() {
@@ -77,6 +99,8 @@ public class CSharp {
       define_variables();
       define_constants();
       arithmetic();
+      if_statement();
+      for_loop();
   }
 }
 

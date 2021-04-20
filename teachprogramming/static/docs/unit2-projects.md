@@ -3,8 +3,16 @@ Unit 2?
 
 This is not really unit 2 .. it's just a catch-all for other stuff
 
+* unit, Coverage report (white box), test monkey (exploration), integration (multiple systems), user test, acceptance test, formal verification (compiler is half way there)
+  * 2 step db migrations, rollback
+  * CI for code coverage (up only), reject on lint fail, pre-commit hooks
+  * dependency injection, mocks
+
+* multiple container ci project
+  * black, code coverage + reject, cypress, database, webserver, containers, unittests, integration tests, end-to-end tests, pre-commit hooks, features from git log, conventional commits (check?), tag + auto increment.
+
 * [ECT Python Program: Theme Park Ride](https://docs.google.com/document/d/1_Hu-ZJz2p4dyYzyYgjZeORWuLX8PVfcFn7i8MZpPFHM/edit)
-> Word problem on estimation:  There are 90 people in line at a theme park ride. Every 5 minutes, 40 people get on the ride and 63 join the line. Estimate how long it would take for 600 people to be in line.
+  * > Word problem on estimation:  There are 90 people in line at a theme park ride. Every 5 minutes, 40 people get on the ride and 63 join the line. Estimate how long it would take for 600 people to be in line.
 
 Easy Stuff to be integrated
 ----------------------------

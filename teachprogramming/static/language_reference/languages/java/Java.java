@@ -70,6 +70,28 @@ public class Java {
     System.out.println(count);
   }
 
+  void if_statement() {
+    String username = "bob";
+    Integer count = 3;
+
+    if (count >= 5 && username.equals("Jim")) {                                 // VER: if_statement
+      System.out.println("Yes");                                                // VER: if_statement
+    }                                                                           // VER: if_statement
+    else if (username == "admin") {                                             // VER: if_statement
+      System.out.println("Admin");                                              // VER: if_statement
+    }                                                                           // VER: if_statement
+    else {                                                                      // VER: if_statement
+      System.out.println("No");                                                 // VER: if_statement
+    }
+  }
+
+  void for_loop() {
+    String username = "Jim";
+    for (Integer i=0 ; i < username.length() ; i++) {                           // VER: for_loop
+      System.out.println(username.charAt(i));                                   // VER: for_loop
+    }                                                                           // VER: for_loop
+  }
+
 
   void read_file() {
     try {                                                                       // VER: read_file
@@ -92,6 +114,12 @@ public class Java {
   public static void main(String[] args) {new Java();}
   public Java() {
     hello_world();
+    //read_line_from_console();
+    define_variables();
+    define_constants();
+    arithmetic();
+    if_statement();
+    for_loop();
     read_file();
   }
 

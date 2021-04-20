@@ -71,7 +71,7 @@ def if_statement_more():
 
 
 def for_loop():
-    username = 'bob'                    # VER: for_loop
+    username = 'Jim'                    # VER: for_loop
     for i in range(0, len(username)):   # VER: for_loop
         print(username[i])              # VER: for_loop
 
