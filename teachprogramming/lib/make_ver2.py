@@ -119,7 +119,7 @@ class ProjectVersions():
 
     @cached_property
     def langauges(self):
-        return frozenset(self.files.keys()) - frozenset({'ver', 'yaml', 'yml', 'txt', 'md'})
+        return frozenset(self.files.keys()) - frozenset({'ver', 'yaml', 'yml', 'txt', 'md', ''})
 
     @cached_property
     def versions(self):
@@ -216,7 +216,7 @@ class LanguageVersions():
 
     @cached_property
     def langauges(self):
-        return frozenset(self.files.keys()) - frozenset({'ver', 'yaml', 'yml', 'md'})
+        return frozenset(self.files.keys()) - frozenset({'ver', 'yaml', 'yml', 'md', ''})
 
     @cached_property
     def versions(self):

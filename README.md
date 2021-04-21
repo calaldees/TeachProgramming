@@ -34,7 +34,8 @@ Other similar projects?
 -----------------------
 
 https://github.com/algorithm-archivists/algorithm-archive
-
+* [executable-tutorials](https://github.com/dharmatech/executable-tutorials)
+    * mechanism for doing what my version system sort of accomplishes
 
 Old README.MD
 =============
