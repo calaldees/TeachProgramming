@@ -1,4 +1,4 @@
-DOCKER_IMAGE:=language_reference_csharp
+DOCKER_IMAGE:=language_reference_python
 run: build
 	docker run --rm -it ${DOCKER_IMAGE}
 build:

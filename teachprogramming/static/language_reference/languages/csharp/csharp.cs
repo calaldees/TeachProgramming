@@ -14,6 +14,7 @@ function csharp { mcs "$1" && clear && mono "${1%.*}.exe" && rm "${1%.*}.exe"; }
 */
 
 using System;                                                                   // VER: hello_world
+using System.IO;                                                                // VER: file_write
 
 public class CSharp {
 
@@ -80,14 +81,59 @@ public class CSharp {
     }                                                                           // VER: if_statement
     else {                                                                      // VER: if_statement
       Console.WriteLine("No");                                                  // VER: if_statement
-    }
+    }                                                                           // VER: if_statement
   }
 
   void for_loop() {
-    string username = "Jim";
+    string username = "Jim";                                                    // VER: for_loop
     for (int i=0 ; i < username.Length ; i++) {                                 // VER: for_loop
       Console.WriteLine(username[i]);                                           // VER: for_loop
     }                                                                           // VER: for_loop
+  }
+
+  void while_loop() {
+    int count = 0;  // VER: while_loop
+    while (count < 10) {  // VER: while_loop
+      Console.WriteLine("Count is " + count);  // VER: while_loop
+      count = count + 2;  // VER: while_loop
+    }  // VER: while_loop
+  }
+
+  void for_each_loop() {
+    string[] names = new string[]{"Bob","Ben","Bill","Boris","Bin"}; // VER: for_each_loop
+    foreach (string name in names) {  // VER: for_each_loop
+      Console.WriteLine(name);  // VER: for_each_loop
+    }  // VER: for_each_loop
+  }
+
+
+  void file_write() {
+    string line_to_write = "Append to end of file"; // VER: file_write
+    try { // VER: file_write
+      StreamWriter file = new StreamWriter("out.txt");  // VER: file_write
+      file.WriteLine(line_to_write);   // VER: file_write
+      file.Close();   // VER: file_write
+    } // VER: file_write
+    catch (Exception e){ // VER: file_write
+      Console.WriteLine("Error: " + e.Message); // VER: file_write
+    } // VER: file_write
+  }
+
+  void file_read() {
+    int line_count = 0;                                                         // VER: file_read
+    string line;                                                                // VER: file_read
+    try {                                                                       // VER: file_read
+      StreamReader input = new StreamReader("in.txt");                          // VER: file_read
+      while (( line = input.ReadLine()) != null) {                              // VER: file_read
+        Console.WriteLine("Line " + line_count + ": " + line);                  // VER: file_read
+        line_count += 1;                                                        // VER: file_read
+      }                                                                         // VER: file_read
+      input.Close();                                                            // VER: file_read
+    }                                                                           // VER: file_read
+    catch (Exception e) {                                                       // VER: file_read
+      Console.WriteLine("Error: " + e.Message);                                 // VER: file_read
+    }                                                                           // VER: file_read
+
   }
 
 
@@ -101,6 +147,10 @@ public class CSharp {
       arithmetic();
       if_statement();
       for_loop();
+      while_loop();
+      for_each_loop();
+      file_write();
+      file_read();
   }
 }
 

@@ -2,10 +2,14 @@
 Javascript      // VER: title
 */
 
+fs = require('fs');
+
+/*
 console = {
     log: print,
     error: print
 };
+*/
 
 //------------------------------------------------------------------------------
 
@@ -23,21 +27,21 @@ function comment() {
 }
 
 function define_variables() {
-    var count = 0;              // VER: define_variables
-    var username = "Betty";     // VER: define_variables
-    var distance = 3.14;        // VER: define_variables
-    var email_errors = true;    // VER: define_variables    
+    let count = 0;              // VER: define_variables
+    let username = "Betty";     // VER: define_variables
+    let distance = 3.14;        // VER: define_variables
+    let email_errors = true;    // VER: define_variables    
 }
 
 function define_constats() {
-    var GRAVITY = 9.81  // VER: define_constants
+    const GRAVITY = 9.81  // VER: define_constants
 }
 
 function arithmetic() {
-    var xpos = 0;
-    var item_price = 0;
-    var quat = 0;
-    var count = 0; 
+    let xpos = 0;
+    let item_price = 0;
+    let quat = 0;
+    let count = 0; 
 
     xpos = xpos + 1;                 // VER: arithmetic
     distance = 3 / 4;                // VER: arithmetic
@@ -47,18 +51,18 @@ function arithmetic() {
 }
 
 function if_statement() {
-    var username = 'bob';
-    var count = 3;
+    let username = 'bob';
+    let count = 3;
 
     if (count >= 5 && username == "Jim") {  // VER: if_statement
         console.log("Yes");                 // VER: if_statement
     }                                       // VER: if_statement
-    else if (username == "admin") {         // VER: if_statement
+    else if (username == "admin" || username == "Bob") {         // VER: if_statement
         console.log("Admin");               // VER: if_statement
     }                                       // VER: if_statement
     else {                                  // VER: if_statement
         console.log("No");                  // VER: if_statement
-    }
+    }                                       // VER: if_statement
 }
 
 function if_statement_more() {
@@ -66,14 +70,14 @@ function if_statement_more() {
 }
 
 function for_loop() {
-    var username = 'bob';                           // VER: for_loop
-    for (var i = 0 ; i < username.length ; i++) {   // VER: for_loop
+    let username = 'bob';                           // VER: for_loop
+    for (let i = 0 ; i < username.length ; i++) {   // VER: for_loop
         console.log(username[i]);                   // VER: for_loop
     }                                               // VER: for_loop
 }
 
 function while_loop() {
-    var count = 0;                          // VER: while_loop
+    let count = 0;                          // VER: while_loop
     while (count < 10) {                    // VER: while_loop
         console.log("Count is " + count);   // VER: while_loop
         count = count + 2;                  // VER: while_loop
@@ -85,8 +89,8 @@ function until_loop() {
 
 function for_each_loop() {
     names = ["Bob", "Ben", "Bill", "Borris", "Bin"];    // VER: for_each_loop
-    for (var i in names) {                              // VER: for_each_loop
-        var name = names[i];                            // VER: for_each_loop
+    for (let i in names) {                              // VER: for_each_loop
+        const name = names[i];                            // VER: for_each_loop
         console.log(name);                              // VER: for_each_loop
     }                                                   // VER: for_each_loop
 }
@@ -94,15 +98,15 @@ function for_each_loop() {
 function file_write() {
     // javascript cannot write to local files because of the security model
     // write to persistant local page storeage
-    var localStorage = {"out.txt": ""};
-    var line_to_write = "Append to end of file";             // VER: file_write
+    let localStorage = {"out.txt": ""};
+    let line_to_write = "Append to end of file";             // VER: file_write
     localStorage["out.txt"] += line_to_write + "\n";         // VER: file_write
 }
 
 function file_read() {
     // File Select
     // javascript cannot access local files unless selected by the user
-    var document = {
+    let document = {
         getElementById: function(elementId) {
             return {
                 addEventListener: function(event, func) {},
@@ -111,9 +115,9 @@ function file_read() {
     };
     //<input type="file" id="fileInput">                        // VER: file_read_alternate_select
     //<script type="text/javascript">                           // VER: file_read_alternate_select
-        var fileInput = document.getElementById('fileInput');   // VER: file_read_alternate_select
+        let fileInput = document.getElementById('fileInput');   // VER: file_read_alternate_select
         fileInput.addEventListener('change', function(e) {      // VER: file_read_alternate_select
-            var reader = new FileReader();                      // VER: file_read_alternate_select
+            let reader = new FileReader();                      // VER: file_read_alternate_select
             reader.onload = function(e) {                       // VER: file_read_alternate_select
                 console.log(reader.result);                     // VER: file_read_alternate_select
             }                                                   // VER: file_read_alternate_select
@@ -124,7 +128,7 @@ function file_read() {
     // Ajax
     // Can read files within an AJAX callback, this also works for files on webserver
     function readTextFile(file, callback) {                 // VER: file_read_alternate
-        var request = new XMLHttpRequest();                 // VER: file_read_alternate
+        let request = new XMLHttpRequest();                 // VER: file_read_alternate
         request.open("GET", file, false);                   // VER: file_read_alternate
         request.onreadystatechange = function() {           // VER: file_read_alternate
             if (request.readyState === 4 && (request.status === 200 || request.status == 0)) {  // VER: file_read_alternate
@@ -134,31 +138,32 @@ function file_read() {
         request.send(null);                                 // VER: file_read_alternate
     };                                                      // VER: file_read_alternate
     
-    // read from persistant local page storeage
-    var localStorage = {"in.txt": read("in.txt", "text")};
-    var line_count = 0;                                     // VER: file_read
+    // read from persistent local page storage
+    let localStorage = {"in.txt": read("in.txt", "text")};
+    let line_count = 0;                                     // VER: file_read
     lines = localStorage["in.txt"].split("\n");             // VER: file_read
-    for (var line_num in lines) {                           // VER: file_read
-        var line = lines[line_num];                         // VER: file_read
+    for (let line_num in lines) {                           // VER: file_read
+        let line = lines[line_num];                         // VER: file_read
         console.log("Line " + line_count + ": " + line);    // VER: file_read
         line_count += 1;                                    // VER: file_read
     }                                                       // VER: file_read
 }
 
-function string_concatination() {
-    var forename = 'bob';
-    var surname = 'jones';
-    fullname = forename + " " + surname;    // VER: string_concatination
+function string_concatenation() {
+    let forename = 'bob';
+    let surname = 'jones';
+    let fullname = forename + " " + surname;                // VER: string_concatenation
+    let fullname2 = `${forname} ${surname}`;                 // VER: string_concatenation
     console.log(fullname);
 }
 
 function convert_string_to_interger_and_back() {
-    var sum = 5 + parseInt('5');    // VER: conert_string_to_interger_and_back
+    let sum = 5 + parseInt('5');    // VER: conert_string_to_interger_and_back
     console.log(String(sum))        // VER: conert_string_to_interger_and_back
 }
 
 function convert_double_to_string_and_back() {
-    var f = parseFloat("3.1415");   // VER: convert_double_to_string_and_back
+    let f = parseFloat("3.1415");   // VER: convert_double_to_string_and_back
     console.log(String(f));         // VER: convert_double_to_string_and_back
 }
 
@@ -191,43 +196,43 @@ function function_with_params_by_value() {
 }
 
 function define_fixed_array() {
-    var names = Array(3);       // VER: define_fixed_array
+    let names = Array(3);       // VER: define_fixed_array
     names[0] = "Bob";           // VER: define_fixed_array
     names[1] = "Foo";           // VER: define_fixed_array
     names[2] = "Rah";           // VER: define_fixed_array
-    for (var i in names) {      // VER: define_fixed_array
-        var name = names[i];    // VER: define_fixed_array
+    for (let i in names) {      // VER: define_fixed_array
+        let name = names[i];    // VER: define_fixed_array
         console.log(name);      // VER: define_fixed_array
     }                           // VER: define_fixed_array
     console.log("array size is " + names.length) // VER: define_fixed_array
 }
 
 function define_2d_arrays() {
-    //var grid = Array(10,10)  // VER: define_2d_arrays
+    //let grid = Array(10,10)  // VER: define_2d_arrays
     //grid(5,5) = 1               // VER: define_2d_arrays
 }
 
 function linked_list() {
-    var list = [];                              // VER: linked_list
+    let list = [];                              // VER: linked_list
     list.push("Bill")                           // VER: linked_list
     list.push("Ben")                            // VER: linked_list
     list.push("Bob")                            // VER: linked_list
     list.pop("Ben")                             // VER: linked_list
     list.pop()                                  // VER: linked_list
     list.unshift("Kim")                         // VER: linked_list
-    for (var i in list) {                       // VER: linked_list
-        var name = list[i];                     // VER: linked_list
+    for (let i in list) {                       // VER: linked_list
+        let name = list[i];                     // VER: linked_list
         console.log(name);                      // VER: linked_list
     }                                           // VER: linked_list
     console.log("list size is " + list.length)  // VER: linked_list
 }
 
 function define_map() {
-    var dict = {};
+    let dict = {};
     dict["Joe"] = 77;
     dict["Jane"] = 51;
-    for (var key in dict) {
-        var value = dict[key];
+    for (let key in dict) {
+        let value = dict[key];
         console.log("Key: " + key + " Value: " + value);
     }    
 }
@@ -241,42 +246,40 @@ function error_handling() {
 }
 
 function split_strings() {
-    var csv_line_test = "Jane,09/09/1989,Female,Blue"   // VER: split_strings
-    var line_split = csv_line_test.split(",");          // VER: split_strings
+    let csv_line_test = "Jane,09/09/1989,Female,Blue"   // VER: split_strings
+    let line_split = csv_line_test.split(",");          // VER: split_strings
     console.log(line_split[1]);
 }
 
 function random_number() {
-    var new_num = Math.round(Math.random() * 100);
-    var new_fraction = Math.random()
+    let new_num = Math.round(Math.random() * 100);
+    let new_fraction = Math.random()
 }
 
 function _switch() {
     
 }
 
-function _class() {
-    // This is totally wrong
-    var star = {    // VER: class
-        x: 0,       // VER: class
-        y: 0,       // VER: class
-        speed: 0    // VER: class
-    }               // VER: class
-    var s = {};     // VER: class
+function _data_container() {
+    let star = {    // VER: data_container
+        x: 0,       // VER: data_container
+        y: 0,       // VER: data_container
+        speed: 0    // VER: data_container
+    }               // VER: data_container
 }
 
 function read_csv_into_array_of_classs() {
-    var file_data = read("test.csv", "text");
+    let file_data = read("test.csv", "text");
     
-    var students = []                               // VER: read_csv
-    var filename = "test.csv"                       // VER: read_csv
+    let students = []                               // VER: read_csv
+    let filename = "test.csv"                       // VER: read_csv
                                                     // VER: read_csv
-    // var file_data = "AJAX or localStorage"       // VER: read_csv
+    // let file_data = "AJAX or localStorage"       // VER: read_csv
     lines = file_data.split("\n");                  // VER: read_csv
-    for (var line_num in lines) {                   // VER: read_csv
-        var line = lines[line_num];                 // VER: read_csv
-        var line_split = line.split(",");           // VER: read_csv
-        var new_student = {                         // VER: read_csv
+    for (let line_num in lines) {                   // VER: read_csv
+        let line = lines[line_num];                 // VER: read_csv
+        let line_split = line.split(",");           // VER: read_csv
+        let new_student = {                         // VER: read_csv
             'forname': line_split[0],               // VER: read_csv
             'surname': line_split[1],               // VER: read_csv
             'date'   : line_split[2] //parse needed // VER: read_csv
@@ -287,50 +290,62 @@ function read_csv_into_array_of_classs() {
 }
 
 function _sleep() {
-    // setTimeout is a browser thing and is not avalable
+    // setTimeout is a browser thing and is not available
     function setTimeout(f, timeout) {f();}
     function after_sleep() {                        // VAR: sleep
         console.log("slept for a second");          // VAR: sleep
     }                                               // VAR: sleep
-    var timeout = setTimeout(after_sleep, 1000);    // VAR: sleep
+    let timeout = setTimeout(after_sleep, 1000);    // VAR: sleep
 }
 
 //------------------------------------------------------------------------------
 // Unsorted
 
-function list_comprehentions() {
-    let data1 = [1,2,3,4,5,6];
-    let data2 = data1
-        .filter(
-            (i) => i >= 3  // function(i) {return i >= 3;}
-        ).map(
-            (i) => i * 2  // function(i) {return i * 2;}
-        );
+function list_comprehension() {
+    const data1 = [1,2,3,4,5,6];                                                // VAR: list_comprehension
+    const data2 = data1                                                         // VAR: list_comprehension
+        .filter(                                                                // VAR: list_comprehension
+            (i) => i >= 3                                                     // VAR: list_comprehension
+            // function(i) {return i >= 3;}
+        ).map(                                                                  // VAR: list_comprehension
+            (i) => i * 2                                                      // VAR: list_comprehension
+            // function(i) {return i * 2;}
+        );                                                                      // VAR: list_comprehension
 }
 
-function dict_comprehention() {
-    let data3 = {
-        'a': 1,
-        'b': 2,
-        'c': 3,
-    }
-    let data4 = Object.fromEntries(
-        Object.entries(data3)
-            .filter(
-                ([k, v]) => v >= 2  // function([k, v]) {return v >= 2;}
-            )
-            .map(
-                ([k, v]) => [v + 10, k]  // function([k, v]) {return [v + 10, k];}
-            )
-    );
+function dict_comprehension() {
+    const data3 = {                                                             // VAR: dict_comprehension
+        'a': 1,                                                                 // VAR: dict_comprehension
+        'b': 2,                                                                 // VAR: dict_comprehension
+        'c': 3,                                                                 // VAR: dict_comprehension
+    }                                                                           // VAR: dict_comprehension
+    const data4 = Object.fromEntries(Object.entries(data3)                      // VAR: dict_comprehension
+        .filter(                                                                // VAR: dict_comprehension
+            ([k, v]) => v >= 2                                                  // VAR: dict_comprehension
+            // function([k, v]) {return v >= 2;}
+        )                                                                       // VAR: dict_comprehension
+        .map(                                                                   // VAR: dict_comprehension
+            ([k, v]) => [v + 10, k]                                             // VAR: dict_comprehension
+            // function([k, v]) {return [v + 10, k];}
+        )                                                                       // VAR: dict_comprehension
+    );                                                                          // VAR: dict_comprehension
 }
 
 //------------------------------------------------------------------------------
 
-var functions = read("_function_order.txt", "text").split("\n");
+let functions = [];
+fs.readFile("_function_order.txt", "utf8", function (err, data) {
+    if (err) {
+        console.error(err);
+    }
+    if (data) {
+        functions = data.split("\n");
+    }
+});
 
-for (var i in functions) {
-    var function_name = functions[i];
+
+for (let i in functions) {
+    let function_name = functions[i];
     console.log("-"+function_name+"-");
     try {
         this[function_name]();

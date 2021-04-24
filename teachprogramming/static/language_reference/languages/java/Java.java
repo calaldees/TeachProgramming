@@ -114,6 +114,16 @@ public class Java {
 
 
 // TODO: java8? https://howtodoinjava.com/java8/java-8-write-to-file-example/
+/*
+//Get the file reference
+Path path = Paths.get("c:/output.txt");
+ 
+//Use try-with-resource to get auto-closeable writer instance
+try (BufferedWriter writer = Files.newBufferedWriter(path)) 
+{
+    writer.write("Hello World !!");
+}
+*/
   void file_write() {
     String line_to_write = "Append to end of file"; // VER: file_write
     try { // VER: file_write
@@ -128,9 +138,10 @@ public class Java {
 
 
   void file_read() {
+    Integer line_count = 0;                                                     // VER: file_read
+    String line;                                                                // VER: file_read
     try {                                                                       // VER: file_read
-      int line_count = 0;                                                       // VER: file_read
-      String line;                                                              // VER: file_read
+
       BufferedReader input =  new BufferedReader(new FileReader("in.txt"));     // VER: file_read
       while (( line = input.readLine()) != null) {                              // VER: file_read
         System.out.println("Line " + line_count + ": " + line);                 // VER: file_read
@@ -189,9 +200,179 @@ public class Java {
     for_loop();
     while_loop();
     for_each_loop();
+    file_write();
     file_read();
     function();
     function_with_return_value();
   }
 
 }
+
+/*
+
+https://howtodoinjava.com/java-8-tutorial/
+
+TODO: streams and lambda
+
+https://howtodoinjava.com/java8/java-streams-by-examples/
+
+Optional<Integer> possible = Optional.of(5); 
+possible.ifPresent(System.out::println);
+
+
+Optional<Company> companyOptional = Optional.empty();
+companyOptional.filter(department -> "Finance".equals(department.getName())
+                    .ifPresent(() -> System.out.println("Finance is present"));
+
+// default methods in interfaces
+public interface Moveable {
+    default void move(){
+        System.out.println("I am moving");
+    }
+}
+
+
+import java.util.ArrayList;
+import java.util.List;
+ 
+public class Animal implements Moveable{
+    public static void main(String[] args){
+        List<Animal> list = new ArrayList();
+        list.add(new Animal());
+        list.add(new Animal());
+        list.add(new Animal());
+         
+        //Iterator code reduced to one line
+        list.forEach((Moveable p) -> p.move());
+    }
+}
+
+
+List<Integer> integers = Arrays.asList(1,12,433,5);
+Optional<Integer> max = integers.stream().reduce( Math::max );
+max.ifPresent( System.out::println ); 
+max.ifPresent(value -> System.out.println(value)); 
+
+
+List<String> strings = Arrays
+        .asList("how", "to", "do", "in", "java", "dot", "com");
+ 
+List<String> sorted = strings
+        .stream()
+        .sorted((s1, s2) -> s1.compareTo(s2))
+        .collect(Collectors.toList());
+ 
+System.out.println(sorted);
+ 
+List<String> sortedAlt = strings
+        .stream()
+        .sorted(String::compareTo)
+        .collect(Collectors.toList());
+ 
+System.out.println(sortedAlt);
+
+
+
+
+List<Integer> integers = IntStream
+                .range(1, 100)
+                .boxed()
+                .collect(Collectors.toCollection( ArrayList::new ));
+ 
+Optional<Integer> max = integers.stream().reduce(Math::max); 
+ 
+max.ifPresent(System.out::println); 
+
+
+
+
+
+new Thread(new Runnable() {
+    @Override
+    public void run() {
+        System.out.println("howtodoinjava");
+    }
+}).start();
+
+If we use the lambda expression for this task then code will be :
+new Thread(
+    () ->   { 
+              System.out.println("My Runnable"); 
+            }
+    ).start();
+
+
+
+memberNames.stream().filter((s) -> s.startsWith("A"))
+                    .map(String::toUpperCase)
+                    .forEach(System.out::println);  
+
+
+
+https://howtodoinjava.com/java8/stream-map-vs-flatmap/
+flatmap is python chain
+
+
+List<Integer> randomNumbers = Stream.generate(() -> (new Random()).nextInt(100))
+                                    .limit(10)
+                                    .collect(Collectors.toList());
+
+
+
+ .takeWhile(s -> !s.equals("d"))
+
+
+
+immutable map
+        Map<String, String> names = Map.ofEntries(
+                Map.entry("1", "Lokesh"),
+                Map.entry("2", "Amit"),
+                Map.entry("3", "Brian"));
+
+var j = 10;
+
+    String transformedName = name.transform(String::strip)
+                                .transform(StringUtils::toCamelCase);
+
+
+if (obj instanceof String s) {
+    // can use s here
+} else {
+    // can't use s here
+}
+
+
+
+public record EmployeeRecord(Long id, 
+        String firstName, 
+        String lastName, 
+        String email, 
+        int age) {
+     
+}
+public class RecordExample {
+    public static void main(String[] args) 
+    {
+        EmployeeRecord e1 = new EmployeeRecord
+                (1l, "Lokesh", "Gupta", "howtodoinjava@gmail.com", 38);
+         
+        System.out.println(e1.id());
+        System.out.println(e1.email());
+         
+        System.out.println(e1);
+    }
+}
+
+
+String dbSchema =   """
+            CREATE TABLE 'TEST'.'EMPLOYEE'
+            (
+              'ID' INT NOT NULL DEFAULT 0 ,
+              'FIRST_NAME' VARCHAR(100) NOT NULL ,
+              'LAST_NAME' VARCHAR(100) NULL ,
+              'STAT_CD' TINYINT NOT NULL DEFAULT 0
+            );
+                    """;
+
+
+*/

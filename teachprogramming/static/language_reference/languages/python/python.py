@@ -79,7 +79,7 @@ def for_loop():
 def while_loop():
     count = 0                         # VER: while_loop
     while count < 10:                 # VER: while_loop
-        print("Count is {0}".format(count))  # VER: while_loop
+        print(f"Count is {count}")  # VER: while_loop
         count = count + 2             # VER: while_loop
 
 
@@ -111,7 +111,7 @@ def file_read():
     line_count = 0                                          # VER: file_read
     with open("in.txt", 'r') as file:                       # VER: file_read
         for line in file:                                   # VER: file_read
-            print("Line " + str(line_count) + ": " + line)  # VER: file_read
+            print(f"Line {line_count} : {line}")             # VER: file_read
             line_count += 1                                 # VER: file_read
                                                             # VER: file_read
     # Alternate way of reading file                         # VER: file_read
@@ -122,17 +122,19 @@ def file_read():
     #file.close()                                            # VER: file_read
 
 
-def string_concatination():
+def string_concatenation():
     forename = 'bob'
     surname = 'jones'
-    fullname = forename + " " + surname                     # VER: string_concatination
-    fullname = "%s %s" % (forename, surname)  # Alternate   # VER: string_concatination
+    fullname = forename + " " + surname                     # VER: string_concatenation
+    fullname2 = f'{forename} {surname}'                      # VER: string_concatenation
+    fullname3 = "%s %s" % (forename, surname)                 # VER: string_concatenation
+    fullname4 = "{} {}".format(forename, surname)                 # VER: string_concatenation
     print(fullname)
 
 
-def convert_string_to_interger_and_back():
-    sum = 5 + int('5')                      # VER: conert_string_to_interger_and_back
-    print(str(sum))                         # VER: conert_string_to_interger_and_back
+def convert_string_to_integer_and_back():
+    sum = 5 + int('5')                      # VER: convert_string_to_integer_and_back
+    print(str(sum))                         # VER: convert_string_to_integer_and_back
 
 
 def convert_double_to_string_and_back():
@@ -162,7 +164,7 @@ def define_fixed_array():
     names.insert(2, "Rah")  # VER: define_fixed_array
     for name in names:      # VER: define_fixed_array
         print(name)         # VER: define_fixed_array
-    print("array size is %s" % len(names))  # VER: define_fixed_array
+    print(f"array size is {len(names)}")  # VER: define_fixed_array
 
 
 def define_2d_arrays():
@@ -183,7 +185,7 @@ def linked_list():
     list.insert(0, "Kim")   # VER: linked_list
     for name in list:       # VER: linked_list
         print(name)         # VER: linked_list
-    print("list size is %s" % len(list))    # VER: linked_list
+    print(f"list size is {len(list)}")    # VER: linked_list
 
 
 def define_map():
@@ -191,7 +193,7 @@ def define_map():
     dict["Joe"] = 77                                    # VER: define_map
     dict["Jane"] = 51                                   # VER: define_map
     for key in dict.keys():                             # VER: define_map
-        print("Key: %s Value: %s" % (key, dict[key]))   # VER: define_map
+        print(f"Key: {key} Value: {dict[key]}"          # VER: define_map
     #todo add contains
 
 
@@ -251,7 +253,7 @@ def read_csv_into_array_of_classs():
             new_student.surname = line_split[1]     # VER: read_csv
             new_student.date    = line_split[2] #better way needed  # VER: read_csv
             students.append(new_student)            # VER: read_csv
-    print("Loaded %s students" % len(students))     # VER: read_csv
+    print(f"Loaded {len(students)} students" % )     # VER: read_csv
 
 
 def sleep():
@@ -263,25 +265,25 @@ def sleep():
 
 # Unsorted
 
-def list_comprehentino():
-    data1 = [1,2,3,4,5,6]
-    data2 = [
-        i * 2
-        for i in data1
-        if i >= 3
-    ]
+def list_comprehension():
+    data1 = [1,2,3,4,5,6]   # VER: list_comprehension
+    data2 = [               # VER: list_comprehension
+        i * 2               # VER: list_comprehension
+        for i in data1      # VER: list_comprehension
+        if i >= 3           # VER: list_comprehension
+    ]                       # VER: list_comprehension
 
-def dict_comprehention():
-    data3 = {
-        'a': 1,
-        'b': 2,
-        'c': 3,
-    }
-    data4 = {
-        v + 10: k
-        for k, v in data3.items()
-        if v >= 2
-    }
+def dict_comprehension():
+    data3 = {              # VER: dict_comprehension
+        'a': 1,            # VER: dict_comprehension
+        'b': 2,            # VER: dict_comprehension
+        'c': 3,            # VER: dict_comprehension
+    }                      # VER: dict_comprehension
+    data4 = {              # VER: dict_comprehension
+        v + 10: k         # VER: dict_comprehension
+        for k, v in data3.items()  # VER: dict_comprehension
+        if v >= 2             # VER: dict_comprehension
+    }                     # VER: dict_comprehension
 
 #-------------------------------------------------------------------------------
 
