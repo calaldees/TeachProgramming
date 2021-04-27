@@ -58,7 +58,7 @@ class MainClass {
       for (int i=0 ; i<data.Length-1 ; i++) {
         string a = data[i];
         string b = data[i+1];
-        //Console.WriteLine("comparing "+i+":"+a+" with "+(i+1)+":"+b);
+        //Console.WriteLine($"comparing {i}:{a} with {(i+1)}:{b}");
         if (string.Compare(a,b) > 0) {
           //Console.WriteLine("swap");
           data[i] = b;

@@ -1,11 +1,17 @@
 # https://filestore.aqa.org.uk/resources/computing/AQA-8520-TG-PC.PDF
 # https://filestore.aqa.org.uk/resources/computing/AQA-8525-TG-PC.PDF
 
-a ← 3
-a ← a + 1
 
-CONSTANT PI ← 3.141
-CONSTANT CLASS_SIZE ← 23
+## This is a comment  # VER: comment
+
+OUTPUT 'Hello World'  # VER: hello_world
+
+
+a ← 3        # VER: define_variables
+a ← a + 1    # VER: define_variables
+
+CONSTANT PI ← 3.141          # VER: define_constants
+CONSTANT CLASS_SIZE ← 23     # VER: define_constants
 
 + - * /
 
@@ -35,12 +41,12 @@ qty ≠ 7
 NOT (a < b)
 
 
-a ← 1
-REPEAT
-    OUTPUT a
-    a ← a + 1
-UNTIL a = 4
-# will output 1, 2, 3
+a ← 1                    # VER: until_loop
+REPEAT                   # VER: until_loop
+    OUTPUT a             # VER: until_loop
+    a ← a + 1            # VER: until_loop
+UNTIL a = 4              # VER: until_loop
+## will output 1, 2, 3   # VER: until_loop
 
 a ← 1
 WHILE a < 4
@@ -134,7 +140,7 @@ ENDSUBROUTINE
 showAdd(2, 3)
 answer ← add(2, 3) * 6
 
-LEN('computer science')   # evalutates to 16
+LEN('computer science')   # evaluates to 16
 POSITION('computer science', 'm')  # evaluates to 2
 SUBSTRING(2, 9, 'computer science')  # evaluates to 'mputer s'
 'computer'+'science'  # evaluates to 'computerscience'

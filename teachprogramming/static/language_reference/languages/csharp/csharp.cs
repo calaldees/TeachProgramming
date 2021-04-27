@@ -32,13 +32,13 @@ public class CSharp {
   }
 
   void comment() {
-      //This is a comment                                                       // VER: comment
+      // // This is a comment                                                   // VER: comment
       // /* this is a multiline comment */                                      // VER: comment
   }
 
   void define_variables() {
     int count = 0;                                                              // VER: define_variables
-    string username = "Betty";                                                  // VER: define_variabless
+    string username = "Betty";                                                  // VER: define_variables
     double distance = 3.14;                                                     // VER: define_variables
     bool email_errors = true;                                                   // VER: define_variables
   }
@@ -76,7 +76,7 @@ public class CSharp {
     if (count >= 5 && username == "Jim") {                                      // VER: if_statement
       Console.WriteLine("Yes");                                                 // VER: if_statement
     }                                                                           // VER: if_statement
-    else if (username == "admin") {                                             // VER: if_statement
+    else if (username == "admin" || username == "Bob") {                        // VER: if_statement
       Console.WriteLine("Admin");                                               // VER: if_statement
     }                                                                           // VER: if_statement
     else {                                                                      // VER: if_statement
@@ -110,29 +110,35 @@ public class CSharp {
   void file_write() {
     string line_to_write = "Append to end of file"; // VER: file_write
     try { // VER: file_write
-      StreamWriter file = new StreamWriter("out.txt");  // VER: file_write
-      file.WriteLine(line_to_write);   // VER: file_write
-      file.Close();   // VER: file_write
+      using (StreamWriter file = new StreamWriter("out.txt")) {  // VER: file_write
+        file.WriteLine(line_to_write);   // VER: file_write
+      }
+      //file.Close();
     } // VER: file_write
     catch (Exception e){ // VER: file_write
-      Console.WriteLine("Error: " + e.Message); // VER: file_write
+      Console.Error.WriteLine($"Error: {e.Message}"); // VER: file_write
     } // VER: file_write
   }
 
   void file_read() {
     int line_count = 0;                                                         // VER: file_read
     string line;                                                                // VER: file_read
+
+    // // With context manager - for object that support `IDisposable`
     try {                                                                       // VER: file_read
-      StreamReader input = new StreamReader("in.txt");                          // VER: file_read
-      while (( line = input.ReadLine()) != null) {                              // VER: file_read
-        Console.WriteLine("Line " + line_count + ": " + line);                  // VER: file_read
-        line_count += 1;                                                        // VER: file_read
+      // StreamReader input = new StreamReader("in.txt");                         // VER: file_read_old
+      using (StreamReader input = new StreamReader("in.txt")) {                 // VER: file_read
+        while (( line = input.ReadLine()) != null) {                            // VER: file_read
+          Console.WriteLine($"Line {line_count}: {line}");                      // VER: file_read
+          line_count += 1;                                                      // VER: file_read
+        }                                                                      // VER: file_read
       }                                                                         // VER: file_read
-      input.Close();                                                            // VER: file_read
+      //input.Close();                                                            // VER: file_read_old
     }                                                                           // VER: file_read
     catch (Exception e) {                                                       // VER: file_read
-      Console.WriteLine("Error: " + e.Message);                                 // VER: file_read
+      Console.Error.WriteLine($"Error: {e.Message}");                           // VER: file_read
     }                                                                           // VER: file_read
+
 
   }
 

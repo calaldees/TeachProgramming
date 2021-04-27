@@ -19,7 +19,7 @@ def read_line_from_console():
 
 
 def comment():
-    #This is a comment  # VER: comment
+    ##This is a comment  # VER: comment
     pass
 
 
@@ -59,7 +59,7 @@ def if_statement():
 
     if count >= 5 and username == "Jim":  # VER: if_statement
         print("Yes")                      # VER: if_statement
-    elif username == "admin":             # VER: if_statement
+    elif username == "admin" or username == "Bob":  # VER: if_statement
         print("Admin")                    # VER: if_statement
     else:                                 # VER: if_statement
         print("No")                       # VER: if_statement
@@ -114,10 +114,10 @@ def file_read():
             print(f"Line {line_count} : {line}")             # VER: file_read
             line_count += 1                                 # VER: file_read
                                                             # VER: file_read
-    # Alternate way of reading file                         # VER: file_read
+    ## Alternate way of reading file                         # VER: file_read
     #file = open("in.txt", 'r')                              # VER: file_read
     #for line in file:                                       # VER: file_read
-    #    print("Line " + str(line_count) + ": " + line)      # VER: file_read
+    #    print(f"Line {line_count}: {line}")                 # VER: file_read
     #    line_count += 1                                     # VER: file_read
     #file.close()                                            # VER: file_read
 
@@ -125,8 +125,8 @@ def file_read():
 def string_concatenation():
     forename = 'bob'
     surname = 'jones'
-    fullname = forename + " " + surname                     # VER: string_concatenation
     fullname2 = f'{forename} {surname}'                      # VER: string_concatenation
+    fullname = forename + " " + surname                     # VER: string_concatenation
     fullname3 = "%s %s" % (forename, surname)                 # VER: string_concatenation
     fullname4 = "{} {}".format(forename, surname)                 # VER: string_concatenation
     print(fullname)
