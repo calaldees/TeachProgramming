@@ -193,7 +193,7 @@ def define_map():
     dict["Joe"] = 77                                    # VER: define_map
     dict["Jane"] = 51                                   # VER: define_map
     for key in dict.keys():                             # VER: define_map
-        print(f"Key: {key} Value: {dict[key]}"          # VER: define_map
+        print(f"Key: {key} Value: {dict[key]}")         # VER: define_map
     #todo add contains
 
 
@@ -210,7 +210,7 @@ def split_strings():
     csv_line_test = "Jane,09/09/1989,Female,Blue"   # VER: split_strings
     line_split = csv_line_test.split(",")           # VER: split_strings
     print(line_split[1])
-
+    csv_line_test2 = " : ".join(line_split)         # VER: split_strings
 
 def random_number():
     import random                       # VER: random_number

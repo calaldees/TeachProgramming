@@ -139,9 +139,56 @@ public class CSharp {
       Console.Error.WriteLine($"Error: {e.Message}");                           // VER: file_read
     }                                                                           // VER: file_read
 
-
   }
 
+  void string_concatenation() {
+    string forename = "bob";
+    string surname = "jones";
+    string fullname = $"{forename} {surname}";                                         // VER: string_concatenation
+    string fullname2 = forename + " " + surname;                                       // VER: string_concatenation
+    // // TODO: other formatting                                                // VER: string_concatenation
+    Console.WriteLine(fullname);
+
+  }
+  void split_strings() {
+    string csv_line_test = "Jane,09/09/1989,Female,Blue";                       // VER: split_strings
+    string[] line_split = csv_line_test.Split(",");                             // VER: split_strings
+    Console.WriteLine(line_split[1]);
+    string csv_line_test2 = String.Join(" : ", line_split);                            // VER: split_strings
+  }
+
+
+  void say_hello() {        // VER: function
+      Console.WriteLine("Hello");      // VER: function
+      Console.WriteLine("Goodbye");    // VER: function
+  }
+  void function() {
+    say_hello();    // VER: function
+  }
+
+
+  int biggest(int a, int b) {      // VER: function_with_return_value
+        if (a > b) {           // VER: function_with_return_value
+            return a;        // VER: function_with_return_value
+        }  // VER: function_with_return_value
+        else {               // VER: function_with_return_value
+            return b;        // VER: function_with_return_value
+        }  // VER: function_with_return_value
+  } // VER: function_with_return_value
+  void function_with_return_value() {
+    Console.WriteLine(biggest(1, 2));    // VER: function_with_return_value
+  }
+
+  void sleep() {
+    System.Threading.Thread.Sleep(1000);
+  }
+
+  void random_number() {
+      Random random = new Random();   // VER: random_number
+      int new_num = random.Next(0, 100);  // VER: random_number
+      double new_fraction = random.NextDouble();     // VER: random_number
+
+  }
 
   public static void Main(string[] args) {new CSharp();}
   CSharp() {
@@ -157,6 +204,11 @@ public class CSharp {
       for_each_loop();
       file_write();
       file_read();
+      string_concatenation();
+      split_strings();
+      function();
+      function_with_return_value();
+      sleep();
   }
 }
 

@@ -127,9 +127,11 @@ Module VisualBasic
         file.Close()                                                            ' VER: file_read
     End Sub
     
-    Sub string_concatination()
-        Dim fullname, forename, surname as String
-        fullname = forename & " " & surname         ' VER: string_concatination
+    Sub string_concatenation()
+        Dim forename as String = "bob"
+        Dim surname as String = "jones"
+        Dim fullname as String = forename & " " & surname         ' VER: string_concatenation
+        Console.WriteLine(fullname)
     End Sub
     
     Sub convert_string_to_interger_and_back()
@@ -250,7 +252,7 @@ Module VisualBasic
     Sub random_number()
         Dim random_generator As Random = New Random             ' VER: random_number
         Dim new_num As Integer = random_generator.Next(0, 100)  ' VER: random_number
-        'Dim new_fraction As Double = random_generator.         ' VER: random_number
+        Dim new_fraction As Double = random_generator.NextDouble()         ' VER: random_number
     End Sub
     
     Sub switch()
@@ -320,6 +322,9 @@ Module VisualBasic
         hello_world()
         function_with_params_by_reference()
         function_with_params_by_value()
+        sleep()
+        random_number()
+        string_concatenation()
         Dim command as String = "hello_world"
         'Call command()
     End Sub

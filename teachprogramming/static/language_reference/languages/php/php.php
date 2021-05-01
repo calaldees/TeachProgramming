@@ -105,10 +105,10 @@ function file_read() {
     fclose($file);                          # VER: file_read
 }
 
-function string_concatination() {
+function string_concatenation() {
     $forename = 'bob';
     $surname = 'jones';
-    $fullname = $forename." ".$surname;     # VER: string_concatination
+    $fullname = $forename." ".$surname;     # VER: string_concatenation
     echo $fullname."\n";
 }
 

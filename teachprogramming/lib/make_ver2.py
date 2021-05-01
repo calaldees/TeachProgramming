@@ -167,6 +167,8 @@ class LanguageVersions():
 
     VERSION_ORDER = [  # TODO: these should be moved eventually
         'title',
+        'help',
+        'run',
         'hello_world',
         'read_line_from_console',
         'comment',
@@ -181,8 +183,8 @@ class LanguageVersions():
         'for_each_loop',
         'file_write',
         'file_read',
-        'string_concatination',
-        'convert_string_to_interger_and_back',
+        'string_concatenation',
+        'convert_string_to_integer_and_back',
         'convert_double_to_string_and_back',
         'function',
         'function_with_return_value',
@@ -194,10 +196,13 @@ class LanguageVersions():
         'define_map',
         'error_handling',
         'split_strings',
+        'join_strings',
         'random_number',
         'class',
         'read_csv_into_array_of_classs',
         'sleep',
+        'list_comprehension',
+        'dict_comprehension',
     ]
 
     def __init__(self, filenames):
