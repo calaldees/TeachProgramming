@@ -289,6 +289,8 @@ http://www.conwaylife.com/wiki/RLE
 ### Grade A
 Implement Conways game of life in ASCII text
 
+[comment]: # (https://www.conwaylife.com/wiki/55P9H3V0  the smallest known spaceship with an unsimplified speed of 3c/9)
+
 
 2D Arrays & Algorithm Design (B to A Grade)
 -------------------------------------------

@@ -20,6 +20,11 @@ Easy Stuff to be integrated
 Sorry - didnt know where to put this
 Generate lyrics to "10 green bottles"
 
+2d arrays (design decision)
+* jagged arrays (lists of lists)
+* 1d array with translation function
+* dict of cords
+
 
 isPrime
 -------

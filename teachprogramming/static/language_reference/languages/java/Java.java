@@ -3,6 +3,8 @@ Java  // VER: title
 https://www.oracle.com/uk/java/technologies/javase-downloads.html  // VER: download
 Java SE (Standard Edition) JDK (Java Development Kit)                       // VER: download
 http://java.sun.com/docs/books/tutorial/                                    // VER: help
+https://howtodoinjava.com/                                                  // VER: help
+https://docs.oracle.com/en/java/javase/15/docs/api/overview-tree.html  // VER: help
 
 javac HelloWorld.java && java HelloWorld                        # VER: run
 // NOTE: filename and `public FILENAME {` must match name+case  # VER:run
@@ -16,7 +18,12 @@ import java.io.FileReader;                                                      
 import java.io.BufferedWriter; //Add at top of file                             // VER: file_write
 import java.io.FileWriter;                                                      // VER: file_write
  
-  
+import java.util.List;    // VER: list_comprehension
+import java.util.Arrays;  // VER: list_comprehension
+import java.util.ArrayList;    // VER: list_comprehension
+import java.util.stream.Collectors;   // VER: list_comprehension
+import java.util.Map;    // VER: dict_comprehension
+import static java.util.Map.entry;   // VER: dict_comprehension
 
 
 public class Java {
@@ -38,7 +45,7 @@ public class Java {
   }
 
   void comment() {
-    //This is a comment                                                         // VER: comment
+    // // This is a comment                                                     // VER: comment
     ///* this is a multiline comment */                                         // VER: comment
   }
 
@@ -47,6 +54,15 @@ public class Java {
     String username = "Betty";                                                  // VER: define_variables
     Double distance = 3.14;                                                     // VER: define_variables
     Boolean email_errors = true;                                                // VER: define_variables
+    String multiline = """
+    a 
+    b
+    """;  // TODO: multiline   // VER: define_variables
+    System.out.println(count);
+    System.out.println(username);
+    System.out.println(distance);
+    System.out.println(email_errors);
+    System.out.println(multiline);
   }
 
   void define_constants() {
@@ -141,7 +157,6 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     Integer line_count = 0;                                                     // VER: file_read
     String line;                                                                // VER: file_read
     try {                                                                       // VER: file_read
-
       BufferedReader input =  new BufferedReader(new FileReader("in.txt"));     // VER: file_read
       while (( line = input.readLine()) != null) {                              // VER: file_read
         System.out.println("Line " + line_count + ": " + line);                 // VER: file_read
@@ -154,14 +169,14 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     }                                                                           // VER: file_read
   }
 
-
-  void function() {
-    sayHello();      // VER: function
-  }
   void sayHello() {  // VER: function
     System.out.println("Hello");  // VER: function
     System.out.println("Goodbye");  // VER: function
   }  // VER: function
+
+  void function() {
+    sayHello();      // VER: function
+  }
 
   Integer biggest(Integer a, Integer b) {  // VER: function_with_return_value
     if (a > b) {   // VER: function_with_return_value
@@ -170,7 +185,7 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     else { // VER: function_with_return_value
       return b; // VER: function_with_return_value
     } // VER: function_with_return_value
-  }
+  }    // VER: function_with_return_value
   void function_with_return_value() {
     System.out.println(biggest(1,2));  // VER: function_with_return_value
   }
@@ -186,6 +201,53 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     }  // VER: define_fixed_array
     System.out.println("array size is "+names.length);  // VER: define_fixed_array
    }  // VER: define_fixed_array
+
+
+  void string_concatenation() {
+    String forename = "bob";
+    String surname = "jones";
+    String fullname = forename + " " + surname;                        // VER: string_concatenation
+    String fullname2 = "%s %s".formatted(forename, surname);              // VER: string_concatenation
+    String fullname3 = "{forename} {surname}".replace("{forename}", forename).replace("{surname}", surname);              // VER: string_concatenation
+    System.out.println(fullname);
+  }
+
+  void split_strings() {
+    final String csv_line_test = "Jane,09/09/1989,Female,Blue";  // VER: split_strings
+    String[] line_split =  csv_line_test.split(",");  // VER: split_strings
+    System.out.println(line_split[1]);
+    String csv_line_test2 = String.join(" : ", line_split);         // VER: split_strings
+    System.out.println(csv_line_test2);
+  }
+
+  void list_comprehension() {
+    // int[] i = new int[]{1,2,3,4}; Arrays.stream(i).collect(toList());
+    List<Integer> data1 = new ArrayList<>(Arrays.asList(1,2,3,4,5,6));          // VER: list_comprehension
+    List<Integer> data2 = data1.stream(                                         // VER: list_comprehension
+    ).filter(                                                                   // VER: list_comprehension
+      (i) -> i >= 3                                                             // VER: list_comprehension
+    ).map(                                                                      // VER: list_comprehension
+      (i) -> i * 2                                                              // VER: list_comprehension
+    ).collect(Collectors.toList());                                             // VER: list_comprehension
+
+    System.out.println(data2);
+  }
+
+  void dict_comprehension() {
+    Map<String,Integer> data3 = Map.ofEntries(                                  //  VER: dict_comprehension
+      entry("a", 1),                                                            //  VER: dict_comprehension
+      entry("b", 2),                                                            //  VER: dict_comprehension
+      entry("c", 3)                                                             //  VER: dict_comprehension
+    );                                                                          //  VER: dict_comprehension
+    Map<Integer, String> data4 = data3.entrySet().stream(                       //  VER: dict_comprehension
+    ).filter(                                                                   //  VER: dict_comprehension
+      (e) -> e.getValue() >= 2                                                  //  VER: dict_comprehension
+    ).map(                                                                      //  VER: dict_comprehension
+      (e) -> entry(e.getValue() + 10, e.getKey())                               //  VER: dict_comprehension
+    ).collect(Collectors.toMap((e)->e.getKey(), (e)->e.getValue()));            //  VER: dict_comprehension
+
+    System.out.println(data4);
+  }
 
   //----------------------------------------------------------------------------
 
@@ -204,6 +266,8 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     file_read();
     function();
     function_with_return_value();
+    list_comprehension();
+    dict_comprehension();
   }
 
 }

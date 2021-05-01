@@ -28,6 +28,7 @@ def define_variables():
     username = "Betty"   # VER: define_variables
     distance = 3.14      # VER: define_variables
     email_errors = True  # VER: define_variables
+    multiline = """a b"""    # VER: define_variables
 
 
 def define_constants():
@@ -211,6 +212,7 @@ def split_strings():
     line_split = csv_line_test.split(",")           # VER: split_strings
     print(line_split[1])
     csv_line_test2 = " : ".join(line_split)         # VER: split_strings
+    print(csv_line_test2)
 
 def random_number():
     import random                       # VER: random_number
