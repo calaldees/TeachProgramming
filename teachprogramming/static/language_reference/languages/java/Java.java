@@ -156,16 +156,13 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
 
 
   void function() {
-    sayHello();
+    sayHello();      // VER: function
   }
   void sayHello() {  // VER: function
     System.out.println("Hello");  // VER: function
     System.out.println("Goodbye");  // VER: function
   }  // VER: function
 
-  void function_with_return_value() {
-    System.out.println(biggest(1,2));
-  }
   Integer biggest(Integer a, Integer b) {  // VER: function_with_return_value
     if (a > b) {   // VER: function_with_return_value
       return a;  // VER: function_with_return_value
@@ -173,6 +170,9 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     else { // VER: function_with_return_value
       return b; // VER: function_with_return_value
     } // VER: function_with_return_value
+  }
+  void function_with_return_value() {
+    System.out.println(biggest(1,2));  // VER: function_with_return_value
   }
 
 

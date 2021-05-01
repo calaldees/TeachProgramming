@@ -158,12 +158,12 @@ public class CSharp {
   }
 
 
-  void say_hello() {        // VER: function
+  void sayHello() {        // VER: function
       Console.WriteLine("Hello");      // VER: function
       Console.WriteLine("Goodbye");    // VER: function
-  }
+  }    // VER: function
   void function() {
-    say_hello();    // VER: function
+    sayHello();    // VER: function
   }
 
 

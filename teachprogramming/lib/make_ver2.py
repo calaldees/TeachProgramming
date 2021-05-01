@@ -167,13 +167,14 @@ class LanguageVersions():
 
     VERSION_ORDER = [  # TODO: these should be moved eventually
         'title',
+        'download',
         'help',
         'run',
         'hello_world',
         'read_line_from_console',
         'comment',
         'define_variables',
-        'define_constats',
+        'define_constants',
         'arithmetic',
         'if_statement',
         'if_statement_more',

@@ -254,6 +254,7 @@ function split_strings() {
     let csv_line_test = "Jane,09/09/1989,Female,Blue"   // VER: split_strings
     let line_split = csv_line_test.split(",");          // VER: split_strings
     console.log(line_split[1]);
+    let csv_line_test2 = line_split.join(" : ");         // VER: split_strings
 }
 
 function random_number() {
@@ -301,6 +302,12 @@ function _sleep() {
         console.log("slept for a second");          // VER: sleep
     }                                               // VER: sleep
     let timeout = setTimeout(after_sleep, 1000);    // VER: sleep
+}
+
+function random_number() {
+    const new_num = Math.floor(Math.random() * 100);    // VER: random_number
+    const new_fraction = random.random();      // VER: random_number
+
 }
 
 //------------------------------------------------------------------------------
