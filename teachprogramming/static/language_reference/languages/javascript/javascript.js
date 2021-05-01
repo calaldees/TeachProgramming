@@ -1,5 +1,10 @@
 /*
 Javascript      // VER: title
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript   // VER: help
+
+node my_file.js  // VER: run
+<script>CODE</script>  in html and opened in web browser // VER: run
 */
 
 fs = require('fs');
@@ -22,7 +27,7 @@ function read_line_from_console() {
 }
 
 function comment() {
-    // This is a comment    // VER: comment
+    // // This is a comment    // VER: comment
     /* So is this */        // VER: comment
 }
 
@@ -292,43 +297,43 @@ function read_csv_into_array_of_classs() {
 function _sleep() {
     // setTimeout is a browser thing and is not available
     function setTimeout(f, timeout) {f();}
-    function after_sleep() {                        // VAR: sleep
-        console.log("slept for a second");          // VAR: sleep
-    }                                               // VAR: sleep
-    let timeout = setTimeout(after_sleep, 1000);    // VAR: sleep
+    function after_sleep() {                        // VER: sleep
+        console.log("slept for a second");          // VER: sleep
+    }                                               // VER: sleep
+    let timeout = setTimeout(after_sleep, 1000);    // VER: sleep
 }
 
 //------------------------------------------------------------------------------
 // Unsorted
 
 function list_comprehension() {
-    const data1 = [1,2,3,4,5,6];                                                // VAR: list_comprehension
-    const data2 = data1                                                         // VAR: list_comprehension
-        .filter(                                                                // VAR: list_comprehension
-            (i) => i >= 3                                                     // VAR: list_comprehension
+    const data1 = [1,2,3,4,5,6];                                                // VER: list_comprehension
+    const data2 = data1                                                         // VER: list_comprehension
+        .filter(                                                                // VER: list_comprehension
+            (i) => i >= 3                                                     // VER: list_comprehension
             // function(i) {return i >= 3;}
-        ).map(                                                                  // VAR: list_comprehension
-            (i) => i * 2                                                      // VAR: list_comprehension
+        ).map(                                                                  // VER: list_comprehension
+            (i) => i * 2                                                      // VER: list_comprehension
             // function(i) {return i * 2;}
-        );                                                                      // VAR: list_comprehension
+        );                                                                      // VER: list_comprehension
 }
 
 function dict_comprehension() {
-    const data3 = {                                                             // VAR: dict_comprehension
-        'a': 1,                                                                 // VAR: dict_comprehension
-        'b': 2,                                                                 // VAR: dict_comprehension
-        'c': 3,                                                                 // VAR: dict_comprehension
-    }                                                                           // VAR: dict_comprehension
-    const data4 = Object.fromEntries(Object.entries(data3)                      // VAR: dict_comprehension
-        .filter(                                                                // VAR: dict_comprehension
-            ([k, v]) => v >= 2                                                  // VAR: dict_comprehension
+    const data3 = {                                                             // VER: dict_comprehension
+        'a': 1,                                                                 // VER: dict_comprehension
+        'b': 2,                                                                 // VER: dict_comprehension
+        'c': 3,                                                                 // VER: dict_comprehension
+    }                                                                           // VER: dict_comprehension
+    const data4 = Object.fromEntries(Object.entries(data3)                      // VER: dict_comprehension
+        .filter(                                                                // VER: dict_comprehension
+            ([k, v]) => v >= 2                                                  // VER: dict_comprehension
             // function([k, v]) {return v >= 2;}
-        )                                                                       // VAR: dict_comprehension
-        .map(                                                                   // VAR: dict_comprehension
-            ([k, v]) => [v + 10, k]                                             // VAR: dict_comprehension
+        )                                                                       // VER: dict_comprehension
+        .map(                                                                   // VER: dict_comprehension
+            ([k, v]) => [v + 10, k]                                             // VER: dict_comprehension
             // function([k, v]) {return [v + 10, k];}
-        )                                                                       // VAR: dict_comprehension
-    );                                                                          // VAR: dict_comprehension
+        )                                                                       // VER: dict_comprehension
+    );                                                                          // VER: dict_comprehension
 }
 
 //------------------------------------------------------------------------------
