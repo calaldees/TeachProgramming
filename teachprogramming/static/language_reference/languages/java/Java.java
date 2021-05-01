@@ -21,10 +21,17 @@ import java.io.FileWriter;                                                      
 import java.util.List;    // VER: list_comprehension
 import java.util.Arrays;  // VER: list_comprehension
 import java.util.ArrayList;    // VER: list_comprehension
-import java.util.stream.Collectors;   // VER: list_comprehension
+
+import java.util.stream.Collectors;   // VER: list_comprehension dict_comprehension
 import java.util.Map;    // VER: dict_comprehension
 import static java.util.Map.entry;   // VER: dict_comprehension
 
+// TODO: this VER multiversion stuff is broken  ... I need some good tests and rewrite make_ver.py
+// What a mess ...
+/* poo double/ VER: list_comprehension dict_comprehension */  // WOW! this produces the output text  `poo  // dict_comprehension`
+
+
+// //----------------------------- // VER: read_line_from_console file_read file_write list_comprehension dict_comprehension
 
 public class Java {
 
