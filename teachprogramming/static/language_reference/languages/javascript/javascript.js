@@ -38,14 +38,14 @@ function define_variables() {
     let email_errors = true;    // VER: define_variables    
 }
 
-function define_constats() {
+function define_constants() {
     const GRAVITY = 9.81  // VER: define_constants
 }
 
 function arithmetic() {
     let xpos = 0;
     let item_price = 0;
-    let quat = 0;
+    let quant = 0;
     let count = 0; 
 
     xpos = xpos + 1;                 // VER: arithmetic
@@ -233,13 +233,17 @@ function linked_list() {
 }
 
 function define_map() {
-    let dict = {};
-    dict["Joe"] = 77;
-    dict["Jane"] = 51;
-    for (let key in dict) {
-        let value = dict[key];
-        console.log("Key: " + key + " Value: " + value);
-    }    
+  let data = { // VER: define_map
+    "a": 1,                                                            // VER: define_map
+    "b": 2,                                                            // VER: define_map
+  };  // VER: define_map
+  console.log(data["b"]);  // prints 2   // VER: define_map
+  data["c"] = 3;  // VER: define_map
+  delete data["a"];  // VER: define_map
+  for (let [k, v] of Object.entries(data)) {  // VER: define_map
+    console.log(`Key: ${k}, Value: ${v}`);  //  VER: define_map
+  }  //  VER: define_map
+  if ("d" in data) {} // VER: define_map
 }
 
 function error_handling() {
@@ -310,6 +314,7 @@ function random_number() {
 
 }
 
+
 //------------------------------------------------------------------------------
 // Unsorted
 
@@ -345,6 +350,28 @@ function dict_comprehension() {
 
 //------------------------------------------------------------------------------
 
+function main() {
+  hello_world();
+  //read_line_from_console();
+  define_variables();
+  define_constants();
+  arithmetic();
+  if_statement();
+  for_loop();
+  while_loop();
+  for_each_loop();
+  file_write();
+  //file_read()
+  //function()
+  function_with_return_value();
+  list_comprehension();
+  dict_comprehension();
+  define_map();
+
+}
+main();
+
+/*
 let functions = [];
 fs.readFile("_function_order.txt", "utf8", function (err, data) {
     if (err) {
@@ -366,3 +393,4 @@ for (let i in functions) {
         console.error(e);
     }
 }
+*/

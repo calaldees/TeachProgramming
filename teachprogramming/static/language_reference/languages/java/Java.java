@@ -25,7 +25,6 @@ import java.util.ArrayList;    // VER: list_comprehension
 import java.util.stream.Collectors;   // VER: list_comprehension dict_comprehension
 import java.util.Map;    // VER: dict_comprehension
 import java.util.HashMap;    // VER: define_map
-import java.util.Map.Entry;    // VER: define_map
 import static java.util.Map.entry;   // VER: dict_comprehension
 
 // TODO: this VER multiversion stuff is broken  ... I need some good tests and rewrite make_ver.py
@@ -219,11 +218,10 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     System.out.println(data.get("b"));  // prints 2   // VER: define_map
     data.put("c", 3);  // VER: define_map
     data.remove("a");  // VER: define_map
-    for(Entry<String,Integer> key_value_pair : data.entrySet()){  // VER: define_map
+    for (var key_value_pair : data.entrySet()){  // VER: define_map
       System.out.println("Key: %s, Value: %s".formatted(key_value_pair.getKey(), key_value_pair.getValue()));  // VER: define_map
     }  // VER: define_map
     if (data.containsKey("d")) {}  // VER: define_map
-
   }
 
   void string_concatenation() {

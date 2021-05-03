@@ -190,12 +190,17 @@ def linked_list():
 
 
 def define_map():
-    dict = {}                                           # VER: define_map
-    dict["Joe"] = 77                                    # VER: define_map
-    dict["Jane"] = 51                                   # VER: define_map
-    for key in dict.keys():                             # VER: define_map
-        print(f"Key: {key} Value: {dict[key]}")         # VER: define_map
-    #todo add contains
+    data = { # VER: define_map
+      "a": 1,                                                            # VER: define_map
+      "b": 2,                                                            # VER: define_map
+    }  # VER: define_map
+    print(data["b"])  # prints 2   # VER: define_map
+    data["c"] = 3  # VER: define_map
+    del data["a"]  # VER: define_map
+    for k, v in  data.items():  # VER: define_map
+      print(f"Key: {k}, Value: {v}")  #  VER: define_map
+    if "d" in data:  # VER: define_map
+        pass  # VER: define_map
 
 
 def error_handling():
@@ -255,7 +260,7 @@ def read_csv_into_array_of_classs():
             new_student.surname = line_split[1]     # VER: read_csv
             new_student.date    = line_split[2] #better way needed  # VER: read_csv
             students.append(new_student)            # VER: read_csv
-    print(f"Loaded {len(students)} students" % )     # VER: read_csv
+    print(f"Loaded {len(students)} students")     # VER: read_csv
 
 
 def sleep():
@@ -294,10 +299,27 @@ if __name__ == "__main__":
     def title(title):
         print('-{0}-'.format(title))
 
+    hello_world()
+    #read_line_from_console()
+    define_variables()
+    define_constants()
+    arithmetic()
+    if_statement()
+    for_loop()
+    while_loop()
+    for_each_loop()
+    file_write()
+    #file_read()
+    #function()
+    function_with_return_value()
+    list_comprehension()
+    dict_comprehension()
+    define_map()
+
     # Run all functions in order
-    for function_name in functions:
-        title(function_name)
-        if function_name not in locals():
-            print('UNIMPLEMENTED')
-            continue
-        locals()[function_name]()
+    #for function_name in functions:
+    #    title(function_name)
+    #    if function_name not in locals():
+    #        print('UNIMPLEMENTED')
+    #        continue
+    #    locals()[function_name]()

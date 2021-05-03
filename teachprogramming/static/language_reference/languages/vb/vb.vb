@@ -227,12 +227,13 @@ Module VisualBasic
     End Sub
     
     Sub define_map()
-        Dim dict As New Dictionary(Of String, String)
-        dict.Add("Joe", 77)
-        dict.Add("Jane", 51)
-        For Each key as String In dict.Keys
-          Console.WriteLine("Key: " + key + " Value: " + dict(key))
-        Next
+        '' TODO: rework this ' VER: define_map
+        Dim dict As New Dictionary(Of String, String)  ' VER: define_map
+        dict.Add("Joe", 77)  ' VER: define_map
+        dict.Add("Jane", 51)  ' VER: define_map
+        For Each key as String In dict.Keys   ' VER: define_map
+          Console.WriteLine("Key: " + key + " Value: " + dict(key))   ' VER: define_map
+        Next   ' VER: define_map
     End Sub
     
     Sub error_handling()
@@ -325,6 +326,7 @@ Module VisualBasic
         sleep()
         random_number()
         string_concatenation()
+        define_map()
         Dim command as String = "hello_world"
         'Call command()
     End Sub
