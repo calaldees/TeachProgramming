@@ -1,10 +1,10 @@
 /*
-Java  // VER: title
+Java 15  // VER: title
 https://www.oracle.com/uk/java/technologies/javase-downloads.html  // VER: download
 Java SE (Standard Edition) JDK (Java Development Kit)                       // VER: download
 http://java.sun.com/docs/books/tutorial/                                    // VER: help
 https://howtodoinjava.com/                                                  // VER: help
-https://docs.oracle.com/en/java/javase/15/docs/api/overview-tree.html  // VER: help
+https://docs.oracle.com/javase/  // VER: help
 
 javac HelloWorld.java && java HelloWorld                        # VER: run
 // NOTE: filename and `public FILENAME {` must match name+case  # VER:run
@@ -24,6 +24,8 @@ import java.util.ArrayList;    // VER: list_comprehension
 
 import java.util.stream.Collectors;   // VER: list_comprehension dict_comprehension
 import java.util.Map;    // VER: dict_comprehension
+import java.util.HashMap;    // VER: define_map
+import java.util.Map.Entry;    // VER: define_map
 import static java.util.Map.entry;   // VER: dict_comprehension
 
 // TODO: this VER multiversion stuff is broken  ... I need some good tests and rewrite make_ver.py
@@ -209,6 +211,20 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     System.out.println("array size is "+names.length);  // VER: define_fixed_array
    }  // VER: define_fixed_array
 
+  void define_map() {
+    Map<String,Integer> data = new HashMap<>(Map.ofEntries(                                  // VER: define_map
+      entry("a", 1),                                                            // VER: define_map
+      entry("b", 2)                                                            // VER: define_map
+    ));                                                                          // VER: define_map
+    System.out.println(data.get("b"));  // prints 2   // VER: define_map
+    data.put("c", 3);  // VER: define_map
+    data.remove("a");  // VER: define_map
+    for(Entry<String,Integer> key_value_pair : data.entrySet()){  // VER: define_map
+      System.out.println("Key: %s, Value: %s".formatted(key_value_pair.getKey(), key_value_pair.getValue()));  // VER: define_map
+    }  // VER: define_map
+    if (data.containsKey("d")) {}  // VER: define_map
+
+  }
 
   void string_concatenation() {
     String forename = "bob";
@@ -275,6 +291,7 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     function_with_return_value();
     list_comprehension();
     dict_comprehension();
+    define_map();
   }
 
 }

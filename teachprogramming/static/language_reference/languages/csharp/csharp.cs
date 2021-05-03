@@ -15,6 +15,7 @@ function csharp { mcs "$1" && clear && mono "${1%.*}.exe" && rm "${1%.*}.exe"; }
 
 using System;                                                                   // VER: hello_world
 using System.IO;                                                                // VER: file_write
+using System.Collections.Generic;                                               // VER: define_map
 
 public class CSharp {
 
@@ -179,6 +180,24 @@ public class CSharp {
     Console.WriteLine(biggest(1, 2));    // VER: function_with_return_value
   }
 
+  void define_map() {
+    IDictionary<string, int> data = new Dictionary<string, int>(){   // VER: define_map
+      {"a", 1},  // VER: define_map
+      {"b", 2},  // VER: define_map
+    };  // VER: define_map
+    Console.WriteLine(data["b"]);  // prints 2   // VER: define_map
+    data.Add("c", 3);  // VER: define_map
+    data.Remove("a");  // VER: define_map
+    foreach (var key_value_pair in data) {  // VER: define_map
+      Console.WriteLine($"Key: {key_value_pair.Key}, Value: {key_value_pair.Value}");  // VER: define_map
+    }  // VER: define_map
+    if (data.ContainsKey("d")) {}  // VER: define_map
+
+    // https://www.tutorialsteacher.com/csharp/csharp-dictionary
+
+  }
+
+
   void sleep() {
     System.Threading.Thread.Sleep(1000);
   }
@@ -209,6 +228,7 @@ public class CSharp {
       function();
       function_with_return_value();
       sleep();
+      define_map();
   }
 }
 
@@ -222,6 +242,29 @@ for (int runs = 0; runs < 400; runs++)
 
 // You can convert it back to an array if you would like to
 int[] terms = termsList.ToArray();
+
+
+
+
+
+https://www.tutorialsteacher.com/csharp/csharp-delegates
+
+public delegate void MyDelegate(string msg); // declare a delegate
+
+// set target method
+MyDelegate del = new MyDelegate(MethodA);
+// or 
+MyDelegate del = MethodA; 
+// or set lambda expression 
+MyDelegate del = (string msg) =>  Console.WriteLine(msg);
+
+// target method
+static void MethodA(string message)
+{
+    Console.WriteLine(message);
+}
+
+
 */
 
 
