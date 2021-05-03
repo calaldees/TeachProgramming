@@ -191,6 +191,7 @@ class LanguageVersions():
         'function_with_return_value',
         'function_with_params_by_reference',
         'function_with_params_by_value',
+        'function_with_param_function',
         'define_fixed_array',
         'define_2d_arrays',
         'list',
