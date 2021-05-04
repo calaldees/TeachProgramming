@@ -17,6 +17,12 @@ using System;                                                                   
 using System.IO;                                                                // VER: file_write
 using System.Collections.Generic;                                               // VER: define_map
 
+public class Star { // VER: class
+    public int x; // VER: class
+    public int y; // VER: class
+    public int speed; // VER: class
+} // VER: class
+
 public class CSharp {
 
   void hello_world() {
@@ -100,13 +106,20 @@ public class CSharp {
     }  // VER: while_loop
   }
 
+  void until_loop() { // VER: until_loop
+    string word = "gibber"; // VER: until_loop
+    do { // VER: until_loop
+      word = word + word; // VER: until_loop
+    } while (word.Length < 10); // VER: until_loop
+    Console.WriteLine(word); // VER: until_loop
+  } // VER: until_loop
+
   void for_each_loop() {
     string[] names = new string[]{"Bob","Ben","Bill","Boris","Bin"}; // VER: for_each_loop
     foreach (string name in names) {  // VER: for_each_loop
       Console.WriteLine(name);  // VER: for_each_loop
     }  // VER: for_each_loop
   }
-
 
   void file_write() {
     string line_to_write = "Append to end of file"; // VER: file_write
@@ -141,6 +154,15 @@ public class CSharp {
     }                                                                           // VER: file_read
 
   }
+
+  void error_handling() {                        // VER: error_handling
+    try {                                        // VER: error_handling
+      // thing that may error                    // VER: error_handling
+    }                                            // VER: error_handling
+    catch{                                       // VER: error_handling
+      // what to do if things go wrong           // VER: error_handling
+    }                                            // VER: error_handling
+  }                                              // VER: error_handling
 
   void string_concatenation() {
     string forename = "bob";
@@ -209,6 +231,12 @@ public class CSharp {
 
   }
 
+  void _class() {
+    Star s = new Star();    // VER: class
+    s.x = 100;              // VER: class
+    Console.WriteLine(s.x); // VER: class
+  }
+
   public static void Main(string[] args) {new CSharp();}
   CSharp() {
       hello_world();
@@ -253,9 +281,9 @@ public delegate void MyDelegate(string msg); // declare a delegate
 
 // set target method
 MyDelegate del = new MyDelegate(MethodA);
-// or 
-MyDelegate del = MethodA; 
-// or set lambda expression 
+// or
+MyDelegate del = MethodA;
+// or set lambda expression
 MyDelegate del = (string msg) =>  Console.WriteLine(msg);
 
 // target method
@@ -266,5 +294,3 @@ static void MethodA(string message)
 
 
 */
-
-
