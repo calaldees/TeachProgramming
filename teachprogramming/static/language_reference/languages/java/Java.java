@@ -27,6 +27,7 @@ import java.util.Map;    // VER: dict_comprehension
 import java.util.HashMap;    // VER: define_map
 import static java.util.Map.entry;   // VER: dict_comprehension
 
+
 // TODO: this VER multiversion stuff is broken  ... I need some good tests and rewrite make_ver.py
 // What a mess ...
 /* poo double/ VER: list_comprehension dict_comprehension */  // WOW! this produces the output text  `poo  // dict_comprehension`
@@ -269,6 +270,67 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
 
     System.out.println(data4);
   }
+
+
+  void define_2d_arrays() {
+    Integer width = 3;   // VER: define_2d_arrays
+    Integer height = 3;   // VER: define_2d_arrays
+    Integer value = 1;  // VER: define_2d_arrays
+                          // VER: define_2d_arrays
+    Integer[][] grid1 = new Integer[width][height];   // VER: define_2d_arrays
+    for (var row: grid1) {Arrays.fill(row, value);}   // VER: define_2d_arrays
+    grid1[2][1] = 5;                                  // VER: define_2d_arrays
+    System.out.println(grid1[0][0]);                 // VER: define_2d_arrays
+                                                      // VER: define_2d_arrays
+    record Point(Integer x, Integer y) {}                 // VER: define_2d_arrays
+    record Dimension(Integer width, Integer height) {                 // VER: define_2d_arrays
+      Integer size() {return width() * height();}                 // VER: define_2d_arrays
+      Integer coord_to_index(Point p) {return coord_to_index(p.x(), p.y());}                // VER: define_2d_arrays
+      Integer coord_to_index(Integer x, Integer y) {return (y * width()) + (x % width());}  // VER: define_2d_arrays
+      Point index_to_coord(Integer i) {return new Point(i % width(), i / width());}         // VER: define_2d_arrays
+    }                 // VER: define_2d_arrays
+                                                           // VER: define_2d_arrays
+    Dimension d = new Dimension(width, height);                 // VER: define_2d_arrays
+    Integer[] grid2 = new Integer[d.size()];                 // VER: define_2d_arrays
+    Arrays.fill(grid2, value);                 // VER: define_2d_arrays
+    grid2[d.coord_to_index(2, 1)] = 5;                 // VER: define_2d_arrays
+    System.out.println(grid2[d.coord_to_index(0,0)]);                 // VER: define_2d_arrays
+                                                           // VER: define_2d_arrays
+    Map<Point,Integer> grid3 = new HashMap<>();                 // VER: define_2d_arrays
+    for (Integer y=0 ; y<height ; y++) {                 // VER: define_2d_arrays
+      for (Integer x=0 ; x<width ; x++) {                 // VER: define_2d_arrays
+        grid3.put(new Point(x,y), value);                 // VER: define_2d_arrays
+      }                 // VER: define_2d_arrays
+    }                 // VER: define_2d_arrays
+    grid3.put(new Point(2,1), 5);                 // VER: define_2d_arrays
+    System.out.println(grid3.get(new Point(0,0)));                 // VER: define_2d_arrays
+
+
+  }
+
+
+/*
+
+
+    class Array2D<T> {
+      public final T[] data;
+      public final Dimension d;
+      Array2D(Dimension dimension, T[] data) {
+        this.d = dimension;
+        this.data = data;
+      }
+      Array2D(Dimension dimension, T value) {
+        this(dimension, (T[])new Object[width * height]);  //this.data = new T[width * height];
+        Arrays.fill(this.data, value);
+      }
+
+
+      T get(Point p) {
+        return this.data[this.coord_to_index(p)];
+      }
+    }
+*/
+
 
   //----------------------------------------------------------------------------
 

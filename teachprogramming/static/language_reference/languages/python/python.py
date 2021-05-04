@@ -169,11 +169,41 @@ def define_fixed_array():
 
 
 def define_2d_arrays():
-  grid = {}  # Not really a 2D array (it's a dictioary)   # VER: define_2d_arrays
-  for x in range(10):  # Fill the grid with 0's           # VER: define_2d_arrays
-    for y in range(10):                                 # VER: define_2d_arrays
-      grid[(x, y)] = 0                                # VER: define_2d_arrays
-  grid[(5, 5)] = 1                                        # VER: define_2d_arrays
+  width = 3   # VER: define_2d_arrays
+  height = 3   # VER: define_2d_arrays
+  value = 1   # VER: define_2d_arrays
+                # VER: define_2d_arrays
+  grid1 = [[value,] * width for y in range(height)]   # VER: define_2d_arrays
+  grid1[2][1] = 5   # VER: define_2d_arrays
+  print(grid1[0][0])   # VER: define_2d_arrays
+                                    # VER: define_2d_arrays
+  from typing import NamedTuple
+  class Dimension(NamedTuple):
+    width: int
+    height: int
+    @property
+    def size(self):
+      return self.width * self.height
+    def coord_to_index(self, x, y):
+      return (y * self.width) + (x % self.width)
+    def index_to_cord(self, i):
+      return (i % self.width, i//self.width)
+
+  grid2 = [value,] * (width * height)   # VER: define_2d_arrays
+  def coord_to_index(x, y):   # VER: define_2d_arrays
+    return (y * width) + (x % width)   # VER: define_2d_arrays
+  grid2[coord_to_index(2, 1)] = 5   # VER: define_2d_arrays
+  print(grid2[coord_to_index(0, 0)])   # VER: define_2d_arrays
+  def index_to_cord(i):   # VER: define_2d_arrays
+    return (i % width, i//width)   # VER: define_2d_arrays
+                             # VER: define_2d_arrays
+  grid3 = {       # VER: define_2d_arrays
+    (x, y): value           # VER: define_2d_arrays
+    for x in range(width)  # VER: define_2d_arrays
+    for y in range(height)  # VER: define_2d_arrays
+  }   # VER: define_2d_arrays
+  grid3[(2, 1)] = 5   # VER: define_2d_arrays
+  print(grid3[(0, 0)])
 
 
 def linked_list():
@@ -319,6 +349,7 @@ if __name__ == "__main__":
   list_comprehension()
   dict_comprehension()
   define_map()
+  define_2d_arrays()
 
   # Run all functions in order
   #for function_name in functions:
