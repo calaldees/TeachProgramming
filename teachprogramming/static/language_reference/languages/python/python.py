@@ -323,7 +323,13 @@ def dict_comprehension():
   }                     # VER: dict_comprehension
 
 def function_with_param_function():
-  pass  # VER: function_with_param_function
+  def my_func_1(a, b):  # VER: function_with_param_function
+    return a + b  # VER: function_with_param_function
+  my_func_2 = lambda a, b: a * b # VER: function_with_param_function
+  def print_my_func(ff):  # VER: function_with_param_function
+    print(ff(2,3))  # VER: function_with_param_function
+  print_my_func(my_func_1) # VER: function_with_param_function
+  print_my_func(my_func_2) # VER: function_with_param_function
 
 
 def define_set():
@@ -332,7 +338,10 @@ def define_set():
   cc = {1,2}      # VER: define_set
   print(aa | bb)  # VER: define_set
   print(aa & bb)  # VER: define_set
+  print(aa - cc)  # VER: define_set
   print(cc in aa) # VER: define_set
+  aa.add(5)       # VER: define_set
+  
 
 #-------------------------------------------------------------------------------
 
@@ -358,8 +367,9 @@ if __name__ == "__main__":
   list_comprehension()
   dict_comprehension()
   define_map()
-  define_2d_arrays()
   define_set()
+  define_2d_arrays()
+  function_with_param_function()
 
   # Run all functions in order
   #for function_name in functions:

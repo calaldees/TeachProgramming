@@ -214,13 +214,21 @@ public class CSharp {
     var bb = new HashSet<int>(){2,3,4};  // VER: define_set
     var cc = new HashSet<int>(){1,2};  // VER: define_set
     HashSet<int> xx;  // VER: define_set
+                        // VER: define_set
     xx = new HashSet<int>(aa);  // VER: define_set
     xx.UnionWith(bb);  // VER: define_set
     Console.WriteLine(String.Join(",",xx));  // VER: define_set
+                            // VER: define_set
     xx = new HashSet<int>(aa);   // VER: define_set
     xx.IntersectWith(bb);         // VER: define_set
     Console.WriteLine(String.Join(",",xx));   // VER: define_set
+                                   // VER: define_set
+    xx = new HashSet<int>(aa);   // VER: define_set
+    xx.ExceptWith(cc);         // VER: define_set
+    Console.WriteLine(String.Join(",",xx));   // VER: define_set
+                                   // VER: define_set
     Console.WriteLine(cc.IsSubsetOf(aa));   // VER: define_set
+    xx.Add(5);   // VER: define_set
   }
 
   public static void Main(string[] args) {new CSharp();}

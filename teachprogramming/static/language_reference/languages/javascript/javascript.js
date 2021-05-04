@@ -355,6 +355,63 @@ function dict_comprehension() {
   );                                                                          // VER: dict_comprehension
 }
 
+
+function define_set() {
+  //// javascript has Sets, but no set operations builtin. Copy them from // VER: define_set
+  //// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set#implementing_basic_set_operations   // VER: define_set
+  SetOperations = {
+    isSuperset: (set, subset) => {
+      for (let elem of subset) {if (!set.has(elem)) {return false}} 
+      return true
+    },
+    union: (setA, setB) => {
+      let _union = new Set(setA);
+      for (let elem of setB) {_union.add(elem)}
+      return _union;
+    },
+    intersection: (setA, setB) => {
+      let _intersection = new Set(); 
+      for (let elem of setB) {if (setA.has(elem)) {_intersection.add(elem)}} 
+      return _intersection
+    },
+    symmetricDifference: (setA, setB) => {
+      let _difference = new Set(setA); 
+      for (let elem of setB) {
+        if (_difference.has(elem)) {_difference.delete(elem)}
+        else                       {_difference.add(elem)}
+      }
+      return _difference;
+    },
+    difference(setA, setB) {
+      let _difference = new Set(setA);
+      for (let elem of setB) {_difference.delete(elem)}
+      return _difference;
+    },
+  }
+
+  const aa = new Set([1, 2, 3]);                     // VER: define_set
+  const bb = new Set([2, 3, 4]);                     // VER: define_set
+  const cc = new Set([1, 2]);                        // VER: define_set
+  console.log(SetOperations.union(aa, bb));          // VER: define_set
+  console.log(SetOperations.intersection(aa, bb));   // VER: define_set
+  console.log(SetOperations.difference(aa, cc));     // VER: define_set
+  console.log(SetOperations.isSuperset(aa, cc));     // VER: define_set
+  aa.add(5);                                         // VER: define_set
+}
+
+
+function function_with_param_function() {
+  function my_func_1(a, b) {  // VER: function_with_param_function
+    return a + b;  // VER: function_with_param_function
+  }  // VER: function_with_param_function
+  const my_func_2 = (a, b) => a * b; // VER: function_with_param_function
+  function print_my_func(ff) {  // VER: function_with_param_function
+    console.log(ff(2,3));  // VER: function_with_param_function
+  }  // VER: function_with_param_function
+  print_my_func(my_func_1); // VER: function_with_param_function
+  print_my_func(my_func_2); // VER: function_with_param_function
+}
+
 //------------------------------------------------------------------------------
 
 function main() {
@@ -374,6 +431,8 @@ function main() {
   list_comprehension();
   dict_comprehension();
   define_map();
+  define_set();
+  function_with_param_function()
 
 }
 main();

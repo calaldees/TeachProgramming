@@ -313,15 +313,41 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     Set<Integer> aa = Set.of(new Integer[]{1,2,3});  // VER: define_set
     Set<Integer> bb = Set.of(new Integer[]{2,3,4});  // VER: define_set
     Set<Integer> cc = Set.of(new Integer[]{1,2});  // VER: define_set
-       // VER: define_set
     Set<Integer> xx = null;   // VER: define_set
+                              // VER: define_set
     xx = new HashSet<>(aa);   // VER: define_set
     xx.addAll(bb);            // VER: define_set
     System.out.println(xx);   // VER: define_set
+                              // VER: define_set
     xx = new HashSet<>(aa);   // VER: define_set
     xx.retainAll(bb);         // VER: define_set
     System.out.println(xx);   // VER: define_set
+                              // VER: define_set
+    xx = new HashSet<>(aa);   // VER: define_set
+    xx.removeAll(cc);         // VER: define_set
+    System.out.println(xx);   // VER: define_set
+                              // VER: define_set
     System.out.println(aa.containsAll(cc));    // VER: define_set
+    xx.add(5);  // VER: define_set
+  }
+
+  void function_with_param_function() {
+    interface MyFunction {  // VER: function_with_param_function
+      Integer my_func(Integer a, Integer b); // VER: function_with_param_function
+    }  // VER: function_with_param_function
+    MyFunction my_func_1 = (Integer a, Integer b) -> a + b;  // VER: function_with_param_function
+    MyFunction my_func_2 = new MyFunction() {  // VER: function_with_param_function
+      public Integer my_func(Integer a, Integer b) {  // VER: function_with_param_function
+        return a * b;  // VER: function_with_param_function
+      } // VER: function_with_param_function
+    };  // VER: function_with_param_function
+    var mm = new Object(){  // VER: function_with_param_function
+      void print_my_func(MyFunction ff) {  // VER: function_with_param_function
+        System.out.println(ff.my_func(2,3));  // VER: function_with_param_function
+      }  // VER: function_with_param_function
+    };  // VER: function_with_param_function
+    mm.print_my_func(my_func_1);  // VER: function_with_param_function
+    mm.print_my_func(my_func_2);  // VER: function_with_param_function
   }
 
 
@@ -369,6 +395,7 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     dict_comprehension();
     define_map();
     define_set();
+    function_with_param_function();
   }
 
 }
