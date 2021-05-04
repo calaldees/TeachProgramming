@@ -203,11 +203,6 @@ function function_with_params_by_value() {
     
 }
 
-function function_with_param_function() {
-  // TODO // VER: function_with_param_function
-}
-
-
 function define_fixed_array() {
   let names = Array(3);       // VER: define_fixed_array
   names[0] = "Bob";           // VER: define_fixed_array
@@ -220,10 +215,6 @@ function define_fixed_array() {
   console.log("array size is " + names.length) // VER: define_fixed_array
 }
 
-function define_2d_arrays() {
-  //let grid = Array(10,10)  // VER: define_2d_arrays
-  //grid(5,5) = 1               // VER: define_2d_arrays
-}
 
 function linked_list() {
   let list = [];                              // VER: linked_list
@@ -357,8 +348,9 @@ function dict_comprehension() {
 
 
 function define_set() {
-  //// javascript has Sets, but no set operations builtin. Copy them from // VER: define_set
-  //// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set#implementing_basic_set_operations   // VER: define_set
+  //// javascript has Sets, but no set operations builtin.              // VER: define_set
+  //// Copy them from                                                   // VER: define_set
+  //// search https://developer.mozilla.org/ for basic set operations   // VER: define_set
   SetOperations = {
     isSuperset: (set, subset) => {
       for (let elem of subset) {if (!set.has(elem)) {return false}} 
@@ -412,6 +404,46 @@ function function_with_param_function() {
   print_my_func(my_func_2); // VER: function_with_param_function
 }
 
+function define_2d_arrays() {
+  const width = 3;
+  const height = 3;
+  const value = 1;
+
+  grid1 = [...Array(height)].map(   // VER: define_2d_arrays_with_nested_arrays
+    () => [...Array(width)].map(() => value));   // VER: define_2d_arrays_with_nested_arrays
+  grid1[2][1] = 5;    // VER: define_2d_arrays_with_nested_arrays
+  console.log(grid1[0][0]);   // VER: define_2d_arrays
+
+
+    /*
+  class Dimension {
+    constructor(width, height) {
+      this.width = width;
+      this.height = height;
+    }
+    get size() {return self.width * self.height;}
+    coord_to_index(x, y) {
+      return (y * self.width) + (x % self.width)
+    def index_to_cord(self, i):
+      return (i % self.width, i//self.width)
+    */
+
+  const grid2 = [...Array(width * height)].map(() => value);   // VER: define_2d_arrays_with_1d_array_with_lookup_function
+  function coord_to_index(x, y) {return (y * width) + (x % width)}   // VER: define_2d_arrays_with_1d_array_with_lookup_function
+  grid2[coord_to_index(2, 1)] = 5;   // VER: define_2d_arrays_with_1d_array_with_lookup_function
+  console.log(grid2[coord_to_index(0, 0)]);   // VER: define_2d_arrays_with_1d_array_with_lookup_function
+  function index_to_cord(i) {return (i % width, Math.floor(i/width))}   // VER: define_2d_arrays_with_1d_array_with_lookup_function
+
+  const grid3 = {};       // VER: define_2d_arrays_with_dictionary
+  for (let y=0 ; y<height ; y++) {  // VER: define_2d_arrays_with_dictionary
+    for (let x=0 ; x<width ; x++) {  // VER: define_2d_arrays_with_dictionary
+      grid3[`${x},${y}`] = value;     // VER: define_2d_arrays_with_dictionary
+    }                        // VER: define_2d_arrays_with_dictionary
+  }                            // VER: define_2d_arrays_with_dictionary
+  grid3["2,1"] = 5;   // VER: define_2d_arrays_with_dictionary
+  console.log(grid3["0,0"]);   // VER: define_2d_arrays_with_dictionary
+}
+
 //------------------------------------------------------------------------------
 
 function main() {
@@ -432,7 +464,8 @@ function main() {
   dict_comprehension();
   define_map();
   define_set();
-  function_with_param_function()
+  function_with_param_function();
+  define_2d_arrays();
 
 }
 main();

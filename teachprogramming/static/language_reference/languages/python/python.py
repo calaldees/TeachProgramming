@@ -169,14 +169,14 @@ def define_fixed_array():
 
 
 def define_2d_arrays():
-  width = 3   # VER: define_2d_array_with_nested_arrays
-  height = 3   # VER: define_2d_array_with_nested_arrays
-  value = 1   # VER: define_2d_array_with_nested_arrays
-                # VER: define_2d_array_with_nested_arrays
-  grid1 = [[value,] * width for y in range(height)]   # VER: define_2d_arrays
-  grid1[2][1] = 5   # VER: define_2d_arrays
-  print(grid1[0][0])   # VER: define_2d_arrays
-                                    # VER: define_2d_arrays
+  width = 3
+  height = 3
+  value = 1
+           
+  grid1 = [[value,] * width for y in range(height)]   # VER: define_2d_arrays_with_nested_arrays
+  grid1[2][1] = 5   # VER: define_2d_arrays_with_nested_arrays
+  print(grid1[0][0])   # VER: define_2d_arrays_with_nested_arrays
+
   from typing import NamedTuple
   class Dimension(NamedTuple):
     width: int
@@ -189,21 +189,21 @@ def define_2d_arrays():
     def index_to_cord(self, i):
       return (i % self.width, i//self.width)
 
-  grid2 = [value,] * (width * height)   # VER: define_2d_arrays
-  def coord_to_index(x, y):   # VER: define_2d_arrays
-    return (y * width) + (x % width)   # VER: define_2d_arrays
-  grid2[coord_to_index(2, 1)] = 5   # VER: define_2d_arrays
-  print(grid2[coord_to_index(0, 0)])   # VER: define_2d_arrays
-  def index_to_cord(i):   # VER: define_2d_arrays
-    return (i % width, i//width)   # VER: define_2d_arrays
-                             # VER: define_2d_arrays
-  grid3 = {       # VER: define_2d_arrays
-    (x, y): value           # VER: define_2d_arrays
-    for x in range(width)  # VER: define_2d_arrays
-    for y in range(height)  # VER: define_2d_arrays
-  }   # VER: define_2d_arrays
-  grid3[(2, 1)] = 5   # VER: define_2d_arrays
-  print(grid3[(0, 0)])   # VER: define_2d_arrays
+  grid2 = [value,] * (width * height)   # VER: define_2d_arrays_with_1d_array_with_lookup_function
+  def coord_to_index(x, y):   # VER: define_2d_arrays_with_1d_array_with_lookup_function
+    return (y * width) + (x % width)   # VER: define_2d_arrays_with_1d_array_with_lookup_function
+  grid2[coord_to_index(2, 1)] = 5   # VER: define_2d_arrays_with_1d_array_with_lookup_function
+  print(grid2[coord_to_index(0, 0)])   # VER: define_2d_arrays_with_1d_array_with_lookup_function
+  def index_to_cord(i):   # VER: define_2d_arrays_with_1d_array_with_lookup_function
+    return (i % width, i//width)   # VER: define_2d_arrays_with_1d_array_with_lookup_function
+
+  grid3 = {       # VER: define_2d_arrays_with_dictionary
+    (x, y): value           # VER: define_2d_arrays_with_dictionary
+    for x in range(width)  # VER: define_2d_arrays_with_dictionary
+    for y in range(height)  # VER: define_2d_arrays_with_dictionary
+  }   # VER: define_2d_arrays_with_dictionary
+  grid3[(2, 1)] = 5   # VER: define_2d_arrays_with_dictionary
+  print(grid3[(0, 0)])   # VER: define_2d_arrays_with_dictionary
 
 
 def linked_list():
