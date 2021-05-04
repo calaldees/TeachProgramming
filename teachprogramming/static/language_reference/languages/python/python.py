@@ -169,10 +169,10 @@ def define_fixed_array():
 
 
 def define_2d_arrays():
-  width = 3   # VER: define_2d_arrays
-  height = 3   # VER: define_2d_arrays
-  value = 1   # VER: define_2d_arrays
-                # VER: define_2d_arrays
+  width = 3   # VER: define_2d_array_with_nested_arrays
+  height = 3   # VER: define_2d_array_with_nested_arrays
+  value = 1   # VER: define_2d_array_with_nested_arrays
+                # VER: define_2d_array_with_nested_arrays
   grid1 = [[value,] * width for y in range(height)]   # VER: define_2d_arrays
   grid1[2][1] = 5   # VER: define_2d_arrays
   print(grid1[0][0])   # VER: define_2d_arrays
@@ -203,7 +203,7 @@ def define_2d_arrays():
     for y in range(height)  # VER: define_2d_arrays
   }   # VER: define_2d_arrays
   grid3[(2, 1)] = 5   # VER: define_2d_arrays
-  print(grid3[(0, 0)])
+  print(grid3[(0, 0)])   # VER: define_2d_arrays
 
 
 def linked_list():
@@ -325,6 +325,15 @@ def dict_comprehension():
 def function_with_param_function():
   pass  # VER: function_with_param_function
 
+
+def define_set():
+  aa = {1,2,3}    # VER: define_set
+  bb = {2,3,4}    # VER: define_set
+  cc = {1,2}      # VER: define_set
+  print(aa | bb)  # VER: define_set
+  print(aa & bb)  # VER: define_set
+  print(cc in aa) # VER: define_set
+
 #-------------------------------------------------------------------------------
 
 if __name__ == "__main__":
@@ -350,6 +359,7 @@ if __name__ == "__main__":
   dict_comprehension()
   define_map()
   define_2d_arrays()
+  define_set()
 
   # Run all functions in order
   #for function_name in functions:

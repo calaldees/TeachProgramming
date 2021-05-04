@@ -4,7 +4,7 @@ https://www.oracle.com/uk/java/technologies/javase-downloads.html  // VER: downl
 Java SE (Standard Edition) JDK (Java Development Kit)                       // VER: download
 http://java.sun.com/docs/books/tutorial/                                    // VER: help
 https://howtodoinjava.com/                                                  // VER: help
-https://docs.oracle.com/javase/  // VER: help
+https://docs.oracle.com/javase/                                             // VER: help
 
 javac HelloWorld.java && java HelloWorld                        # VER: run
 // NOTE: filename and `public FILENAME {` must match name+case  # VER:run
@@ -26,6 +26,9 @@ import java.util.stream.Collectors;   // VER: list_comprehension dict_comprehens
 import java.util.Map;    // VER: dict_comprehension
 import java.util.HashMap;    // VER: define_map
 import static java.util.Map.entry;   // VER: dict_comprehension
+
+import java.util.Set;    // VER: define_set
+import java.util.HashSet;    // VER: define_set
 
 
 // TODO: this VER multiversion stuff is broken  ... I need some good tests and rewrite make_ver.py
@@ -244,7 +247,7 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
 
   void list_comprehension() {
     // int[] i = new int[]{1,2,3,4}; Arrays.stream(i).collect(toList());
-    List<Integer> data1 = new ArrayList<>(Arrays.asList(1,2,3,4,5,6));          // VER: list_comprehension
+    List<Integer> data1 = new ArrayList<>(Arrays.asList(new Integer[]{1,2,3,4,5,6}));          // VER: list_comprehension
     List<Integer> data2 = data1.stream(                                         // VER: list_comprehension
     ).filter(                                                                   // VER: list_comprehension
       (i) -> i >= 3                                                             // VER: list_comprehension
@@ -304,8 +307,21 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     }                 // VER: define_2d_arrays
     grid3.put(new Point(2,1), 5);                 // VER: define_2d_arrays
     System.out.println(grid3.get(new Point(0,0)));                 // VER: define_2d_arrays
+  }
 
-
+  void define_set() {
+    Set<Integer> aa = Set.of(new Integer[]{1,2,3});  // VER: define_set
+    Set<Integer> bb = Set.of(new Integer[]{2,3,4});  // VER: define_set
+    Set<Integer> cc = Set.of(new Integer[]{1,2});  // VER: define_set
+       // VER: define_set
+    Set<Integer> xx = null;   // VER: define_set
+    xx = new HashSet<>(aa);   // VER: define_set
+    xx.addAll(bb);            // VER: define_set
+    System.out.println(xx);   // VER: define_set
+    xx = new HashSet<>(aa);   // VER: define_set
+    xx.retainAll(bb);         // VER: define_set
+    System.out.println(xx);   // VER: define_set
+    System.out.println(aa.containsAll(cc));    // VER: define_set
   }
 
 
@@ -352,6 +368,7 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     list_comprehension();
     dict_comprehension();
     define_map();
+    define_set();
   }
 
 }

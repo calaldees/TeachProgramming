@@ -196,6 +196,7 @@ class LanguageVersions():
         'define_2d_arrays',
         'list',
         'define_map',
+        'define_set',
         'error_handling',
         'split_strings',
         'join_strings',
