@@ -92,9 +92,9 @@ def until_loop():
 
 
 def for_each_loop():
-  names = ("Bob", "Ben", "Bill", "Borris", "Bin")  # VER: for_each_loop
-  for name in names:                               # VER: for_each_loop
-    print(name)                                  # VER: for_each_loop
+  ff = ("a", "b", "c")  # VER: for_each_loop
+  for f in ff:              # VER: for_each_loop
+    print(f)               # VER: for_each_loop
 
 
 def file_write():
@@ -159,13 +159,26 @@ def function_with_return_value():
 
 
 def define_fixed_array():
-  names = []              # VER: define_fixed_array
-  names.insert(0, "Bob")  # VER: define_fixed_array
-  names.insert(1, "Foo")  # VER: define_fixed_array
-  names.insert(2, "Rah")  # VER: define_fixed_array
-  for name in names:      # VER: define_fixed_array
-    print(name)         # VER: define_fixed_array
-  print(f"array size is {len(names)}")  # VER: define_fixed_array
+  aa = [None,] * 3              # VER: define_fixed_array
+  aa[1] = "test"   # VER: define_fixed_array
+  print(aa)  # VER: define_fixed_array
+  print(aa[1])   # VER: define_fixed_array
+      # VER: define_fixed_array
+  bb = ["a", "b", "c"]   # VER: define_fixed_array
+  print(f"bb size is {len(bb)}")  # VER: define_fixed_array
+  for i in bb:      # VER: define_fixed_array
+    print(i)         # VER: define_fixed_array
+
+def define_list():
+  cc = ["a", "b", "c"] # VER: define_list
+  print(cc[0]) # VER: define_list
+  last = cc.pop() # VER: define_list
+  cc.append("d") # VER: define_list
+  first = cc.pop(0) # VER: define_list
+  cc.insert(0, "z")  # VER: define_list
+  cc.remove("b") # VER: define_list
+  for i in cc:    # VER: define_list
+    print(i)  # z d  # VER: define_list
 
 
 def define_2d_arrays():
@@ -205,18 +218,6 @@ def define_2d_arrays():
   grid3[(2, 1)] = 5   # VER: define_2d_arrays_with_dictionary
   print(grid3[(0, 0)])   # VER: define_2d_arrays_with_dictionary
 
-
-def linked_list():
-  list = []               # VER: linked_list
-  list.append("Bill")     # VER: linked_list
-  list.append("Ben")      # VER: linked_list
-  list.append("Bob")      # VER: linked_list
-  list.remove("Ben")      # VER: linked_list
-  list.pop()              # VER: linked_list
-  list.insert(0, "Kim")   # VER: linked_list
-  for name in list:       # VER: linked_list
-    print(name)         # VER: linked_list
-  print(f"list size is {len(list)}")    # VER: linked_list
 
 
 def define_map():
@@ -288,7 +289,7 @@ def read_csv_into_array_of_classs():
       new_student = Student()                 # VER: read_csv
       new_student.forname = line_split[0]     # VER: read_csv
       new_student.surname = line_split[1]     # VER: read_csv
-      new_student.date    = line_split[2] #better way needed  # VER: read_csv
+      new_student.date    = line_split[2] #better?  # VER: read_csv
       students.append(new_student)            # VER: read_csv
   print(f"Loaded {len(students)} students")     # VER: read_csv
 
@@ -366,6 +367,7 @@ if __name__ == "__main__":
   function_with_param_function()
   list_comprehension()
   dict_comprehension()
+  define_list()
   define_map()
   define_set()
   define_2d_arrays()

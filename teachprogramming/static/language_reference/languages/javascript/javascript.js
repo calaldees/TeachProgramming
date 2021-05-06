@@ -93,10 +93,9 @@ function until_loop() {
 }
 
 function for_each_loop() {
-  names = ["Bob", "Ben", "Bill", "Borris", "Bin"];    // VER: for_each_loop
-  for (let i in names) {                              // VER: for_each_loop
-    const name = names[i];                            // VER: for_each_loop
-    console.log(name);                              // VER: for_each_loop
+  const ff = ["a", "b", "c"];    // VER: for_each_loop
+  for (let f of ff) {                              // VER: for_each_loop
+    console.log(f);                              // VER: for_each_loop
   }                                                   // VER: for_each_loop
 }
 
@@ -204,32 +203,34 @@ function function_with_params_by_value() {
 }
 
 function define_fixed_array() {
-  let names = Array(3);       // VER: define_fixed_array
-  names[0] = "Bob";           // VER: define_fixed_array
-  names[1] = "Foo";           // VER: define_fixed_array
-  names[2] = "Rah";           // VER: define_fixed_array
-  for (let i in names) {      // VER: define_fixed_array
-    let name = names[i];    // VER: define_fixed_array
-    console.log(name);      // VER: define_fixed_array
+  const aa = Array(3);   // VER: define_fixed_array
+  aa[1] = "test";   // VER: define_fixed_array
+  console.log(aa);   // VER: define_fixed_array
+  console.log(aa[1]);   // VER: define_fixed_array
+       // VER: define_fixed_array
+  const bb = ["a", "b", "c"];       // VER: define_fixed_array
+  console.log(`bb size is ${bb.length}`); // VER: define_fixed_array
+  for (let i of bb) {      // VER: define_fixed_array
+    console.log(i);      // VER: define_fixed_array
   }                           // VER: define_fixed_array
-  console.log("array size is " + names.length) // VER: define_fixed_array
 }
 
-
-function linked_list() {
-  let list = [];                              // VER: linked_list
-  list.push("Bill")                           // VER: linked_list
-  list.push("Ben")                            // VER: linked_list
-  list.push("Bob")                            // VER: linked_list
-  list.pop("Ben")                             // VER: linked_list
-  list.pop()                                  // VER: linked_list
-  list.unshift("Kim")                         // VER: linked_list
-  for (let i in list) {                       // VER: linked_list
-    let name = list[i];                     // VER: linked_list
-    console.log(name);                      // VER: linked_list
-  }                                           // VER: linked_list
-  console.log("list size is " + list.length)  // VER: linked_list
+function define_list() {
+  const cc = ["a", "b", "c"];  // VER: define_list
+  console.log(cc[0]);  // VER: define_list
+  const last = cc.pop();  // VER: define_list
+  cc.push("d");  // VER: define_list
+  const first = cc.shift();  // VER: define_list
+  cc.unshift("z");  // VER: define_list
+  function remove_by_value(array, v) { // VER: define_list
+    const i = array.indexOf(v); if (i > -1) {array.splice(i, 1);}  // VER: define_list
+  }  // VER: define_list
+  remove_by_value(cc, "b"); // VER: define_list
+  for (let i of cc) {  // VER: define_list
+    console.log(i); // z d   // VER: define_list
+  }  // VER: define_list
 }
+
 
 function define_map() {
   let data = { // VER: define_map
@@ -462,6 +463,8 @@ function main() {
   function_with_return_value();
   list_comprehension();
   dict_comprehension();
+  define_fixed_array();
+  define_list();
   define_map();
   define_set();
   function_with_param_function();

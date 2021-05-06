@@ -15,7 +15,7 @@ function read_line_from_console() {
 }
 
 function comment() {
-    #This is a comment          # VER: comment
+    ##This is a comment          # VER: comment
     /* so is this */            # VER: comment
 }
 
@@ -82,9 +82,9 @@ function until_loop() {
 }
 
 function for_each_loop() {
-    $names = array ("Bob","Ben","Bill","Borris","Bin"); # VER: for_each_loop
-    foreach ($names as $name) {                         # VER: for_each_loop
-        echo $name."\n";                                # VER: for_each_loop
+    $ff = array ("a", "b", "c"); # VER: for_each_loop
+    foreach ($f as $ff) {                         # VER: for_each_loop
+        echo $f."\n";                                # VER: for_each_loop
     }                                                   # VER: for_each_loop
 }
 
@@ -171,18 +171,18 @@ function define_2d_arrays() {
     $grid[5][5] = 1;                                    # VER: define_2d_arrays
 }
 
-function linked_list() {
-    $list = array();                                        # VER: linked_list
-    $list[] = "Bill"; #Add to end of array                  # VER: linked_list
-    $list[] = "Ben";                                        # VER: linked_list
-    $list[] = "Bob";                                        # VER: linked_list
-    unset($list[1]); #No language feature to search for     # VER: linked_list
-    array_pop($list); #Remove last item                     # VER: linked_list
-    array_unshift($list, "Kim"); #Add first                 # VER: linked_list
-    foreach ($list as $name) {                              # VER: linked_list
-      echo $name."\n";                                      # VER: linked_list
-    }                                                       # VER: linked_list
-    echo "list size is ".count($list)."\n";                 # VER: linked_list
+function define_list() {
+    $list = array();                                        # VER: define_list
+    $list[] = "Bill"; #Add to end of array                  # VER: define_list
+    $list[] = "Ben";                                        # VER: define_list
+    $list[] = "Bob";                                        # VER: define_list
+    unset($list[1]); #No language feature to search for     # VER: define_list
+    array_pop($list); #Remove last item                     # VER: define_list
+    array_unshift($list, "Kim"); #Add first                 # VER: define_list
+    foreach ($list as $name) {                              # VER: define_list
+      echo $name."\n";                                      # VER: define_list
+    }                                                       # VER: define_list
+    echo "list size is ".count($list)."\n";                 # VER: define_list
 }
 
 function define_map() {

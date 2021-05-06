@@ -135,9 +135,9 @@ public class Java {
   }
 
   void for_each_loop() {
-    String[] names = {"Bob","Ben","Bill","Borris","Bin"}; // VER: for_each_loop
-    for (String name: names) {  // VER: for_each_loop
-      System.out.println(name);  // VER: for_each_loop
+    String[] ff = {"a","b","c"}; // VER: for_each_loop
+    for (String f : ff) {  // VER: for_each_loop
+      System.out.println(f);  // VER: for_each_loop
     }  // VER: for_each_loop
   }
 
@@ -205,15 +205,30 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
 
 
   void define_fixed_array() {
-    String[] names = new String[3];  // VER: define_fixed_array
-    names[0] = "Bob"; // VER: define_fixed_array
-    names[1] = "Foo";  // VER: define_fixed_array
-    names[2] = "Rah";  // VER: define_fixed_array
-    for (String name : names) {  // VER: define_fixed_array
-      System.out.println(name);  // VER: define_fixed_array
+    String[] aa = new String[3];  // VER: define_fixed_array
+    aa[1] = "test";  // VER: define_fixed_array
+    System.out.println(aa);  // VER: define_fixed_array
+    System.out.println(aa[1]);  // VER: define_fixed_array
+         // VER: define_fixed_array
+    String[] bb = new String[]{"a", "b", "c"};  // VER: define_fixed_array
+    System.out.println("bb size is "+bb.length);  // VER: define_fixed_array
+    for (String i : bb) {  // VER: define_fixed_array
+      System.out.println(i);  // VER: define_fixed_array
     }  // VER: define_fixed_array
-    System.out.println("array size is "+names.length);  // VER: define_fixed_array
-   }  // VER: define_fixed_array
+  }
+
+  void define_list() {
+    List<String> cc = new ArrayList<>(Arrays.asList(new String[]{"a", "b", "c"}));  // VER: define_list
+    System.out.println(cc.get(0)); // VER: define_list
+    String last = cc.remove(cc.size()-1);
+    cc.add("d"); // VER: define_list
+    String first = cc.remove(0);  // VER: define_list
+    cc.add(0, "z");  // VER: define_list
+    cc.remove("b");  // VER: define_list
+    for (String i : cc) {  // VER: define_list
+      System.out.println(i); // z d   // VER: define_list
+    }  // VER: define_list
+  }
 
   void define_map() {
     Map<String,Integer> data = new HashMap<>(Map.ofEntries(                                  // VER: define_map
@@ -397,6 +412,7 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     function_with_return_value();
     list_comprehension();
     dict_comprehension();
+    define_list();
     define_map();
     define_set();
     function_with_param_function();

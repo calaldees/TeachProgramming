@@ -2,8 +2,7 @@
 'Visual Studio Comunity                              ' VER: download
 'https://visualstudio.microsoft.com/downloads/       ' VER: download
 
-'https://docs.microsoft.com/en-us/dotnet/visual-basic/programming-guide/language-features/ ' VER: help
-'https://docs.microsoft.com/en-us/dotnet/visual-basic/language-reference/ ' VER: help
+'https://docs.microsoft.com/en-us/dotnet/visual-basic/' VER: help
 
 Imports System.Collections.Generic
 
@@ -22,7 +21,7 @@ Module VisualBasic
     End Sub
     
     Sub comment()
-        'This is a comment      ' VER: comment
+        ''This is a comment      ' VER: comment
     End Sub
 
     Sub define_variables()    
@@ -88,10 +87,10 @@ Module VisualBasic
     End Sub
     
     Sub for_each_loop()
-        Dim names() as String = {"Bob","Ben","Bill","Borris","Bin"} ' VER: for_each_loop
-        For Each name As String In names                            ' VER: for_each_loop
-          Console.WriteLine(name)                                   ' VER: for_each_loop
-        Next name                                                   ' VER: for_each_loop
+        Dim ff() as String = {"a","b","c"} ' VER: for_each_loop
+        For Each f As String In ff                            ' VER: for_each_loop
+          Console.WriteLine(f)                                   ' VER: for_each_loop
+        Next f                                                   ' VER: for_each_loop
     End Sub
     
     Sub file_write()
@@ -203,18 +202,18 @@ Module VisualBasic
         grid(5,5) = 1               ' VER: define_2d_arrays
     End Sub
     
-    Sub linked_list()
-        Dim list As New LinkedList(Of String)           ' VER: linked_list
-        list.AddLast("Bill")                            ' VER: linked_list
-        list.AddLast("Ben")                             ' VER: linked_list
-        list.AddLast("Bob")                             ' VER: linked_list
-        list.Remove("Ben")                              ' VER: linked_list
-        list.RemoveLast()                               ' VER: linked_list
-        list.AddFirst("Kim")                            ' VER: linked_list
-        For Each item as String In list                 ' VER: linked_list
-          Console.WriteLine(item)                       ' VER: linked_list
-        Next                                            ' VER: linked_list
-        Console.WriteLine("list size is " + list.Count) ' VER: linked_list
+    Sub define_list()
+        Dim list As New LinkedList(Of String)           ' VER: define_list
+        list.AddLast("Bill")                            ' VER: define_list
+        list.AddLast("Ben")                             ' VER: define_list
+        list.AddLast("Bob")                             ' VER: define_list
+        list.Remove("Ben")                              ' VER: define_list
+        list.RemoveLast()                               ' VER: define_list
+        list.AddFirst("Kim")                            ' VER: define_list
+        For Each item as String In list                 ' VER: define_list
+          Console.WriteLine(item)                       ' VER: define_list
+        Next                                            ' VER: define_list
+        Console.WriteLine("list size is " + list.Count) ' VER: define_list
         
         'Alternate – notes old redim way – more needed
         'ReDim Preserve ArrayName(LowerValue To HigherValue)

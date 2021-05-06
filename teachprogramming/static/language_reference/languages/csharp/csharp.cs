@@ -101,9 +101,9 @@ public class CSharp {
   }
 
   void for_each_loop() {
-    string[] names = new string[]{"Bob","Ben","Bill","Boris","Bin"}; // VER: for_each_loop
-    foreach (string name in names) {  // VER: for_each_loop
-      Console.WriteLine(name);  // VER: for_each_loop
+    string[] ff = new string[]{"a","b","c"}; // VER: for_each_loop
+    foreach (string f in ff) {  // VER: for_each_loop
+      Console.WriteLine(f);  // VER: for_each_loop
     }  // VER: for_each_loop
   }
 
@@ -209,6 +209,19 @@ public class CSharp {
 
   }
 
+  void define_list() {
+    var cc = new List<string>(new string[]{"a", "b", "c"});   // VER: define_list
+    Console.WriteLine(cc[0]);   // VER: define_list
+    string last = cc[cc.Count-1]; cc.RemoveAt(cc.Count-1);   // VER: define_list
+    cc.Add("d");   // VER: define_list
+    string first = cc[0]; cc.RemoveAt(0);   // VER: define_list
+    cc.Insert(0, "z");   // VER: define_list
+    cc.Remove("b");   // VER: define_list
+    foreach (var i in cc) {   // VER: define_list
+      Console.WriteLine(i);  // z d // VER: define_list
+    }   // VER: define_list
+  }
+
   void define_set() {
     var aa = new HashSet<int>(){1,2,3};  // VER: define_set
     var bb = new HashSet<int>(){2,3,4};  // VER: define_set
@@ -231,6 +244,20 @@ public class CSharp {
     xx.Add(5);   // VER: define_set
   }
 
+  public delegate int MyFunction(int a, int b);    // VER: function_with_param_function
+  void function_with_param_function() {
+    MyFunction my_func_1 = (a, b) => a + b;    // VER: function_with_param_function
+    MyFunction my_func_2 = delegate(int a, int b) {    // VER: function_with_param_function
+      return a * b;    // VER: function_with_param_function
+    };    // VER: function_with_param_function
+    Action<MyFunction> print_my_func = (ff) => {  // VER: function_with_param_function
+        Console.WriteLine(ff(2,3));  // VER: function_with_param_function
+    };  // VER: function_with_param_function
+    print_my_func(my_func_1);  // VER: function_with_param_function
+    print_my_func(my_func_2);  // VER: function_with_param_function
+  }
+
+
   public static void Main(string[] args) {new CSharp();}
   CSharp() {
       hello_world();
@@ -250,8 +277,10 @@ public class CSharp {
       function();
       function_with_return_value();
       sleep();
+      define_list();
       define_map();
       define_set();
+      function_with_param_function();
   }
 }
 
