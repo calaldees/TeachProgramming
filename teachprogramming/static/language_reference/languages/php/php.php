@@ -26,7 +26,7 @@ function define_variables() {
     $email_errors = True;   # VER: define_variables
 }
 
-function define_constats() {
+function define_constants() {
     define("GRAVITY", 9.81);   # VER: define_constants
 }
 
@@ -265,10 +265,21 @@ function _sleep() {
 function title($title) {
     echo "-".$title."-\n";
 }
-$file = fopen("_function_order.txt", "r");
-while($line=fgets($file)) {
-    $line = trim($line);
-    title($line);
-    $line();
-}
-fclose($file);
+#$file = fopen("_function_order.txt", "r");
+#while($line=fgets($file)) {
+#    $line = trim($line);
+#    title($line);
+#    $line();
+#}
+#fclose($file);
+
+hello_world();
+#read_line_from_console()
+define_variables();
+define_constants();
+arithmetic();
+if_statement();
+for_loop();
+while_loop();
+for_each_loop();
+file_write();

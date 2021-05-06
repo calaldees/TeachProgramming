@@ -32,16 +32,9 @@ ruby:
 rust:
 	# TODO
 
-c:
-	cd ${PATH_LANGAUGES}/$@ && \
-	gcc -Wall c.c -o c
-	./c
-
 
 
 # Clean ------------------------------------------------------------------------
 
 clean:
-	rm *.class
-	rm *.exe
-	rm *.pyc
+	# todo

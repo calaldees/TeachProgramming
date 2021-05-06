@@ -72,5 +72,5 @@ def if_statement()
 end
 
 read_line_from_console()
-file_read()
+#file_read()
 if_statement()

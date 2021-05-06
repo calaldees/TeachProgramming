@@ -15,3 +15,12 @@ services:
     vb:
         build:
             context: ./languages/vb
+    c:
+        build:
+            context: ./languages/c
+    php:
+        build:
+            context: ./languages/php
+    ruby:
+        build:
+            context: ./languages/ruby
