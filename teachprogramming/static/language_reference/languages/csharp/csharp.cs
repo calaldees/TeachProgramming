@@ -182,6 +182,19 @@ public class CSharp {
     Console.WriteLine(biggest(1, 2));    // VER: function_with_return_value
   }
 
+  void define_fixed_array() {
+    string[] aa = new string[3];  // VER: define_fixed_array
+    aa[1] = "test";  // VER: define_fixed_array
+    Console.WriteLine(String.Join(",",aa));  // VER: define_fixed_array
+    Console.WriteLine(aa[1]);  // VER: define_fixed_array
+         // VER: define_fixed_array
+    string[] bb = new string[]{"a", "b", "c"};  // VER: define_fixed_array
+    Console.WriteLine("bb size is "+bb.Length);  // VER: define_fixed_array
+    foreach (var i in bb) {  // VER: define_fixed_array
+      Console.WriteLine(i);  // VER: define_fixed_array
+    }  // VER: define_fixed_array
+  }
+
   void define_map() {
     IDictionary<string, int> data = new Dictionary<string, int>(){   // VER: define_map
       {"a", 1},  // VER: define_map
@@ -260,6 +273,59 @@ public class CSharp {
   }
 
 
+  // Mono did not support records or readonly structs
+  //public record DailyTemperature(double HighTemp, double LowTemp) {}
+  public struct Point {
+    public int x;
+    public int y;
+  }
+  public struct Dimension {    // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    public Dimension(int width, int height) {// VER: define_2d_arrays_with_1d_array_with_lookup_function
+      this.width = width; this.height=height;// VER: define_2d_arrays_with_1d_array_with_lookup_function
+    } // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    public int width {get;}    // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    public int height {get;}    // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    public int size {get {return width * height;}}    // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    public int coord_to_index(int x, int y) {// VER: define_2d_arrays_with_1d_array_with_lookup_function
+      return (y * width) + (x % width);// VER: define_2d_arrays_with_1d_array_with_lookup_function
+    }    // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    // ??? index_to_coord(Integer i) {return new Point(i % width(), i / width());}
+  }    // VER: define_2d_arrays_with_1d_array_with_lookup_function
+  void define_2d_arrays() {
+    int width = 3;
+    int height = 3;
+    int value = 1;
+
+    int[,] grid1 = new int[width,height];             // VER: define_2d_arrays_with_nested_arrays
+    for (int y=0; y < grid1.GetLength(1) ; y++) {     // VER: define_2d_arrays_with_nested_arrays
+      for (int x=0; x < grid1.GetLength(0) ; x++) {   // VER: define_2d_arrays_with_nested_arrays
+        grid1[x, y] = value;                        // VER: define_2d_arrays_with_nested_arrays
+      }                                               // VER: define_2d_arrays_with_nested_arrays
+    }                                                 // VER: define_2d_arrays_with_nested_arrays
+    grid1[2,1] = 5;                                  // VER: define_2d_arrays_with_nested_arrays
+    Console.WriteLine(grid1[0,0]);                   // VER: define_2d_arrays_with_nested_arrays
+            // VER: define_2d_arrays_with_nested_arrays
+
+    Dimension d = new Dimension(width, height);         // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    int[] grid2 = new int[d.size];                      // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    Array.Fill(grid2, value);                           // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    grid2[d.coord_to_index(2, 1)] = 5;                  // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    Console.WriteLine(grid2[d.coord_to_index(0,0)]);    // VER: define_2d_arrays_with_1d_array_with_lookup_function
+
+    IDictionary<Tuple<int, int>, int> grid3 = // VER: define_2d_arrays_with_dictionary
+      new Dictionary<Tuple<int, int>, int>(); // VER: define_2d_arrays_with_dictionary
+    for (int y=0 ; y<height ; y++) {                // VER: define_2d_arrays_with_dictionary
+      for (int x=0 ; x<width ; x++) {               // VER: define_2d_arrays_with_dictionary
+        grid3.Add(new Tuple<int,int>(x,y), value);               // VER: define_2d_arrays_with_dictionary
+      }    // VER: define_2d_arrays_with_dictionary
+    }    // VER: define_2d_arrays_with_dictionary
+    grid3[new Tuple<int,int>(2,1)] = 5;    // VER: define_2d_arrays_with_dictionary
+    Console.WriteLine(grid3[new Tuple<int,int>(0,0)]);    // VER: define_2d_arrays_with_dictionary
+
+  }
+
+
+
   public static void Main(string[] args) {new CSharp();}
   CSharp() {
       hello_world();
@@ -279,10 +345,12 @@ public class CSharp {
       function();
       function_with_return_value();
       sleep();
+      define_fixed_array();
       define_list();
       define_map();
       define_set();
       function_with_param_function();
+      define_2d_arrays();
   }
 }
 

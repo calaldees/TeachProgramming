@@ -121,7 +121,7 @@ public class Java {
 
   void for_loop() {
     Integer[] data = new Integer[]{5,6,7};                                      // VER: for_loop
-    for (int i=0 ; i < data.length() ; i++) {                                   // VER: for_loop
+    for (int i=0 ; i < data.length ; i++) {                                   // VER: for_loop
       System.out.println(data[i]);                                              // VER: for_loop
     }                                                                           // VER: for_loop
   }
@@ -207,7 +207,7 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
   void define_fixed_array() {
     String[] aa = new String[3];  // VER: define_fixed_array
     aa[1] = "test";  // VER: define_fixed_array
-    System.out.println(aa);  // VER: define_fixed_array
+    System.out.println(String.join(",",aa));  // VER: define_fixed_array
     System.out.println(aa[1]);  // VER: define_fixed_array
          // VER: define_fixed_array
     String[] bb = new String[]{"a", "b", "c"};  // VER: define_fixed_array
@@ -412,6 +412,7 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     function_with_return_value();
     list_comprehension();
     dict_comprehension();
+    define_fixed_array();
     define_list();
     define_map();
     define_set();

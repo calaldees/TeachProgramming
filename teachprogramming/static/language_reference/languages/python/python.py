@@ -366,6 +366,7 @@ if __name__ == "__main__":
   function_with_param_function()
   list_comprehension()
   dict_comprehension()
+  define_fixed_array()
   define_list()
   define_map()
   define_set()

@@ -7,6 +7,8 @@ Alternate tutorials
 
 https://www.tutorialsteacher.com/
 https://www.dotnetperls.com/
+https://tools.withcode.uk/quickref/
+https://www.homeandlearn.co.uk/
 
 
 TODO
