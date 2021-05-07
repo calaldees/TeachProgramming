@@ -238,9 +238,9 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     System.out.println(data.get("b"));  // prints 2   // VER: define_map
     data.put("c", 3);  // VER: define_map
     data.remove("a");  // VER: define_map
-    for (var key_value_pair : data.entrySet()){  // VER: define_map
+    for (var kv : data.entrySet()){  // VER: define_map
       System.out.println("Key: %s, Value: %s"    // VER: define_map
-        .formatted(key_value_pair.getKey(), key_value_pair.getValue()));  // VER: define_map
+        .formatted(kv.getKey(), kv.getValue()));  // VER: define_map
     }  // VER: define_map
     if (data.containsKey("d")) {}  // VER: define_map
   }

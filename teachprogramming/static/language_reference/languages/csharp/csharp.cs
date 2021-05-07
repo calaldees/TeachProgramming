@@ -188,8 +188,8 @@ public class CSharp {
     Console.WriteLine(data["b"]);  // prints 2   // VER: define_map
     data.Add("c", 3);  // VER: define_map
     data.Remove("a");  // VER: define_map
-    foreach (var key_value_pair in data) {  // VER: define_map
-      Console.WriteLine($"Key: {key_value_pair.Key}, Value: {key_value_pair.Value}");  // VER: define_map
+    foreach (var kv in data) {  // VER: define_map
+      Console.WriteLine($"Key: {kv.Key}, Value: {kv.Value}");  // VER: define_map
     }  // VER: define_map
     if (data.ContainsKey("d")) {}  // VER: define_map
 
