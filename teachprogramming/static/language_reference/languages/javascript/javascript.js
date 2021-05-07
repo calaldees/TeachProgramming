@@ -75,10 +75,10 @@ function if_statement_more() {
 }
 
 function for_loop() {
-  let username = 'bob';                           // VER: for_loop
-  for (let i = 0 ; i < username.length ; i++) {   // VER: for_loop
-    console.log(username[i]);                   // VER: for_loop
-  }                                               // VER: for_loop
+  const data = [5,6,7];                                              // VER: for_loop
+  for (let i=0 ; i < data.length ; i++) {                                     // VER: for_loop
+    console.log(data[i]);                                               // VER: for_loop
+  }                                                                           // VER: for_loop
 }
 
 function while_loop() {

@@ -24,7 +24,7 @@ Module VisualBasic
         ''This is a comment      ' VER: comment
     End Sub
 
-    Sub define_variables()    
+    Sub define_variables()
         Dim count as Integer = 0            ' VER: define_variables
         Dim username as String = "Betty"    ' VER: define_variables
         Dim distance as Double = "3.14"     ' VER: define_variables
@@ -65,16 +65,16 @@ Module VisualBasic
     End Sub
     
     Sub for_loop()
-        Dim username as String = "bob"              ' VER: for_loop
-        For i As Integer = 0 To username.Length - 1 ' VER: for_loop
-          Console.WriteLine(username.Chars(i))      ' VER: for_loop
+        Dim data() as Integer = {5,6,7}              ' VER: for_loop
+        For i As Integer = 0 To data.Length - 1 ' VER: for_loop
+          Console.WriteLine(data(i))      ' VER: for_loop
         Next                                        ' VER: for_loop
     End Sub
 
     Sub while_loop()
         Dim count as Integer = 0                    ' VER: while_loop
         Do While count < 10                         ' VER: while_loop
-          Console.WriteLine("Count is " + count)    ' VER: while_loop
+          Console.WriteLine("Count is " & count)    ' VER: while_loop
           count = count + 2                         ' VER: while_loop
         Loop                                        ' VER: while_loop
     End Sub
@@ -82,8 +82,8 @@ Module VisualBasic
     Sub until_loop()
         Dim word as String = "gibber"   ' VER: until_loop
         Do                              ' VER: until_loop
-          word = word + word            ' VER: until_loop
-        Loop Until word.Length < 10     ' VER: until_loop
+          word = word & word            ' VER: until_loop
+        Loop Until word.Length > 12     ' VER: until_loop
     End Sub
     
     Sub for_each_loop()
@@ -320,6 +320,16 @@ Module VisualBasic
     
     Sub Main()
         hello_world()
+        read_line_from_console()
+        comment()
+        define_variables()
+        define_constants()
+        arithmetic()
+        if_statement()
+        for_loop()
+        while_loop()
+        until_loop()
+        for_each_loop()
         function_with_params_by_reference()
         function_with_params_by_value()
         sleep()

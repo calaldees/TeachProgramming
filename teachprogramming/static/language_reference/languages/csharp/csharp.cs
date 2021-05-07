@@ -8,8 +8,10 @@ https://docs.microsoft.com/en-us/dotnet/csharp/                                 
 https://www.tutorialspoint.com/csharp/index.htm                                 // VER: help
 
 # TODO: install mono                                                            // VER: run
-function csharp { mcs "$1" && clear && mono "${1%.*}.exe" && rm "${1%.*}.exe"; } // VER: run
-# linux bash function                                                           // VER: run
+function csharp {     # linux bash function                                     // VER: run
+  mcs "$1" && clear && mono "${1%.*}.exe" && rm "${1%.*}.exe";                  // VER: run
+}                                                                               // VER: run
+
 
 */
 
@@ -86,9 +88,9 @@ public class CSharp {
   }
 
   void for_loop() {
-    string username = "Jim";                                                    // VER: for_loop
-    for (int i=0 ; i < username.Length ; i++) {                                 // VER: for_loop
-      Console.WriteLine(username[i]);                                           // VER: for_loop
+    int[] data = new int[]{5,6,7};                                              // VER: for_loop
+    for (int i=0 ; i < data.Length ; i++) {                                     // VER: for_loop
+      Console.WriteLine(data[i]);                                               // VER: for_loop
     }                                                                           // VER: for_loop
   }
 

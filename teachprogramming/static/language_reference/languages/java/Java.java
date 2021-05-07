@@ -120,9 +120,9 @@ public class Java {
   }
 
   void for_loop() {
-    String username = "Jim";
-    for (Integer i=0 ; i < username.length() ; i++) {                           // VER: for_loop
-      System.out.println(username.charAt(i));                                   // VER: for_loop
+    Integer[] data = new Integer[]{5,6,7};                                      // VER: for_loop
+    for (int i=0 ; i < data.length() ; i++) {                                   // VER: for_loop
+      System.out.println(data[i]);                                              // VER: for_loop
     }                                                                           // VER: for_loop
   }
 

@@ -72,10 +72,9 @@ def if_statement_more():
 
 
 def for_loop():
-  username = 'Jim'                    # VER: for_loop
-  for i in range(0, len(username)):   # VER: for_loop
-    print(username[i])              # VER: for_loop
-
+  data = [5,6,7]                                                                # VER: for_loop
+  for i in range(len(data)):                                                    # VER: for_loop
+    print(data[i])                                                              # VER: for_loop
 
 def while_loop():
   count = 0                         # VER: while_loop
@@ -92,7 +91,7 @@ def until_loop():
 
 
 def for_each_loop():
-  ff = ("a", "b", "c")  # VER: for_each_loop
+  ff = ["a", "b", "c"]  # VER: for_each_loop
   for f in ff:              # VER: for_each_loop
     print(f)               # VER: for_each_loop
 
