@@ -101,7 +101,7 @@ def file_write():
   with open("out.txt", 'a') as file:          # VER: file_write
     file.write(line_to_write + "\n")        # VER: file_write
                         # VER: file_write
-  # Alternate way of writing file             # VER: file_write
+  ## Alternate way of writing file             # VER: file_write
   file = open("out.txt", 'a')                 # VER: file_write
   file.write(line_to_write + "\n")            # VER: file_write
   file.close()                                # VER: file_write

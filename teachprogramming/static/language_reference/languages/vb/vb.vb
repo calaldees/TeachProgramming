@@ -203,17 +203,24 @@ Module VisualBasic
     End Sub
     
     Sub define_list()
-        Dim list As New LinkedList(Of String)           ' VER: define_list
-        list.AddLast("Bill")                            ' VER: define_list
-        list.AddLast("Ben")                             ' VER: define_list
-        list.AddLast("Bob")                             ' VER: define_list
-        list.Remove("Ben")                              ' VER: define_list
-        list.RemoveLast()                               ' VER: define_list
-        list.AddFirst("Kim")                            ' VER: define_list
-        For Each item as String In list                 ' VER: define_list
-          Console.WriteLine(item)                       ' VER: define_list
+        'Dim list2 As New List(Of Integer)({2, 3, 5, 7})  ' list initialiser not implemented in mono 'https://www.dotnetperls.com/list-vbnet
+        'Dim cc As New List(Of String)({"a", "b", "c"})
+        Dim cc As New List(Of String)  ' VER: define_list
+        cc.Add("a")  ' VER: define_list
+        cc.Add("b")  ' VER: define_list
+        cc.Add("c")  ' VER: define_list
+        Console.WriteLine(cc(0))                        ' VER: define_list
+        Dim last as String = cc(cc.Count-1)          ' VER: define_list
+        cc.RemoveAt(cc.Count-1)  ' VER: define_list
+        cc.Add("d")            ' VER: define_list
+        Dim first as String = cc(0)       ' VER: define_list
+        cc.RemoveAt(0)   ' VER: define_list
+        cc.Insert(0, "z")                           ' VER: define_list
+        cc.Remove("b")                              ' VER: define_list
+        For Each i as String In cc                 ' VER: define_list
+          Console.WriteLine(i) '' z d                  ' VER: define_list
         Next                                            ' VER: define_list
-        Console.WriteLine("list size is " + list.Count) ' VER: define_list
+
         
         'Alternate – notes old redim way – more needed
         'ReDim Preserve ArrayName(LowerValue To HigherValue)
@@ -335,6 +342,7 @@ Module VisualBasic
         sleep()
         random_number()
         string_concatenation()
+        define_list()
         define_map()
         Dim command as String = "hello_world"
         'Call command()

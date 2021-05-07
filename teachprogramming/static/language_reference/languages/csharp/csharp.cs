@@ -115,7 +115,7 @@ public class CSharp {
     try { // VER: file_write
       using (StreamWriter file = new StreamWriter("out.txt")) {  // VER: file_write
         file.WriteLine(line_to_write);   // VER: file_write
-      }
+      } // VER: file_write
       //file.Close();
     } // VER: file_write
     catch (Exception e){ // VER: file_write

@@ -6,6 +6,7 @@ Alternate tutorials
 -------------------
 
 https://www.tutorialsteacher.com/
+https://www.dotnetperls.com/
 
 
 TODO
