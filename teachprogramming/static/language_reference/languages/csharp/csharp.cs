@@ -193,6 +193,9 @@ public class CSharp {
     foreach (var i in bb) {  // VER: define_fixed_array
       Console.WriteLine(i);  // VER: define_fixed_array
     }  // VER: define_fixed_array
+    if (Array.IndexOf(bb, "a") >= 0) {  // VER: define_fixed_array
+      Console.WriteLine("a exists in array");  // VER: define_fixed_array
+    }  // VER: define_fixed_array
   }
 
   void define_map() {

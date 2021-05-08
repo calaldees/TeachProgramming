@@ -82,6 +82,7 @@ def while_loop():
     print(f"Count is {count}")  # VER: while_loop
     count = count + 2             # VER: while_loop
 
+# TODO: break and return in loop
 
 def until_loop():
   """
@@ -167,6 +168,8 @@ def define_fixed_array():
   print(f"bb size is {len(bb)}")  # VER: define_fixed_array
   for i in bb:      # VER: define_fixed_array
     print(i)         # VER: define_fixed_array
+  if "a" in bb:    # VER: define_fixed_array
+    print("a exists in array")   # VER: define_fixed_array
 
 def define_list():
   cc = ["a", "b", "c"]        # VER: define_list

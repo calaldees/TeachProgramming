@@ -215,6 +215,9 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     for (String i : bb) {  // VER: define_fixed_array
       System.out.println(i);  // VER: define_fixed_array
     }  // VER: define_fixed_array
+    if (Arrays.stream(bb).anyMatch("a"::equals)) { // VER: define_fixed_array
+      System.out.println("a exists in array");  // VER: define_fixed_array
+    }  // VER: define_fixed_array
   }
 
   void define_list() {

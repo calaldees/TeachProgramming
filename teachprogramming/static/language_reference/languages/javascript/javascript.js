@@ -213,6 +213,9 @@ function define_fixed_array() {
   for (let i of bb) {      // VER: define_fixed_array
     console.log(i);      // VER: define_fixed_array
   }                           // VER: define_fixed_array
+  if (bb.indexOf("a")>=0) {  // VER: define_fixed_array
+    console.log("a exists in array");  // VER: define_fixed_array
+  }  // VER: define_fixed_array
 }
 
 function define_list() {
@@ -229,7 +232,7 @@ function define_list() {
   for (let i of cc) {  // VER: define_list
     console.log(i); // z d   // VER: define_list
   }  // VER: define_list
-  if ("z" in cc) {  // VER: define_list
+  if (cc.indexOf("z") >= 0) {  // VER: define_list
     console.log("z exists in list");  // VER: define_list
   }  // VER: define_list
 }
