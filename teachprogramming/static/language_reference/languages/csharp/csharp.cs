@@ -342,18 +342,18 @@ public class CSharp {
   }
 
   void dict_comprehension() {
-    var data3 = new Dictionary<string, int>(){
-      {"a", 1},
-      {"b", 2},
-      {"c", 3},
-    };
-    var data4 = data3
-      .Where((kv) => kv.Value >= 2)
-      .ToDictionary(
-        (kv) => kv.Value + 10,
-        (kv) => kv.Key
-      )
-    ;
+    var data3 = new Dictionary<string, int>(){   // VER: dict_comprehension
+      {"a", 1},  // VER: dict_comprehension
+      {"b", 2},  // VER: dict_comprehension
+      {"c", 3},  // VER: dict_comprehension
+    };  // VER: dict_comprehension
+    var data4 = data3  // VER: dict_comprehension
+      .Where((kv) => kv.Value >= 2)  // VER: dict_comprehension
+      .ToDictionary(  // VER: dict_comprehension
+        (kv) => kv.Value + 10,  // VER: dict_comprehension
+        (kv) => kv.Key  // VER: dict_comprehension
+      )  // VER: dict_comprehension
+    ;  // VER: dict_comprehension
     Console.WriteLine(String.Join(",",data4));
   }
 
