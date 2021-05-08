@@ -18,6 +18,7 @@ function csharp {     # linux bash function                                     
 using System;                                                                   // VER: hello_world
 using System.IO;                                                                // VER: file_write
 using System.Collections.Generic;                                               // VER: define_map
+using System.Linq;                                                              // VER: list_comprehension
 
 public class CSharp {
 
@@ -183,12 +184,12 @@ public class CSharp {
   }
 
   void define_fixed_array() {
-    string[] aa = new string[3];  // VER: define_fixed_array
+    var aa = new string[3];  // VER: define_fixed_array
     aa[1] = "test";  // VER: define_fixed_array
     Console.WriteLine(String.Join(",",aa));  // VER: define_fixed_array
     Console.WriteLine(aa[1]);  // VER: define_fixed_array
          // VER: define_fixed_array
-    string[] bb = new string[]{"a", "b", "c"};  // VER: define_fixed_array
+    var bb = new string[]{"a", "b", "c"};  // VER: define_fixed_array
     Console.WriteLine("bb size is "+bb.Length);  // VER: define_fixed_array
     foreach (var i in bb) {  // VER: define_fixed_array
       Console.WriteLine(i);  // VER: define_fixed_array
@@ -199,7 +200,7 @@ public class CSharp {
   }
 
   void define_map() {
-    IDictionary<string, int> data = new Dictionary<string, int>(){   // VER: define_map
+    var data = new Dictionary<string, int>(){   // VER: define_map
       {"a", 1},  // VER: define_map
       {"b", 2},  // VER: define_map
     };  // VER: define_map
@@ -302,7 +303,7 @@ public class CSharp {
     int height = 3;
     int value = 1;
 
-    int[,] grid1 = new int[width,height];             // VER: define_2d_arrays_with_nested_arrays
+    var grid1 = new int[width,height];             // VER: define_2d_arrays_with_nested_arrays
     for (int y=0; y < grid1.GetLength(1) ; y++) {     // VER: define_2d_arrays_with_nested_arrays
       for (int x=0; x < grid1.GetLength(0) ; x++) {   // VER: define_2d_arrays_with_nested_arrays
         grid1[x, y] = value;                        // VER: define_2d_arrays_with_nested_arrays
@@ -313,13 +314,12 @@ public class CSharp {
             // VER: define_2d_arrays_with_nested_arrays
 
     Dimension d = new Dimension(width, height);         // VER: define_2d_arrays_with_1d_array_with_lookup_function
-    int[] grid2 = new int[d.size];                      // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    var grid2 = new int[d.size];                      // VER: define_2d_arrays_with_1d_array_with_lookup_function
     Array.Fill(grid2, value);                           // VER: define_2d_arrays_with_1d_array_with_lookup_function
     grid2[d.coord_to_index(2, 1)] = 5;                  // VER: define_2d_arrays_with_1d_array_with_lookup_function
     Console.WriteLine(grid2[d.coord_to_index(0,0)]);    // VER: define_2d_arrays_with_1d_array_with_lookup_function
 
-    IDictionary<Tuple<int, int>, int> grid3 = // VER: define_2d_arrays_with_dictionary
-      new Dictionary<Tuple<int, int>, int>(); // VER: define_2d_arrays_with_dictionary
+    var grid3 = new Dictionary<Tuple<int, int>, int>(); // VER: define_2d_arrays_with_dictionary
     for (int y=0 ; y<height ; y++) {                // VER: define_2d_arrays_with_dictionary
       for (int x=0 ; x<width ; x++) {               // VER: define_2d_arrays_with_dictionary
         grid3.Add(new Tuple<int,int>(x,y), value);               // VER: define_2d_arrays_with_dictionary
@@ -328,6 +328,33 @@ public class CSharp {
     grid3[new Tuple<int,int>(2,1)] = 5;    // VER: define_2d_arrays_with_dictionary
     Console.WriteLine(grid3[new Tuple<int,int>(0,0)]);    // VER: define_2d_arrays_with_dictionary
 
+  }
+
+  void list_comprehension() {
+    var data1 = new List<int>(new int[]{1,2,3,4,5,6});                           // VER: list_comprehension
+    var data2 = data1                                                         // VER: list_comprehension
+      .Where(                                                                // VER: list_comprehension
+        (i) => i >= 3                                                     // VER: list_comprehension
+      ).Select(                                                                  // VER: list_comprehension
+        (i) => i * 2                                                      // VER: list_comprehension
+      );                                                                      // VER: list_comprehension
+      Console.WriteLine(String.Join(",",data2));
+  }
+
+  void dict_comprehension() {
+    var data3 = new Dictionary<string, int>(){
+      {"a", 1},
+      {"b", 2},
+      {"c", 3},
+    };
+    var data4 = data3
+      .Where((kv) => kv.Value >= 2)
+      .ToDictionary(
+        (kv) => kv.Value + 10,
+        (kv) => kv.Key
+      )
+    ;
+    Console.WriteLine(String.Join(",",data4));
   }
 
 
@@ -357,6 +384,8 @@ public class CSharp {
       define_set();
       function_with_param_function();
       define_2d_arrays();
+      list_comprehension();
+      dict_comprehension();
   }
 }
 

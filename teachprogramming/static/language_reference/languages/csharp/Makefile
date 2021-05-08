@@ -4,4 +4,8 @@ run: build
 build:
 	docker build --tag ${DOCKER_IMAGE} .
 shell:
-	docker run --rm -it ${DOCKER_IMAGE} /bin/bash
+	docker run \
+		--rm -it \
+		--volume ${PWD}/csharp.cs:/csharp/csharp.cs:ro \
+		${DOCKER_IMAGE} \
+		/bin/bash

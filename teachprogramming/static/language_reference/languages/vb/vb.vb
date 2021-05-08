@@ -202,6 +202,7 @@ Module VisualBasic
     For Each i As String In bb  ' VER: define_fixed_array
       Console.WriteLine(i)  ' VER: define_fixed_array
     Next i  ' VER: define_fixed_array
+    '' TODO contains ' VER: define_fixed_array
   End Sub
   
   Sub define_2d_arrays()
