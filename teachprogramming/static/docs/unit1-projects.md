@@ -269,7 +269,7 @@ Sorting and Searching Records (Grade D to B)
 * This project will assess your algorithm design, CSV handling, Records(dictionaries/associative-arrays/maps) Bubble Sort understanding and Linear/Binary Search Understanding
 
 
-2D Arrays & RLE Encoding (Grade B to A)
+2D Arrays & RLE Encoding (Grade C to A)
 ----------------------------------
 Read the ConwayRLE format and display the result as ASCII
 http://www.conwaylife.com/wiki/RLE

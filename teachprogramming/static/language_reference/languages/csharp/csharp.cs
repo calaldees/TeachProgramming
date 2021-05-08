@@ -235,6 +235,9 @@ public class CSharp {
     foreach (var i in cc) {   // VER: define_list
       Console.WriteLine(i);  // z d // VER: define_list
     }   // VER: define_list
+    if (cc.Contains("z")) {                  // VER: define_list
+      Console.WriteLine("z exists in list");  // VER: define_list
+    } // VER: define_list
   }
 
   void define_set() {

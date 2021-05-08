@@ -228,6 +228,9 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     for (String i : cc) {  // VER: define_list
       System.out.println(i); // z d   // VER: define_list
     }  // VER: define_list
+    if (cc.contains("z")) {                  // VER: define_list
+      System.out.println("z exists in list");  // VER: define_list
+    }  // VER: define_list
   }
 
   void define_map() {

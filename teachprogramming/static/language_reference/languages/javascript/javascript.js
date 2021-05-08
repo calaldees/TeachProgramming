@@ -229,6 +229,9 @@ function define_list() {
   for (let i of cc) {  // VER: define_list
     console.log(i); // z d   // VER: define_list
   }  // VER: define_list
+  if ("z" in cc) {  // VER: define_list
+    console.log("z exists in list");  // VER: define_list
+  }  // VER: define_list
 }
 
 

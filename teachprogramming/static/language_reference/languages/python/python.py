@@ -169,15 +169,17 @@ def define_fixed_array():
     print(i)         # VER: define_fixed_array
 
 def define_list():
-  cc = ["a", "b", "c"] # VER: define_list
-  print(cc[0]) # VER: define_list
-  last = cc.pop() # VER: define_list
-  cc.append("d") # VER: define_list
-  first = cc.pop(0) # VER: define_list
-  cc.insert(0, "z")  # VER: define_list
-  cc.remove("b") # VER: define_list
-  for i in cc:    # VER: define_list
-    print(i)  # z d  # VER: define_list
+  cc = ["a", "b", "c"]        # VER: define_list
+  print(cc[0])                # VER: define_list
+  last = cc.pop()             # VER: define_list
+  cc.append("d")              # VER: define_list
+  first = cc.pop(0)           # VER: define_list
+  cc.insert(0, "z")           # VER: define_list
+  cc.remove("b")              # VER: define_list
+  for i in cc:                # VER: define_list
+    print(i)  # z d           # VER: define_list
+  if "z" in cc:               # VER: define_list
+    print("z exists in list") # VER: define_list
 
 
 def define_2d_arrays():
