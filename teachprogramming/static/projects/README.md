@@ -35,6 +35,7 @@ Project Ideas
 * MMORPG redis world?
 * raw code
     * Search in Pi
+        * Optimise lookup
     * Add massive numbers
     * Tower of hanoi Recursive
 * Algorithmic art?
@@ -100,6 +101,13 @@ Project Ideas
 * Simple Raytrace?
 * AI
     * [Coding Train shape recognition](https://www.youtube.com/watch?v=3MqJzMvHE3E)
+* HTTP Server
+    * Write from scratch - 
+        * maybe give socket framework?
+            * cheat sheet?
+* DNS server request / lookup? UDP - make a proxy 
+    * [Let's hand write DNS messages](https://routley.io/posts/hand-writing-dns-messages/)
+    * [rfc1035](https://datatracker.ietf.org/doc/html/rfc1035)
 * SMTP Client - in different languages - desktop and web?
     * Email server in docker conainer
     * https://www.siteground.co.uk/tutorials/email/protocols-pop3-smtp-imap/
@@ -131,6 +139,7 @@ https://github.com/kobs0N/Hacking-Cheatsheet
     * Nursing
         * [The Royal Marsden Manual of Clinical Nursing Procedures, Professional Edition, 9th](https://www.amazon.co.uk/Marsden-Clinical-Nursing-Procedures-Professional/dp/1118745922)
         * [Malnutrition Universal Screening Tool](https://www.bapen.org.uk/pdfs/must/must_full.pdf)
+    * Scale recipes [live.withcode.uk - Episode 40: Chocolate Cookies](https://live.withcode.uk/#e40)
 * Pitch Trainer
     * single note?
     * chord?
@@ -140,16 +149,64 @@ https://github.com/kobs0N/Hacking-Cheatsheet
     * 
 * Robot vacuum cleaner?
     * lego robotic? or simulated?
+* [3D functions in BASIC (ZX Spectrum)](https://www.youtube.com/watch?v=-Aw_YiZVu38)
 
 Windows Form Games?
 ------------------
 
 * 0's and X's
+    * perfect AI? lookup?
 * Snakes and ladders
 * Connect 4
 * Minesweeper
 * Street car racer? mouse input - sleep?
 * Tron
+
+Unsorted
+--------
+
+Generate lyrics to "10 green bottles"
+
+
+This is not really unit 2 .. it's just a catch-all for other stuff
+
+* unit, Coverage report (white box), test monkey (exploration), integration (multiple systems), user test, acceptance test, formal verification (compiler is half way there)
+  * 2 step db migrations, rollback
+  * CI for code coverage (up only), reject on lint fail, pre-commit hooks
+  * dependency injection, mocks
+
+* multiple container ci project
+  * black, code coverage + reject, cypress, database, webserver (REST api + template render, openAPI3) poetry||requirements.txt? log to central log container? load balancer? nginx gzip+static http2? https-cert?, containers, unittests, integration tests, end-to-end tests, pre-commit hooks, features from git log, conventional commits (regex check?), tag + auto increment.
+  * Conventional comments (all commits must have a ticket number)
+* kubernettees?
+
+
+* [ECT Python Program: Theme Park Ride](https://docs.google.com/document/d/1_Hu-ZJz2p4dyYzyYgjZeORWuLX8PVfcFn7i8MZpPFHM/edit)
+  * > Word problem on estimation:  There are 90 people in line at a theme park ride. Every 5 minutes, 40 people get on the ride and 63 join the line. Estimate how long it would take for 600 people to be in line.
+
+
+isPrime
+-------
+
+Create a function that takes an integer and returns true if the number is prime.
+https://en.wikipedia.org/wiki/Primality_test
+
+
+```python
+
+```
+
+Is in Pi
+* [Coding Challenge #156: Peeking inside Pi](https://www.youtube.com/watch?v=MEdpRYyjz_0)
+    * [datafiles](https://www.angio.net/pi/digits.html)
+    * Optimisation lookup index
+
+
+* [pages.github.com](https://pages.github.com/)
+  * [Creating a GitHub Pages site with Jekyll](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/creating-a-github-pages-site-with-jekyll)
+  * [GitHub Pages and DNS](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site)
+  * [Getting Started with GitHub Pages](https://guides.github.com/features/pages/)
+* repl.it server
 
 
 My Hacks

@@ -59,7 +59,9 @@ How to teach Computing
 * Real Exam (gcse or A-Level)
 * Community
     * A 'hang' space
-
+    * Learning though conversation
+        * Challenging ideas
+        * Consolidate learning/thinking
 
 * Principles
     * Theory (lectures) _when needed_ and interesting dynamic

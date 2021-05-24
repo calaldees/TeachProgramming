@@ -1,24 +1,7 @@
 Unit 2?
 ======
 
-This is not really unit 2 .. it's just a catch-all for other stuff
 
-* unit, Coverage report (white box), test monkey (exploration), integration (multiple systems), user test, acceptance test, formal verification (compiler is half way there)
-  * 2 step db migrations, rollback
-  * CI for code coverage (up only), reject on lint fail, pre-commit hooks
-  * dependency injection, mocks
-
-* multiple container ci project
-  * black, code coverage + reject, cypress, database, webserver (REST api + template render, openAPI3) poetry||requirements.txt? log to central log container? load balancer? nginx gzip+static http2? https-cert?, containers, unittests, integration tests, end-to-end tests, pre-commit hooks, features from git log, conventional commits (regex check?), tag + auto increment.
-
-* [ECT Python Program: Theme Park Ride](https://docs.google.com/document/d/1_Hu-ZJz2p4dyYzyYgjZeORWuLX8PVfcFn7i8MZpPFHM/edit)
-  * > Word problem on estimation:  There are 90 people in line at a theme park ride. Every 5 minutes, 40 people get on the ride and 63 join the line. Estimate how long it would take for 600 people to be in line.
-
-Easy Stuff to be integrated
-----------------------------
-
-Sorry - didnt know where to put this
-Generate lyrics to "10 green bottles"
 
 2d arrays (design decision)
 * jagged arrays (lists of lists)
@@ -26,22 +9,6 @@ Generate lyrics to "10 green bottles"
 * dict of cords
 
 
-isPrime
--------
-
-Create a function that takes an integer and returns true if the number is prime.
-https://en.wikipedia.org/wiki/Primality_test
-
-
-```python
-
-```
-
-
-* [pages.github.com](https://pages.github.com/)
-  * [Creating a GitHub Pages site with Jekyll](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/creating-a-github-pages-site-with-jekyll)
-  * [GitHub Pages and DNS](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site)
-  * [Getting Started with GitHub Pages](https://guides.github.com/features/pages/)
 
 Using and/or/not to drive a seven segment display from a 4 bit number
 
@@ -163,6 +130,13 @@ logic gate for half adder and full adder
 asembler
 bitshift
 
+
+Generate pub/private key and send message with commandline
+
+Write simple static http server
+  And security vulerbility test
+Write a simple email server SMTP/POP/IMAP?
+  test with clients? test with containers?
 
 interupts
 

@@ -27,3 +27,7 @@ TODO
 * reflection
     * in dynamic languages you need to know what `type` something is
 
+* tcp server + client
+* UDP example send receive
+* draw shapes (graphics/canvas)
+    * mouse move/click?
