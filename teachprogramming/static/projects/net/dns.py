@@ -7,13 +7,16 @@ Professional developers would not implement this themselves.
 
 https://datatracker.ietf.org/doc/html/rfc1035
 https://routley.io/posts/hand-writing-dns-messages/
+
 https://wiki.python.org/moin/UdpCommunication
+http://sfriederichs.github.io/how-to/python/udp/2017/12/07/UDP-Communication.html
+https://pymotw.com/2/socket/udp.html
 """
 
 import socket
 import struct
 import random
-import inspect
+import io
 
 from pprint import pprint
 import logging
@@ -144,9 +147,20 @@ class Question(NamedTuple):
         return data + bytes([0x00]) + struct.pack('>HH', self._QTYPE, self._QCLASS)
 
     @classmethod
-    def from_bytes(cls, data):
-        raise NotImplemented()
-        return Question()
+    def from_bytes(cls, buffer):
+        """
+        >>> Question.from_bytes(io.BytesIO(bytes.fromhex('07-65-78-61-6d-70-6c-65-03-63-6f-6d-00-00-01-00-01'.replace('-',''))))
+        Question(QNAME='example.com', QTYPE='A', QCLASS='IN')
+        """
+        segments = []
+        while True:
+            length, = buffer.read(1)
+            if length == 0:
+                break
+            segments.append(buffer.read(length).decode('utf8'))
+        _QTYPE, _QCLASS = struct.unpack('>HH', buffer.read(4))
+        log.warning(f'TODO - decode {_QTYPE} {_QCLASS}')  # TODO _QTYPE
+        return Question.new('.'.join(segments))
 
     @property
     def _QTYPE(self):
@@ -176,10 +190,11 @@ def server(host_proxy, lookup_file, port, **kwargs):
     while True:
         data, addr = sock.recvfrom(4098)
         log.debug("received message: %s" % data)
-
-        header = Header.from_bytes(data[0:12])
-        for question in range(header.QDCOUNT):
-            log.info('todo decode question')
+        data = io.BytesIO(data)
+        header = Header.from_bytes(data.read(12))
+        for QDCOUNT in range(header.QDCOUNT):
+            question = Question.from_bytes(data)
+            log.info(question)
             
 
 
