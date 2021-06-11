@@ -50,6 +50,10 @@ How to teach Computing
     * Decentralisation
     * Snowden/Privacy
     * AI examples - Deepfakes?
+        * https://experiments.withgoogle.com/collection/ai
+        * https://machinelearningforkids.co.uk/
+        * https://teachablemachine.withgoogle.com/
+        * https://www.appsforgood.org/courses/machine-learning
 * Hack time presentations (concept)
     * bring something cool?
     * Show feature/tool you've encountered
@@ -63,6 +67,8 @@ How to teach Computing
     * Learning though conversation
         * Challenging ideas
         * Consolidate learning/thinking
+
+Continue someone elses project? games? add feature?
 
 * Principles
     * Theory (lectures) _when needed_ and interesting dynamic
