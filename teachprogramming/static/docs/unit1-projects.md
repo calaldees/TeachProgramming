@@ -172,6 +172,10 @@ Know the names, symbols and corresponding powers of 10 for the decimal prefixes:
 * tera, T - 10^12
 
 
+* Byte size to human readable form (is a hard problem)
+    * [The most copied StackOverflow snippet of all time is flawed!](https://programming.guide/worlds-most-copied-so-snippet.html)
+        * an answer I wrote almost a decade ago was found to be the most copied snippet on Stack Overflow. Ironically it happens to be buggy.
+
 Cypher (D to A Grade)
 ---------------------
 Create a program to encode/decode messages.

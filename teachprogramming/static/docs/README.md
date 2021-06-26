@@ -69,6 +69,27 @@ How to teach Computing
         * Consolidate learning/thinking
 
 Continue someone elses project? games? add feature?
+Take interest in their outside projects - showcase them? (like hack time presentations)
+Role model?
+Ownership of own learning
+
+* [On a Metodology for Creating School Curricula in Computing](https://ioinformatics.org/journal/v11_2017_93_107.pdf)
+
+* My preference is Teach algorithums at the _program level_
+* [Teaching algorithms in upper secondary education: a study of teachers’ pedagogical content knowledge](https://www.tandfonline.com/doi/full/10.1080/08993408.2021.1935554)
+    * >  introducing computing concepts without the use of a computer may keep “learners from the crucial computational experiences involved in CT’s common practice”
+    * > “the ‘programming vs. Unplugged’ debate should not be an ‘either-or’ debate”
+    * > assessment is often combined with a specific programming environment
+        * overlap between object level and program level
+    * > “students would be attracted by a feeling of recreation – in-the-moment enjoyment”
+    * PCK - Magnusson et al. (1999)
+        * knowledge of goals and objectives for teaching a specific topic in the curriculum, (GO)
+        * knowledge of students’ understanding of this topic, (SU)
+        * knowledge of instructional strategies concerning this topic, (IS)
+        * knowledge of ways to assess students’ understanding of this topic (AS)
+        * combinations of PKC in the form GO-IS
+    * > It is about the analysis of a problem and what we need to come up with a solution … What we miss in secondary education is to first think about what is needed, what is the goal, how we get there, and what steps can be distinguished.
+    * > too much focus on the syntax and distract from the problem-solving process. Futschek (2006) 
 
 * Principles
     * Theory (lectures) _when needed_ and interesting dynamic
@@ -81,7 +102,11 @@ Continue someone elses project? games? add feature?
     * Participate in community
     * Convey principles/concepts over Tooling (be explicit about this to learners)
     * Real context/purpose, society focused
-
+    * Consider emotional understand to foster engagement
+        * [Emotions and programming learning: systematic mapping](https://www.tandfonline.com/doi/full/10.1080/08993408.2021.1920816)
+        * Ellis and Tod - relationship with curriculum
+    * Vancus 2009 - no reason to engage if no visible use for it
+    * Wingfield and Eccles (1992) "Utility Value"
 
 > Seymour Papert introduced the Logo language in the 1970s and watched how children got excited by computing and learned how to think computationally. He attuned Logo to children's interests; even so, it still took students time to move from the fascination of the introduction to the ability to program useful computations regularly.
 https://cacm.acm.org/magazines/2017/3/213837-misconceptions-about-computer-science/fulltext
@@ -106,10 +131,12 @@ Investigate
 
 Partial programs (force read + understand)
 Parson problems
+Swap programs and add a feature to another persons codebase
 
 > Barnett and Coate’s (2005) view of the curriculum in higher education as deliberately designed to engage students, among others. They write of
 >> the imaginative design of spaces as such, spaces that are likely to generate new energies among students and inspire them, and so prompt their triple engagement – in knowing, acting and being. (3)
 
+* [Maths e.g](http://www.mathcentre.ac.uk:8081/mathseg/index.jsp) - online site that individually programmatically generates questions and worked examples
 
 TODO
 See also CompterSciencePedagogy in teaching workshops
@@ -127,3 +154,31 @@ Other
 
 * Parallels in MFL?
     * [Study shows exposure to multiple languages may make it easier to learn one](https://www.washington.edu/news/2019/09/05/study-shows-exposure-to-multiple-languages-may-make-it-easier-to-learn-one/)
+
+
+* Assessment in PE
+    * Idea - Could some of these techniqies be used to assess the qualitys we want to see in Computer science? Make them accessible? 
+    * Physical
+        * Fitness Level
+        * Skills development
+        * Tequnique
+        * Decition Making
+        * Competetive
+    * Social
+        * Communication
+        * Movivation
+        * Respect
+        * Sportsmanship
+        * Commitment
+    * Leadership
+        * Movtivation
+        * Communiaton
+        * Teamwork
+        * Empathy and kindness
+        * Cooperation
+    * Coaching
+        * Rules
+        * Tactics
+        * Technique
+        * Use of terminology
+        * Lead a warm up
