@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
+	<style>
+		html, body {
+			margin: 0;
+			height: 100%;
+			overflow: hidden;
+			text-align: center;
+			background-color: black;
+		}
+		canvas {
+			image-rendering: pixelated;
+			object-fit: cover;
+			height: 100%; max-height: 100%;
+			max-width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="480" height="270"></canvas>
+</body>
+<script type="module">
+
+	const canvas = document.getElementById('canvas');
+	const context = canvas.getContext('2d');
+	const w = canvas.width;
+	const h = canvas.height;
+
+
+	function render(c, state) {
+		c.clearRect(0, 0, w, h);  // Reset the canvas to background color
+
+		// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
+
+		// Rectangle
+		c.fillStyle = 'white';
+		c.fillRect(20, 20, 10, 10);
+
+		// TEMPLATE for Freeform shape
+		// c.fillStyle = 'white';
+		// .. or
+		// c.strokeStyle = 'cyan';
+		// c.beginPath();
+		// ... moveTo, lineTo, arc
+		// c.stroke(); // draws the lines of the shape
+		// .. or
+		// c.fill(); // fills the shape
+
+		// Line
+		c.strokeStyle = 'cyan';
+		c.lineWidth = 2;
+		c.beginPath();
+		c.moveTo(100, 100);
+		c.lineTo(200, 100);
+		c.stroke();
+
+		// Arc/Circle
+		c.fillStyle = 'magenta';
+		c.beginPath();
+		c.arc(200, 200, 20, 0, Math.PI/2);
+		c.lineTo(200, 200);
+		c.fill();
+	}
+
+	// Loop
+	function main(time) {
+		requestAnimationFrame(main);
+		render(context);
+		// TODO: this is `easy mode` there is more to this for accurate timing of frames
+	}
+
+	console.log("Ready");
+	render(context);  // Render once on load
+	// main();  // Render in animation loop
+</script>
+</html>
