@@ -1,6 +1,14 @@
 How to teach Computing
 ======================
 
+TODO
+I need to cross reference all of this against
+* [Teaching Tech Together: How to create and deliver lessons that work and build a teaching community around them](https://teachtogether.tech/) 2019 Greg Wilson
+    * Free eBook
+    * Amazing insights into teaching Computing
+
+---
+
 * Spec given to students
     * Spec bingo -> tick + ask
 * CheatSheet - encourage freely move between languages
@@ -14,6 +22,7 @@ How to teach Computing
         * Code reviews
         * Pair programming
     * Theory covered by practical tasks
+    * conceive, design, implement and operate - [CDIO](https://en.wikipedia.org/wiki/CDIO_Initiative) [cdio-standards-30](http://cdio.org/content/cdio-standards-30)
 * Public repos
     * Version control
     * Transparency
@@ -23,10 +32,12 @@ How to teach Computing
 * Automated questions + answers
     * for individual
 * Guided projects (bank of)
+    * (See Purpose-First programming below)
     * Actually create something
     * Sense of achievement
     * Accessible independently
-    * [CDIO](https://en.wikipedia.org/wiki/CDIO_Initiative), context, real
+    * context, real
+    * (See conversational programmers Cunningham)
 * Theory guided by regular interleaving of exam questions on paper
 * Sometimes don't even tell them what the lesson is about - just show them some code and Predict, Run, Investigate (PRIMM)
     * E.g. by ref or by val example
@@ -61,6 +72,7 @@ How to teach Computing
     * HackDay
     * BarCamp (local tech culture meet/present)
     * Competitions (british informatics olympiad? robotics?)
+        * olympiad.org.uk + bebras.org + ioinformatics.org + bebras uk + 
 * Real Exam (gcse or A-Level)
 * Community
     * A 'hang' space
@@ -151,7 +163,12 @@ Other
 * [Learn proramming in 10 years](https://norvig.com/21-days.html)
     * Work on projects _with_ other programmers
     * Work on projects _after_ other programmers
-
+* [CHI 2021 | Purpose-first programming works for conversational programmers](https://www.youtube.com/watch?v=flLjtC1QfD0)  Katie Cunningham 2021
+    * [Avoiding the Turing Tarpit: Learning Conversational Programming by Starting from Code’s Purpose](https://dl.acm.org/doi/10.1145/3411764.3445571)
+    * [Katie Cunningham’s Purpose-first Programming: Glass box scaffolding for learning to code for authentic contexts](https://computinged.wordpress.com/2021/06/21/katie-cunninghams-purpose-first-programming-glass-box-scaffolding-for-learning-to-code/)
+    * Conversational Programmers (High level patterns - in blocks)
+    * Build working program in chunked examples
+    * (Kind of like my engineering projects - felt success - felt real world)
 * Parallels in MFL?
     * [Study shows exposure to multiple languages may make it easier to learn one](https://www.washington.edu/news/2019/09/05/study-shows-exposure-to-multiple-languages-may-make-it-easier-to-learn-one/)
 
@@ -182,3 +199,54 @@ Other
         * Technique
         * Use of terminology
         * Lead a warm up
+
+
+* [10 Creative Risks to Take With Your Students This Year](https://spencerauthor.com/creative-risks-new-year/)
+    * WIth class's
+        * Engage with wonder
+        * Collaboration
+        * Blog about what your passionate about
+        * hack time
+    * Very similar principles to productive adults
+
+---
+
+ Collaborating with other profetionals
+
+ * [Pedagogy by proxy: developing computing PCK through shared lesson resources](https://sure.sunderland.ac.uk/id/eprint/13728/) Hidson, Elizabeth (2021)
+---
+
+* [Evaluating Programming Languages](https://courses.cs.washington.edu/courses/cse341/02sp/concepts/evaluating-languages.html) for education
+    * Why not just teach multiple at once?
+Rapid development
+    Programmers are more expensive than machines, so they'd better be able to make fast progress. (We should consider both the language and its environment in making this evaluaiton.) 
+Easy maintenance
+    Maintenance is expensive. 
+Reliability and safety
+    When computers go down, planes crash, phone systems break, nuclear reactors melt down, cash machines close. We'd like to avoid this. 
+Portability
+    I'd like my program to run on many different platforms, with minimal rewriting. 
+Efficiency
+    The compiler should be fast. The code itself should be fast. 
+Low training time (learnability)
+    The language should be easy to learn. Training is expensive. 
+Reusability
+    Writing software components once is cheaper than writing them twice. 
+Pedagogical value
+    The language should support and enforce the concepts you want to teach. 
+
+
+Readability
+    Understand what you, or someone else has written. 
+Writeability
+    Say what you mean, without excessive verbiage. 
+Simplicity
+    The language should have a minimal number of primitive concepts/features. 
+Orthogonality
+    The language should support the combination of its concepts/features in a meaningful way. 
+Consistency
+    The language should not include needless inconsistencies. (But remember Ralph Waldo Emerson: "A foolish consistency is the hobgoblin of small minds.") 
+Expressiveness
+    The programmer should be able to express their algorithm naturally. 
+Abstraction
+    The language should support a high level of data and control abstraction. 
