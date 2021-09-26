@@ -29,17 +29,18 @@ def http_server(data_in):
     ]
     data_out = b''
     if match := re.match(r'GET (.*) HTTP/\d', data_in):
-        path = PATH + match.group(1).replace('%20', ' ').split('?')[0]
-        log.info(f"{path=}")
-        if os.path.isdir(path):
+        path = match.group(1).replace('%20', ' ').split('?')[0].strip('/')
+        path_actual = os.path.join(PATH, path)
+        log.info(f"{path=} - {path_actual=}")
+        if os.path.isdir(path_actual):
             html_body = ''.join(
-                f"<li><a href='{path}{i}'>{path}{i}</a></li>" 
-                for i in os.listdir(path)
+                f"<li><a href='{os.path.join(path,i)}'>{os.path.join(path,i)}</a></li>" 
+                for i in os.listdir(path_actual)
             )
             data_out = f"<html><head><title>MiniServer</title></head><body><ul>{html_body}</ul></body></html>".encode('utf8')
             response_headers.append(b'Content-type: text/html; charset=utf-8')
-        if os.path.isfile(path):
-            with open(path, 'rb') as filehandle:
+        if os.path.isfile(path_actual):
+            with open(path_actual, 'rb') as filehandle:
                 data_out = filehandle.read()
     return b'\r\n'.join(response_headers + [b'', data_out])
 
