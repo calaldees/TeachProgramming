@@ -60,5 +60,5 @@ def serve_app(func_app, port=8000, host=''):
                 conn.send(data_out)
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.INFO)
     serve_app(http_server)
