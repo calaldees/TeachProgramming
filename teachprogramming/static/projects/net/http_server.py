@@ -5,12 +5,20 @@ Basic HTTP file server using raw sockets
 import socket
 import re
 import os
+import sys
 
 
 import logging
 log = logging.getLogger(__name__)
 
-PATH = '.'
+
+# Commandline root path - (This is Jankey global rubbish - do not architect code like this!)
+if len(sys.argv) == 1:
+    sys.argv.append('.')
+assert len(sys.argv) == 2, f"Usage: python3 ${__file__} PATH_TO_SERVE"
+PATH = sys.argv[1]
+assert os.path.isdir(PATH), f"{PATH} should be a dir"
+
 
 
 def http_server(data_in):
