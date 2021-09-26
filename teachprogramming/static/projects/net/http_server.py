@@ -23,12 +23,13 @@ assert os.path.isdir(PATH), f"{PATH} should be a dir"
 
 def http_server(data_in):
     data_in = data_in.decode('utf8')
+    log.debug(data_in)
     response_headers = [
         b'HTTP/1.0 200 OK',
     ]
     data_out = b''
-    if match := re.match('GET (.*) HTTP/1.1', data_in):
-        path = PATH + match.group(1).replace('%20', ' ')
+    if match := re.match(r'GET (.*) HTTP/\d', data_in):
+        path = PATH + match.group(1).replace('%20', ' ').split('?')[0]
         log.info(f"{path=}")
         if os.path.isdir(path):
             html_body = ''.join(
@@ -59,5 +60,5 @@ def serve_app(func_app, port=8000, host=''):
                 conn.send(data_out)
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG)
     serve_app(http_server)
