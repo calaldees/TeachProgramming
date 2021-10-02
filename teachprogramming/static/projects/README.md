@@ -75,6 +75,8 @@ Project Ideas
     * ?
     * [Trans-Siberian Orchestra - Wizards in Winter (Official Music Video)](https://www.youtube.com/watch?v=pWBjl-jPcVM)
     * [SyncroLight](https://www.syncrolight.co.uk/) - Commercial software and hardware
+    * https://sweetlight-controller.com/
+    * https://www.daslight.com/en/?country=gb
 * Drive LED scrolling display with serial? or color changing led strips?
 * More sources of data!
     * visulisation (maybe hand drawn)

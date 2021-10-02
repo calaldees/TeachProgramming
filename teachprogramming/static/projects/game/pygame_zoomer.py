@@ -133,20 +133,37 @@ class Font():
                 sf.blit(self.font[character], (_x, y + func_y(_x)))
 
 
+class Tunnel():
+    def __init__(self):
+        self.layers = 3
+    def render(self, sf, frame):
+        sf_w = sf.get_width()
+        sf_h = sf.get_height()
+        max_radius = (max(sf_w, sf_h) * 1.2)//2
+        for _level in range(self.layers):
+            radius = _level * (frame%max_radius) / self.layers
+            g = int((radius/max_radius) * 255)
+            pg.draw.circle(sf, (g,g,g), (sf_w//2, sf_h//2), int(radius), 1)
+
+
+
 class Demo(GameBase):
     def __init__(self, resolution=(320,180)):
         self.zoomer = Zoomer()
         self.stars = Stars(resolution[0]/2, resolution[1])
         self.font = Font('images/font.png')
+        self.tunnel = Tunnel()
         super().__init__(title='Demo', resolution=resolution, fps=60)
     def loop(self, screen, frame):
         frame = frame / 1  # change the divisor for change of speed. We can render fractional frames!
         width = screen.get_width()
-        _width = screen.get_width()/2
+        _width = screen.get_width()//2
         height = screen.get_height()
+        _height = screen.get_height()//2
 
         self.zoomer.render(screen.subsurface(0, 0, _width, height), frame)
-        self.stars.render(screen.subsurface(_width, 0, _width, height), frame)
+        self.stars.render(screen.subsurface(_width, 0, _width, _height), frame)
+        self.tunnel.render(screen.subsurface(_width, _height, _width, _height), frame)
 
         text = '                '.join((
             '                     ',
