@@ -1,6 +1,8 @@
 // https://expressjs.com/en/starter/hello-world.html
 
-const express = require('express')
+import express from 'express'
+//const express = require('express')
+
 const app = express()
 const port = 3000
 
@@ -17,4 +19,4 @@ process.on('SIGINT', function() {
     console.log( "\nGracefully shutting down from SIGINT (Ctrl-C)" );
     // some other closing procedures go here
     process.exit(0);
-  });
+});

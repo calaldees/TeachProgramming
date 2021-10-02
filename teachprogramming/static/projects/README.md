@@ -32,6 +32,8 @@ Language
 Project Ideas
 -------------
 
+* Demoscene/Creative Coding workshop
+    * See creativeCodingWorkshop.md
 * MMORPG redis world?
 * raw code
     * Search in Pi
