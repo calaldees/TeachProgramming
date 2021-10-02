@@ -72,10 +72,9 @@ def if_statement_more():
 
 
 def for_loop():
-  username = 'Jim'                    # VER: for_loop
-  for i in range(0, len(username)):   # VER: for_loop
-    print(username[i])              # VER: for_loop
-
+  data = [5,6,7]                                                                # VER: for_loop
+  for i in range(len(data)):                                                    # VER: for_loop
+    print(data[i])                                                              # VER: for_loop
 
 def while_loop():
   count = 0                         # VER: while_loop
@@ -83,6 +82,7 @@ def while_loop():
     print(f"Count is {count}")  # VER: while_loop
     count = count + 2             # VER: while_loop
 
+# TODO: break and return in loop
 
 def until_loop():
   """
@@ -92,9 +92,9 @@ def until_loop():
 
 
 def for_each_loop():
-  names = ("Bob", "Ben", "Bill", "Borris", "Bin")  # VER: for_each_loop
-  for name in names:                               # VER: for_each_loop
-    print(name)                                  # VER: for_each_loop
+  ff = ["a", "b", "c"]  # VER: for_each_loop
+  for f in ff:              # VER: for_each_loop
+    print(f)               # VER: for_each_loop
 
 
 def file_write():
@@ -102,7 +102,7 @@ def file_write():
   with open("out.txt", 'a') as file:          # VER: file_write
     file.write(line_to_write + "\n")        # VER: file_write
                         # VER: file_write
-  # Alternate way of writing file             # VER: file_write
+  ## Alternate way of writing file             # VER: file_write
   file = open("out.txt", 'a')                 # VER: file_write
   file.write(line_to_write + "\n")            # VER: file_write
   file.close()                                # VER: file_write
@@ -159,24 +159,41 @@ def function_with_return_value():
 
 
 def define_fixed_array():
-  names = []              # VER: define_fixed_array
-  names.insert(0, "Bob")  # VER: define_fixed_array
-  names.insert(1, "Foo")  # VER: define_fixed_array
-  names.insert(2, "Rah")  # VER: define_fixed_array
-  for name in names:      # VER: define_fixed_array
-    print(name)         # VER: define_fixed_array
-  print(f"array size is {len(names)}")  # VER: define_fixed_array
+  aa = [None,] * 3              # VER: define_fixed_array
+  aa[1] = "test"   # VER: define_fixed_array
+  print(aa)  # VER: define_fixed_array
+  print(aa[1])   # VER: define_fixed_array
+      # VER: define_fixed_array
+  bb = ["a", "b", "c"]   # VER: define_fixed_array
+  print(f"bb size is {len(bb)}")  # VER: define_fixed_array
+  for i in bb:      # VER: define_fixed_array
+    print(i)         # VER: define_fixed_array
+  if "a" in bb:    # VER: define_fixed_array
+    print("a exists in array")   # VER: define_fixed_array
+
+def define_list():
+  cc = ["a", "b", "c"]        # VER: define_list
+  print(cc[0])                # VER: define_list
+  last = cc.pop()             # VER: define_list
+  cc.append("d")              # VER: define_list
+  first = cc.pop(0)           # VER: define_list
+  cc.insert(0, "z")           # VER: define_list
+  cc.remove("b")              # VER: define_list
+  for i in cc:                # VER: define_list
+    print(i)  # z d           # VER: define_list
+  if "z" in cc:               # VER: define_list
+    print("z exists in list") # VER: define_list
 
 
 def define_2d_arrays():
-  width = 3   # VER: define_2d_arrays
-  height = 3   # VER: define_2d_arrays
-  value = 1   # VER: define_2d_arrays
-                # VER: define_2d_arrays
-  grid1 = [[value,] * width for y in range(height)]   # VER: define_2d_arrays
-  grid1[2][1] = 5   # VER: define_2d_arrays
-  print(grid1[0][0])   # VER: define_2d_arrays
-                                    # VER: define_2d_arrays
+  width = 3
+  height = 3
+  value = 1
+           
+  grid1 = [[value,] * width for y in range(height)]   # VER: define_2d_arrays_with_nested_arrays
+  grid1[2][1] = 5   # VER: define_2d_arrays_with_nested_arrays
+  print(grid1[0][0])   # VER: define_2d_arrays_with_nested_arrays
+
   from typing import NamedTuple
   class Dimension(NamedTuple):
     width: int
@@ -189,34 +206,22 @@ def define_2d_arrays():
     def index_to_cord(self, i):
       return (i % self.width, i//self.width)
 
-  grid2 = [value,] * (width * height)   # VER: define_2d_arrays
-  def coord_to_index(x, y):   # VER: define_2d_arrays
-    return (y * width) + (x % width)   # VER: define_2d_arrays
-  grid2[coord_to_index(2, 1)] = 5   # VER: define_2d_arrays
-  print(grid2[coord_to_index(0, 0)])   # VER: define_2d_arrays
-  def index_to_cord(i):   # VER: define_2d_arrays
-    return (i % width, i//width)   # VER: define_2d_arrays
-                             # VER: define_2d_arrays
-  grid3 = {       # VER: define_2d_arrays
-    (x, y): value           # VER: define_2d_arrays
-    for x in range(width)  # VER: define_2d_arrays
-    for y in range(height)  # VER: define_2d_arrays
-  }   # VER: define_2d_arrays
-  grid3[(2, 1)] = 5   # VER: define_2d_arrays
-  print(grid3[(0, 0)])
+  grid2 = [value,] * (width * height)   # VER: define_2d_arrays_with_1d_array_with_lookup_function
+  def coord_to_index(x, y):   # VER: define_2d_arrays_with_1d_array_with_lookup_function
+    return (y * width) + (x % width)   # VER: define_2d_arrays_with_1d_array_with_lookup_function
+  grid2[coord_to_index(2, 1)] = 5   # VER: define_2d_arrays_with_1d_array_with_lookup_function
+  print(grid2[coord_to_index(0, 0)])   # VER: define_2d_arrays_with_1d_array_with_lookup_function
+  def index_to_cord(i):   # VER: define_2d_arrays_with_1d_array_with_lookup_function
+    return (i % width, i//width)   # VER: define_2d_arrays_with_1d_array_with_lookup_function
 
+  grid3 = {       # VER: define_2d_arrays_with_dictionary
+    (x, y): value           # VER: define_2d_arrays_with_dictionary
+    for x in range(width)  # VER: define_2d_arrays_with_dictionary
+    for y in range(height)  # VER: define_2d_arrays_with_dictionary
+  }   # VER: define_2d_arrays_with_dictionary
+  grid3[(2, 1)] = 5   # VER: define_2d_arrays_with_dictionary
+  print(grid3[(0, 0)])   # VER: define_2d_arrays_with_dictionary
 
-def linked_list():
-  list = []               # VER: linked_list
-  list.append("Bill")     # VER: linked_list
-  list.append("Ben")      # VER: linked_list
-  list.append("Bob")      # VER: linked_list
-  list.remove("Ben")      # VER: linked_list
-  list.pop()              # VER: linked_list
-  list.insert(0, "Kim")   # VER: linked_list
-  for name in list:       # VER: linked_list
-    print(name)         # VER: linked_list
-  print(f"list size is {len(list)}")    # VER: linked_list
 
 
 def define_map():
@@ -288,7 +293,7 @@ def read_csv_into_array_of_classs():
       new_student = Student()                 # VER: read_csv
       new_student.forname = line_split[0]     # VER: read_csv
       new_student.surname = line_split[1]     # VER: read_csv
-      new_student.date    = line_split[2] #better way needed  # VER: read_csv
+      new_student.date    = line_split[2] #better?  # VER: read_csv
       students.append(new_student)            # VER: read_csv
   print(f"Loaded {len(students)} students")     # VER: read_csv
 
@@ -323,7 +328,25 @@ def dict_comprehension():
   }                     # VER: dict_comprehension
 
 def function_with_param_function():
-  pass  # VER: function_with_param_function
+  def my_func_1(a, b):  # VER: function_with_param_function
+    return a + b  # VER: function_with_param_function
+  my_func_2 = lambda a, b: a * b # VER: function_with_param_function
+  def print_my_func(ff):  # VER: function_with_param_function
+    print(ff(2,3))  # VER: function_with_param_function
+  print_my_func(my_func_1) # VER: function_with_param_function
+  print_my_func(my_func_2) # VER: function_with_param_function
+
+
+def define_set():
+  aa = {1,2,3}    # VER: define_set
+  bb = {2,3,4}    # VER: define_set
+  cc = {1,2}      # VER: define_set
+  print(aa | bb)  # VER: define_set
+  print(aa & bb)  # VER: define_set
+  print(aa - cc)  # VER: define_set
+  print(cc in aa) # VER: define_set
+  aa.add(5)       # VER: define_set
+  
 
 #-------------------------------------------------------------------------------
 
@@ -348,8 +371,12 @@ if __name__ == "__main__":
   function_with_param_function()
   list_comprehension()
   dict_comprehension()
+  define_fixed_array()
+  define_list()
   define_map()
+  define_set()
   define_2d_arrays()
+  function_with_param_function()
 
   # Run all functions in order
   #for function_name in functions:

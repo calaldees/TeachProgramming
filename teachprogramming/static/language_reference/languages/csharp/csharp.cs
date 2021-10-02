@@ -8,14 +8,17 @@ https://docs.microsoft.com/en-us/dotnet/csharp/                                 
 https://www.tutorialspoint.com/csharp/index.htm                                 // VER: help
 
 # TODO: install mono                                                            // VER: run
-function csharp { mcs "$1" && clear && mono "${1%.*}.exe" && rm "${1%.*}.exe"; } // VER: run
-# linux bash function                                                           // VER: run
+function csharp {     # linux bash function                                     // VER: run
+  mcs "$1" && clear && mono "${1%.*}.exe" && rm "${1%.*}.exe";                  // VER: run
+}                                                                               // VER: run
+
 
 */
 
 using System;                                                                   // VER: hello_world
 using System.IO;                                                                // VER: file_write
 using System.Collections.Generic;                                               // VER: define_map
+using System.Linq;                                                              // VER: list_comprehension
 
 public class Star { // VER: class
     public int x; // VER: class
@@ -92,9 +95,9 @@ public class CSharp {
   }
 
   void for_loop() {
-    string username = "Jim";                                                    // VER: for_loop
-    for (int i=0 ; i < username.Length ; i++) {                                 // VER: for_loop
-      Console.WriteLine(username[i]);                                           // VER: for_loop
+    int[] data = new int[]{5,6,7};                                              // VER: for_loop
+    for (int i=0 ; i < data.Length ; i++) {                                     // VER: for_loop
+      Console.WriteLine(data[i]);                                               // VER: for_loop
     }                                                                           // VER: for_loop
   }
 
@@ -115,9 +118,9 @@ public class CSharp {
   } // VER: until_loop
 
   void for_each_loop() {
-    string[] names = new string[]{"Bob","Ben","Bill","Boris","Bin"}; // VER: for_each_loop
-    foreach (string name in names) {  // VER: for_each_loop
-      Console.WriteLine(name);  // VER: for_each_loop
+    string[] ff = new string[]{"a","b","c"}; // VER: for_each_loop
+    foreach (string f in ff) {  // VER: for_each_loop
+      Console.WriteLine(f);  // VER: for_each_loop
     }  // VER: for_each_loop
   }
 
@@ -126,7 +129,7 @@ public class CSharp {
     try { // VER: file_write
       using (StreamWriter file = new StreamWriter("out.txt")) {  // VER: file_write
         file.WriteLine(line_to_write);   // VER: file_write
-      }
+      } // VER: file_write
       //file.Close();
     } // VER: file_write
     catch (Exception e){ // VER: file_write
@@ -202,23 +205,38 @@ public class CSharp {
     Console.WriteLine(biggest(1, 2));    // VER: function_with_return_value
   }
 
+  void define_fixed_array() {
+    var aa = new string[3];  // VER: define_fixed_array
+    aa[1] = "test";  // VER: define_fixed_array
+    Console.WriteLine(String.Join(",",aa));  // VER: define_fixed_array
+    Console.WriteLine(aa[1]);  // VER: define_fixed_array
+         // VER: define_fixed_array
+    var bb = new string[]{"a", "b", "c"};  // VER: define_fixed_array
+    Console.WriteLine("bb size is "+bb.Length);  // VER: define_fixed_array
+    foreach (var i in bb) {  // VER: define_fixed_array
+      Console.WriteLine(i);  // VER: define_fixed_array
+    }  // VER: define_fixed_array
+    if (Array.IndexOf(bb, "a") >= 0) {  // VER: define_fixed_array
+      Console.WriteLine("a exists in array");  // VER: define_fixed_array
+    }  // VER: define_fixed_array
+  }
+
   void define_map() {
-    IDictionary<string, int> data = new Dictionary<string, int>(){   // VER: define_map
+    var data = new Dictionary<string, int>(){   // VER: define_map
       {"a", 1},  // VER: define_map
       {"b", 2},  // VER: define_map
     };  // VER: define_map
     Console.WriteLine(data["b"]);  // prints 2   // VER: define_map
     data.Add("c", 3);  // VER: define_map
     data.Remove("a");  // VER: define_map
-    foreach (var key_value_pair in data) {  // VER: define_map
-      Console.WriteLine($"Key: {key_value_pair.Key}, Value: {key_value_pair.Value}");  // VER: define_map
+    foreach (var kv in data) {  // VER: define_map
+      Console.WriteLine($"Key: {kv.Key}, Value: {kv.Value}");  // VER: define_map
     }  // VER: define_map
     if (data.ContainsKey("d")) {}  // VER: define_map
 
     // https://www.tutorialsteacher.com/csharp/csharp-dictionary
 
   }
-
 
   void sleep() {
     System.Threading.Thread.Sleep(1000);
@@ -235,6 +253,135 @@ public class CSharp {
     Star s = new Star();    // VER: class
     s.x = 100;              // VER: class
     Console.WriteLine(s.x); // VER: class
+  }
+
+  void define_list() {
+    var cc = new List<string>(new string[]{"a", "b", "c"});   // VER: define_list
+    Console.WriteLine(cc[0]);   // VER: define_list
+    string last = cc[cc.Count-1]; cc.RemoveAt(cc.Count-1);   // VER: define_list
+    cc.Add("d");   // VER: define_list
+    string first = cc[0]; cc.RemoveAt(0);   // VER: define_list
+    cc.Insert(0, "z");   // VER: define_list
+    cc.Remove("b");   // VER: define_list
+    foreach (var i in cc) {   // VER: define_list
+      Console.WriteLine(i);  // z d // VER: define_list
+    }   // VER: define_list
+    if (cc.Contains("z")) {                  // VER: define_list
+      Console.WriteLine("z exists in list");  // VER: define_list
+    } // VER: define_list
+  }
+
+  void define_set() {
+    var aa = new HashSet<int>(){1,2,3};  // VER: define_set
+    var bb = new HashSet<int>(){2,3,4};  // VER: define_set
+    var cc = new HashSet<int>(){1,2};  // VER: define_set
+    HashSet<int> xx;  // VER: define_set
+                        // VER: define_set
+    xx = new HashSet<int>(aa);  // VER: define_set
+    xx.UnionWith(bb);  // VER: define_set
+    Console.WriteLine(String.Join(",",xx));  // VER: define_set
+                            // VER: define_set
+    xx = new HashSet<int>(aa);   // VER: define_set
+    xx.IntersectWith(bb);         // VER: define_set
+    Console.WriteLine(String.Join(",",xx));   // VER: define_set
+                                   // VER: define_set
+    xx = new HashSet<int>(aa);   // VER: define_set
+    xx.ExceptWith(cc);         // VER: define_set
+    Console.WriteLine(String.Join(",",xx));   // VER: define_set
+                                   // VER: define_set
+    Console.WriteLine(cc.IsSubsetOf(aa));   // VER: define_set
+    xx.Add(5);   // VER: define_set
+  }
+
+  public delegate int MyFunction(int a, int b);    // VER: function_with_param_function
+  void function_with_param_function() {
+    MyFunction my_func_1 = (a, b) => a + b;    // VER: function_with_param_function
+    MyFunction my_func_2 = delegate(int a, int b) {    // VER: function_with_param_function
+      return a * b;    // VER: function_with_param_function
+    };    // VER: function_with_param_function
+    Action<MyFunction> print_my_func = (ff) => {  // VER: function_with_param_function
+        Console.WriteLine(ff(2,3));  // VER: function_with_param_function
+    };  // VER: function_with_param_function
+    print_my_func(my_func_1);  // VER: function_with_param_function
+    print_my_func(my_func_2);  // VER: function_with_param_function
+  }
+
+
+  // Mono did not support records or readonly structs
+  //public record DailyTemperature(double HighTemp, double LowTemp) {}
+  public struct Point {
+    public int x;
+    public int y;
+  }
+  public struct Dimension {    // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    public Dimension(int width, int height) {// VER: define_2d_arrays_with_1d_array_with_lookup_function
+      this.width = width; this.height=height;// VER: define_2d_arrays_with_1d_array_with_lookup_function
+    } // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    public int width {get;}    // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    public int height {get;}    // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    public int size {get {return width * height;}}    // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    public int coord_to_index(int x, int y) {// VER: define_2d_arrays_with_1d_array_with_lookup_function
+      return (y * width) + (x % width);// VER: define_2d_arrays_with_1d_array_with_lookup_function
+    }    // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    // ??? index_to_coord(Integer i) {return new Point(i % width(), i / width());}
+  }    // VER: define_2d_arrays_with_1d_array_with_lookup_function
+  void define_2d_arrays() {
+    int width = 3;
+    int height = 3;
+    int value = 1;
+
+    var grid1 = new int[width,height];             // VER: define_2d_arrays_with_nested_arrays
+    for (int y=0; y < grid1.GetLength(1) ; y++) {     // VER: define_2d_arrays_with_nested_arrays
+      for (int x=0; x < grid1.GetLength(0) ; x++) {   // VER: define_2d_arrays_with_nested_arrays
+        grid1[x, y] = value;                        // VER: define_2d_arrays_with_nested_arrays
+      }                                               // VER: define_2d_arrays_with_nested_arrays
+    }                                                 // VER: define_2d_arrays_with_nested_arrays
+    grid1[2,1] = 5;                                  // VER: define_2d_arrays_with_nested_arrays
+    Console.WriteLine(grid1[0,0]);                   // VER: define_2d_arrays_with_nested_arrays
+            // VER: define_2d_arrays_with_nested_arrays
+
+    Dimension d = new Dimension(width, height);         // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    var grid2 = new int[d.size];                      // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    Array.Fill(grid2, value);                           // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    grid2[d.coord_to_index(2, 1)] = 5;                  // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    Console.WriteLine(grid2[d.coord_to_index(0,0)]);    // VER: define_2d_arrays_with_1d_array_with_lookup_function
+
+    var grid3 = new Dictionary<Tuple<int, int>, int>(); // VER: define_2d_arrays_with_dictionary
+    for (int y=0 ; y<height ; y++) {                // VER: define_2d_arrays_with_dictionary
+      for (int x=0 ; x<width ; x++) {               // VER: define_2d_arrays_with_dictionary
+        grid3.Add(new Tuple<int,int>(x,y), value);               // VER: define_2d_arrays_with_dictionary
+      }    // VER: define_2d_arrays_with_dictionary
+    }    // VER: define_2d_arrays_with_dictionary
+    grid3[new Tuple<int,int>(2,1)] = 5;    // VER: define_2d_arrays_with_dictionary
+    Console.WriteLine(grid3[new Tuple<int,int>(0,0)]);    // VER: define_2d_arrays_with_dictionary
+
+  }
+
+  void list_comprehension() {
+    var data1 = new List<int>(new int[]{1,2,3,4,5,6});                           // VER: list_comprehension
+    var data2 = data1                                                         // VER: list_comprehension
+      .Where(                                                                // VER: list_comprehension
+        (i) => i >= 3                                                     // VER: list_comprehension
+      ).Select(                                                                  // VER: list_comprehension
+        (i) => i * 2                                                      // VER: list_comprehension
+      );                                                                      // VER: list_comprehension
+      Console.WriteLine(String.Join(",",data2));
+  }
+
+  void dict_comprehension() {
+    var data3 = new Dictionary<string, int>(){   // VER: dict_comprehension
+      {"a", 1},  // VER: dict_comprehension
+      {"b", 2},  // VER: dict_comprehension
+      {"c", 3},  // VER: dict_comprehension
+    };  // VER: dict_comprehension
+    var data4 = data3  // VER: dict_comprehension
+      .Where((kv) => kv.Value >= 2)  // VER: dict_comprehension
+      .ToDictionary(  // VER: dict_comprehension
+        (kv) => kv.Value + 10,  // VER: dict_comprehension
+        (kv) => kv.Key  // VER: dict_comprehension
+      )  // VER: dict_comprehension
+    ;  // VER: dict_comprehension
+    Console.WriteLine(String.Join(",",data4));
   }
 
   public static void Main(string[] args) {new CSharp();}
@@ -256,7 +403,14 @@ public class CSharp {
       function();
       function_with_return_value();
       sleep();
+      define_fixed_array();
+      define_list();
       define_map();
+      define_set();
+      function_with_param_function();
+      define_2d_arrays();
+      list_comprehension();
+      dict_comprehension();
   }
 }
 

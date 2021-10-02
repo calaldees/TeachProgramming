@@ -15,3 +15,8 @@ Future projects
 * Buying a domain and setup DNS
 * Serving Google Doc to live edit site
 * Static site generation
+
+HTTP Server from scratch
+------------------------
+
+* [Building a basic HTTP Server from scratch in Python](https://www.codementor.io/@joaojonesventura/building-a-basic-http-server-from-scratch-in-python-1cedkg0842)

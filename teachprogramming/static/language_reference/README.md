@@ -6,6 +6,10 @@ Alternate tutorials
 -------------------
 
 https://www.tutorialsteacher.com/
+https://www.dotnetperls.com/
+https://tools.withcode.uk/quickref/
+https://www.homeandlearn.co.uk/
+https://zetcode.com/all/
 
 
 TODO
@@ -23,3 +27,7 @@ TODO
 * reflection
     * in dynamic languages you need to know what `type` something is
 
+* tcp server + client
+* UDP example send receive
+* draw shapes (graphics/canvas)
+    * mouse move/click?

@@ -172,6 +172,10 @@ Know the names, symbols and corresponding powers of 10 for the decimal prefixes:
 * tera, T - 10^12
 
 
+* Byte size to human readable form (is a hard problem)
+    * [The most copied StackOverflow snippet of all time is flawed!](https://programming.guide/worlds-most-copied-so-snippet.html)
+        * an answer I wrote almost a decade ago was found to be the most copied snippet on Stack Overflow. Ironically it happens to be buggy.
+
 Cypher (D to A Grade)
 ---------------------
 Create a program to encode/decode messages.
@@ -269,7 +273,7 @@ Sorting and Searching Records (Grade D to B)
 * This project will assess your algorithm design, CSV handling, Records(dictionaries/associative-arrays/maps) Bubble Sort understanding and Linear/Binary Search Understanding
 
 
-2D Arrays & RLE Encoding (Grade B to A)
+2D Arrays & RLE Encoding (Grade C to A)
 ----------------------------------
 Read the ConwayRLE format and display the result as ASCII
 http://www.conwaylife.com/wiki/RLE

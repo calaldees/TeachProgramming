@@ -4,6 +4,11 @@
     <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
     <title>TeachProgramming</title>
     <style>
+        #source {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
         #navigation a {
             margin-right: 1em;
         }
@@ -29,7 +34,7 @@
             @page {
                 margin: 1em;
             }
-            #navigation {  /* and (min-width: 500px) */
+            #navigation, #source {  /* and (min-width: 500px) */
                 display: none;
             }
             table { 
@@ -43,6 +48,7 @@
     </style>
 </head>
 <body>
+<a id="source" href="https://github.com/calaldees/TeachProgramming/tree/master/teachprogramming/static/language_reference/languages">source</a>
 <div id="navigation"></div>
 <div id="main"></div>
 <script type="module">
@@ -99,7 +105,7 @@ function renderLanguageReference(data) {
     for (let version_row of data.versions) {
         const table_row = document.createElement('tr');
         const table_row_name = document.createElement('td');
-        table_row_name.textContent = version_row;
+        table_row_name.textContent = version_row.replaceAll('_',' ');
         table_row.appendChild(table_row_name);
         for (let language of languages) {
             const code = data.languages[language];

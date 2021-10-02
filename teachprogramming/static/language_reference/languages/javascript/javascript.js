@@ -75,10 +75,10 @@ function if_statement_more() {
 }
 
 function for_loop() {
-  let username = 'bob';                           // VER: for_loop
-  for (let i = 0 ; i < username.length ; i++) {   // VER: for_loop
-    console.log(username[i]);                   // VER: for_loop
-  }                                               // VER: for_loop
+  const data = [5,6,7];                                              // VER: for_loop
+  for (let i=0 ; i < data.length ; i++) {                                     // VER: for_loop
+    console.log(data[i]);                                               // VER: for_loop
+  }                                                                           // VER: for_loop
 }
 
 function while_loop() {
@@ -93,10 +93,9 @@ function until_loop() {
 }
 
 function for_each_loop() {
-  names = ["Bob", "Ben", "Bill", "Borris", "Bin"];    // VER: for_each_loop
-  for (let i in names) {                              // VER: for_each_loop
-    const name = names[i];                            // VER: for_each_loop
-    console.log(name);                              // VER: for_each_loop
+  const ff = ["a", "b", "c"];    // VER: for_each_loop
+  for (let f of ff) {                              // VER: for_each_loop
+    console.log(f);                              // VER: for_each_loop
   }                                                   // VER: for_each_loop
 }
 
@@ -203,42 +202,41 @@ function function_with_params_by_value() {
     
 }
 
-function function_with_param_function() {
-  // TODO // VER: function_with_param_function
-}
-
-
 function define_fixed_array() {
-  let names = Array(3);       // VER: define_fixed_array
-  names[0] = "Bob";           // VER: define_fixed_array
-  names[1] = "Foo";           // VER: define_fixed_array
-  names[2] = "Rah";           // VER: define_fixed_array
-  for (let i in names) {      // VER: define_fixed_array
-    let name = names[i];    // VER: define_fixed_array
-    console.log(name);      // VER: define_fixed_array
+  const aa = Array(3);   // VER: define_fixed_array
+  aa[1] = "test";   // VER: define_fixed_array
+  console.log(aa);   // VER: define_fixed_array
+  console.log(aa[1]);   // VER: define_fixed_array
+       // VER: define_fixed_array
+  const bb = ["a", "b", "c"];       // VER: define_fixed_array
+  console.log(`bb size is ${bb.length}`); // VER: define_fixed_array
+  for (let i of bb) {      // VER: define_fixed_array
+    console.log(i);      // VER: define_fixed_array
   }                           // VER: define_fixed_array
-  console.log("array size is " + names.length) // VER: define_fixed_array
+  if (bb.indexOf("a")>=0) {  // VER: define_fixed_array
+    console.log("a exists in array");  // VER: define_fixed_array
+  }  // VER: define_fixed_array
 }
 
-function define_2d_arrays() {
-  //let grid = Array(10,10)  // VER: define_2d_arrays
-  //grid(5,5) = 1               // VER: define_2d_arrays
+function define_list() {
+  const cc = ["a", "b", "c"];  // VER: define_list
+  console.log(cc[0]);  // VER: define_list
+  const last = cc.pop();  // VER: define_list
+  cc.push("d");  // VER: define_list
+  const first = cc.shift();  // VER: define_list
+  cc.unshift("z");  // VER: define_list
+  function remove_by_value(array, v) { // VER: define_list
+    const i = array.indexOf(v); if (i > -1) {array.splice(i, 1);}  // VER: define_list
+  }  // VER: define_list
+  remove_by_value(cc, "b"); // VER: define_list
+  for (let i of cc) {  // VER: define_list
+    console.log(i); // z d   // VER: define_list
+  }  // VER: define_list
+  if (cc.indexOf("z") >= 0) {  // VER: define_list
+    console.log("z exists in list");  // VER: define_list
+  }  // VER: define_list
 }
 
-function linked_list() {
-  let list = [];                              // VER: linked_list
-  list.push("Bill")                           // VER: linked_list
-  list.push("Ben")                            // VER: linked_list
-  list.push("Bob")                            // VER: linked_list
-  list.pop("Ben")                             // VER: linked_list
-  list.pop()                                  // VER: linked_list
-  list.unshift("Kim")                         // VER: linked_list
-  for (let i in list) {                       // VER: linked_list
-    let name = list[i];                     // VER: linked_list
-    console.log(name);                      // VER: linked_list
-  }                                           // VER: linked_list
-  console.log("list size is " + list.length)  // VER: linked_list
-}
 
 function define_map() {
   let data = { // VER: define_map
@@ -355,6 +353,104 @@ function dict_comprehension() {
   );                                                                          // VER: dict_comprehension
 }
 
+
+function define_set() {
+  //// javascript has Sets, but no set operations builtin.              // VER: define_set
+  //// Copy them from                                                   // VER: define_set
+  //// search https://developer.mozilla.org/ for basic set operations   // VER: define_set
+  SetOperations = {
+    isSuperset: (set, subset) => {
+      for (let elem of subset) {if (!set.has(elem)) {return false}} 
+      return true
+    },
+    union: (setA, setB) => {
+      let _union = new Set(setA);
+      for (let elem of setB) {_union.add(elem)}
+      return _union;
+    },
+    intersection: (setA, setB) => {
+      let _intersection = new Set(); 
+      for (let elem of setB) {if (setA.has(elem)) {_intersection.add(elem)}} 
+      return _intersection
+    },
+    symmetricDifference: (setA, setB) => {
+      let _difference = new Set(setA); 
+      for (let elem of setB) {
+        if (_difference.has(elem)) {_difference.delete(elem)}
+        else                       {_difference.add(elem)}
+      }
+      return _difference;
+    },
+    difference(setA, setB) {
+      let _difference = new Set(setA);
+      for (let elem of setB) {_difference.delete(elem)}
+      return _difference;
+    },
+  }
+
+  const aa = new Set([1, 2, 3]);                     // VER: define_set
+  const bb = new Set([2, 3, 4]);                     // VER: define_set
+  const cc = new Set([1, 2]);                        // VER: define_set
+  console.log(SetOperations.union(aa, bb));          // VER: define_set
+  console.log(SetOperations.intersection(aa, bb));   // VER: define_set
+  console.log(SetOperations.difference(aa, cc));     // VER: define_set
+  console.log(SetOperations.isSuperset(aa, cc));     // VER: define_set
+  aa.add(5);                                         // VER: define_set
+}
+
+
+function function_with_param_function() {
+  function my_func_1(a, b) {  // VER: function_with_param_function
+    return a + b;  // VER: function_with_param_function
+  }  // VER: function_with_param_function
+  const my_func_2 = (a, b) => a * b; // VER: function_with_param_function
+  function print_my_func(ff) {  // VER: function_with_param_function
+    console.log(ff(2,3));  // VER: function_with_param_function
+  }  // VER: function_with_param_function
+  print_my_func(my_func_1); // VER: function_with_param_function
+  print_my_func(my_func_2); // VER: function_with_param_function
+}
+
+function define_2d_arrays() {
+  const width = 3;
+  const height = 3;
+  const value = 1;
+
+  grid1 = [...Array(height)].map(   // VER: define_2d_arrays_with_nested_arrays
+    () => [...Array(width)].map(() => value));   // VER: define_2d_arrays_with_nested_arrays
+  grid1[2][1] = 5;    // VER: define_2d_arrays_with_nested_arrays
+  console.log(grid1[0][0]);   // VER: define_2d_arrays
+
+
+    /*
+  class Dimension {
+    constructor(width, height) {
+      this.width = width;
+      this.height = height;
+    }
+    get size() {return self.width * self.height;}
+    coord_to_index(x, y) {
+      return (y * self.width) + (x % self.width)
+    def index_to_cord(self, i):
+      return (i % self.width, i//self.width)
+    */
+
+  const grid2 = [...Array(width * height)].map(() => value);   // VER: define_2d_arrays_with_1d_array_with_lookup_function
+  function coord_to_index(x, y) {return (y * width) + (x % width)}   // VER: define_2d_arrays_with_1d_array_with_lookup_function
+  grid2[coord_to_index(2, 1)] = 5;   // VER: define_2d_arrays_with_1d_array_with_lookup_function
+  console.log(grid2[coord_to_index(0, 0)]);   // VER: define_2d_arrays_with_1d_array_with_lookup_function
+  function index_to_cord(i) {return (i % width, Math.floor(i/width))}   // VER: define_2d_arrays_with_1d_array_with_lookup_function
+
+  const grid3 = {};       // VER: define_2d_arrays_with_dictionary
+  for (let y=0 ; y<height ; y++) {  // VER: define_2d_arrays_with_dictionary
+    for (let x=0 ; x<width ; x++) {  // VER: define_2d_arrays_with_dictionary
+      grid3[`${x},${y}`] = value;     // VER: define_2d_arrays_with_dictionary
+    }                        // VER: define_2d_arrays_with_dictionary
+  }                            // VER: define_2d_arrays_with_dictionary
+  grid3["2,1"] = 5;   // VER: define_2d_arrays_with_dictionary
+  console.log(grid3["0,0"]);   // VER: define_2d_arrays_with_dictionary
+}
+
 //------------------------------------------------------------------------------
 
 function main() {
@@ -373,7 +469,12 @@ function main() {
   function_with_return_value();
   list_comprehension();
   dict_comprehension();
+  define_fixed_array();
+  define_list();
   define_map();
+  define_set();
+  function_with_param_function();
+  define_2d_arrays();
 
 }
 main();

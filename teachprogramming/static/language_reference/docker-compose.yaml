@@ -1,0 +1,26 @@
+version: '3.5'
+services:
+    python:
+        build:
+            context: ./languages/python
+    java:
+        build:
+            context: ./languages/java
+    javascript:
+        build:
+            context: ./languages/javascript
+    csharp:
+        build:
+            context: ./languages/csharp
+    vb:
+        build:
+            context: ./languages/vb
+    c:
+        build:
+            context: ./languages/c
+    php:
+        build:
+            context: ./languages/php
+    ruby:
+        build:
+            context: ./languages/ruby

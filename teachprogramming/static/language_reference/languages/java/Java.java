@@ -4,7 +4,7 @@ https://www.oracle.com/uk/java/technologies/javase-downloads.html  // VER: downl
 Java SE (Standard Edition) JDK (Java Development Kit)                       // VER: download
 http://java.sun.com/docs/books/tutorial/                                    // VER: help
 https://howtodoinjava.com/                                                  // VER: help
-https://docs.oracle.com/javase/  // VER: help
+https://docs.oracle.com/javase/                                             // VER: help
 
 javac HelloWorld.java && java HelloWorld                        # VER: run
 // NOTE: filename and `public FILENAME {` must match name+case  # VER:run
@@ -27,13 +27,17 @@ import java.util.Map;    // VER: dict_comprehension
 import java.util.HashMap;    // VER: define_map
 import static java.util.Map.entry;   // VER: dict_comprehension
 
+import java.util.Set;    // VER: define_set
+import java.util.HashSet;    // VER: define_set
+
 
 // TODO: this VER multiversion stuff is broken  ... I need some good tests and rewrite make_ver.py
 // What a mess ...
 /* poo double/ VER: list_comprehension dict_comprehension */  // WOW! this produces the output text  `poo  // dict_comprehension`
 
 
-// //----------------------------- // VER: read_line_from_console file_read file_write list_comprehension dict_comprehension
+// //----------------------------- // VER: read_line_from_console 
+  // TODO: the line above should be for all imports?  file_read file_write list_comprehension dict_comprehension
 
 public class Java {
 
@@ -116,9 +120,9 @@ public class Java {
   }
 
   void for_loop() {
-    String username = "Jim";
-    for (Integer i=0 ; i < username.length() ; i++) {                           // VER: for_loop
-      System.out.println(username.charAt(i));                                   // VER: for_loop
+    Integer[] data = new Integer[]{5,6,7};                                      // VER: for_loop
+    for (int i=0 ; i < data.length ; i++) {                                   // VER: for_loop
+      System.out.println(data[i]);                                              // VER: for_loop
     }                                                                           // VER: for_loop
   }
 
@@ -131,9 +135,9 @@ public class Java {
   }
 
   void for_each_loop() {
-    String[] names = {"Bob","Ben","Bill","Borris","Bin"}; // VER: for_each_loop
-    for (String name: names) {  // VER: for_each_loop
-      System.out.println(name);  // VER: for_each_loop
+    String[] ff = {"a","b","c"}; // VER: for_each_loop
+    for (String f : ff) {  // VER: for_each_loop
+      System.out.println(f);  // VER: for_each_loop
     }  // VER: for_each_loop
   }
 
@@ -201,15 +205,36 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
 
 
   void define_fixed_array() {
-    String[] names = new String[3];  // VER: define_fixed_array
-    names[0] = "Bob"; // VER: define_fixed_array
-    names[1] = "Foo";  // VER: define_fixed_array
-    names[2] = "Rah";  // VER: define_fixed_array
-    for (String name : names) {  // VER: define_fixed_array
-      System.out.println(name);  // VER: define_fixed_array
+    String[] aa = new String[3];  // VER: define_fixed_array
+    aa[1] = "test";  // VER: define_fixed_array
+    System.out.println(String.join(",",aa));  // VER: define_fixed_array
+    System.out.println(aa[1]);  // VER: define_fixed_array
+         // VER: define_fixed_array
+    String[] bb = new String[]{"a", "b", "c"};  // VER: define_fixed_array
+    System.out.println("bb size is "+bb.length);  // VER: define_fixed_array
+    for (String i : bb) {  // VER: define_fixed_array
+      System.out.println(i);  // VER: define_fixed_array
     }  // VER: define_fixed_array
-    System.out.println("array size is "+names.length);  // VER: define_fixed_array
-   }  // VER: define_fixed_array
+    if (Arrays.stream(bb).anyMatch("a"::equals)) { // VER: define_fixed_array
+      System.out.println("a exists in array");  // VER: define_fixed_array
+    }  // VER: define_fixed_array
+  }
+
+  void define_list() {
+    List<String> cc = new ArrayList<>(Arrays.asList(new String[]{"a", "b", "c"}));  // VER: define_list
+    System.out.println(cc.get(0)); // VER: define_list
+    String last = cc.remove(cc.size()-1);
+    cc.add("d"); // VER: define_list
+    String first = cc.remove(0);  // VER: define_list
+    cc.add(0, "z");  // VER: define_list
+    cc.remove("b");  // VER: define_list
+    for (String i : cc) {  // VER: define_list
+      System.out.println(i); // z d   // VER: define_list
+    }  // VER: define_list
+    if (cc.contains("z")) {                  // VER: define_list
+      System.out.println("z exists in list");  // VER: define_list
+    }  // VER: define_list
+  }
 
   void define_map() {
     Map<String,Integer> data = new HashMap<>(Map.ofEntries(                                  // VER: define_map
@@ -219,8 +244,9 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     System.out.println(data.get("b"));  // prints 2   // VER: define_map
     data.put("c", 3);  // VER: define_map
     data.remove("a");  // VER: define_map
-    for (var key_value_pair : data.entrySet()){  // VER: define_map
-      System.out.println("Key: %s, Value: %s".formatted(key_value_pair.getKey(), key_value_pair.getValue()));  // VER: define_map
+    for (var kv : data.entrySet()){  // VER: define_map
+      System.out.println("Key: %s, Value: %s"    // VER: define_map
+        .formatted(kv.getKey(), kv.getValue()));  // VER: define_map
     }  // VER: define_map
     if (data.containsKey("d")) {}  // VER: define_map
   }
@@ -228,9 +254,11 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
   void string_concatenation() {
     String forename = "bob";
     String surname = "jones";
-    String fullname = forename + " " + surname;                        // VER: string_concatenation
-    String fullname2 = "%s %s".formatted(forename, surname);              // VER: string_concatenation
-    String fullname3 = "{forename} {surname}".replace("{forename}", forename).replace("{surname}", surname);              // VER: string_concatenation
+    String fullname = forename + " " + surname;                                 // VER: string_concatenation
+    String fullname2 = "%s %s".formatted(forename, surname);                    // VER: string_concatenation
+    String fullname3 = "{forename} {surname}"                                   // VER: string_concatenation
+      .replace("{forename}", forename)                                          // VER: string_concatenation
+      .replace("{surname}", surname);                                           // VER: string_concatenation
     System.out.println(fullname);
   }
 
@@ -244,7 +272,7 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
 
   void list_comprehension() {
     // int[] i = new int[]{1,2,3,4}; Arrays.stream(i).collect(toList());
-    List<Integer> data1 = new ArrayList<>(Arrays.asList(1,2,3,4,5,6));          // VER: list_comprehension
+    List<Integer> data1 = new ArrayList<>(Arrays.asList(new Integer[]{1,2,3,4,5,6}));          // VER: list_comprehension
     List<Integer> data2 = data1.stream(                                         // VER: list_comprehension
     ).filter(                                                                   // VER: list_comprehension
       (i) -> i >= 3                                                             // VER: list_comprehension
@@ -273,39 +301,78 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
 
 
   void define_2d_arrays() {
-    Integer width = 3;   // VER: define_2d_arrays
-    Integer height = 3;   // VER: define_2d_arrays
-    Integer value = 1;  // VER: define_2d_arrays
-                          // VER: define_2d_arrays
-    Integer[][] grid1 = new Integer[width][height];   // VER: define_2d_arrays
-    for (var row: grid1) {Arrays.fill(row, value);}   // VER: define_2d_arrays
-    grid1[2][1] = 5;                                  // VER: define_2d_arrays
-    System.out.println(grid1[0][0]);                 // VER: define_2d_arrays
-                                                      // VER: define_2d_arrays
-    record Point(Integer x, Integer y) {}                 // VER: define_2d_arrays
-    record Dimension(Integer width, Integer height) {                 // VER: define_2d_arrays
-      Integer size() {return width() * height();}                 // VER: define_2d_arrays
-      Integer coord_to_index(Point p) {return coord_to_index(p.x(), p.y());}                // VER: define_2d_arrays
-      Integer coord_to_index(Integer x, Integer y) {return (y * width()) + (x % width());}  // VER: define_2d_arrays
-      Point index_to_coord(Integer i) {return new Point(i % width(), i / width());}         // VER: define_2d_arrays
-    }                 // VER: define_2d_arrays
-                                                           // VER: define_2d_arrays
-    Dimension d = new Dimension(width, height);                 // VER: define_2d_arrays
-    Integer[] grid2 = new Integer[d.size()];                 // VER: define_2d_arrays
-    Arrays.fill(grid2, value);                 // VER: define_2d_arrays
-    grid2[d.coord_to_index(2, 1)] = 5;                 // VER: define_2d_arrays
-    System.out.println(grid2[d.coord_to_index(0,0)]);                 // VER: define_2d_arrays
-                                                           // VER: define_2d_arrays
-    Map<Point,Integer> grid3 = new HashMap<>();                 // VER: define_2d_arrays
-    for (Integer y=0 ; y<height ; y++) {                 // VER: define_2d_arrays
-      for (Integer x=0 ; x<width ; x++) {                 // VER: define_2d_arrays
-        grid3.put(new Point(x,y), value);                 // VER: define_2d_arrays
-      }                 // VER: define_2d_arrays
-    }                 // VER: define_2d_arrays
-    grid3.put(new Point(2,1), 5);                 // VER: define_2d_arrays
-    System.out.println(grid3.get(new Point(0,0)));                 // VER: define_2d_arrays
+    Integer width = 3;
+    Integer height = 3;
+    Integer value = 1;
+                      
+    Integer[][] grid1 = new Integer[width][height];   // VER: define_2d_arrays_with_nested_arrays
+    for (var row: grid1) {Arrays.fill(row, value);}   // VER: define_2d_arrays_with_nested_arrays
+    grid1[2][1] = 5;                                  // VER: define_2d_arrays_with_nested_arrays
+    System.out.println(grid1[0][0]);                 // VER: define_2d_arrays_with_nested_arrays
 
+    record Point(Integer x, Integer y) {}                 // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    record Dimension(Integer width, Integer height) {     // VER: define_2d_arrays_with_1d_array_with_lookup_function
+      Integer size() {return width() * height();}         // VER: define_2d_arrays_with_1d_array_with_lookup_function
+      Integer coord_to_index(Point p) {return coord_to_index(p.x(), p.y());}                // VER: define_2d_arrays_with_1d_array_with_lookup_function
+      Integer coord_to_index(Integer x, Integer y) {return (y * width()) + (x % width());}  // VER: define_2d_arrays_with_1d_array_with_lookup_function
+      Point index_to_coord(Integer i) {return new Point(i % width(), i / width());}         // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    }                 // VER: define_2d_arrays_with_1d_array_with_lookup_function
+                                                        // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    Dimension d = new Dimension(width, height);         // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    Integer[] grid2 = new Integer[d.size()];            // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    Arrays.fill(grid2, value);                          // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    grid2[d.coord_to_index(2, 1)] = 5;                  // VER: define_2d_arrays_with_1d_array_with_lookup_function
+    System.out.println(grid2[d.coord_to_index(0,0)]);   // VER: define_2d_arrays_with_1d_array_with_lookup_function
 
+    Map<Point,Integer> grid3 = new HashMap<>();         // VER: define_2d_arrays_with_dictionary
+    for (Integer y=0 ; y<height ; y++) {                // VER: define_2d_arrays_with_dictionary
+      for (Integer x=0 ; x<width ; x++) {               // VER: define_2d_arrays_with_dictionary
+        grid3.put(new Point(x,y), value);               // VER: define_2d_arrays_with_dictionary
+      }                                                 // VER: define_2d_arrays_with_dictionary
+    }                                                   // VER: define_2d_arrays_with_dictionary
+    grid3.put(new Point(2,1), 5);                       // VER: define_2d_arrays_with_dictionary
+    System.out.println(grid3.get(new Point(0,0)));      // VER: define_2d_arrays_with_dictionary
+  }
+
+  void define_set() {
+    Set<Integer> aa = Set.of(new Integer[]{1,2,3});  // VER: define_set
+    Set<Integer> bb = Set.of(new Integer[]{2,3,4});  // VER: define_set
+    Set<Integer> cc = Set.of(new Integer[]{1,2});  // VER: define_set
+    Set<Integer> xx = null;   // VER: define_set
+                              // VER: define_set
+    xx = new HashSet<>(aa);   // VER: define_set
+    xx.addAll(bb);            // VER: define_set
+    System.out.println(xx);   // VER: define_set
+                              // VER: define_set
+    xx = new HashSet<>(aa);   // VER: define_set
+    xx.retainAll(bb);         // VER: define_set
+    System.out.println(xx);   // VER: define_set
+                              // VER: define_set
+    xx = new HashSet<>(aa);   // VER: define_set
+    xx.removeAll(cc);         // VER: define_set
+    System.out.println(xx);   // VER: define_set
+                              // VER: define_set
+    System.out.println(aa.containsAll(cc));    // VER: define_set
+    xx.add(5);  // VER: define_set
+  }
+
+  void function_with_param_function() {
+    interface MyFunction {  // VER: function_with_param_function
+      Integer my_func(Integer a, Integer b); // VER: function_with_param_function
+    }  // VER: function_with_param_function
+    MyFunction my_func_1 = (Integer a, Integer b) -> a + b;  // VER: function_with_param_function
+    MyFunction my_func_2 = new MyFunction() {  // VER: function_with_param_function
+      public Integer my_func(Integer a, Integer b) {  // VER: function_with_param_function
+        return a * b;  // VER: function_with_param_function
+      } // VER: function_with_param_function
+    };  // VER: function_with_param_function
+    var mm = new Object(){  // VER: function_with_param_function
+      void print_my_func(MyFunction ff) {  // VER: function_with_param_function
+        System.out.println(ff.my_func(2,3));  // VER: function_with_param_function
+      }  // VER: function_with_param_function
+    };  // VER: function_with_param_function
+    mm.print_my_func(my_func_1);  // VER: function_with_param_function
+    mm.print_my_func(my_func_2);  // VER: function_with_param_function
   }
 
 
@@ -351,7 +418,11 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     function_with_return_value();
     list_comprehension();
     dict_comprehension();
+    define_fixed_array();
+    define_list();
     define_map();
+    define_set();
+    function_with_param_function();
   }
 
 }
