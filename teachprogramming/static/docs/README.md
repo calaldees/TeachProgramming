@@ -216,6 +216,26 @@ Other
  * [Pedagogy by proxy: developing computing PCK through shared lesson resources](https://sure.sunderland.ac.uk/id/eprint/13728/) Hidson, Elizabeth (2021)
 ---
 
+
+There’s also https://github.com/shish/rosettaboy for python / c++ / rust (pondering adding go / js / Java / ??? - but trying to get at least one of the existing versions to work properly first)
+
+(The python is painful at ~3 FPS; the c++ and rust are mostly working but with glitchy sound and support for large cartridges is weirdly broken, like Tetris works fine but Zelda sometimes loads the wrong map screen o_O)
+
+How do you debug/test?
+Mostly I rely on other people having spent a long time building test ROMs and validating them on real hardware 😅 (They require like 10 basic CPU instructions, then use those to build unit tests for the other ~300 instructions)
+making an emulator is a lot easier when somebody else already made unit tests for all the features \o/
+
+Alas the sound-test rom is only for interactive use rather than unit testing, so I can hear that my code sounds wrong, but no specific error >.<
+
+So why is there such a performance difference between python and the others? What are the operations that python struggles with?
+
+Gameboy emulation is pretty much 100% straight number-crunching and array lookups; even the graphics are done one pixel at a time, so you can’t take shortcuts like “use SDL to blit a whole 8x8 sprite in one go” - a lot of games do things like parallax scrolling by tweaking the render settings between each scan-line
+
+https://dolphin-emu.org/blog/2021/09/07/dolphin-progress-report-august-2021/
+GameCube treats +0 and -0 as differnt numbers - emulator went cray cray
+
+---
+
 * [Evaluating Programming Languages](https://courses.cs.washington.edu/courses/cse341/02sp/concepts/evaluating-languages.html) for education
     * Why not just teach multiple at once?
 Rapid development
