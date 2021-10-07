@@ -89,6 +89,7 @@ Project Ideas
     * interquatile range?
 * FF7 Game vote? - channel socket? quiz?
 * Chess - channel socket
+    * (side adventure - how does a chess engine work? TODO watch https://www.youtube.com/watch?v=U4ogK0MIzqk)
 * Game tiles
     * edge
 * BANG (game)
@@ -230,3 +231,10 @@ My Hacks
 * 3D news globe?
 * Karaoke mobile?
 * Retro price value
+
+
+Unsorted
+========
+
+No idea where to put this
+GDC [Math for game programmers - building a better jump](https://www.youtube.com/watch?v=hG9SzQxaCm8) 20min

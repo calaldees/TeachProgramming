@@ -14,7 +14,7 @@ fetch(`https://api.postcodes.io/postcodes/${postcode}`)
 // https://www.geeksforgeeks.org/difference-between-promise-and-async-await-in-node-js/?ref=leftbar-rightbar
 
 function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve, reject) => setTimeout(resolve, ms));
 }
 
 
@@ -67,3 +67,14 @@ async function evaluate_promise() {
 console.log(11);
 evaluate_promise();
 console.log(12);
+
+async function doo() {
+    console.log("a");
+    await sleep(1000);
+    console.log("b");
+    await sleep(1000);
+    console.log("c");
+    await sleep(1000);
+    console.log("d");
+}
+doo();
