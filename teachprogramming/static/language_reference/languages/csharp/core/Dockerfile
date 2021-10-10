@@ -3,20 +3,22 @@
 # an absolute joke of a process
 # https://softchris.github.io/pages/dotnet-dockerize.html#create-a-dockerignore-file
 
-#FROM mcr.microsoft.com/dotnet/sdk:5.0
-#FROM mcr.microsoft.com/dotnet/sdk:2.0
-FROM mcr.microsoft.com/dotnet/core/sdk:2.0
+FROM mcr.microsoft.com/dotnet/sdk:5.0
 
 WORKDIR /app/
 
-COPY HelloWorld.cs ./
+COPY * ./
+CMD dotnet run
 
+#FROM mcr.microsoft.com/dotnet/sdk:2.0
+#FROM mcr.microsoft.com/dotnet/core/sdk:2.0
 # https://stackoverflow.com/a/47697996/3356840
-RUN dotnet \
-    /usr/share/dotnet/sdk/${DOTNET_SDK_VERSION}/Roslyn/csc.exe \
-        -r:/usr/share/dotnet/shared/Microsoft.NETCore.App/${ASPNET_VERSION}/System.Private.CoreLib.dll \
-        -r:/usr/share/dotnet/shared/Microsoft.NETCore.App/${ASPNET_VERSION}/System.Console.dll \
-        -r:/usr/share/dotnet/shared/Microsoft.NETCore.App/${ASPNET_VERSION}/System.Runtime.dll \
-    HelloWorld.cs
+#COPY HelloWorld.cs ./
+#RUN dotnet \
+#    /usr/share/dotnet/sdk/${DOTNET_SDK_VERSION}/Roslyn/csc.exe \
+#        -r:/usr/share/dotnet/shared/Microsoft.NETCore.App/${ASPNET_VERSION}/System.Private.CoreLib.dll \
+#        -r:/usr/share/dotnet/shared/Microsoft.NETCore.App/${ASPNET_VERSION}/System.Console.dll \
+#        -r:/usr/share/dotnet/shared/Microsoft.NETCore.App/${ASPNET_VERSION}/System.Runtime.dll \
+#    HelloWorld.cs
+#CMD HelloWorld.exe
 
-CMD HelloWorld.exe

@@ -348,6 +348,19 @@ def define_set():
   aa.add(5)       # VER: define_set
   
 
+def json_data():
+  data = [                                     # VER: json_data
+    {'a': 1, 'b': 2},                          # VER: json_data
+    {'c': 3, 'd': 4},                          # VER: json_data
+    {'e': [5,6,7], 'f': {'g': 10, 'h': "something"}}   # VER: json_data
+  ]         # VER: json_data
+  import json    # VER: json_data
+  string_data = json.dumps(data)          # VER: json_data
+  print(string_data)              # VER: json_data
+  # '[{"a": 1, "b": 2}, {"c": 3, "d": 4}, {"e": [5, 6, 7], "f": {"g": 10, "h": "something"}}]'
+  data2 = json.loads(string_data)         # VER: json_data
+
+
 #-------------------------------------------------------------------------------
 
 if __name__ == "__main__":
@@ -377,6 +390,7 @@ if __name__ == "__main__":
   define_set()
   define_2d_arrays()
   function_with_param_function()
+  json_data()
 
   # Run all functions in order
   #for function_name in functions:

@@ -451,6 +451,20 @@ function define_2d_arrays() {
   console.log(grid3["0,0"]);   // VER: define_2d_arrays_with_dictionary
 }
 
+
+function json_data(){
+  const data = [                                     // VER: json_data
+    {'a': 1, 'b': 2},                          // VER: json_data
+    {'c': 3, 'd': 4},                          // VER: json_data
+    {'e': [5,6,7], 'f': {'g': 10, 'h': "something"}}   // VER: json_data
+  ];         // VER: json_data
+  const string_data = JSON.stringify(data);          // VER: json_data
+  console.log(string_data);              // VER: json_data
+  // '[{"a": 1, "b": 2}, {"c": 3, "d": 4}, {"e": [5, 6, 7], "f": {"g": 10, "h": "something"}}]'
+  const data2 = JSON.parse(string_data);         // VER: json_data
+}
+
+
 //------------------------------------------------------------------------------
 
 function main() {
@@ -475,6 +489,7 @@ function main() {
   define_set();
   function_with_param_function();
   define_2d_arrays();
+  json_data();
 
 }
 main();

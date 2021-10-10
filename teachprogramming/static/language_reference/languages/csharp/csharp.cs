@@ -19,6 +19,7 @@ using System;                                                                   
 using System.IO;                                                                // VER: file_write
 using System.Collections.Generic;                                               // VER: define_map
 using System.Linq;                                                              // VER: list_comprehension
+//using System.Text.Json;  // TODO see json_data
 
 public class CSharp {
 
@@ -45,6 +46,7 @@ public class CSharp {
     string username = "Betty";                                                  // VER: define_variables
     double distance = 3.14;                                                     // VER: define_variables
     bool email_errors = true;                                                   // VER: define_variables
+    string multiline = $@"a b";                                                 // VER: define_variables
   }
 
   void define_constants() {
@@ -357,6 +359,17 @@ public class CSharp {
     Console.WriteLine(String.Join(",",data4));
   }
 
+  void json_data() {
+    // using System.Text.Json;                                                  // VER: json_data
+    // https://marcroussy.com/2020/08/17/deserialization-with-system-text-json/
+    var stringifiedJson = @"{ ""Topic"":""Json Serialization Part 1"",""Part"":1,""Author"":""Marc"",""Co-Author"":""Helen"",""Keywords"":[""json"",""netcore"",""parsing""]}";  // VER: json_data
+    var blogPost = JsonDocument.Parse(stringifiedJson);  // VER: json_data
+    var topic = blogPost.RootElement.GetProperty("Topic").GetString();  // VER: json_data
+    Console.WriteLine(topic);  // VER: json_data
+
+    // Can deserialise into data object type      // VER: json_data
+    // var personObject = JsonSerializer.Deserialize<Person>(jsonPerson);    // VER: json_data
+  }
 
 
   public static void Main(string[] args) {new CSharp();}
