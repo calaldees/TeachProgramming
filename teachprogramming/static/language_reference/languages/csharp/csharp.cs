@@ -362,7 +362,14 @@ public class CSharp {
   void json_data() {
     // using System.Text.Json;                                                  // VER: json_data
     // https://marcroussy.com/2020/08/17/deserialization-with-system-text-json/
-    var stringifiedJson = @"{ ""Topic"":""Json Serialization Part 1"",""Part"":1,""Author"":""Marc"",""Co-Author"":""Helen"",""Keywords"":[""json"",""netcore"",""parsing""]}";  // VER: json_data
+    // TODO: WARNING!! this string inline needs investigating
+    var stringifiedJson = @"{                           // VER: json_data
+      ""Topic"":""Json Serialization Part 1"",          // VER: json_data
+      ""Part"":1,                                       // VER: json_data
+      ""Author"":""Marc"",                              // VER: json_data
+      ""Co-Author"":""Helen"",                          // VER: json_data
+      ""Keywords"":[""json"",""netcore"",""parsing""]   // VER: json_data
+    }";                                                 // VER: json_data
     /*
     var blogPost = JsonDocument.Parse(stringifiedJson);  // VER: json_data
     var topic = blogPost.RootElement.GetProperty("Topic").GetString();  // VER: json_data
