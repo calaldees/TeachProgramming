@@ -169,6 +169,7 @@ Other
     * Conversational Programmers (High level patterns - in blocks)
     * Build working program in chunked examples
     * (Kind of like my engineering projects - felt success - felt real world)
+    * [Mismatch of Expectations: How Modern Learning Resources Fail Conversational Programmers](https://dl.acm.org/doi/10.1145/3173574.3174085)
 * Parallels in MFL?
     * [Study shows exposure to multiple languages may make it easier to learn one](https://www.washington.edu/news/2019/09/05/study-shows-exposure-to-multiple-languages-may-make-it-easier-to-learn-one/)
 
@@ -270,3 +271,27 @@ Expressiveness
     The programmer should be able to express their algorithm naturally. 
 Abstraction
     The language should support a high level of data and control abstraction. 
+
+
+https://store.steampowered.com/app/504210/SHENZHEN_IO/
+https://store.steampowered.com/app/619150/while_True_learn/
+
+
+
+* [mimirhq.com](https://www.mimirhq.com/)
+    * Scale and automate your Computer Science classroom.
+    * Mimir Classroom provides the tools for instructors to efficiently teach Computer Science courses of any scale without compromising quality of education for students.
+    * [Assignment](https://www.mimirhq.com/classroom/programming-assignments)
+    * [Projects](https://www.mimirhq.com/classroom/programming-projects)
+        * Automatic grading
+        * Hidden tests
+        * Plagiarism detection
+        * Online IDE
+    * [Open Educational Resources](https://www.mimirhq.com/classroom/open-educational-resources) OER
+
+* [Hacker News folk wisdom on visual programming](https://drossbucket.com/2021/06/30/hacker-news-folk-wisdom-on-visual-programming/)
+* [Learnable Programming](http://worrydream.com/#!/LearnableProgramming) Bret Victor / September 2012
+    * Designing a programming system for understanding programs
+
+* [Why Programming is Hard to Fundamentally Improve](https://aidancunniffe.com/why-programming-is-hard-to-fundamentally-improve-4101612d4ad9)
+    * > I think most of the stalled innovations in programming focused disproportionally on learnability. The problem is, within a few weeks of using any paradigm developers usually have built a repository of habits that keep them from making mistakes. For instance, if a new visual logic builder prides itself on preventing all syntax errors, that’s really cool, but most developers have learned to do that automatically.

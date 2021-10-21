@@ -235,6 +235,7 @@ function define_list() {
   if (cc.indexOf("z") >= 0) {  // VER: define_list
     console.log("z exists in list");  // VER: define_list
   }  // VER: define_list
+  // TODO: concat lists
 }
 
 

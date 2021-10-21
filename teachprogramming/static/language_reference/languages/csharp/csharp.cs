@@ -199,6 +199,9 @@ public class CSharp {
     if (Array.IndexOf(bb, "a") >= 0) {  // VER: define_fixed_array
       Console.WriteLine("a exists in array");  // VER: define_fixed_array
     }  // VER: define_fixed_array
+
+    // TODO:
+    // indexOf and join
   }
 
   void define_map() {
@@ -244,6 +247,7 @@ public class CSharp {
     if (cc.Contains("z")) {                  // VER: define_list
       Console.WriteLine("z exists in list");  // VER: define_list
     } // VER: define_list
+    // TODO: concat lists
   }
 
   void define_set() {
@@ -361,6 +365,9 @@ public class CSharp {
 
   void json_data() {
     // using System.Text.Json;                                                  // VER: json_data
+    // https://docs.microsoft.com/en-us/dotnet/api/system.text.json?view=net-5.0
+    // https://docs.microsoft.com/en-us/dotnet/standard/serialization/system-text-json-how-to?pivots=dotnet-5-0
+    // https://stackoverflow.com/a/58495751/3356840
     // https://marcroussy.com/2020/08/17/deserialization-with-system-text-json/
     // TODO: WARNING!! this string inline needs investigating
     var stringifiedJson = @"{                           // VER: json_data

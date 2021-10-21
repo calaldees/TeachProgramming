@@ -183,6 +183,7 @@ def define_list():
     print(i)  # z d           # VER: define_list
   if "z" in cc:               # VER: define_list
     print("z exists in list") # VER: define_list
+  # TODO: concat list
 
 
 def define_2d_arrays():
