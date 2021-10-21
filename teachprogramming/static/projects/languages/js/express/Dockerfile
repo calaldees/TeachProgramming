@@ -5,6 +5,6 @@ WORKDIR /app/
 COPY package.json ./
 RUN npm install
 
-COPY *.js ./
+COPY helloworld.js ./
 
-ENTRYPOINT ["node", "index.js"]
+ENTRYPOINT ["node", "helloworld.js"]
