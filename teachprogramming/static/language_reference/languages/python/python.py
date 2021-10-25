@@ -362,6 +362,23 @@ def json_data():
   data2 = json.loads(string_data)         # VER: json_data
 
 
+def commandline_args():
+  pass  # TODO     # VER: commandline_args
+
+
+def network_tcp_send():
+  pass  # TODO    # ver: network_tcp_send
+def network_tcp_recv():
+  pass  # TODO    # ver: network_tcp_recv
+def network_udp_send():
+  pass  # TODO    # ver: network_upd_send
+def network_udp_recv():
+  pass  # TODO    # ver: network_udp_recv
+
+def file_binary():
+  pass   # TODO    # ver: file_binary
+  # TODO: seek?
+
 #-------------------------------------------------------------------------------
 
 if __name__ == "__main__":
@@ -392,6 +409,13 @@ if __name__ == "__main__":
   define_2d_arrays()
   function_with_param_function()
   json_data()
+
+  commandline_args()
+  network_tcp_send()
+  network_tcp_recv()
+  network_udp_send()
+  network_udp_recv()
+  file_binary()
 
   # Run all functions in order
   #for function_name in functions:

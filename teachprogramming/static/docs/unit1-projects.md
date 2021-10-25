@@ -176,6 +176,7 @@ Know the names, symbols and corresponding powers of 10 for the decimal prefixes:
     * [The most copied StackOverflow snippet of all time is flawed!](https://programming.guide/worlds-most-copied-so-snippet.html)
         * an answer I wrote almost a decade ago was found to be the most copied snippet on Stack Overflow. Ironically it happens to be buggy.
 
+
 Cypher (D to A Grade)
 ---------------------
 Create a program to encode/decode messages.
@@ -271,6 +272,23 @@ Sorting and Searching Records (Grade D to B)
 
 ### Techniques
 * This project will assess your algorithm design, CSV handling, Records(dictionaries/associative-arrays/maps) Bubble Sort understanding and Linear/Binary Search Understanding
+
+
+Generate soundwave (C grade)
+------------------
+
+* Generate a mono 44.1khz audio file containing a 440hz sin wave, square wave, triangle or saw wave with code.
+* Output raw binary to a file (16bit signed) [filename.raw]
+* Open in audacity? compare with wikipedia reference audio clip
+
+Binary files, byte order (big/little endian)
+
+### Generate all 4 wave types (B Grade)
+
+### Create WAV file header (A grade)
+* http://soundfile.sapp.org/doc/WaveFormat/
+* https://stackoverflow.com/questions/28137559/can-someone-explain-wavwave-file-headers
+
 
 
 2D Arrays & RLE Encoding (Grade C to A)

@@ -9,7 +9,7 @@ Unit 2?
 * dict of cords
 
 
-Algorithum to select correct coins for change (at a cash register)
+Algorithm to select correct coins for change (at a cash register)
   what happens if we run out of pound coins?
 
 
