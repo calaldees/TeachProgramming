@@ -379,6 +379,12 @@ def file_binary():
   pass   # TODO    # ver: file_binary
   # TODO: seek?
 
+def assertion():
+  name = "bob"
+  count = 3
+  assert name == "bob", f"I am expecting {name} to be 'bob'"  # ver: assertion
+  assert count >= 3  # ver: assertion
+
 #-------------------------------------------------------------------------------
 
 if __name__ == "__main__":
@@ -416,6 +422,7 @@ if __name__ == "__main__":
   network_udp_send()
   network_udp_recv()
   file_binary()
+  assertion()
 
   # Run all functions in order
   #for function_name in functions:

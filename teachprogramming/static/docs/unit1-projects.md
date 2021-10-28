@@ -236,6 +236,11 @@ Write a program that converts strings from one number format to another.
 ### Techniques
 * This project will assess Grey Codes, Suitable Test data and Algorithm design
     * To convert to and from grey codes I suggest a lookup table and the use of a Linear Search.
+* Create automated tests for your code - use the `assert` statement - Do this before you code your solution
+    * ```python
+        assert bin2dec("11") == 3
+        assert dec2hex(17) == "11"
+      ```
 
 
 Networking (C Grade)
@@ -250,6 +255,7 @@ This project is designed to get you to
 * Understand the binary structure of network address
 * Understand network terminology/features
 * further reading [Fun with IP address parsing](https://blog.dave.tf/post/ip-addr-parsing/)
+
 
 Sorting and Searching Records (Grade D to B)
 --------------------------------------------
