@@ -112,6 +112,13 @@ public class CSharp {
     }  // VER: for_each_loop
   }
 
+  void until_loop() {
+    int count = 0;                             // VER: until_loop
+    do {                                       // VER: until_loop
+      Console.WriteLine("Count is " + count);  // VER: until_loop
+      count = count + 2;                       // VER: until_loop
+    } while(count < 10);                       // VER: until_loop
+  }
 
   void file_write() {
     string line_to_write = "Append to end of file"; // VER: file_write

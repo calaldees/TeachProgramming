@@ -210,11 +210,44 @@ Other
         * hack time
     * Very similar principles to productive adults
 
+* [How to help a student get unstuck](https://offbyone.us/posts/how-to-help-a-student-get-unstuck/) 2021 (short 5min article)
+    * Forget about the program, focus on the programmer
+    * Don’t let them overheat
+    * How to teach #
+        * Try to ask questions more often than you give information.
+        * avoid touching a student’s keyboard. 
+        * prompt the student to summarize what they’ve learned.
+    * How to debug
+        * even professional programers get stuck, and that there’s a methodology for getting unstuck.
+    * How to support
+        * Hear their concerns and anxieties, and let them know that they’ll get through it.
+        * Lots of early stage programmers don’t realize that it’s normal to struggle
+    * Putting it all together
+
+* [The Computer Science Student-Centred Instructional Continuum - CS-SCIC](https://blog.teachcomputing.org/the-computer-science-student-centred-instructional-continuum/) NCCE citing (Waite & Liebe, 2021)
+    1. Copy code: students are given step-by-step instructions to follow, e.g. copy an example program;
+    2. Targeted tasks: students are given a short task, e.g. fix buggy code, Parsons problems;
+    3. Shared coding: the teacher thinks aloud as they design and write code, sometimes called demonstrating or live coding, e.g. teacher models how to write a program;
+    4. Project-based: students are provided with a project goal and create a solution, e.g.create a quiz in Scratch;
+    5. Inquiry-based: students consider a scenario or question and create a solution, e.g. explore a set of code commands and discover ways to use them;
+    6. Tinkering: completely unstructured student-led exploration, e.g. explore a software”
+
+* [Summary of Semantic Transfer in Programming Languages: Exploratory Study of Relative Novices](https://blog.teachcomputing.org/summary-of-semantic-transfer-in-programming-languages-exploratory-study-of-relative-novices/) dec 2020
+    * when a second language is encountered
+        * A carryover concept (similar meaning in both the old and new context)
+        * A changed concept (different meaning in the new context)
+        * A novel concept (completely new to the learner)
+
+
 ---
 
- Collaborating with other profetionals
+ Collaborating with other professionals
 
  * [Pedagogy by proxy: developing computing PCK through shared lesson resources](https://sure.sunderland.ac.uk/id/eprint/13728/) Hidson, Elizabeth (2021)
+
+* [Exemplary Progress: A network to share best practice](https://mirandanet.ac.uk/wp-content/uploads/2019/06/exemplary_progress_fe.pdf) Becta 2008
+    * TODO - realted to sharing practice
+
 ---
 
 
@@ -295,3 +328,4 @@ https://store.steampowered.com/app/619150/while_True_learn/
 
 * [Why Programming is Hard to Fundamentally Improve](https://aidancunniffe.com/why-programming-is-hard-to-fundamentally-improve-4101612d4ad9)
     * > I think most of the stalled innovations in programming focused disproportionally on learnability. The problem is, within a few weeks of using any paradigm developers usually have built a repository of habits that keep them from making mistakes. For instance, if a new visual logic builder prides itself on preventing all syntax errors, that’s really cool, but most developers have learned to do that automatically.
+
