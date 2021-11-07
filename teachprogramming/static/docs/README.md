@@ -45,6 +45,9 @@ I need to cross reference all of this against
     * Culmination of skills
     * Create a game?
     * Hardware? HCI? Output DMX?
+* Creativity
+    * Self directed/conceived projects for the joy/sake of it
+    * Demoscene
 * Meta-cognition (concept?)
     * Structured Retrospectives
     * Process + actions
@@ -329,3 +332,19 @@ https://store.steampowered.com/app/619150/while_True_learn/
 * [Why Programming is Hard to Fundamentally Improve](https://aidancunniffe.com/why-programming-is-hard-to-fundamentally-improve-4101612d4ad9)
     * > I think most of the stalled innovations in programming focused disproportionally on learnability. The problem is, within a few weeks of using any paradigm developers usually have built a repository of habits that keep them from making mistakes. For instance, if a new visual logic builder prides itself on preventing all syntax errors, that’s really cool, but most developers have learned to do that automatically.
 
+
+* [Innovative teaching in computer science: what does it mean and why do we need it?](https://www.tandfonline.com/doi/full/10.1080/08993408.2010.486239) 2010 Y. Ben-David Kolikant 
+    * encourage students to become more active in their learning, 
+    * make the CS classroom more authentic, more similar to the real work setting of CS practitioners
+    * build on students' existing knowledge and understanding
+    * encourage peer learning in various ways. In all papers, ICT is used to leverage these efforts.
+    * > bring about a transformation in the students' professional point of view: Helping them become competent and appreciative of what CS professionals deem as problems worth solving, acceptable work process, elegant and effective solutions, knowledge worth knowing, and so forth
+    * “Experiences with lab-centric instruction”, Titterton, Lewis, and Clancy
+        * > substituting lecture for lab time
+    * Teaching computer science through problems, not solutions”, Fee and Holland-Minkley propose a problem-based learning
+    * Constructive evaluation: a pedagogy of student-contributed assessment”, Luxton-Reilly and Denny
+        * > “constructive evaluation”. Students are required to author questions that assess one or more of the learning outcomes of a course and provide a sample solution
+
+
+* [CDIO](https://en.wikipedia.org/wiki/CDIO_Initiative)
+    * Conceive Design Implement Operate. The CDIO Initiative is an educational framework that stresses engineering fundamentals set in the context of conceiving, designing, implementing and operating real-world systems and products.
