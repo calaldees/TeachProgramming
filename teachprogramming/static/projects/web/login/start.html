@@ -22,10 +22,6 @@
     }
     #background img {
         object-fit: cover;
-        transition: filter 0.3s ease-out;
-    }
-    .login_active #background img {
-        filter: blur(0.5em);
     }
 
     .flex_center {
@@ -36,19 +32,6 @@
 
     #login {
         position: relative;
-        opacity: 0;
-        top: 10vh;
-        filter: blur(0.5em);
-        transition: 
-            opacity 0.5s ease-out, 
-            top 0.5s ease-out, 
-            filter 0.5s ease-out
-        ;
-    }
-    .login_active #login {
-        opacity: 1;
-        top: 0;
-        filter: blur(0.0em);
     }
 
     #profile_picture {
