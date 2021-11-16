@@ -39,8 +39,12 @@ I need to cross reference all of this against
     * context, real
     * (See conversational programmers Cunningham)
 * Theory guided by regular interleaving of exam questions on paper
-* Sometimes don't even tell them what the lesson is about - just show them some code and Predict, Run, Investigate (PRIMM)
-    * E.g. by ref or by val example
+* Mix it up!
+    * Sometimes don't even tell them what the lesson is about - just show them some code and Predict, Run, Investigate (PRIMM)
+        * E.g. by ref or by val example
+    * Conduct an entire session as mutes (no talking at all by anyone - except emergencies)
+    * Just use 'off' hand - (somehow restrict dominant hand in a fun/non-intrusive way?)
+    * Don't touch the mouse (unplug it!)
 * Final self directed Personal project (A-level project)
     * Culmination of skills
     * Create a game?
@@ -54,6 +58,7 @@ I need to cross reference all of this against
 * Group Wiki (concept?)
     * Publicly visible?
     * 'Who can' list?
+    * Group solutions to code problems?
 * Peer Mentor (with a big enough and multiple generation group)
     * Learners are paired with (slightly) more experienced mentor
         * The course lead can pair appropriately by ability/personality
@@ -71,6 +76,10 @@ I need to cross reference all of this against
 * Hack time presentations (concept)
     * bring something cool?
     * Show feature/tool you've encountered
+* Regular pair-program a programming challenge
+    * Different (rotate) partners each time
+    * What makes you a good pair partner - what are good partner traits?
+    * Respect/understanding for your partners current level/belt/development
 * Encourage participation at an event
     * HackDay
     * BarCamp (local tech culture meet/present)

@@ -2,13 +2,13 @@ AS-Level Computing: Projects
 ============================
 
 * [AQA A-Level Computing - Specification](https://filestore.aqa.org.uk/resources/computing/specifications/AQA-7516-7517-SP-2015.PDF)
-    * 180 guided learning hours (school) + homework
+    * 180 guided learning hours == hours of tuition + directed hours of independent study
 
 * These are all the projects for the year 
 * Tasks can be attempted in any order (self directed/ownership)
 * Every task maps to theory specification
 * You may use any language for each task
-    * It is recommended that you use a least 2 languages (one static, one dynamic)
+    * It is recommended that you use a minimum of 2 languages (one static, one dynamic)
 
 
 Training Tasks (Grade E)
@@ -32,6 +32,8 @@ Training Tasks (Grade E)
           ```
 9. Fibonacci Sequence: Generate the following sequence under 200. `1,1,2,3,5,8,13,21,etc`
     * Add the previous 2 numbers, e.g. 2+3=5 3+5=8
+10. Create a function that takes an array of strings of possible values and asks the user relatedly for one of these inputs, when it receives one of these correct/possible values, return this value
+    * e.g `[proceed, abort, skip]`, `[yes, no, maybe]`
 
 
 Filesize Calculator (E Grade)
@@ -134,7 +136,7 @@ This project is designed to get you to understand
         * each digit will append to a `display` textbox/string
 
 ### A2 (Professional)
-* Consider reverse polish and brackets (a stack?)
+* Consider reverse polish and brackets (a tree?)
 
 
 Validation (E to C Grade)

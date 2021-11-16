@@ -1,8 +1,8 @@
 
 Other resources
-https://vanillawebprojects.com/
-https://github.com/bradtraversy/vanillawebprojects
-
+* https://vanillawebprojects.com/
+* https://github.com/bradtraversy/vanillawebprojects
+* https://github.com/rheh/HTML5-canvas-projects
 
 Diff Engine
 -----------
@@ -32,6 +32,9 @@ Language
 Project Ideas
 -------------
 
+* Mastermind
+* Password strength checker
+* 
 * Demoscene/Creative Coding workshop
     * See creativeCodingWorkshop.md
 * MMORPG redis world?
@@ -93,7 +96,7 @@ Project Ideas
 * Game tiles
     * edge
 * BANG (game)
-* Flash card
+* Flash card app
 * Generic Websocket channel echo - example
 * web foundations
     * mobile offline - socital ideas?
@@ -200,6 +203,10 @@ https://en.wikipedia.org/wiki/Primality_test
 ```python
 
 ```
+Improve O(n) complexity
+
+
+
 
 Is in Pi
 * [Coding Challenge #156: Peeking inside Pi](https://www.youtube.com/watch?v=MEdpRYyjz_0)

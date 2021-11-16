@@ -1,7 +1,7 @@
 Unit 2?
 ======
 
-
+regex, json
 
 2d arrays (design decision)
 * jagged arrays (lists of lists)
@@ -62,6 +62,7 @@ digit is a terminal
 bnf for car reg LLNN LLL
 
 base case?
+see graph traversal
 
 ## Finite state machines
 
@@ -94,6 +95,7 @@ reverse polish notation
   * Test harness? 100000 items and timing performance?
 graph (weighted directed/undirected)
  traversal
+ maths bacars nor form
 tree (root, connected, undirected) binary
  traversal
 vector (dot product)

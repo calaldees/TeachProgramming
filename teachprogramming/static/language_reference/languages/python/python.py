@@ -385,6 +385,9 @@ def assertion():
   assert name == "bob", f"I am expecting {name} to be 'bob'"  # ver: assertion
   assert count >= 3  # ver: assertion
 
+def sort():
+  # TODO: sort with comparator # ver: sort
+
 #-------------------------------------------------------------------------------
 
 if __name__ == "__main__":
@@ -423,6 +426,7 @@ if __name__ == "__main__":
   network_udp_recv()
   file_binary()
   assertion()
+  sort()
 
   # Run all functions in order
   #for function_name in functions:
