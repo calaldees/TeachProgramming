@@ -39,7 +39,9 @@ https://github.com/algorithm-archivists/algorithm-archive
 * [Code Tour: VSCode Extension](https://marketplace.visualstudio.com/items?itemName=vsls-contrib.codetour)
 * [codeamigo.dev](https://codeamigo.dev/)
     * online tutorials with steps
-
+* [textframe.app](https://textframe.app/)
+    * Text documentation commentary with animated/tweened preview inline
+    * A similar concept to my projects
 
 Online Coding Environments
 --------------------------

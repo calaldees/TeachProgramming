@@ -9,6 +9,30 @@ I need to cross reference all of this against
 
 ---
 
+
+```mermaid
+graph TD
+    creativity[Creativity] 
+    real[Real Programs]
+    projects[Self paced theory projects]
+    tools[Tools and Reference]
+    
+    
+    subgraph cc [community]
+        community((community))
+    end
+
+    creativity --> community
+    real --> community
+    projects --> community
+    tools --> community
+```
+
+* Purpose/Goal
+    * Qualification?
+    * Game?
+    * Build at a Hack day?
+    * Social/Atmosphere (time well spent)
 * Spec given to students
     * Spec bingo -> tick + ask
 * CheatSheet - encourage freely move between languages
