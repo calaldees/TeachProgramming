@@ -132,6 +132,8 @@ def string_concatenation():
   fullname4 = "{} {}".format(forename, surname)                 # VER: string_concatenation
   print(fullname)
 
+def split_strings():
+  pass ## TODO # VER: split_strings
 
 def convert_string_to_integer_and_back():
   sum = 5 + int('5')                      # VER: convert_string_to_integer_and_back
@@ -387,6 +389,8 @@ def assertion():
 
 def sort():
   # TODO: sort with comparator # ver: sort
+  # reverse=True - key function
+  data = ["b", "d", "c", "a"]    # ver: sort
 
 #-------------------------------------------------------------------------------
 

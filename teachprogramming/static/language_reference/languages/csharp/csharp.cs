@@ -169,6 +169,12 @@ public class CSharp {
     Console.WriteLine(line_split[1]);
     string csv_line_test2 = String.Join(" : ", line_split);                            // VER: split_strings
   }
+  void string_compare() {
+    // // TODO: string_compare  // VER: string_compare
+  }
+  void convert_string_to_integer_and_back() {
+    // // TODO: // VER: convert_string_to_integer_and_back
+  }
 
 
   void sayHello() {        // VER: function
@@ -394,6 +400,16 @@ public class CSharp {
     // var personObject = JsonSerializer.Deserialize<Person>(jsonPerson);    // VER: json_data
   }
 
+  static void sort() {
+    // sort reverse with custom comparator
+    // TODO:
+    // https://stackoverflow.com/questions/15494463/how-can-i-do-an-inline-sort
+    // (a, b) => String.Compare(a.Name, b.Name)
+    // Consider "Key" to be inline with python?
+    string[] data = {"b", "d", "c", "a"};       // VER: sort
+    Array.Sort(data);                           // VER: sort
+    Console.WriteLine(String.Join(",", data));  // VER: sort
+  }
 
   public static void Main(string[] args) {new CSharp();}
   CSharp() {
@@ -411,6 +427,7 @@ public class CSharp {
       file_read();
       string_concatenation();
       split_strings();
+      string_compare();
       function();
       function_with_return_value();
       sleep();
@@ -423,6 +440,7 @@ public class CSharp {
       list_comprehension();
       dict_comprehension();
       json_data();
+      sort();
   }
 }
 
