@@ -416,7 +416,8 @@ function define_2d_arrays() {
   const value = 1;
 
   grid1 = [...Array(height)].map(   // VER: define_2d_arrays_with_nested_arrays
-    () => [...Array(width)].map(() => value));   // VER: define_2d_arrays_with_nested_arrays
+    () => [...Array(width)].map(() => value)  // VER: define_2d_arrays_with_nested_arrays
+  );   // VER: define_2d_arrays_with_nested_arrays
   grid1[2][1] = 5;    // VER: define_2d_arrays_with_nested_arrays
   console.log(grid1[0][0]);   // VER: define_2d_arrays
 
@@ -464,6 +465,22 @@ function json_data(){
 }
 
 
+function sort() {
+  // TODO comparator               // VER: sort
+  let numbers = [4, 2, 5, 1, 3];   // VER: sort
+  numbers.sort((a, b) => a - b);   // VER: sort
+  //console.log(numbers);            // VER: sort
+  // [1, 2, 3, 4, 5]
+  
+}
+
+function assertion() {
+  let name = "bob"
+  let count = 3
+  console.assert(name == "bob", `I am expecting ${name} to be 'bob'`);  // ver: assertion
+  console.assert(count >= 3);  // ver: assertion
+}
+
 //------------------------------------------------------------------------------
 
 function main() {
@@ -496,7 +513,8 @@ function main() {
   error_handling();
   split_strings();
   random_number();
-
+  sort();
+  assertion();
 }
 main();
 
