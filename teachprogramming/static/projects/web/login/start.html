@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
+    <title>Login transition</title>
+    <style>
+
+    body {
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+    }
+
+    .fullscreen {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    #background {
+        position: absolute;
+    }
+    #background img {
+        object-fit: cover;
+    }
+
+    .flex_center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #login {
+        position: relative;
+    }
+
+    #profile_picture {
+        font-size: 15vh;
+        width: 30vh;
+        height: 30vh;
+        background-color: lightgray;
+        border-radius:50%;
+    }
+    #input {
+        margin: 1em;
+    }
+    #input input {
+        display: block;
+        width: 100%;
+    }
+
+    </style>
+    <script src=""></script>
+</head>
+<body>
+
+    <div id="background" class="fullscreen">
+        <img src="Canterbury-cathedral-wyrdlight.jpg">
+    </div>
+
+
+    <div id="login" class="fullscreen flex_center">
+        <div>
+            <div id="profile_picture" class="flex_center">
+                &#128100;
+            </div>
+
+            <div id="input">
+                <input name="username" placeholder="Username">
+                <input name="password" type="password" placeholder="Password">
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- html here -->
+
+<script type="module">
+
+    const $body = document.getElementsByTagName("body")[0];
+    const $background = document.getElementById("login");
+    //const $background = $body;
+    $background.addEventListener("click", event => {
+        $body.classList.toggle("login_active");
+    });
+
+</script>
+</body>
+</html>

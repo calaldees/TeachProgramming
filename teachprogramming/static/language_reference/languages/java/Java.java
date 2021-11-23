@@ -218,6 +218,18 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     if (Arrays.stream(bb).anyMatch("a"::equals)) { // VER: define_fixed_array
       System.out.println("a exists in array");  // VER: define_fixed_array
     }  // VER: define_fixed_array
+
+    // TODO: indexOf
+    //  not trivial - understand system level language
+    // TODO: join fixed arrays
+    // Collection.addAll().toArray()
+    // not efficient - consider collection abstractions
+    // import java.util.Arrays;
+    <T> T[] joinArrays(T[] a, T[] b) {
+      T[] c = Arrays.copyOf(a, a.length + b.length);
+      System.arraycopy(b, 0, c, a.length, b.length);
+      return c;
+    }
   }
 
   void define_list() {
@@ -234,6 +246,8 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     if (cc.contains("z")) {                  // VER: define_list
       System.out.println("z exists in list");  // VER: define_list
     }  // VER: define_list
+
+    // TODO: concat lists
   }
 
   void define_map() {

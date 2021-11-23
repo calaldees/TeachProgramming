@@ -2,13 +2,13 @@ AS-Level Computing: Projects
 ============================
 
 * [AQA A-Level Computing - Specification](https://filestore.aqa.org.uk/resources/computing/specifications/AQA-7516-7517-SP-2015.PDF)
-    * 180 guided learning hours (school) + homework
+    * 180 guided learning hours == hours of tuition + directed hours of independent study
 
 * These are all the projects for the year 
 * Tasks can be attempted in any order (self directed/ownership)
 * Every task maps to theory specification
 * You may use any language for each task
-    * It is recommended that you use a least 2 languages (one static, one dynamic)
+    * It is recommended that you use a minimum of 2 languages (one static, one dynamic)
 
 
 Training Tasks (Grade E)
@@ -32,6 +32,8 @@ Training Tasks (Grade E)
           ```
 9. Fibonacci Sequence: Generate the following sequence under 200. `1,1,2,3,5,8,13,21,etc`
     * Add the previous 2 numbers, e.g. 2+3=5 3+5=8
+10. Create a function that takes an array of strings of possible values and asks the user relatedly for one of these inputs, when it receives one of these correct/possible values, return this value
+    * e.g `[proceed, abort, skip]`, `[yes, no, maybe]`
 
 
 Filesize Calculator (E Grade)
@@ -134,7 +136,7 @@ This project is designed to get you to understand
         * each digit will append to a `display` textbox/string
 
 ### A2 (Professional)
-* Consider reverse polish and brackets (a stack?)
+* Consider reverse polish and brackets (a tree?)
 
 
 Validation (E to C Grade)
@@ -175,6 +177,7 @@ Know the names, symbols and corresponding powers of 10 for the decimal prefixes:
 * Byte size to human readable form (is a hard problem)
     * [The most copied StackOverflow snippet of all time is flawed!](https://programming.guide/worlds-most-copied-so-snippet.html)
         * an answer I wrote almost a decade ago was found to be the most copied snippet on Stack Overflow. Ironically it happens to be buggy.
+
 
 Cypher (D to A Grade)
 ---------------------
@@ -235,6 +238,11 @@ Write a program that converts strings from one number format to another.
 ### Techniques
 * This project will assess Grey Codes, Suitable Test data and Algorithm design
     * To convert to and from grey codes I suggest a lookup table and the use of a Linear Search.
+* Create automated tests for your code - use the `assert` statement - Do this before you code your solution
+    * ```python
+        assert bin2dec("11") == 3
+        assert dec2hex(17) == "11"
+      ```
 
 
 Networking (C Grade)
@@ -249,6 +257,7 @@ This project is designed to get you to
 * Understand the binary structure of network address
 * Understand network terminology/features
 * further reading [Fun with IP address parsing](https://blog.dave.tf/post/ip-addr-parsing/)
+
 
 Sorting and Searching Records (Grade D to B)
 --------------------------------------------
@@ -271,6 +280,23 @@ Sorting and Searching Records (Grade D to B)
 
 ### Techniques
 * This project will assess your algorithm design, CSV handling, Records(dictionaries/associative-arrays/maps) Bubble Sort understanding and Linear/Binary Search Understanding
+
+
+Generate soundwave (C grade)
+------------------
+
+* Generate a mono 44.1khz audio file containing a 440hz sin wave, square wave, triangle or saw wave with code.
+* Output raw binary to a file (16bit signed) [filename.raw]
+* Open in audacity? compare with wikipedia reference audio clip
+
+Binary files, byte order (big/little endian)
+
+### Generate all 4 wave types (B Grade)
+
+### Create WAV file header (A grade)
+* http://soundfile.sapp.org/doc/WaveFormat/
+* https://stackoverflow.com/questions/28137559/can-someone-explain-wavwave-file-headers
+
 
 
 2D Arrays & RLE Encoding (Grade C to A)

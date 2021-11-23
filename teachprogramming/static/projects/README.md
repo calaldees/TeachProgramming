@@ -1,8 +1,8 @@
 
 Other resources
-https://vanillawebprojects.com/
-https://github.com/bradtraversy/vanillawebprojects
-
+* https://vanillawebprojects.com/
+* https://github.com/bradtraversy/vanillawebprojects
+* https://github.com/rheh/HTML5-canvas-projects
 
 Diff Engine
 -----------
@@ -32,6 +32,9 @@ Language
 Project Ideas
 -------------
 
+* Mastermind
+* Password strength checker
+* 
 * Demoscene/Creative Coding workshop
     * See creativeCodingWorkshop.md
 * MMORPG redis world?
@@ -89,10 +92,11 @@ Project Ideas
     * interquatile range?
 * FF7 Game vote? - channel socket? quiz?
 * Chess - channel socket
+    * (side adventure - how does a chess engine work? TODO watch https://www.youtube.com/watch?v=U4ogK0MIzqk)
 * Game tiles
     * edge
 * BANG (game)
-* Flash card
+* Flash card app
 * Generic Websocket channel echo - example
 * web foundations
     * mobile offline - socital ideas?
@@ -199,6 +203,10 @@ https://en.wikipedia.org/wiki/Primality_test
 ```python
 
 ```
+Improve O(n) complexity
+
+
+
 
 Is in Pi
 * [Coding Challenge #156: Peeking inside Pi](https://www.youtube.com/watch?v=MEdpRYyjz_0)
@@ -230,3 +238,10 @@ My Hacks
 * 3D news globe?
 * Karaoke mobile?
 * Retro price value
+
+
+Unsorted
+========
+
+No idea where to put this
+GDC [Math for game programmers - building a better jump](https://www.youtube.com/watch?v=hG9SzQxaCm8) 20min

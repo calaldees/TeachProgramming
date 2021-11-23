@@ -9,6 +9,58 @@ I need to cross reference all of this against
 
 ---
 
+
+```mermaid
+graph LR
+    
+
+    subgraph collaboration [collaboration]
+        timeboxed_challenges[short challenges pair-or-individual]
+        timeboxed_prototype[hack days]
+        pass_project[Pass on a project]
+        version_control
+        showcase
+        mentoring[Pier Mentoring]
+    end
+
+    subgraph self [self]
+        creativity_small[Small creative projects]
+        creative_large[Longer term creative projects]
+        tt --> timeboxed_challenges
+    end
+
+
+    subgraph academic [academic]
+        projects[projects linked to theory - Self paced]
+        reference[Multi Language Reference]
+        spec[Specification bingo]
+        real_qualification
+        exam_questions --> timeboxed_challenges
+    end
+
+    subgraph engineering [engineering]
+        real[Complete Real Programs]
+        tools[Real Tools]
+        tech_sessions
+        rr --> reference
+    end
+
+
+    community[Community]
+
+
+    %%creativity --> community
+    %%real --> community
+    %%projects --> community
+    %%tools --> community
+    
+```
+
+* Purpose/Goal
+    * Qualification?
+    * Game?
+    * Build at a Hack day?
+    * Social/Atmosphere (time well spent)
 * Spec given to students
     * Spec bingo -> tick + ask
 * CheatSheet - encourage freely move between languages
@@ -39,18 +91,26 @@ I need to cross reference all of this against
     * context, real
     * (See conversational programmers Cunningham)
 * Theory guided by regular interleaving of exam questions on paper
-* Sometimes don't even tell them what the lesson is about - just show them some code and Predict, Run, Investigate (PRIMM)
-    * E.g. by ref or by val example
+* Mix it up!
+    * Sometimes don't even tell them what the lesson is about - just show them some code and Predict, Run, Investigate (PRIMM)
+        * E.g. by ref or by val example
+    * Conduct an entire session as mutes (no talking at all by anyone - except emergencies)
+    * Just use 'off' hand - (somehow restrict dominant hand in a fun/non-intrusive way?)
+    * Don't touch the mouse (unplug it!)
 * Final self directed Personal project (A-level project)
     * Culmination of skills
     * Create a game?
     * Hardware? HCI? Output DMX?
+* Creativity
+    * Self directed/conceived projects for the joy/sake of it
+    * Demoscene
 * Meta-cognition (concept?)
     * Structured Retrospectives
     * Process + actions
 * Group Wiki (concept?)
     * Publicly visible?
     * 'Who can' list?
+    * Group solutions to code problems?
 * Peer Mentor (with a big enough and multiple generation group)
     * Learners are paired with (slightly) more experienced mentor
         * The course lead can pair appropriately by ability/personality
@@ -68,6 +128,10 @@ I need to cross reference all of this against
 * Hack time presentations (concept)
     * bring something cool?
     * Show feature/tool you've encountered
+* Regular pair-program a programming challenge
+    * Different (rotate) partners each time
+    * What makes you a good pair partner - what are good partner traits?
+    * Respect/understanding for your partners current level/belt/development
 * Encourage participation at an event
     * HackDay
     * BarCamp (local tech culture meet/present)
@@ -87,7 +151,7 @@ Ownership of own learning
 
 * [On a Metodology for Creating School Curricula in Computing](https://ioinformatics.org/journal/v11_2017_93_107.pdf)
 
-* My preference is Teach algorithums at the _program level_
+* My preference is Teach algorithms at the _program level_
 * [Teaching algorithms in upper secondary education: a study of teachers’ pedagogical content knowledge](https://www.tandfonline.com/doi/full/10.1080/08993408.2021.1935554)
     * >  introducing computing concepts without the use of a computer may keep “learners from the crucial computational experiences involved in CT’s common practice”
     * > “the ‘programming vs. Unplugged’ debate should not be an ‘either-or’ debate”
@@ -169,6 +233,7 @@ Other
     * Conversational Programmers (High level patterns - in blocks)
     * Build working program in chunked examples
     * (Kind of like my engineering projects - felt success - felt real world)
+    * [Mismatch of Expectations: How Modern Learning Resources Fail Conversational Programmers](https://dl.acm.org/doi/10.1145/3173574.3174085)
 * Parallels in MFL?
     * [Study shows exposure to multiple languages may make it easier to learn one](https://www.washington.edu/news/2019/09/05/study-shows-exposure-to-multiple-languages-may-make-it-easier-to-learn-one/)
 
@@ -209,11 +274,44 @@ Other
         * hack time
     * Very similar principles to productive adults
 
+* [How to help a student get unstuck](https://offbyone.us/posts/how-to-help-a-student-get-unstuck/) 2021 (short 5min article)
+    * Forget about the program, focus on the programmer
+    * Don’t let them overheat
+    * How to teach #
+        * Try to ask questions more often than you give information.
+        * avoid touching a student’s keyboard. 
+        * prompt the student to summarize what they’ve learned.
+    * How to debug
+        * even professional programers get stuck, and that there’s a methodology for getting unstuck.
+    * How to support
+        * Hear their concerns and anxieties, and let them know that they’ll get through it.
+        * Lots of early stage programmers don’t realize that it’s normal to struggle
+    * Putting it all together
+
+* [The Computer Science Student-Centred Instructional Continuum - CS-SCIC](https://blog.teachcomputing.org/the-computer-science-student-centred-instructional-continuum/) NCCE citing (Waite & Liebe, 2021)
+    1. Copy code: students are given step-by-step instructions to follow, e.g. copy an example program;
+    2. Targeted tasks: students are given a short task, e.g. fix buggy code, Parsons problems;
+    3. Shared coding: the teacher thinks aloud as they design and write code, sometimes called demonstrating or live coding, e.g. teacher models how to write a program;
+    4. Project-based: students are provided with a project goal and create a solution, e.g.create a quiz in Scratch;
+    5. Inquiry-based: students consider a scenario or question and create a solution, e.g. explore a set of code commands and discover ways to use them;
+    6. Tinkering: completely unstructured student-led exploration, e.g. explore a software”
+
+* [Summary of Semantic Transfer in Programming Languages: Exploratory Study of Relative Novices](https://blog.teachcomputing.org/summary-of-semantic-transfer-in-programming-languages-exploratory-study-of-relative-novices/) dec 2020
+    * when a second language is encountered
+        * A carryover concept (similar meaning in both the old and new context)
+        * A changed concept (different meaning in the new context)
+        * A novel concept (completely new to the learner)
+
+
 ---
 
- Collaborating with other profetionals
+ Collaborating with other professionals
 
  * [Pedagogy by proxy: developing computing PCK through shared lesson resources](https://sure.sunderland.ac.uk/id/eprint/13728/) Hidson, Elizabeth (2021)
+
+* [Exemplary Progress: A network to share best practice](https://mirandanet.ac.uk/wp-content/uploads/2019/06/exemplary_progress_fe.pdf) Becta 2008
+    * TODO - realted to sharing practice
+
 ---
 
 
@@ -270,3 +368,44 @@ Expressiveness
     The programmer should be able to express their algorithm naturally. 
 Abstraction
     The language should support a high level of data and control abstraction. 
+
+
+https://store.steampowered.com/app/504210/SHENZHEN_IO/
+https://store.steampowered.com/app/619150/while_True_learn/
+
+
+
+* [mimirhq.com](https://www.mimirhq.com/)
+    * Scale and automate your Computer Science classroom.
+    * Mimir Classroom provides the tools for instructors to efficiently teach Computer Science courses of any scale without compromising quality of education for students.
+    * [Assignment](https://www.mimirhq.com/classroom/programming-assignments)
+    * [Projects](https://www.mimirhq.com/classroom/programming-projects)
+        * Automatic grading
+        * Hidden tests
+        * Plagiarism detection
+        * Online IDE
+    * [Open Educational Resources](https://www.mimirhq.com/classroom/open-educational-resources) OER
+
+* [Hacker News folk wisdom on visual programming](https://drossbucket.com/2021/06/30/hacker-news-folk-wisdom-on-visual-programming/)
+* [Learnable Programming](http://worrydream.com/#!/LearnableProgramming) Bret Victor / September 2012
+    * Designing a programming system for understanding programs
+
+* [Why Programming is Hard to Fundamentally Improve](https://aidancunniffe.com/why-programming-is-hard-to-fundamentally-improve-4101612d4ad9)
+    * > I think most of the stalled innovations in programming focused disproportionally on learnability. The problem is, within a few weeks of using any paradigm developers usually have built a repository of habits that keep them from making mistakes. For instance, if a new visual logic builder prides itself on preventing all syntax errors, that’s really cool, but most developers have learned to do that automatically.
+
+
+* [Innovative teaching in computer science: what does it mean and why do we need it?](https://www.tandfonline.com/doi/full/10.1080/08993408.2010.486239) 2010 Y. Ben-David Kolikant 
+    * encourage students to become more active in their learning, 
+    * make the CS classroom more authentic, more similar to the real work setting of CS practitioners
+    * build on students' existing knowledge and understanding
+    * encourage peer learning in various ways. In all papers, ICT is used to leverage these efforts.
+    * > bring about a transformation in the students' professional point of view: Helping them become competent and appreciative of what CS professionals deem as problems worth solving, acceptable work process, elegant and effective solutions, knowledge worth knowing, and so forth
+    * “Experiences with lab-centric instruction”, Titterton, Lewis, and Clancy
+        * > substituting lecture for lab time
+    * Teaching computer science through problems, not solutions”, Fee and Holland-Minkley propose a problem-based learning
+    * Constructive evaluation: a pedagogy of student-contributed assessment”, Luxton-Reilly and Denny
+        * > “constructive evaluation”. Students are required to author questions that assess one or more of the learning outcomes of a course and provide a sample solution
+
+
+* [CDIO](https://en.wikipedia.org/wiki/CDIO_Initiative)
+    * Conceive Design Implement Operate. The CDIO Initiative is an educational framework that stresses engineering fundamentals set in the context of conceiving, designing, implementing and operating real-world systems and products.

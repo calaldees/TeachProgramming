@@ -19,6 +19,7 @@ using System;                                                                   
 using System.IO;                                                                // VER: file_write
 using System.Collections.Generic;                                               // VER: define_map
 using System.Linq;                                                              // VER: list_comprehension
+//using System.Text.Json;  // TODO see json_data
 
 public class Star { // VER: class
     public int x; // VER: class
@@ -51,6 +52,7 @@ public class CSharp {
     string username = "Betty";                                                  // VER: define_variables
     double distance = 3.14;                                                     // VER: define_variables
     bool email_errors = true;                                                   // VER: define_variables
+    string multiline = $@"a b";                                                 // VER: define_variables
   }
 
   void define_constants() {
@@ -124,6 +126,16 @@ public class CSharp {
     }  // VER: for_each_loop
   }
 
+
+  void until_loop() {
+    int count = 0;                             // VER: until_loop
+    do {                                       // VER: until_loop
+      Console.WriteLine("Count is " + count);  // VER: until_loop
+      count = count + 2;                       // VER: until_loop
+    } while(count < 10);                       // VER: until_loop
+  }
+
+
   void file_write() {
     string line_to_write = "Append to end of file"; // VER: file_write
     try { // VER: file_write
@@ -182,6 +194,12 @@ public class CSharp {
     Console.WriteLine(line_split[1]);
     string csv_line_test2 = String.Join(" : ", line_split);                            // VER: split_strings
   }
+  void string_compare() {
+    // // TODO: string_compare  // VER: string_compare
+  }
+  void convert_string_to_integer_and_back() {
+    // // TODO: // VER: convert_string_to_integer_and_back
+  }
 
 
   void sayHello() {        // VER: function
@@ -219,6 +237,9 @@ public class CSharp {
     if (Array.IndexOf(bb, "a") >= 0) {  // VER: define_fixed_array
       Console.WriteLine("a exists in array");  // VER: define_fixed_array
     }  // VER: define_fixed_array
+
+    // TODO:
+    // indexOf and join
   }
 
   void define_map() {
@@ -269,6 +290,7 @@ public class CSharp {
     if (cc.Contains("z")) {                  // VER: define_list
       Console.WriteLine("z exists in list");  // VER: define_list
     } // VER: define_list
+    // TODO: concat lists
   }
 
   void define_set() {
@@ -384,6 +406,42 @@ public class CSharp {
     Console.WriteLine(String.Join(",",data4));
   }
 
+
+  void json_data() {
+    // using System.Text.Json;                                                  // VER: json_data
+    // https://docs.microsoft.com/en-us/dotnet/api/system.text.json?view=net-5.0
+    // https://docs.microsoft.com/en-us/dotnet/standard/serialization/system-text-json-how-to?pivots=dotnet-5-0
+    // https://stackoverflow.com/a/58495751/3356840
+    // https://marcroussy.com/2020/08/17/deserialization-with-system-text-json/
+    // TODO: WARNING!! this string inline needs investigating
+    var stringifiedJson = @"{                           // VER: json_data
+      ""Topic"":""Json Serialization Part 1"",          // VER: json_data
+      ""Part"":1,                                       // VER: json_data
+      ""Author"":""Marc"",                              // VER: json_data
+      ""Co-Author"":""Helen"",                          // VER: json_data
+      ""Keywords"":[""json"",""netcore"",""parsing""]   // VER: json_data
+    }";                                                 // VER: json_data
+    /*
+    var blogPost = JsonDocument.Parse(stringifiedJson);  // VER: json_data
+    var topic = blogPost.RootElement.GetProperty("Topic").GetString();  // VER: json_data
+    Console.WriteLine(topic);  // VER: json_data
+    */
+
+    // Can deserialise into data object type      // VER: json_data
+    // var personObject = JsonSerializer.Deserialize<Person>(jsonPerson);    // VER: json_data
+  }
+
+  static void sort() {
+    // sort reverse with custom comparator
+    // TODO:
+    // https://stackoverflow.com/questions/15494463/how-can-i-do-an-inline-sort
+    // (a, b) => String.Compare(a.Name, b.Name)
+    // Consider "Key" to be inline with python?
+    string[] data = {"b", "d", "c", "a"};       // VER: sort
+    Array.Sort(data);                           // VER: sort
+    Console.WriteLine(String.Join(",", data));  // VER: sort
+  }
+
   public static void Main(string[] args) {new CSharp();}
   CSharp() {
       hello_world();
@@ -400,6 +458,7 @@ public class CSharp {
       file_read();
       string_concatenation();
       split_strings();
+      string_compare();
       function();
       function_with_return_value();
       sleep();
@@ -411,6 +470,8 @@ public class CSharp {
       define_2d_arrays();
       list_comprehension();
       dict_comprehension();
+      json_data();
+      sort();
   }
 }
 

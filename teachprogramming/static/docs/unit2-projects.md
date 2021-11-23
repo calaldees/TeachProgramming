@@ -1,13 +1,16 @@
 Unit 2?
 ======
 
-
+regex, json
 
 2d arrays (design decision)
 * jagged arrays (lists of lists)
 * 1d array with translation function
 * dict of cords
 
+
+Algorithm to select correct coins for change (at a cash register)
+  what happens if we run out of pound coins?
 
 
 Using and/or/not to drive a seven segment display from a 4 bit number
@@ -59,6 +62,7 @@ digit is a terminal
 bnf for car reg LLNN LLL
 
 base case?
+see graph traversal
 
 ## Finite state machines
 
@@ -91,6 +95,7 @@ reverse polish notation
   * Test harness? 100000 items and timing performance?
 graph (weighted directed/undirected)
  traversal
+ maths bacars nor form
 tree (root, connected, undirected) binary
  traversal
 vector (dot product)

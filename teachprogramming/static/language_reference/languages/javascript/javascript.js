@@ -35,7 +35,8 @@ function define_variables() {
   let count = 0;              // VER: define_variables
   let username = "Betty";     // VER: define_variables
   let distance = 3.14;        // VER: define_variables
-  let email_errors = true;    // VER: define_variables    
+  let email_errors = true;    // VER: define_variables
+  let multiline = `a b`;      // VER: define_variables
 }
 
 function define_constants() {
@@ -164,13 +165,13 @@ function string_concatenation() {
   console.log(fullname);
 }
 
-function convert_string_to_interger_and_back() {
-  let sum = 5 + parseInt('5');    // VER: conert_string_to_interger_and_back
-  console.log(String(sum))        // VER: conert_string_to_interger_and_back
+function convert_string_to_integer_and_back() {
+  let sum = 5 + Math.floor(Number("5"));    // VER: convert_string_to_integer_and_back
+  console.log(String(sum));                 // VER: convert_string_to_integer_and_back
 }
 
 function convert_double_to_string_and_back() {
-  let f = parseFloat("3.1415");   // VER: convert_double_to_string_and_back
+  let f = Number("3.1415");   // VER: convert_double_to_string_and_back
   console.log(String(f));         // VER: convert_double_to_string_and_back
 }
 
@@ -235,6 +236,7 @@ function define_list() {
   if (cc.indexOf("z") >= 0) {  // VER: define_list
     console.log("z exists in list");  // VER: define_list
   }  // VER: define_list
+  // TODO: concat lists
 }
 
 
@@ -267,10 +269,12 @@ function split_strings() {
   let csv_line_test2 = line_split.join(" : ");         // VER: split_strings
 }
 
+
 function random_number() {
-  let new_num = Math.round(Math.random() * 100);
-  let new_fraction = Math.random()
+  const new_num = Math.floor(Math.random() * 100);    // VER: random_number
+  const new_fraction = random.random();      // VER: random_number
 }
+
 
 function _switch() {
     
@@ -314,10 +318,6 @@ function _sleep() {
   let timeout = setTimeout(after_sleep, 1000);    // VER: sleep
 }
 
-function random_number() {
-  const new_num = Math.floor(Math.random() * 100);    // VER: random_number
-  const new_fraction = random.random();      // VER: random_number
-}
 
 
 //------------------------------------------------------------------------------
@@ -417,7 +417,8 @@ function define_2d_arrays() {
   const value = 1;
 
   grid1 = [...Array(height)].map(   // VER: define_2d_arrays_with_nested_arrays
-    () => [...Array(width)].map(() => value));   // VER: define_2d_arrays_with_nested_arrays
+    () => [...Array(width)].map(() => value)  // VER: define_2d_arrays_with_nested_arrays
+  );   // VER: define_2d_arrays_with_nested_arrays
   grid1[2][1] = 5;    // VER: define_2d_arrays_with_nested_arrays
   console.log(grid1[0][0]);   // VER: define_2d_arrays
 
@@ -451,10 +452,41 @@ function define_2d_arrays() {
   console.log(grid3["0,0"]);   // VER: define_2d_arrays_with_dictionary
 }
 
+
+function json_data(){
+  const data = [                                     // VER: json_data
+    {'a': 1, 'b': 2},                          // VER: json_data
+    {'c': 3, 'd': 4},                          // VER: json_data
+    {'e': [5,6,7], 'f': {'g': 10, 'h': "something"}}   // VER: json_data
+  ];         // VER: json_data
+  const string_data = JSON.stringify(data);          // VER: json_data
+  console.log(string_data);              // VER: json_data
+  // '[{"a": 1, "b": 2}, {"c": 3, "d": 4}, {"e": [5, 6, 7], "f": {"g": 10, "h": "something"}}]'
+  const data2 = JSON.parse(string_data);         // VER: json_data
+}
+
+
+function sort() {
+  // TODO comparator               // VER: sort
+  let numbers = [4, 2, 5, 1, 3];   // VER: sort
+  numbers.sort((a, b) => a - b);   // VER: sort
+  //console.log(numbers);            // VER: sort
+  // [1, 2, 3, 4, 5]
+  
+}
+
+function assertion() {
+  let name = "bob"
+  let count = 3
+  console.assert(name == "bob", `I am expecting ${name} to be 'bob'`);  // ver: assertion
+  console.assert(count >= 3);  // ver: assertion
+}
+
 //------------------------------------------------------------------------------
 
 function main() {
   hello_world();
+  comment();
   //read_line_from_console();
   define_variables();
   define_constants();
@@ -466,6 +498,9 @@ function main() {
   file_write();
   //file_read()
   //function()
+  string_concatenation();
+  convert_string_to_integer_and_back();
+  convert_double_to_string_and_back();
   function_with_return_value();
   list_comprehension();
   dict_comprehension();
@@ -475,7 +510,12 @@ function main() {
   define_set();
   function_with_param_function();
   define_2d_arrays();
-
+  json_data();
+  error_handling();
+  split_strings();
+  random_number();
+  sort();
+  assertion();
 }
 main();
 

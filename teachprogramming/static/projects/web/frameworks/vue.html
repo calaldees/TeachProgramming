@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
+	<title>Vue.js Test</title>
+	<style>
+		
+	</style>
+	<script src="https://unpkg.com/vue@next"></script> <!-- https://v3.vuejs.org/guide/installation.html#cdn -->
+	<!-- <script src="vue.js"></script> -->
+</head>
+<body>
+	<h1>Vue.js Test</h1>
+	<div id="app">
+
+		<h2>Create</h2>
+		<form @submit.prevent="createItem">
+			<input name="user_id" v-model="create.user_id" placeholder="user_id">
+			<input name="lat" v-model="create.lat" placeholder="lat">
+			<input name="lon" v-model="create.lon" placeholder="lon">
+			<input name="image" v-model="create.image" placeholder="image">
+			<input name="keywords" v-model="create.keywords" placeholder="keywords">
+			<textarea name="description" v-model="create.description" placeholder="description"></textarea>
+			<button data-action="create_item">Create Item</button>
+		</form>
+
+		<h2>Items</h2>
+		<ul>
+			<li v-for="item in items">
+				<img src="{{item.image}}">
+				<span data-field="id">{{item.id}}</span>
+				{{item}}
+				<button data-action="delete" @click="deleteItem(item.id)">Delete</button>
+			</li>
+		</ul>
+
+	</div>
+<script type="module">
+
+	const urlParams = new URLSearchParams(window.location.search);
+	const urlAPI = (urlParams.get('api') || '/api/v1').replace(/\/$/, '');  // Get api url (and remove trailing slash if present)
+
+	const RootComponent = {
+	  data() {
+		return {
+			create: {
+				user_id: 'bob',
+				lat: '1',
+				lon: '1',
+				description: 'item from cypress test',
+				image: 'http://placekitten.com/100/100',
+				keywords: 'item1, item2, item3',
+			},
+			items: [],
+		}
+	  },
+	  created() {
+		this.updateItems()
+	  },
+	  components: {
+		//CreateItem,
+	  },
+	  methods: {
+		updateItems() {
+			fetch(`${urlAPI}/items`, {
+			})
+				.then(response => response.json())
+				.then(json => {this.items = json})
+			.catch(err => console.error(err))
+		},
+		clearInput() {
+			this.create = {...this.create, ...{
+				user_id: undefined,
+				lat: undefined,
+				lon: undefined,
+				description: undefined,
+				image: undefined,
+				keywords: undefined,
+			}}
+		},
+		createItem() {
+			fetch(`${urlAPI}/item`, {
+				method: 'POST',
+				headers: {'Content-Type': 'application/json'},
+				body: JSON.stringify(this.create),
+			})
+				.then(response => response.json())
+				.then(()=>this.updateItems())
+				.then(()=>this.clearInput())
+			.catch(err => console.error(err));
+		},
+		deleteItem(item_id) {
+			fetch(`${urlAPI}/item/${item_id}`, {
+				method: 'DELETE',
+			})
+				.then(()=>this.updateItems())
+			.catch(err => console.error(err));
+		}
+	  },
+	}
+	const app = Vue.createApp(RootComponent)
+	const vm = app.mount('#app')
+</script>
+
+</body>
+</html>

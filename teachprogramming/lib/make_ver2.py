@@ -15,6 +15,9 @@ except ImportError:
     from .make_ver import make_ver  # TODO: deprecate and reimplement
 
 
+EXCLUDED_EXTENSIONS = frozenset({'ver', 'yaml', 'yml', 'txt', 'md', 'json', 'csproj', ''})
+
+
 def parse_legacy_version_data(data):
     r"""
     >>> ver = parse_legacy_version_data('''
@@ -119,7 +122,7 @@ class ProjectVersions():
 
     @cached_property
     def langauges(self):
-        return frozenset(self.files.keys()) - frozenset({'ver', 'yaml', 'yml', 'txt', 'md', ''})
+        return frozenset(self.files.keys()) - frozenset({'txt',}) - EXCLUDED_EXTENSIONS
 
     @cached_property
     def versions(self):
@@ -226,7 +229,7 @@ class LanguageVersions():
 
     @cached_property
     def langauges(self):
-        return frozenset(self.files.keys()) - frozenset({'ver', 'yaml', 'yml', 'md', ''})
+        return frozenset(self.files.keys()) - EXCLUDED_EXTENSIONS
 
     @cached_property
     def versions(self):

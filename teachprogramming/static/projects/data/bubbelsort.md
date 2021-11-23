@@ -16,6 +16,8 @@ if __name__ == '__main__':
     print(data)
 ```
 
+`python3 FILENAME.py`
+
 ### c#
 
 ```csharp
@@ -60,6 +62,8 @@ class Main {
 }
 ```
 
+`javac Main.java && java Main`
+
 ### javascript
 
 ```javascript
@@ -74,6 +78,7 @@ data = bubbleSort(data);
 console.log(data);
 ```
 
+`node FILENAME.js`
 
 ### vb
 

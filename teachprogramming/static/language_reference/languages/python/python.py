@@ -132,6 +132,8 @@ def string_concatenation():
   fullname4 = "{} {}".format(forename, surname)                 # VER: string_concatenation
   print(fullname)
 
+def split_strings():
+  pass ## TODO # VER: split_strings
 
 def convert_string_to_integer_and_back():
   sum = 5 + int('5')                      # VER: convert_string_to_integer_and_back
@@ -183,6 +185,7 @@ def define_list():
     print(i)  # z d           # VER: define_list
   if "z" in cc:               # VER: define_list
     print("z exists in list") # VER: define_list
+  # TODO: concat list
 
 
 def define_2d_arrays():
@@ -348,6 +351,47 @@ def define_set():
   aa.add(5)       # VER: define_set
   
 
+def json_data():
+  data = [                                     # VER: json_data
+    {'a': 1, 'b': 2},                          # VER: json_data
+    {'c': 3, 'd': 4},                          # VER: json_data
+    {'e': [5,6,7], 'f': {'g': 10, 'h': "something"}}   # VER: json_data
+  ]         # VER: json_data
+  import json    # VER: json_data
+  string_data = json.dumps(data)          # VER: json_data
+  print(string_data)              # VER: json_data
+  # '[{"a": 1, "b": 2}, {"c": 3, "d": 4}, {"e": [5, 6, 7], "f": {"g": 10, "h": "something"}}]'
+  data2 = json.loads(string_data)         # VER: json_data
+
+
+def commandline_args():
+  pass  # TODO     # VER: commandline_args
+
+
+def network_tcp_send():
+  pass  # TODO    # ver: network_tcp_send
+def network_tcp_recv():
+  pass  # TODO    # ver: network_tcp_recv
+def network_udp_send():
+  pass  # TODO    # ver: network_upd_send
+def network_udp_recv():
+  pass  # TODO    # ver: network_udp_recv
+
+def file_binary():
+  pass   # TODO    # ver: file_binary
+  # TODO: seek?
+
+def assertion():
+  name = "bob"
+  count = 3
+  assert name == "bob", f"I am expecting {name} to be 'bob'"  # ver: assertion
+  assert count >= 3  # ver: assertion
+
+def sort():
+  # TODO: sort with comparator # ver: sort
+  # reverse=True - key function
+  data = ["b", "d", "c", "a"]    # ver: sort
+
 #-------------------------------------------------------------------------------
 
 if __name__ == "__main__":
@@ -377,6 +421,16 @@ if __name__ == "__main__":
   define_set()
   define_2d_arrays()
   function_with_param_function()
+  json_data()
+
+  commandline_args()
+  network_tcp_send()
+  network_tcp_recv()
+  network_udp_send()
+  network_udp_recv()
+  file_binary()
+  assertion()
+  sort()
 
   # Run all functions in order
   #for function_name in functions:

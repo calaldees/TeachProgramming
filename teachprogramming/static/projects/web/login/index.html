@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
+    <title>Login transition</title>
+    <style>
+
+    body {
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+    }
+
+    .fullscreen {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    #background {
+        position: absolute;
+    }
+    #background img {
+        object-fit: cover;
+        transition: filter 0.3s ease-out;
+        width: 100%;
+        height: 100%;
+    }
+    .login_active #background img {
+        filter: blur(0.5em);
+    }
+
+    .flex_center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #login {
+        position: relative;
+        opacity: 0;
+        top: 10vh;
+        filter: blur(0.5em);
+        transition: 
+            opacity 0.5s ease-out, 
+            top 0.5s ease-out, 
+            filter 0.5s ease-out
+        ;
+    }
+    .login_active #login {
+        opacity: 1;
+        top: 0;
+        filter: blur(0.0em);
+    }
+
+    #profile_picture {
+        font-size: 15vh;
+        width: 30vh;
+        height: 30vh;
+        background-color: lightgray;
+        border-radius:50%;
+    }
+    #input {
+        margin: 1em;
+    }
+    #input input {
+        display: block;
+        width: 100%;
+    }
+
+    </style>
+    <script src=""></script>
+</head>
+<body>
+
+    <div id="background" class="fullscreen">
+        <img src="Canterbury-cathedral-wyrdlight.jpg">
+    </div>
+
+
+    <div id="login" class="fullscreen flex_center">
+        <div>
+            <div id="profile_picture" class="flex_center">
+                &#128100;
+            </div>
+
+            <div id="input">
+                <input name="username" placeholder="Username">
+                <input name="password" type="password" placeholder="Password">
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- html here -->
+
+<script type="module">
+
+    const $body = document.getElementsByTagName("body")[0];
+    const $background = document.getElementById("login");
+    //const $background = $body;
+    $background.addEventListener("click", event => {
+        $body.classList.toggle("login_active");
+    });
+
+</script>
+</body>
+</html>
