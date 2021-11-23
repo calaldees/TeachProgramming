@@ -164,13 +164,13 @@ function string_concatenation() {
   console.log(fullname);
 }
 
-function convert_string_to_interger_and_back() {
-  let sum = 5 + parseInt('5');    // VER: conert_string_to_interger_and_back
-  console.log(String(sum))        // VER: conert_string_to_interger_and_back
+function convert_string_to_integer_and_back() {
+  let sum = 5 + Math.floor(Number("5"));    // VER: convert_string_to_integer_and_back
+  console.log(String(sum));                 // VER: convert_string_to_integer_and_back
 }
 
 function convert_double_to_string_and_back() {
-  let f = parseFloat("3.1415");   // VER: convert_double_to_string_and_back
+  let f = Number("3.1415");   // VER: convert_double_to_string_and_back
   console.log(String(f));         // VER: convert_double_to_string_and_back
 }
 
@@ -268,10 +268,12 @@ function split_strings() {
   let csv_line_test2 = line_split.join(" : ");         // VER: split_strings
 }
 
+
 function random_number() {
-  let new_num = Math.round(Math.random() * 100);
-  let new_fraction = Math.random()
+  const new_num = Math.floor(Math.random() * 100);    // VER: random_number
+  const new_fraction = random.random();      // VER: random_number
 }
+
 
 function _switch() {
     
@@ -315,10 +317,6 @@ function _sleep() {
   let timeout = setTimeout(after_sleep, 1000);    // VER: sleep
 }
 
-function random_number() {
-  const new_num = Math.floor(Math.random() * 100);    // VER: random_number
-  const new_fraction = random.random();      // VER: random_number
-}
 
 
 //------------------------------------------------------------------------------
@@ -470,6 +468,7 @@ function json_data(){
 
 function main() {
   hello_world();
+  comment();
   //read_line_from_console();
   define_variables();
   define_constants();
@@ -481,6 +480,9 @@ function main() {
   file_write();
   //file_read()
   //function()
+  string_concatenation();
+  convert_string_to_integer_and_back();
+  convert_double_to_string_and_back();
   function_with_return_value();
   list_comprehension();
   dict_comprehension();
@@ -491,6 +493,9 @@ function main() {
   function_with_param_function();
   define_2d_arrays();
   json_data();
+  error_handling();
+  split_strings();
+  random_number();
 
 }
 main();
