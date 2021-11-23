@@ -21,6 +21,12 @@ using System.Collections.Generic;                                               
 using System.Linq;                                                              // VER: list_comprehension
 //using System.Text.Json;  // TODO see json_data
 
+public class Star { // VER: class
+    public int x; // VER: class
+    public int y; // VER: class
+    public int speed; // VER: class
+} // VER: class
+
 public class CSharp {
 
   void hello_world() {
@@ -105,12 +111,21 @@ public class CSharp {
     }  // VER: while_loop
   }
 
+  void until_loop() { // VER: until_loop
+    string word = "gibber"; // VER: until_loop
+    do { // VER: until_loop
+      word = word + word; // VER: until_loop
+    } while (word.Length < 10); // VER: until_loop
+    Console.WriteLine(word); // VER: until_loop
+  } // VER: until_loop
+
   void for_each_loop() {
     string[] ff = new string[]{"a","b","c"}; // VER: for_each_loop
     foreach (string f in ff) {  // VER: for_each_loop
       Console.WriteLine(f);  // VER: for_each_loop
     }  // VER: for_each_loop
   }
+
 
   void until_loop() {
     int count = 0;                             // VER: until_loop
@@ -119,6 +134,7 @@ public class CSharp {
       count = count + 2;                       // VER: until_loop
     } while(count < 10);                       // VER: until_loop
   }
+
 
   void file_write() {
     string line_to_write = "Append to end of file"; // VER: file_write
@@ -153,6 +169,15 @@ public class CSharp {
     }                                                                           // VER: file_read
 
   }
+
+  void error_handling() {                        // VER: error_handling
+    try {                                        // VER: error_handling
+      // thing that may error                    // VER: error_handling
+    }                                            // VER: error_handling
+    catch{                                       // VER: error_handling
+      // what to do if things go wrong           // VER: error_handling
+    }                                            // VER: error_handling
+  }                                              // VER: error_handling
 
   void string_concatenation() {
     string forename = "bob";
@@ -234,7 +259,6 @@ public class CSharp {
 
   }
 
-
   void sleep() {
     System.Threading.Thread.Sleep(1000);
   }
@@ -244,6 +268,12 @@ public class CSharp {
       int new_num = random.Next(0, 100);  // VER: random_number
       double new_fraction = random.NextDouble();     // VER: random_number
 
+  }
+
+  void _class() {
+    Star s = new Star();    // VER: class
+    s.x = 100;              // VER: class
+    Console.WriteLine(s.x); // VER: class
   }
 
   void define_list() {
@@ -376,6 +406,7 @@ public class CSharp {
     Console.WriteLine(String.Join(",",data4));
   }
 
+
   void json_data() {
     // using System.Text.Json;                                                  // VER: json_data
     // https://docs.microsoft.com/en-us/dotnet/api/system.text.json?view=net-5.0
@@ -465,9 +496,9 @@ public delegate void MyDelegate(string msg); // declare a delegate
 
 // set target method
 MyDelegate del = new MyDelegate(MethodA);
-// or 
-MyDelegate del = MethodA; 
-// or set lambda expression 
+// or
+MyDelegate del = MethodA;
+// or set lambda expression
 MyDelegate del = (string msg) =>  Console.WriteLine(msg);
 
 // target method
@@ -478,5 +509,3 @@ static void MethodA(string message)
 
 
 */
-
-
