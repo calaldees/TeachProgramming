@@ -11,21 +11,49 @@ I need to cross reference all of this against
 
 
 ```mermaid
-graph TD
-    creativity[Creativity] 
-    real[Real Programs]
-    projects[Self paced theory projects]
-    tools[Tools and Reference]
+graph LR
     
-    
-    subgraph cc [community]
-        community((community))
+
+    subgraph collaboration [collaboration]
+        timeboxed_challenges[short challenges pair-or-individual]
+        timeboxed_prototype[hack days]
+        pass_project[Pass on a project]
+        version_control
+        showcase
+        mentoring[Pier Mentoring]
     end
 
-    creativity --> community
-    real --> community
-    projects --> community
-    tools --> community
+    subgraph self [self]
+        creativity_small[Small creative projects]
+        creative_large[Longer term creative projects]
+        tt --> timeboxed_challenges
+    end
+
+
+    subgraph academic [academic]
+        projects[projects linked to theory - Self paced]
+        reference[Multi Language Reference]
+        spec[Specification bingo]
+        real_qualification
+        exam_questions --> timeboxed_challenges
+    end
+
+    subgraph engineering [engineering]
+        real[Complete Real Programs]
+        tools[Real Tools]
+        tech_sessions
+        rr --> reference
+    end
+
+
+    community[Community]
+
+
+    %%creativity --> community
+    %%real --> community
+    %%projects --> community
+    %%tools --> community
+    
 ```
 
 * Purpose/Goal
@@ -123,7 +151,7 @@ Ownership of own learning
 
 * [On a Metodology for Creating School Curricula in Computing](https://ioinformatics.org/journal/v11_2017_93_107.pdf)
 
-* My preference is Teach algorithums at the _program level_
+* My preference is Teach algorithms at the _program level_
 * [Teaching algorithms in upper secondary education: a study of teachers’ pedagogical content knowledge](https://www.tandfonline.com/doi/full/10.1080/08993408.2021.1935554)
     * >  introducing computing concepts without the use of a computer may keep “learners from the crucial computational experiences involved in CT’s common practice”
     * > “the ‘programming vs. Unplugged’ debate should not be an ‘either-or’ debate”
