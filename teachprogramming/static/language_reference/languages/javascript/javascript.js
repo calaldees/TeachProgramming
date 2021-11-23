@@ -35,7 +35,8 @@ function define_variables() {
   let count = 0;              // VER: define_variables
   let username = "Betty";     // VER: define_variables
   let distance = 3.14;        // VER: define_variables
-  let email_errors = true;    // VER: define_variables    
+  let email_errors = true;    // VER: define_variables
+  let multiline = `a b`;      // VER: define_variables
 }
 
 function define_constants() {
