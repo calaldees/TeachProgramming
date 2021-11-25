@@ -4,7 +4,7 @@
 
 using System;
 
-public class HelloWorld
+public class HelloWorld2
 {
     public static void Main(string[] args)
     {

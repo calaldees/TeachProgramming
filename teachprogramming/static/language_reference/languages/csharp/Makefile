@@ -1,15 +1,14 @@
-DOCKER_IMAGE:=language_reference_csharp
-run: build
-	docker run --rm -it ${DOCKER_IMAGE}
+DOCKER_IMAGE:=dotnet
+DOCKER_RUN:=docker run --rm -it --volume ${PWD}:/app/:ro --volume /app/bin --volume /app/obj ${DOCKER_IMAGE}
+
+compile_and_run_current_folder_in_container:
+	${DOCKER_RUN}
 build:
+	mkdir -p bin obj
 	docker build --tag ${DOCKER_IMAGE} .
+run:
+	docker run --rm -it ${DOCKER_IMAGE}
 shell:
-	docker run \
-		--rm -it \
-		--volume ${PWD}/csharp.cs:/csharp/csharp.cs:ro \
-		${DOCKER_IMAGE} \
-		/bin/bash
-install_local_dependencies:
-	# ubuntu packages
-	# mono-vbnc
-	sudo apt instal mono-mcs
+	${DOCKER_RUN} /bin/bash
+clean:
+	rm -rf bin obj

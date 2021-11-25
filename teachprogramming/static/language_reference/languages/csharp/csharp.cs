@@ -19,7 +19,7 @@ using System;                                                                   
 using System.IO;                                                                // VER: file_write
 using System.Collections.Generic;                                               // VER: define_map
 using System.Linq;                                                              // VER: list_comprehension
-//using System.Text.Json;  // TODO see json_data - not available in mono as it only up to dotnet.4.x
+using System.Text.Json;  // TODO see json_data - not available in mono as it only up to dotnet.4.x
 
 public class Star { // VER: class
     public int x; // VER: class
@@ -27,7 +27,9 @@ public class Star { // VER: class
     public int speed; // VER: class
 } // VER: class
 
-public class CSharp {
+namespace Main
+{
+public class Program {
 
   void hello_world() {
   // public class HelloWorld {                                                  // VER: hello_world
@@ -414,6 +416,10 @@ public class CSharp {
     // https://stackoverflow.com/a/58495751/3356840
     // https://marcroussy.com/2020/08/17/deserialization-with-system-text-json/
     // TODO: WARNING!! this string inline needs investigating
+
+    var stringifiedJson = @"{ ""Topic"":""Json Serialization Part 1"",""Part"":1,""Author"":""Marc"",""Co-Author"":""Helen"",""Keywords"":[""json"",""netcore"",""parsing""]}";
+    /*
+    Hack to allow pretty pretting on cheat sheet of `stringifiedJson`
     var stringifiedJson = @"{                           // VER: json_data
       ""Topic"":""Json Serialization Part 1"",          // VER: json_data
       ""Part"":1,                                       // VER: json_data
@@ -421,11 +427,10 @@ public class CSharp {
       ""Co-Author"":""Helen"",                          // VER: json_data
       ""Keywords"":[""json"",""netcore"",""parsing""]   // VER: json_data
     }";                                                 // VER: json_data
-    /*
+    */
     var blogPost = JsonDocument.Parse(stringifiedJson);  // VER: json_data
     var topic = blogPost.RootElement.GetProperty("Topic").GetString();  // VER: json_data
     Console.WriteLine(topic);  // VER: json_data
-    */
 
     // Can deserialise into data object type      // VER: json_data
     // var personObject = JsonSerializer.Deserialize<Person>(jsonPerson);    // VER: json_data
@@ -442,8 +447,10 @@ public class CSharp {
     Console.WriteLine(String.Join(",", data));  // VER: sort
   }
 
-  public static void Main(string[] args) {new CSharp();}
-  CSharp() {
+
+  // Main ----------------------------------------------------------------------
+
+  Program() {
       hello_world();
       //read_line_from_console();
       comment();
@@ -473,8 +480,9 @@ public class CSharp {
       json_data();
       sort();
   }
+  public static void Main(string[] args) {new Program();}
 }
-
+} // end namespace
 
 /*
 List<int> termsList = new List<int>();
