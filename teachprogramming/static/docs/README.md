@@ -9,6 +9,34 @@ I need to cross reference all of this against
 
 ---
 
+* [Where the Humanities Aren’t in Crisis - An outlandish new venture in liberal education.](https://hedgehogreview.com/web-features/thr/posts/where-the-humanities-arent-in-crisis)
+    * > ZENA: the idea would be to cut through all the red tape: no grades, no credit, no degrees, no fees, no vice-presidents—even no climbing wall, if you can believe it.
+        > ME: What would the students get out of it then?
+        > ZENA: They’d study great things and cultivate the life of the mind.
+        > ME: OK . . . but what would I get out of it?
+        > ZENA: You’d also study great things and cultivate the life of the mind.
+        > ME: You mean we’d be focused on education—like, just because education is good?
+        > ZENA: Yes, exactly.
+        > ME: Wow, this is so crazy it just might work!
+
+
+> ‘Owning your own learning’ is at the heart of strong self-regulation and metacognition: setting learning goals, planning, monitoring and evaluating success in tasks links to those goals; forming effective schemata that take account of big-picture questions and themes that inform subsequent conscious rehearsal and elaboration.
+https://teacherhead.com/2019/01/10/revisiting-dylan-wiliams-five-brilliant-formative-assessment-strategies/ Tom Sherington
+* giving students access to long-term topic plans, the syllabus, the wide scope overview before diving down into the details;
+* setting out milestones in the progress journey so that students can take their bearings and plan their own next steps through appropriate forms of practice, becoming increasingly independent.
+* setting out clear relational models for conceptual schema building  – as per Shimamura’s Relate in MARGE.
+* providing exemplars of performance at various levels of success up to a high/exceptional level so students can compare their own work against a scale and see for themselves where they are and what short-run learning goals might be achievable to move forward.
+
+ 
+https://craigndave.org/programming-with-time/
+* > Programming taught from the front of the class at best only ever effectively teaches a third of the class.
+* > Allowing students to learn independently at their own pace and choose their own challenges allows greater flexibility for the teacher to stretch and support individual students.
+* > students that are absent from class are not disadvantaged and can even continue their work at home. 
+* > If a question is too difficult to answer, or a problem is too difficult to solve, these can be left to be discussed with the teacher. The student can still move on to the next objective or problem.
+
+
+
+
 
 ```mermaid
 graph LR

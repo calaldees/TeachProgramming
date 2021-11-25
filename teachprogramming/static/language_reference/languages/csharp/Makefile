@@ -9,3 +9,7 @@ shell:
 		--volume ${PWD}/csharp.cs:/csharp/csharp.cs:ro \
 		${DOCKER_IMAGE} \
 		/bin/bash
+install_local:
+	# ubuntu packages
+	# mono-vbnc
+	sudo apt instal mono-mcs
