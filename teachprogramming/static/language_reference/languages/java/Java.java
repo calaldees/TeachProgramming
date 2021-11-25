@@ -224,13 +224,13 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     // TODO: join fixed arrays
     // Collection.addAll().toArray()
     // not efficient - consider collection abstractions
+  }
     // import java.util.Arrays;
     <T> T[] joinArrays(T[] a, T[] b) {
       T[] c = Arrays.copyOf(a, a.length + b.length);
       System.arraycopy(b, 0, c, a.length, b.length);
       return c;
     }
-  }
 
   void define_list() {
     List<String> cc = new ArrayList<>(Arrays.asList(new String[]{"a", "b", "c"}));  // VER: define_list

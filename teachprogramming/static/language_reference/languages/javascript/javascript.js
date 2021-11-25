@@ -161,7 +161,7 @@ function string_concatenation() {
   let forename = 'bob';
   let surname = 'jones';
   let fullname = forename + " " + surname;                // VER: string_concatenation
-  let fullname2 = `${forname} ${surname}`;                 // VER: string_concatenation
+  let fullname2 = `${forename} ${surname}`;                 // VER: string_concatenation
   console.log(fullname);
 }
 
@@ -272,7 +272,7 @@ function split_strings() {
 
 function random_number() {
   const new_num = Math.floor(Math.random() * 100);    // VER: random_number
-  const new_fraction = random.random();      // VER: random_number
+  const new_fraction = Math.random();      // VER: random_number
 }
 
 
