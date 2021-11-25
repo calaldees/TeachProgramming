@@ -4,7 +4,7 @@ using System.Text.Json;
 
 //namespace HelloWorld
 //{
-class Program
+class Program  // Must match what is in `main.csproj`
 {
     static void Main(string[] args)
     {
