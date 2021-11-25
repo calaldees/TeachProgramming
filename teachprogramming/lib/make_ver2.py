@@ -15,7 +15,7 @@ except ImportError:
     from .make_ver import make_ver  # TODO: deprecate and reimplement
 
 
-EXCLUDED_EXTENSIONS = frozenset({'ver', 'yaml', 'yml', 'txt', 'md', 'json', 'csproj', ''})
+EXCLUDED_EXTENSIONS = frozenset({'ver', 'yaml', 'yml', 'txt', 'md', 'json', 'csproj', '', 'Makefile', 'Dockerfile'})
 
 
 def parse_legacy_version_data(data):
