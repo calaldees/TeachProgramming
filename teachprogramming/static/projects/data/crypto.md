@@ -8,6 +8,8 @@ The purpose of this project is to exercise the following spec points
 * 3.5.5.1 Character form of a decimal digit
 * 3.5.5.2 ASCII and Unicode
 * 3.5.6.8 Encryption
+TODO: Link to spec points?
+
 
 Terminology
 -----------
@@ -20,6 +22,7 @@ clear-text =
 in-the-clear =
 
 http://www.asciitable.com/
+
 
 Task
 ----
@@ -62,16 +65,21 @@ Write your solution in a file called `crypto.py` and have a function `def encode
     >>> decode('pizza', 'wmkko q vah z ddo shpb rai nm p kng')
     'hello i was a dog that sat on a log'
 
+
 Secret bonus
 ------------
+
+These bonus's could be in a separate `.md` file
 
     >>> encode('b', 'abcABC123+-*!')
     'bcdbcd123+-*!'
 
+TODO: `.lower()` is needed because capital letters are not supported currently by encode
+
     >>> import random
     >>> LETTERS = tuple(chr(i) for i in range(64, 127))
     >>> key = 'abc'
-    >>> message = ''.join(random.choice(LETTERS) for i in range(1000))
+    >>> message = ''.join(random.choice(LETTERS) for i in range(1000)).lower()
     >>> message_encoded = encode(key, message)
     >>> message_decoded = decode(key, message_encoded)
     >>> assert message == message_decoded, f'{message} \n\n!=\n\n {message_decoded}'

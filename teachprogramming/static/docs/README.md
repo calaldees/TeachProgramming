@@ -1,6 +1,10 @@
 How to teach Computing
 ======================
 
+* [Celebrating the community: Cian](https://www.raspberrypi.org/blog/community-stories-cian-google-apprenticeship/)
+    * Coder Dojo story
+
+
 TODO
 I need to cross reference all of this against
 * [Teaching Tech Together: How to create and deliver lessons that work and build a teaching community around them](https://teachtogether.tech/) 2019 Greg Wilson
