@@ -4,7 +4,7 @@ How much of the UK will be flooded when the sea level rises?
 
 Earth land height data - a greyscale image
 Download (place in script folder)
-https://karczmarczuk.users.greyc.fr/TEACH/Imagerie.old/Images/elev_bump_8k.jpg
+http://shadedrelief.com/natural3/ne3_data/8192/elev_bump_8k.jpg
 Source Image Reference
 http://www.shadedrelief.com/natural3/pages/extra.html
 
@@ -23,7 +23,7 @@ Extension:
 
 Quick Setup: bash commands
     curl -O "https://raw.githubusercontent.com/calaldees/TeachProgramming/master/teachprogramming/static/projects/data/elavation.py"
-    curl -O "https://karczmarczuk.users.greyc.fr/TEACH/Imagerie.old/Images/elev_bump_8k.jpg"
+    curl -O "http://shadedrelief.com/natural3/ne3_data/8192/elev_bump_8k.jpg"
     pip3 install pillow
     python3 elavation.py
 """

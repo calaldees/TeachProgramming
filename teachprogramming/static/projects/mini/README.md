@@ -1,5 +1,5 @@
-Mini Algorithum Projects
-========================
+Mini Algorithm Projects
+=======================
 
 
 In a row

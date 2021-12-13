@@ -5,12 +5,13 @@
 Alternate tutorials
 -------------------
 
-https://www.tutorialsteacher.com/
-https://www.dotnetperls.com/
-https://tools.withcode.uk/quickref/
-https://www.homeandlearn.co.uk/
-https://zetcode.com/all/
-https://riptutorial.com/
+* https://www.codecademy.com/resources/cheatsheets/all
+* https://www.tutorialsteacher.com/
+* https://www.dotnetperls.com/
+* https://tools.withcode.uk/quickref/
+* https://www.homeandlearn.co.uk/
+* https://zetcode.com/all/
+* https://riptutorial.com/
 
 
 
