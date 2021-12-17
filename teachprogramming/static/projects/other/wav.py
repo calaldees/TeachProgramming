@@ -73,12 +73,20 @@ OSCILLATOR_TYPES = {
 }
 
 class Oscillator():
-    # consider cloning https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode
+    """
+    Consider
+        Realtime Output
+            https://python-sounddevice.readthedocs.io/en/0.4.3/examples.html
+        Copying JS ossilator methods
+            https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode
+    WAV 16bit+ are signed integers
+    WAV 8bit are unsigned (nice consistency?)
+    """
     def __init__(self, oscillator_function=sine, sample_rate=44100, bit_depth=16):
+        self.oscillator_function = oscillator_function
         self.sample_rate = sample_rate
         self.bit_depth = bit_depth
         self.MAX_POSITIVE_INT = (pow(2, self.bit_depth) - 2) // 2 # `//2` because two's complement
-        self.oscillator_function = oscillator_function
         self.o = io.BytesIO()
     @property
     def num_bytes(self):
@@ -113,10 +121,13 @@ class WAVHeader(NamedTuple):
     def data_size(self, num_samples):
         return num_samples * self.block_align
 
-    def encode(self, Subchunk2Size):
-        """
+    def header(self, Subchunk2Size):
+        r"""
         http://soundfile.sapp.org/doc/WaveFormat/
         http://www.topherlee.com/software/pcm-tut-wavformat.html
+
+        >>> WAVHeader(channels=1, sample_rate=44100, bits_per_sample=16).header(128)
+        b'RIFF\xa4\x00\x00\x00WAVEfmt \x10\x00\x00\x00\x01\x00\x01\x00D\xac\x00\x00\x88X\x01\x00\x02\x00\x10\x00data\x80\x00\x00\x00'
         """
         return b'RIFF' + struct.pack('<I', 36 + Subchunk2Size) + b'WAVEfmt ' + struct.pack(
             '<IHHIIHH',
@@ -138,5 +149,13 @@ if __name__ == "__main__":
         o.add_full_oscillation()
 
     with open('test2.wav', 'wb') as f:
-        f.write(wh.encode(o.num_bytes))
+        f.write(wh.header(o.num_bytes))
         f.write(o.o.getbuffer())
+
+
+# Consider
+# js synth
+# https://dev.to/ndesmic/building-a-digital-synthesizer-part-2-octaves-power-and-chords-991
+# * [A Young Person's Guide to the Principles of Music Synthesis](http://beausievers.com/synth/synthbasics/)
+# Realtime python audio output
+# https://python-sounddevice.readthedocs.io/en/0.4.3/examples.html#creating-an-asyncio-generator-for-audio-blocks
