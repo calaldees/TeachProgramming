@@ -5,6 +5,8 @@
 Alternate tutorials
 -------------------
 
+* [Comprehensive Python Cheatsheet](https://gto76.github.io/python-cheatsheet/)
+    * Amazing reference - all the bits + sqlite, synthesizer, scrape, pygame (kind of everything I'm aiming for with my sheets)
 * https://www.codecademy.com/resources/cheatsheets/all
 * https://www.tutorialsteacher.com/
 * https://www.dotnetperls.com/

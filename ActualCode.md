@@ -13,3 +13,9 @@ A manifesto about what we want to do:
 
 * We are tired of people teaching boring theory when those teachers can't actually do anything with code themselves
     * lame talk about networks but can't send an actual TCP packet to another machine
+
+* If you regularly attend our sessions you have the identity of a coder
+    * The process of coding is hard and uncomfortable
+    * You may not enjoy the process of coding (yet), but if you develop a rich enough skillset (over years) you will not just enjoy it. 
+    * You could deeply love the process and use your skills to augment your life and the people around you.
+
