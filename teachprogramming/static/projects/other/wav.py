@@ -56,13 +56,14 @@ def square(x):
     >>> square(0.25)
     1.0
     >>> square(0.5)
-    -1.0
+    1.0
     >>> square(0.75)
     -1.0
     >>> square(1)
     -1.0
     """
-    return 1.0 if x < 0.5 else -1.0
+    return 1.0 if x <= 0.5 else -1.0
+    return float(-((round(x)*2)-1))  # branchless? which is faster? the float cast could be expensive
 
 OSCILLATOR_TYPES = {
     "sine": sine,
