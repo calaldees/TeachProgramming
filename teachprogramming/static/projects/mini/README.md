@@ -1,6 +1,19 @@
 Mini Algorithm Projects
 =======================
 
+Bit-manipulation
+String manipulation
+Recursion
+
+String '.''-' morse code
+
+
+Next year - join the dots - Egineering
+
+https://www.educative.io/edpresso/what-is-the-rsa-algorithm
+https://scanftree.com/programs/c/c-code-to-implement-rsa-algorithmencryption-and-decryption/
+https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsacryptoserviceprovider?view=net-6.0
+
 
 In a row
 --------

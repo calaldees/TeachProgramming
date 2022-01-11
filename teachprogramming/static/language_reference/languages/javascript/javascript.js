@@ -354,6 +354,10 @@ function dict_comprehension() {
 }
 
 
+// TODO: flatmap?
+// https://www.wisdomgeek.com/development/web-development/javascript/flatten-arrays-in-vanilla-javascript-with-flat-and-flatmap/
+
+
 function define_set() {
   //// javascript has Sets, but no set operations builtin.              // VER: define_set
   //// Copy them from                                                   // VER: define_set
@@ -481,6 +485,10 @@ function assertion() {
   console.assert(name == "bob", `I am expecting ${name} to be 'bob'`);  // ver: assertion
   console.assert(count >= 3);  // ver: assertion
 }
+
+
+
+
 
 //------------------------------------------------------------------------------
 

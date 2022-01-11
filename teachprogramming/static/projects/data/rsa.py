@@ -6,7 +6,7 @@ from typing import NamedTuple
 from functools import partial
 
 
-def gcd(p,q):
+def gcd(p, q):
     """
     Create the Greatest_common_divisor of two positive integers.
 
@@ -18,15 +18,15 @@ def gcd(p,q):
     return p
 #from math import gcd
 
-def phi(a,b):
+def phi(a, b):
     """
     >>> phi(61,53)
     3120
     """
     return (a-1)*(b-1)
 
-def is_coprime(a,b):
-    return gcd(a,b) == 1
+def is_coprime(a, b):
+    return gcd(a, b) == 1
 def coprime(n):
     """
     Find largest coprime to n and return it
@@ -94,9 +94,10 @@ def keygen(p, q):
     """
     assert isprime(p)
     assert isprime(q)
-    n = p*q
-    e = coprime(phi(p,q))
-    d = next(filter(lambda d: (d*e) % phi(p,q) == 1, range(3,phi(p,q))))
+    n = p * q
+    _phi = phi(p, q)
+    e = coprime(_phi)
+    d = next(filter(lambda d: (d * e) % _phi == 1, range(3, _phi)))
     return (Key(e,n), Key(d,n))  # the first key is public, the second is private
 
 
