@@ -6,6 +6,7 @@ from typing import NamedTuple
 from functools import partial
 
 
+
 def gcd(p, q):
     """
     Create the Greatest_common_divisor of two positive integers.
@@ -14,18 +15,28 @@ def gcd(p, q):
     5
     """
     while q != 0:
-        p, q = q, p%q
+        p, q = (q, p%q)
     return p
 #from math import gcd
 
 def phi(a, b):
     """
-    >>> phi(61,53)
+    >>> phi(61, 53)
     3120
     """
     return (a-1)*(b-1)
 
 def is_coprime(a, b):
+    """
+    >>> is_coprime(17, 13)
+    True
+    >>> is_coprime(17, 21)
+    True
+    >>> is_coprime(15, 21)
+    False
+    >>> is_coprime(25, 45)
+    False
+    """
     return gcd(a, b) == 1
 def coprime(n):
     """
@@ -46,7 +57,7 @@ def isprime(n):
     Check first 100 digets
     >>> PRIMES = {2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97}
     >>> for i in range(2,100):
-    ...     assert (i in PRIMES) == isprime(i), f"{i} is in list of primes {i in PRIMES}"
+    ...     assert (i in PRIMES) == isprime(i), f"{i} is in list of primes {PRIMES}"
 
     Test a mini prime number
     >>> isprime(6700417)
@@ -60,7 +71,7 @@ def isprime(n):
     if not n & 1:  # all other even numbers are not primes
         return False
     # range starts with 3 and only needs to go up the squareroot of n for all odd numbers
-    for x in range(3, int(n**0.5)+1, 2):
+    for x in range(3, int(pow(n,0.5))+1, 2):
         if n % x == 0:
             return False
     return True
@@ -101,13 +112,18 @@ def keygen(p, q):
     return (Key(e,n), Key(d,n))  # the first key is public, the second is private
 
 
+def _test():
+    """
+    >>> pub, pri = keygen(61, 53)
+
+    >>> pri.crypt(pub.crypt(123))
+    123
+
+    >>> pub.crypt(pri.crypt(123))
+    123
+    """
+    pass
+
+
 if __name__ == "__main__":
-    pub, pri = keygen(61, 53)
-    
-    p = 123
-
-    c1 = pub.crypt(p)
-    assert pri.crypt(c1) == p
-
-    c2 = pri.crypt(p)
-    assert pub.crypt(c2) == p
+    print("see doctests - python3 -m doctest -v rsa.py")
