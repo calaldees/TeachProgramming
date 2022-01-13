@@ -50,6 +50,11 @@ Online Coding Environments
 * [OneCompiler](https://onecompiler.com/)
 * [tutorialspoint.com/codingground](https://www.tutorialspoint.com/codingground.htm)
 
+Groups
+------
+
+* [codingdojo.org](https://codingdojo.org/) - kata
+* [coderdojo.com](https://coderdojo.com/) - under 16
 
 Old README.MD
 =============

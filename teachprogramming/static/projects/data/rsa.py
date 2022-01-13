@@ -50,7 +50,7 @@ def coprime(n):
     >>> coprime(3120)
     3113
     """
-    return max(filter(partial(is_coprime, n), range(n-1)))
+    return next(filter(partial(is_coprime, n), range(n-2,0,-1)))
 
 def isprime(n):
     """
@@ -126,4 +126,5 @@ def _test():
 
 
 if __name__ == "__main__":
+    # any two prime numbers - there are A LOT - http://www.primos.mat.br/2T_en.html
     print("see doctests - python3 -m doctest -v rsa.py")
