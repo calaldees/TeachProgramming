@@ -61,15 +61,13 @@ class ItemResource:
         resp.status = falcon.HTTP_201
         resp.media = ITEMS[item_id]
     def on_get(self, req, resp, item_id):
-        item_id = int(item_id)
         try:
-            resp.media = ITEMS[item_id]
+            resp.media = ITEMS[int(item_id)]
         except KeyError:
             resp.status = falcon.HTTP_404
     def on_delete(self, req, resp, item_id):
-        item_id = int(item_id)
         try:
-            del ITEMS[item_id]  # TODO: this is terrible because it re-uses ids .. 
+            del ITEMS[int(item_id)]  # TODO: this is terrible because it re-uses ids .. 
             resp.status = falcon.HTTP_204
         except KeyError:
             resp.status = falcon.HTTP_404
