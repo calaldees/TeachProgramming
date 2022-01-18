@@ -23,3 +23,5 @@ A manifesto about what we want to do:
 ---
 * To build anything complex we have to work in software teams (industry is not a solo sport)
 * You can't get good alone
+
+

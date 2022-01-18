@@ -339,13 +339,33 @@ Other
 
  Collaborating with other professionals
 
- * [Pedagogy by proxy: developing computing PCK through shared lesson resources](https://sure.sunderland.ac.uk/id/eprint/13728/) Hidson, Elizabeth (2021)
-
+* [Pedagogy by proxy: developing computing PCK through shared lesson resources](https://sure.sunderland.ac.uk/id/eprint/13728/) Hidson, Elizabeth (2021)
 * [Exemplary Progress: A network to share best practice](https://mirandanet.ac.uk/wp-content/uploads/2019/06/exemplary_progress_fe.pdf) Becta 2008
     * TODO - realted to sharing practice
+* [A Framework for Improving the Sharing of Teaching Practices among Computer Science Instructors](https://dl.acm.org/doi/10.1145/3304221.3325590) 2019
+    * Framework seems simple - just login and use a template? .. TODO I need examples. Apparently 40 computing teachers are partipating
+    * 
 
 ---
 
+Informal
+--------
+
+* [Our Kids Code](http://ourkidscode.ie/) - Creative Computing for Families
+    * [OurKidsCode: A National Programme to get Families Involved in CS Education](https://dl.acm.org/doi/10.1145/3304221.3325574) 2019
+* [Findings from a Multi-year Study of CT in K-2 Students in Formal and Informal Settings](https://dl.acm.org/doi/epdf/10.1145/3304221.3325585) 2019
+
+
+Identity
+--------
+
+* [A Grounded Theory of Computing Professional Identity Formation](https://dl.acm.org/doi/10.1145/3304221.3325598) 2019
+    * > we have limited knowledge of how computing professional identity develops
+
+
+Computer Adaptive Testing #CAT
+
+---
 
 There’s also https://github.com/shish/rosettaboy for python / c++ / rust (pondering adding go / js / Java / ??? - but trying to get at least one of the existing versions to work properly first)
 
@@ -438,6 +458,18 @@ https://store.steampowered.com/app/619150/while_True_learn/
     * Constructive evaluation: a pedagogy of student-contributed assessment”, Luxton-Reilly and Denny
         * > “constructive evaluation”. Students are required to author questions that assess one or more of the learning outcomes of a course and provide a sample solution
 
+* [COOL: Cooperative Open Learning for Beginning Programmers](https://dl.acm.org/doi/10.1145/3304221.3325569) 2019
+    * > It includes several forms of cooperative learning like peer tutoring, pair programming, and talents exchange. 
+
+* [Designing Engaging Learning Experiences](https://dl.acm.org/doi/10.1145/3304221.3325563) 2019
+    * Space, Events, Peer
 
 * [CDIO](https://en.wikipedia.org/wiki/CDIO_Initiative)
     * Conceive Design Implement Operate. The CDIO Initiative is an educational framework that stresses engineering fundamentals set in the context of conceiving, designing, implementing and operating real-world systems and products.
+
+
+* [Raspberry Pi Foundation: Research publications](https://www.raspberrypi.org/research/publications/)
+    * [Teaching programming in schools: A review of approaches and strategies](https://www.raspberrypi.org/app/uploads/2021/11/Teaching-programming-in-schools-pedagogy-review-Raspberry-Pi-Foundation.pdf) Sentence, Waite, 2021 
+    * [Understanding computing education: Volume 1](https://www.raspberrypi.org/app/uploads/2021/05/Understanding-computing-education-Volume-1-Raspberry-Pi-Foundation-Research-Seminars.pdf)
+    * [Understanding computing education: Volume 2 Theme: Equity, diversity and inclusion in computing education research](https://www.raspberrypi.org/app/uploads/2021/12/Understanding-computing-education-Volume-2-Raspberry-Pi-Foundation-Research-Seminars.pdf)
+

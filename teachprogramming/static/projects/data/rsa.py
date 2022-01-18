@@ -1,6 +1,8 @@
 # Inspired by
 # https://gist.github.com/itsbilal/b4af303f70659a7f7d38
 # https://www.educative.io/edpresso/what-is-the-rsa-algorithm  (this feels wrong - the e=17 does not track with the other example)
+# TODO
+# [Idempotent Factorizations: A New Addition to the Cryptography Classroom](https://dl.acm.org/doi/10.1145/3304221.3325557)
 
 from typing import NamedTuple
 from functools import partial

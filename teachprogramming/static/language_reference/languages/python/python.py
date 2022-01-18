@@ -364,6 +364,10 @@ def json_data():
   data2 = json.loads(string_data)         # VER: json_data
 
 
+def nested_data():
+  ## TODO: nested datastructures - towards json?  # VER: nested_data
+  pass    
+
 def commandline_args():
   pass  # TODO     # VER: commandline_args
 
@@ -422,6 +426,7 @@ if __name__ == "__main__":
   define_2d_arrays()
   function_with_param_function()
   json_data()
+  nested_data()
 
   commandline_args()
   network_tcp_send()

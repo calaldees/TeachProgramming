@@ -15,6 +15,10 @@ https://scanftree.com/programs/c/c-code-to-implement-rsa-algorithmencryption-and
 https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsacryptoserviceprovider?view=net-6.0
 
 
+* [Instructional Pseudocode Guide to Teach Problem-Solving](https://dl.acm.org/doi/10.1145/3304221.3325581) 2019
+    * > This paper introduces how technical writing techniques and problem-solving strategies can be combined to help students find those questions and develop programming code through writing instructions and documenting their design process. 
+
+
 In a row
 --------
 ```python
