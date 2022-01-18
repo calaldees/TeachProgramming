@@ -79,19 +79,13 @@ def create_wsgi_app(**kwargs):
     app = falcon.App(middleware=[
         AddCORSMiddleware(),
     ])
-
-    index_resource = IndexResource()
-    app.add_route('/', index_resource)
-
-    item_resource = ItemResource()
-    app.add_route('/item', item_resource)
-    app.add_route('/item/{item_id}', item_resource)
-
-    items_resource = ItemsResource()
-    app.add_route('/items', items_resource)
-
+    app.add_route('/', IndexResource())
+    app.add_route('/item', ItemResource())
+    app.add_route('/item/{item_id}', ItemResource())
+    app.add_route('/items', ItemsResource())
     return app
 
+app = create_wsgi_app()  # surface `app` variable for gunicorn and other wsgi servers
 
 if __name__ == '__main__':
     kwargs = {"host": "0.0.0.0", "port": 8000, "log_level": logging.DEBUG}  # TODO: get kwargs from argparse
@@ -104,6 +98,3 @@ if __name__ == '__main__':
         httpd.serve_forever()
     except KeyboardInterrupt:
         pass
-
-
-app = create_wsgi_app()  # surface `app`` variable for gunicorn
