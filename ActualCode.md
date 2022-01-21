@@ -34,9 +34,40 @@ We want to Actual(ly) code
 Concept
 -------
 
+Local karate clubs have a huge range of ages and abilities - so why can't we?
+12 year old absolute beginners, to professional developers, and everyone in between
+
+Audience
+* School students (KS3, KS4, KS5)
+* Undergraduates (from multiple institutions)
+* Local community wanting to upskill
+* Junior developers (and beyond)
+
+Same evening each week - free food
+All skill levels welcome
+
+
+### Activities
+
+* Pair problem of the week
+* Showcases
+* Theory (towards qualifications)
+* Themes (demo's, direction, starting points)
+* Self directed space to just chat and code
+* Just sitting around and having free food
 
 
 Organisers
 ----------
 
 
+
+
+Other existing concepts (for reference)
+--------------
+
+* [Techspressionist Manifesto (v2.0)](https://techspressionism.com/manifesto/)
+* [coderdojo.com](https://coderdojo.com/) - Aimed specifically at KS2/KS3
+* [codekata.com](http://codekata.com/) - Just need to practice - a LOT - tasks
+* [Coding Dojo](https://codingdojo.org/)
+* [programming-motherXXXXer.com](http://programming-motherfucker.com/) - Do you speak it?
