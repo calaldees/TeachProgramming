@@ -26,3 +26,6 @@ services:
     lua:
         build:
             context: ./languages/lua
+    golang:
+        build:
+            context: ./languages/golang
