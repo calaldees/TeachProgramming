@@ -22,6 +22,7 @@ comment_tokens = dict(
     rb   =   '#',
     txt  =   '#',
     cs   = r'//',
+    lua  = r'--',
 )
 unversioned_vername = 'base'
 

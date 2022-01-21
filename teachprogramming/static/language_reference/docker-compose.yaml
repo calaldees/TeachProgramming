@@ -1,4 +1,3 @@
-version: '3.5'
 services:
     python:
         build:
@@ -24,3 +23,6 @@ services:
     ruby:
         build:
             context: ./languages/ruby
+    lua:
+        build:
+            context: ./languages/lua
