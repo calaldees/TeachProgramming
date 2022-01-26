@@ -10,11 +10,11 @@ Manifesto
 * We don't care about your 'syllabus' or your 'business objectives', 'grade boundaries' or 'OKRs'
 * We enjoy just prating around with computers, we are interested and curious
 * We actually want to build something with code, because we can - not because somebody set us a lame task to meet their own addenda
-* We love being creative and building pointless stuff, because we can
+* We love being creative and building pointless stuff
 * We don't video our sessions or demos because we prefer to talk to real people rather than cameras and screens
 * Our greatest assets are _our passion_ and the _people_ around us
 * We are tired of teachers shovelling us boring theory when those teachers can't actually do anything with code themselves
-    * Lame talk about networks, but can't send an actual TCP packet to another machine
+    * Lame talk about networks, but can't send an actual UDP packet to another machine
 * We don't care about categorising people for some kind of virtue signalling metric. We're going to engage in actual code with other actual human beings.
 * If you regularly attend gatherings with other coders you will take the identity of 'a coder'
     * Identify comes before skill
