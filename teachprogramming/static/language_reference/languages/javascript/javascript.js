@@ -316,6 +316,14 @@ function _sleep() {
     console.log("slept for a second");          // VER: sleep
   }                                               // VER: sleep
   let timeout = setTimeout(after_sleep, 1000);    // VER: sleep
+
+
+  const sleep = (milliseconds) => new Promise((resolve, reject) => setTimeout(resolve, milliseconds));  // VER: sleep
+  async function do_steps() {// VER: sleep
+      console.log("1"); // VER: sleep
+      await sleep(1000); // VER: sleep
+      console.log("2"); // VER: sleep
+  }// VER: sleep
 }
 
 
