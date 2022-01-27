@@ -1,0 +1,39 @@
+<script type="module">
+// use with https://github.com/calaldees/channelServer
+
+
+// Color
+function randomColor() {
+    return Math.floor(Math.random()*255);
+}
+function updateScreenColor(r,g,b) {
+    r = r | randomColor();
+    g = g | randomColor();
+    b = b | randomColor();
+    document.body.style = `background-color: rgb(${r}, ${g}, ${b});`
+}
+
+// Keyboard event
+window.addEventListener('keydown', updateScreenColor);
+
+// Websocket event
+const ws_url = "ws://localhost:9800/test1.ws";
+const socket = new WebSocket(ws_url);
+socket.addEventListener('message', function (event) {
+    //console.log(event.data);
+    updateScreenColor();
+});
+
+
+const sleep = (milliseconds) => new Promise((resolve, reject) => setTimeout(resolve, milliseconds));
+async function do_steps() {
+    console.log("1");
+    await sleep(1000);
+    console.log("2");
+    await sleep(1000);
+    console.log("3");
+}
+do_steps()
+
+
+</script>
