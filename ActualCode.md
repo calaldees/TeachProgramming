@@ -15,7 +15,7 @@ Manifesto
 * Our greatest assets are _our passion_ and the _people_ around us
 * We are tired of teachers shovelling us boring theory when those teachers can't actually do anything with code themselves
     * Lame talk about networks, but can't send an actual UDP packet to another machine
-* We don't care about categorising people for some kind of virtue signalling metric. We're going to engage in actual code with other actual human beings.
+* We don't care about categorising people. We're going to engage in actual code with other actual human beings.
 * If you regularly attend gatherings with other coders you will take the identity of 'a coder'
     * Identify comes before skill
 * We know the process of coding is hard and uncomfortable
