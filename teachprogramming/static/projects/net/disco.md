@@ -38,3 +38,7 @@ Activity
 Where could the delay/latency come from?
 Think pair share - all the places
 
+Advanced Design
+---------------
+
+The server has no logic - we send lots of irrelevant information to each node
