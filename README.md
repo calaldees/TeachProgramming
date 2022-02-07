@@ -46,15 +46,30 @@ https://github.com/algorithm-archivists/algorithm-archive
 Online Coding Environments
 --------------------------
 
-* [Repl.it](https://replit.com/)
+* [Repl.it](https://replit.com/) - social login required
 * [OneCompiler](https://onecompiler.com/)
 * [tutorialspoint.com/codingground](https://www.tutorialspoint.com/codingground.htm)
+* [w3schools.com/tryit](https://www.w3schools.com/tryit/trycompiler.asp?filename=demo_python)
+* jupyterhub
+* [gitpod.io](https://gitpod.io/) - social login or github required
+    * Full web IDE
+* other
+    * [codebunk](https://codebunk.com) - live collaboration
+    * [mycompiler.io](https://www.mycompiler.io/)
+    * [glot.io](https://glot.io/)
+    * [dotnetfiddle.net](https://dotnetfiddle.net/) js only
+    * [glitch.com](https://glitch.com/)
+    * [ideone.com](https://ideone.com)
+    * [tio.run](https://tio.run/)
+    * [create.withcode.uk](https://create.withcode.uk/) python only - but has input box support
+    * [codepad.org](http://codepad.org)
 
 Groups
 ------
 
 * [codingdojo.org](https://codingdojo.org/) - kata
 * [coderdojo.com](https://coderdojo.com/) - under 16
+
 
 Old README.MD
 =============
