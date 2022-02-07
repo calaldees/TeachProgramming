@@ -1,6 +1,32 @@
 Mini Algorithm Projects
 =======================
 
+* Local
+    * Local IDE
+* Online
+    * [jupyterhub.canterbury.ac.uk](https://jupyterhub.canterbury.ac.uk/)
+    * [w3schools.com/tryit](https://www.w3schools.com/tryit/trycompiler.asp?filename=demo_python)
+    * [Repl.it](https://replit.com/)
+    * [OneCompiler](https://onecompiler.com/)
+    * [tutorialspoint.com/codingground](https://www.tutorialspoint.com/codingground.htm)
+    * Other
+        * [codebunk](https://codebunk.com) - live collaboration
+        * [mycompiler.io](https://www.mycompiler.io/)
+        * [glot.io](https://glot.io/)
+        * [dotnetfiddle.net](https://dotnetfiddle.net/) csharp
+        * [glitch.com](https://glitch.com/)
+        * [ideone.com](https://ideone.com)
+        * [tio.run](https://tio.run/)
+        * [create.withcode.uk](https://create.withcode.uk/) python only - but has input box support
+        * [codepad.org](http://codepad.org)
+
+
+* Once you've solved a problem in one language - build your skills by implementing it in another
+    * https://computingteachers.uk/static/langauge_reference.html
+
+---
+
+
 Bit-manipulation
 String manipulation
 Recursion
@@ -57,6 +83,7 @@ def fib(v):
     >>> next_fib(1):
     1
     """
+    return
 ```
 
 
@@ -90,20 +117,7 @@ Single digets only
 67 ok
 66 not ok
 
-tower(3)
-```
-  #
- ###
-#####
-```
 
-tower(4)
-```
-   #
-  ###
- #####
-#######
-```
 
 
 is_prime
