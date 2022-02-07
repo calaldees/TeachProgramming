@@ -18,7 +18,7 @@ signal.signal(signal.SIGINT, ctrl_handler)
 import rtmidi
 midi_in = rtmidi.MidiIn()
 print(midi_in.get_ports())  # ['Arturia MiniLab mkII 0', 'loopMIDI Port 1']
-midi_in.open_port(1)
+midi_in.open_port(int(input('which index: ')))
 
 def handle_input(event, data=None):
     message, deltatime = event
