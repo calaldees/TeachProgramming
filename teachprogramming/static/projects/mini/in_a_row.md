@@ -51,5 +51,9 @@ Professionals can make this generic, so that it can be used for multiple types o
 Can you also return the item that has been repeated that many times
 ```csharp
 (int count, T i) in_a_row<T> (IEnumerable<T> data) {
+    //???
+}
+
+AssertIsEqual(in_a_row("aabbbccb"), (3, 'b'), "should count 3 b's");
 ```
 </details>
