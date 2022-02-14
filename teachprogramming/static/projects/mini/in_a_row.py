@@ -33,10 +33,10 @@ def in_a_row(data):
         for j in data:
             if i == j:
                 count += 1
-                if count > max_count:
-                    max_count = count
             else:
                 count = 0
+            if count > max_count:
+                max_count = count
     return max_count
 
 def in_a_row2(data):
@@ -66,15 +66,13 @@ def in_a_row2(data):
     >>> in_a_row2((1,2,2,3,3,3,2,2))
     (3, 3)
     """
-    max_count = 0
-    max_i = None
+    max_count, max_i = 0, None
     for i in sorted(set(data)):
         count = 0
         for j in data:
             count = count + 1 if i == j else 0
             if count > max_count:
-                max_count = count
-                max_i = i
+                max_count, max_i = count, i
     return max_count, max_i
 
 
@@ -130,7 +128,7 @@ def in_a_row4(data):
     )
 
 
-# ---- crap that did not work
+# ---- stuff that did not work
 
     #return max(
         #reduce(lambda acc, j: acc+1 if i==j else 0, data, 0)
