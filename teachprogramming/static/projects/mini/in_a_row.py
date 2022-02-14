@@ -19,6 +19,13 @@ def in_a_row(data):
     2
     >>> in_a_row('aabbbcc')
     3
+    >>> in_a_row('aabbbccb')
+    3
+    >>> in_a_row('aabbbcacbaa')
+    3
+    >>> in_a_row((1,2,2,3,3,3,2,2))
+    3
+
     """
     max_count = 0
     for i in data:
@@ -26,8 +33,10 @@ def in_a_row(data):
         for j in data:
             if i == j:
                 count += 1
-        if count > max_count:
-            max_count = count
+                if count > max_count:
+                    max_count = count
+            else:
+                count = 0
     return max_count
 
 def in_a_row2(data):
@@ -46,50 +55,47 @@ def in_a_row2(data):
     (2, 'a')
     >>> in_a_row2('abb')
     (2, 'b')
-    >>> in_a_row2('aabbcc')
+    >>> in_a_row2('aabbccdd')
     (2, 'a')
     >>> in_a_row2('aabbbcc')
     (3, 'b')
+    >>> in_a_row2('aabbbccb')
+    (3, 'b')
+    >>> in_a_row2('aabbbcacbaa')
+    (3, 'b')
+    >>> in_a_row2((1,2,2,3,3,3,2,2))
+    (3, 3)
     """
     max_count = 0
     max_i = None
-    for i in data:
+    for i in sorted(set(data)):
         count = 0
         for j in data:
-            if i == j:
-                count += 1
-        if count > max_count:
-            max_count = count
-            max_i = i
+            count = count + 1 if i == j else 0
+            if count > max_count:
+                max_count = count
+                max_i = i
     return max_count, max_i
 
 
+import re
 def in_a_row3(data):
     """
+    String only with regex
+
     >>> in_a_row3('')
-    0
-    >>> in_a_row3('a')
-    1
-    >>> in_a_row3('b')
-    1
-    >>> in_a_row3('ab')
-    1
-    >>> in_a_row3('aa')
-    2
-    >>> in_a_row3('aab')
-    2
-    >>> in_a_row3('abb')
-    2
-    >>> in_a_row3('aabbcc')
-    2
-    >>> in_a_row3('aabbbcc')
-    3
+    (0, '')
+    >>> in_a_row3('aabbbccb')
+    (3, 'b')
+    >>> in_a_row3('aabbbcacbaa')
+    (3, 'b')
     """
-    if not data: return 0
+    if not data: return (0, '')
     return max(
-        sum(1 for j in data if i == j)  #, i)
+        (max(map(len, re.split(f'[^{i}]', data))), i)
         for i in set(data)
     )
+
 
 from itertools import groupby
 def in_a_row4(data):
@@ -110,11 +116,24 @@ def in_a_row4(data):
     (2, 'b')
     >>> in_a_row4('aabbcc')
     (2, 'c')
-    >>> in_a_row4('aabbbcc')
+    >>> in_a_row4('aabbbccb')
     (3, 'b')
+    >>> in_a_row4('aabbbcacbaa')
+    (3, 'b')
+    >>> in_a_row4((1,2,2,3,3,3,2,2))
+    (3, 3)
     """
     if not data: return (0, '')
     return max(
         (sum(1 for _ in iterator), key)
         for key, iterator in groupby(data)
     )
+
+
+# ---- crap that did not work
+
+    #return max(
+        #reduce(lambda acc, j: acc+1 if i==j else 0, data, 0)
+        #sum(1 for j in data if i == j)  #, i)
+    #    for i in set(data)
+    #)
