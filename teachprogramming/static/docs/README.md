@@ -473,3 +473,5 @@ https://store.steampowered.com/app/619150/while_True_learn/
     * [Understanding computing education: Volume 1](https://www.raspberrypi.org/app/uploads/2021/05/Understanding-computing-education-Volume-1-Raspberry-Pi-Foundation-Research-Seminars.pdf)
     * [Understanding computing education: Volume 2 Theme: Equity, diversity and inclusion in computing education research](https://www.raspberrypi.org/app/uploads/2021/12/Understanding-computing-education-Volume-2-Raspberry-Pi-Foundation-Research-Seminars.pdf)
 
+
+* [Discord: The hub of community building](https://helloworld.raspberrypi.org/articles/hw17-discord-the-hub-of-community-building) HelloWorld RaspberyPi 2022

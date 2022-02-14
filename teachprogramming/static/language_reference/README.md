@@ -11,11 +11,14 @@ Alternate tutorials
 * https://www.codecademy.com/resources/cheatsheets/all
 * https://www.tutorialsteacher.com/
 * https://www.dotnetperls.com/
+    * real nice with visual examples - not complete
+    * c#, go, python, vb, java, javascirpt
 * https://tools.withcode.uk/quickref/
 * https://www.homeandlearn.co.uk/
 * https://zetcode.com/all/
 * https://riptutorial.com/
 
+https://www.pythonsheets.com/ including cool advanced stuff
 
 
 TODO

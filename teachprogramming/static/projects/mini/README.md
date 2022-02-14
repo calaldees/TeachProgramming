@@ -73,32 +73,6 @@ https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsacryp
     * > This paper introduces how technical writing techniques and problem-solving strategies can be combined to help students find those questions and develop programming code through writing instructions and documenting their design process. 
 
 
-In a row
---------
-```python
-def in_a_row(data):
-    """
-    >>> in_a_row('')
-    0
-    >>> in_a_row('a')
-    1
-    >>> in_a_row('b')
-    1
-    >>> in_a_row('ab')
-    1
-    >>> in_a_row('aa')
-    2
-    >>> in_a_row('aab')
-    2
-    >>> in_a_row('abb')
-    2
-    >>> in_a_row('aabbcc')
-    2
-    >>> in_a_row('aabbbcc')
-    3
-    """
-    return
-```
 
 
 Fibbonach
