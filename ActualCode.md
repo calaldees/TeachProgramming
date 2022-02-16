@@ -14,10 +14,10 @@ Manifesto
 * We don't video our sessions or demos because we prefer to talk to real people rather than cameras and screens
 * Our greatest assets are _our passion_ and the _people_ around us
 * We are tired of teachers shovelling us boring theory when those teachers can't actually do anything with code themselves
-    * Lame talk about networks, but can't send an actual UDP packet to another machine
-* We don't care about categorising people. We're going to engage in actual code with other actual human beings.
+    * Lame talking about networks, but nobody in the room can send an actual UDP packet to another machine
+* We don't care about categorising people. We're going to engage in actual code with other actual human beings
 * If you regularly attend gatherings with other coders you will take the identity of 'a coder'
-    * Identify comes before skill
+    * _Identity_ comes before _skill_
 * We know the process of coding is hard and uncomfortable
     * You may not enjoy the process of coding (yet), but if you develop a rich enough skill-set (over years) you will not just enjoy it ...  You could deeply love the process and use your skills to augment your life and the people around you.
     * (But getting there is years of getting your ass kicked)
