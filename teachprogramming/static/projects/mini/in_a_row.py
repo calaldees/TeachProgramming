@@ -128,6 +128,47 @@ def in_a_row4(data):
     )
 
 
+
+def in_a_row5(data):
+    """
+    Single Pass
+
+    >>> in_a_row5('')
+    (0, None)
+    >>> in_a_row5('a')
+    (1, 'a')
+    >>> in_a_row5('b')
+    (1, 'b')
+    >>> in_a_row5('ab')
+    (1, 'a')
+    >>> in_a_row5('aa')
+    (2, 'a')
+    >>> in_a_row5('aab')
+    (2, 'a')
+    >>> in_a_row5('abb')
+    (2, 'b')
+    >>> in_a_row5('aabbcc')
+    (2, 'a')
+    >>> in_a_row5('aabbbccb')
+    (3, 'b')
+    >>> in_a_row5('aabbbcacbaa')
+    (3, 'b')
+    >>> in_a_row5((1,2,2,3,3,3,2,2))
+    (3, 3)
+    """
+    count_max = 0
+    i_max = None
+    i_count = 0
+    i_prev = None
+    for i in data:
+        i_count = i_count + 1 if i == i_prev else 1
+        if i_count > count_max:
+            count_max = i_count
+            i_max = i
+        i_prev = i
+    return count_max, i_max
+
+
 # ---- stuff that did not work
 
     #return max(
