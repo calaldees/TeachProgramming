@@ -18,7 +18,8 @@ Alternate tutorials
 * https://zetcode.com/all/
 * https://riptutorial.com/
 
-https://www.pythonsheets.com/ including cool advanced stuff
+* https://blog.finxter.com/python-cheat-sheets/
+* https://www.pythonsheets.com/ including cool advanced stuff
 
 
 TODO

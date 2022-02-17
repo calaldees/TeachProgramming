@@ -475,3 +475,18 @@ https://store.steampowered.com/app/619150/while_True_learn/
 
 
 * [Discord: The hub of community building](https://helloworld.raspberrypi.org/articles/hw17-discord-the-hub-of-community-building) HelloWorld RaspberyPi 2022
+
+
+* [Understanding Conceptual Transfer for Students Learning New Programming Languages](https://dl.acm.org/doi/10.1145/3372782.3406270)
+    * Concept categories
+        * CarryoverConcepts (CC)
+            * While loop (pyhton + java pretty much the same)
+        * False Carryover Concepts (FCC)
+            * Array equality (python==value, java==reference)
+        * Abstract True CarryoverConcepts (ATCC)
+            * object aliasing (pyhton + java pretty much the same)
+    * The problem zone is FCC - these need to be identified
+
+* [If They Build It, Will They Understand It? Exploring the Relationship between Student Code and Performance](https://dl.acm.org/doi/10.1145/3341525.3387379)
+    * > student performance on specific questions on the written assessments is only very weakly correlated to specific attributes of final projects typically used in artifact analysis as well as attributes we use to define candidate code (r < 0.2, p < 0.05). In particular, the correlation is not nearly strong enough to serve as a proxy for understanding
+    * Digital artifact only weakly correlated with understanding

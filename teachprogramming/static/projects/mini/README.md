@@ -1,6 +1,17 @@
 Mini Algorithm Projects
 =======================
 
+Other examples
+--------------
+
+Small program that can be solved in 30min or less
+
+* https://www.w3resource.com/python-exercises/puzzles/index.php
+* [microsoft / PythonProgrammingPuzzles](https://github.com/microsoft/PythonProgrammingPuzzles) -  A Dataset of Python Challenges for AI Research 
+* Mid Tier 
+    * https://blog.finxter.com/10-best-python-puzzles-to-discover-your-true-skill-level/
+    * 10 * interactive mini python programs where you predict the output
+
 Code Environment
 ----------------
 
