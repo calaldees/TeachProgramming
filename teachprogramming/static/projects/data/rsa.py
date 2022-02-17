@@ -84,21 +84,7 @@ class Key(NamedTuple):
     n: int
     def crypt(self, p):
         return pow(p, self.e, self.n)
-    def crack(self):
-        """
-        First, find all prime numbers that multiply to give n
-        For each p,q possibility, check if phi(p,q) and e are coprime
 
-        >>> Key(3113, 3233).crack()
-        (53, 61)
-        >>> Key(1337, 3233).crack()
-        (53, 61)
-        """
-        for p in range(2, self.n-1):
-            if isprime(p) and (self.n % p) == 0:
-                q = self.n // p
-                if isprime(q) and is_coprime(self.e, phi(p, q)):
-                    return (p, q)
 
 def keygen(p, q):
     """
@@ -127,6 +113,27 @@ def _test():
     pass
 
 
+class KeyCrack(Key):
+    def crack(self):
+        """
+        First, find all prime numbers that multiply to give n
+        For each p,q possibility, check if phi(p,q) and e are coprime
+
+        >>> KeyCrack(3113, 3233).crack()
+        (53, 61)
+        >>> KeyCrack(1337, 3233).crack()
+        (53, 61)
+        """
+        for p in range(2, self.n-1):
+            if isprime(p) and (self.n % p) == 0:
+                q = self.n // p
+                if isprime(q) and is_coprime(self.e, phi(p, q)):
+                    return (p, q)
+
+
 if __name__ == "__main__":
     # any two prime numbers - there are A LOT - http://www.primos.mat.br/2T_en.html
-    print("see doctests - python3 -m doctest -v rsa.py")
+    print("see doctests")
+    print("python3 -m doctest -v rsa.py")
+    print("or")
+    print("pytest --doctest-modules rsa.py")
