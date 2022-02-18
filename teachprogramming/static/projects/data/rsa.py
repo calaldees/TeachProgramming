@@ -112,6 +112,22 @@ def _test():
     """
     pass
 
+def _test2():
+    r"""
+    >>> pub, pri = keygen(61, 53)
+    
+    >>> from functools import partial
+    >>> from calaldees.iterator import IteratorCombine
+    >>> pub_encrypt_to_bytes = IteratorCombine().map(pub.crypt).map(partial(int.to_bytes, length=2, byteorder='big')).flatten().func(bytes).process
+    >>> pri_decrypt_from_bytes = IteratorCombine().group(2).map(partial(int.from_bytes, byteorder='big')).map(pri.crypt).func(bytes).process
+
+    >>> pub_encrypt_to_bytes(b'abc')
+    b'\x0b8\tq\x03\xaf'
+    >>> pri_decrypt_from_bytes(b'\x0b8\tq\x03\xaf')
+    b'abc'
+    """
+    pass
+
 
 class KeyCrack(Key):
     def crack(self):
