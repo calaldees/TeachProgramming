@@ -1,12 +1,12 @@
 # Inspired by
 # https://gist.github.com/itsbilal/b4af303f70659a7f7d38
 # https://www.educative.io/edpresso/what-is-the-rsa-algorithm  (this feels wrong - the e=17 does not track with the other example)
+# The above also state that e=public key and d=private - the private key is derived from the public key? I think this is the wrong way round. The public key can be derived from the private key
 # TODO
 # [Idempotent Factorizations: A New Addition to the Cryptography Classroom](https://dl.acm.org/doi/10.1145/3304221.3325557)
 
 from typing import NamedTuple
 from functools import partial
-
 
 
 def gcd(p, q):
@@ -97,12 +97,12 @@ def keygen(p, q):
     _phi = phi(p, q)
     e = coprime(_phi)
     d = next(filter(lambda d: (d * e) % _phi == 1, range(3, _phi)))
-    return (Key(e,n), Key(d,n))  # the first key is public, the second is private
+    return (Key(e,n), Key(d,n))  # the first key is private, the second is public key  # swapped from original
 
 
 def _test():
     """
-    >>> pub, pri = keygen(61, 53)
+    >>> pri, pub = keygen(61, 53)
 
     >>> pri.crypt(pub.crypt(123))
     123
@@ -114,19 +114,38 @@ def _test():
 
 def _test2():
     r"""
-    >>> pub, pri = keygen(61, 53)
-    
     >>> from functools import partial
     >>> from calaldees.iterator import IteratorCombine
-    >>> pub_encrypt_to_bytes = IteratorCombine().map(pub.crypt).map(partial(int.to_bytes, length=2, byteorder='big')).flatten().func(bytes).process
-    >>> pri_decrypt_from_bytes = IteratorCombine().group(2).map(partial(int.from_bytes, byteorder='big')).map(pri.crypt).func(bytes).process
+    >>> def _enc_func(f):
+    ...     return IteratorCombine().map(f).map(partial(int.to_bytes, length=2, byteorder='big')).flatten().func(bytes).process
+    >>> def _dec_func(f):
+    ...     return IteratorCombine().group(2).map(partial(int.from_bytes, byteorder='big')).map(f).func(bytes).process
 
+    >>> pri, pub = keygen(61, 53)
+
+    >>> pub_encrypt_to_bytes = _enc_func(pub.crypt)
+    >>> pri_decrypt_from_bytes = _dec_func(pri.crypt)
     >>> pub_encrypt_to_bytes(b'abc')
+    b'\x03\n\x08\x9c\x0c\x0f'
+    >>> pri_decrypt_from_bytes(b'\x03\n\x08\x9c\x0c\x0f')
+    b'abc'
+
+    >>> pri_encrypt_to_bytes = _enc_func(pri.crypt)
+    >>> pub_decrypt_from_bytes = _dec_func(pub.crypt)
+    >>> pri_encrypt_to_bytes(b'abc')
     b'\x0b8\tq\x03\xaf'
-    >>> pri_decrypt_from_bytes(b'\x0b8\tq\x03\xaf')
+    >>> pub_decrypt_from_bytes(b'\x0b8\tq\x03\xaf')
     b'abc'
     """
     pass
+
+
+def random_prime():
+    import random
+    i = random.randint(0, 255)
+    while not isprime(i):
+        i += 1
+    return i
 
 
 class KeyCrack(Key):
