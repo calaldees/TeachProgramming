@@ -59,6 +59,7 @@ public class Program {
 
   void define_constants() {
     const double GRAVITY = 9.81;                                                // VER: define_constants
+    // todo `readonly`
   }
 
   void arithmetic() {
