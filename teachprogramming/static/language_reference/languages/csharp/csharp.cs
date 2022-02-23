@@ -202,6 +202,8 @@ public class Program {
   }
   void convert_string_to_integer_and_back() {
     // // TODO: // VER: convert_string_to_integer_and_back
+    // // TODO: Int32.Parse  // VER: convert_string_to_integer_and_back
+    int[] data = textBox1.Text.Split(",").Select(Int32.Parse).ToArray();  // TODO
   }
 
 
@@ -243,6 +245,15 @@ public class Program {
 
     // TODO:
     // indexOf and join
+    // enumerate - //foreach (var (v, i) in data.Select((v,i) => (v,i))) {
+
+      /*
+      Some other nonsense
+
+            //String text = "5,2,7,12,3";
+            //int[] data = text.Split(",").Select(Int32.Parse).ToArray();
+
+      */
   }
 
   void define_map() {
