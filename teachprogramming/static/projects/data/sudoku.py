@@ -1,3 +1,13 @@
+"""
+This is a broken and incomplete sudoku solver
+Currently took around 4 hours with no resources other than looking python standard library functions.
+It cant solve problem 1 in 10 mins on my machine ... something is wrong.
+
+
+Need to investigate the algorithm at
+https://dev.to/aspittel/how-i-finally-wrote-a-sudoku-solver-177g
+"""
+
 import re
 from itertools import chain, permutations
 
@@ -207,6 +217,7 @@ class Sudoku():
         #assert self.match(self._base[i:j], self.data[i:j])
 
     def solve(self, r=0):
+        # I don't think this is complete ... it seems to get stuck repeating the last few rows A LOT
         if r>=9:
             assert False, "How? What? No?"
         missing = self._missing(self.row(self._base, r))
