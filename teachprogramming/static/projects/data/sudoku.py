@@ -90,6 +90,22 @@ class Sudoku():
         return tuple(v if v else d2[inc()] for v in d1)
 
     @staticmethod
+    def match(d1, d2):
+        """
+        Match ignoring 0's
+        >>> Sudoku.match((1,2,0,4,0,6,0,8,9), (1,2,3,4,5,6,7,8,9))
+        True
+        >>> Sudoku.match((1,2,5,4,3,6,7,8,9), (1,2,3,4,5,6,7,8,9))
+        False
+        >>> Sudoku.match((1,2,5,4,3,6,7,8,9), (1,2,0,4,0,6,0,8,9))
+        True
+        """
+        return all(
+            a==b if a!=0 and b!=0 else True
+            for a, b in zip(d1,d2)
+        )
+
+    @staticmethod
     def row(data, n):
         """
         >>> data = Sudoku.parse(problem)
@@ -129,6 +145,16 @@ class Sudoku():
         self._base = self.parse(data)
         self.data = list(self._base)
 
+    def __repr__(self):
+        r"""
+        >>> repr(Sudoku(problem))
+        '530070000\n600195000\n098000060\n800060003\n400803001\n700020006\n060000280\n000419005\n000080079'
+        """
+        return "\n".join(
+            ''.join(map(str, self.data[9*(i+0):9*(i+1)]))
+            for i in range(9)
+        )
+
     @property
     def valid(self):
         """
@@ -151,6 +177,12 @@ class Sudoku():
             )
         )
 
+    def set_row(self, n, row_data):
+        #assert len(row_data) == 9
+        i, j = (9*(n+0), 9*(n+1))
+        self.data[i:j] = row_data
+        #assert self.match(self._base[i:j], self.data[i:j])
+
     def solve(self):
         r = 0
         missing = self._missing(self.row(self.data, r))
@@ -159,6 +191,10 @@ class Sudoku():
             for p in permutations(missing, len(missing))
         ):
             print(proposed_row)
+            self.set_row(r, proposed_row)
+        print(self)
+
+
 
 if __name__ == "__main__":
     Sudoku(problem).solve()
