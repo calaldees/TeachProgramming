@@ -1,5 +1,5 @@
 import re
-from itertools import chain
+from itertools import chain, permutations
 
 problem = """
 var puzzle = [
@@ -115,9 +115,9 @@ class Sudoku():
     def block(Class, data, row, col):
         """
         >>> data = Sudoku.parse(problem)
-        >>> Sudoku.block(data, 0,0)
+        >>> Sudoku.block(data, 0, 0)
         (5, 3, 0, 6, 0, 0, 0, 9, 8)
-        >>> Sudoku.block(data, 1,1)
+        >>> Sudoku.block(data, 1, 1)
         (0, 6, 0, 8, 0, 3, 0, 2, 0)
         """
         return tuple(chain.from_iterable(
@@ -151,4 +151,14 @@ class Sudoku():
             )
         )
 
+    def solve(self):
+        r = 0
+        missing = self._missing(self.row(self.data, r))
+        for proposed_row in (
+            self.overlay(self.row(self._base, r), p)
+            for p in permutations(missing, len(missing))
+        ):
+            print(proposed_row)
 
+if __name__ == "__main__":
+    Sudoku(problem).solve()
