@@ -67,8 +67,30 @@ class Sudoku():
         """
         return frozenset(data) == Class.COMPLETE_NUMBER_SET
 
+    @classmethod
+    def _missing(Class, data):
+        """
+        >>> Sudoku._missing((1,2,3))
+        frozenset({4, 5, 6, 7, 8, 9})
+        """
+        return Class.COMPLETE_NUMBER_SET - frozenset(data)
+
+    @staticmethod
+    def overlay(d1, d2):
+        """
+        >>> Sudoku.overlay((1,2,0,4,0,6,0,8,9), (3,5,7))
+        (1, 2, 3, 4, 5, 6, 7, 8, 9)
+        """
+        c = -1
+        def inc():
+            nonlocal c 
+            c += 1
+            return c
+        return tuple(v if v else d2[inc()] for v in d1)
+
     def __init__(self, data):
-        self.data = self.parse(data)
+        self._base = self.parse(data)
+        self.data = list(self._base)
 
     @property
     def valid(self):
@@ -121,3 +143,4 @@ class Sudoku():
             r[(col*3):(col+1)*3]
             for r in (self.row((row*3)+i) for i in range(3))
         ))
+
