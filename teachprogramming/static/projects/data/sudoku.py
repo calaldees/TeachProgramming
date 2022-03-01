@@ -27,7 +27,6 @@ solution = """
     [3,4,5,2,8,6,1,7,9]] 
 """
 
-
 class Sudoku():
     COMPLETE_NUMBER_SET = frozenset(i+1 for i in range(9))
 
@@ -49,7 +48,9 @@ class Sudoku():
         >>> Sudoku.parse(problem)
         (5, 3, 0, 0, 7, 0, 0, 0, 0, 6, 0, 0, 1, 9, 5, 0, 0, 0, 0, 9, 8, 0, 0, 0, 0, 6, 0, 8, 0, 0, 0, 6, 0, 0, 0, 3, 4, 0, 0, 8, 0, 3, 0, 0, 1, 7, 0, 0, 0, 2, 0, 0, 0, 6, 0, 6, 0, 0, 0, 0, 2, 8, 0, 0, 0, 0, 4, 1, 9, 0, 0, 5, 0, 0, 0, 0, 8, 0, 0, 7, 9)
         """
-        data = tuple(int(i) for i in re.sub(r'\D', '', data))
+        if isinstance(data, str):
+            data = (int(i) for i in re.sub(r'\D', '', data))
+        data = tuple(data)
         len(data) == 9*9
         return data
 
@@ -88,6 +89,42 @@ class Sudoku():
             return c
         return tuple(v if v else d2[inc()] for v in d1)
 
+    @staticmethod
+    def row(data, n):
+        """
+        >>> data = Sudoku.parse(problem)
+        >>> Sudoku.row(data, 0)
+        (5, 3, 0, 0, 7, 0, 0, 0, 0)
+        >>> Sudoku.row(data, 1)
+        (6, 0, 0, 1, 9, 5, 0, 0, 0)
+        """
+        return data[(n*9):(n+1)*9]
+
+    @staticmethod
+    def col(data, n):
+        """
+        >>> data = Sudoku.parse(problem)
+        >>> Sudoku.col(data, 0)
+        (5, 6, 0, 8, 4, 7, 0, 0, 0)
+        >>> Sudoku.col(data, 1)
+        (3, 0, 9, 0, 0, 0, 6, 0, 0)
+        """
+        return tuple(data[(i*9)+n] for i in range(9))
+
+    @classmethod
+    def block(Class, data, row, col):
+        """
+        >>> data = Sudoku.parse(problem)
+        >>> Sudoku.block(data, 0,0)
+        (5, 3, 0, 6, 0, 0, 0, 9, 8)
+        >>> Sudoku.block(data, 1,1)
+        (0, 6, 0, 8, 0, 3, 0, 2, 0)
+        """
+        return tuple(chain.from_iterable(
+            r[(col*3):(col+1)*3]
+            for r in (Class.row(data, (row*3)+i) for i in range(3))
+        ))
+
     def __init__(self, data):
         self._base = self.parse(data)
         self.data = list(self._base)
@@ -103,44 +140,15 @@ class Sudoku():
         return (
             len(tuple(filter(None, self.data))) == 9*9 # data is correct size
             and
-            all(self._valid(self.row(r)) for r in range(9))
+            all(self._valid(self.row(self.data, r)) for r in range(9))
             and
-            all(self._valid(self.col(c)) for c in range(9))
+            all(self._valid(self.col(self.data, c)) for c in range(9))
             and
             all(
-                self._valid(self.block(x,y))
+                self._valid(self.block(self.data, x,y))
                 for y in range(3)
                 for x in range(3)
             )
         )
 
-    def row(self, n):
-        """
-        >>> Sudoku(problem).row(0)
-        (5, 3, 0, 0, 7, 0, 0, 0, 0)
-        >>> Sudoku(problem).row(1)
-        (6, 0, 0, 1, 9, 5, 0, 0, 0)
-        """
-        return self.data[(n*9):(n+1)*9]
-
-    def col(self, n):
-        """
-        >>> Sudoku(problem).col(0)
-        (5, 6, 0, 8, 4, 7, 0, 0, 0)
-        >>> Sudoku(problem).col(1)
-        (3, 0, 9, 0, 0, 0, 6, 0, 0)
-        """
-        return tuple(self.data[(i*9)+n] for i in range(9))
-
-    def block(self,row,col):
-        """
-        >>> Sudoku(problem).block(0,0)
-        (5, 3, 0, 6, 0, 0, 0, 9, 8)
-        >>> Sudoku(problem).block(1,1)
-        (0, 6, 0, 8, 0, 3, 0, 2, 0)
-        """
-        return tuple(chain.from_iterable(
-            r[(col*3):(col+1)*3]
-            for r in (self.row((row*3)+i) for i in range(3))
-        ))
 
