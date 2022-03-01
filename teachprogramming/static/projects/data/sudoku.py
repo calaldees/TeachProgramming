@@ -10,6 +10,7 @@ https://dev.to/aspittel/how-i-finally-wrote-a-sudoku-solver-177g
 
 import re
 from itertools import chain, permutations
+import time
 
 problem = """
 var puzzle = [
@@ -38,6 +39,21 @@ var puzzle = [
 
 """
 
+# https://en.wikipedia.org/wiki/Sudoku_solving_algorithms
+# Designed to beat the brute force method. The first row is freeform
+problem3 = """
+000 000 000
+000 003 085
+001 020 000
+
+000 507 000
+004 000 100
+090 000 000
+
+500 000 073
+002 010 000
+000 040 009
+"""
 
 solution = """
     sudoku(puzzle);
@@ -85,57 +101,32 @@ class Sudoku():
         return data.count(0) / (9*9)
 
     @classmethod
-    def _valid(Class, data):
+    def _valid_data(Class, data):
         """
-        >>> Sudoku._valid((1,2,3,4,5,6,7,8,9))
+        >>> Sudoku._valid_data((1,2,3,4,5,6,7,8,9))
         True
-        >>> Sudoku._valid((0,2,3,4,5,6,7,8,9))
+        >>> Sudoku._valid_data((0,0,0,0,5,6,7,8,9))
+        True
+        >>> Sudoku._valid_data((0,0,0,5,5,6,7,8,9))
         False
-        >>> Sudoku._valid((9,8,7,6,5,4,3,2,1))
+        """
+        data = tuple(filter(None, data))
+        return len(frozenset(data)) == len(data)
+
+    @classmethod
+    def _complete_data(Class, data):
+        """
+        >>> Sudoku._complete_data((1,2,3,4,5,6,7,8,9))
         True
-        >>> Sudoku._valid((5,5,5,5,5,5,5,5,5))
+        >>> Sudoku._complete_data((0,2,3,4,5,6,7,8,9))
+        False
+        >>> Sudoku._complete_data((9,8,7,6,5,4,3,2,1))
+        True
+        >>> Sudoku._complete_data((5,5,5,5,5,5,5,5,5))
         False
         """
         return frozenset(data) == Class.COMPLETE_NUMBER_SET
 
-    @classmethod
-    def _missing(Class, data):
-        """
-        >>> Sudoku._missing((1,2,3))
-        frozenset({4, 5, 6, 7, 8, 9})
-        """
-        return Class.COMPLETE_NUMBER_SET - frozenset(data)
-
-    @staticmethod
-    def overlay(d1, d2):
-        """
-        >>> Sudoku.overlay((1,2,0,4,0,6,0,8,9), (3,5,7))
-        (1, 2, 3, 4, 5, 6, 7, 8, 9)
-        """
-        assert d1.count(0) == len(d2)
-        c = -1
-        def inc():
-            nonlocal c 
-            c += 1
-            return c
-        return tuple(v if v else d2[inc()] for v in d1)
-
-    # just used for assertions
-    # @staticmethod
-    # def match(d1, d2):
-    #     """
-    #     Match ignoring 0's
-    #     >>> Sudoku.match((1,2,0,4,0,6,0,8,9), (1,2,3,4,5,6,7,8,9))
-    #     True
-    #     >>> Sudoku.match((1,2,5,4,3,6,7,8,9), (1,2,3,4,5,6,7,8,9))
-    #     False
-    #     >>> Sudoku.match((1,2,5,4,3,6,7,8,9), (1,2,0,4,0,6,0,8,9))
-    #     True
-    #     """
-    #     return all(
-    #         a==b if a!=0 and b!=0 else True
-    #         for a, b in zip(d1,d2)
-    #     )
 
     @staticmethod
     def row(data, n):
@@ -189,26 +180,109 @@ class Sudoku():
         )
 
     @property
-    def valid(self):
+    def complete(self):
         """
-        >>> Sudoku(problem).valid
+        >>> Sudoku(problem).complete
         False
-        >>> Sudoku(solution).valid
+        >>> Sudoku(solution).complete
         True
         """
         return (
             len(tuple(filter(None, self.data))) == 9*9 # data is correct size
             and
-            all(self._valid(self.row(self.data, r)) for r in range(9))
+            all(self._complete_data(self.row(self.data, r)) for r in range(9))
             and
-            all(self._valid(self.col(self.data, c)) for c in range(9))
+            all(self._complete_data(self.col(self.data, c)) for c in range(9))
             and
             all(
-                self._valid(self.block(self.data, x,y))
+                self._complete_data(self.block(self.data, x,y))
                 for y in range(3)
                 for x in range(3)
             )
         )
+    
+    def valid_cell_values(self, index):
+        """
+        >>> ss = Sudoku(problem)
+        >>> ss.valid_cell_values(0)
+        frozenset()
+        >>> ss.valid_cell_values(2)
+        frozenset({1, 2, 4})
+        >>> ss.valid_cell_values(78)
+        frozenset({1, 3, 4, 6})
+        """
+        if self.data[index]:
+            return frozenset()
+        def _valid(value):
+            return all((
+                self._valid_data(self.row(self.data, index//9) + [value,]),
+                self._valid_data(self.col(self.data, index%9) + (value,)),
+                self._valid_data(self.block(self.data, index//9//3, index%9//3) + (value,)),
+            ))
+        return frozenset(filter(_valid, self.COMPLETE_NUMBER_SET))
+
+
+    def solve(self, index=0):
+        self._debug()
+        if index >= 80:
+            return True
+        while self._base[index]:
+            index += 1
+            if index >= 80:
+                return True
+        possible_values = self.valid_cell_values(index)
+        if not possible_values:
+            return  # if there are no possible values then this is not the solution
+        for possible_value in possible_values:
+            self.data[index] = possible_value
+            solved = self.solve(index+1)
+            if solved:
+                return solved
+        self.data[index] = 0  # backtrack - clean-up our attempt
+
+    # Rubbish solving --------------------------------------
+
+
+    # just used for assertions
+    # @staticmethod
+    # def match(d1, d2):
+    #     """
+    #     Match ignoring 0's
+    #     >>> Sudoku.match((1,2,0,4,0,6,0,8,9), (1,2,3,4,5,6,7,8,9))
+    #     True
+    #     >>> Sudoku.match((1,2,5,4,3,6,7,8,9), (1,2,3,4,5,6,7,8,9))
+    #     False
+    #     >>> Sudoku.match((1,2,5,4,3,6,7,8,9), (1,2,0,4,0,6,0,8,9))
+    #     True
+    #     """
+    #     return all(
+    #         a==b if a!=0 and b!=0 else True
+    #         for a, b in zip(d1,d2)
+    #     )
+
+    @classmethod
+    def _missing(Class, data):
+        """
+        >>> Sudoku._missing((1,2,3))
+        frozenset({4, 5, 6, 7, 8, 9})
+        """
+        return Class.COMPLETE_NUMBER_SET - frozenset(data)
+
+    @staticmethod
+    def overlay(d1, d2):
+        """
+        >>> Sudoku.overlay((1,2,0,4,0,6,0,8,9), (3,5,7))
+        (1, 2, 3, 4, 5, 6, 7, 8, 9)
+        """
+        assert d1.count(0) == len(d2)
+        c = -1
+        def inc():
+            nonlocal c 
+            c += 1
+            return c
+        return tuple(v if v else d2[inc()] for v in d1)
+
+
 
     def set_row(self, n, row_data):
         #assert len(row_data) == 9
@@ -216,8 +290,10 @@ class Sudoku():
         self.data[i:j] = row_data
         #assert self.match(self._base[i:j], self.data[i:j])
 
-    def solve(self, r=0):
-        # I don't think this is complete ... it seems to get stuck repeating the last few rows A LOT
+    def solve_rubbish(self, r=0):
+        """
+        This was my first attempt. It was shockingly bad. Never ever do this.
+        """
         if r>=9:
             assert False, "How? What? No?"
         missing = self._missing(self.row(self._base, r))
@@ -231,12 +307,12 @@ class Sudoku():
 
             if r==2 or r==5 or r==8:
                 if not all(
-                    self._valid(self.block(self.data, r//3, col))
+                    self._complete_data(self.block(self.data, r//3, col))
                     for col in range(3)
                 ):
                     continue
             if r==8:
-                if not all(self._valid(self.col(self.data, c)) for c in range(9)):
+                if not all(self._complete_data(self.col(self.data, c)) for c in range(9)):
                     continue
                 else:
                     return True
@@ -250,7 +326,9 @@ class Sudoku():
         if self._debug_counter % 100000 == 0:
             print("\033c", end='')
             print(f"{self._debug_counter=}")
-            print(self)
+            print(self, flush=True)
+            #breakpoint()
+            #time.sleep(0.5)
 
 
 if __name__ == "__main__":
@@ -263,4 +341,4 @@ if __name__ == "__main__":
     print("\033c", end='')
     print(f"solved it in {ss._debug_counter} comparisons")
     print(ss)
-    print(ss.valid)
+    print(ss.complete)
