@@ -1,11 +1,13 @@
 """
-This is a broken and incomplete sudoku solver
-Currently took around 4 hours with no resources other than looking python standard library functions.
-It cant solve problem 1 in 10 mins on my machine ... something is wrong.
+Sudoku Solver attempt
+
+Need to investigate the algorithms at
+* https://dev.to/aspittel/how-i-finally-wrote-a-sudoku-solver-177g
+* https://stackoverflow.com/a/57876668/3356840
 
 
-Need to investigate the algorithm at
-https://dev.to/aspittel/how-i-finally-wrote-a-sudoku-solver-177g
+TODO
+* [stackoverflow.com how-to-generate-sudoku-boards-with-unique-solutions](https://stackoverflow.com/questions/6924216/how-to-generate-sudoku-boards-with-unique-solutions)
 """
 
 import re
@@ -331,14 +333,104 @@ class Sudoku():
             #time.sleep(0.5)
 
 
+
+class Sudoku2():
+    COMPLETE_NUMBER_SET = frozenset(i+1 for i in range(9))
+
+    def __init__(self, data):
+        self.data = list(Sudoku.parse(data))
+        self.empty_indexes = tuple(i for i, v in enumerate(self.data) if not v)
+
+    def __repr__(self):
+        return "\n".join(''.join(map(str, self.data[9*(i+0):9*(i+1)])) for i in range(9))
+
+    def valid_cell_values(self, i):
+        """
+        >>> ss = Sudoku2(problem)
+        >>> ss.valid_cell_values(2)
+        frozenset({1, 2, 4})
+        >>> ss.valid_cell_values(8)
+        frozenset({8, 2, 4})
+        >>> ss.valid_cell_values(78)
+        frozenset({1, 3, 4, 6})
+        """
+        row_num, col_num = i//9, i%9
+        row_index = row_num*9
+        block_row, block_col = (row_num//3)*3, (col_num//3)*3
+        return (
+            self.COMPLETE_NUMBER_SET
+            - frozenset(self.data[row_index:row_index+9])
+            - frozenset(self.data[row_num*9 + col_num] for row_num in range(9))
+            - frozenset(chain.from_iterable(
+                self.data[block_i:block_i+3] 
+                for block_i in (((block_row+r)*9)+block_col for r in range(3))
+            ))
+        )
+
+    def solve(self, i=0):
+        if i>=len(self.empty_indexes):
+            return True
+        _i = self.empty_indexes[i]
+        for valid_number in self.valid_cell_values(_i):
+            self.data[_i] = valid_number
+            _solved = self.solve(i+1)
+            if _solved:
+                return _solved
+        self.data[_i] = 0
+
+
+    # Old working
+    # def row(self, n):
+    #     """
+    #     >>> ss = Sudoku2(problem)
+    #     >>> ss.row(0)
+    #     frozenset({0, 3, 5, 7})
+    #     >>> ss.row(1)
+    #     frozenset({0, 1, 5, 6, 9})
+    #     """
+    #     return frozenset(self.data[(n*9):(n+1)*9])
+    # def col(self, n):
+    #     """
+    #     >>> ss = Sudoku2(problem)
+    #     >>> ss.col(0)
+    #     frozenset({0, 4, 5, 6, 7, 8})
+    #     >>> ss.col(1)
+    #     frozenset({0, 9, 3, 6})
+    #     """
+    #     return frozenset(self.data[(i*9)+n] for i in range(9))
+    # def block(self, row, col):
+    #     """
+    #     >>> ss = Sudoku2(problem)
+    #     >>> ss.block(0, 0)
+    #     frozenset({0, 3, 5, 6, 8, 9})
+    #     >>> ss.block(1, 1)
+    #     frozenset({0, 2, 3, 6, 8})
+    #     """
+    #     return frozenset(chain.from_iterable(self.data[i:i+3] for i in ((((row*3)+i)*9)+(col*3) for i in range(3))))
+    # def valid_cell_values(self, i):
+    #     """
+    #     >>> ss = Sudoku2(problem)
+    #     >>> ss.valid_cell_values(2)
+    #     frozenset({1, 2, 4})
+    #     >>> ss.valid_cell_values(8)
+    #     frozenset({8, 2, 4})
+    #     >>> ss.valid_cell_values(78)
+    #     frozenset({1, 3, 4, 6})
+    #     """
+    #     return self.COMPLETE_NUMBER_SET - self.row(i//9) - self.col(i%9)- self.block(i//9//3, i%9//3)
+
+
+
+
 if __name__ == "__main__":
-    ss = Sudoku(problem)
-    print(ss)
-    print(f'Missing {Sudoku._percent_data_missing(ss._base)*100:.2f}%')
-    input()
+    ss = Sudoku2(problem)
+    #print(ss)
+    #print(f'Missing {Sudoku._percent_data_missing(ss._base)*100:.2f}%')
+    #input()
+    #breakpoint()
     ss.solve()
 
-    print("\033c", end='')
-    print(f"solved it in {ss._debug_counter} comparisons")
+    #print("\033c", end='')
+    #print(f"solved it in {ss._debug_counter} comparisons")
     print(ss)
-    print(ss.complete)
+    #print(ss.complete)
