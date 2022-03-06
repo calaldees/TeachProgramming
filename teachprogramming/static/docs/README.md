@@ -299,7 +299,7 @@ Other
 
 
 * [10 Creative Risks to Take With Your Students This Year](https://spencerauthor.com/creative-risks-new-year/)
-    * WIth class's
+    * With class's
         * Engage with wonder
         * Collaboration
         * Blog about what your passionate about
@@ -437,6 +437,8 @@ https://store.steampowered.com/app/619150/while_True_learn/
         * Plagiarism detection
         * Online IDE
     * [Open Educational Resources](https://www.mimirhq.com/classroom/open-educational-resources) OER
+* [An online platform for teaching upper secondary school computer science](https://dl.acm.org/doi/10.1145/3481282.3481287)
+    * This paper describes the Isaac Computer Science platform. The platform includes content and questions to support the teaching of A level computer science (a two-year upper secondary school qualification). The paper reviews design decisions made in developing this resource and suggests a generic platform pedagogy matrix.
 
 * [Hacker News folk wisdom on visual programming](https://drossbucket.com/2021/06/30/hacker-news-folk-wisdom-on-visual-programming/)
 * [Learnable Programming](http://worrydream.com/#!/LearnableProgramming) Bret Victor / September 2012
@@ -490,3 +492,6 @@ https://store.steampowered.com/app/619150/while_True_learn/
 * [If They Build It, Will They Understand It? Exploring the Relationship between Student Code and Performance](https://dl.acm.org/doi/10.1145/3341525.3387379)
     * > student performance on specific questions on the written assessments is only very weakly correlated to specific attributes of final projects typically used in artifact analysis as well as attributes we use to define candidate code (r < 0.2, p < 0.05). In particular, the correlation is not nearly strong enough to serve as a proxy for understanding
     * Digital artifact only weakly correlated with understanding
+    * TODO: read related?
+        * [Ideas, technology, and skills: A taxonomy for digital projects](http://www.constructionismconf.org/wp-content/uploads/2020/05/C2020-Proceedings.pdf) 2020 Raspbery Pi Foundation
+        * This paper seeks to develop the understanding of how young people engage with digital making projects. It proposes a simple taxonomy for thinking about the factors that are required or must be developed in order for young people to successfully complete a digital making project.
