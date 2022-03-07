@@ -95,7 +95,7 @@ class Sudoku():
         if isinstance(data, str):
             data = (int(i) for i in re.sub(r'\D', '', data))
         data = tuple(data)
-        len(data) == 9*9
+        assert len(data) == 9*9
         return data
 
     @staticmethod
@@ -338,12 +338,51 @@ class Sudoku2():
     COMPLETE_NUMBER_SET = frozenset(i+1 for i in range(9))
 
     def __init__(self, data):
-        self.data = list(Sudoku.parse(data))
+        self.data = list(int(i) for i in re.sub(r'\D', '', data))
+        assert len(self.data) == 9*9
         self.empty_indexes = tuple(i for i, v in enumerate(self.data) if not v)
 
     def __repr__(self):
         return "\n".join(''.join(map(str, self.data[9*(i+0):9*(i+1)])) for i in range(9))
 
+    def solve(self, i=0):
+        if i>=len(self.empty_indexes):
+            return True
+        _i = self.empty_indexes[i]
+        for valid_number in self.valid_cell_values(_i):
+            self.data[_i] = valid_number
+            _solved = self.solve(i+1)
+            if _solved:
+                return _solved
+        self.data[_i] = 0
+
+    def row(self, r):
+        """
+        >>> ss = Sudoku2(problem)
+        >>> ss.row(0)
+        frozenset({0, 3, 5, 7})
+        >>> ss.row(1)
+        frozenset({0, 1, 5, 6, 9})
+        """
+        return frozenset(self.data[(r*9):(r+1)*9])
+    def col(self, c):
+        """
+        >>> ss = Sudoku2(problem)
+        >>> ss.col(0)
+        frozenset({0, 4, 5, 6, 7, 8})
+        >>> ss.col(1)
+        frozenset({0, 9, 3, 6})
+        """
+        return frozenset(self.data[(i*9)+c] for i in range(9))
+    def block(self, row, col):
+        """
+        >>> ss = Sudoku2(problem)
+        >>> ss.block(0, 0)
+        frozenset({0, 3, 5, 6, 8, 9})
+        >>> ss.block(1, 1)
+        frozenset({0, 2, 3, 6, 8})
+        """
+        return frozenset(chain.from_iterable(self.data[i:i+3] for i in ((((row*3)+i)*9)+(col*3) for i in range(3))))
     def valid_cell_values(self, i):
         """
         >>> ss = Sudoku2(problem)
@@ -352,6 +391,20 @@ class Sudoku2():
         >>> ss.valid_cell_values(8)
         frozenset({8, 2, 4})
         >>> ss.valid_cell_values(78)
+        frozenset({1, 3, 4, 6})
+        """
+        return self.COMPLETE_NUMBER_SET - self.row(i//9) - self.col(i%9)- self.block(i//9//3, i%9//3)
+
+    def valid_cell_values2(self, i):
+        """
+        Alternate implementation of valid_cell_values in a single function
+        I don't think this is clearer
+        >>> ss = Sudoku2(problem)
+        >>> ss.valid_cell_values2(2)
+        frozenset({1, 2, 4})
+        >>> ss.valid_cell_values2(8)
+        frozenset({8, 2, 4})
+        >>> ss.valid_cell_values2(78)
         frozenset({1, 3, 4, 6})
         """
         row_num, col_num = i//9, i%9
@@ -366,59 +419,6 @@ class Sudoku2():
                 for block_i in (((block_row+r)*9)+block_col for r in range(3))
             ))
         )
-
-    def solve(self, i=0):
-        if i>=len(self.empty_indexes):
-            return True
-        _i = self.empty_indexes[i]
-        for valid_number in self.valid_cell_values(_i):
-            self.data[_i] = valid_number
-            _solved = self.solve(i+1)
-            if _solved:
-                return _solved
-        self.data[_i] = 0
-
-
-    # Old working
-    # def row(self, n):
-    #     """
-    #     >>> ss = Sudoku2(problem)
-    #     >>> ss.row(0)
-    #     frozenset({0, 3, 5, 7})
-    #     >>> ss.row(1)
-    #     frozenset({0, 1, 5, 6, 9})
-    #     """
-    #     return frozenset(self.data[(n*9):(n+1)*9])
-    # def col(self, n):
-    #     """
-    #     >>> ss = Sudoku2(problem)
-    #     >>> ss.col(0)
-    #     frozenset({0, 4, 5, 6, 7, 8})
-    #     >>> ss.col(1)
-    #     frozenset({0, 9, 3, 6})
-    #     """
-    #     return frozenset(self.data[(i*9)+n] for i in range(9))
-    # def block(self, row, col):
-    #     """
-    #     >>> ss = Sudoku2(problem)
-    #     >>> ss.block(0, 0)
-    #     frozenset({0, 3, 5, 6, 8, 9})
-    #     >>> ss.block(1, 1)
-    #     frozenset({0, 2, 3, 6, 8})
-    #     """
-    #     return frozenset(chain.from_iterable(self.data[i:i+3] for i in ((((row*3)+i)*9)+(col*3) for i in range(3))))
-    # def valid_cell_values(self, i):
-    #     """
-    #     >>> ss = Sudoku2(problem)
-    #     >>> ss.valid_cell_values(2)
-    #     frozenset({1, 2, 4})
-    #     >>> ss.valid_cell_values(8)
-    #     frozenset({8, 2, 4})
-    #     >>> ss.valid_cell_values(78)
-    #     frozenset({1, 3, 4, 6})
-    #     """
-    #     return self.COMPLETE_NUMBER_SET - self.row(i//9) - self.col(i%9)- self.block(i//9//3, i%9//3)
-
 
 
 
