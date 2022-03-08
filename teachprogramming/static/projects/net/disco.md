@@ -53,9 +53,57 @@ Remote control - with buttons and text box's. Slider? color picker?
 Receiver - image, text, video (mp4, youtube), redirect-webpage (frame?) (need snippets)
 video that moves from left to right (timed?)
 
+
+```javascript
+document.body.style = "margin:0; background-color:black;"  // remove the default html border
 ```
-<iframe width="560" height="315" src="https://www.youtube.com/embed/[Video ID]I?&autoplay=1" frameborder="0" allowfullscreen></iframe>
+
+```javascript
+function iframe(url) {
+  document.body.innerHTML = `<iframe style="width: 100%; height: 100%;" src="${url}" frameborder="0" allowfullscreen></iframe>`
+}
+iframe("https://canterbury.ac.uk/")
 ```
+
+```javascript
+function youtube(video_id) {
+  iframe(`https://www.youtube.com/embed/${video_id}?&autoplay=1`)
+}
+youtube("0jjeOYMjmDU")
+```
+
+```javascript
+function image(image_url) {
+  document.body.innerHTML = `<img style="width: 100%; height: 100%; object-fit: cover;" src="${image_url}">`
+}
+image("https://upload.wikimedia.org/wikipedia/commons/6/60/Augustine_Abbey.jpg")
+```
+
+```javascript
+function media(url) {
+  document.body.innerHTML = `<video controls autoplay style="width: 100%; height: 100%; object-fit: contain;"><source src="${url}"></video>`
+}
+media("https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_1280_10MG.mp4")
+```
+consider `mute` and `loop` and `controls`
+
+```javascript
+function speak(text) {
+  window.speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+}
+speak('Hello World');
+```
+
+```javascript
+function text(text) {
+  document.body.innerHTML = `<p>${text}</p>`
+}
+text('Hello World');
+// TODO: set font size and color and font? center? wrap?
+// Animation? scroll in?
+```
+
+
 
 Image blur - guess what it is - slowly unblur
 
@@ -64,23 +112,6 @@ This is sort of What chromecast is
 
 text to speach?
 
-https://stackoverflow.com/a/22234035/3356840
-```javascript
-window.speechSynthesis.speak(new SpeechSynthesisUtterance('Hello World'));
-```
-```javascript
-function say(m) {
-  var msg = new SpeechSynthesisUtterance();
-  var voices = window.speechSynthesis.getVoices();
-  msg.voice = voices[10];
-  msg.voiceURI = "native";
-  msg.volume = 1;
-  msg.rate = 1;
-  msg.pitch = 0.8;
-  msg.text = m;
-  msg.lang = 'en-US';
-  speechSynthesis.speak(msg);
-```
 
 
 
