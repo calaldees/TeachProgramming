@@ -34,6 +34,7 @@
         c.rotate(Math.PI)
 
         function branch(len, angle) {
+            //const t = c.getTransform()  // possible alternate way of reversing transforms
             line(0,0,0,len)
             c.translate(0,len)
             if (len>4) {
@@ -44,6 +45,7 @@
                 c.rotate(angle)
             }
             c.translate(0,-len)
+            //c.setTransform(t)  // possible alternate way of reversing transforms
         }
         branch(len, angle)
     }
