@@ -1,0 +1,84 @@
+<!-- Fractal Tree - Inspired by - Coding Challenge #14: Fractal Trees - Recursive - CodingTrain - https://www.youtube.com/watch?v=0jjeOYMjmDU -->
+<body style="margin: 0;">
+<canvas id="canvas" width="480" height="270" style="image-rendering: pixelated; object-fit: contain; width:100%; max-width: 100%; height: 100%; max-height: 100%;"></canvas>
+<script type="module">
+    const canvas = document.getElementById('canvas')
+    const c = canvas.getContext('2d')
+
+    const w = canvas.width
+    const h = canvas.height
+
+    function color(r,g,b) {
+        const color = `rgb(${r},${g},${b})`
+        c.fillStyle = color
+        c.strokeStyle = color
+    }
+    function reset() {
+        c.setTransform(1, 0, 0, 1, 0, 0)  // Reset transformation matrix to the identity matrix
+        c.fillStyle = 'black'
+        c.fillRect(0, 0, canvas.width, canvas.height)
+    }
+    function pixel(x, y) {c.fillRect(Math.floor(x), Math.floor(y), 1, 1);}
+    function line(x1,y1,x2,y2) {
+        c.beginPath()
+        c.moveTo(Math.floor(x1)+0.5, Math.floor(y1)+0.5)
+        c.lineTo(Math.floor(x2)+0.5, Math.floor(y2)+0.5)
+        c.stroke()
+    }
+
+
+    function draw(len, angle) {
+        reset()
+        color(255,255,255)
+        c.translate(w/2,h)
+        c.rotate(Math.PI)
+
+        function branch(len, angle) {
+            line(0,0,0,len)
+            c.translate(0,len)
+            if (len>4) {
+                c.rotate(angle)
+                branch(len*0.67, angle)
+                c.rotate(-angle*2)
+                branch(len*0.67, angle)
+                c.rotate(angle)
+            }
+            c.translate(0,-len)
+        }
+        branch(len, angle)
+    }
+
+    const a = Math.PI / 4;
+    slider(a, (e)=>{
+        draw(100, e.target.value)
+    })
+    draw(100, a)
+
+
+
+
+
+    function slider(value, onchange_func) {
+        const i = document.createElement('input')
+        i.style = "position: absolute; left:0; top:0"
+        i.type = 'range'
+        i.value = value
+        i.min = 0
+        i.max = Math.PI
+        i.step = 0.01
+        i.incremental = true
+
+        // Normalise onChange nonsense
+        // https://stackoverflow.com/a/37623959/3356840
+        function onRangeChange(r,f) {
+            var n,c,m;
+            r.addEventListener("input",function(e){n=1;c=e.target.value;if(c!=m)f(e);m=c;});
+            r.addEventListener("change",function(e){if(!n)f(e);});
+        }
+        onRangeChange(i, onchange_func)
+
+        document.body.appendChild(i)
+    }
+
+</script>
+</body>
