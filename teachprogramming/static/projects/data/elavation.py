@@ -23,7 +23,7 @@ Extension:
 
 Quick Setup: bash commands
     curl -O "https://raw.githubusercontent.com/calaldees/TeachProgramming/master/teachprogramming/static/projects/data/elavation.py"
-    curl -O "http://shadedrelief.com/natural3/ne3_data/8192/elev_bump_8k.jpg"
+    curl  -A "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:59.0) Gecko/20100101 Firefox/59.0" -O "https://shadedrelief.com/natural3/ne3_data/8192/elev_bump_8k.jpg"
     pip3 install pillow
     python3 elavation.py
 """
