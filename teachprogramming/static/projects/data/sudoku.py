@@ -1,19 +1,14 @@
 """
 Sudoku Solver attempt
 
-Need to investigate the algorithms at
+References
 * https://dev.to/aspittel/how-i-finally-wrote-a-sudoku-solver-177g
 * https://stackoverflow.com/a/57876668/3356840
-
-
-TODO
 * [stackoverflow.com how-to-generate-sudoku-boards-with-unique-solutions](https://stackoverflow.com/questions/6924216/how-to-generate-sudoku-boards-with-unique-solutions)
 """
 
-from operator import index
 import re
 from itertools import chain, permutations
-import time
 import random
 
 
@@ -74,6 +69,7 @@ solution = """
     [3,4,5,2,8,6,1,7,9]] 
 """
 
+# First attempt
 class Sudoku():
     COMPLETE_NUMBER_SET = frozenset(i+1 for i in range(9))
 
@@ -411,32 +407,6 @@ class Sudoku2():
         """
         return self.COMPLETE_NUMBER_SET - self.row(i//9) - self.col(i%9)- self.block(i//9//3, i%9//3)
 
-    def valid_cell_values2(self, i):
-        """
-        Experiment
-        Alternate implementation of valid_cell_values in a single function
-        I don't think this is clearer than separate functions to get collections
-        >>> ss = Sudoku2(problem)
-        >>> ss.valid_cell_values2(2)
-        frozenset({1, 2, 4})
-        >>> ss.valid_cell_values2(8)
-        frozenset({8, 2, 4})
-        >>> ss.valid_cell_values2(78)
-        frozenset({1, 3, 4, 6})
-        """
-        row_num, col_num = i//9, i%9
-        row_index = row_num*9
-        block_row, block_col = (row_num//3)*3, (col_num//3)*3
-        return (
-            self.COMPLETE_NUMBER_SET
-            - frozenset(self.data[row_index:row_index+9])
-            - frozenset(self.data[row_num*9 + col_num] for row_num in range(9))
-            - frozenset(chain.from_iterable(
-                self.data[block_i:block_i+3] 
-                for block_i in (((block_row+r)*9)+block_col for r in range(3))
-            ))
-        )
-
     @property
     def complete(self):
         """
@@ -530,8 +500,40 @@ class Sudoku2():
 
 
 
+    # Old experiment -----------------------------------------------------------
 
-# Same as Sudoku2 but without tests
+    def valid_cell_values2(self, i):
+        """
+        Experiment
+        Alternate implementation of valid_cell_values in a single function
+        I don't think this is clearer than separate functions to get collections
+        >>> ss = Sudoku2(problem)
+        >>> ss.valid_cell_values2(2)
+        frozenset({1, 2, 4})
+        >>> ss.valid_cell_values2(8)
+        frozenset({8, 2, 4})
+        >>> ss.valid_cell_values2(78)
+        frozenset({1, 3, 4, 6})
+        """
+        row_num, col_num = i//9, i%9
+        row_index = row_num*9
+        block_row, block_col = (row_num//3)*3, (col_num//3)*3
+        return (
+            self.COMPLETE_NUMBER_SET
+            - frozenset(self.data[row_index:row_index+9])
+            - frozenset(self.data[row_num*9 + col_num] for row_num in range(9))
+            - frozenset(chain.from_iterable(
+                self.data[block_i:block_i+3] 
+                for block_i in (((block_row+r)*9)+block_col for r in range(3))
+            ))
+        )
+
+
+
+
+
+
+# Same as Sudoku2 but just the solver simplified
 class Sudoku3():
     COMPLETE_NUMBER_SET = frozenset(i+1 for i in range(9))
 
