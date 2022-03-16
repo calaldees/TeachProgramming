@@ -360,10 +360,14 @@ class Sudoku2():
                 return _solved
         self.data[_i] = 0
 
-    def _indexes_to_frozenset(self, indexes):
-        return frozenset(map(lambda i: self.data[i], indexes))
     def row_indexes(self, r):
         return range((r*9),(r+1)*9)
+    def col_indexes(self, c):
+        return ((i*9)+c for i in range(9))
+    def block_indexes(self, row, col):
+        return chain.from_iterable(range(i,i+3) for i in ((((row*3)+i)*9)+(col*3) for i in range(3)))
+    def _indexes_to_frozenset(self, indexes):
+        return frozenset(map(lambda i: self.data[i], indexes))
     def row(self, r):
         """
         >>> ss = Sudoku2(problem)
@@ -373,8 +377,6 @@ class Sudoku2():
         frozenset({0, 1, 5, 6, 9})
         """
         return self._indexes_to_frozenset(self.row_indexes(r))
-    def col_indexes(self, c):
-        return ((i*9)+c for i in range(9))
     def col(self, c):
         """
         >>> ss = Sudoku2(problem)
@@ -384,8 +386,6 @@ class Sudoku2():
         frozenset({0, 9, 3, 6})
         """
         return self._indexes_to_frozenset(self.col_indexes(c))
-    def block_indexes(self, row, col):
-        return chain.from_iterable(range(i,i+3) for i in ((((row*3)+i)*9)+(col*3) for i in range(3)))
     def block(self, row, col):
         """
         >>> ss = Sudoku2(problem)
@@ -434,7 +434,6 @@ class Sudoku2():
                 self.data[_i1] = self.data[_i2]
                 self.data[_i2] = _tmp
 
-        # Swap numbers in dataset
         nums = self._randomize_order(self.COMPLETE_NUMBER_SET)
         for i in range(3):
             swap_indexes_in_place(self._indexes_of(nums.pop()), self._indexes_of(nums.pop()))
@@ -447,19 +446,15 @@ class Sudoku2():
                 for row_block in range(3)
                 for r in self._randomize_order(range((row_block+0)*3, (row_block+1)*3))
             )
-        # Shuffle rows (group of 3 block)
         for r1, r2 in zip(range(9), shuffle_row_col_indexes()):
             swap_indexes_in_place(self.row_indexes(r1), self.row_indexes(r2))
-        # Shuffle cols (group of 3 block)
         for c1, c2 in zip(range(9), shuffle_row_col_indexes()):
             swap_indexes_in_place(self.col_indexes(c1), self.col_indexes(c2))
-        # Shuffle block row
         for br1, br2 in zip(range(3), shuffle_block_indexes()):
             swap_indexes_in_place(
                 chain.from_iterable(self.block_indexes(br1, col) for col in range(3)), 
                 chain.from_iterable(self.block_indexes(br2, col) for col in range(3)),
             )
-        # Shuffle block col
         for bc1, bc2 in zip(range(3), shuffle_block_indexes()):
             swap_indexes_in_place(
                 chain.from_iterable(self.block_indexes(row, bc1) for row in range(3)), 
