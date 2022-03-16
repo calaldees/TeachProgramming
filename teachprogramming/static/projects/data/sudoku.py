@@ -476,7 +476,7 @@ class Sudoku2():
         """
         for i in range(5):
             self._shuffle()
-    def create(self, difficulty=20):
+    def create(self, difficulty=50):
         """
         >>> ss = Sudoku2(solution)
         >>> ss.complete
@@ -489,6 +489,7 @@ class Sudoku2():
         True
         """
         assert self.complete
+        assert (9*9) - difficulty >=17
         self.shuffle()
         for i in self._randomize_order(range(9*9))[:difficulty]:
             self.data[i] = 0
@@ -574,4 +575,11 @@ if __name__ == "__main__":
     #print("\033c", end='')
     #print(f"solved it in {ss._debug_counter} comparisons")
     print(ss)
+    print()
     #print(ss.complete)
+
+    ss.create()
+    print(ss)
+    print()
+    ss.solve()
+    print(ss)
