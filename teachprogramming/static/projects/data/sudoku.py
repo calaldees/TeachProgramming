@@ -10,9 +10,12 @@ TODO
 * [stackoverflow.com how-to-generate-sudoku-boards-with-unique-solutions](https://stackoverflow.com/questions/6924216/how-to-generate-sudoku-boards-with-unique-solutions)
 """
 
+from operator import index
 import re
 from itertools import chain, permutations
 import time
+import random
+
 
 problem = """
 var puzzle = [
@@ -356,6 +359,10 @@ class Sudoku2():
                 return _solved
         self.data[_i] = 0
 
+    def _indexes_to_frozenset(self, indexes):
+        return frozenset(map(lambda i: self.data[i], indexes))
+    def row_indexes(self, r):
+        return range((r*9),(r+1)*9)
     def row(self, r):
         """
         >>> ss = Sudoku2(problem)
@@ -364,7 +371,9 @@ class Sudoku2():
         >>> ss.row(1)
         frozenset({0, 1, 5, 6, 9})
         """
-        return frozenset(self.data[(r*9):(r+1)*9])
+        return self._indexes_to_frozenset(self.row_indexes(r))
+    def col_indexes(self, c):
+        return ((i*9)+c for i in range(9))
     def col(self, c):
         """
         >>> ss = Sudoku2(problem)
@@ -373,7 +382,9 @@ class Sudoku2():
         >>> ss.col(1)
         frozenset({0, 9, 3, 6})
         """
-        return frozenset(self.data[(i*9)+c] for i in range(9))
+        return self._indexes_to_frozenset(self.col_indexes(c))
+    def block_indexes(self, row, col):
+        return chain.from_iterable(range(i,i+3) for i in ((((row*3)+i)*9)+(col*3) for i in range(3)))
     def block(self, row, col):
         """
         >>> ss = Sudoku2(problem)
@@ -382,7 +393,7 @@ class Sudoku2():
         >>> ss.block(1, 1)
         frozenset({0, 2, 3, 6, 8})
         """
-        return frozenset(chain.from_iterable(self.data[i:i+3] for i in ((((row*3)+i)*9)+(col*3) for i in range(3))))
+        return self._indexes_to_frozenset(self.block_indexes(row, col))
     def valid_cell_values(self, i):
         """
         >>> ss = Sudoku2(problem)
@@ -397,8 +408,9 @@ class Sudoku2():
 
     def valid_cell_values2(self, i):
         """
+        Experiment
         Alternate implementation of valid_cell_values in a single function
-        I don't think this is clearer
+        I don't think this is clearer than separate functions to get collections
         >>> ss = Sudoku2(problem)
         >>> ss.valid_cell_values2(2)
         frozenset({1, 2, 4})
@@ -419,6 +431,106 @@ class Sudoku2():
                 for block_i in (((block_row+r)*9)+block_col for r in range(3))
             ))
         )
+
+    @property
+    def complete(self):
+        """
+        >>> Sudoku2(problem).complete
+        False
+        >>> Sudoku2(solution).complete
+        True
+        """
+        return all(
+            s == self.COMPLETE_NUMBER_SET
+            for s in chain(
+                (self.row(r) for r in range(9)),
+                (self.col(c) for c in range(9)),
+                (self.block(x,y) for y in range(3) for x in range(3)),
+            )
+        )
+
+    @staticmethod
+    def _randomize_order(data):
+        return sorted(data, key=lambda k: random.random())
+    def _shuffle(self):
+        # Swap numbers in dataset
+        def swap_list_values_in_place(data, v1, v2):
+            for i, v in enumerate(data):
+                if v == v1:
+                    data[i] = v2
+                if v == v2:
+                    data[i] = v1
+        nums = list(self.COMPLETE_NUMBER_SET)
+        random.shuffle(nums)
+        swap_list_values_in_place(self.data, nums.pop(), nums.pop())
+        swap_list_values_in_place(self.data, nums.pop(), nums.pop())
+
+        def shuffle_block_indexes():
+            return self._randomize_order(range(3))
+        def shuffle_row_col_indexes():
+            return tuple(
+                r
+                for row_block in range(3)
+                for r in self._randomize_order(range((row_block+0)*3, (row_block+1)*3))
+            )
+        def swap_indexes_in_place(i1, i2):
+            for _i1, _i2 in zip(i1, i2):
+                _tmp = self.data[_i1]
+                self.data[_i1] = self.data[_i2]
+                self.data[_i2] = _tmp
+        # Shuffle rows (group of 3 block)
+        for r1, r2 in zip(range(9), shuffle_row_col_indexes()):
+            swap_indexes_in_place(self.row_indexes(r1), self.row_indexes(r2))
+        # Shuffle cols (group of 3 block)
+        for c1, c2 in zip(range(9), shuffle_row_col_indexes()):
+            swap_indexes_in_place(self.col_indexes(c1), self.col_indexes(c2))
+        # Shuffle block row
+        for br1, br2 in zip(range(3), shuffle_block_indexes()):
+            swap_indexes_in_place(
+                chain.from_iterable(self.block_indexes(br1, col) for col in range(3)), 
+                chain.from_iterable(self.block_indexes(br2, col) for col in range(3)),
+            )
+        # Shuffle block col
+        for bc1, bc2 in zip(range(3), shuffle_block_indexes()):
+            swap_indexes_in_place(
+                chain.from_iterable(self.block_indexes(row, bc1) for row in range(3)), 
+                chain.from_iterable(self.block_indexes(row, bc2) for row in range(3)),
+            )
+    def shuffle(self):
+        """
+        >>> ss = Sudoku2(solution)
+        >>> data_copy = list(ss.data)
+        >>> ss.data == data_copy
+        True
+        >>> ss.complete
+        True
+        >>> ss.shuffle()
+        >>> ss.data == data_copy
+        False
+        >>> ss.complete
+        True
+        """
+        for i in range(6):
+            self._shuffle()
+    def create(self, difficulty=20):
+        """
+        >>> ss = Sudoku2(solution)
+        >>> ss.complete
+        True
+        >>> ss.create()
+        >>> ss.complete
+        False
+        >>> ss.solve()
+        True
+        >>> ss.complete
+        True
+        """
+        assert self.complete
+        self.shuffle()
+        for i in self._randomize_order(range(9*9))[:difficulty]:
+            self.data[i] = 0
+        self.empty_indexes = tuple(i for i, v in enumerate(self.data) if not v)
+
 
 
 
