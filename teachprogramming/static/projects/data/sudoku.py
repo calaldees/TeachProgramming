@@ -343,18 +343,23 @@ class Sudoku2():
     def __init__(self, data):
         self.data = list(int(i) for i in re.sub(r'\D', '', data))
         assert len(self.data) == 9*9
-        self.empty_indexes = tuple(i for i, v in enumerate(self.data) if not v)
+        self.empty_indexes = tuple()
 
     def __repr__(self):
         return "\n".join(''.join(map(str, self.data[9*(i+0):9*(i+1)])) for i in range(9))
 
-    def solve(self, i=0):
+    def _indexes_of(self, o):
+        return tuple(i for i, v in enumerate(self.data) if v==o)
+    def solve(self):
+        self.empty_indexes = self._indexes_of(0)
+        self._solve()
+    def _solve(self, i=0):
         if i>=len(self.empty_indexes):
             return True
         _i = self.empty_indexes[i]
         for valid_number in self.valid_cell_values(_i):
             self.data[_i] = valid_number
-            _solved = self.solve(i+1)
+            _solved = self._solve(i+1)
             if _solved:
                 return _solved
         self.data[_i] = 0
@@ -453,17 +458,16 @@ class Sudoku2():
     def _randomize_order(data):
         return sorted(data, key=lambda k: random.random())
     def _shuffle(self):
+        def swap_indexes_in_place(i1, i2):
+            for _i1, _i2 in zip(i1, i2):
+                _tmp = self.data[_i1]
+                self.data[_i1] = self.data[_i2]
+                self.data[_i2] = _tmp
+
         # Swap numbers in dataset
-        def swap_list_values_in_place(data, v1, v2):
-            for i, v in enumerate(data):
-                if v == v1:
-                    data[i] = v2
-                if v == v2:
-                    data[i] = v1
-        nums = list(self.COMPLETE_NUMBER_SET)
-        random.shuffle(nums)
-        swap_list_values_in_place(self.data, nums.pop(), nums.pop())
-        swap_list_values_in_place(self.data, nums.pop(), nums.pop())
+        nums = self._randomize_order(self.COMPLETE_NUMBER_SET)
+        for i in range(3):
+            swap_indexes_in_place(self._indexes_of(nums.pop()), self._indexes_of(nums.pop()))
 
         def shuffle_block_indexes():
             return self._randomize_order(range(3))
@@ -473,11 +477,6 @@ class Sudoku2():
                 for row_block in range(3)
                 for r in self._randomize_order(range((row_block+0)*3, (row_block+1)*3))
             )
-        def swap_indexes_in_place(i1, i2):
-            for _i1, _i2 in zip(i1, i2):
-                _tmp = self.data[_i1]
-                self.data[_i1] = self.data[_i2]
-                self.data[_i2] = _tmp
         # Shuffle rows (group of 3 block)
         for r1, r2 in zip(range(9), shuffle_row_col_indexes()):
             swap_indexes_in_place(self.row_indexes(r1), self.row_indexes(r2))
@@ -510,7 +509,7 @@ class Sudoku2():
         >>> ss.complete
         True
         """
-        for i in range(6):
+        for i in range(5):
             self._shuffle()
     def create(self, difficulty=20):
         """
@@ -521,7 +520,6 @@ class Sudoku2():
         >>> ss.complete
         False
         >>> ss.solve()
-        True
         >>> ss.complete
         True
         """
@@ -529,7 +527,6 @@ class Sudoku2():
         self.shuffle()
         for i in self._randomize_order(range(9*9))[:difficulty]:
             self.data[i] = 0
-        self.empty_indexes = tuple(i for i, v in enumerate(self.data) if not v)
 
 
 
