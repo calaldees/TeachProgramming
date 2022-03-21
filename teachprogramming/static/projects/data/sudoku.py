@@ -574,12 +574,14 @@ if __name__ == "__main__":
 
     #print("\033c", end='')
     #print(f"solved it in {ss._debug_counter} comparisons")
-    print(ss)
-    print()
+    #print(ss)
+    #print()
     #print(ss.complete)
 
-    ss.create()
-    print(ss)
-    print()
-    ss.solve()
-    print(ss)
+    for i in range(40):
+        ss = Sudoku2(solution)
+        ss.create(difficulty=30)
+        print(ss)
+        print()
+    #ss.solve()
+    #print(ss)
