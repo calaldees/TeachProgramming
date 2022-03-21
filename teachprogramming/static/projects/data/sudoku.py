@@ -563,14 +563,56 @@ class Sudoku3():
 
 
 
+def _create_and_solve():
+    ss = Sudoku2(solution)
+    ss.create()
+    ss.solve()
+    assert ss.complete
+
+def benchmark():
+    import timeit
+
+    number = 100
+    average_time_taken = timeit.timeit(_create_and_solve, number=number) / number
+    print(f'{average_time_taken=}')
+
+
+def solve_until_terminate():
+    print("Generating sudokus - kill with ctrl+c")
+    count = 0
+    import datetime
+    start = datetime.datetime.now()
+    import signal
+    def ctrl_handler(signum, frm):
+        print()
+        print(f"Generated and solved {count=} sudokus in {datetime.datetime.now() - start}")
+        exit()
+    signal.signal(signal.SIGINT, ctrl_handler)
+    while True:
+        _create_and_solve()
+        count += 1
+        if count % 100 == 0:
+            print('.', end="", flush=True)
+
+
+def generate():
+    for i in range(40):
+        ss = Sudoku2(solution)
+        ss.create(difficulty=30)
+        print(ss)
+        print()
+
 
 if __name__ == "__main__":
-    ss = Sudoku2(problem)
+    #benchmark()
+    solve_until_terminate()
+
+    #ss = Sudoku2(problem)
     #print(ss)
     #print(f'Missing {Sudoku._percent_data_missing(ss._base)*100:.2f}%')
     #input()
     #breakpoint()
-    ss.solve()
+    #ss.solve()
 
     #print("\033c", end='')
     #print(f"solved it in {ss._debug_counter} comparisons")
@@ -578,10 +620,6 @@ if __name__ == "__main__":
     #print()
     #print(ss.complete)
 
-    for i in range(40):
-        ss = Sudoku2(solution)
-        ss.create(difficulty=30)
-        print(ss)
-        print()
     #ss.solve()
     #print(ss)
+
