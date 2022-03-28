@@ -584,8 +584,10 @@ def solve_until_terminate():
     start = datetime.datetime.now()
     import signal
     def ctrl_handler(signum, frm):
+        elapsed_time = datetime.datetime.now() - start
+        seconds = elapsed_time.seconds + (elapsed_time.microseconds/1000000)
         print()
-        print(f"Generated and solved {count=} sudokus in {datetime.datetime.now() - start}")
+        print(f"Generated and solved {count} sudokus in {elapsed_time}. That's {count/seconds:.1f} per second")
         exit()
     signal.signal(signal.SIGINT, ctrl_handler)
     while True:
