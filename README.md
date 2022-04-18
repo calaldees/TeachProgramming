@@ -43,26 +43,30 @@ https://github.com/algorithm-archivists/algorithm-archive
     * Text documentation commentary with animated/tweened preview inline
     * A similar concept to my projects
 
+
 Online Coding Environments
 --------------------------
 
-* [Repl.it](https://replit.com/) - social login required
-* [OneCompiler](https://onecompiler.com/)
-* [tutorialspoint.com/codingground](https://www.tutorialspoint.com/codingground.htm)
-* [w3schools.com/tryit](https://www.w3schools.com/tryit/trycompiler.asp?filename=demo_python)
-* jupyterhub
-* [gitpod.io](https://gitpod.io/) - social login or github required
-    * Full web IDE
-* other
-    * [codebunk](https://codebunk.com) - live collaboration
+* login-free
+    * [OneCompiler](https://onecompiler.com/)
     * [mycompiler.io](https://www.mycompiler.io/)
-    * [glot.io](https://glot.io/)
-    * [dotnetfiddle.net](https://dotnetfiddle.net/) js only
-    * [glitch.com](https://glitch.com/)
-    * [ideone.com](https://ideone.com)
-    * [tio.run](https://tio.run/)
+    * [tutorialspoint.com/codingground](https://www.tutorialspoint.com/codingground.htm)
+    * [w3schools.com/tryit](https://www.w3schools.com/tryit/trycompiler.asp?filename=demo_python)
+    * [dotnetfiddle.net](https://dotnetfiddle.net/) C# only
+    * [glot.io](https://glot.io/) - (in settings raise number of default lines)
+    * [ideone.com](https://ideone.com) - fairly slow
+    * [tio.run](https://tio.run/) - no starting program - create main method from scratch
+* social login required
+    * [Repl.it](https://replit.com/) - social login required
+    * [codebunk](https://codebunk.com) - live collaboration
+* internal
+    * [jupyterhub](https://jupyterhub.canterbury.ac.uk/)
+* Full web IDE
+    * [gitpod.io](https://gitpod.io/) - social login or github required
+* other
+    * [glitch.com](https://glitch.com/) - web tech
     * [create.withcode.uk](https://create.withcode.uk/) python only - but has input box support
-    * [codepad.org](http://codepad.org)
+    * [codepad.org](http://codepad.org) - very simple - older languages
 
 Groups
 ------

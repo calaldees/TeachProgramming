@@ -1,0 +1,7 @@
+Reflection
+==========
+
+```python
+dir()
+getattr()
+```

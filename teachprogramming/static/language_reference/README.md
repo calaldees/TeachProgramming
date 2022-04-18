@@ -2,7 +2,7 @@
 
 * [Deep learning to translate between programming languages](https://ai.facebook.com/blog/deep-learning-to-translate-between-programming-languages)
 
-Alternate tutorials
+Alternate tutorials/cheatsheets
 -------------------
 
 * [devhints.io](https://devhints.io/) cheatsheets

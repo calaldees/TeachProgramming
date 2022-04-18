@@ -203,7 +203,8 @@ public class Program {
   void convert_string_to_integer_and_back() {
     // // TODO: // VER: convert_string_to_integer_and_back
     // // TODO: Int32.Parse  // VER: convert_string_to_integer_and_back
-    int[] data = textBox1.Text.Split(",").Select(Int32.Parse).ToArray();  // TODO
+    String ss = "1, 2, 3";
+    int[] data = ss.Split(",").Select(Int32.Parse).ToArray();  // TODO
   }
 
 
@@ -443,9 +444,31 @@ public class Program {
     var blogPost = JsonDocument.Parse(stringifiedJson);  // VER: json_data
     var topic = blogPost.RootElement.GetProperty("Topic").GetString();  // VER: json_data
     Console.WriteLine(topic);  // VER: json_data
+    Console.WriteLine(JsonSerializer.Serialize(blogPost));  // VER: json_data
+  }
 
-    // Can deserialise into data object type      // VER: json_data
-    // var personObject = JsonSerializer.Deserialize<Person>(jsonPerson);    // VER: json_data
+  class Pet {  // VER: json_data_to_object
+    public string name  { get; set; }  // VER: json_data_to_object
+    public string type  { get; set; }  // VER: json_data_to_object
+  }  // VER: json_data_to_object
+  class Person {  // VER: json_data_to_object
+      public String name  { get; set; }  // VER: json_data_to_object
+      public int age  { get; set; }  // VER: json_data_to_object
+      public List<Pet> pets  { get; set; }  // VER: json_data_to_object
+  }  // VER: json_data_to_object
+  static void json_data_to_object() {
+    var p = new Person {  // VER: json_data_to_object
+        name = "Test",  // VER: json_data_to_object
+        age = 100,  // VER: json_data_to_object
+        pets = new List<Pet> {  // VER: json_data_to_object
+            new Pet {name = "Kitty", type = "cat"},  // VER: json_data_to_object
+            new Pet {name = "Doggy", type = "dog"},  // VER: json_data_to_object
+        },  // VER: json_data_to_object
+    };  // VER: json_data_to_object
+    string data = JsonSerializer.Serialize<Person>(p);  // VER: json_data_to_object
+    Console.WriteLine(data);  // VER: json_data_to_object
+    var p2 = JsonSerializer.Deserialize<Person>(data);  // VER: json_data_to_object
+    Console.WriteLine(p2.pets[1].name);  // VER: json_data_to_object
   }
 
   static void sort() {
@@ -529,6 +552,7 @@ public class Program
       list_comprehension();
       dict_comprehension();
       json_data();
+      json_data_to_object();
       sort();
   }
   public static void Main(string[] args) {new Program();}

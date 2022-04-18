@@ -1,0 +1,16 @@
+    public static Rectangle operator +(Rectangle a, Rectangle b) {
+        return new Rectangle(
+            x1: Math.Min(a.x1, b.x1), 
+            y1: Math.Min(a.y1, b.y1), 
+            x2: Math.Max(a.x2, b.x2), 
+            y2: Math.Max(a.y2, b.y2)
+        );
+    }
+    public static Rectangle operator +(Rectangle a, int b) {
+        return new Rectangle(
+            x1: a.x1,
+            y1: a.y1, 
+            x2: a.x2 + b,
+            y2L a.y2 + b
+        );
+    }

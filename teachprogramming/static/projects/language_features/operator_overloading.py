@@ -19,13 +19,13 @@ class Circle():
     def __str__(self):
         return repr(self)
     def __add__(self, other):
-        if (isinstance(other, Circle)):
+        if isinstance(other, Circle):
             return Circle(
                 x = (self.x + other.x)/2,
                 y = (self.y + other.y)/2,
                 radius = self.radius + other.radius,
             )
-        if (isinstance(other, (int, float))):
+        if isinstance(other, (int, float)):
             return Circle(
                 x = self.x,
                 y = self.y,
@@ -58,6 +58,8 @@ class Rectangle():
         """
         This is a doctest - you can run this from the command line with
         python3 -m doctest -o ELLIPSIS NAME_OF_FILE.py
+        or
+        uncomment the run line at the bottom of the file
 
         >>> r1 = Rectangle(0,0,10,10)
         >>> r2 = Rectangle(5,5,20,20)
@@ -79,6 +81,7 @@ class Rectangle():
         # hint there are two built in functions that may help - one of them is min - https://docs.python.org/3/library/functions.html
         raise NotImplementedError(f"Unable to add '{other}'")
 
+
     # Part 2: Implement another operator
     #def __???__(self, other):
         # Can you implement another operator? can you make 'subtract' remove from the width/height of the rectangle?
@@ -87,3 +90,6 @@ class Rectangle():
     # Part 3: Identify other operators that can be overloaded
     # https://docs.python.org/3/library/operator.html
     # Is operator overloading good? or bad? why?
+
+# Run Doctest - un comment this line to run them on file run
+#import doctest ; doctest.testmod(optionflags=doctest.ELLIPSIS)
