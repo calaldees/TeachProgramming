@@ -396,6 +396,14 @@ def sort():
   # reverse=True - key function
   data = ["b", "d", "c", "a"]    # ver: sort
 
+
+
+# cool bits
+# a,b = b, a   # swap 
+# ll = list(map(int, input().split()))
+# ll = [line.strip() for line in open('FILE.TXT', 'r')]
+# 
+
 #-------------------------------------------------------------------------------
 
 if __name__ == "__main__":

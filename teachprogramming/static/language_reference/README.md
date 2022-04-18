@@ -20,6 +20,7 @@ Alternate tutorials
 
 * https://blog.finxter.com/python-cheat-sheets/
 * https://www.pythonsheets.com/ including cool advanced stuff
+* https://www.javatpoint.com/ C C# Java PHP Javascript Python + technologies selenium, rails, etc
 
 
 TODO

@@ -459,6 +459,45 @@ public class Program {
     Console.WriteLine(String.Join(",", data));  // VER: sort
   }
 
+/*
+Named params
+static void set_date(int Day=1, int Month = 1, int Year = 1900)
+}
+set_date(Year:2022) -> 1st ajn 2022
+
+
+By Ref
+
+using System;
+					
+public class Program
+{
+	public static void Main()
+	{
+		int a = 1;
+		int b = 2;
+		Console.WriteLine($"a={a} b={b}");
+		//Console.WriteLine(add(a, b));
+		Console.WriteLine(add(ref a, b));
+		//Console.WriteLine(add(out a, b));
+		Console.WriteLine($"a={a} b={b}");
+	}
+	
+	static int add(ref int a, int b) { 
+	//static int add(out int a, int b) { 
+	//static int add(int a, int b) {
+		a = a + 10;
+		return a + b;
+	}
+	
+	// Difference between out and ref is "where" you init the variable
+	
+	// primitives (by default) passed/copied by value
+	// ALL objects passed by reference
+}
+
+*/
+
 
   // Main ----------------------------------------------------------------------
 

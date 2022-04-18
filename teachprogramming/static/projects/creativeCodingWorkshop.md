@@ -23,12 +23,16 @@ WIP Outline
         * DNA Logo (DOS/Pascal 15 years old)
         * Pygame zoomer
     * Describe algorithms for effects (5min each)
+        * Random shapes (squares and circles)
         * Scrolling Stars
         * Particle Shower
         * Fire
+            * https://github.com/ethanhjennings/webgl-fire-particles
+            * https://ethanhjennings.github.io/webgl-fire-particles/
         * Bubbles?
         * Wipe
         * Recursion - tree animate (15min)
+        * Game of life?
     * Techniques
         * Sin waves
         * Easing functions (10min)

@@ -104,6 +104,15 @@ text('Hello World');
 ```
 
 
+* Browser [Event reference](https://developer.mozilla.org/en-US/docs/Web/Events#event_listing)
+```javascript
+const $text = document.createElement('div');
+document.body.appendChild($text);
+window.addEventListener('pointermove', (event)=>{
+    $text.textContent = `x=${Math.round(event.x/window.innerWidth*100)}% y=${Math.round(event.y/window.innerHeight*100)}%`
+})
+```
+
 
 Image blur - guess what it is - slowly unblur
 
