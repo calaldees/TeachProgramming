@@ -56,6 +56,11 @@ tt = Test(10)
 ```
 
 
+JavaScript
+----------
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
+
 ```javascript
 // language wise - no - https://stackoverflow.com/questions/2051678/getting-all-variables-in-scope
 
