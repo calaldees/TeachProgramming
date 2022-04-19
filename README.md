@@ -47,20 +47,21 @@ https://github.com/algorithm-archivists/algorithm-archive
 Online Coding Environments
 --------------------------
 
+* internal
+    * [jupyterhub](https://jupyterhub.canterbury.ac.uk/)
 * login-free
     * [OneCompiler](https://onecompiler.com/)
     * [mycompiler.io](https://www.mycompiler.io/)
     * [tutorialspoint.com/codingground](https://www.tutorialspoint.com/codingground.htm)
     * [w3schools.com/tryit](https://www.w3schools.com/tryit/trycompiler.asp?filename=demo_python)
     * [dotnetfiddle.net](https://dotnetfiddle.net/) C# only
+    * [www.programiz.com](https://www.programiz.com/python-programming/online-compiler/) python (looses repl state), java, c#, js, c, sql
     * [glot.io](https://glot.io/) - (in settings raise number of default lines)
     * [ideone.com](https://ideone.com) - fairly slow
     * [tio.run](https://tio.run/) - no starting program - create main method from scratch
 * social login required
     * [Repl.it](https://replit.com/) - social login required
     * [codebunk](https://codebunk.com) - live collaboration
-* internal
-    * [jupyterhub](https://jupyterhub.canterbury.ac.uk/)
 * Full web IDE
     * [gitpod.io](https://gitpod.io/) - social login or github required
 * other

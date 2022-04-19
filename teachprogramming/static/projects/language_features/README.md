@@ -17,8 +17,7 @@ Features
 * import/library management
 * error handling
     * exceptions
-* [[mutability]] /immutability
-* [[_meta_programming]]
+* [[mutability]] / immutability
 * [[operator_overloading]]
 * [[decorators]]
 * [[_meta_programming]]
