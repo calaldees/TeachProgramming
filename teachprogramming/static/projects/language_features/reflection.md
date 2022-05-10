@@ -1,7 +1,12 @@
 Reflection
 ==========
 
-The entire language of python is built on reflection
+Problem: You may not know what objects/functions you are working with at compile time.
+Possible Use: Plugin system?
+
+
+The entire language of python is built on reflection.
+Live inspection of state/objects
 
 
 

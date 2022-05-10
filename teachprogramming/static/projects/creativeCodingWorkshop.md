@@ -1,6 +1,8 @@
 Creative Coding Workshop
 ========================
 
+Could be a whole day event at uni or a module at GCSE level.
+
 WIP Outline
 
 * Time
@@ -25,7 +27,7 @@ WIP Outline
     * Describe algorithms for effects (5min each)
         * Random shapes (squares and circles)
         * Scrolling Stars
-        * Particle Shower
+        * Particle Shower (mass/velocity)
         * Fire
             * https://github.com/ethanhjennings/webgl-fire-particles
             * https://ethanhjennings.github.io/webgl-fire-particles/
@@ -33,9 +35,19 @@ WIP Outline
         * Wipe
         * Recursion - tree animate (15min)
         * Game of life?
+        * [Mysitfy](https://www.youtube.com/watch?v=uZQr-gHyYFI) [Beziers](https://www.youtube.com/watch?v=nWYI7WxhUbU) Windows XP Screensaver
+            * Windows screensaver - algorithm - quadratic line * 4 -  draw over black/last - draw next
+                * bounce points around screen (dvd image bounce)
+        * Draw Binary Pascals Triangle
     * Techniques
-        * Sin waves
+        * Sin waves for visuals (10min)
         * Easing functions (10min)
         * Perlin noise (15min)
         * PCM Audio (from bytes) (15min)
         * Midi arpeggio
+
+
+* assessment/measure? because we are obsessed with this
+    * Complexity of code
+    * Use of librarys
+    * Asthetic

@@ -495,3 +495,9 @@ https://store.steampowered.com/app/619150/while_True_learn/
     * TODO: read related?
         * [Ideas, technology, and skills: A taxonomy for digital projects](http://www.constructionismconf.org/wp-content/uploads/2020/05/C2020-Proceedings.pdf) 2020 Raspbery Pi Foundation
         * This paper seeks to develop the understanding of how young people engage with digital making projects. It proposes a simple taxonomy for thinking about the factors that are required or must be developed in order for young people to successfully complete a digital making project.
+
+
+
+* blog.teachcomputing.org - [The importance of practical programming](https://blog.teachcomputing.org/the-importance-of-practical-programming/)
+    * White Paper from NCCE working group [Practical programming in computing education](https://static.teachcomputing.org/Practical+Work+in+Computing+Apr+22.pdf) Feb 2022
+        * Miles Berry, Paul Curzon, Quintin Cutts, Celia Hoyles, Simon Peyton Jones, and Shahneila Saeed, NCCE Academic Board

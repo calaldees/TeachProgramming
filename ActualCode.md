@@ -71,3 +71,17 @@ Other existing concepts (for reference)
 * [codekata.com](http://codekata.com/) - Just need to practice - a LOT - tasks
 * [Coding Dojo](https://codingdojo.org/)
 * [programming-motherXXXXer.com](http://programming-motherfucker.com/) - Do you speak it?
+
+Alternate names
+---------------
+
+* Code Crew
+* Kode Krew 
+    * I decided against .. Kent Kode Krew ...
+* Code Zone
+* Bootstrap Code
+
+
+Notes
+-----
+* Get parents + others joining
