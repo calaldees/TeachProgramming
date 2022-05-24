@@ -34,3 +34,10 @@ Point p1 = new Point(1,1);
 Point p2 = new Point(1,1);
 Console.WriteLine(p1 == p2);
 ```
+
+
+```javascript
+1 == "1"
+1 === "1"
+```
+`==` Implicit conversion

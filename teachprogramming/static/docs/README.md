@@ -501,3 +501,9 @@ https://store.steampowered.com/app/619150/while_True_learn/
 * blog.teachcomputing.org - [The importance of practical programming](https://blog.teachcomputing.org/the-importance-of-practical-programming/)
     * White Paper from NCCE working group [Practical programming in computing education](https://static.teachcomputing.org/Practical+Work+in+Computing+Apr+22.pdf) Feb 2022
         * Miles Berry, Paul Curzon, Quintin Cutts, Celia Hoyles, Simon Peyton Jones, and Shahneila Saeed, NCCE Academic Board
+
+
+
+Isaac Computer Science [Program Design](https://isaaccomputerscience.org/topics/program_design?examBoard=all&stage=all)
+
+
