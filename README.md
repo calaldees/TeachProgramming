@@ -68,6 +68,7 @@ Online Coding Environments
     * [glitch.com](https://glitch.com/) - web tech
     * [create.withcode.uk](https://create.withcode.uk/) python only - but has input box support
     * [codepad.org](http://codepad.org) - very simple - older languages
+    * https://sqlite.org/fiddle/
 
 Groups
 ------
