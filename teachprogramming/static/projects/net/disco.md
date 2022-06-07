@@ -19,6 +19,8 @@ Keywords
 ### Computing
 * Javascript/browser
 * Context + diff
+* Client/Server
+  * Echo Server
 * Event
 * Event Driven Programming
 * WebSocket
@@ -144,6 +146,8 @@ Change "1" to be a unique Identifier (ID) for your computer. Teacher will give y
 ```
 When your number is sent over a network, your screen should change color.
 
+TODO: `console.log("message", event.data)`
+
 Press F12 to enable developer tools 'console'.
 ```javascript
 socket.send("1")
@@ -202,97 +206,36 @@ socket.send(`
 Teacher Notes
 =============
 
-```html
-<script type="module">
+Room Setup
+----------
 
-const urlParams = new URLSearchParams(window.location.search)
-const WS_URL = urlParams.get('ws_url') || "ws://localhost:9800/test1.ws"
-const ID = urlParams.get('id')
-// For transmitting sequence
-const BPM = parseInt(urlParams.get('bpm') || 60)
-const IDS = parseInt(urlParams.get('ids') || 8)
+ For my outreach workshop I will require the following setup and ready for each student before the session starts.
+(See Screenshot attached)
+    * Plain text editor (with template open)
+    * Web browser (chrome/firefox)
+
+I will know the WS_URL an hour before the session (this is hosted on a cloud server so I can't have it running in advance without costing a lot of money)
+
+I suggest we have
+ - a single account
+ - I save the template `disco.html` to the desktop
+ - Create shortcut on desktop to online form questions
+On each machine we
+  1.) Technicians log in to each machine
+  2.) Open `Desktop/disco.html` in notepad
+  3.) SaveAs `Desktop/disco_XX.html`
+  4.) Open `Desktop/disco_XX.html` in chrome
+
+I am happy for any additional ideas to help speed the setup of the room.
+Let me know your thoughts.
 
 
-function randomByte() {return Math.floor(Math.random()*255)}
-function updateScreenColor(r,g,b) {
-    r = r || randomByte()
-    g = g || randomByte()
-    b = b || randomByte()
-    document.body.style = `background-color: rgb(${r},${g},${b});`
-}
+Teacher Code
+------------
 
-// Keyboard event
-window.addEventListener('keydown', (event)=>{
-    updateScreenColor()
-})
+### disco.html
+@import "disco.html" {code_block=true class="line-numbers"}
 
-// Websocket event
-const socket = new WebSocket(WS_URL);
-window.socket = socket
-socket.addEventListener('message', (event)=>{
-    //console.log(event.data);
-    if (!ID) {updateScreenColor(); return;}
-
-    const messages = event.data.split('\n')
-    for (let message of messages) {
-        const [id, r, g, b] = message.split(":")
-        if (ID == id) {
-            updateScreenColor(r,g,b)
-        }
-    }
-})
-
-// -----------------------------------------------------------------------------
-
-const COLORS = [
-    [255,0,0], //red
-    [255,255,0], //yellow
-    [0,255,0], // green
-    [0,255,255], // cyan
-    [0,0,255], // blue
-    [255,0,255], // magenta
-]
-export function* range(target, start=0, step=1) {for (let i=start ; i<target ; i+=step) {yield i}}
-
-function generate_disco_message_for_frame(frame) {
-    const bar = Math.floor(frame/8)
-    return [...range(IDS)].map((id)=>{
-        const id_offset = (id+frame)%4==0?1:0
-        const COLOR = COLORS[(bar + id_offset) % COLORS.length]
-        return [id,].concat(COLOR).join(":")
-    }).join("\n")
-}
-
-// this is a terrible timing loop as it drifts
-const sleep = (milliseconds) => new Promise((resolve, reject) => setTimeout(resolve, milliseconds))
-async function call_on_bpm(bpm, call, duration_seconds=60) {
-    const iterations = bpm * (duration_seconds / 60)
-    const wait_in_milliseconds = 1 / (bpm / 60) * 1000
-    console.log("Starting disco for", duration_seconds, "BPM", bpm, "wait_in_milliseconds", wait_in_milliseconds, "iterations", iterations)
-    for (let frame=0 ; frame <= iterations ; frame++) {
-        call(frame)
-        await sleep(wait_in_milliseconds)
-    }
-}
-
-function start_disco(duration_seconds=60) {
-    call_on_bpm(
-        BPM, 
-        (frame)=>{
-            const msg = generate_disco_message_for_frame(frame)
-            console.log(msg)
-            socket.send(msg)
-        },
-        duration_seconds=duration_seconds,
-    )
-}
-window.start_disco = start_disco
-
-// Use with 
-// file:///C:/Users/.../disco.html?&ids=30&bpm=167&ws_url=wss://9800-XXX-channelserver-XXX.ws-XXX.gitpod.io/test1.ws
-// type `start_disco(duration_seconds=60)` in console
-</script>
-```
 
 ### To complement: Protocol Version 1: Computer Id
 
@@ -302,6 +245,22 @@ for (let id=0 ; id<30 ; id++) {socket.send(`${id}`)}  // Whole room!
 ```
 Inefficient
 
+
+Antonymous online form
+----------------------
+
+Antonymous open questions - all shown for teacher/class to comment discuss.
+
+I'm going to ask you hard questions deliberately.
+Software engineers have to explain their thinking/understanding clearly.
+
+* What is a code 'diff'?
+* What is a 'Network protocol'?
+* What is 'Event Driven Programming'?
+* What are the challenges with networks, timing and latency?
+* Is what we have created a 'Distributed system'? Give reasons why?
+
+MSForms with short link? Shortcut on desktop?
 
 ---
 <hr style="page-break-after: always;"/>

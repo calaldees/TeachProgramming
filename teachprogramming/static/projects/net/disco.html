@@ -1,5 +1,11 @@
 <script type="module">
-// use with https://github.com/calaldees/channelServer
+
+// Use with
+// https://gitpod.io/#https://github.com/calaldees/channelServer
+// query string example
+// file:///C:/Users/.../disco.html?&ids=30&bpm=167&ws_url=wss://9800-XXX-channelserver-XXX.ws-XXX.gitpod.io/test1.ws
+// type `start_disco(duration_seconds=60)` in console
+
 
 const urlParams = new URLSearchParams(window.location.search)
 const WS_URL = urlParams.get('ws_url') || "ws://localhost:9800/test1.ws"
@@ -84,7 +90,4 @@ function start_disco(duration_seconds=60) {
 }
 window.start_disco = start_disco
 
-// Use with 
-// file:///C:/Users/.../disco.html?&ids=30&bpm=167&ws_url=wss://9800-XXX-channelserver-XXX.ws-XXX.gitpod.io/test1.ws
-// type `start_disco(duration_seconds=60)` in console
 </script>
