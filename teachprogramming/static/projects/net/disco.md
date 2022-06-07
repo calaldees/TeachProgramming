@@ -1,16 +1,153 @@
-Disco
-=====
+<style>
+.token.inserted {font-weight: bold;}
+.token.deleted {text-decoration: line-through;}
+</style>
+
+
+Network Disco Lights + Remote Control
+=====================================
 
 School activity for KS3, KS4, KS5.
 
-
-Teacher notes
--------------
 
 ### Principle
 
 * Apply/Practical first - to give context - then discuss dissect/understand
 * Real industry tools
+
+* Projects
+  * Project 1: Network Disco Light
+  * Project 2: Remote Control (Chrome-cast clone)
+
+---
+<hr style="page-break-after: always;"/>
+
+# Network Disco Lights - HTML5/Javascript
+
+## Base
+* Create a file called `disco.html`
+```html
+<script type="module">
+const WS_URL = "ws://localhost:9800/test1.ws"
+</script>
+```
+* Open `disco.html` in a web browser
+* Replace `localhost` with URL your teacher gives you
+* Run the program after each addition by refreshing your browser `ctrl + r`
+
+## Random Screen Color
+```diff
+ <script type="module">
+ const WS_URL = "ws://localhost:9800/test1.ws"
++
++function randomByte() {return Math.floor(Math.random()*255)}
++function updateScreenColor(r,g,b) {
++    r = r || randomByte()
++    g = g || randomByte()
++    b = b || randomByte()
++    document.body.style = `background-color: rgb(${r},${g},${b});`
++}
++
++window.addEventListener('keydown', (event)=>{
++    updateScreenColor()
++})
++
+ </script>
+```
+Press any key on the keyboard
+
+## Listen to Network
+```diff
++const socket = new WebSocket(WS_URL)
++window.socket = socket
++socket.addEventListener('message', (event)=>{
++            updateScreenColor()
++})
+
+ </script>
+```
+When a network message is revived, your screen should change color.
+
+## Protocol Version 1: Computer Id
+Change "1" to be a unique Identifier (ID) for your computer. 
+Your teacher will give you a number.
+```diff
+ socket.addEventListener('message', (event)=>{
++        console.log("received", event.data)
++        const id = event.data
++        if (id == "1") {
+             updateScreenColor()
++        }
+ })
+```
+When your number is sent over a network, your screen should change color.
+
+Press F12 to enable developer tools 'console'.
+```javascript
+socket.send("1")
+```
+Change the color of our neighbors screen with their `id`
+
+
+## Protocol Version 2: Color
+```diff
+ socket.addEventListener('message', (event)=>{
+         console.log("received", event.data)
+-        const id = event.data
++        const [id, r, g, b] = event.data.split(":")
+         if (id == "1") {
+-            updateScreenColor()
++            updateScreenColor(r,g,b)
+        }
+ })
+```
+In console
+```javascript
+socket.send("1:255:0:0")
+```
+
+## Protocol Version 3: Multiple Computer Id's
+```diff
+ socket.addEventListener('message', (event)=>{
+     console.log("received", event.data)
++    const messages = event.data.split("\n")
++    for (let message of messages) {
+-        const [id, r, g, b] = event.data.split(":")
++        const [id, r, g, b] = message.split(":")
+         if (id == "1") {
+             updateScreenColor(r,g,b)
+         }
++    }
+ })
+```
+In console
+```javascript
+socket.send(`
+1:255:0:0
+2:0:255:0
+3:0:0:255
+`)
+```
+
+## Calculate BPM
+* Calculate the Beats Per Minuet (BPM) of a piece of music
+* Count/tally the number of beats over 60 seconds
+* Disco Time
+
+## Extra
+* Join another channel - replace `test1` for different channels. e.g. `my_cool_channel`
+  * Try just sending messages to your friends and chat with commands
+    * `socket.send("hello")`
+* Start your own server (GitHub login required)
+  * https://gitpod.io#https://github.com/calaldees/channelServer
+
+<hr style="page-break-after: always;"/>
+---
+
+
+
+Teacher Notes
+=============
 
 
 Keywords
@@ -62,149 +199,16 @@ Activities
   * [Caramella Girls - Caramelldansen (Official English Version)](https://www.youtube.com/watch?v=A67ZkAd1wmI) YouTube
     * bpm 167?
 
+Extra (unsorted)
+-----
 
-Activity
---------
-
+### Questions
 Where could the delay/latency come from?
 Think pair share - all the places
 
-
-Advanced Design
-----------------
-
+### Advanced Design
 The server has no logic - we send lots of irrelevant information to each node
 
-
-
-
----
-<style>
-.token.inserted {font-weight: bold;}
-.token.deleted {text-decoration: line-through;}
-</style>
-<hr style="page-break-after: always;"/>
-
-
-# Network Disco Lights - HTML5/Javascript
-
-## Base
-Create a file called `disco.html` and open it in a browser
-Run the program after each addition by refreshing your browser
-```html
-<script type="module">
-const WS_URL = "ws://localhost:9800/test1.ws"
-</script>
-```
-Open `disco.html` in a web browser
-Reload the page each addition by pressing CTRL+F5
-
-Replace `localhost` with URL your teacher gives you.
-
-## Random Screen Color
-```diff
- <script type="module">
- const WS_URL = "ws://localhost:9800/test1.ws"
-+
-+function randomByte() {return Math.floor(Math.random()*255)}
-+function updateScreenColor(r,g,b) {
-+    r = r || randomByte()
-+    g = g || randomByte()
-+    b = b || randomByte()
-+    document.body.style = `background-color: rgb(${r},${g},${b});`
-+}
-+
-+window.addEventListener('keydown', (event)=>{
-+    updateScreenColor()
-+})
-+
- </script>
-```
-Press any key on the keyboard
-
-## Listen to Network
-```diff
-+const socket = new WebSocket(WS_URL)
-+window.socket = socket
-+socket.addEventListener('message', (event)=>{
-+            updateScreenColor()
-+})
-
- </script>
-```
-When a network message is revived, your screen should change color.
-
-## Protocol Version 1: Computer Id
-Change "1" to be a unique Identifier (ID) for your computer. Teacher will give you a number.
-```diff
- socket.addEventListener('message', (event)=>{
-+        const id = event.data
-+        if (id == "1") {
-             updateScreenColor()
-+        }
- })
-```
-When your number is sent over a network, your screen should change color.
-
-TODO: `console.log("message", event.data)`
-
-Press F12 to enable developer tools 'console'.
-```javascript
-socket.send("1")
-```
-Change the color of our neighbors screen.
-
-## Protocol Version 2: Color
-```diff
- socket.addEventListener('message', (event)=>{
--        const id = event.data
-+        const [id, r, g, b] = event.data.split(":")
-         if (id == "1") {
--            updateScreenColor()
-+            updateScreenColor(r,g,b)
-        }
- })
-```
-In console
-```javascript
-socket.send("1:255:0:0")
-```
-
-## Protocol Version 3: Multiple Computer Id's
-```diff
- socket.addEventListener('message', (event)=>{
-+    const messages = event.data.split("\n")
-+    for (let message of messages) {
--        const [id, r, g, b] = event.data.split(":")
-+        const [id, r, g, b] = message.split(":")
-         if (id == "1") {
-             updateScreenColor(r,g,b)
-         }
-+    }
- })
-```
-In console
-```javascript
-socket.send(`
-1:255:0:0
-2:0:255:0
-3:0:0:255
-`)
-```
-
-## Calculate BPM
-* Calculate the Beats Per Minuet (BPM) of a piece of music
-* Count/tally the number of beats over 60 seconds
-* Disco Time
-
-## Extra
-* Join another channel - replace `test1` for different channels
-* Start your own server (GitHub login required)
-  * https://gitpod.io#https://github.com/calaldees/channelServer
-
-
-Teacher Notes
-=============
 
 Room Setup
 ----------
@@ -265,8 +269,9 @@ MSForms with short link? Shortcut on desktop?
 ---
 <hr style="page-break-after: always;"/>
 
-Remote Control Project
-======================
+
+Project 2: Remote Control (Chromecast clone)
+=========================
 
 display.html
 ------------
