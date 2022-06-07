@@ -52,7 +52,10 @@ The server has no logic - we send lots of irrelevant information to each node
 
 
 ---
-<style>.token.inserted, .token.deleted {font-weight: bold;}</style>
+<style>
+.token.inserted {font-weight: bold;}
+.token.deleted {text-decoration: line-through;}
+</style>
 <hr style="page-break-after: always;"/>
 
 
