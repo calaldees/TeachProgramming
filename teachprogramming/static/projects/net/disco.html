@@ -17,16 +17,6 @@ function updateScreenColor(r,g,b) {
     document.body.style = `background-color: rgb(${r},${g},${b});`
 }
 
-/*
-function randomByte() {return Math.floor(Math.random()*255)}
-function updateScreenColor(r,g,b) {
-    arguments = arguments.map((v)=>v>=0?v:randomByte());
-    document.body.style = `background-color: rgb(${arguments.join(',')});`
-}
-*/
-
-
-
 // Keyboard event
 window.addEventListener('keydown', (event)=>{
     updateScreenColor()
@@ -71,23 +61,30 @@ function generate_disco_message_for_frame(frame) {
 
 // this is a terrible timing loop as it drifts
 const sleep = (milliseconds) => new Promise((resolve, reject) => setTimeout(resolve, milliseconds))
-async function call_on_bpm(bpm, call) {
-    const wait_in_milliseconds = (bpm / 60) * 1000;
-    for (let frame=0 ; frame <= bpm ; frame++) {
+async function call_on_bpm(bpm, call, duration_seconds=60) {
+    const iterations = bpm * (duration_seconds / 60)
+    const wait_in_milliseconds = 1 / (bpm / 60) * 1000
+    console.log("Starting disco for", duration_seconds, "BPM", bpm, "wait_in_milliseconds", wait_in_milliseconds, "iterations", iterations)
+    for (let frame=0 ; frame <= iterations ; frame++) {
         call(frame)
         await sleep(wait_in_milliseconds)
     }
 }
 
-function start_disco() {
-    call_on_bpm(BPM, (frame)=>{
-        const msg = generate_disco_message_for_frame(frame)
-        console.log(msg)
-        socket.send(msg)
-    })
+function start_disco(duration_seconds=60) {
+    call_on_bpm(
+        BPM, 
+        (frame)=>{
+            const msg = generate_disco_message_for_frame(frame)
+            console.log(msg)
+            socket.send(msg)
+        },
+        duration_seconds=duration_seconds,
+    )
 }
-
 window.start_disco = start_disco
 
-
+// Use with 
+// file:///C:/Users/.../disco.html?&ids=30&bpm=167&ws_url=wss://9800-XXX-channelserver-XXX.ws-XXX.gitpod.io/test1.ws
+// type `start_disco(duration_seconds=60)` in console
 </script>
