@@ -54,7 +54,7 @@ const WS_URL = "ws://localhost:9800/test1.ws"
 +
  </script>
 ```
-Press any key on the keyboard
+Press any key on your keyboard, your screen should change color.
 
 ## Listen to Network
 ```diff
@@ -69,7 +69,7 @@ Press any key on the keyboard
 When a network message is revived, your screen should change color.
 
 ## Protocol Version 1: Computer Id
-Change "1" to be a unique Identifier (ID) for your computer. 
+Change "1" to be a unique Identifier (ID) for your computer.
 Your teacher will give you a number.
 ```diff
  socket.addEventListener('message', (event)=>{
@@ -86,7 +86,7 @@ Press F12 to enable developer tools 'console'.
 ```javascript
 socket.send("1")
 ```
-Change the color of our neighbors screen with their `id`
+Change the color of your neighbors screen with their `id`
 
 
 ## Protocol Version 2: Color
@@ -105,6 +105,7 @@ In console
 ```javascript
 socket.send("1:255:0:0")
 ```
+Change the color of your neighbors screen to your own color with their `id`
 
 ## Protocol Version 3: Multiple Computer Id's
 ```diff
@@ -128,6 +129,8 @@ socket.send(`
 3:0:0:255
 `)
 ```
+With a single multiline message; Change the color of your two neighbors screens to two different colors with their `id`s
+Hint: You will need `shift + enter` and backticks!
 
 ## Calculate BPM
 * Calculate the Beats Per Minuet (BPM) of a piece of music
