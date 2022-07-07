@@ -1,0 +1,25 @@
+<script type="module">
+  function do_thing(text) {
+    console.log(text)
+  }
+
+  document.getElementById("button1").addEventListener("click", ()=>{
+      do_thing('hello1')
+  })
+
+  document.getElementById("button2").addEventListener("click", ()=>{
+      const text = document.getElementById("text1").value
+      do_thing(`Text in the box is ${text}`)
+  })
+</script>
+
+<h1>Test</h1>
+
+<button id="button1">Test Button 1</button>
+
+<input type="text" id="text1"></text>
+<button id="button2">Test Button 2 - from textbox</button>
+
+
+<label for="points">Points (between 0 and 10):</label>
+<input type="range" id="points" name="points" min="0" max="10"> 

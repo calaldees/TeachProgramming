@@ -120,6 +120,7 @@ Calculator (D Grade)
 ### Techniques
 This project is designed to get you to understand
 * String splitting, Parsing strings, Float/Double/Real data-types, Rounding, Mathematical Operators
+* Critique [my_first_calculator.py](https://github.com/AceLewis/my_first_calculator.py/blob/master/my_first_calculator.py)
 
 ### C Grade
 * If the first number is not input, use the answer from the previous step automatically

@@ -507,3 +507,11 @@ https://store.steampowered.com/app/619150/while_True_learn/
 Isaac Computer Science [Program Design](https://isaaccomputerscience.org/topics/program_design?examBoard=all&stage=all)
 
 
+* [Ask HN: CS grad who barely knows any CS](https://news.ycombinator.com/item?id=31736094)
+    * A computing degree means you are finally 'a rank armature'
+
+
+* [Referencing within code in software engineering education](https://researchspace.canterbury.ac.uk/8y428/referencing-within-code-in-softw)
+    * [doi](http://dx.doi.org/10.25416/NTR.14907891.v1)
+    * Short paper by Scott about referencing code sources in academia
+
