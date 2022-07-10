@@ -345,6 +345,8 @@ Other
 * [A Framework for Improving the Sharing of Teaching Practices among Computer Science Instructors](https://dl.acm.org/doi/10.1145/3304221.3325590) 2019
     * Framework seems simple - just login and use a template? .. TODO I need examples. Apparently 40 computing teachers are partipating
     * 
+* [The National Teaching Repository: global reach and Impact](https://www.advance-he.ac.uk/news-and-views/national-teaching-repository-global-reach-and-impact)
+
 
 ---
 
