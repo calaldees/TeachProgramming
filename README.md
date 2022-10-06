@@ -48,12 +48,12 @@ Online Coding Environments
 --------------------------
 
 * internal
-    * [jupyterhub](https://jupyterhub.canterbury.ac.uk/)
+    * [jupyterhub](https://jupyterhub.canterbury.ac.uk/) no-readline
 * login-free
-    * [OneCompiler](https://onecompiler.com/)
-    * [mycompiler.io](https://www.mycompiler.io/)
+    * [OneCompiler](https://onecompiler.com/) pre-readline
+    * [mycompiler.io](https://www.mycompiler.io/) pre-readline
     * [tutorialspoint.com/codingground](https://www.tutorialspoint.com/codingground.htm)
-    * [w3schools.com/tryit](https://www.w3schools.com/tryit/trycompiler.asp?filename=demo_python)
+    * [w3schools.com/tryit](https://www.w3schools.com/tryit/trycompiler.asp?filename=demo_python) no-readline
     * [dotnetfiddle.net](https://dotnetfiddle.net/) C# only
     * [www.programiz.com](https://www.programiz.com/python-programming/online-compiler/) python (looses repl state), java, c#, js, c, sql
     * [glot.io](https://glot.io/) - (in settings raise number of default lines)

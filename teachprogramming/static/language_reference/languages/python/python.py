@@ -397,6 +397,10 @@ def sort():
   data = ["b", "d", "c", "a"]    # ver: sort
 
 
+def regex():
+  # TODO: regex
+  import re   # ver: regex
+
 
 # cool bits
 # a,b = b, a   # swap 
@@ -444,6 +448,7 @@ if __name__ == "__main__":
   file_binary()
   assertion()
   sort()
+  regex()
 
   # Run all functions in order
   #for function_name in functions:

@@ -51,3 +51,6 @@ WIP Outline
     * Complexity of code
     * Use of librarys
     * Asthetic
+
+
+https://mattiasgustavsson.com/wasm/
