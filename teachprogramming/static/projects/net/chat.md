@@ -16,6 +16,8 @@ GitPod connection example - replace this line
 var socket     = new WebSocket("wss://9873-jade-catfish-9fuxc59i.ws-eu18.gitpod.io/");         // VER: connect
 ```
 
+See [disco.md](disco.md)
+
 
 * [We Need to Talk!! &ndash; A Chatroom Application Using a Student-Designed Protocol](https://dl.acm.org/doi/10.1145/3304221.3325575)
     * > assignment for a computer networks class in which students design and implement an application-layer protocol for a chatroom using a client-server architecture running over TCP-IP. 

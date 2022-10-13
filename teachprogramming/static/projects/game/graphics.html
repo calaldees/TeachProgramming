@@ -24,20 +24,24 @@
 </body>
 <script type="module">
 
-	const canvas = document.getElementById('canvas');
-	const context = canvas.getContext('2d');
-	const w = canvas.width;
-	const h = canvas.height;
+	const canvas = document.getElementById('canvas')
+	const context = canvas.getContext('2d')
+	const w = canvas.width
+	const h = canvas.height
 
-
+	function clear(){context.clearRect(0, 0, w, h)}
 	function render(c, state) {
-		c.clearRect(0, 0, w, h);  // Reset the canvas to background color
+		clear()
 
-		// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
+		// https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial
+		// Advanced
+		//  https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Compositing
+		//  https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
+		//  https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
 
 		// Rectangle
-		c.fillStyle = 'white';
-		c.fillRect(20, 20, 10, 10);
+		c.fillStyle = 'white'
+		c.fillRect(20, 20, 10, 10)
 
 		// TEMPLATE for Freeform shape
 		// c.fillStyle = 'white';
@@ -50,30 +54,37 @@
 		// c.fill(); // fills the shape
 
 		// Line
-		c.strokeStyle = 'cyan';
-		c.lineWidth = 2;
-		c.beginPath();
-		c.moveTo(100, 100);
-		c.lineTo(200, 100);
-		c.stroke();
+		c.strokeStyle = 'cyan'
+		c.lineWidth = 2
+		c.beginPath()
+		c.moveTo(100, 100)
+		c.lineTo(200, 100)
+		c.stroke()
 
 		// Arc/Circle
-		c.fillStyle = 'magenta';
-		c.beginPath();
-		c.arc(200, 200, 20, 0, Math.PI/2);
-		c.lineTo(200, 200);
-		c.fill();
+		c.fillStyle = 'magenta'
+		c.beginPath()
+		c.arc(200, 200, 20, 0, Math.PI/2)
+		c.lineTo(200, 200)
+		c.fill()
 	}
 
 	// Loop
 	function main(time) {
-		requestAnimationFrame(main);
-		render(context);
+		requestAnimationFrame(main)
+		render(context)
 		// TODO: this is `easy mode` there is more to this for accurate timing of frames
 	}
 
 	console.log("Ready");
 	render(context);  // Render once on load
 	// main();  // Render in animation loop
+
+	// Export to window for REPL
+	window.clear = clear
+	window.c = context
+	// now try in console
+	//   clear()
+	//   c.fillRect(200, 20, 10, 10)
 </script>
 </html>

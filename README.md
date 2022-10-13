@@ -48,7 +48,7 @@ Online Coding Environments
 --------------------------
 
 * internal
-    * [jupyterhub](https://jupyterhub.canterbury.ac.uk/) no-readline
+    * [jupyterhub.canterbury](https://jupyterhub.canterbury.ac.uk/) no-readline
 * login-free
     * [OneCompiler](https://onecompiler.com/) pre-readline
     * [mycompiler.io](https://www.mycompiler.io/) pre-readline
@@ -62,6 +62,7 @@ Online Coding Environments
 * social login required
     * [Repl.it](https://replit.com/) - social login required
     * [codebunk](https://codebunk.com) - live collaboration
+    * [jupyterhub.org](https://jupyterhub.org) python
 * Full web IDE
     * [gitpod.io](https://gitpod.io/) - social login or github required
 * other
