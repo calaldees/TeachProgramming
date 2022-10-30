@@ -22,7 +22,13 @@
     }
     #background img {
         object-fit: cover;
+        /* transition? */
     }
+    /*
+    ??? #background img {
+        When login is active - blur the background image
+    }
+    */
 
     .flex_center {
         display: flex;
@@ -32,7 +38,23 @@
 
     #login {
         position: relative;
+        /*
+        opacity == transparent
+        change the `top` to position it vertically lower (maybe in px?, em?, or vh?)
+        blur the element a bit (px?, em? or vh?)
+        transition:
+            what_property? duration? easing_function?,
+            what_property? duration? easing_function?,
+            what_property? duration? easing_function?
+        */
     }
+    /*
+    ??? #login {
+        opacity == solid,
+        top == 0,
+        blur == none
+    }
+    */
 
     #profile_picture {
         font-size: 15vh;
@@ -59,7 +81,7 @@
     </div>
 
 
-    <div id="login" class="fullscreen flex_center">
+    <div id="login" class="fullscreen flex_center"><!-- "login_active" class is added dynamically here via javascript--></div>
         <div>
             <div id="profile_picture" class="flex_center">
                 &#128100;
