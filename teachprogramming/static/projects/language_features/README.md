@@ -28,6 +28,7 @@ Features
 * [[pattern_matching]]
 * concurrency
     * [[async-await]]
+    * [[concurrency]] primitives
 * inline testing
 
 * [[internationalisation]]
