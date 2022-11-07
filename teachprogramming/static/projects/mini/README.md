@@ -1,6 +1,9 @@
 Mini Algorithm Projects
 =======================
 
+* Professional coding problems
+    * [daweedkob - problem_solutions](https://github.com/daweedkob/problem_solutions) - Problemset solutions from leetcode, e-olymp, codingame and CSES 
+
 Other examples
 --------------
 

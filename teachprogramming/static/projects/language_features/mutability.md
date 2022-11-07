@@ -29,3 +29,29 @@ console.log(ll);
 * Mutability by default is dangerous. It is difficult to protect yourself.
 * Solution _Immutability_. Library's?
     * [immutable-js](https://immutable-js.com/)
+
+
+Language Design Consistency
+---------------------------
+
+Lists are mutable.
+Some list methods return new lists, some modify the list.
+
+
+```javascript
+aa = [4,3,1,2]
+bb = aa.filter((i)=> i > 2)
+console.log(aa)
+console.log(bb)
+// the original list is not altered
+```
+
+```javascript
+aa = [4,3,1,2]
+bb = aa.sort()
+console.log(aa)
+console.log(bb)
+// the original list is altered
+```
+
+Problem: The language is not consistent. We have to study the language documentation to understand if a language has side effects

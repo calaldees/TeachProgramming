@@ -30,3 +30,6 @@ ll := []int{4,5,6,7}
 * Why is this basic feature missing from arrays in java and golang?
     * This is a pretty important aspect of language design
 
+* _array_s and _list_s are differnt concepts
+    * arrays are a system level construct
+    * lists are abstractions

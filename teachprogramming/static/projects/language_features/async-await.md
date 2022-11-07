@@ -67,3 +67,22 @@ const promise = do_steps();
 * [What Is the Python Global Interpreter Lock (GIL)?](https://realpython.com/python-gil/)
 * We can augment these single process languages to be utilising that single process as much as possible by using an event loop. This helps with blocking IO.
     * The languages have new features `async` and `await` to support this
+
+
+
+Misunderstanding example - Cypress
+----------------------------------
+https://docs.cypress.io/faq/questions/using-cypress-faq#How-do-I-get-an-element-s-text-contents
+
+```javascript
+// INCORRECT USEAGE!! Cypress is async all the way
+console.log(1)
+let text = cy.contains(uuid).should('be.visible').parents('li').find('[data-field="id"]').invoke('text')
+console.log(2)
+if (text == "thing") {
+    console.log(3.5)
+}
+console.log(3)
+cy.get('textarea').type(text)
+// All the console.log happen instantly
+```

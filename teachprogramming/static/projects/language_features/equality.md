@@ -41,3 +41,33 @@ Console.WriteLine(p1 == p2);
 1 === "1"
 ```
 `==` Implicit conversion
+
+
+List/array equality?
+-------------------
+A false carryover-concept
+Which languages perform deep object content comparisons by default
+
+```python
+aa = [1,2,3]
+bb = [1,2,3]
+print(aa == bb)
+```
+
+```javascript
+aa = [1,2,3]
+bb = [1,2,3]
+console.log(aa == bb)
+```
+
+```csharp
+var aa = new int[]{1,2,3};
+var bb = new int[]{1,2,3};
+Console.WriteLine(aa == bb);
+```
+
+```java
+Integer[] aa = new Integer[]{1,2,3};
+Integer[] bb = new Integer[]{1,2,3};
+System.out.println(aa == bb);
+```

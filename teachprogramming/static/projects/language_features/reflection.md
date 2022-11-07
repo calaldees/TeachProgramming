@@ -77,3 +77,15 @@ for ( var i in window ) {
     }
 }
 ```
+
+
+Java
+----
+
+https://www.oracle.com/technical-resources/articles/java/javareflection.html
+
+C#
+---
+
+* [reflection.ipynb](reflection.ipynb)
+
