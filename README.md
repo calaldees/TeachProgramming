@@ -37,6 +37,9 @@ https://github.com/algorithm-archivists/algorithm-archive
 * [executable-tutorials](https://github.com/dharmatech/executable-tutorials)
     * mechanism for doing what my version system sort of accomplishes
 * [Code Tour: VSCode Extension](https://marketplace.visualstudio.com/items?itemName=vsls-contrib.codetour)
+* [Storyteller](https://markm208.github.io/)
+    * [markm208/storyteller](https://github.com/markm208/storyteller) Telling stories about how code evolves
+    * web navigable animations
 * [codeamigo.dev](https://codeamigo.dev/)
     * online tutorials with steps
 * [textframe.app](https://textframe.app/)
@@ -50,9 +53,9 @@ Online Coding Environments
 * internal
     * [jupyterhub.canterbury](https://jupyterhub.canterbury.ac.uk/) no-readline
 * login-free
+    * [tutorialspoint.com/codingground](https://www.tutorialspoint.com/codingground.htm)
     * [OneCompiler](https://onecompiler.com/) pre-readline
     * [mycompiler.io](https://www.mycompiler.io/) pre-readline
-    * [tutorialspoint.com/codingground](https://www.tutorialspoint.com/codingground.htm)
     * [w3schools.com/tryit](https://www.w3schools.com/tryit/trycompiler.asp?filename=demo_python) no-readline
     * [dotnetfiddle.net](https://dotnetfiddle.net/) C# only
     * [www.programiz.com](https://www.programiz.com/python-programming/online-compiler/) python (looses repl state), java, c#, js, c, sql
@@ -60,11 +63,13 @@ Online Coding Environments
     * [ideone.com](https://ideone.com) - fairly slow
     * [tio.run](https://tio.run/) - no starting program - create main method from scratch
 * social login required
-    * [Repl.it](https://replit.com/) - social login required
+    * [repl.it](https://replit.com/) - social login required
+        * not brilliant for one-shots
     * [codebunk](https://codebunk.com) - live collaboration
     * [jupyterhub.org](https://jupyterhub.org) python
 * Full web IDE
     * [gitpod.io](https://gitpod.io/) - social login or github required
+    * codespaces?
 * other
     * [glitch.com](https://glitch.com/) - web tech
     * [create.withcode.uk](https://create.withcode.uk/) python only - but has input box support
