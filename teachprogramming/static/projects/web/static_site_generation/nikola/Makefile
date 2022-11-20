@@ -1,3 +1,5 @@
+# Nikola in Docker - Inspired by https://getnikola.com/getting-started.html
+
 DOCKER_IMAGE:=dragas/nikola:alpine
 CONTAINER_WORKDIR:=/nikola/
 USER=$(shell id -u):$(shell id -g)
@@ -14,6 +16,6 @@ demo:
 shell:
 	${DOCKER_RUN} /bin/sh
 
-# see 
+# edit some of the text in (auto-reload? or start/stop server) + see changes
 #	demo/posts/1.rst
 #	demo/pages/listing-demo.rst
