@@ -1,3 +1,5 @@
+# https://github.com/KilledByAPixel/LittleJS
+
 serve: game.js engine.all.min.js tiles.png
 	python3 -m http.server
 game.js:
