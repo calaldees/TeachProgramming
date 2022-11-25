@@ -5,6 +5,9 @@
 Alternate tutorials/cheatsheets
 -------------------
 
+https://blog.withcode.uk/2021/09/gcse-computer-science-resource-updated-to-include-ocr-exam-reference-language/
+https://tools.withcode.uk/quickref/
+
 * [devhints.io](https://devhints.io/) cheatsheets
 * [Comprehensive Python Cheatsheet](https://gto76.github.io/python-cheatsheet/)
     * Amazing reference - all the bits + sqlite, synthesizer, scrape, pygame (kind of everything I'm aiming for with my sheets)
