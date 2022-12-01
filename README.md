@@ -51,6 +51,8 @@ Online Coding Environments
 --------------------------
 
 * internal
+    * [jupyterlite](https://github.com/jupyterlite/jupyterlite) [static html](https://jupyterlite.readthedocs.io/en/latest/_static/lab/index.html)
+        * Python + JS completely in browser
     * [jupyterhub.canterbury](https://jupyterhub.canterbury.ac.uk/) no-readline
 * login-free
     * [tutorialspoint.com/codingground](https://www.tutorialspoint.com/codingground.htm)
