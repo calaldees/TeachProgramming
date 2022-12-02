@@ -33,6 +33,12 @@ I will move it once it's been tidied up a bit.
 Other similar projects?
 -----------------------
 
+### Language reference
+
+* see [language_reference/README.md](teachprogramming/static/language_reference/README.md)
+
+### Projects (in steps)
+
 https://github.com/algorithm-archivists/algorithm-archive
 * [executable-tutorials](https://github.com/dharmatech/executable-tutorials)
     * mechanism for doing what my version system sort of accomplishes
@@ -55,6 +61,7 @@ Online Coding Environments
         * Python + JS completely in browser
     * [jupyterhub.canterbury](https://jupyterhub.canterbury.ac.uk/) no-readline
 * login-free
+    * [programiz online-compiler](https://www.programiz.com/python-programming/online-compiler/) java, c#, python, js, c, html5
     * [tutorialspoint.com/codingground](https://www.tutorialspoint.com/codingground.htm)
     * [OneCompiler](https://onecompiler.com/) pre-readline
     * [mycompiler.io](https://www.mycompiler.io/) pre-readline
@@ -67,6 +74,7 @@ Online Coding Environments
 * social login required
     * [repl.it](https://replit.com/) - social login required
         * not brilliant for one-shots
+        * live remote pair/group share
     * [codebunk](https://codebunk.com) - live collaboration
     * [jupyterhub.org](https://jupyterhub.org) python
 * Full web IDE

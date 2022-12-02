@@ -1,9 +1,3 @@
-<style>
-.token.inserted {font-weight: bold;}
-.token.deleted {text-decoration: line-through;}
-</style>
-
-
 Network Disco Lights + Remote Control
 =====================================
 
@@ -21,6 +15,11 @@ School activity for KS3, KS4, KS5.
 
 ---
 <hr style="page-break-after: always;"/>
+<style>
+.token.inserted {font-weight: bold;}
+.token.deleted {text-decoration: line-through;}
+</style>
+
 
 # Network Disco Lights - HTML5/Javascript
 
