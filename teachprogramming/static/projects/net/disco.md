@@ -16,8 +16,8 @@ School activity for KS3, KS4, KS5.
 ---
 <hr style="page-break-after: always;"/>
 <style>
-.token.inserted {font-weight: bold;}
-.token.deleted {text-decoration: line-through;}
+.token.inserted {font-weight: bolder; font-style: italic; color: green;}
+.token.deleted {text-decoration: line-through; color: red;}
 </style>
 
 
@@ -239,8 +239,8 @@ Let me know your thoughts.
 Teacher Code
 ------------
 
-### disco.html
-@import "disco.html" {code_block=true class="line-numbers"}
+### disco_teacher.html
+@import "disco_teacher.html" {code_block=true class="line-numbers"}
 
 
 ### To complement: Protocol Version 1: Computer Id

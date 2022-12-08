@@ -23,3 +23,10 @@ void AssertIsEqual<A> (A a, A b, string message) {
     }
 }
 ```
+
+Extreme
+-------
+
+* [High throughput Fizz Buzz](https://codegolf.stackexchange.com/questions/215216/high-throughput-fizz-buzz/236630#236630)
+    * GB/per second for fizbuzz generation - drag race
+    * `<your_program> | pv > /dev/null`

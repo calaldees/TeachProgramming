@@ -54,5 +54,7 @@ Advanced
 * Optimise it! Make it 100's of times faster.
     * (I've got ideas, but I need to put them in my solutions ... have a think)
     * Optimisation questions are a VERY common next question in any coding interview situations
+        * See fizzbuzz drag racing
+        * See isPrime drag racing
 
 </details>
