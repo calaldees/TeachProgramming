@@ -59,3 +59,17 @@ Online Coding Environments
             * [ideone.com](https://ideone.com)
             * [codepad.org](http://codepad.org)
             * [tio.run](https://tio.run/)
+
+
+Skills
+------
+
+* Rearrange windows
+* Block Indent + De-indent
+* Look at the colours of the brackets - indentation
+* Multiple terminals
+* Hotkeys to move tabs + run
+* Get a small program that works - commit! -  add functionality - Read the errors
+* Devtools
+    * Network (request response? cors?)
+    * JS console

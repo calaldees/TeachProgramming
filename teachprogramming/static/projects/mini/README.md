@@ -1,6 +1,8 @@
 Mini Algorithm Projects
 =======================
 
+TODO: Assert
+
 * Once you've solved a problem in one language - build your skills by implementing it in another
     * https://computingteachers.uk/static/langauge_reference.html
 
