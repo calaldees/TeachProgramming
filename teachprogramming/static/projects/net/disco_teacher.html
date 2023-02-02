@@ -3,8 +3,10 @@
 // Use with
 // https://gitpod.io/#https://github.com/calaldees/channelServer
 // query string example
-// file:///C:/Users/.../disco.html?&ids=30&bpm=167&ws_url=wss://9800-XXX-channelserver-XXX.ws-XXX.gitpod.io/test1.ws
-// type `start_disco(duration_seconds=60)` in console
+// file:///C:/Users/.../disco.html?ws_url=wss://9800-XXX-channelserver-XXX.ws-XXX.gitpod.io/test1.ws&ids=30&bpm=167
+// type `start_disco()` in console
+// get 4 test screens up with id=1to4
+// file:///C:/Users/.../disco.html?ws_url=wss://9800-XXX-channelserver-XXX.ws-XXX.gitpod.io/test1.ws&id=1
 
 
 const urlParams = new URLSearchParams(window.location.search)
@@ -14,13 +16,9 @@ const ID = urlParams.get('id')
 const BPM = parseInt(urlParams.get('bpm') || 60)
 const IDS = parseInt(urlParams.get('ids') || 8)
 
-
-function randomByte() {return Math.floor(Math.random()*255)}
 function updateScreenColor(r,g,b) {
-    r = r || randomByte()
-    g = g || randomByte()
-    b = b || randomByte()
-    document.body.style = `background-color: rgb(${r},${g},${b});`
+    function randomByte() {return Math.floor(Math.random()*255)}
+    document.body.style = `background-color: rgb(${r||randomByte()},${g||randomByte()},${b||randomByte()});`
 }
 
 // Keyboard event
@@ -33,7 +31,7 @@ const socket = new WebSocket(WS_URL);
 window.socket = socket
 socket.addEventListener('message', (event)=>{
     //console.log(event.data);
-    if (!ID) {updateScreenColor(); return;}
+    if (!ID) {updateScreenColor(); return;}  // change evner message fallback if no `ID` in url/query-string
 
     const messages = event.data.split('\n')
     for (let message of messages) {
@@ -45,6 +43,7 @@ socket.addEventListener('message', (event)=>{
 })
 
 // -----------------------------------------------------------------------------
+// Teacher ONLY implementation of `start_disco()`
 
 const COLORS = [
     [255,0,0], //red
@@ -56,10 +55,11 @@ const COLORS = [
 ]
 export function* range(target, start=0, step=1) {for (let i=start ; i<target ; i+=step) {yield i}}
 
-function generate_disco_message_for_frame(frame) {
+function generate_disco_message_for_frame(frame, color_group_size=2) {
+    // color_group_size `=4` for chasing lights. This is great for the 'macro' effect, but individual learners cant see their screen changing each time. I've set the default to 2
     const bar = Math.floor(frame/8)
     return [...range(IDS)].map((id)=>{
-        const id_offset = (id+frame)%4==0?1:0
+        const id_offset = (id+frame)%color_group_size==0?1:0
         const COLOR = COLORS[(bar + id_offset) % COLORS.length]
         return [id,].concat(COLOR).join(":")
     }).join("\n")

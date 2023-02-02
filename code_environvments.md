@@ -14,6 +14,7 @@ Online Coding Environments
         * Python + JS completely in browser
     * [jupyterhub.canterbury](https://jupyterhub.canterbury.ac.uk/) no-readline
 * login-free
+    * [sharepad.io](https://sharepad.io/) js, python, c#, java - no login - live collaboration - share single files - no-readline
     * [programiz online-compiler](https://www.programiz.com/python-programming/online-compiler/) java, c#, python, js, c, html5
     * [tutorialspoint.com/codingground](https://www.tutorialspoint.com/codingground.htm)
     * [OneCompiler](https://onecompiler.com/) pre-readline
@@ -24,12 +25,17 @@ Online Coding Environments
     * [glot.io](https://glot.io/) - (in settings raise number of default lines)
     * [ideone.com](https://ideone.com) - fairly slow
     * [tio.run](https://tio.run/) - no starting program - create main method from scratch
+    * html,css,js
+        * [CodePen](https://codepen.io/) 
+        * [Playcode.io](https://playcode.io/), react,vue
+        * [JSFiddle](https://jsfiddle.net/)
 * social login required
     * [repl.it](https://replit.com/) - social login required
         * not brilliant for one-shots
         * live remote pair/group share
     * [codebunk](https://codebunk.com) - live collaboration
     * [jupyterhub.org](https://jupyterhub.org) python
+    * [Google Colab](https://colab.research.google.com/notebooks/basic_features_overview.ipynb)
 * Full web IDE
     * [gitpod.io](https://gitpod.io/) - social login or github required
     * codespaces?

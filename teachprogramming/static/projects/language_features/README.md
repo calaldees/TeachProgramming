@@ -40,6 +40,10 @@ More
 * [[_evaluating_languages]]
 * [[_further_reading]]
 
+Language specific reference
+---------------------------
+
+http://es6-features.org/
 
 
 Final Thoughts

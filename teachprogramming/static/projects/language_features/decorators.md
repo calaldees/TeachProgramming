@@ -1,6 +1,7 @@
 Decorators
 ----------
 
+
 python
 ```python
 # TASK:
@@ -49,3 +50,29 @@ if __name__ == "__main__":
 * What is the point of this technique?
 * When/Why would you ever use it?
 * Is this good? or bad?
+
+
+TODO
+====
+
+## Decorators in javascript
+
+https://www.sitepoint.com/javascript-decorators-what-they-are/
+
+```javascript
+function doSomething(name) {
+  console.log('Hello, ' + name);
+}
+
+function loggingDecorator(wrapped) {
+  return function() {
+    console.log('Starting');
+    const result = wrapped.apply(this, arguments);
+    console.log('Finished');
+    return result;
+  }
+}
+
+const wrapped = loggingDecorator(doSomething);
+```
+

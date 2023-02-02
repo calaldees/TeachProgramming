@@ -517,3 +517,18 @@ Isaac Computer Science [Program Design](https://isaaccomputerscience.org/topics/
     * [doi](http://dx.doi.org/10.25416/NTR.14907891.v1)
     * Short paper by Scott about referencing code sources in academia
 
+
+* [Automatic Generation of Programming Exercises and Code Explanations Using Large Language Models](https://dl.acm.org/doi/10.1145/3501385.3543957) ICER 2022
+    * TODO
+* [Preventing Cheating in Hands-on Lab Assignments](https://dl.acm.org/doi/10.1145/3478431.3499420) Feb 2022 sigcse
+    * > all students typically receive the same assignment,
+    * > we discuss methods for automatic problem generation for hands-on tasks completed in a computer lab environment. Using this approach, each student receives personalized tasks.
+
+
+* Passionate real teaching
+    * For teachers to be effective, they need to be continually learning too
+        * Described in [The Teaching Delusion](https://www.johncattbookshop.com/titles/the-teaching-delusion)
+    * I constantly upskill in computing - it should be normal for teachers to learn and collaborate
+* Creativity
+    * Communication and Cretivity, often missed off the sylibus
+    * [The Missing Piece: The essential skills that education forgot](https://www.johncattbookshop.com/titles/the-missing-piece-the-essential-skills-that-education-forgot)
