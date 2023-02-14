@@ -317,21 +317,25 @@ Keywords
 
 ### Computing
 * Javascript/browser
-* Context + diff
+* Diff
+  * `+` `-` Context
 * Client/Server
   * Echo Server
 * Event
 * Event Driven Programming
 * WebSocket
+  * BiDirectional
 * Protocol
   * version
-* BiDirectional
 * RGB (color representation)
 * Distributed System
 * (Network) Message Bus
 * Latency
 * Synchronisation (A problem, NTP)
-* backticks, shift+enter
+* Keyboard/IDE/Editor
+  * backticks, shift+enter
+  * REPL ReadEvaluatePrintLoop
+  * F12 (builtin REPL, debugger)
 
 
 ### Other discipline/domains
