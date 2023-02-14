@@ -48,6 +48,14 @@ public class Matrix {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {return false;}
+        if (obj.getClass() != this.getClass()) {return false;}
+        Matrix m2 = (Matrix)obj;
+        return this.d.equals(m2.d) && Arrays.equals(this.m, m2.m);
+    }
+
+    @Override
     public String toString() {
         // Java streams distracted me for far to long
         // DAMNIT! Java streams have forsaken me .. this is a messy hack

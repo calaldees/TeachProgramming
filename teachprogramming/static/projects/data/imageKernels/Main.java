@@ -23,6 +23,8 @@ class Main {
         Matrix m3 = MatrixOperation.applyThreaded(m1, Kernel.BLUR);
         System.out.println(m3.toString());
 
+        assert m2.equals(m3) : "should match";
+
         //System.out.println(mm.m.length);
     }
 }

@@ -5,7 +5,6 @@ import java.util.function.Function;
 import java.util.stream.IntStream;
 import java.util.stream.Collectors;
 
-
 import imageKernels.Matrix;
 import imageKernels.Kernel;
 
@@ -26,7 +25,7 @@ public class MatrixOperation {
         });
     }
 
-    public static Matrix applyThreaded(Matrix m1, Kernel k) {return applyThreaded(m1,k,4);}
+    public static Matrix applyThreaded(Matrix m1, Kernel k       ) {return applyThreaded(m1,k,4);}
     public static Matrix applyThreaded(Matrix m1, Kernel k, int t) {
         Matrix m2 = m1.clone();
         IntStream.range(0, t)
@@ -35,7 +34,7 @@ public class MatrixOperation {
                 int i = threadNumber * batch_size;
                 int j = i + batch_size;
                 String threadName = String.format("%s: %s->%s",threadNumber,i,j);
-                System.out.println(threadName);
+                //System.out.println(threadName);
                 Thread thread = new Thread(() -> apply(m1, k, m2, IntStream.range(i,j)),  threadName);
                 thread.start();
                 return thread;
