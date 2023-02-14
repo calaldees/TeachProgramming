@@ -1,5 +1,6 @@
 package imageKernels;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.function.Supplier;
 import java.lang.Math;
@@ -10,7 +11,7 @@ import java.util.stream.Collectors;
 import java.lang.StringBuilder;
 
 
-public class Matrix {
+public class Matrix implements Serializable {
     public final Dimension d;
     private final int[] m;
     private final int offset;
@@ -24,6 +25,7 @@ public class Matrix {
     public Matrix(Dimension d, int[] m) {this(d,m,0);}
     public Matrix(Dimension d, int[] m, int o) {
         //assert m.length == d.width*d.height;
+        assert o+m.length <= d.width*d.height : "offset+data is bigger than data-size!";
         assert o        % d.width == 0 : "offset must be multiple of width";
         assert m.length % d.width == 0 : "data segment must be multiple of width";
         if (o > 0) {
@@ -39,6 +41,12 @@ public class Matrix {
     }
     public Matrix cloneSegment(int offset, int length) {
         return new Matrix(d, Arrays.copyOfRange(m, offset, offset+length), offset);
+    }
+    public void mergeSegment(Matrix m2) {
+        assert this.d.equals(m2.d) : "only matrix of the same size can be merged";
+        m2.indexesSafe().forEach(i -> {
+            this.m(i, m2.m(i));
+        });
     }
 
 
@@ -59,7 +67,7 @@ public class Matrix {
             m(i-1+d.width), m(i+d.width), m(i+1+d.width),
         };
     }
-    private int m(int i) {
+    public int m(int i) {
         //return i>=0 && i<m.length ? m[i] : 0;
         return m[mod(i-offset, m.length)];  //i%m.length
     }

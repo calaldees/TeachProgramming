@@ -5,6 +5,12 @@ import java.util.function.Function;
 import java.util.stream.IntStream;
 import java.util.stream.Collectors;
 
+import java.io.ByteArrayOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;
+
 import imageKernels.Matrix;
 import imageKernels.Kernel;
 
@@ -41,8 +47,47 @@ public class MatrixOperation {
             })
             .forEach(thread -> {
                 try {thread.join();}
-                catch (InterruptedException ex) {}
+                catch (InterruptedException e) {e.printStackTrace();}
             });
+        return m2;
+    }
+
+    public static Matrix applyNetwork(Matrix m1, Kernel k, int t) {
+        Matrix m2 = m1.cloneEmpty();
+
+        // Output matrix segments to byte stream
+        ByteArrayOutputStream inMemoryStream = new ByteArrayOutputStream();
+        try {
+            ObjectOutputStream outputStream = new ObjectOutputStream(inMemoryStream);
+        
+            IntStream.range(0, t)
+                .forEach(segmentNumber -> {
+                    int batch_size = (int)(m1.dataSize() / t);
+                    int offset = segmentNumber * batch_size;
+                    String threadName = String.format("%s: offset:%s length:%s",segmentNumber,offset,batch_size);
+
+                    try {
+                        outputStream.writeObject(m1.cloneSegment(offset,batch_size));
+                    } catch (IOException e) {e.printStackTrace();}
+                });
+
+            outputStream.close();
+        } catch (IOException e) {e.printStackTrace();}
+
+        // Input matrix segments from byte stream
+        try {
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(inMemoryStream.toByteArray());
+            ObjectInputStream in = new ObjectInputStream(inputStream);
+
+            var m = (Matrix)in.readObject();
+
+            in.close();
+            inputStream.close();
+            inMemoryStream.close();
+        }
+        catch (IOException e) {e.printStackTrace();}
+        catch (ClassNotFoundException e) {e.printStackTrace();}
+
         return m2;
     }
 }
