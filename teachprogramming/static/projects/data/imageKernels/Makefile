@@ -5,7 +5,10 @@ run: build
 build:
 	docker build --tag ${DOCKER_IMAGE} .
 shell:
-	docker run -it --volume ${PWD}:/java/ ${DOCKER_IMAGE} /bin/bash
+	docker run -it --volume ${PWD}:/java/ ${DOCKER_IMAGE} /bin/sh
 
 run_local:
-	javac *.java && java -ea Main
+	reset && javac *.java && java -ea Main
+
+clean:
+	find . -name "*.class" -type f -delete
