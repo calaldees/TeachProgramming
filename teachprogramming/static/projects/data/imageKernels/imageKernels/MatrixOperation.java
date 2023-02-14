@@ -13,24 +13,24 @@ public class MatrixOperation {
     private MatrixOperation() {}
 
     public static Matrix apply(Matrix m1, Kernel k) {
-        Matrix m2 = m1.clone();
-        apply(m1, k, m2, IntStream.range(0, m1.m.length));
+        Matrix m2 = m1.cloneEmpty();
+        apply(m1, k, m2, m1.indexes());
         return m2;
     }
 
     private static void apply(Matrix m1, Kernel k, Matrix m2, IntStream range) {
         range.forEachOrdered(i -> {
             //System.out.println(i);
-            m2.m[i] = k.apply(m1.data(i));
+            m2.m(i, k.apply(m1.data(i)));
         });
     }
 
     public static Matrix applyThreaded(Matrix m1, Kernel k       ) {return applyThreaded(m1,k,4);}
     public static Matrix applyThreaded(Matrix m1, Kernel k, int t) {
-        Matrix m2 = m1.clone();
+        Matrix m2 = m1.cloneEmpty();
         IntStream.range(0, t)
             .mapToObj(threadNumber -> {
-                int batch_size = (int)(m1.m.length / t);
+                int batch_size = (int)(m1.dataSize() / t);
                 int i = threadNumber * batch_size;
                 int j = i + batch_size;
                 String threadName = String.format("%s: %s->%s",threadNumber,i,j);

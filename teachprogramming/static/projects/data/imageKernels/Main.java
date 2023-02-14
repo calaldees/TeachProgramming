@@ -25,6 +25,6 @@ class Main {
 
         assert m2.equals(m3) : "should match";
 
-        //System.out.println(mm.m.length);
+        m1.cloneSegment(80, 120);
     }
 }
