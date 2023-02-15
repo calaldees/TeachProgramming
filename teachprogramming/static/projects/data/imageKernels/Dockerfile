@@ -6,5 +6,5 @@
 FROM eclipse-temurin:19-jdk-alpine
 WORKDIR /java/
 COPY . .
-RUN javac Main.java
-CMD ["java", "-ea", "Main"]
+RUN javac *.java
+CMD ["java", "-ea", "Attempt2"]

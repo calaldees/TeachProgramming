@@ -8,7 +8,7 @@ shell:
 	docker run -it --volume ${PWD}:/java/ ${DOCKER_IMAGE} /bin/sh
 
 run_local:
-	reset && javac *.java && java -ea Main
+	reset && javac *.java && java -ea Attempt2
 
 clean:
 	find . -name "*.class" -type f -delete

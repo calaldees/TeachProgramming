@@ -52,6 +52,7 @@ public class MatrixOperation {
         return m2;
     }
 
+    public static Matrix applyNetwork(Matrix m1, Kernel k       ) {return applyNetwork(m1,k,4);}
     public static Matrix applyNetwork(Matrix m1, Kernel k, int t) {
         Matrix m2 = m1.cloneEmpty();
 
@@ -62,12 +63,14 @@ public class MatrixOperation {
         
             IntStream.range(0, t)
                 .forEach(segmentNumber -> {
-                    int batch_size = (int)(m1.dataSize() / t);
+                    int batch_size = (((int)(m1.dataSize() / t) / m1.d.width)+1)*m1.d.width;
                     int offset = segmentNumber * batch_size;
                     String threadName = String.format("%s: offset:%s length:%s",segmentNumber,offset,batch_size);
 
                     try {
-                        outputStream.writeObject(m1.cloneSegment(offset,batch_size));
+                        if (offset + batch_size > m1.dataSize()) {batch_size = m1.dataSize() - offset;}
+                        //System.out.println(String.format("%s %s", offset_round_down, offset_round_down+batch_size_round_up));
+                        outputStream.writeObject(m1.cloneSegment(offset, batch_size));
                     } catch (IOException e) {e.printStackTrace();}
                 });
 
@@ -79,7 +82,17 @@ public class MatrixOperation {
             ByteArrayInputStream inputStream = new ByteArrayInputStream(inMemoryStream.toByteArray());
             ObjectInputStream in = new ObjectInputStream(inputStream);
 
-            var m = (Matrix)in.readObject();
+            while (true) {
+                Matrix m3;
+                try {m3 = (Matrix)in.readObject();} catch (IOException ex) {break;}
+
+                var m4 = m3.cloneSegment();
+                apply(m3, k, m4, m3.indexesSafe());
+                // TODO: send m4 back over network
+
+                // temp for now
+                m2.mergeSegment(m4);
+            }
 
             in.close();
             inputStream.close();

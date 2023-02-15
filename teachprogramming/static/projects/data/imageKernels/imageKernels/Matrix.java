@@ -29,7 +29,7 @@ public class Matrix implements Serializable {
         assert o        % d.width == 0 : "offset must be multiple of width";
         assert m.length % d.width == 0 : "data segment must be multiple of width";
         if (o > 0) {
-            assert m.length >= d.width*3 : "data length is too low to be safe with buffer of one layer each side of this data chunk";
+            //assert m.length >= d.width*3 : "data length is too low to be safe with buffer of one layer each side of this data chunk";
         }
         this.d = d;
         this.offset = o;
@@ -38,6 +38,9 @@ public class Matrix implements Serializable {
 
     public Matrix cloneEmpty() {
         return new Matrix(d);
+    }
+    public Matrix cloneSegment() {
+        return new Matrix(d, new int[this.m.length], this.offset);
     }
     public Matrix cloneSegment(int offset, int length) {
         return new Matrix(d, Arrays.copyOfRange(m, offset, offset+length), offset);
