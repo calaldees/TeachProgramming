@@ -5,13 +5,9 @@
     <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
     <title>Wordle</title>
     <style>
-
-    /* styles here */
-    .highlight_correct {background-color: lightgreen;}
-    .highlight_wrong {background-color: grey;}
-    .highlight_wrong_place {background-color: yellow;}
-
-
+        .highlight_correct {background-color: lightgreen;}
+        .highlight_wrong {background-color: grey;}
+        .highlight_wrong_place {background-color: yellow;}
     </style>
 </head>
 <body>
@@ -52,10 +48,6 @@ const state = {
 }
 
 
-function guess(word) {
-    state.guess.push(word)
-    render(state)
-}
 
 function* wordFeedback(word, guess) {
     for (let i=0 ; i<word.length ; i++) {
@@ -70,8 +62,6 @@ assertEqualsObject([
 ])
 
 
-document.getElementById("wordleInput").addEventListener('change', (event) => guess(event.target.value))
-
 const output = document.getElementById('wordleOutput')
 function render(state) {
     output.innerHTML = ''
@@ -81,6 +71,14 @@ function render(state) {
         ))
     )))
 }
+
+function guess(word, ) {
+    state.guess.push(word)
+    render(state)
+}
+document.getElementById("wordleInput").addEventListener('change', (event) => guess(event.target.value))
+
+
 
 </script>
 </body>
