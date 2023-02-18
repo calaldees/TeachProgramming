@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
+    <title>Wordle</title>
+    <style>
+
+    /* styles here */
+    .highlight_correct {background-color: lightgreen;}
+    .highlight_wrong {background-color: grey;}
+    .highlight_wrong_place {background-color: yellow;}
+
+
+    </style>
+</head>
+<body>
+    <h1>Wordle</h1>
+
+    <div id="wordleOutput"></div>
+    <input id="wordleInput" type="text" placeholder="word"/>
+
+<script type="module">
+
+export function assertEquals(comparison_tuples) {for (let [a, b] of comparison_tuples) {console.assert(a == b, `${a} should-equal ${b}`)}}
+export function assertEqualsObject(comparison_tuples) {return assertEquals(comparison_tuples.map(v => v.map(JSON.stringify)))}
+export const hasIterationProtocol = variable => variable !== null && Symbol.iterator in Object(variable);
+export function randomItem(array) {return array[Math.floor(Math.random()*array.length)]}
+function h(type, params, children) {
+    const el = document.createElement(type)
+    for (let [k,v] of Object.entries(params)) {el[k] = v}
+    if (typeof(children)==="string") {el.appendChild(document.createTextNode(children))}
+    else if (hasIterationProtocol(children)) {
+        for (let c of children) {el.append(c)}
+    }
+    else if (children) {el.appendChild(children)}
+    return el
+}
+
+// Word bank to be replaced by API call
+const word_bank = [
+    'mush',
+    'push',
+    'dosh',
+]
+
+
+
+const state = {
+    word: randomItem(word_bank),
+    guess: [],
+}
+
+
+function guess(word) {
+    state.guess.push(word)
+    render(state)
+}
+
+function* wordFeedback(word, guess) {
+    for (let i=0 ; i<word.length ; i++) {
+        yield [
+            guess[i],
+            guess[i]===word[i] ? 'correct' : (word.indexOf(guess[i])>=0 ? 'wrong_place' : 'wrong')
+        ]
+    }
+}
+assertEqualsObject([
+    [ [...wordFeedback("mush", "tdsm")], [["t","wrong"],["d","wrong"],["s","correct"],["m","wrong_place"]] ],
+])
+
+
+document.getElementById("wordleInput").addEventListener('change', (event) => guess(event.target.value))
+
+const output = document.getElementById('wordleOutput')
+function render(state) {
+    output.innerHTML = ''
+    output.appendChild(h('table', {}, state.guess.map(guess =>
+        h('tr', {}, [...wordFeedback(state.word, guess)].map(r =>
+            h('td', {classList: `highlight_${r[1]}`}, r[0])
+        ))
+    )))
+}
+
+</script>
+</body>
+</html>
