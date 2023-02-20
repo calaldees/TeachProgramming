@@ -402,6 +402,15 @@ def regex():
   import re   # ver: regex
 
 
+
+def function_named_defaults():
+  """
+  
+  """
+  # TODO
+  pass
+
+
 # cool bits
 # a,b = b, a   # swap 
 # ll = list(map(int, input().split()))

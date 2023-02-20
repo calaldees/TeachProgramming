@@ -495,6 +495,13 @@ function assertion() {
 }
 
 
+function function_named_defaults() {
+  // TODO
+  // function omelette(...[egg = '🍳', cheese = '🐮']) {
+}
+
+
+
 
 
 
