@@ -17,6 +17,9 @@ const SCORES = []
 app.get('/', (req, res) => {
     res.sendFile('client.html', {root: __dirname})
 })
+app.get('/words', (req, res) => {
+    res.sendFile('words', {root: __dirname})
+})
 
 app.get('/score/', (req, res) => {
     res.json(["TODO",])
@@ -27,6 +30,7 @@ app.post('/score/', (req, res) => {
 })
 
 app.get('/word/', (req, res) => {
+    // > Each daily game uses a word from a randomly ordered list of 2,309 words (out of the approximate 13,000 five-letter words
     res.status(200).json(["TODO",])
 })
 

@@ -48,7 +48,6 @@ const state = {
 }
 
 
-
 function* wordFeedback(word, guess) {
     for (let i=0 ; i<word.length ; i++) {
         yield [
@@ -59,7 +58,10 @@ function* wordFeedback(word, guess) {
 }
 assertEqualsObject([
     [ [...wordFeedback("mush", "tdsm")], [["t","wrong"],["d","wrong"],["s","correct"],["m","wrong_place"]] ],
+    // https://en.wikipedia.org/wiki/Wordle > Multiple instances of the same letter in a guess, such as the "o"s in "robot", will be colored green or yellow only if the letter also appears multiple times in the answer; otherwise, excess repeating letters will be colored gray.
+    [ [...wordFeedback("robot", "obobo")], [["o","wrong_place"],["b","wrong_place"],["o","wrong_place"],["b","wrong"],["o","wrong"]] ],
 ])
+
 
 
 const output = document.getElementById('wordleOutput')
