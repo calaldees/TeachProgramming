@@ -5,5 +5,93 @@ Mad idea - consolidate my resources and ideas in some form of publishing.
 I think I need to start with a book proposal.
 
 * Bloomsbury [Submitting a Book Proposal](https://www.bloomsbury.com/uk/discover/bloomsbury-academic/authors/submitting-a-book-proposal/)
+* https://httcs.online/
+* https://www.johncattbookshop.com/pages/submissions
+    * > Please email Alex Sharratt via as@johncatt.com to discuss ideas.
 
-Time to get this show on the road
+I need to start sketching out a chapter list ...
+
+Title
+-----
+
+Needs word-smithing
+
+Computing Education: 
+the missing bits?
+the holistic approach?
+the wider story?
+zero to hero?
+
+
+Chapter Concepts
+----------------
+
+* Part 1 - The problem
+    * Why Computing - not just for jobs
+    * What is missing
+        * Is computing for everyone
+        * Most people cant do shit all with a computer (really) - 
+        * Most people don't know how the world works. Do they need to? DNS? Cookie? Why WiFi6 is better for power. Privacy?
+        * Computing is power
+        * What's not in the curriculum - IDE's, collaboration, diff
+        * GUI's suck
+        * What is difficult to teach - networks
+        * What stops computing teachers doing this - time, skill
+        * Verbal reasoning
+            * can't explain the problem, cant explain the goal
+        * Focus (the mobile distraction)
+        * Best content has already been created and accessible - why is everyone not awesome?
+        * Online, AI and the future fo education
+        * Interview whiteboard
+        * Authentic (problems worth solving)
+        * Runbook for stuckness
+        * Context
+        * Different ages and stages of learners (are they that different?)
+        * Computational thinking - what can they do? I agree with Denning
+        * Am I old fashion? We need AI, big data skills - do we need to teach the foundations (numbers in binary) - it's uneeded boring
+        * Nobody knows CS - even people that think know
+            * Dijstras rant 1989
+        * Technology built on technology built on technology - how is anyone ment to penetrate this
+* Part2 - ideas?
+    * Principles
+        * Comunity, low stakes, no hireachy, real, creativiy/autnomy, presentation, wiki, progress visible (spec)
+            * Zone of proximal Development what is possible with community support
+        * children develop faster when they are not with other children
+        * not games - this trivialises the diciplin
+        * time/space/environment, disciplin, focus
+        * Blooms taxonly does not work in this domain
+    * Pillars
+        * Practical Theory Exercises (self paced, multiple language)
+            * unpluged only to faciliitate real
+        * Engineering examples
+        * Creativity
+        * Community
+            * rubber duck, pair, verbal, build after others, identity
+        * (multiple langauges - false carryover concepts)
+        * (context)
+    * Practical as a vehicle for theory
+    * Guided Engineering projects
+    * Creativity - what end of the trumpet to blow into - self directed
+    * Equipment - cost? access? schools? portable?
+        * Space
+    * Ongoing skill development
+        * Constant (show have time - self directed)
+        * CS graduates that don't know CS
+    * Assessment
+        * Test center, verbal presentation, digital artifact not suffect
+        * leadership (assessed in PE)
+        * real national qualification
+    * ActualCode - formal education is misaligned with learners
+    * Projects
+        * (SSDD)
+        * Escape room
+        * shapes (creativity) scratch, turtle, canvas/tk/.NetForms
+        * Networking KS3,4,5,degree,professional
+        * web-tech
+        * Blockchain?
+        * Cloud? CICD?
+        * Cybersecutiry?
+        * AI?
+        * The lens of Games - what activities to choose and why
+    * Teacher collaboration on resources
+        * Missing meta and how to overcome it

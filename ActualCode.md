@@ -85,3 +85,20 @@ Alternate names
 Notes
 -----
 * Get parents + others joining
+
+
+---
+
+Getting buy-in
+
+    BCS Learning and Development Specialist Group: https://www.bcs.org/membership-and-registrations/member-communities/learning-and-development-specialist-group/
+    BCS Early Careers Executive (includes apprentices) https://www.bcs.org/membership-and-registrations/member-communities/bcs-early-careers-executive/
+    Talk about speaking with execs (2 versions):
+        https://www.youtube.com/watch?v=xTP4kIy6C8I
+            1. One outcome away from being publicly fired
+            2. Executives are just people. They are lonley because of the power disparity. Can't trust what people say to you.
+            * Every decision is either typei:cant-go-back typeii:can-be-reversed
+            3. They don't know everything, but people expect them too. Imposter syndrome. Be careful about the assumptions you make (jargon)
+                * Ask them to explain the problem they are having to you
+            4. Speak truth they can trust 
+        https://www.youtube.com/watch?v=VtztfImcsBI
