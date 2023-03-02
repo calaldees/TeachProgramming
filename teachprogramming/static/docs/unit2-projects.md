@@ -45,7 +45,40 @@ transpositional cypher
 language frequency alalysis project
 * [Line drawing algorithm](https://en.wikipedia.org/wiki/Line_drawing_algorithm)
 
-Auto video edit project?
+* anaglyph 
+  * 3d video processing
+  * python? multiply/screen
+  * ffmpeg commandline image stream + remux + audio
+* Maybe anaglyph in js canvas for 2d sprites? multiply/screen?
+
+a program that outputs `graphvis` (or equivalent)
+
+Spring embedder
+
+(all the below in a project?)
+Line drawing
+line crossing - polygons
+flood fill (call stack overflow, keeping your own stack)
+(now I'm stretching - 2d matrix operations? for rotation?)
+flood fill game with unicode characters
+  https://replit.com/@virnuls/Flood-Fill#main.py
+
+
+simple games? http://inventwithpython.com/blog/2012/02/20/i-need-practice-programming-49-ideas-for-game-clones-to-code/
+
+* maths
+  * solve linear equations?
+  * multiple answers? x^2? x^3
+
+mri data viewer
+voxels?
+
+terminal/text animation
+
+shader conway?
+
+Auto video edit project - music video? bpm
+(scene detection?)
 
 assembler -> fetch execute
 

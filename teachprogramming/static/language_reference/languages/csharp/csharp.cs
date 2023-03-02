@@ -17,7 +17,7 @@ function csharp {     # linux bash function                                     
 
 using System;                                                                   // VER: hello_world
 using System.IO;                                                                // VER: file_write
-using System.Collections.Generic;                                               // VER: define_map
+using System.Collections.Generic;                                               // VER: define_map,list_comprehension
 using System.Linq;                                                              // VER: list_comprehension
 using System.Text.Json;  // TODO see json_data - not available in mono as it only up to dotnet.4.x
 

@@ -8,6 +8,8 @@ I think I need to start with a book proposal.
 * https://httcs.online/
 * https://www.johncattbookshop.com/pages/submissions
     * > Please email Alex Sharratt via as@johncatt.com to discuss ideas.
+* routledge [submit-your-book-proposal](https://www.routledge.com/our-customers/authors/submit-your-book-proposal)
+    * [editorial contacts](https://www.routledge.com/contacts/editorial)
 
 I need to start sketching out a chapter list ...
 
@@ -95,3 +97,19 @@ Chapter Concepts
         * The lens of Games - what activities to choose and why
     * Teacher collaboration on resources
         * Missing meta and how to overcome it
+
+* A lens of computing for a path to actualisation of ideas
+* What industry can learn from formal education - what formal education can learn from industry
+* [Popular education in Sweden: much more than you wanted to know](https://www.lesswrong.com/posts/tjxgbovwc5Ft7wrtc/popular-education-in-sweden-much-more-than-you-wanted-to-1)
+    * > Folkbildningsrörelsen: that is the name we have for this movement of self-organized study groups, resource centers, maker spaces, public lectures, and free retreats for personal development. 
+* "Conversational programmers"
+* missing "Metadata" on sharing lesson content/calaborators - they why
+* Meaningful targets - Feedback that get's actioned - progress that get's identified
+* Individual at the center - growth - aligned with business/curriculum
+* Most graduates if given a whiteboard pen can't converse with you
+    * social skills (not sitting silently)
+* Hack time and culture - social pressure - how to manage this effectivly
+* Junior to senior? defention? framework? framework for progression? proposal? benchmark statements?
+    * investigate other frameworks
+* Feedback was missing in industry - left to own devices - daunting
+* one-to-ones with line manager - not wingesd - actions and timeframe - always talk about the long

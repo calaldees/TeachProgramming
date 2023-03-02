@@ -29,6 +29,8 @@ Online Coding Environments
         * [CodePen](https://codepen.io/) 
         * [Playcode.io](https://playcode.io/), react,vue
         * [JSFiddle](https://jsfiddle.net/)
+    * REPL terminal
+        * [pyodide terminal](https://pyodide.org/en/stable/console.html)
 * social login required
     * [repl.it](https://replit.com/) - social login required
         * not brilliant for one-shots
@@ -40,6 +42,7 @@ Online Coding Environments
     * [gitpod.io](https://gitpod.io/) - social login or github required
     * codespaces?
     * [vscode.dev](https://vscode.dev/) full VS code in browser - no login - interesting!
+        * [vscode-code-runner-for-web](https://github.com/formulahendry/vscode-code-runner-for-web) - extension to run python code in browser
 * other
     * [glitch.com](https://glitch.com/) - web tech
     * [create.withcode.uk](https://create.withcode.uk/) python only - but has input box support
