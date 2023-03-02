@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+
 
 public class Task
 {
@@ -18,16 +20,18 @@ public class Task
         public Point(Point p) {this.x = p.x; this.y = p.y;}
         public override bool Equals (object obj){return Equals(obj as Point);}
         public bool Equals (Point p){return p != null && this.x == p.x && this.y == p.y;}
+        public override string ToString() {return $"Point(x={x}, y={y})";}
     }
 
     class Matrix {
-        // hard 3x3 matrix for 2d transforms
+        // hard coded 3x3 matrix for 2d transforms
         private double[] m = new double[]{1,0,0,0,1,0,0,0,1};  // identity matrix
         public Matrix() {}
         public Matrix(double[] m) {this.m = m;}  // assert length equal?  //params 
         public Matrix(Matrix m) {this.m = m.m;}  // assert length equal?
         public override bool Equals (object obj){return Equals(obj as Matrix);}
         public bool Equals (Matrix m){return Enumerable.SequenceEqual(this.m, m.m);} //return m != null; for (int i ; i<m.length ; i++) {}}
+        public override string ToString() {return $"Matrix({String.Join(',',m)})";}
         public Point apply(Point p) {
             return new Point(Convert.ToInt32(m[0]*p.x + m[1]*p.y + m[2]), Convert.ToInt32(m[3]*p.x + m[4]*p.y + m[5]));
         }
@@ -39,22 +43,36 @@ public class Task
                 m[6]*n[0] + m[7]*n[3] + m[8]*n[6], m[6]*n[1] + m[7]*n[4] + m[8]*n[7], m[6]*n[2] + m[7]*n[5] + m[8]*n[8],
             });
         }
-        public void scale(double s) {
+        public Matrix scale(double s) {
             m[0]*=s;
             m[4]*=s;
+            return this;
         }
-        public void translate(double x, double y) {
+        public Matrix translate(double x, double y) {
             m[2]+=x;
             m[5]+=y;
+            return this;
         }
-        public void rotate(double r) {
+        public Matrix rotate(double r) {
             m[0] = Math.Cos(r);
             m[3] = Math.Sin(r);
             m[1] = -m[3];
             m[4] = m[0];
+            return this;
         }
-        public void invertX() {m[0] = -m[0];}
-        public void invertY() {m[4] = -m[4];}
+        public Matrix invertX() {m[0] = -m[0]; return this;}
+        public Matrix invertY() {m[4] = -m[4]; return this;}
+    }
+
+    class Polygon {
+        public List<Point> pp;
+        public Polygon() {this.pp = new List<Point>();}
+        public Polygon(IEnumerable<Point> pp) {this.pp = new List<Point>(pp);}
+        //public add(Point p) {this.p.Add(p);}
+        public Polygon apply(Matrix m) {
+            return new Polygon(pp.Select((p)=> m.apply(p)));
+        }
+        public override string ToString() {return $"Polygon({String.Join(',',pp.Select((i)=>i.ToString()))})";}
     }
 
     public static void Main(string[] args) { new Task(); }
@@ -65,6 +83,8 @@ function csharp {
   mcs "$1" && clear && mono "${1%.*}.exe" && rm "${1%.*}.exe";
 }
 */
+
+        /*
         Console.WriteLine(Console.BufferWidth);
         Console.WriteLine(Console.BufferHeight);
         Console.Clear();
@@ -82,34 +102,45 @@ function csharp {
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.SetCursorPosition(0, 0);
         Console.Write(Console.WindowHeight);
-        
+        */
+
+        Console.SetCursorPosition(0, 0);
         Console.BackgroundColor = ConsoleColor.Black;
         Console.ForegroundColor = ConsoleColor.White;
-        line(new Point(0,0), new Point(20,10));
-        Thread.Sleep(1000);
-        line(new Point(0,0), new Point(10,20));
-        Thread.Sleep(1000);
 
+        //line(new Point(0,0), new Point(20,10));
+        //Thread.Sleep(1000);
+        //line(new Point(0,0), new Point(10,20));
+        //Thread.Sleep(1000);
+
+
+        Polygon shape = new Polygon();
+        shape.pp.AddRange(new Point[]{new Point(0,0),new Point(10,0),new Point(10,10),new Point(0,10), new Point(0,0)});
+        drawPoly(shape);
+        Console.ReadLine();
 
         double r = 0;
-        Point p1 = new Point(10,10);
-        Point p2 = new Point(15,15);
-        Matrix t1 = new Matrix();
-        t1.translate(50,0);
+        //Point p1 = new Point(0,0);
+        //Point p2 = new Point(10,0);
+        //Matrix t1 = new Matrix();
+        //t1.translate(10,10);
         //t1.translate(-Console.BufferWidth/2, -Console.BufferHeight/2);
         //Matrix t2 = new Matrix();
         //t2.translate(-5,0);
         //t2.translate(Console.BufferWidth/2, Console.BufferHeight/2);
-        for (int i=0 ; i<20 ; i++) {
-            Matrix m = new Matrix();
-            m.rotate(r);
-            m = t1.multiply(m);
-            line(m.apply(p1), m.apply(p2));
-            r+=0.1;
-            Thread.Sleep(500);
+        for (int i=0 ; i<30 ; i++) {
+            Matrix m = new Matrix().rotate(r).translate(10,10);
+            //m.rotate(r);
+            //m = t1.multiply(m);
+            debug(m.ToString());
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+            drawPoly(shape.apply(m));
+            //line(m.apply(p1), m.apply(p2));
+            r-=0.1;
+            Thread.Sleep(300);
             Console.Clear();
         }
-
 
         Matrix a = new Matrix();
         Matrix b = new Matrix();
@@ -123,6 +154,14 @@ function csharp {
     }
 
 
+    void debug(string message) {
+        Console.BackgroundColor = ConsoleColor.Black;
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.SetCursorPosition(1, Console.BufferHeight-1);
+        Console.Write(message);
+        //Thread.Sleep(1000);
+        Console.ReadLine();
+    }
 
     void line(Point p1, Point p2, char c = '#') {
         // inspired by https://www.tutorialspoint.com/computer_graphics/line_generation_algorithm.htm
@@ -139,6 +178,15 @@ function csharp {
             if (x<0 || y<0 || x>Console.BufferWidth || y>Console.BufferHeight) {continue;}
             Console.SetCursorPosition(Convert.ToInt32(Math.Floor(x)), Convert.ToInt32(Math.Floor(y)));
             Console.Write(c);
+        }
+    }
+    void drawPoly(Polygon pp) {
+        Point _p = null;
+        foreach (Point p in pp.pp) {
+            if (_p==null || p==null) {_p = p; continue;}
+            debug($"Hey {_p.ToString()} to {p.ToString()}");
+            line(_p,p);
+            _p = p;
         }
     }
 }
