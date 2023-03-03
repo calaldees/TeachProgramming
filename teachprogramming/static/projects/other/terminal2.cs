@@ -23,7 +23,11 @@ public class Task
         public override string ToString() {return $"Point(x={x}, y={y})";}
     }
 
-    class Matrix {
+    interface MatrixApply {
+        Point apply(Point p);
+    }
+
+    class Matrix : MatrixApply {
         // hard coded 3x3 matrix for 2d transforms
         private double[] m = new double[]{1,0,0,0,1,0,0,0,1};  // identity matrix
         public Matrix() {}
@@ -43,13 +47,10 @@ public class Task
                 m[6]*n[0] + m[7]*n[3] + m[8]*n[6], m[6]*n[1] + m[7]*n[4] + m[8]*n[7], m[6]*n[2] + m[7]*n[5] + m[8]*n[8],
             });
         }
-        public Matrix scale(double s) {
-            m[0]*=s;
-            m[4]*=s;
-            return this;
-        }
-        public Matrix scaleY(double s) {
-            m[4]*=s;
+        public Matrix scale(double s) {return scale(s,s);}
+        public Matrix scale(double x, double y) {
+            m[0]*=x;
+            m[4]*=y;
             return this;
         }
         public Matrix translate(double x, double y) {
@@ -73,7 +74,7 @@ public class Task
         public Polygon() {this.pp = new List<Point>();}
         public Polygon(IEnumerable<Point> pp) {this.pp = new List<Point>(pp);}
         //public add(Point p) {this.p.Add(p);}
-        public Polygon apply(Matrix m) {
+        public Polygon apply(MatrixApply m) {
             return new Polygon(pp.Select((p)=> m.apply(p)));
         }
         public override string ToString() {return $"Polygon({String.Join(',',pp.Select((i)=>i.ToString()))})";}
@@ -142,8 +143,15 @@ function csharp {
         //t2.translate(-5,0);
         //t2.translate(Console.BufferWidth/2, Console.BufferHeight/2);
         for (int i=0 ; i<70 ; i++) {
-            Matrix m = new Matrix().rotate(r).translate(20,20);
-            // Matrix m = new Matrix().multiply(new Matrix().rotate(r)).multiply(new Matrix().translate(20,20)).multiply(new Matrix().scaleY(0.65));
+            //Matrix m = new Matrix().rotate(r).translate(20,20);
+            //Matrix m = new Matrix().multiply(new Matrix().rotate(r)).multiply(new Matrix().translate(20,20)).multiply(new Matrix().scale(1, 0.65));
+            Matrix m = new Matrix()
+                .multiply(new Matrix().translate(Console.BufferWidth/2,Console.BufferHeight/2))
+                .multiply(new Matrix().scale(1, 0.65))
+                .multiply(new Matrix().rotate(r))
+                .multiply(new Matrix().scale(2, 2))
+                .multiply(new Matrix().translate(-5,-5))
+            ;
 
             //m.rotate(r);
             //m = t1.multiply(m);
