@@ -48,6 +48,10 @@ public class Task
             m[4]*=s;
             return this;
         }
+        public Matrix scaleY(double s) {
+            m[4]*=s;
+            return this;
+        }
         public Matrix translate(double x, double y) {
             m[2]+=x;
             m[5]+=y;
@@ -112,12 +116,21 @@ function csharp {
         //Thread.Sleep(1000);
         //line(new Point(0,0), new Point(10,20));
         //Thread.Sleep(1000);
+        //line_bresenham(new Point(-1,6),new Point(4,10));
 
-
+        
+        
         Polygon shape = new Polygon();
         shape.pp.AddRange(new Point[]{new Point(0,0),new Point(10,0),new Point(10,10),new Point(0,10), new Point(0,0)});
-        drawPoly(shape);
-        Console.ReadLine();
+        /*
+        //drawPoly(shape);
+        //Console.ReadLine(); Console.Clear();
+        Matrix m = new Matrix().scaleY(0.6).translate(5,0);
+        drawPoly(shape.apply(m));
+        */
+        
+        
+
 
         double r = 0;
         //Point p1 = new Point(0,0);
@@ -128,20 +141,23 @@ function csharp {
         //Matrix t2 = new Matrix();
         //t2.translate(-5,0);
         //t2.translate(Console.BufferWidth/2, Console.BufferHeight/2);
-        for (int i=0 ; i<30 ; i++) {
-            Matrix m = new Matrix().rotate(r).translate(10,10);
+        for (int i=0 ; i<70 ; i++) {
+            Matrix m = new Matrix().rotate(r).translate(20,20);
+            // Matrix m = new Matrix().multiply(new Matrix().rotate(r)).multiply(new Matrix().translate(20,20)).multiply(new Matrix().scaleY(0.65));
+
             //m.rotate(r);
             //m = t1.multiply(m);
-            debug(m.ToString());
+            //debug(m.ToString());
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
             drawPoly(shape.apply(m));
             //line(m.apply(p1), m.apply(p2));
             r-=0.1;
-            Thread.Sleep(300);
+            Thread.Sleep(100);
             Console.Clear();
         }
 
+        /*
         Matrix a = new Matrix();
         Matrix b = new Matrix();
         AssertIsEqual(a, a.multiply(b));
@@ -149,6 +165,8 @@ function csharp {
         b.scale(2);
         b.translate(1,0);
         AssertIsEqual(b.apply(new Point(1,1)) , new Point(3,2));
+        */
+
 
         Console.ReadLine();
     }
@@ -162,6 +180,67 @@ function csharp {
         //Thread.Sleep(1000);
         Console.ReadLine();
     }
+
+
+    public delegate void DrawPixel(int x, int y);
+
+    DrawPixel drawPixel = (x, y) => {
+        if (x<0 || y<0 || x>=Console.BufferWidth || y>Console.BufferHeight) {return;}
+        Console.SetCursorPosition(x, y);
+        Console.Write('#');
+    };
+
+    void line_naive(Point p1, Point p2) {
+        // https://en.wikipedia.org/wiki/Line_drawing_algorithm#A_naive_line-drawing_algorithm
+        int dx = p2.x - p1.x;
+        int dy = p2.y - p1.y;
+        for (int x=p1.x ; x<p2.x ; x++) {
+            int y = p1.y + dy * (x - p1.x) / dx;
+            Console.SetCursorPosition(x, y);
+            Console.Write('#');
+        }
+    }
+
+    void line_bresenham(Point p1, Point p2) {
+        // https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
+        int dx = Math.Abs(p1.x - p2.x);
+        int dy = Math.Abs(p1.y - p2.y);
+        if (dy<dx) {
+            if (p1.x>p2.x) {(p1, p2) = (p2, p1);}
+            line_bresenham_x(p1,p2);
+        } else {
+            if (p1.y>p2.y) {(p1, p2) = (p2, p1);}
+            line_bresenham_y(p1,p2);
+        }
+    }
+    void line_bresenham_x(Point p1, Point p2) {
+        int dx = p2.x - p1.x;
+        int dy = p2.y - p1.y;
+        int yi = 1;
+        if (dy < 0) {yi = -1; dy = -dy;}
+        int D = (2*dy) - dx;
+        int y = p1.y;
+        //debug($"line_bresenham_x dx={dx} dy={dy} yi={yi} D={D} y={y}");
+        for (int x=p1.x ; x<p2.x ; x++) {
+            drawPixel(x,y);
+            if (D > 0) {y += yi; D = D + (2*(dy - dx));}
+            else       {         D = D +  2 *dy       ;}
+        }
+    }
+    void line_bresenham_y(Point p1, Point p2) {
+        int dx = p2.x - p1.x;
+        int dy = p2.y - p1.y;
+        int xi = 1;
+        if (dx < 0) {xi = -1; dx = -dx;}
+        int D = (2*dx) - dy;
+        int x = p1.x;
+        for (int y=p1.y ; y<p2.y ; y++) {
+            drawPixel(x,y);
+            if (D > 0) {x += xi; D = D + (2*(dx - dy));}
+            else       {         D = D +  2 *dx       ;}
+        }
+    }
+    
 
     void line(Point p1, Point p2, char c = '#') {
         // inspired by https://www.tutorialspoint.com/computer_graphics/line_generation_algorithm.htm
@@ -184,8 +263,8 @@ function csharp {
         Point _p = null;
         foreach (Point p in pp.pp) {
             if (_p==null || p==null) {_p = p; continue;}
-            debug($"Hey {_p.ToString()} to {p.ToString()}");
-            line(_p,p);
+            //debug($"Hey {_p.ToString()} to {p.ToString()}");
+            line_bresenham(_p,p);
             _p = p;
         }
     }
