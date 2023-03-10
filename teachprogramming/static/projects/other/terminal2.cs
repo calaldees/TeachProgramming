@@ -6,8 +6,8 @@ using System.Threading;
 
 public class Task
 {
-    void AssertIsEqual<A> (A a, A b) {AssertIsEqual(a,b,"");}
-    void AssertIsEqual<A> (A a, A b, string message) {
+    static void AssertIsEqual<A> (A a, A b) {AssertIsEqual(a,b,"");}
+    static void AssertIsEqual<A> (A a, A b, string message) {
         if (!a.Equals(b)) {
             throw new Exception($"Failed AssertIsEqual({a} == {b}): {message}");
         }
@@ -16,6 +16,7 @@ public class Task
     public class Point {
         public double x;
         public double y;
+        public Point() {this.x = -100; this.y = -100;} // TODO replace with NaN
         public Point(int x, int y) {this.x = x; this.y = y;}
         //public Point(double x, double y) {this.x = Convert.ToInt32(x); this.y = Convert.ToInt32(y);}
         public Point(double x, double y) {this.x = x; this.y = y;}
@@ -25,6 +26,42 @@ public class Task
         public override string ToString() {return $"Point(x={x}, y={y})";}
     }
 
+    public class Line {
+        public Point p1;
+        public Point p2;
+        public Line(Point p1, Point p2) {this.p1 = p1; this.p2 = p2;}
+        public bool isNull() {return p1.Equals(p2);}
+        public Point intersect(Line l) {
+            // line intersect math by Paul Bourke http://paulbourke.net/geometry/pointlineplane/
+
+            // Check if none of the lines are of length 0
+            if (isNull() || l.isNull()) {return new Point();}
+            var denominator = ((l.p2.y - l.p1.y) * (p2.x - p1.x) - (l.p2.x - l.p1.x) * (p2.y - p1.y));
+            // Lines are parallel
+            if (denominator == 0) {return new Point();}
+            var ua = ((l.p2.x - l.p1.x) * (p1.y - l.p1.y) - (l.p2.y - l.p1.y) * (p1.x - l.p1.x)) / denominator;
+            var ub = ((p2.x - p1.x) * (p1.y - l.p1.y) - (p2.y - p1.y) * (p1.x - l.p1.x)) / denominator;
+            // is the intersection along the segments
+            if (ua < 0 || ua > 1 || ub < 0 || ub > 1) {return new Point();}
+            // Return a object with the x and y coordinates of the intersection
+            return new Point(p1.x + ua * (p2.x - p1.x), p1.y + ua * (p2.y - p1.y));
+        }
+        public static void assertIntersect() {
+            AssertIsEqual(
+                new Line(new Point(0,0), new Point(10,10))
+                .intersect(
+                    new Line(new Point(0,10), new Point(10,0))
+                ), 
+                new Point(5,5)
+            );
+            //AssertIsEqual(intersect(new Point(0,0), new Point(0,0), new Point(0,10), new Point(10,0)), new Point());
+            //AssertIsEqual(intersect(new Point(0,0), new Point(10,10), new Point(1,0), new Point(11,10)), new Point());
+            //AssertIsEqual(intersect(new Point(0,0), new Point(10,10), new Point(10,10), new Point(20,20)), new Point());
+            //AssertIsEqual(intersect(new Point(0,0), new Point(10,10), new Point(9,9), new Point(20,20)), new Point()); // really?
+            //AssertIsEqual(intersect(new Point(0,0), new Point(10,10), new Point(5,10), new Point(5,-100)), new Point(5,5));
+        }
+
+    }
 
     class Matrix {
         // hard coded 3x3 matrix for 2d transforms
@@ -70,9 +107,23 @@ public class Task
             return new Polygon(pp.Select((p)=> m.apply(p)));
         }
         public override string ToString() {return $"Polygon({String.Join(',',pp.Select((i)=>i.ToString()))})";}
+        public Point min() {  // TODO: make this a `property`
+            return new Point(); // NotImplemented
+        }
+        public Point max() {  // TODO: make this a `property`
+            return new Point(); // NotImplemented
+        }
+        public List<Line> lines() {  // TODO: make this a `property`
+            return null; // NotImplemented
+            
+        }
+        public List<Point> intersect(Line l) {
+            return null; // NotImplemented
+        }
     }
 
     void drawPolygon(Polygon pp) {
+        // TODO: replace with foreach (Line l in pp.lines())
         Point _p = null;
         foreach (Point p in pp.pp) {
             if (_p==null || p==null) {_p = p; continue;}
@@ -84,6 +135,8 @@ public class Task
 
     public static void Main(string[] args) { new Task(); }
     Task() {
+        Line.assertIntersect();
+        //return;
         // https://docs.microsoft.com/en-us/dotnet/api/system.console?view=net-5.0#common-operations
         /*
 function csharp {
@@ -197,37 +250,16 @@ function csharp {
     
 
 
-
-    // Old poo lines
-    /*
-    void line_naive(Point p1, Point p2) {
-        // https://en.wikipedia.org/wiki/Line_drawing_algorithm#A_naive_line-drawing_algorithm
-        int dx = p2.x - p1.x;
-        int dy = p2.y - p1.y;
-        for (int x=p1.x ; x<p2.x ; x++) {
-            int y = p1.y + dy * (x - p1.x) / dx;
-            Console.SetCursorPosition(x, y);
-            Console.Write('#');
+    // TODO: Consider fast/optimised horizontal line rather than bresenham
+    void fillPolygon(Polygon p) {
+        // https://www.tutorialspoint.com/computer_graphics/polygon_filling_algorithm.htm
+        Point min = p.min();
+        Point max = p.max();
+        for (var line=min.y ; line<max.y; line++) {
+            // TODO
         }
     }
 
-    void line(Point p1, Point p2, char c = '#') {
-        // inspired by https://www.tutorialspoint.com/computer_graphics/line_generation_algorithm.htm
-        double x = Convert.ToDouble(p1.x);
-        double y = Convert.ToDouble(p1.y);
-        int dx = Math.Abs(p1.x - p2.x);
-        int dy = Math.Abs(p1.y - p2.y);
-        int steps = (dx>dy) ? dx : dy;
-        double x_step = Convert.ToDouble(dx)/steps;
-        double y_step = Convert.ToDouble(dy)/steps;
-        for(int v=0; v < steps; v++) {
-            x = x + x_step;
-            y = y + y_step;
-            if (x<0 || y<0 || x>Console.BufferWidth || y>Console.BufferHeight) {continue;}
-            Console.SetCursorPosition(Convert.ToInt32(Math.Floor(x)), Convert.ToInt32(Math.Floor(y)));
-            Console.Write(c);
-        }
-    }
-    */
+
 
 }
