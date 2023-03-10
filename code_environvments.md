@@ -14,7 +14,7 @@ Online Coding Environments
         * Python + JS completely in browser
     * [jupyterhub.canterbury](https://jupyterhub.canterbury.ac.uk/) no-readline
 * login-free
-    * [sharepad.io](https://sharepad.io/) js, python, c#, java - no login - live collaboration - share single files - no-readline
+    * [sharepad.io](https://sharepad.io/) js, python, c#, java - no login - live collaboration - share single files - pre-execute-readline
     * [programiz online-compiler](https://www.programiz.com/python-programming/online-compiler/) java, c#, python, js, c, html5
     * [tutorialspoint.com/codingground](https://www.tutorialspoint.com/codingground.htm)
     * [OneCompiler](https://onecompiler.com/) pre-readline

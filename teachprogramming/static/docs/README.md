@@ -11,6 +11,10 @@ I need to cross reference all of this against
     * Free eBook
     * Amazing insights into teaching Computing
 
+* [jackdoe / programming-for-kids](https://github.com/jackdoe/programming-for-kids)   book for parents and kids. 
+    * Whole book in markdown - ideas for workshops
+    * Same guy that created [Programming Time](https://punkjazz.org/programming-time/)
+
 ---
 
 * [Where the Humanities Aren’t in Crisis - An outlandish new venture in liberal education.](https://hedgehogreview.com/web-features/thr/posts/where-the-humanities-arent-in-crisis)
