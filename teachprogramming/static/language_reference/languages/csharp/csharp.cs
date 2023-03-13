@@ -403,6 +403,12 @@ public class Program {
         (i) => i * 2                                                      // VER: list_comprehension
       );                                                                      // VER: list_comprehension
       Console.WriteLine(String.Join(",",data2));
+
+      // TODO: Reduce
+      // https://blog.submain.com/csharp-functional-programming/
+      // var sum = number.Aggregate((x, y) => x + y);
+
+      // TODO:             yield return i;
   }
 
   void dict_comprehension() {

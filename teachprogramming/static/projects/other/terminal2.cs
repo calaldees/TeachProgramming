@@ -35,14 +35,14 @@ public class Task
             // line intersect math by Paul Bourke http://paulbourke.net/geometry/pointlineplane/
 
             // Check if none of the lines are of length 0
-            if (isNull() || l.isNull()) {return new Point();}
+            if (isNull() || l.isNull()) {return null;}
             var denominator = ((l.p2.y - l.p1.y) * (p2.x - p1.x) - (l.p2.x - l.p1.x) * (p2.y - p1.y));
             // Lines are parallel
-            if (denominator == 0) {return new Point();}
+            if (denominator == 0) {return null;}
             var ua = ((l.p2.x - l.p1.x) * (p1.y - l.p1.y) - (l.p2.y - l.p1.y) * (p1.x - l.p1.x)) / denominator;
             var ub = ((p2.x - p1.x) * (p1.y - l.p1.y) - (p2.y - p1.y) * (p1.x - l.p1.x)) / denominator;
             // is the intersection along the segments
-            if (ua < 0 || ua > 1 || ub < 0 || ub > 1) {return new Point();}
+            if (ua < 0 || ua > 1 || ub < 0 || ub > 1) {return null;}
             // Return a object with the x and y coordinates of the intersection
             return new Point(p1.x + ua * (p2.x - p1.x), p1.y + ua * (p2.y - p1.y));
         }
@@ -107,29 +107,44 @@ public class Task
             return new Polygon(pp.Select((p)=> m.apply(p)));
         }
         public override string ToString() {return $"Polygon({String.Join(',',pp.Select((i)=>i.ToString()))})";}
-        public Point min() {  // TODO: make this a `property`
-            return new Point(); // NotImplemented
-        }
-        public Point max() {  // TODO: make this a `property`
-            return new Point(); // NotImplemented
-        }
-        public List<Line> lines() {  // TODO: make this a `property`
-            return null; // NotImplemented
-            
-        }
-        public List<Point> intersect(Line l) {
-            return null; // NotImplemented
+        public Point min {get{
+            return pp.Aggregate((acc, i) => {
+                return new Point(Math.Min(acc.x, i.x), Math.Min(acc.y, i.y));
+            });
+        }}
+        public Point max {get{
+            return pp.Aggregate((acc, i) => {
+                return new Point(Math.Max(acc.x, i.x), Math.Max(acc.y, i.y));
+            });
+        }}
+        public IEnumerable<Line> lines {get {
+            // TODO: Pairwise?
+            Point _p = null;
+            foreach (Point p in pp) {
+                if (_p==null || p==null) {_p = p; continue;}
+                yield return new Line(_p, p);
+                _p = p;
+            }
+        }}
+        public IEnumerable<Point> intersect(Line line) {
+            return lines.Select((l)=>l.intersect(line)).Where(p => p != null);
         }
     }
 
     void drawPolygon(Polygon pp) {
-        // TODO: replace with foreach (Line l in pp.lines())
-        Point _p = null;
-        foreach (Point p in pp.pp) {
-            if (_p==null || p==null) {_p = p; continue;}
-            //debug($"Hey {_p.ToString()} to {p.ToString()}");
-            line_bresenham(_p,p);
-            _p = p;
+        // Fill
+        // https://www.tutorialspoint.com/computer_graphics/polygon_filling_algorithm.htm
+        Point min = pp.min;
+        Point max = pp.max;
+        for (var y=min.y ; y<max.y; y++) {
+            var points = pp.intersect(new Line(new Point(min.x, y), new Point(max.x, y))).ToArray();
+            if (points.Length == 2) { // HACK to test
+                drawRow(points[0], points[1]);
+            }
+        }
+        // Outline
+        foreach (Line l in pp.lines) {
+            line_bresenham(l.p1, l.p2);
         }
     }
 
@@ -187,7 +202,7 @@ function csharp {
     }
 
 
-    void debug(string message) {
+    static void debug(string message) {
         Console.BackgroundColor = ConsoleColor.Black;
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.SetCursorPosition(1, Console.BufferHeight-1);
@@ -206,6 +221,18 @@ function csharp {
         Console.SetCursorPosition(_x, _y);
         Console.Write('#');
     };
+    
+    public delegate void DrawRow(Point p1, Point p2);
+    DrawRow drawRow = (p1, p2) => {
+        if (p1==null || p2==null) {return;}
+        //if (p1.y != p2.y) {throw new Exception($"p1:{p1} p2:{p2}");}
+        //if (p1.x>p2.x) {(p1, p2) = (p2, p1);}
+        if (p1.x>p2.x) {var _p = p1; p1=p2; p2=_p;}
+        Console.SetCursorPosition(Convert.ToInt32(p1.x),Convert.ToInt32(p1.y));
+        Console.Write(new string('.', Convert.ToInt32(p2.x-p1.x)));
+    };
+    
+
 
 
     void line_bresenham(Point p1, Point p2) {
@@ -249,16 +276,6 @@ function csharp {
     }
     
 
-
-    // TODO: Consider fast/optimised horizontal line rather than bresenham
-    void fillPolygon(Polygon p) {
-        // https://www.tutorialspoint.com/computer_graphics/polygon_filling_algorithm.htm
-        Point min = p.min();
-        Point max = p.max();
-        for (var line=min.y ; line<max.y; line++) {
-            // TODO
-        }
-    }
 
 
 
