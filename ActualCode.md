@@ -71,6 +71,22 @@ Other existing concepts (for reference)
 * [codekata.com](http://codekata.com/) - Just need to practice - a LOT - tasks
 * [Coding Dojo](https://codingdojo.org/)
 * [programming-motherXXXXer.com](http://programming-motherfucker.com/) - Do you speak it?
+* YouTube: Raspberry Pi Foundation - Computing [Clubs Conference: Live from the main stage | 25 March 2023](https://www.youtube.com/watch?v=9YLoS1NSC9A) 2023
+    * 09:00–09:30 How can computing education research help me run my club? - Jane Waite, Raspberry Pi Computing Education Research Centre
+    * 09:30–10:00 It's not just coding - Fiona Lindsay, Code Club
+    * 10:00–10:30 How can assistive technology benefit your club? - Rhodri Smith, Code Club
+    * 10:30–11:00 Our club's success and approach - Doña Keating, CoderDojo
+    * 11:00–11:30 Code Club and Astro Pi: Success for a whole school approach - Sophie Hudson, Code Club
+    * BREAK
+    * 12:00–12:30 Everything you need to know about Coolest Projects - Helen Gardner, Raspberry Pi Foundation
+    * 12:30–13:00 Community translation event: Blowing raspberries or speaking in tongues? - Marcus Davage, BMC Software Ltd
+    * BREAK
+    * 14:30–15:00 Welcoming the next generation of mentors & champions - John McAtominey, Raspberry Pi Foundation
+    * 15:00–15:30 How Scratch powers our Dojo - David Morley, Royal Museums Greenwich
+    * 15:30–16:00 Digitising Aruba in a sustainable way - Bruce Harms, CoderDojo
+    * BREAK
+    * 16:45–17:30 Closing keynote.
+
 
 Alternate names
 ---------------
@@ -97,7 +113,7 @@ Getting buy-in
         https://www.youtube.com/watch?v=xTP4kIy6C8I
             1. One outcome away from being publicly fired
             2. Executives are just people. They are lonley because of the power disparity. Can't trust what people say to you.
-            * Every decision is either typei:cant-go-back typeii:can-be-reversed
+                * Every decision is either typei:cant-go-back typeii:can-be-reversed
             3. They don't know everything, but people expect them too. Imposter syndrome. Be careful about the assumptions you make (jargon)
                 * Ask them to explain the problem they are having to you
             4. Speak truth they can trust 
