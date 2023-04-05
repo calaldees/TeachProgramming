@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
+    <title>Anaglyph</title>
+    <style>
+        html, body {margin: 0; padding: 0; height: 100%; overflow: hidden;}
+        canvas {image-rendering: pixelated; object-fit: contain; width:100%; max-width: 100%; height: 100%; max-height: 100%;}
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="320" height="240"></canvas>
+<script type="module">
+// -----------------------------------------------------------------------------
+
+const canvas = document.getElementById('canvas')
+const c = canvas.getContext('2d')
+window.c = c
+
+const w = canvas.width
+const h = canvas.height
+
+
+
+class AnaglyphContext {
+    constructor(context) {
+        this.c = context
+        this.w = this.c.canvas.width
+        this.h = this.c.canvas.height
+        this.l = new OffscreenCanvas(this.w, this.h)
+        this.cl = this.l.getContext("2d")
+        this.r = new OffscreenCanvas(this.w, this.h)
+        this.cr = this.r.getContext("2d")
+        this.clear()
+    }
+    clear() {
+        for (let _c of [this.c, this.cl, this.cr]) {
+            _c.fillStyle = 'black'
+            _c.fillRect(0, 0, _c.canvas.width, _c.canvas.height)
+        }
+    }
+    combine() {
+        function multiply(_c, color) {
+            _c.globalCompositeOperation = "multiply"
+            _c.fillStyle = color
+            _c.fillRect(0, 0, _c.canvas.width, _c.canvas.height)
+            _c.globalCompositeOperation = "source-over"
+        }
+        multiply(this.cl, 'red')
+        multiply(this.cr, 'cyan')
+
+        this.c.drawImage(this.l, 0, 0)
+        this.c.globalCompositeOperation = "screen"
+        this.c.drawImage(this.r, 0, 0)
+        this.c.globalCompositeOperation = "source-over"
+
+        this.cl.clearRect(0, 0, this.width, this.height)
+        this.cr.clearRect(0, 0, this.width, this.height)
+    }
+    _zxl(z) {return -Math.floor((z+1)/2)}
+    _zxr(z) {return Math.floor(z/2)}
+    drawImage(i, x, y, z=0) {
+        this.cl.drawImage(i, x+this._zxl(z), y)
+        this.cr.drawImage(i, x+this._zxr(z), y)
+    }
+    fillRect(x, y, z, w, h) {
+        this.cl.fillRect(x+this._zxl(z),y,w,h)
+        this.cr.fillRect(x+this._zxr(z),y,w,h)
+    }
+    get fillStyle() {return this.cl.fillStyle}
+    set fillStyle(fillStyle) {
+        this.cr.fillStyle = fillStyle
+        this.cl.fillStyle = fillStyle
+    }
+}
+
+let aa = new AnaglyphContext(c)
+aa.fillStyle = 'white'
+aa.fillRect(100,100,2,15,15)
+aa.fillRect(50,50,0,20,20)
+aa.fillRect(140,80,-1,40,40)
+aa.combine()
+
+
+// Main Loop
+let frame = 0
+function main(time) {
+    const requestAnimationFrameId = requestAnimationFrame(main)
+    frame++
+}
+//main()
+
+// -----------------------------------------------------------------------------
+</script>
+</body>
+</html>
