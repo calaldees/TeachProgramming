@@ -21,8 +21,9 @@ WIP Outline
     * Demoscene (30min)
         * History
         * Examples
+        * [mapOfComputing/demoscene.md](https://github.com/calaldees/mapOfComputing/blob/main/computing/demoscene.md)
     * My Examples + Code (15min)
-        * DNA Logo (DOS/Pascal 15 years old)
+        * DNA Logo (DOS/Pascal 16 years old)
         * Pygame zoomer
     * Describe algorithms for effects (5min each)
         * Random shapes (squares and circles)
@@ -40,12 +41,20 @@ WIP Outline
                 * bounce points around screen (dvd image bounce)
         * Draw Binary Pascals Triangle
     * Techniques
+        * Graphics shape libraries + render loop
         * Sin waves for visuals (10min)
-        * Easing functions (10min)
+        * Tween/Easing-functions (10min)
         * Perlin noise (15min)
         * PCM Audio (from bytes) (15min)
         * Midi arpeggio
 
+TODO:
+* Templates for shapes and render loops in a range of languages (scratch, vb.net, python tk, python pygame, java)
+* Template tasks
+    * Random shapes/colors
+    * DVD bounce
+    * particles
+    * 
 
 Unsorted
 ========
