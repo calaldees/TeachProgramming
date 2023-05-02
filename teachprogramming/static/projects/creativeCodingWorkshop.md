@@ -47,6 +47,9 @@ WIP Outline
         * Midi arpeggio
 
 
+Unsorted
+========
+
 * assessment/measure? because we are obsessed with this
     * Complexity of code
     * Use of librarys
@@ -54,3 +57,21 @@ WIP Outline
 
 
 https://mattiasgustavsson.com/wasm/
+
+Demoscene
+
+DNA Logo
+--------
+
+At 16 years old, without the internet and only built in librarys/documentation for 'Turbo Pascal 7.0 DOS'. I was able to animate a set of shapes in code
+
+![dnalogo_000](./_images/dnalogo_000.png)
+![dnalogo_001](./_images/dnalogo_001.png)
+![dnalogo_002](./_images/dnalogo_002.png)
+![dnalogo_003](./_images/dnalogo_003.png)
+
+Creating something visually interesting with code 
+* Has an infinite skill ceiling
+    * Algorithmic complexity
+* Individual input
+* Social/artistic/peer recondition
