@@ -18,12 +18,15 @@ def _triangle(n, x, y):
     >>> _triangle(2, 1, 1)
     0
     """
-    if n==1:
-        return 1
-    _half_n = n/2
-    if x>=_half_n and y>=_half_n:
-        return 0
-    return _triangle(_half_n, x if x<_half_n else x-_half_n, y if y<_half_n else y-_half_n)
+    while n>1:
+        n = n >> 1  # divide by 2
+        if x>=n and y>=n:
+            return 0
+        if x>=n:
+            x-=n
+        if y>=n:
+            y-=n
+    return 1
 
 
 def triangle(n):
