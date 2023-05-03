@@ -74,6 +74,7 @@ DNA Logo
 
 At 16 years old, without the internet and only built in librarys/documentation for 'Turbo Pascal 7.0 DOS'. I was able to animate a set of shapes in code
 
+![dnalogo_000](./_images/dnalogo_000.gif)
 ![dnalogo_000](./_images/dnalogo_000.png)
 ![dnalogo_001](./_images/dnalogo_001.png)
 ![dnalogo_002](./_images/dnalogo_002.png)
