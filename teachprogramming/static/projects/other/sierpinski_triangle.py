@@ -82,3 +82,7 @@ if __name__ == "__main__":
     print(triangle(8))
     print()
     print(triangle(16))
+    print()
+    print(triangle(32))
+    print()
+    print(triangle(64))
