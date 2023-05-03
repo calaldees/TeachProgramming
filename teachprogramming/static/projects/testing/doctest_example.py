@@ -70,3 +70,6 @@ pytest enables `...` by default
 
 # https://stackoverflow.com/questions/1024411/can-python-doctest-ignore-some-output-lines
 # https://hub.packtpub.com/basic-doctest-python/
+
+# For multiline strings consider
+# https://docs.python.org/3/library/textwrap.html#textwrap.dedent

@@ -39,7 +39,7 @@ WIP Outline
         * [Mysitfy](https://www.youtube.com/watch?v=uZQr-gHyYFI) [Beziers](https://www.youtube.com/watch?v=nWYI7WxhUbU) Windows XP Screensaver
             * Windows screensaver - algorithm - quadratic line * 4 -  draw over black/last - draw next
                 * bounce points around screen (dvd image bounce)
-        * Draw Binary Pascals Triangle
+        * Draw https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle
     * Techniques
         * Graphics shape libraries + render loop
         * Sin waves for visuals (10min)
