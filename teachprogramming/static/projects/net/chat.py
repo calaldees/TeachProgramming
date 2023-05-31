@@ -1,25 +1,20 @@
-import socket, threading, time
-                                        # VER: gui
-try:                                    # VER: gui
-    import tkinter                      # VER: gui
-    import tkinter.scrolledtext         # VER: gui_recv
-except ImportError:                     # VER: gui
-    import Tkinter as tkinter           # VER: gui
-    import ScrolledText as scrolledtext # VER gui_recv
-    tkinter.scrolledtext = scrolledtext # VER gui_recv
+import socket, threading
+import tkinter                      # VER: gui
+import tkinter.scrolledtext         # VER: gui_recv
                                                       # VER: recv
 def connection(sock):                                 # VER: recv
     while True:                                       # VER: recv
         data_recv = sock.recv(4098)                   # VER: recv
         if not data_recv:                             # VER: recv
             break                                     # VER: recv
+        # Issue exclusively with version `recv` in windows terminal ctrl+c does not terminate when waiting for message with sock.recv() - the program will exit after a ctrl+c when a new message is recved - https://github.com/python/cpython/issues/85609  # VER: not base
         #print(data_recv)                             # VER: recv not gui_recv
         output_box.insert(tkinter.END, data_recv)     # VER: gui_recv
         output_box.yview(tkinter.END)                 # VER: gui_scroll
     sock.close()                                      # VER: recv
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # VER: connect
-sock.connect(("localhost", 9872))                        # VER: connect
+sock.connect(("localhost", 9801))                        # VER: connect
 #connection(sock)                                          # VER: recv not send_recv
                                                            # VER: send_recv
 thread = threading.Thread(target=connection, args=(sock,)) # VER: send_recv
@@ -33,15 +28,15 @@ output_box.pack(fill=tkinter.BOTH, expand=1)                              # VER:
 input_box = tkinter.Entry(root)                                           # VER: gui
 input_box.pack(fill=tkinter.BOTH)                                         # VER: gui
 def handle_user_input(e):                                                 # VER: gui
-    #sock.sendall((input_box.get()+'\n').encode('utf-8'))                 # VER: gui not gui_username
-    sock.sendall(('Yourname: '+input_box.get()+'\n').encode('utf-8'))     # VER:         gui_username
+    #sock.sendall(f'{input_box.get()}\n'.encode('utf-8'))                 # VER: gui not gui_username
+    sock.sendall((f'Yourname: {input_box.get()}\n').encode('utf-8'))      # VER:         gui_username
     input_box.delete(0, tkinter.END)                                      # VER: gui
 input_box.bind("<KeyRelease-Return>", handle_user_input)                  # VER: gui
 input_box.focus_set()                                                     # VER: gui
                                                                           # VER: gui
 root.mainloop()                                                           # VER: gui
 
-#sock.sendall(bytes('Hello I am Bob'+"\n",'utf-8'))   # VER: send_one not gui
-#while True:                                          # VER: send     not gui
-#    sock.sendall(bytes(input()+"\n",'utf-8'))        # VER: send     not gui
+#sock.sendall('Hello I am PYTHON\n'.encode('utf-8'))           # VER: send_one not gui
+#while True:                                                   # VER: send     not gui
+#    sock.sendall(f'{input()}\n'.encode('utf-8'))              # VER: send     not gui
 #

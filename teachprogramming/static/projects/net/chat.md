@@ -1,19 +1,13 @@
 Chat
 ====
 
-Consider asyncIO python server with both tcp and websockets in repl?
+Use https://github.com/calaldees/channelServer
 
-* [Building a Replit to Replit Chat App Using Node.js](https://docs.replit.com/tutorials/15-repl-chat)
-
-
-```bash
-curl -O https://raw.githubusercontent.com/superLimitBreak/multisocketServer/master/multisocketServer/server/multisocket_server.py
-python3 multisocket_server.py --show_messages
-```
+* [Start GitPod channelServer](https://gitpod.io/#https://github.com/calaldees/channelServer)
 
 GitPod connection example - replace this line
 ```javascript
-var socket     = new WebSocket("wss://9873-jade-catfish-9fuxc59i.ws-eu18.gitpod.io/");         // VER: connect
+var socket     = new WebSocket("wss://9873-jade-catfish-9fuxc59i.ws-eu18.gitpod.io/test1.ws");         // VER: connect
 ```
 
 See [disco.md](disco.md)
@@ -25,3 +19,19 @@ See [disco.md](disco.md)
     * > The protocol is written in a style based on that used in a Request for Comments (RFC), the international standard for describing networking protocols. 
     * > Students work in pairs to implement the protocol using a programming technology of their choice. This experience helps students to understand that different applications can communicate when they are all designed according to the same RFC specification.
     * > Students are free to choose any programming technology to implement the protocol
+
+Other similar concepts
+----------------------
+* [Building a Replit to Replit Chat App Using Node.js](https://docs.replit.com/tutorials/15-repl-chat)
+* [kchat](https://github.com/srpeck/kchat) -  Persistent group chat in <50 lines using kdb+/k/q web sockets and JS
+
+
+Old
+===
+
+Previous server reference
+
+```bash
+curl -O https://raw.githubusercontent.com/superLimitBreak/multisocketServer/master/multisocketServer/server/multisocket_server.py
+python3 multisocket_server.py --show_messages
+```
