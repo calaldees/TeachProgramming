@@ -21,6 +21,9 @@ Online Coding Environments
     * [mycompiler.io](https://www.mycompiler.io/) pre-readline
     * [w3schools.com/tryit](https://www.w3schools.com/tryit/trycompiler.asp?filename=demo_python) no-readline
     * [dotnetfiddle.net](https://dotnetfiddle.net/) C# only
+    * [javafiddle](https://javafiddle.leaningtech.com) (completely client web-assembly)
+        * JVM replacement in HTML5 and WebAssembly to run Java applications (and applets) on modern browsers
+        * [](https://webvm.io/)
     * [www.programiz.com](https://www.programiz.com/python-programming/online-compiler/) python (looses repl state), java, c#, js, c, sql
     * [glot.io](https://glot.io/) - (in settings raise number of default lines)
     * [ideone.com](https://ideone.com) - fairly slow
