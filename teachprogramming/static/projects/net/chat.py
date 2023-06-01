@@ -1,6 +1,10 @@
 import socket, threading
 import tkinter                      # VER: gui
 import tkinter.scrolledtext         # VER: gui_recv
+
+address = ("localhost", 9801)                            # VER: connect
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # VER: connect
+sock.connect(address)                                    # VER: connect
                                                       # VER: recv
 def connection(sock):                                 # VER: recv
     while True:                                       # VER: recv
@@ -12,14 +16,12 @@ def connection(sock):                                 # VER: recv
         output_box.insert(tkinter.END, data_recv)     # VER: gui_recv
         output_box.yview(tkinter.END)                 # VER: gui_scroll
     sock.close()                                      # VER: recv
-
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # VER: connect
-sock.connect(("localhost", 9801))                        # VER: connect
-#connection(sock)                                          # VER: recv not send_recv
                                                            # VER: send_recv
 thread = threading.Thread(target=connection, args=(sock,)) # VER: send_recv
 thread.daemon=True                                         # VER: send_recv
 thread.start()                                             # VER: send_recv
+# Issue exclusively with version `send_recv` in windows blocks on `input()` - this makes receiving messages problematic - https://github.com/python/cpython/issues/85609  # VER: not base
+#connection(sock)                                          # VER: recv not send_recv
                                                                           # VER: gui
 root = tkinter.Tk()                                                       # VER: gui
 root.title("Chat Client")                                                 # VER: gui
