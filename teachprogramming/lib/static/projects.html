@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html-ui.min.js"></script>
 
-    <!-- -->
+    <!-- https://github.com/kpdecker/jsdiff -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/4.0.2/diff.min.js"></script>
 </head>
 <body>
@@ -45,19 +45,18 @@ function renderProject(data) {
         if (!_version_code) {continue;}
         let prev = '';  // Dirty Dirty Hack
         for (const [version, code] of Object.entries(_version_code)) {
+            const diff = Diff.createTwoFilesPatch("file", "file", prev, code)
+
             hostElement.insertAdjacentHTML('beforeend', `<h3>${version}</h3>`);
             const pre = document.createElement('pre');
             pre.append(document.createTextNode(code));
+            pre.append(document.createTextNode(diff))
             hostElement.append(pre);
 
-            const div = document.createElement('div');
-            hostElement.append(div);
-            const diff2htmlUi = new Diff2HtmlUI(
-                div, 
-                Diff.createTwoFilesPatch("file", "file", prev, code),
-                { drawFileList: true, matching: 'lines' }
-            );
-            diff2htmlUi.draw();
+            const div = document.createElement('div')
+            hostElement.append(div)
+            const diff2htmlUi = new Diff2HtmlUI(div, diff,{ drawFileList: true, matching: 'lines' })
+            diff2htmlUi.draw()
 
             prev = code; // DIRTY! DIRTY HACK!
         }

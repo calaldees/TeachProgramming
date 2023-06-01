@@ -5,12 +5,13 @@ Use https://github.com/calaldees/channelServer
 
 * [Start GitPod channelServer](https://gitpod.io/#https://github.com/calaldees/channelServer)
 
-GitPod connection example - replace this line
+GitPod connection example - use the `wss://` address e.g.
 ```javascript
-var socket     = new WebSocket("wss://9873-jade-catfish-9fuxc59i.ws-eu18.gitpod.io/test1.ws");         // VER: connect
+const address  = "wss://9873-jade-catfish-9fuxc59i.ws-eu18.gitpod.io/test1.ws"
 ```
+Python will not work in GitPod because it is behind a webserver that only proxies webtraffic `wss://`
 
-See [disco.md](disco.md)
+See [disco.md](disco.md) for an alternate activity.
 
 
 * [We Need to Talk!! &ndash; A Chatroom Application Using a Student-Designed Protocol](https://dl.acm.org/doi/10.1145/3304221.3325575)
@@ -25,13 +26,299 @@ Other similar concepts
 * [Building a Replit to Replit Chat App Using Node.js](https://docs.replit.com/tutorials/15-repl-chat)
 * [kchat](https://github.com/srpeck/kchat) -  Persistent group chat in <50 lines using kdb+/k/q web sockets and JS
 
+Printing
+--------
 
-Old
-===
+With VSCode Markdown extensions. `Open in Browser`. In Firefox, `ctrl+p`. 'Pages per sheet: 2' 'Scale: 80%' 'Margins: Minimum' 'Two-sided printing: flip on short edge' 'Print backgrounds'
+
+
+Old/Alternative Server
+----------------------
 
 Previous server reference
 
 ```bash
 curl -O https://raw.githubusercontent.com/superLimitBreak/multisocketServer/master/multisocketServer/server/multisocket_server.py
 python3 multisocket_server.py --show_messages
+```
+
+
+
+<!--PAGE BREAK --><hr style="page-break-after: always;"/>
+<style>
+.token.inserted {font-weight: bolder; font-style: italic; color: green;}
+.token.deleted {text-decoration: line-through; color: red;}
+</style>
+
+
+chat.html
+---------
+
+Create a file called `chat.html` and open it in a browser.
+Run the program after each section by refreshing your browser with the `F5` key.
+See extra debug/errors with `F12`.
+
+### base
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Client</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Chat Client</h1>
+<script>
+
+</script></body></html>
+```
+
+### connect
+Replace `localhost` with the servers websocket url address. (Starts with `wss://` or `ws:/`).
+```diff
+ <script>
+ 
++const address  = "ws://localhost:9800/test1.ws"
++let socket     = new WebSocket(address)
++
+ </script></body></html>
+```
+Look at the server to see if your IP address connected.
+
+### send_one
+```diff
+ let socket     = new WebSocket(address)
+ 
++function open() {
++    socket.send("Hello I am JAVASCRIPT"+"\n")
++}
++socket.addEventListener("open", open)
++
+ </script></body></html>
+```
+Look at the server to see if the server received your message.
+
+### send
+```diff
+ socket.addEventListener("open", open)
++while (true) { socket.send(prompt()+"\n") }
+```
+Type a message and press enter. See if the server got your message.
+
+### recv
+```diff
+ while (true) { socket.send(prompt()+"\n") }
++ 
++function receive(msg) {
++    console.log("got: " + msg.data)
++}
++socket.addEventListener("message", receive)
+```
+See messages by showing devtools `F12` and viewing `console`.
+
+### gui
+```diff
+     <h1>Chat Client</h1>
++    <input    id="text_field" style="width:300px;" />
+```
+```diff
+ let socket     = new WebSocket(address)
+ 
+-function open() {
+-    socket.send("Hello I am Bob"+"\n")
+-}
+-socket.addEventListener("open", open)
+-while (true) { socket.send(prompt()+"\n") }
++let text_field = document.getElementById("text_field")
++text_field.addEventListener("keydown", textEventKeyDown, true)
++function textEventKeyDown(event) {
++    if (event.keyCode==13) {
++        socket.send(text_field.value+"\n")
++        text_field.value = ""
++    }
++}
+ 
+ function receive(msg) {
+```
+
+### gui_recv
+```diff
+     <h1>Chat Client</h1>
++    <textarea id="text_area"  style="width:300px;" rows="15" readonly></textarea><br/>
+     <input    id="text_field" style="width:300px;" />
+```
+```diff
++let text_area  = document.getElementById("text_area")
+ function receive(msg) {
+-    console.log("got: " + msg.data)
++    text_area.value = text_area.value + msg.data
+ }
+ socket.addEventListener("message", receive)
+```
+
+### gui_scroll
+```diff
+ function receive(msg) {
+     text_area.value = text_area.value + msg.data
++    text_area.scrollTop = text_area.scrollHeight
+ }
+```
+
+### gui_username
+```diff
+     if (event.keyCode==13) {
+-        socket.send(text_field.value+"\n")
++        socket.send("Yourname: "+text_field.value+"\n")
+         text_field.value = ""
+```
+
+<!--PAGE BREAK --><hr style="page-break-after: always;"/>
+
+chat.py
+-------
+
+Create a file `chat.py`.
+Run the program after each addition in a terminal with `python chat.py`. If using IDLE run with `F5`.
+Stop the program with `ctrl+c`
+
+### base
+```python
+import socket, threading
+```
+
+### connect
+Replace `localhost` with the servers IP address example: 192.168.0.1
+```diff
+ import socket, threading
+ 
++address = ("localhost", 9801)
++sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
++sock.connect(address)
+```
+Look at the server to see if your IP address connected.
+
+### send_one
+```diff
+ sock.connect(address)
+ 
++sock.sendall('Hello I am PYTHON\n'.encode('utf-8'))
+```
+Look at the server to see if the server received your message.
+
+### send
+```diff
+ sock.sendall('Hello I am PYTHON\n'.encode('utf-8'))
++while True:
++    sock.sendall(f'{input()}\n'.encode('utf-8'))
+```
+Type a message and press enter. See if the server got your message.
+
+### recv
+```diff
+ sock.connect(address)
+ 
++def connection(sock):
++    while True:
++        data_recv = sock.recv(4098)
++        if not data_recv:
++            break
++        print(data_recv)
++    sock.close()
++connection(sock)
++
+ sock.sendall('Hello I am PYTHON\n'.encode('utf-8'))
+```
+Windows Only Issue: `ctrl+c` does not stop the program until another message is received. Press `ctrl+c` and wait patently.
+
+### send_recv
+```diff
+-connection(sock)
+ 
++thread = threading.Thread(target=connection, args=(sock,))
++thread.daemon=True
++thread.start()
+```
+Windows Only Issue: Windows terminal blocks on `input()` - received messages are displayed garbled and only after sending a message.
+
+### gui
+```diff
+ import socket, threading
++import tkinter
+```
+```diff
+ sock.connect(address)
++ 
++root = tkinter.Tk()
++root.title("Chat Client")
++input_box = tkinter.Entry(root)
++input_box.pack(fill=tkinter.BOTH)
++def handle_user_input(e):
++    sock.sendall(f'{input_box.get()}\n'.encode('utf-8'))
++    input_box.delete(0, tkinter.END)
++input_box.bind("<KeyRelease-Return>", handle_user_input)
++input_box.focus_set()
+
+ def connection(sock):
+```
+```diff
+-sock.sendall('Hello I am PYTHON\n'.encode('utf-8'))
+-while True:
+-    sock.sendall(f'{input()}\n'.encode('utf-8'))
++
++root.mainloop()
+```
+
+### gui_recv
+```diff
+ import tkinter
++import tkinter.scrolledtext
+```
+```diff
+-        print(data_recv)
++        output_box.insert(tkinter.END, data_recv)
+```
+```diff
+ root.title("Chat Client")
++output_box = tkinter.scrolledtext.ScrolledText(root, width=40, height=15)
++output_box.pack(fill=tkinter.BOTH, expand=1)
+ input_box = tkinter.Entry(root)
+```
+
+### gui_scroll
+```diff
+         output_box.insert(tkinter.END, data_recv)
++        output_box.yview(tkinter.END)
+```
+
+### gui_username
+```diff
+-    sock.sendall(f'{input_box.get()}\n'.encode('utf-8'))
++    sock.sendall((f'Yourname: {input_box.get()}\n').encode('utf-8'))
+```
+
+### (bonus) http request
+(only `http` not `https`)
+```diff
+-address = ("localhost", 9801)
++address = ("calaldees.uk", 80)
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.connect(address)
++sock.sendall(b'''GET / HTTP/1.1\r\nHost: calaldees.uk\r\nUser-Agent: curl/7.81.0\r\nAccept: */*\r\n\r\n''')
+```
+
+
+#### http standalone
+```python
+import socket
+address = ("calaldees.uk", 80)
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.settimeout(1)
+sock.connect(address)
+sock.sendall(b'''GET / HTTP/1.1\r\nHost: calaldees.uk\r\nUser-Agent: curl/7.81.0\r\nAccept: */*\r\n\r\n''')
+while True:
+    response = sock.recv(65535)
+    if not response:
+        break
+    print(response.decode())
+sock.close()
 ```
