@@ -30,13 +30,13 @@ def connection(sock):                                       # VER: network
     sock.close()                                            # VER: network
                                                             # VER: network
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    # VER: network
-sock.connect(("localhost", 9872))                           # VER: network
+sock.connect(("localhost", 9801))                           # VER: network
 thread = threading.Thread(target=connection, args=(sock,))  # VER: network
 thread.daemon=True                                          # VER: network
 thread.start()                                              # VER: network
                                                             # VER: network
 def send(message):                                          # VER: network
-    sock.sendall(json.dumps(message)+'\n'.encode('utf-8'))  # VER: network
+    sock.sendall((json.dumps(message)+'\n').encode('utf8'))  # VER: network
 
 screen.fill(v.color_background)
 while v.running:

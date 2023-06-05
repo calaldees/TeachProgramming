@@ -2,8 +2,8 @@ import tkinter
 import time
 
 
-class TkAnimationFrame():
-    def __init__(self, width=640, height=480, frames_per_second=60):
+class TkAnimationBase():
+    def __init__(self, width=320, height=180, frames_per_second=60):
         self.frames_per_second = frames_per_second
 
         self.root = tkinter.Tk()
@@ -26,6 +26,7 @@ class TkAnimationFrame():
         frame = 0
         time_start = time.time()
         while 'Escape' not in self.input:
+            self.canvas.create_rectangle(0, 0, self.canvas.winfo_width(), self.canvas.winfo_height(), outline="#000", fill="#000")
             self.loop(self.canvas, frame)
             self.canvas.update()
             frame += 1
@@ -33,7 +34,10 @@ class TkAnimationFrame():
             time_elapsed = time.time() - time_start
             time_sleep = time_next_frame - time_elapsed
             time.sleep(max(0, time_sleep))
-            self.canvas.delete(tkinter.ALL)
+            try:
+                self.canvas.delete(tkinter.ALL)
+            except tkinter.TclError:
+                pass
         self.root.destroy()
 
     def startup(self):
@@ -46,29 +50,43 @@ class TkAnimationFrame():
         """
         http://zetcode.com/gui/tkinter/drawing/
         """
-        raise Exception('Please override loop')
+        raise NotImplementedError('override loop method')
 
 
-class AnimationDemo(TkAnimationFrame):
+class AnimationDemo(TkAnimationBase):
     def startup(self):
         super().startup()
         def click(event):
             print(event)
         self.canvas.bind("<Button>", click)
 
-        self.img = tkinter.PhotoImage(file="images/fish.gif")
+        self.x = 100
+        self.y = 100
+        self.image = tkinter.PhotoImage(file='images/block.gif')
+
+        self.img = tkinter.PhotoImage(file="images/block.gif")
 
     def loop(self, canvas, frame):
         c = canvas
-        c.create_rectangle(0, 0, c.winfo_width(), c.winfo_height(), outline="#000", fill="#000")
+        width, height = c.winfo_width(), c.winfo_height()
 
-        t = frame % c.winfo_width()
+        t = frame % width
         c.create_rectangle(t, 10, t+120, 80, outline="#fb0", fill="#fb0")
 
-        t = frame % c.winfo_height()
-        c.create_line(t, t, t+10, t+10, fill="red")
+        t = frame % height
+        c.create_line(t, t, t+10, t+10, fill="red", width=5)
 
         c.create_image(self.mouse_x, self.mouse_y, image=self.img, anchor=tkinter.NW)
+
+        if 'Up' in self.input:
+            self.y += -1
+        if 'Down' in self.input:
+            self.y += 1
+        if 'Right' in self.input:
+            self.x += 1
+        if 'Left' in self.input:
+            self.x += -1
+        c.create_image(self.x, self.y, image=self.image, anchor=tkinter.NW)
 
         #print(self.input)
 

@@ -1,11 +1,11 @@
-import pygame as pg
+import pygame
 
 class GameBase():
     def __init__(self, title="pg", resolution=(320,180), fps=60, color_background='black'):
-        pg.init()
-        pg.display.set_caption(title)
-        self.screen = pg.display.set_mode(resolution, pg.SCALED | pg.RESIZABLE)
-        self.clock = pg.time.Clock()
+        pygame.init()
+        pygame.display.set_caption(title)
+        self.screen = pygame.display.set_mode(resolution, pygame.SCALED | pygame.RESIZABLE)
+        self.clock = pygame.time.Clock()
         self.fps = fps
         self.color_background = color_background
     def run(self):
@@ -13,20 +13,20 @@ class GameBase():
         self.running = True
         while self.running:
             self.clock.tick(self.fps)
-            self.keys = pg.key.get_pressed()
-            for event in pg.event.get():
-                if event.type == pg.QUIT or self.keys[pg.K_ESCAPE]:
+            self.keys = pygame.key.get_pressed()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT or self.keys[pygame.K_ESCAPE]:
                     self.running = False
-                if event.type == pg.VIDEORESIZE:
-                    pg.display._resize_event(event)
-                if (self.keys[pg.K_RALT] or self.keys[pg.K_LALT]) and self.keys[pg.K_RETURN]:
-                    pg.display.toggle_fullscreen()
+                if event.type == pygame.VIDEORESIZE:
+                    pygame.display._resize_event(event)
+                if (self.keys[pygame.K_RALT] or self.keys[pygame.K_LALT]) and self.keys[pygame.K_RETURN]:
+                    pygame.display.toggle_fullscreen()
             self.screen.fill(self.color_background)
             self.loop(self.screen, frame)
-            pg.display.flip()
+            pygame.display.flip()
             frame += 1
         self.quit()
-        pg.quit()
+        pygame.quit()
     def loop(self, screen, frame):
         raise NotImplementedError('override loop method')
     def quit(self):
@@ -36,20 +36,30 @@ class Game(GameBase):
     def __init__(self):
         self.x = 100
         self.y = 100
-        self.image = pg.image.load('ball.png')
+        self.image = pygame.image.load('images/block.gif')
         super().__init__()
     def loop(self, screen, frame):
-        if self.keys[pg.K_UP]:
-            self.y += -1
-        if self.keys[pg.K_DOWN]:
-            self.y += 1
-        if self.keys[pg.K_RIGHT]:
-            self.x += 1
-        if self.keys[pg.K_LEFT]:
-            self.x += -1
+        s = screen
+        width, height = s.get_size()
 
-        #pg.draw.rect(screen, 'green', (self.x, self.y, 70, 40), 2, border_radius=15)
-        screen.blit(self.image, (self.x, self.y))
+        t = frame % width
+        pygame.draw.rect(s, pygame.Color("#f0b000"), (t, 10, 120, 80))
+
+        t = frame % height
+        pygame.draw.line(s, pygame.Color("red"), (t, t), (t+10, t+10), 5)
+
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        s.blit(self.image, (mouse_x, mouse_y))
+
+        if self.keys[pygame.K_UP]:
+            self.y += -1
+        if self.keys[pygame.K_DOWN]:
+            self.y += 1
+        if self.keys[pygame.K_RIGHT]:
+            self.x += 1
+        if self.keys[pygame.K_LEFT]:
+            self.x += -1
+        s.blit(self.image, (self.x, self.y))
 
 
         # Task DVD menu

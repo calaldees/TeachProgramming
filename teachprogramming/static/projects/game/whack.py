@@ -8,7 +8,7 @@ clock = pygame.time.Clock()
 black = (0, 0, 0)
 
 # Variables
-ball_image = pygame.image.load("ball.png")
+ball_image = pygame.image.load("images/block.gif")
 ball_rect  = ball_image.get_rect()
 
 time_elapsed = 0
