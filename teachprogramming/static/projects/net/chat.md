@@ -1,58 +1,81 @@
 Chat
 ====
 
+Overview
+--------
+
+
+Server
+------
+
 Use https://github.com/calaldees/channelServer
 
-* [Start GitPod channelServer](https://gitpod.io/#https://github.com/calaldees/channelServer)
+### External visible server/ip
+
+git + docker required
+
+```bash
+git clone xxx
+cd xxx
+ifconfig  # find ip
+make run
+```
+
+### Gitpod
+
+* [Launch GitPod channelServer](https://gitpod.io/#https://github.com/calaldees/channelServer)
+
+#### Websocket
 
 GitPod connection example - use the `wss://` address e.g.
 ```javascript
 const address  = "wss://9873-jade-catfish-9fuxc59i.ws-eu18.gitpod.io/test1.ws"
 ```
-Python will not work in GitPod because it is behind a webserver that only proxies webtraffic `wss://`
 
-See [disco.md](disco.md) for an alternate activity.
+#### TCP (Python)
+Python will not work in GitPod. GitPod cannot share plain/raw TCP ports. Ports are proxied through a web-server, so only secure traffic like `wss://`, `https://` is proxied
 
-
-* [We Need to Talk!! &ndash; A Chatroom Application Using a Student-Designed Protocol](https://dl.acm.org/doi/10.1145/3304221.3325575)
-    * > assignment for a computer networks class in which students design and implement an application-layer protocol for a chatroom using a client-server architecture running over TCP-IP. 
-    * > Working collaboratively, students design a single protocol that will be implemented by all class members. 
-    * > The protocol is written in a style based on that used in a Request for Comments (RFC), the international standard for describing networking protocols. 
-    * > Students work in pairs to implement the protocol using a programming technology of their choice. This experience helps students to understand that different applications can communicate when they are all designed according to the same RFC specification.
-    * > Students are free to choose any programming technology to implement the protocol
-
-Other similar concepts
-----------------------
-* [Building a Replit to Replit Chat App Using Node.js](https://docs.replit.com/tutorials/15-repl-chat)
-* [kchat](https://github.com/srpeck/kchat) -  Persistent group chat in <50 lines using kdb+/k/q web sockets and JS
 
 Printing
 --------
 
-With VSCode Markdown extensions. `Open in Browser`. In Firefox, `ctrl+p`. 'Pages per sheet: 2' 'Scale: 80%' 'Margins: Minimum' 'Two-sided printing: flip on short edge' 'Print backgrounds'
+Each programming activity should not be more that one side of A4. (More than one page creates cognitive navigation overhead)
+
+* With VSCode Markdown extensions. `Open in Browser`. 
+* In Firefox, `ctrl+p`. 
+    * 'Pages per sheet: `2`'
+    * 'Pages': Custom: `2-3,4-5` (duplex print `char.html` on one page and `chat.py` on the reverse)
+    * Scale: `80%`
+    * Margins: `Minimum`
+    * Two-sided printing: `flip on short edge`
+    * Print backgrounds `tick`
 
 
-Old/Alternative Server
-----------------------
-
-Previous server reference
-
-```bash
-curl -O https://raw.githubusercontent.com/superLimitBreak/multisocketServer/master/multisocketServer/server/multisocket_server.py
-python3 multisocket_server.py --show_messages
-```
+Related Projects
+----------------
+* See [disco.md](disco.md) for an alternate activity.
+* [[paint]] for graphical shared whiteboard
+* Consider in `copter` sending `player_number:xpos:ypos`->`1:150:93` every alternate frame `frame%2==0`
+* Consider udp activity (python)
 
 
+---
 
-<!--PAGE BREAK --><hr style="page-break-after: always;"/>
 <style>
-.token.inserted {font-weight: bolder; font-style: italic; color: green;}
+@media print {
+    hr {display: none;}
+    h1 {page-break-before: always;}
+    h1:first-of-type {page-break-before: avoid;}
+}
+pre[class*="language-"] {background-color: #e7e7e7; border: 1px grey solid;} /* code blocks print visibly on paper*/
+.token.inserted {font-weight: bolder; color: green;}
 .token.deleted {text-decoration: line-through; color: red;}
 </style>
 
+---
 
 chat.html
----------
+=========
 
 Create a file called `chat.html` and open it in a browser.
 Run the program after each section by refreshing your browser with the `F5` key.
@@ -175,7 +198,7 @@ See messages by showing devtools `F12` and viewing `console`.
 <!--PAGE BREAK --><hr style="page-break-after: always;"/>
 
 chat.py
--------
+=======
 
 Create a file `chat.py`.
 Run the program after each addition in a terminal with `python chat.py`. If using IDLE run with `F5`.
@@ -300,25 +323,52 @@ Windows Only Issue: Windows terminal blocks on `input()` - received messages are
 (only `http` not `https`)
 ```diff
 -address = ("localhost", 9801)
-+address = ("calaldees.uk", 80)
++address = ("neverssl.com", 80)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.connect(address)
-+sock.sendall(b'''GET / HTTP/1.1\r\nHost: calaldees.uk\r\nUser-Agent: curl/7.81.0\r\nAccept: */*\r\n\r\n''')
++sock.sendall(b'''GET / HTTP/1.1\r\nHost: neverssl.com\r\nUser-Agent: curl/7.81.0\r\nAccept: */*\r\n\r\n''')
 ```
+Extra: `ping neverssl.com` to get IP address
 
 
 #### http standalone
 ```python
 import socket
-address = ("calaldees.uk", 80)
+address = ("neverssl.com", 80)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.settimeout(1)
 sock.connect(address)
-sock.sendall(b'''GET / HTTP/1.1\r\nHost: calaldees.uk\r\nUser-Agent: curl/7.81.0\r\nAccept: */*\r\n\r\n''')
+sock.sendall(b'''GET / HTTP/1.1\r\nHost: neverssl.com\r\nUser-Agent: curl/7.81.0\r\nAccept: */*\r\n\r\n''')
 while True:
     response = sock.recv(65535)
     if not response:
         break
     print(response.decode())
 sock.close()
+```
+
+
+---
+
+Notes
+=====
+
+* [We Need to Talk!! \&ndash; A Chatroom Application Using a Student-Designed Protocol](https://dl.acm.org/doi/10.1145/3304221.3325575)
+    * > assignment for a computer networks class in which students design and implement an application-layer protocol for a chatroom using a client-server architecture running over TCP-IP. 
+    * > Working collaboratively, students design a single protocol that will be implemented by all class members. 
+    * > The protocol is written in a style based on that used in a Request for Comments (RFC), the international standard for describing networking protocols. 
+    * > Students work in pairs to implement the protocol using a programming technology of their choice. This experience helps students to understand that different applications can communicate when they are all designed according to the same RFC specification.
+    * > Students are free to choose any programming technology to implement the protocol
+
+Other similar concepts
+----------------------
+* [Building a Replit to Replit Chat App Using Node.js](https://docs.replit.com/tutorials/15-repl-chat)
+* [kchat](https://github.com/srpeck/kchat) -  Persistent group chat in <50 lines using kdb+/k/q web sockets and JS
+
+Old/Alternative Server (for reference)
+----------------------
+Previous server reference
+```bash
+curl -O https://raw.githubusercontent.com/superLimitBreak/multisocketServer/master/multisocketServer/server/multisocket_server.py
+python3 multisocket_server.py --show_messages
 ```

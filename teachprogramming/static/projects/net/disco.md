@@ -15,7 +15,13 @@ School activity for KS3, KS4, KS5.
 
 
 <style>
-.token.inserted {font-weight: bolder; font-style: italic; color: green;}
+@media print {
+    hr {display: none;}
+    h1 {page-break-before: always;}
+    h1:first-of-type {page-break-before: avoid;}
+}
+pre[class*="language-"] {background-color: #e7e7e7; border: 1px grey solid;} /* code blocks print visibly on paper*/
+.token.inserted {font-weight: bolder; color: green;}
 .token.deleted {text-decoration: line-through; color: red;}
 </style>
 
@@ -353,9 +359,9 @@ Activities
   * setup WS_URL variable beforehand
   * 16:9 screen split in half
     * Plain text editor
-      * ctrl + s
+      * `ctrl + s`
     * Web browser (chrome/firefox)
-      * ctrl + r
+      * `ctrl + r` or `F5`
     * ![disco_student_dev_example.gif](disco_student_dev_example.gif)
 
 ### Practical - disco.html

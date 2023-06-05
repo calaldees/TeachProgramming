@@ -14,13 +14,12 @@ const address  = "ws://localhost:9800/test1.ws" // VER: connect
 let socket     = new WebSocket(address)         // VER: connect
                                                 // VER: send_one not gui
 //function open() {                             // VER: send_one not gui
-//    socket.send("Hello I am Bob"+"\n")        // VER: send_one not gui
+//    socket.send("Hello I am JAVASCRIPT"+"\n") // VER: send_one not gui
 //}                                             // VER: send_one not gui
 //socket.addEventListener("open", open)         // VER: send_one not gui
 //while (true) { socket.send(prompt()+"\n") }   // VER: send     not gui
                                                                 // VER: gui
 let text_field = document.getElementById("text_field")          // VER: gui
-text_field.addEventListener("keydown", textEventKeyDown, true)  // VER: gui
 function textEventKeyDown(event) {                              // VER: gui
     if (event.keyCode==13) {                                    // VER: gui
         //socket.send(text_field.value+"\n")                    // VER: gui not gui_username
@@ -28,6 +27,7 @@ function textEventKeyDown(event) {                              // VER: gui
         text_field.value = ""                                   // VER: gui
     }                                                           // VER: gui
 }                                                               // VER: gui
+text_field.addEventListener("keydown", textEventKeyDown, true)  // VER: gui
                                                    // VER: recv
 let text_area  = document.getElementById("text_area") // VER: gui_recv
 function receive(msg) {                            // VER: recv
