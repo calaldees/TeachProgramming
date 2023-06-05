@@ -53,7 +53,7 @@ class TkAnimationBase():
         raise NotImplementedError('override loop method')
 
 
-class AnimationDemo(TkAnimationBase):
+class TkDemo(TkAnimationBase):
     def startup(self):
         super().startup()
         def click(event):
@@ -90,5 +90,5 @@ class AnimationDemo(TkAnimationBase):
 
         #print(self.input)
 
-
-AnimationDemo()
+if __name__ == '__main__':
+    TkDemo()

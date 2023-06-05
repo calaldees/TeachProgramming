@@ -1,6 +1,6 @@
 import pygame
 
-class GameBase():
+class PygameBase():
     def __init__(self, title="pg", resolution=(320,180), fps=60, color_background='black'):
         pygame.init()
         pygame.display.set_caption(title)
@@ -32,7 +32,7 @@ class GameBase():
     def quit(self):
         pass  # override to shutdown
 
-class Game(GameBase):
+class GameDemo(PygameBase):
     def __init__(self):
         self.x = 100
         self.y = 100
@@ -71,4 +71,4 @@ class Game(GameBase):
         # 6.) Remove any hard coded values for width/height/imagesize/etc
 
 if __name__ == '__main__':
-    Game().run()
+    GameDemo().run()
