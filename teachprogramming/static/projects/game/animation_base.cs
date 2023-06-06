@@ -2,10 +2,14 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace WinFormsApp5 {
-    public partial class Form1 : Form {
+namespace WinFormsApp5
+{
+    public partial class Form1 : Form
+    {
         // Performant graphics loop in C# .Net Forms using the standard builtin System.Drawing libs
-        // Inspired by https://stackoverflow.com/questions/11020710/is-graphics-drawimage-too-slow-for-bigger-images/
+        // Inspired by 
+        //   https://stackoverflow.com/questions/11020710/is-graphics-drawimage-too-slow-for-bigger-images/
+        //   https://swharden.com/csdv/ -> https://github.com/swharden/Csharp-Data-Visualization
         readonly System.Threading.Timer timer;
         readonly Bitmap bmp = new Bitmap(320, 180, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
         BufferedGraphics graphicsBuffer;
@@ -23,10 +27,6 @@ namespace WinFormsApp5 {
         public Form1()
         {
             InitializeComponent();
-
-            //this.TopMost = true;
-            //this.FormBorderStyle = FormBorderStyle.None;
-            //this.WindowState = FormWindowState.Maximized;
 
             initGraphicsBuffer();
 
@@ -81,7 +81,8 @@ namespace WinFormsApp5 {
             g.DrawImage(bmp, 0, 0, Width, Height);
             graphicsBuffer.Render(e.Graphics);
         }
-        private void initGraphicsBuffer() {
+        private void initGraphicsBuffer()
+        {
             if (graphicsBuffer != null) { graphicsBuffer.Dispose(); }
             graphicsBuffer = BufferedGraphicsManager.Current.Allocate(CreateGraphics(), new Rectangle(new Point(0, 0), Size));
         }
@@ -91,6 +92,14 @@ namespace WinFormsApp5 {
         {
             //if (keys_pressed.Count > 0) { log(String.Join(",", keys_pressed)); }
             if (keys_pressed.Contains("Escape")) { Close(); }
+            // Fullscreen (one way, you can't currently swtich back)
+            if (keys_pressed.Contains("Menu") && keys_pressed.Contains("Return")) {
+                if (this.FormBorderStyle != FormBorderStyle.None) {
+                    this.TopMost = true;
+                    this.FormBorderStyle = FormBorderStyle.None;
+                    this.WindowState = FormWindowState.Maximized;
+                }
+            }
 
             render(frame++);
             Invalidate();
@@ -99,7 +108,8 @@ namespace WinFormsApp5 {
         private void Form1_Resize(object sender, EventArgs e) { initGraphicsBuffer(); }
         private void Form1_KeyDown(object sender, KeyEventArgs e) { keys_pressed.Add(e.KeyCode.ToString()); }
         private void Form1_KeyUp(object sender, KeyEventArgs e) { keys_pressed.Remove(e.KeyCode.ToString()); }
-        private void Form1_MouseMove(object sender, MouseEventArgs e) {
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
             mouse.X = (int)((e.Location.X / (double)Width) * bmp.Width);
             mouse.Y = (int)((e.Location.Y / (double)Height) * bmp.Height);
         }
