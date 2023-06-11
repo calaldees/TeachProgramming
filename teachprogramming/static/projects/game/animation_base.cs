@@ -92,21 +92,20 @@ namespace WinFormsApp5
         {
             //if (keys_pressed.Count > 0) { log(String.Join(",", keys_pressed)); }
             if (keys_pressed.Contains("Escape")) { Close(); }
-            // Fullscreen (one way, you can't currently swtich back)
-            if (keys_pressed.Contains("Menu") && keys_pressed.Contains("Return")) {
-                if (this.FormBorderStyle != FormBorderStyle.None) {
-                    this.TopMost = true;
-                    this.FormBorderStyle = FormBorderStyle.None;
-                    this.WindowState = FormWindowState.Maximized;
-                }
-            }
-
             render(frame++);
             Invalidate();
         }
 
+        private bool fullscreen { get => this.FormBorderStyle == FormBorderStyle.None; }
+        private void toggleFullscreen()
+        {
+            this.TopMost = !fullscreen;
+            this.WindowState = fullscreen ? FormWindowState.Normal : FormWindowState.Maximized;
+            this.FormBorderStyle = fullscreen ? FormBorderStyle.Sizable : FormBorderStyle.None;
+        }
+
         private void Form1_Resize(object sender, EventArgs e) { initGraphicsBuffer(); }
-        private void Form1_KeyDown(object sender, KeyEventArgs e) { keys_pressed.Add(e.KeyCode.ToString()); }
+        private void Form1_KeyDown(object sender, KeyEventArgs e) { keys_pressed.Add(e.KeyCode.ToString()); if (e.Alt && e.KeyCode == Keys.Return) toggleFullscreen(); }
         private void Form1_KeyUp(object sender, KeyEventArgs e) { keys_pressed.Remove(e.KeyCode.ToString()); }
         private void Form1_MouseMove(object sender, MouseEventArgs e)
         {
