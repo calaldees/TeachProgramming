@@ -7,44 +7,50 @@ import javax.swing.JFrame;
 import java.util.concurrent.*;
 
 
-class animation_base {
+class animation_base extends AnimationFrame {
+
+    int x = 100;  // if these are `Integer` there is a thread hazzard!?
+    int y = 100;
+
+    Image image;
+
+    @Override
+    void setup() {
+        image = loadImage("images/block.gif");
+    }
+
+    @Override 
+    void loop(Graphics g, Integer frame) {
+        //log(String.join(",",keys_pressed));
+
+        //g.setColor(Color.WHITE);
+        //g.drawString("Hello World", frame % buffer.getWidth(), 100);
+
+        int t = frame % buffer.getWidth();
+        Color color = new Color((int) Long.parseLong("FFf0b000", 16));
+        g.setColor(color);
+        g.fillRect(t,10,120,80);
+
+        t = frame % buffer.getHeight();
+        g.setColor(Color.RED);
+        //pen.Width = 5;  //??
+        g.drawLine(t,t,t+10,t+10);
+
+        g.drawImage(image,mouse_position.x,mouse_position.y,jframe);
+        //g.setColor(Color.RED);
+        //g.fillRect(mouse_position.x,mouse_position.y,10,10);
+
+        if (keys_pressed.contains("Up")) { y += -1; }
+        if (keys_pressed.contains("Down")) { y += 1; }
+        if (keys_pressed.contains("Left")) { x += -1; }
+        if (keys_pressed.contains("Right")) { x += 1; }
+        g.drawImage(image,x,y,jframe);
+        //g.setColor(Color.YELLOW);
+        //g.fillRect(x,y,10,10);
+    }
+
     public static void main(String[] args) {
-        new AnimationFrame(){
-            int x = 100;
-            int y = 100;
-
-            Image image = loadImage("images/block.gif");
-
-            @Override 
-            void loop(Graphics g, Integer frame) {
-                //log(String.join(",",keys_pressed));
-
-                //g.setColor(Color.WHITE);
-                //g.drawString("Hello World", frame % buffer.getWidth(), 100);
-
-                int t = frame % buffer.getWidth();
-                Color color = new Color((int) Long.parseLong("FFf0b000", 16));
-                g.setColor(color);
-                g.fillRect(t,10,120,80);
-
-                t = frame % buffer.getHeight();
-                g.setColor(Color.RED);
-                //pen.Width = 5;  //??
-                g.drawLine(t,t,t+10,t+10);
-
-                g.drawImage(image,mouse_position.x,mouse_position.y,jframe);
-                //g.setColor(Color.RED);
-                //g.fillRect(mouse_position.x,mouse_position.y,10,10);
-
-                if (keys_pressed.contains("Up")) { y += -1; }
-                if (keys_pressed.contains("Down")) { y += 1; }
-                if (keys_pressed.contains("Left")) { x += -1; }
-                if (keys_pressed.contains("Right")) { x += 1; }
-                g.drawImage(image,x,y,jframe);
-                //g.setColor(Color.YELLOW);
-                //g.fillRect(x,y,10,10);
-            }
-        };
+        new animation_base();
     }
 }
 
@@ -72,8 +78,12 @@ abstract class AnimationFrame implements WindowStateListener, WindowListener, Ke
         this.fps = fps;
         initDisplay();
         setFullScreen(false);
+        setup();
         startTimer();
     }
+
+    abstract void setup();
+    abstract void loop(Graphics g, Integer frame);
 
     void initDisplay(){
         if (jframe != null) {jframe.dispose();}
@@ -115,8 +125,6 @@ abstract class AnimationFrame implements WindowStateListener, WindowListener, Ke
         }
         jframe.setVisible(true);
     }
-
-    abstract void loop(Graphics g, Integer frame);
 
     private void startTimer() {
         if (timer == null) {
