@@ -10,27 +10,39 @@ import java.util.concurrent.*;
 class animation_base {
     public static void main(String[] args) {
         new AnimationFrame(){
-            Integer x = 100;
-            Integer y = 100;
+            int x = 100;
+            int y = 100;
+
+            Image image = loadImage("images/block.gif");
 
             @Override 
             void loop(Graphics g, Integer frame) {
                 //log(String.join(",",keys_pressed));
 
-                g.setColor(Color.WHITE);
-                g.drawString("Hello World", frame%buffer.getWidth(), 100);
+                //g.setColor(Color.WHITE);
+                //g.drawString("Hello World", frame % buffer.getWidth(), 100);
 
+                int t = frame % buffer.getWidth();
+                Color color = new Color((int) Long.parseLong("FFf0b000", 16));
+                g.setColor(color);
+                g.fillRect(t,10,120,80);
+
+                t = frame % buffer.getHeight();
                 g.setColor(Color.RED);
-                g.fillRect(mouse_position.x,mouse_position.y,10,10);
+                //pen.Width = 5;  //??
+                g.drawLine(t,t,t+10,t+10);
+
+                g.drawImage(image,mouse_position.x,mouse_position.y,jframe);
+                //g.setColor(Color.RED);
+                //g.fillRect(mouse_position.x,mouse_position.y,10,10);
 
                 if (keys_pressed.contains("Up")) { y += -1; }
                 if (keys_pressed.contains("Down")) { y += 1; }
                 if (keys_pressed.contains("Left")) { x += -1; }
                 if (keys_pressed.contains("Right")) { x += 1; }
-                //g.DrawImage(image, x, y);
-                g.setColor(Color.YELLOW);
-                g.fillRect(x,y,10,10);
-
+                g.drawImage(image,x,y,jframe);
+                //g.setColor(Color.YELLOW);
+                //g.fillRect(x,y,10,10);
             }
         };
     }
@@ -109,12 +121,12 @@ abstract class AnimationFrame implements WindowStateListener, WindowListener, Ke
     private void startTimer() {
         if (timer == null) {
             timer = Executors.newSingleThreadScheduledExecutor();
-            timer.scheduleAtFixedRate(() -> {
+            timer.scheduleAtFixedRate(() -> {try {
                 final var g = buffer.getGraphics();
                 g.clearRect(0,0,buffer.getWidth(), buffer.getHeight());
                 loop(g, frame_number++);
                 jframe.repaint();
-            }, 0, 1000/fps, TimeUnit.MILLISECONDS);
+            }catch (Exception ex){ex.printStackTrace(System.out); System.exit(1);}}, 0, 1000/fps, TimeUnit.MILLISECONDS);
         }
     }
     private void stopTimer() {
@@ -130,6 +142,7 @@ abstract class AnimationFrame implements WindowStateListener, WindowListener, Ke
         setFullScreen(false);
         stopTimer();
         jframe.dispose();
+        jframe = null;
     }
 
     public void windowStateChanged(WindowEvent e) {
@@ -171,6 +184,18 @@ abstract class AnimationFrame implements WindowStateListener, WindowListener, Ke
         int rotation = e.getWheelRotation();
         //if      (rotation>0) {mouseWheelUp();}
         //else if (rotation<0) {mouseWheelDown();}
+    }
+
+    Image loadImage(String filename) {
+        try {
+            Image i = java.awt.Toolkit.getDefaultToolkit().getImage(filename);
+            MediaTracker load_tracker = new MediaTracker(jframe);
+            load_tracker.addImage(i, 0);
+            load_tracker.waitForID(0);
+            if (load_tracker.isErrorID(0)) {i=null;}
+            return i;
+        }
+        catch (Exception ex) {throw new IllegalStateException("Unable to load Image: "+filename);}  // this is not printing anything?! debug this
     }
 
     private void log(String s) {System.out.println(s);}
