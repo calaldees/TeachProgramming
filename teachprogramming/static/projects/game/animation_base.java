@@ -1,36 +1,11 @@
 import java.util.Set;
 import java.util.HashSet;
-
-
-import java.awt.Dimension;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.Graphics;
-//import java.awt.Graphics2D;
-import java.awt.Color;
-import java.awt.Image;
-import java.awt.Component;
-
-import java.awt.DisplayMode;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.awt.event.WindowStateListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
-
+import java.awt.event.*;
 import javax.swing.JFrame;
+import java.util.concurrent.*;
 
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 class animation_base {
     public static void main(String[] args) {
