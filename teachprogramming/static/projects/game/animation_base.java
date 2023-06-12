@@ -10,6 +10,9 @@ import java.util.concurrent.*;
 class animation_base {
     public static void main(String[] args) {
         new AnimationFrame(){
+            Integer x = 100;
+            Integer y = 100;
+
             @Override 
             void loop(Graphics g, Integer frame) {
                 //log(String.join(",",keys_pressed));
@@ -19,6 +22,15 @@ class animation_base {
 
                 g.setColor(Color.RED);
                 g.fillRect(mouse_position.x,mouse_position.y,10,10);
+
+                if (keys_pressed.contains("Up")) { y += -1; }
+                if (keys_pressed.contains("Down")) { y += 1; }
+                if (keys_pressed.contains("Left")) { x += -1; }
+                if (keys_pressed.contains("Right")) { x += 1; }
+                //g.DrawImage(image, x, y);
+                g.setColor(Color.YELLOW);
+                g.fillRect(x,y,10,10);
+
             }
         };
     }
@@ -26,22 +38,26 @@ class animation_base {
 
 abstract class AnimationFrame implements WindowStateListener, WindowListener, KeyListener, MouseListener, MouseMotionListener, MouseWheelListener {
 
-    JFrame jframe;
-    final Dimension size = new Dimension(320, 180);
-    BufferedImage buffer;
+    final Dimension size;
+    final Integer fps;
+
     final Set<String> keys_pressed = new HashSet<String>();
     final Point mouse_position = new Point();
-    final Integer fps = 60;
-
+    
     private final GraphicsDevice screen_device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     private final DisplayMode display_mode_original = screen_device.getDisplayMode();
     private static final DisplayMode display_mode_fullscreen = new DisplayMode(640,360,16,DisplayMode.REFRESH_RATE_UNKNOWN);
     
+    JFrame jframe;
+    BufferedImage buffer;
     ScheduledExecutorService timer;
     Integer frame_number = 0;
 
 
-    AnimationFrame() {
+    AnimationFrame() {this(new Dimension(320, 180), 60);}
+    AnimationFrame(Dimension size, Integer fps) {
+        this.size = size;
+        this.fps = fps;
         initDisplay();
         setFullScreen(false);
         startTimer();
@@ -70,29 +86,21 @@ abstract class AnimationFrame implements WindowStateListener, WindowListener, Ke
         c.addMouseMotionListener(this);
         c.addMouseWheelListener(this);
         jframe.add(c);
-
     }
 
     void setFullScreen(Boolean fullscreen) {
         initDisplay();
-
-        if (fullscreen) {
-            try {
-                jframe.setUndecorated(true);
-                screen_device.setFullScreenWindow(jframe);
-                //screen_device.setDisplayMode(display_mode_fullscreen);
-            }
-            catch (Exception e) {throw e;}
-        }
-        if (!fullscreen) {
-            try {
+        if (fullscreen) {try {
+            jframe.setUndecorated(true);
+            screen_device.setFullScreenWindow(jframe);
+            //screen_device.setDisplayMode(display_mode_fullscreen);
+        } catch (Exception e) {throw e;}}
+        if (!fullscreen) {try {
                 screen_device.setDisplayMode(display_mode_original);
                 screen_device.setFullScreenWindow(null);
-            }
-            catch (Exception e) {}
+            } catch (Exception e) {}
             jframe.pack();
         }
-
         jframe.setVisible(true);
     }
 
@@ -130,10 +138,10 @@ abstract class AnimationFrame implements WindowStateListener, WindowListener, Ke
     public void windowOpened(WindowEvent e) {}
     public void windowClosing(WindowEvent e) {exit();}
     public void windowClosed(WindowEvent e) {}
-    public void windowIconified(WindowEvent e) {stopTimer();}
-    public void windowDeiconified(WindowEvent e) {startTimer();}
-    public void windowActivated(WindowEvent e) {}
-    public void windowDeactivated(WindowEvent e) {}
+    public void windowIconified(WindowEvent e) {}
+    public void windowDeiconified(WindowEvent e) {}
+    public void windowActivated(WindowEvent e) {startTimer();}
+    public void windowDeactivated(WindowEvent e) {stopTimer();}
 
     public void keyTyped(KeyEvent e) {}
     public void keyReleased(KeyEvent e) {
@@ -151,8 +159,8 @@ abstract class AnimationFrame implements WindowStateListener, WindowListener, Ke
     public void mouseReleased(MouseEvent e) {keys_pressed.remove("Mouse"+e.getButton());}
     public void mouseEntered(MouseEvent e)  {}
     public void mouseExited(MouseEvent e)   {}
-    public void mouseDragged(MouseEvent e)  {updateMousePosition(e);}// mouseDragged(mouse_position.x,mouse_position.y);}
-    public void mouseMoved(MouseEvent e)    {updateMousePosition(e);}// mouseMoved(mouse_position.x,mouse_position.y);}
+    public void mouseDragged(MouseEvent e)  {updateMousePosition(e);}
+    public void mouseMoved(MouseEvent e)    {updateMousePosition(e);}
 
     private void updateMousePosition(MouseEvent e) {
         mouse_position.x = (int)((e.getX()/(double)jframe.getContentPane().getWidth() )*buffer.getWidth() );
