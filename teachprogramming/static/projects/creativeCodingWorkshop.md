@@ -39,6 +39,7 @@ WIP Outline
         * [Mysitfy](https://www.youtube.com/watch?v=uZQr-gHyYFI) [Beziers](https://www.youtube.com/watch?v=nWYI7WxhUbU) Windows XP Screensaver
             * Windows screensaver - algorithm - quadratic line * 4 -  draw over black/last - draw next
                 * bounce points around screen (dvd image bounce)
+            * [csharp example](https://swharden.com/csdv/simulations/mystify/)
         * Draw https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle
     * Techniques
         * Graphics shape libraries + render loop
@@ -67,7 +68,8 @@ Unsorted
 
 https://mattiasgustavsson.com/wasm/
 
-Demoscene
+* [Coding Challenge 1: Starfield Simulation](https://www.youtube.com/watch?v=17WoOqgXsRM)
+* Demoscene
 
 DNA Logo
 --------

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
+    <style>
+        html, body {
+            margin: 0;
+            height: 100%;
+            overflow: hidden;
+            text-align: center;
+            background-color: black;
+        }
+        canvas {
+            image-rendering: pixelated;
+            object-fit: contain; /* cover */
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="320" height="180"></canvas>
+    <button id="save_canvas_as_png" style="position: absolute; top: 0; right: 0; user-select: none;">png</button>
+</body>
+
+<script type="module">
+// https://github.com/calaldees/chaos/blob/a74b2ea316f4ab0cd47c7682e9c4572d35340061/gfx/image_decode.js
+
+const nonHexRegex = new RegExp('[^0-9a-f]+', 'gi')
+export function cleanHexString(hex_string) {return hex_string.toLowerCase().replaceAll(nonHexRegex, "")}
+export function* hexToBytes(hex) {
+    console.assert(hex.length % 2 == 0)
+    for (let c = 0; c < hex.length; c += 2) {
+        yield parseInt(hex.substr(c, 2), 16)
+    }
+}
+
+const WHITE_PIXEL = [255,255,255,255]
+const BLACK_PIXEL = [0,0,0,0]
+function* bytesToMonoImageDataArray(bytes) {
+    for (let byte of bytes) {
+        for (let i=7 ; i>=0 ; i+=-1) {
+            yield* (byte >> i) % 2 ? WHITE_PIXEL : BLACK_PIXEL
+        }
+    }
+}
+
+export function* bytesToMono8x8ImageDataChunks(bytesIterable) {
+    const bytes = []
+    for (let byte of bytesIterable) {
+        bytes.push(byte)
+        if (bytes.length==8) {
+            yield new ImageData(new Uint8ClampedArray(bytesToMonoImageDataArray(bytes)), 8, 8)
+            bytes.length = 0
+        }
+    }
+}
+
+export function ImageDataToImageBitmap(imageDataArray) {
+    const size = Math.sqrt(imageDataArray.length) * 8
+    const offscreen = new OffscreenCanvas(size, size)
+    const c = offscreen.getContext("2d")
+    if (imageDataArray.length == 1) {
+        c.putImageData(imageDataArray[0], 0, 0)
+    } else 
+    if (imageDataArray.length == 4) {
+        c.putImageData(imageDataArray[0], 0, 0)
+        c.putImageData(imageDataArray[1], 8, 0)
+        c.putImageData(imageDataArray[2], 0, 8)
+        c.putImageData(imageDataArray[3], 8, 8)
+    } else {
+        throw `unable to process imageDataArray`
+    }
+    return offscreen.transferToImageBitmap()
+}
+
+const BASE64_HEAD = "data:application/octet;base64,"
+function base64ToUint8Array(base64_string) {
+    base64_string = base64_string.startsWith(BASE64_HEAD) ? base64_string.substr(BASE64_HEAD.length) : base64_string
+    return Uint8Array.from(atob(base64_string), c => c.charCodeAt(0))  // https://stackoverflow.com/a/41106346/3356840
+    // await (await fetch("data:application/octet;base64," + base64data)).arrayBuffer()
+    // https://stackoverflow.com/questions/21797299/convert-base64-string-to-arraybuffer#comment124033543_49273187
+}
+
+export function loadImage(data) {
+    if (typeof(data) == "string" && data.startsWith("data:")) {throw "do some base64 decoding shiz"}
+    if (typeof(data) == "string") {data = hexToBytes(cleanHexString(data))}
+    return ImageDataToImageBitmap([...bytesToMono8x8ImageDataChunks(data)])
+}
+export function* loadImages(data) {
+    if (typeof(data) == "string") {data = hexToBytes(cleanHexString(data))}
+    const chunks = []
+    for (let Mono8x8ImageDataChunk of bytesToMono8x8ImageDataChunks(data)) {
+        chunks.push(Mono8x8ImageDataChunk)
+        if (chunks.length==4) {
+            yield ImageDataToImageBitmap(chunks)
+            chunks.length = 0
+        }
+    }
+}
+
+//export
+window.decodeHexTo8x8MonoImage = loadImage
+</script>
+
+<script type="module">
+const decodeHexTo8x8MonoImage = window.decodeHexTo8x8MonoImage
+
+class CanvasBase {
+    constructor(canvas) {
+        this.canvas = canvas || document.getElementById('canvas')
+        this.context = this.canvas.getContext('2d')
+        this.images = {}
+    }
+    get w() {return this.canvas.width}
+    get h() {return this.canvas.height}
+    load_image = (name, url) => {
+        const images = this.images
+        images[name] = new Image()
+        images[name].onload = function() {images[name] = this}
+        images[name].src = url
+    }
+    save_canvas_as_png = () => {
+        // https://stackoverflow.com/a/11112370/3356840
+        const base64_string = this.canvas.toDataURL("image/png")
+        const newTab = window.open('about:blank','image from canvas')
+        newTab.document.write("<img src='" + base64_string + "' alt='from canvas'/>")
+    }
+    render() {
+        throw Exception("Not Implemented Error")
+    }
+}
+
+
+class CanvasDemo extends CanvasBase {
+    constructor(canvas) {
+        super(...arguments)
+    }
+
+    render() {
+        const c = this.context
+        c.clearRect(0, 0, this.w, this.h)
+        
+        let x = 0
+        for (let [name, image] of Object.entries(this.images)) {
+            c.drawImage(image, x, Math.floor(x/this.w)*16)
+            x += image.width
+        }
+    }
+}
+
+const canvasDemo = new CanvasDemo()
+document.getElementById("save_canvas_as_png").addEventListener("click", canvasDemo.save_canvas_as_png)
+
+let socket = new WebSocket("ws://localhost:9800/test1.ws")
+socket.addEventListener('message', async function (event) {
+    const data = event.data.text ? await event.data.text() : event.data  // Normalise bytes and text messages
+    const [letter, image_hex] = data.split(":")
+    canvasDemo.images[letter] = decodeHexTo8x8MonoImage(image_hex)
+    canvasDemo.render()
+})
+
+
+</script></html>
