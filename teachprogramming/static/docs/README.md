@@ -534,5 +534,10 @@ Isaac Computer Science [Program Design](https://isaaccomputerscience.org/topics/
         * Described in [The Teaching Delusion](https://www.johncattbookshop.com/titles/the-teaching-delusion)
     * I constantly upskill in computing - it should be normal for teachers to learn and collaborate
 * Creativity
-    * Communication and Cretivity, often missed off the sylibus
+    * Communication and Creativity, often missed off the syllabus
     * [The Missing Piece: The essential skills that education forgot](https://www.johncattbookshop.com/titles/the-missing-piece-the-essential-skills-that-education-forgot)
+    * [What I Learned From Two Years of Teaching High School CS - Leaving Teaching](https://blog.charliemeyer.co/what-i-learned-from-two-years-of-teaching-high-school-cs/)
+        * > The lesson we need to take as curriculum developers is that there is no one size fits all solution: students have distinct interests and we need to find ways for students to explore CS content through the lens of what interests them.
+        * > What Python Music and other successful projects I wrote taught me was that this model is incomplete. Yes, buggy tools and error ridden curriculum are bad, but students will happily work around them if they have intrinsic motivation in the subject.
+        * > What mattered more is that Braeden and the other students who engaged with the project finally got what programming actually is. Programming is about identifying a goal for a program, and iterating on code to achieve it regardless of what bugs you encounter. More than that, programming is about harnessing the computer to express yourself creatively, systematizing the contents of your imagination until they come alive in the real world.
+        * Creator of [pickcode.io](https://pickcode.io/)

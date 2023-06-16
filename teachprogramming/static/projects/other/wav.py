@@ -95,6 +95,12 @@ class Oscillator():
     @property
     def samples(self):
         return self.o.getbuffer().nbytes // self.bit_depth // 8
+    @property
+    def bytes(self):
+        data = self.o.getvalue()
+        self.o.seek(0)
+        self.o.truncate(0)
+        return data
     def add_full_oscillation(self, note=440):
         oscillation_samples = self.sample_rate // note * 2
         for s in (
@@ -142,6 +148,59 @@ class WAVHeader(NamedTuple):
         ) + b'data' + struct.pack('<I', Subchunk2Size)
 
 
+def play_pyaudio(o):
+    # pip install pyaudio
+    try:
+        import pyaudio
+    except ImportError:
+        return
+
+    p = pyaudio.PyAudio()
+
+    # blocking
+    #stream = p.open(format=pyaudio.paInt16, channels=1, rate=44100, output=True)
+    #stream.write(o.o.getvalue())
+
+    # stream
+    buffer = bytearray()
+    def _callback(in_data, frame_count, time_info, status):
+        nonlocal buffer
+        target_bytes = frame_count * 2  #16bits
+        while (len(buffer) + o.num_bytes) < target_bytes:
+            o.add_full_oscillation()
+        buffer += o.bytes
+        (out, buffer[:]) = (bytes(buffer[:target_bytes]), buffer[target_bytes:])
+        return (out, pyaudio.paContinue)
+    stream = p.open(format=pyaudio.paInt16, channels=1, rate=44100, output=True, stream_callback=_callback)
+
+    import time
+    while stream.is_active():
+        time.sleep(0.1)
+
+    stream.close()
+    p.terminate()
+
+
+def play_simpleaudio(o):
+    try:
+        import simpleaudio as sa
+    except ImportError as ex:
+        print("simpleaudio not installed")
+        return
+    # https://simpleaudio.readthedocs.io/en/latest/tutorial.html#playing-audio-directly
+    play_obj = sa.play_buffer(o.o.getbuffer(), 1, 2, 44100)
+    play_obj = play_obj.play()
+    play_obj.wait_done()
+
+    # Could not install this on windows - what a pain
+    # choco install microsoft-visual-cpp-build-tools
+    # pip install simpleaudio
+    # https://stackoverflow.com/questions/67312738/error-command-errored-out-with-exit-status-1-python-when-installing-simple
+    # https://www.lfd.uci.edu/~gohlke/pythonlibs/#simpleaudio
+    # pip install https://download.lfd.uci.edu/pythonlibs/archived/simpleaudio-1.0.4-cp310-cp310-win_amd64.whl
+
+
+
 if __name__ == "__main__":
     wh = WAVHeader(channels=1, sample_rate=44100, bits_per_sample=16)
 
@@ -152,6 +211,8 @@ if __name__ == "__main__":
     with open('test2.wav', 'wb') as f:
         f.write(wh.header(o.num_bytes))
         f.write(o.o.getbuffer())
+
+    play_pyaudio(o)
 
 
 # Consider
