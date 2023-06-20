@@ -11,8 +11,9 @@ Raster font network?
 
 * [fontLiveView.html](./fontLiveView.html)
     * use channelServer
-
+* use channelServer http get - url components
 * Database?
+    * Connect to channelServer and 'append to file' the items that are sent
 * Export to PNG? ASCII order?
     * https://www.ascii-code.com/
     * symbols 32-47 + 58-64 + 91-96 + 123-126
@@ -20,6 +21,9 @@ Raster font network?
     * A == 65
     * a == 97
     * 0-255 array as empty 8x8 images, then a loader to put chars in correct ascii locations? 3 images(or rows?)0-9,A-Z,a-z
+* TODO
+    * Make data to gif python exporter
+    * Make image cutter to ascii codes
 * https://nfggames.com/games/fontmaker/lister.php
     * https://nfggames.com/games/fontmaker/index.php (with gradient!!! Cool!)
     * Apply gradient to white letters

@@ -59,6 +59,64 @@ Related Projects
 * Consider udp activity (python)
 
 
+
+Slide Notes - exemplar outreach activity (2 hours)
+-----------
+
+What technical terms do you know about computer networking?
+Brainstorm as many technical terms as possible
+(What foundational knowledge do leaners have - active participants straight away)
+
+Have you programming in:
+Python, Javascript, Python&Javascript, neither
+
+
+* Aim
+    * Write a program to send and receive data over a network
+* Key Words
+    * Diff
+        * `+` `-` Context
+    * Event
+        * Event Driven Programming
+    * Client/Server
+        * Echo Server
+    * Protocol
+        * (each ends message `\n` NEW_LINE)
+    * TCP
+        * Websocket
+        * BiDirectional
+        * IP v4 Address Range
+    * Keyboard/IDE/Editor
+        * Compile/Run `F5`
+        * `ctrl+c` stop
+        * `F12` (builtin REPL, debugger)
+* Key points
+    * "Data" is independent of "programming language"
+        * Your language is a tool for working with data
+    * Professional programmers use a 'Diff' to describe changes to code
+    * Networked applications often have a Client and a Server
+    * The concept of an 'Echo' Server
+    * We send raw data as text/bytes
+    * we need to define a 'protocol' (http, smtp)
+
+
+* We have created a VERY simple network chat application
+* Proof of identity? Signing?
+    * Who sent the offensive message?
+* Data types - images?
+* Formatting?
+* Data storage
+    * Where stored?
+    * WhatsApp/Signal don't store on server
+    * Facebook/Discord stored on server
+* Multiple Servers?
+    * My implementation can probably handle 100 to 1000 connections
+    * Different languages (systems level)
+
+
+
+
+
 ---
 
 <style>

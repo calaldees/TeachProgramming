@@ -83,6 +83,9 @@ Chapter Concepts
         * Test center, verbal presentation, digital artifact not suffect
         * leadership (assessed in PE)
         * real national qualification
+        * function -> function that calls a function, iteration -> nested iteration
+        * Code review (digital artifact + lead/explain presentation + as participant interaction) (live marked)
+            * scaffolds and age appropriate
     * ActualCode - formal education is misaligned with learners
     * Projects
         * (SSDD)
@@ -113,3 +116,32 @@ Chapter Concepts
     * investigate other frameworks
 * Feedback was missing in industry - left to own devices - daunting
 * one-to-ones with line manager - not wingesd - actions and timeframe - always talk about the long
+
+Real things don't score highly as year 13 AQA Projects
+
+
+Activities
+----------
+
+* Disco
+    * Chromecast
+* Chat
+    * Network Paint
+* Raster Font -> Greets
+* Demoscene
+    * Recursive Tree
+    * Stars
+    * Zoomer
+    * Combine multiple into one (git)
+* Games
+    * Copter
+        * Multiplayer
+    * race
+    * gravity
+* AI assistant
+    * 
+* Font (from handwriting)
+* Synth?
+* Data Projects?
+
+

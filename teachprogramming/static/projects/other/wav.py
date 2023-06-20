@@ -149,6 +149,8 @@ class WAVHeader(NamedTuple):
 
 
 def play_pyaudio(o):
+    # See more at 
+    #    https://python.plainenglish.io/build-your-own-python-synthesizer-part-3-162796b7d351
     # pip install pyaudio
     try:
         import pyaudio
