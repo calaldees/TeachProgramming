@@ -73,6 +73,8 @@ Python, Javascript, Python&Javascript, neither
 
 * Aim
     * Write a program to send and receive data over a network
+    * Build technical domain specific terminology
+    * Understand some concepts about network client technology
 * Key Words
     * Diff
         * `+` `-` Context
