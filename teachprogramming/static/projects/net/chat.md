@@ -183,8 +183,10 @@ Look at the server to see if the server received your message.
 
 ### send
 ```diff
-     socket.send("Hello I am JAVASCRIPT"+"\n")
-+    while (true) { socket.send(prompt()+"\n") }
+-    socket.send("Hello I am JAVASCRIPT"+"\n")
++    socket.send(prompt()+"\n")
+ }
+ socket.addEventListener("open", open)
 ```
 Type a message and press enter. See if the server got your message.
 
@@ -208,11 +210,10 @@ See messages by showing devtools `F12` and viewing `console`.
  let socket = new WebSocket(url)
  
 -function open() {
--    socket.send("Hello I am Bob"+"\n")
--    while (true) { socket.send(prompt()+"\n") }
+-    socket.send(prompt()+"\n")
 -}
 -socket.addEventListener("open", open)
--
+
 +let text_field = document.getElementById("text_field")
 +text_field.addEventListener("keydown", textEventKeyDown, true)
 +function textEventKeyDown(event) {
@@ -293,6 +294,7 @@ Look at the server to see if the server received your message.
 ```diff
  sock.sendall('Hello I am PYTHON\n'.encode('utf-8'))
 +while True:
++    print("type something:")
 +    sock.sendall(f'{input()}\n'.encode('utf-8'))
 ```
 Type a message and press enter. See if the server got your message.
@@ -325,6 +327,7 @@ Windows Only Issue: `ctrl+c` does not stop the program until another message is 
 +thread.start()
 ```
 Windows Only Issue: Windows terminal blocks on `input()` - received messages are displayed garbled and only after sending a message.
+<!-- TODO: consider async python -->
 
 ### gui
 ```diff
@@ -349,6 +352,7 @@ Windows Only Issue: Windows terminal blocks on `input()` - received messages are
 ```diff
 -sock.sendall('Hello I am PYTHON\n'.encode('utf-8'))
 -while True:
+-    print("type something:")
 -    sock.sendall(f'{input()}\n'.encode('utf-8'))
 +
 +root.mainloop()

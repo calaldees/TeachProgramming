@@ -39,5 +39,6 @@ thread.start()                                             # VER: send_recv
 root.mainloop()                                                           # VER: gui
 #sock.sendall('Hello I am PYTHON\n'.encode('utf-8'))           # VER: send_one not gui
 #while True:                                                   # VER: send     not gui
+#    print("type something:")                                  # VER: send     not gui
 #    sock.sendall(f'{input()}\n'.encode('utf-8'))              # VER: send     not gui
 #

@@ -15,14 +15,14 @@ let socket = new WebSocket(url)                 // VER: connect
                                                 // VER: send_one not gui
 //function open() {                             // VER: send_one not gui
 //    socket.send("Hello I am JAVASCRIPT"+"\n") // VER: send_one not gui
-//    while (true) { socket.send(prompt()+"\n") } // VER: send   not gui
+//    socket.send(prompt()+"\n")                // VER: send     not gui
 //}                                             // VER: send_one not gui
 //socket.addEventListener("open", open)         // VER: send_one not gui
 
                                                                 // VER: gui
 let text_field = document.getElementById("text_field")          // VER: gui
 function textEventKeyDown(event) {                              // VER: gui
-    if (event.keyCode==13) {                                    // VER: gui
+    if (event.key=='Enter') {                                   // VER: gui
         //socket.send(text_field.value+"\n")                    // VER: gui not gui_username
         socket.send("Yourname: "+text_field.value+"\n")         // VER:         gui_username
         text_field.value = ""                                   // VER: gui
