@@ -29,7 +29,7 @@ make run
 
 GitPod connection example - use the `wss://` address e.g.
 ```javascript
-const address  = "wss://9873-jade-catfish-9fuxc59i.ws-eu18.gitpod.io/test1.ws"
+const url = "wss://9873-jade-catfish-9fuxc59i.ws-eu18.gitpod.io/test1.ws"
 ```
 
 #### TCP (Python)
@@ -157,12 +157,12 @@ See extra debug/errors with `F12`.
 ```
 
 ### connect
-Replace `localhost` with the servers websocket url address. (Starts with `wss://` or `ws:/`).
+Replace `localhost` with the servers websocket url. (Starts with `wss://` or `ws:/`).
 ```diff
  <script>
  
-+const address  = "ws://localhost:9800/test1.ws"
-+let socket     = new WebSocket(address)
++const url = "ws://localhost:9800/test1.ws"
++let socket = new WebSocket(url)
 +
  </script></body></html>
 ```
@@ -170,7 +170,7 @@ Look at the server to see if your IP address connected.
 
 ### send_one
 ```diff
- let socket     = new WebSocket(address)
+ let socket = new WebSocket(url)
  
 +function open() {
 +    socket.send("Hello I am JAVASCRIPT"+"\n")
@@ -183,14 +183,14 @@ Look at the server to see if the server received your message.
 
 ### send
 ```diff
- socket.addEventListener("open", open)
-+while (true) { socket.send(prompt()+"\n") }
+     socket.send("Hello I am JAVASCRIPT"+"\n")
++    while (true) { socket.send(prompt()+"\n") }
 ```
 Type a message and press enter. See if the server got your message.
 
 ### recv
 ```diff
- while (true) { socket.send(prompt()+"\n") }
+ socket.addEventListener("open", open)
 + 
 +function receive(msg) {
 +    console.log("got: " + msg.data)
@@ -205,13 +205,14 @@ See messages by showing devtools `F12` and viewing `console`.
 +    <input    id="text_field" style="width:300px;" />
 ```
 ```diff
- let socket     = new WebSocket(address)
+ let socket = new WebSocket(url)
  
 -function open() {
 -    socket.send("Hello I am Bob"+"\n")
+-    while (true) { socket.send(prompt()+"\n") }
 -}
 -socket.addEventListener("open", open)
--while (true) { socket.send(prompt()+"\n") }
+-
 +let text_field = document.getElementById("text_field")
 +text_field.addEventListener("keydown", textEventKeyDown, true)
 +function textEventKeyDown(event) {
@@ -270,7 +271,7 @@ import socket, threading
 ```
 
 ### connect
-Replace `localhost` with the servers IP address example: 192.168.0.1
+Replace `localhost` with the servers IP address example: `192.168.0.1`
 ```diff
  import socket, threading
  
@@ -311,6 +312,8 @@ Type a message and press enter. See if the server got your message.
 +
  sock.sendall('Hello I am PYTHON\n'.encode('utf-8'))
 ```
+You will need to wait to be sent a message to see it. You cannot send messages in this state.
+
 Windows Only Issue: `ctrl+c` does not stop the program until another message is received. Press `ctrl+c` and wait patently.
 
 ### send_recv

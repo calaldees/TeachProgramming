@@ -10,14 +10,15 @@
     <input    id="text_field" style="width:300px;" />                                 <!-- VER: gui      -->
 <script>
                                                 // VER: connect
-const address  = "ws://localhost:9800/test1.ws" // VER: connect
-let socket     = new WebSocket(address)         // VER: connect
+const url  = "ws://localhost:9800/test1.ws"     // VER: connect
+let socket = new WebSocket(url)                 // VER: connect
                                                 // VER: send_one not gui
 //function open() {                             // VER: send_one not gui
 //    socket.send("Hello I am JAVASCRIPT"+"\n") // VER: send_one not gui
+//    while (true) { socket.send(prompt()+"\n") } // VER: send   not gui
 //}                                             // VER: send_one not gui
 //socket.addEventListener("open", open)         // VER: send_one not gui
-//while (true) { socket.send(prompt()+"\n") }   // VER: send     not gui
+
                                                                 // VER: gui
 let text_field = document.getElementById("text_field")          // VER: gui
 function textEventKeyDown(event) {                              // VER: gui
