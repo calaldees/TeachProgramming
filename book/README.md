@@ -145,3 +145,17 @@ Activities
 * Data Projects?
 
 
+---
+
+Most people cant to much with a computing
+manipulate date (scrabble around in excel, get data from a souce and refine/combine)
+automate actions (create scrips, links things together, trigger dataflow)
+autonimously create something (most people are give a constrained task)
+
+to get to a level above you need 100's and hundreds of challenge hours
+in year 7,8,9 they get 30 hours a year maximum
+A GCSE is 60 hours
+
+The only way to get the exposure (time) and challenge (approriate difficuluty) is self direction
+
+Comunity

@@ -215,13 +215,13 @@ See messages by showing devtools `F12` and viewing `console`.
 -socket.addEventListener("open", open)
 
 +let text_field = document.getElementById("text_field")
-+text_field.addEventListener("keydown", textEventKeyDown, true)
 +function textEventKeyDown(event) {
-+    if (event.keyCode==13) {
++    if (event.key=='Enter') {
 +        socket.send(text_field.value+"\n")
 +        text_field.value = ""
 +    }
 +}
++text_field.addEventListener("keydown", textEventKeyDown, true)
  
  function receive(msg) {
 ```
@@ -431,6 +431,7 @@ Other similar concepts
 ----------------------
 * [Building a Replit to Replit Chat App Using Node.js](https://docs.replit.com/tutorials/15-repl-chat)
 * [kchat](https://github.com/srpeck/kchat) -  Persistent group chat in <50 lines using kdb+/k/q web sockets and JS
+* [kkuchta / css-only-chat](https://github.com/kkuchta/css-only-chat) -  A truly monstrous async web chat using no JS whatsoever on the frontend 
 
 Old/Alternative Server (for reference)
 ----------------------
