@@ -56,7 +56,7 @@ class GameDemo(PygameBase):
         self.animation_sprites = [
             AnimationSprite(self.sprites[32:32+11]),
             AnimationSprite(self.sprites[32:32+11]),
-            AnimationSprite(self.sprites[32:32+11]),
+            AnimationSprite(self.sprites[45:45+11]),
             AnimationSprite(self.sprites[6:15], speed=0, x=100, y=100),
         ]
         super().__init__()
