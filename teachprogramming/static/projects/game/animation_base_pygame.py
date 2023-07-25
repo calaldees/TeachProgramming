@@ -22,7 +22,11 @@ class PygameBase():
                 if (self.keys[pygame.K_RALT] or self.keys[pygame.K_LALT]) and self.keys[pygame.K_RETURN]:
                     pygame.display.toggle_fullscreen()
             self.screen.fill(self.color_background)
-            self.loop(self.screen, frame)
+            try:
+                self.loop(self.screen, frame)
+            except:
+                import traceback; traceback.print_exc()
+                self.running = False
             pygame.display.flip()
             frame += 1
         self.quit()
@@ -31,6 +35,7 @@ class PygameBase():
         raise NotImplementedError('override loop method')
     def quit(self):
         pass  # override to shutdown
+
 
 class GameDemo(PygameBase):
     def __init__(self):
