@@ -541,3 +541,7 @@ Isaac Computer Science [Program Design](https://isaaccomputerscience.org/topics/
         * > What Python Music and other successful projects I wrote taught me was that this model is incomplete. Yes, buggy tools and error ridden curriculum are bad, but students will happily work around them if they have intrinsic motivation in the subject.
         * > What mattered more is that Braeden and the other students who engaged with the project finally got what programming actually is. Programming is about identifying a goal for a program, and iterating on code to achieve it regardless of what bugs you encounter. More than that, programming is about harnessing the computer to express yourself creatively, systematizing the contents of your imagination until they come alive in the real world.
         * Creator of [pickcode.io](https://pickcode.io/)
+
+* [What’s Wrong With Most Godot Tutorials (including ours)](https://www.youtube.com/watch?v=yQZKXdwyh-Q)
+    * Most teaching of CS is the boring fundamentals - it takes time and sucks
+    * Partial programs that demonstrate a specific principle

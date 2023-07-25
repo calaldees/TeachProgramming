@@ -65,6 +65,7 @@ Unsorted
     * Use of librarys
     * Asthetic
 
+https://www.theguardian.com/games/2023/jul/06/people-competing-to-make-the-worst-computer-games-possible
 
 https://mattiasgustavsson.com/wasm/
 
