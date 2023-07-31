@@ -139,7 +139,7 @@ chat.html
 
 Create a file called `chat.html` and open it in a browser.
 Run the program after each section by refreshing your browser with the `F5` key.
-See extra debug/errors with `F12`.
+See extra debug/errors with `F12` (Or `Shift+Option+Command+c` on Safari after enabling devtools in Preferences).
 
 ### base
 ```html
@@ -162,7 +162,7 @@ Replace `localhost` with the servers websocket url. (Starts with `wss://` or `ws
  <script>
  
 +const url = "ws://localhost:9800/test1.ws"
-+let socket = new WebSocket(url)
++const socket = new WebSocket(url)
 +
  </script></body></html>
 ```
@@ -170,7 +170,7 @@ Look at the server to see if your IP address connected.
 
 ### send_one
 ```diff
- let socket = new WebSocket(url)
+ const socket = new WebSocket(url)
  
 +function open() {
 +    socket.send("Hello I am JAVASCRIPT"+"\n")
@@ -207,14 +207,14 @@ See messages by showing devtools `F12` and viewing `console`.
 +    <input    id="text_field" style="width:300px;" />
 ```
 ```diff
- let socket = new WebSocket(url)
+ const socket = new WebSocket(url)
  
 -function open() {
 -    socket.send(prompt()+"\n")
 -}
 -socket.addEventListener("open", open)
 
-+let text_field = document.getElementById("text_field")
++const text_field = document.getElementById("text_field")
 +function textEventKeyDown(event) {
 +    if (event.key=='Enter') {
 +        socket.send(text_field.value+"\n")
@@ -233,7 +233,7 @@ See messages by showing devtools `F12` and viewing `console`.
      <input    id="text_field" style="width:300px;" />
 ```
 ```diff
-+let text_area  = document.getElementById("text_area")
++const text_area = document.getElementById("text_area")
  function receive(msg) {
 -    console.log("got: " + msg.data)
 +    text_area.value = text_area.value + msg.data

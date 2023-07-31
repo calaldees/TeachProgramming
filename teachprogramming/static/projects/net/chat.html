@@ -10,8 +10,8 @@
     <input    id="text_field" style="width:300px;" />                                 <!-- VER: gui      -->
 <script>
                                                 // VER: connect
-const url  = "ws://localhost:9800/test1.ws"     // VER: connect
-let socket = new WebSocket(url)                 // VER: connect
+const url = "ws://localhost:9800/test1.ws"      // VER: connect
+const socket = new WebSocket(url)               // VER: connect
                                                 // VER: send_one not gui
 //function open() {                             // VER: send_one not gui
 //    socket.send("Hello I am JAVASCRIPT"+"\n") // VER: send_one not gui
@@ -20,7 +20,7 @@ let socket = new WebSocket(url)                 // VER: connect
 //socket.addEventListener("open", open)         // VER: send_one not gui
 
                                                                 // VER: gui
-let text_field = document.getElementById("text_field")          // VER: gui
+const text_field = document.getElementById("text_field")        // VER: gui
 function textEventKeyDown(event) {                              // VER: gui
     if (event.key=='Enter') {                                   // VER: gui
         //socket.send(text_field.value+"\n")                    // VER: gui not gui_username
@@ -30,7 +30,7 @@ function textEventKeyDown(event) {                              // VER: gui
 }                                                               // VER: gui
 text_field.addEventListener("keydown", textEventKeyDown, true)  // VER: gui
                                                    // VER: recv
-let text_area  = document.getElementById("text_area") // VER: gui_recv
+const text_area = document.getElementById("text_area") // VER: gui_recv
 function receive(msg) {                            // VER: recv
     //console.log("got: " + msg.data)              // VER: recv not gui_recv
     text_area.value = text_area.value + msg.data   // VER: gui_recv

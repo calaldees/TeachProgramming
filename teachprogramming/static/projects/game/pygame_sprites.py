@@ -4,6 +4,8 @@ import pygame
 
 from animation_base_pygame import PygameBase
 
+# https://onlinegiftools.com/convert-sprite-sheet-to-gif
+
 def download(url):
     """
     Equivalent of curl if need
