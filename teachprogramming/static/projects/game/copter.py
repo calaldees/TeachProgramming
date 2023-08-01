@@ -2,7 +2,7 @@ import pygame
 import math
 
 pygame.init()
-screen = pygame.display.set_mode((320, 240))
+screen = pygame.display.set_mode((320, 240), pygame.SCALED | pygame.RESIZABLE)
 clock  = pygame.time.Clock()
 
 class callByRef:
