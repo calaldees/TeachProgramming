@@ -1,6 +1,9 @@
 import tkinter
 import time
 
+# TODO:
+# we need get sub images from an image - pygame has `subsurface`
+# https://stackoverflow.com/questions/52375035/cropping-an-image-in-tkinter
 
 class TkAnimationBase():
     def __init__(self, width=320, height=180, frames_per_second=60):

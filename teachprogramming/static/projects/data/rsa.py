@@ -64,6 +64,8 @@ def isprime(n):
     Test a mini prime number
     >>> isprime(6700417)
     True
+    >>> isprime(6700418)
+    False
     """
     assert isinstance(n, int) and n >= 0 # make sure n is a positive integer
     if n < 2:  # 0 and 1 are not primes

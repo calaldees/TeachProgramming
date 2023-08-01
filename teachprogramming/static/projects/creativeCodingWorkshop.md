@@ -21,6 +21,7 @@ WIP Outline
     * Demoscene (30min)
         * History
         * Examples
+            * TODO
         * [mapOfComputing/demoscene.md](https://github.com/calaldees/mapOfComputing/blob/main/computing/demoscene.md)
     * My Examples + Code (15min)
         * DNA Logo (DOS/Pascal 16 years old)

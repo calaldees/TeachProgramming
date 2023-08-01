@@ -159,3 +159,13 @@ A GCSE is 60 hours
 The only way to get the exposure (time) and challenge (approriate difficuluty) is self direction
 
 Comunity
+
+
+Not everyone needs to learn how to code
+* [Not Everyone Should Code](https://www.youtube.com/watch?v=EFwa5Owp0-k) YouTube PolyMatter
+
+Two opposing feelings
+  1.) Learn something?
+    brain teaser - understanding concepts
+  2.) Build something?
+    make something cool - disect it later
