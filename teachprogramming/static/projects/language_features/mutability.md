@@ -55,3 +55,4 @@ console.log(bb)
 ```
 
 Problem: The language is not consistent. We have to study the language documentation to understand if a language has side effects
+See ES2023 for array mutability

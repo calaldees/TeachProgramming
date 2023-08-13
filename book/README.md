@@ -103,6 +103,8 @@ Chapter Concepts
 
 * A lens of computing for a path to actualisation of ideas
 * What industry can learn from formal education - what formal education can learn from industry
+    * https://helloworld.raspberrypi.org/articles/what-can-computing-educators-learn-from-industry
+        * todo
 * [Popular education in Sweden: much more than you wanted to know](https://www.lesswrong.com/posts/tjxgbovwc5Ft7wrtc/popular-education-in-sweden-much-more-than-you-wanted-to-1)
     * > Folkbildningsrörelsen: that is the name we have for this movement of self-organized study groups, resource centers, maker spaces, public lectures, and free retreats for personal development. 
 * "Conversational programmers"
