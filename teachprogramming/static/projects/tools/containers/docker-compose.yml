@@ -1,0 +1,49 @@
+
+services:
+
+  python:
+    build:
+      context: ./http_server_python
+    volumes:
+      - ${PWD}:/data/
+    command:
+      - /data/
+    ports:
+      - 8001:8000
+
+  java:
+    build:
+      context: ./http_server_java
+    volumes:
+      - ${PWD}:/data/
+    command:
+      - /data/
+    ports:
+      - 8002:8000
+
+  custom_java:
+    build:
+      context: ./custom_http_server_java
+    volumes:
+      - ${PWD}:/data/
+    command:
+      - /data/
+    ports:
+      - 8003:8000
+
+  custom_python:
+    build:
+      context: ./custom_http_server_python
+    volumes:
+      - ${PWD}:/data/
+    command:
+      - /data/
+    ports:
+      - 8004:8000
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - 8000:80
+    volumes:
+      - ${PWD}:/usr/share/nginx/html:ro

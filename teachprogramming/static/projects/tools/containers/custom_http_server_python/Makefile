@@ -1,0 +1,17 @@
+DOCKER_IMAGE:=custom_http_server_python
+
+
+help:
+	# This is some help
+
+build:
+	docker build --tag ${DOCKER_IMAGE} .
+
+run:
+	docker run --rm -it --publish 8000:8000 ${DOCKER_IMAGE}
+
+run_volume:
+	docker run --rm -it --publish 8000:8000 --volume ${PWD}:/data/ ${DOCKER_IMAGE} /data/
+
+shell:
+	docker run --rm -it --publish 8000:8000 --entrypoint /bin/sh ${DOCKER_IMAGE}

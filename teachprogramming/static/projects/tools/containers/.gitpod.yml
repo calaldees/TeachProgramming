@@ -1,0 +1,5 @@
+
+vscode:
+  extensions:
+    - ms-azuretools.vscode-docker
+    - ms-python.python
