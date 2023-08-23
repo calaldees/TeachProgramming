@@ -1,6 +1,8 @@
 Container Workshop (1 hour)
 ==================
 
+* See also https://github.com/calaldees/dockerWorkshop for a full workshop on what containers are
+
 Prerequisites
 -------------
 
