@@ -538,3 +538,6 @@ Unsorted
 shell == full evaluation - array is not shell
 
 Exec + run
+
+https://container.training/
+Some professional docker slides and kubernetes

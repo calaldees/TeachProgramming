@@ -1,6 +1,19 @@
 Concurrency Primitives in GoLang
 --------------------------------
 
+* see [[async-await]]
+* Concurrency
+	* [Asyncio, twisted, tornado, gevent walk into a bar ... they pay, they leave, they drink, they order.](https://www.bitecode.dev/p/asyncio-twisted-tornado-gevent-walk)
+		* URL fetch example with 3 different python async systems
+		* The typical analogy is this:
+			* concurrency is having two lines of customers ordering from a one cashier;
+			* parallelism is having two lines of customers ordering from two cashiers.
+		* Which, means, if you think about it, that concurrency has a lot to do with sharing one resource
+		* `async` just isn't needed - Python Documentation [ThreadPoolExecutor Example](https://docs.python.org/3/library/concurrent.futures.html#threadpoolexecutor-example) multiple urls
+		* Discuss's FastAPI and Django
+	* [Notes on structured concurrency, or: Go statement considered harmful](https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/)
+
+
 * [Practical Example of Concurrency on Golang](https://articles.wesionary.team/practical-example-of-concurrency-on-golang-fc4609ea8ed1) - Go Routine, WaitGroups, Mutex, Channel
 
 `helloworld.go`
@@ -33,7 +46,6 @@ import (
 )
 
 func main() {
-
 	websites := []string{
 		"https://stackoverflow.com/",
 		"https://github.com/",
@@ -44,11 +56,9 @@ func main() {
 		"https://www.coursera.org/",
 		"https://wesionary.team/",
 	}
-
 	for _, website := range websites {
 		getWebsite(website)
 	}
-
 }
 func getWebsite(website string) {
 	if res, err := http.Get(website); err != nil {
@@ -65,7 +75,6 @@ func getWebsite(website string) {
 var wg sync.WaitGroup
 
 func main() {
-
 	websites := []string{
 		"https://stackoverflow.com/",
 		"https://github.com/",
@@ -76,14 +85,11 @@ func main() {
 		"https://www.coursera.org/",
 		"https://wesionary.team/",
 	}
-
 	for _, website := range websites {
 		go getWebsite(website)
 		wg.Add(1)
 	}
-
 	wg.Wait()
-
 }
 func getWebsite(website string) {
 	defer wg.Done()
@@ -93,7 +99,6 @@ func getWebsite(website string) {
 	} else {
 		fmt.Printf("[%d] %s is up\n", res.StatusCode, website)
 	}
-
 }
 ```
 
@@ -180,10 +185,8 @@ func main() {
 func getWebsite(website string, c chan string) {
 	if _, err := http.Get(website); err != nil {
 		c <- website + "is down"
-
 	} else {
 		c <- website + "is up"
 	}
-
 }
 ```
