@@ -545,3 +545,9 @@ Isaac Computer Science [Program Design](https://isaaccomputerscience.org/topics/
 * [What’s Wrong With Most Godot Tutorials (including ours)](https://www.youtube.com/watch?v=yQZKXdwyh-Q)
     * Most teaching of CS is the boring fundamentals - it takes time and sucks
     * Partial programs that demonstrate a specific principle
+
+
+* How is programming taught in code clubs? Experiences, gender perceptions, and learning barriers experienced by code club teachers
+    * Efthimia Aivaloglou and Felienne Hermans (Leiden Institute of Advanced Computer Science)
+* Understanding conceptual transfer in second and subsequent programming languages 
+    * Ethel Tshukudu and Quintin Cutts (University of Glasgow)

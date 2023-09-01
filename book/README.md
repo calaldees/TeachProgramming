@@ -70,6 +70,7 @@ Chapter Concepts
         * Community
             * rubber duck, pair, verbal, build after others, identity
         * (multiple langauges - false carryover concepts)
+            * Understanding conceptual transfer in second and subsequent programming languages Ethel Tshukudu and Quintin Cutts (University of Glasgow)
         * (context)
     * Practical as a vehicle for theory
     * Guided Engineering projects

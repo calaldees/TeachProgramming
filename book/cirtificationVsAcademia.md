@@ -12,3 +12,9 @@ TODO:
 * [Educating Cyber Professionals: A View from Academia, the Private Sector, and Government](https://doi.org/10.1109/MSP.2012.36) 2002
 * [SKYNET: A platform for maximizing career opportunities](https://eds.s.ebscohost.com/eds/detail/detail?vid=0&sid=fc2e2359-d15d-4e7d-b017-d3dd3783ef47%40redis&bdata=JkF1dGhUeXBlPWNvb2tpZSxpcCxzaGliJnNpdGU9ZWRzLWxpdmUmc2NvcGU9c2l0ZQ%3d%3d#AN=edseee.9487581&db=edseee) 2021
 * [Communications education and training: expanding the student experience [Guest Editorial]](https://doi.org/10.1109/MCOM.2014.6979958) 2014
+
+
+* [What Skills Do CS Grads Need?: Colleges And Employers Disagree.](https://dl.acm.org/doi/10.1145/3545947.3576369)
+    * Video/Poster presentation 10min
+    * Employers focus on "working without knowing the answers" and "collaboration"
+        * Manage oneself, experiment
