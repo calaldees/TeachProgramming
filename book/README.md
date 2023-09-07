@@ -172,3 +172,33 @@ Two opposing feelings
     brain teaser - understanding concepts
   2.) Build something?
     make something cool - disect it later
+
+
+New Degree random notes
+-----------------------
+
+New Degree
+
+Tooling
+    Bash
+    IDE
+    Version control
+    Code review
+Profetional tooling practical
+    PFL
+    containers
+    tests
+
+Multi langauge
+
+
+Theory conveyed by practical
+Verbal fluency
+    assessment - presentations
+Creativity - visuals with code
+
+Y2? working with others
+    Chat project? Group?
+    Work on something after someone else
+    live pair programming
+    code review

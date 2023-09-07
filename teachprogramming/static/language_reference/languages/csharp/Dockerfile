@@ -3,7 +3,7 @@
 # an absolute joke of a process
 # https://softchris.github.io/pages/dotnet-dockerize.html#create-a-dockerignore-file
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0
+FROM mcr.microsoft.com/dotnet/sdk
 
 WORKDIR /app/
 
