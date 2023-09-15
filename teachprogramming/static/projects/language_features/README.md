@@ -30,8 +30,15 @@ Features
     * [[async-await]]
     * [[concurrency]] primitives
 * inline testing
-
 * [[internationalisation]]
+* Dynamic Vs Static languages
+    * Pro's and Con's of each
+    * What can dynamic languages do that static ones cant (and vice versa)
+    * (see mapOfComputing for more)
+    * TODO: example
+        * Return "anything" (in static can do this with Object) .. so what
+        * Add a method to an object once created
+            * Metaclass!
 
 
 More

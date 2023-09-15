@@ -551,3 +551,7 @@ Isaac Computer Science [Program Design](https://isaaccomputerscience.org/topics/
     * Efthimia Aivaloglou and Felienne Hermans (Leiden Institute of Advanced Computer Science)
 * Understanding conceptual transfer in second and subsequent programming languages 
     * Ethel Tshukudu and Quintin Cutts (University of Glasgow)
+
+Learning by refactoring - not learning by example
+https://github.com/lsmor/snake-fury
+
