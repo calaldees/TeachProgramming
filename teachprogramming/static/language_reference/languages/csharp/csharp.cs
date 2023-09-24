@@ -496,9 +496,9 @@ public class Program {
     // https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient
     // https://learn.microsoft.com/en-us/dotnet/api/system.net.httpwebrequest?view=net-7.0  ??? Wha?
     
-    //HttpResponseMessage response = await client.GetAsync("http://www.contoso.com/");   // VER: http_request
-    //response.EnsureSuccessStatusCode();                                                // VER: http_request
-    //string responseBody = await response.Content.ReadAsStringAsync();                  // VER: http_request
+    //HttpResponseMessage response = await client.GetAsync("http://www.contoso.com/");
+    //response.EnsureSuccessStatusCode();
+    //string responseBody = await response.Content.ReadAsStringAsync();
   }
 
   void http_request_json() {

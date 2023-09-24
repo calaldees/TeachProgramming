@@ -401,7 +401,9 @@ def http_request_json():
       ))                                                # ver: http_request_json
                                                         # ver: http_request_json
   from pprint import pprint                             # ver: http_request_json
-  pprint(fetch_json('https://jsonplaceholder.typicode.com/posts/1', method="GET"))  # ver: http_request_json
+  pprint(fetch_json(                                    # ver: http_request_json
+    'https://jsonplaceholder.typicode.com/posts/1',     # ver: http_request_json
+    method="GET"))                                      # ver: http_request_json
   #pprint(fetch_json('http://localhost:8000/item', {"user_id": "user1234", "keywords": ["hammer", "nails", "tools"], "description": "A hammer and nails set. In canterbury", "lat": 51.2798438, "lon": 1.0830275}, method='POST'))
 
 def file_binary():

@@ -15,7 +15,9 @@ except ImportError:
     from .make_ver import make_ver  # TODO: deprecate and reimplement
 
 
-EXCLUDED_EXTENSIONS = frozenset({'ver', 'yaml', 'yml', 'txt', 'md', 'json', 'csproj', '', 'Makefile', 'Dockerfile'})
+EXCLUDED_EXTENSIONS = frozenset({'ver', 'yaml', 'yml', 'txt', 'md', 'json', 'csproj', '', 'Makefile', 'Dockerfile', 
+    'editorconfig', 'cache'  # HACK - this is getting out of hand - we do a filescan() and get all files - csharp creates some cancer with bin/obj folders and I need a way to ignore them - for now I just hide rougue files here. Please remove this hack line and try to debug this properly
+})
 
 
 def parse_legacy_version_data(data):

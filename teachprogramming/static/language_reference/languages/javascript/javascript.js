@@ -501,6 +501,22 @@ function function_named_defaults() {
 }
 
 
+function http_request_json() {
+  // https://jsonplaceholder.typicode.com/guide/
+  fetch('https://jsonplaceholder.typicode.com/posts', {   // VER: http_request_json
+    method: 'POST',                                       // VER: http_request_json
+    body: JSON.stringify({   // VER: http_request_json
+      title: 'foo',         // VER: http_request_json
+      body: 'bar',         // VER: http_request_json
+      userId: 1,          // VER: http_request_json
+    }),                   // VER: http_request_json
+    headers: {              // VER: http_request_json
+      'Content-type': 'application/json; charset=UTF-8',      // VER: http_request_json
+    },                // VER: http_request_json
+  })          // VER: http_request_json
+    .then((response) => response.json())      // VER: http_request_json
+    .then((json) => console.log(json))      // VER: http_request_json
+}
 
 
 
@@ -539,6 +555,7 @@ function main() {
   random_number();
   sort();
   assertion();
+  http_request_json();
 }
 main();
 
