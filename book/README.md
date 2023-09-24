@@ -202,3 +202,11 @@ Y2? working with others
     Work on something after someone else
     live pair programming
     code review
+
+---
+
+* [An Entire Computer Science Degree in 11 Minutes](https://www.youtube.com/watch?v=m7RQFb-VcQQ)
+    * American student describes the whole degree process.
+    * He's omega privilaged and can travel the world
+    * His first year was a poorly sequenced joke
+    * His hard work full on got him though - code proficiency takes "time" (sustained)

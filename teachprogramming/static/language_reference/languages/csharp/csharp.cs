@@ -20,6 +20,7 @@ using System.IO;                                                                
 using System.Collections.Generic;                                               // VER: define_map,list_comprehension
 using System.Linq;                                                              // VER: list_comprehension
 using System.Text.Json;  // TODO see json_data - not available in mono as it only up to dotnet.4.x
+using System.Net.Http;   // VER: http_request
 
 public class Star { // VER: class
     public int x; // VER: class
@@ -30,6 +31,8 @@ public class Star { // VER: class
 namespace Main
 {
 public class Program {
+
+  static readonly HttpClient client = new HttpClient();   // VER: http_request
 
   void hello_world() {
   // public class HelloWorld {                                                  // VER: hello_world
@@ -477,7 +480,7 @@ public class Program {
     Console.WriteLine(p2.pets[1].name);  // VER: json_data_to_object
   }
 
-  static void sort() {
+  void sort() {
     // sort reverse with custom comparator
     // TODO:
     // https://stackoverflow.com/questions/15494463/how-can-i-do-an-inline-sort
@@ -487,6 +490,21 @@ public class Program {
     Array.Sort(data);                           // VER: sort
     Console.WriteLine(String.Join(",", data));  // VER: sort
   }
+
+
+  void http_request() {
+    // https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httpclient
+    // https://learn.microsoft.com/en-us/dotnet/api/system.net.httpwebrequest?view=net-7.0  ??? Wha?
+    
+    //HttpResponseMessage response = await client.GetAsync("http://www.contoso.com/");   // VER: http_request
+    //response.EnsureSuccessStatusCode();                                                // VER: http_request
+    //string responseBody = await response.Content.ReadAsStringAsync();                  // VER: http_request
+  }
+
+  void http_request_json() {
+
+  }
+
 
 /*
 Named params
@@ -560,6 +578,8 @@ public class Program
       json_data();
       json_data_to_object();
       sort();
+      http_request();
+      http_request_json();
   }
   public static void Main(string[] args) {new Program();}
 }
