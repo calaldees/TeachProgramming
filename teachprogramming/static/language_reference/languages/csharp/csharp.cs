@@ -57,7 +57,7 @@ public class Program {
     string username = "Betty";                                                  // VER: define_variables
     double distance = 3.14;                                                     // VER: define_variables
     bool email_errors = true;                                                   // VER: define_variables
-    string multiline = $@"a b";                                                 // VER: define_variables
+    string multiline = $$"""a b""";                                             // VER: define_variables
   }
 
   void define_constants() {
@@ -188,8 +188,9 @@ public class Program {
   void string_concatenation() {
     string forename = "bob";
     string surname = "jones";
-    string fullname = $"{forename} {surname}";                                         // VER: string_concatenation
-    string fullname2 = forename + " " + surname;                                       // VER: string_concatenation
+    string fullname = forename + " " + surname;                                       // VER: string_concatenation
+    string fullname2 = $"{forename} {surname}";                                         // VER: string_concatenation
+    string fullname3 = $$"""{{forename}} {{surname}}""";                               // VER: string_concatenation
     // // TODO: other formatting                                                // VER: string_concatenation
     Console.WriteLine(fullname);
 
@@ -439,16 +440,18 @@ public class Program {
     // https://marcroussy.com/2020/08/17/deserialization-with-system-text-json/
     // TODO: WARNING!! this string inline needs investigating
 
-    var stringifiedJson = @"{ ""Topic"":""Json Serialization Part 1"",""Part"":1,""Author"":""Marc"",""Co-Author"":""Helen"",""Keywords"":[""json"",""netcore"",""parsing""]}";
+    var stringifiedJson = $$"""
+      {"Topic":"Json Serialization Part 1","Part":1,"Author":"Marc","Co-Author":"Helen","Keywords":["json","netcore","parsing"]}
+    """;
     /*
     Hack to allow pretty pretting on cheat sheet of `stringifiedJson`
-    var stringifiedJson = @"{                           // VER: json_data
-      ""Topic"":""Json Serialization Part 1"",          // VER: json_data
-      ""Part"":1,                                       // VER: json_data
-      ""Author"":""Marc"",                              // VER: json_data
-      ""Co-Author"":""Helen"",                          // VER: json_data
-      ""Keywords"":[""json"",""netcore"",""parsing""]   // VER: json_data
-    }";                                                 // VER: json_data
+    var stringifiedJson = $$"""{                           // VER: json_data
+      "Topic":"Json Serialization Part 1",          // VER: json_data
+      "Part":1,                                       // VER: json_data
+      "Author":"Marc",                              // VER: json_data
+      "Co-Author":"Helen",                          // VER: json_data
+      "Keywords":["json","netcore","parsing"]   // VER: json_data
+    }""";                                                 // VER: json_data
     */
     var blogPost = JsonDocument.Parse(stringifiedJson);  // VER: json_data
     var topic = blogPost.RootElement.GetProperty("Topic").GetString();  // VER: json_data

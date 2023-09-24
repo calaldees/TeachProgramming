@@ -53,44 +53,41 @@ const data2 = JSON.parse(string_data);
 * The `{'e': [...` line, because it is a different structure to the other elements, creates massive problems for static languages.
 * In most cases JSON handling is not built into the base language and needs and external library.
 
+Can be used in https://dotnetfiddle.net/ with `.NET 7` or higher
 ```csharp
-    var stringifiedJson = @"{""Topic"":""Json Serialization Part 1"",""Part"":1,""Author"":""Marc"",""Co-Author"":""Helen"",""Keywords"":[""json"",""netcore"",""parsing""]}";
-    var blogPost = JsonDocument.Parse(stringifiedJson);
-    var topic = blogPost.RootElement.GetProperty("Topic").GetString();
-    Console.WriteLine(topic);
-    Console.WriteLine(JsonSerializer.Serialize(blogPost));
-    // manipulating values is hard - https://kevsoft.net/2021/12/29/manipulate-json-with-system-text-json-nodes.html
+using System;
+using System.Text.Json;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+public class Program {
+	static readonly HttpClient client = new HttpClient();
+	public static async Task Main() {
+		//var responseBody = $$"""
+		//  {"userId": 1, "id": 1, "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit", "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"}
+		//""";
+
+		HttpResponseMessage response = await client.GetAsync("https://jsonplaceholder.typicode.com/posts/1");
+		response.EnsureSuccessStatusCode();
+		string responseBody = await response.Content.ReadAsStringAsync();
+		Console.WriteLine(responseBody);
+
+		var json = JsonDocument.Parse(responseBody);
+		Console.WriteLine(json.RootElement.GetProperty("title").GetString());
+		// manipulating values is hard - https://kevsoft.net/2021/12/29/manipulate-json-with-system-text-json-nodes.html
+		Console.WriteLine(JsonSerializer.Serialize(json));
+	}
+}
 ```
 
-Extension Task: Attempt to decode the jsonstring (from the last exercise) and `Console.WriteLine` the value for `data[2]['e'][1]`
-You may need the documentation for [JsonElement](https://docs.microsoft.com/en-us/dotnet/api/system.text.json.jsonelement?view=net-6.0)
+### Extension Task
+* Attempt to decode the jsonstring (from the last python/javascript exercise) in csharp
+* and `Console.WriteLine` the value for `data[2]['e'][1]`
+You may need the documentation for [JsonElement](https://docs.microsoft.com/en-us/dotnet/api/system.text.json.jsonelement?view=net-7.0)
 
-```csharp
-    class Pet {
-        public string name  { get; set; }
-        public string type  { get; set; }
-    }
-    class Person {
-        public String name  { get; set; }
-        public int age  { get; set; }
-        public List<Pet> pets  { get; set; }
-    }
-
-    var p = new Person {
-        name = "Test",
-        age = 100,
-        pets = new List<Pet> {
-            new Pet {name = "Kitty", type = "cat"},
-            new Pet {name = "Doggy", type = "dog"},
-        },
-    };
-    string data = JsonSerializer.Serialize<Person>(p);
-    Console.WriteLine(data);
-    var p2 = JsonSerializer.Deserialize<Person>(data);
-    Console.WriteLine(p2.pets[1].name);
-```
 
 ### Further thoughts
+* Most static languages serialise and deserialize json from schema's or object structures
 
 #### Other data formats
 * XML (legacy 2005)
