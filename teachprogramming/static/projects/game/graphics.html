@@ -78,26 +78,31 @@
 	// Advanced Technique 1 - Custom Paths/Shapes
 	function my_custom_shape() {
 		// TEMPLATE for Freeform shape
-		// c.fillStyle = 'white';
-		// .. or
-		// c.strokeStyle = 'cyan';
+		// c.fillStyle = 'white'
+		// .. and/or
+		// c.strokeStyle = 'cyan'
 		//
-		// c.beginPath();
+		// c.beginPath()
 		// ... moveTo? lineTo? arc?
 		// ... moveTo? lineTo? arc?
 		// ... moveTo? lineTo? arc?
 		//
 		// Finish the shape
-		// c.stroke(); // draws the lines of the shape
-		// .. or
-		// c.fill(); // fills the shape
+		// c.stroke() // draws the lines of the shape
+		// .. and/or
+		// c.fill() // fills the shape
 	}
 
 	// Advanced Technique 2 - Animation Loop
 	//   SideNote: This is `easy mode` animation - More needed to handled accurate timing of frames
+	let state = {}
+	function updateState(state) {
+		// Change things here
+	}
 	function startAnimation(time) {
 		requestAnimationFrame(startAnimation)
-		render(context)
+		updateState(state)
+		render(context, state)
 	}
 	// startAnimation()  // Render in animation loop
 
@@ -119,6 +124,7 @@
 	//   https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Compositing
 	//   https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
 	//   https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
+
 
 </script>
 </html>
