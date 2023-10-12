@@ -24,11 +24,15 @@
 </body>
 <script type="module">
 
+	// Setup canvas variables and core functions
 	const canvas = document.getElementById('canvas')
 	const context = canvas.getContext('2d')
 	const w = canvas.width
 	const h = canvas.height
-	function clear() {context.clearRect(0, 0, w, h)}
+	function clear() {
+		c.setTransform(1, 0, 0, 1, 0, 0)  // Reset transformation matrix to the identity matrix
+		context.clearRect(0, 0, w, h)
+	}
 
 	function render(c, state) {
 		clear()
@@ -51,42 +55,67 @@
 		c.arc(200, 200, 20, 0, Math.PI/2)
 		c.lineTo(200, 200)
 		c.fill()
+	}
 
+	console.log("Ready to draw")
+	render(context)  // Render once on load
+
+	
+	// Live Drawing ------------------------------------------------------------
+	// Press `F12` - Javascript `Console` - REPL
+	window.clear = clear  // export function to `window` example
+	window.c = context
+	// Type in the `console` to live draw
+	//   clear()
+	//   c.fillRect(200, 20, 10, 10)
+
+
+	// Advanced SKills ---------------------------------------------------------
+	
+	// Advanced Technique 1 - Custom Paths/Shapes
+	function my_custom_shape() {
 		// TEMPLATE for Freeform shape
 		// c.fillStyle = 'white';
 		// .. or
 		// c.strokeStyle = 'cyan';
+		//
 		// c.beginPath();
-		// ... moveTo, lineTo, arc
+		// ... moveTo? lineTo? arc?
+		// ... moveTo? lineTo? arc?
+		// ... moveTo? lineTo? arc?
+		//
+		// Finish the shape
 		// c.stroke(); // draws the lines of the shape
 		// .. or
 		// c.fill(); // fills the shape
-
-		// HTML5 Canvas Documentation
-		// https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial
-		// Advanced
-		//  https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Compositing
-		//  https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
-		//  https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
-
 	}
 
-	// Loop (optional for animation)
+	// Advanced Technique 2 - Animation Loop
 	//   SideNote: This is `easy mode` animation - More needed to handled accurate timing of frames
 	function startAnimation(time) {
 		requestAnimationFrame(startAnimation)
 		render(context)
 	}
-
-	// Javascript Console REPL - Press `F12`
-	window.clear = clear
-	window.c = context
-	// Try in console
-	//   clear()
-	//   c.fillRect(200, 20, 10, 10)
-
-	console.log("Ready")
-	render(context)  // Render once on load
 	// startAnimation()  // Render in animation loop
+
+
+	// Advanced Technique 3 - Origin Transform
+	function transform_origin_example() {
+		// https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/getTransform
+		const storedTransform = c.getTransform()
+		c.translate(100,100)
+		c.rotate(Math.PI)
+		// draw code here ...
+		c.setTransform(storedTransform)
+	}
+
+	// Documentation -----------------------------------------------------------
+
+	// https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial
+	// Advanced
+	//   https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Compositing
+	//   https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
+	//   https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
+
 </script>
 </html>
