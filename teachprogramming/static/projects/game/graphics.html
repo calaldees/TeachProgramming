@@ -13,9 +13,9 @@
 		}
 		canvas {
 			image-rendering: pixelated;
-			object-fit: cover;
+			object-fit: contain; /* cover */
 			height: 100%; max-height: 100%;
-			max-width: 100%;
+			/* max-width: 100%; */
 		}
 	</style>
 </head>
@@ -30,7 +30,7 @@
 	const w = canvas.width
 	const h = canvas.height
 	function reset() {
-		c.setTransform(1, 0, 0, 1, 0, 0)  // Reset transformation matrix to the identity matrix
+		context.setTransform(1, 0, 0, 1, 0, 0)  // Reset transformation matrix to the identity matrix
 		context.clearRect(0, 0, w, h)
 	}
 	// See more base functions (e.g. color, pixel and line)
