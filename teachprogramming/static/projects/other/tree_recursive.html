@@ -8,15 +8,16 @@
     const w = canvas.width
     const h = canvas.height
 
-    function color(r,g,b) {
-        const color = `rgb(${r},${g},${b})`
-        c.fillStyle = color
-        c.strokeStyle = color
-    }
+
     function reset() {
         c.setTransform(1, 0, 0, 1, 0, 0)  // Reset transformation matrix to the identity matrix
         c.fillStyle = 'black'
         c.fillRect(0, 0, canvas.width, canvas.height)
+    }
+    function color(r,g,b) {
+        const color = `rgb(${r},${g},${b})`
+        c.fillStyle = color
+        c.strokeStyle = color
     }
     function pixel(x, y) {c.fillRect(Math.floor(x), Math.floor(y), 1, 1);}
     function line(x1,y1,x2,y2) {

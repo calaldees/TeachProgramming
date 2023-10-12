@@ -29,13 +29,13 @@
 	const context = canvas.getContext('2d')
 	const w = canvas.width
 	const h = canvas.height
-	function clear() {
+	function reset() {
 		c.setTransform(1, 0, 0, 1, 0, 0)  // Reset transformation matrix to the identity matrix
 		context.clearRect(0, 0, w, h)
 	}
 
 	function render(c, state) {
-		clear()
+		reset()
 
 		// Rectangle
 		c.fillStyle = 'white'
@@ -60,13 +60,13 @@
 	console.log("Ready to draw")
 	render(context)  // Render once on load
 
-	
+
 	// Live Drawing ------------------------------------------------------------
 	// Press `F12` - Javascript `Console` - REPL
-	window.clear = clear  // export function to `window` example
+	window.reset = reset  // export function to `window` example
 	window.c = context
 	// Type in the `console` to live draw
-	//   clear()
+	//   reset()
 	//   c.fillRect(200, 20, 10, 10)
 
 
