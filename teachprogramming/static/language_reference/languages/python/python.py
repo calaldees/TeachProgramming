@@ -436,6 +436,9 @@ def function_named_defaults():
   pass
 
 
+def debugger():
+  # breakpoint()   # ver: debugger
+
 # cool bits
 # a,b = b, a   # swap 
 # ll = list(map(int, input().split()))
@@ -485,6 +488,8 @@ if __name__ == "__main__":
   assertion()
   sort()
   regex()
+
+  debugger()
 
   # Run all functions in order
   #for function_name in functions:

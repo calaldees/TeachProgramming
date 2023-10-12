@@ -210,3 +210,40 @@ Y2? working with others
     * He's omega privilaged and can travel the world
     * His first year was a poorly sequenced joke
     * His hard work full on got him though - code proficiency takes "time" (sustained)
+
+---
+
+* [A’s for All (as Time and Interest Allow)](https://dl.acm.org/doi/pdf/10.1145/3545945.3569847) SigCSE [doi](https://dl.acm.org/doi/10.1145/3545945.3569847)
+    * Dynamic, Randomised problem generation
+
+---
+
+* [Project-Based Software Engineering Curriculum for Secondary Students](https://doi.org/10.1145/3605468.3605501)
+    * Abstract
+        * > There has been a growing interest in software engineering (SE) education to prepare K-12 students for the workforce. 
+        > Despite the relevance of SE education for K-12 students, most of the available instructional units lack detail and are limited for large-scale use [27]. 
+        > Previous research has also indicated that educators fear that SE concepts are too complicated for secondary students [14] 
+        > ... Gutierrez et al . confirmed that primary and secondary students are more than capable of comprehending SE concepts [13].
+    * > We use a block-based learning environment that connects to Application Programming Interfaces (APIs), which, in turn, provide students with a wide range of online datasets to use in their projects. 
+    * > Human-Computer Interaction, Prototyping,
+    * > virtual week-long summer camp
+    * "Computer Science Frontiers" as a follow up to "AP Computer Science Principles" (see below)
+    * Create (performance task)
+        * develop a computer program of their choice 
+            * Submit program code 
+            * video of programm running - text is fine - no voice narration
+        * The Create performance task requires at least 9 hours of dedicated class time for students to complete. The end-of-course exam is 3 hours long and includes 70 multiple-choice questions and 4 written response prompts related to their Create performance task. 
+            * Indentify inputs/outputs, funcitons, reational operators
+    * [AP Computer Science Principles](https://apcentral.collegeboard.org/courses/ap-computer-science-principles/course) (Advanced Placement - pursue college-level studies while still in high school) [spec-pdf](https://apcentral.collegeboard.org/media/pdf/ap-computer-science-principles-course-and-exam-description.pdf)
+        * for (High School == 6th form) to access content for (College (freshman) == University Year 1)
+    
+
+* [From Blocks to Professional Development – Thoughts on the Future of Educational Programming](https://dl.acm.org/doi/10.1145/3605468.3609785) Kölling 2023
+    * > block-based systems built around structure editors almost exclusively used for early programming instruction to young learners, 
+      > and professional environments that use text-based languages and are edited at character level. 
+      > Here, we argue that combining the two approaches into a single system can have benefits. We discuss frame-based editing, a combination of text and blocks, and its potential to improve the landscape of programming education
+* The Cambridge Handbook of Computing Education Research [14 - Assessment and Plagiarism](https://www.cambridge.org/core/books/cambridge-handbook-of-computing-education-research/assessment-and-plagiarism/E77348A0456C3B352F317DFF7D9F5361)
+    * >  As a subject that is often considered vocational in nature, computing students also need to demonstrate standard skills of employability, which lacks an overall infrastructure (Fincher & Finlay, Reference Fincher and Finlay2016)
+    * > “The spirit and style of student assessment defines the de facto curriculum.”  Rowntree (Reference Rowntree1977) 
+
+Concept: "Localised assessment" combined with "authentic assessment"

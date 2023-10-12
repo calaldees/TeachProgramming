@@ -20,7 +20,7 @@
 	</style>
 </head>
 <body>
-	<canvas id="canvas" width="480" height="270"></canvas>
+	<canvas id="canvas" width="480" height="270"></canvas><!-- 480*270 is 1/4 of 1920*1080 -->
 </body>
 <script type="module">
 
@@ -28,32 +28,16 @@
 	const context = canvas.getContext('2d')
 	const w = canvas.width
 	const h = canvas.height
+	function clear() {context.clearRect(0, 0, w, h)}
 
-	function clear(){context.clearRect(0, 0, w, h)}
 	function render(c, state) {
 		clear()
-
-		// https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial
-		// Advanced
-		//  https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Compositing
-		//  https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
-		//  https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
 
 		// Rectangle
 		c.fillStyle = 'white'
 		c.fillRect(20, 20, 10, 10)
 
-		// TEMPLATE for Freeform shape
-		// c.fillStyle = 'white';
-		// .. or
-		// c.strokeStyle = 'cyan';
-		// c.beginPath();
-		// ... moveTo, lineTo, arc
-		// c.stroke(); // draws the lines of the shape
-		// .. or
-		// c.fill(); // fills the shape
-
-		// Line
+		// Line - (make your own line function to reuse this)
 		c.strokeStyle = 'cyan'
 		c.lineWidth = 2
 		c.beginPath()
@@ -67,24 +51,42 @@
 		c.arc(200, 200, 20, 0, Math.PI/2)
 		c.lineTo(200, 200)
 		c.fill()
+
+		// TEMPLATE for Freeform shape
+		// c.fillStyle = 'white';
+		// .. or
+		// c.strokeStyle = 'cyan';
+		// c.beginPath();
+		// ... moveTo, lineTo, arc
+		// c.stroke(); // draws the lines of the shape
+		// .. or
+		// c.fill(); // fills the shape
+
+		// HTML5 Canvas Documentation
+		// https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial
+		// Advanced
+		//  https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Compositing
+		//  https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
+		//  https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
+
 	}
 
-	// Loop
-	function main(time) {
-		requestAnimationFrame(main)
+	// Loop (optional for animation)
+	//   SideNote: This is `easy mode` animation - More needed to handled accurate timing of frames
+	function startAnimation(time) {
+		requestAnimationFrame(startAnimation)
 		render(context)
-		// TODO: this is `easy mode` there is more to this for accurate timing of frames
 	}
 
-	console.log("Ready");
-	render(context);  // Render once on load
-	// main();  // Render in animation loop
-
-	// Export to window for REPL
+	// Javascript Console REPL - Press `F12`
 	window.clear = clear
 	window.c = context
-	// now try in console
+	// Try in console
 	//   clear()
 	//   c.fillRect(200, 20, 10, 10)
+
+	console.log("Ready")
+	render(context)  // Render once on load
+	// startAnimation()  // Render in animation loop
 </script>
 </html>

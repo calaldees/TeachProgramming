@@ -87,6 +87,8 @@ Other existing concepts (for reference)
     * 15:30–16:00 Digitising Aruba in a sustainable way - Bruce Harms, CoderDojo
     * BREAK
     * 16:45–17:30 Closing keynote.
+* [The Code Club Blog](https://blog.codeclub.org/)
+    * [Our Code Club rules! How to have fun and set boundaries](https://blog.codeclub.org/2023/09/20/our-code-club-rules-how-to-have-fun-and-set-boundaries/)
 
 
 Alternate names
@@ -94,7 +96,7 @@ Alternate names
 
 * Code Crew
 * Kode Krew 
-    * I decided against .. Kent Kode Krew ...
+    * I decided against .. Kent Kode Krew ... The KKK
 * Code Zone
 * Bootstrap Code
 

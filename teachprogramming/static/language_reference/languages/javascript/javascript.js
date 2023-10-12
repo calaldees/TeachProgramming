@@ -520,6 +520,10 @@ function http_request_json() {
 }
 
 
+function debug() {
+  // `NODE_INSPECT_RESUME_ON_START=1 node inspect app.js`  // https://nodejs.org/api/debugger.html
+  //debugger;  // ver: debugger
+}
 
 
 //------------------------------------------------------------------------------
@@ -557,6 +561,7 @@ function main() {
   sort();
   assertion();
   http_request_json();
+  debug();
 }
 main();
 
