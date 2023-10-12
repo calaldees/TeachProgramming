@@ -24,7 +24,7 @@
 </body>
 <script type="module">
 
-	// Setup canvas variables and core functions
+	// Setup -------------------------------------------------------------------
 	const canvas = document.getElementById('canvas')
 	const context = canvas.getContext('2d')
 	const w = canvas.width
@@ -33,7 +33,10 @@
 		c.setTransform(1, 0, 0, 1, 0, 0)  // Reset transformation matrix to the identity matrix
 		context.clearRect(0, 0, w, h)
 	}
+	// See more base functions (e.g. color, pixel and line)
+	// 	https://github.com/calaldees/TeachProgramming/blob/cb82b5f2a76a0649eef9a301996f18d73b04d635/teachprogramming/static/projects/other/tree_recursive.html#L17
 
+	// Render ------------------------------------------------------------------
 	function render(c, state) {
 		reset()
 
@@ -41,7 +44,7 @@
 		c.fillStyle = 'white'
 		c.fillRect(20, 20, 10, 10)
 
-		// Line - (make your own line function to reuse this)
+		// Line - (todo make your own line function to reuse this)
 		c.strokeStyle = 'cyan'
 		c.lineWidth = 2
 		c.beginPath()
