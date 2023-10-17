@@ -8,22 +8,23 @@ Overview
 Server
 ------
 
-Use https://github.com/calaldees/channelServer
+### Cloud Based IDE
 
-### External visible server/ip
+* Launch [channelServer](https://github.com/calaldees/channelServer)
+    * [GitHub CodeSpaces](https://codespaces.new/calaldees/channelServer?quickstart=1)
+        * Make ports public (cant specify this in config)
+    * [GitPod](https://gitpod.io/#https://github.com/calaldees/channelServer)
 
-git + docker required
+### Local
+
+* git + docker required
 
 ```bash
-git clone xxx
-cd xxx
+git clone https://github.com/calaldees/channelServer
+cd channelServer
 ifconfig  # find ip
 make run
 ```
-
-### Gitpod
-
-* [Launch GitPod channelServer](https://gitpod.io/#https://github.com/calaldees/channelServer)
 
 #### Websocket
 
