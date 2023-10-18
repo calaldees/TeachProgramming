@@ -1,0 +1,36 @@
+<!DOCTYPE html><html>
+<head>
+    <meta charset="utf-8" />
+    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
+    <title>Markdown</title>
+
+    <!-- // https://github.com/showdownjs/showdown -->
+    <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+</head>
+<body>
+
+<script type="module">
+
+if (!window.location.hash) {window.location.hash="#README.md"}
+
+function renderMarkdownFileToElement(url, $el) {
+    document.title = url
+    fetch(url)
+        .then(response => response.text())
+        .then((markdown_data) => {
+            const converter = new showdown.Converter()
+            $el.innerHTML = converter.makeHtml(markdown_data)
+        })
+    .catch(err => console.error(err))
+}
+
+const $markdownElement = document.getElementById('markdown') || document.getElementsByTagName('body').item(0)
+
+window.onhashchange = function() {
+    renderMarkdownFileToElement(`${window.location.hash.replace('#','')}`, $markdownElement)
+}
+window.onhashchange()
+
+</script>
+</body>
+</html>
