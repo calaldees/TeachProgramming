@@ -55,4 +55,5 @@ def loop():
     )
     turtle.update()
 loop()
+breakpoint()
 #draw_tree_recursive(t, TreeState(size=100+frame))
