@@ -1,36 +1,37 @@
-<!DOCTYPE html><html>
-<head>
-    <meta charset="utf-8" />
-    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
-    <title>Markdown</title>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
+		<!-- // https://github.com/showdownjs/showdown -->
+		<script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+	</head>
+	<body>
+		<script type="module">
 
-    <!-- // https://github.com/showdownjs/showdown -->
-    <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
-</head>
-<body>
+			if (!window.location.search) {window.location.search="source=README.md"}
+			const sourceUrl = (new URLSearchParams(window.location.search)).get("source")
 
-<script type="module">
+			function renderMarkdownFileToElement(sourceUrl, $el) {
+				document.title = sourceUrl
+				fetch(sourceUrl)
+					.then(response => response.text())
+					.then((markdown_data) => {
+						const converter = new showdown.Converter({
+							tables: true,
+							tasklists: true,
+							openLinksInNewWindow: true,
+							// https://github.com/showdownjs/showdown#valid-options
+						},)
+						$el.innerHTML = converter.makeHtml(markdown_data)
+					})
+				.catch(err => console.error(err))
+			}
 
-if (!window.location.hash) {window.location.hash="#README.md"}
+			const $markdownElement = document.getElementById('markdown') || document.getElementsByTagName('body').item(0)
 
-function renderMarkdownFileToElement(url, $el) {
-    document.title = url
-    fetch(url)
-        .then(response => response.text())
-        .then((markdown_data) => {
-            const converter = new showdown.Converter()
-            $el.innerHTML = converter.makeHtml(markdown_data)
-        })
-    .catch(err => console.error(err))
-}
+			renderMarkdownFileToElement(sourceUrl, $markdownElement)
 
-const $markdownElement = document.getElementById('markdown') || document.getElementsByTagName('body').item(0)
-
-window.onhashchange = function() {
-    renderMarkdownFileToElement(`${window.location.hash.replace('#','')}`, $markdownElement)
-}
-window.onhashchange()
-
-</script>
-</body>
+		</script>
+	</body>
 </html>

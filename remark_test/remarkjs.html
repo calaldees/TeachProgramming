@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <!-- Bootstrap Standalone Markdown Presentation Renderer -->
-    <!-- Example Inspired by https://remarkjs.com/#8 -->
-	<meta charset="utf-8" />
-	<link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
-    <style type="text/css">
-    </style>
-    <script src="http://remarkjs.com/downloads/remark-latest.min.js"></script>
-  </head>
-  <body>
-    <script>
-        if (!window.location.search) {window.location.search="source=README.md"}
-        var slideshow = remark.create({
-            sourceUrl: (new URLSearchParams(window.location.search)).get("source"),
-        })
-    </script>
-  </body>
+	<!-- Bootstrap Standalone Markdown Presentation Renderer -->
+	<!-- Example Inspired by https://remarkjs.com/#8 -->
+	<head>
+		<meta charset="utf-8" />
+		<link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
+		<script src="http://remarkjs.com/downloads/remark-latest.min.js"></script>
+		<link rel="stylesheet" media="all" href="remarkjs.css" />
+	</head>
+	<body>
+		<script type="module">
+			if (!window.location.search) {window.location.search="source=README.md"}
+			var slideshow = remark.create({
+				sourceUrl: (new URLSearchParams(window.location.search)).get("source"),
+			})
+		</script>
+	</body>
 </html>
