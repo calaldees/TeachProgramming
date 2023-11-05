@@ -15,17 +15,17 @@ Online Coding Environments
     * [jupyterhub.canterbury](https://jupyterhub.canterbury.ac.uk/) no-readline
 * login-free
     * [sharepad.io](https://sharepad.io/) js, python, c#, java - no login - live collaboration - share single files - pre-execute-readline
-    * [programiz online-compiler](https://www.programiz.com/python-programming/online-compiler/) java, c#, python, js, c, html5
+    * [programiz.com](https://www.programiz.com/python-programming/online-compiler/) java, c#, js, c, html5 python (looses repl state), c#, sql. Loads of courses/tutorials/challenges
+    * [OneCompiler.com](https://onecompiler.com/) pre-readline
     * [tutorialspoint.com/codingground](https://www.tutorialspoint.com/codingground.htm)
     * [csacademy.com/workspace/](https://csacademy.com/workspace/)
-    * [OneCompiler](https://onecompiler.com/) pre-readline
+    
     * [mycompiler.io](https://www.mycompiler.io/) pre-readline
     * [w3schools.com/tryit](https://www.w3schools.com/tryit/trycompiler.asp?filename=demo_python) no-readline
     * [dotnetfiddle.net](https://dotnetfiddle.net/) C# only
     * [javafiddle](https://javafiddle.leaningtech.com) (completely client web-assembly)
         * JVM replacement in HTML5 and WebAssembly to run Java applications (and applets) on modern browsers
         * [](https://webvm.io/)
-    * [www.programiz.com](https://www.programiz.com/python-programming/online-compiler/) python (looses repl state), java, c#, js, c, sql
     * [glot.io](https://glot.io/) - (in settings raise number of default lines)
     * [ideone.com](https://ideone.com) - fairly slow
     * [tio.run](https://tio.run/) - no starting program - create main method from scratch

@@ -234,6 +234,7 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
 
   void define_list() {
     List<String> cc = new ArrayList<>(Arrays.asList(new String[]{"a", "b", "c"}));  // VER: define_list
+    System.out.println(String.join(",", cc));   // VER: define_list
     System.out.println(cc.get(0)); // VER: define_list
     String last = cc.remove(cc.size()-1);
     cc.add("d"); // VER: define_list

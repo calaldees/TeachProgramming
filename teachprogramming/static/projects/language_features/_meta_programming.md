@@ -1,6 +1,6 @@
 ### Meta Programming
 
-* [Metaprogramming](https://en.wikipedia.org/wiki/Metaprogramming) Wikipedia
+* [MetaProgramming](https://en.wikipedia.org/wiki/Metaprogramming) Wikipedia
     * > a program can be designed to read, generate, analyze or transform other programs, and even modify itself while running
 
 * [[reflection]] - program inspecting itself while running

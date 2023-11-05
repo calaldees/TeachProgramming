@@ -1,6 +1,12 @@
 Language Features
 =================
 
+* [[code_environments]]
+    * sharepad.io
+    * programiz.com
+    * onecompiler.com
+* See also [language reference](https://computingteachers.uk/static/langauge_reference.html)
+
 Features
 --------
 
@@ -11,12 +17,16 @@ Features
 * Type checking
     * [[typing]]
     * Passing Functions + Anonymous Functions Lambda
-* data structures
-* [[abstraction]]
-    * [[inheritence]]
+        * See cheat sheet
+    * Generic Types
+        * (see in_a_row for csharp quick example)
+* [[generic_collections]]
+* [[inheritance]]
 * import/library management
+    * I hate csharp `using` see `Linq`
 * error handling
     * exceptions
+    * go calls always return error
 * [[mutability]] / immutability
 * [[operator_overloading]]
 * [[decorators]]
@@ -25,12 +35,15 @@ Features
 * Data Structures
     * [[json]]
     * Sets
+    * [[streams]]
+        * 
 * [[pattern_matching]]
 * concurrency
     * [[async-await]]
     * [[concurrency]] primitives
 * inline testing
 * [[internationalisation]]
+* [[language_interop]]
 * Dynamic Vs Static languages
     * Pro's and Con's of each
     * What can dynamic languages do that static ones cant (and vice versa)

@@ -1,5 +1,5 @@
-Implementation Abstraction
---------------------------
+Generic Collections (implementation abstraction)
+-------------------
 
 java
 ```java
@@ -66,5 +66,9 @@ Whiteboard/Visualiser?
         * Can be distributed across memory 
     * Easy to add/remove/splice
 
-This example shows us first hand the difference between high level and low level languages.
-In high level languages, we don't know what the system is doing. We use whatever abstraction we are provided.
+* High level vs Low level
+    * This example shows us first hand the difference between high level and low level languages.
+    * In high level languages, we don't know what the system is doing. We use whatever abstraction we are provided.
+    * in Low level languages we need to explicitly describe our implementation
+
+* Microsoft C# [When to use generic collections](https://learn.microsoft.com/en-us/dotnet/standard/collections/when-to-use-generic-collections)

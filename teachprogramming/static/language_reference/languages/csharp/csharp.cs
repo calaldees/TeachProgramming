@@ -17,7 +17,7 @@ function csharp {     # linux bash function                                     
 
 using System;                                                                   // VER: hello_world
 using System.IO;                                                                // VER: file_write
-using System.Collections.Generic;                                               // VER: define_map,list_comprehension
+using System.Collections.Generic;                                               // VER: define_map,list_comprehension,define_list
 using System.Linq;                                                              // VER: list_comprehension
 using System.Text.Json;  // TODO see json_data - not available in mono as it only up to dotnet.4.x
 using System.Net.Http;   // VER: http_request
@@ -236,7 +236,7 @@ public class Program {
   void define_fixed_array() {
     var aa = new string[3];  // VER: define_fixed_array
     aa[1] = "test";  // VER: define_fixed_array
-    Console.WriteLine(String.Join(",",aa));  // VER: define_fixed_array
+    Console.WriteLine(String.Join(",", aa));  // VER: define_fixed_array
     Console.WriteLine(aa[1]);  // VER: define_fixed_array
          // VER: define_fixed_array
     var bb = new string[]{"a", "b", "c"};  // VER: define_fixed_array
@@ -297,6 +297,7 @@ public class Program {
 
   void define_list() {
     var cc = new List<string>(new string[]{"a", "b", "c"});   // VER: define_list
+    Console.WriteLine(String.Join(",", cc));  // VER: define_list
     Console.WriteLine(cc[0]);   // VER: define_list
     string last = cc[cc.Count-1]; cc.RemoveAt(cc.Count-1);   // VER: define_list
     cc.Add("d");   // VER: define_list
@@ -309,6 +310,9 @@ public class Program {
     if (cc.Contains("z")) {                  // VER: define_list
       Console.WriteLine("z exists in list");  // VER: define_list
     } // VER: define_list
+
+
+
     // TODO: concat lists
   }
 

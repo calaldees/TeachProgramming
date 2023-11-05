@@ -18,6 +18,8 @@ class Main {
   }
 }
 ```
+* `==` is reference equality
+* StackOverflow: [What is the proper way to implement a robust equals() and hashCode() method in an inheritance hierarchy?](https://stackoverflow.com/a/53291782/3356840)
 
 csharp
 ```csharp
@@ -34,6 +36,8 @@ Point p1 = new Point(1,1);
 Point p2 = new Point(1,1);
 Console.WriteLine(p1 == p2);
 ```
+* `==` is reference equality
+* [How to define value equality for a class or struct (C# Programming Guide)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/how-to-define-value-equality-for-a-type)
 
 
 ```javascript

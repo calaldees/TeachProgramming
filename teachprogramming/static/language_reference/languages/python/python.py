@@ -175,6 +175,7 @@ def define_fixed_array():
 
 def define_list():
   cc = ["a", "b", "c"]        # VER: define_list
+  print(cc)                   # VER: define_list
   print(cc[0])                # VER: define_list
   last = cc.pop()             # VER: define_list
   cc.append("d")              # VER: define_list

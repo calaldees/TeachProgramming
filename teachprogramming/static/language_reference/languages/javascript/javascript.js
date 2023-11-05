@@ -220,21 +220,22 @@ function define_fixed_array() {
 }
 
 function define_list() {
-  const cc = ["a", "b", "c"];  // VER: define_list
-  console.log(cc[0]);  // VER: define_list
-  const last = cc.pop();  // VER: define_list
-  cc.push("d");  // VER: define_list
-  const first = cc.shift();  // VER: define_list
-  cc.unshift("z");  // VER: define_list
+  const cc = ["a", "b", "c"]  // VER: define_list
+  console.log(cc)  // VER: define_list
+  console.log(cc[0])  // VER: define_list
+  const last = cc.pop()  // VER: define_list
+  cc.push("d")  // VER: define_list
+  const first = cc.shift()  // VER: define_list
+  cc.unshift("z")  // VER: define_list
   function remove_by_value(array, v) { // VER: define_list
-    const i = array.indexOf(v); if (i > -1) {array.splice(i, 1);}  // VER: define_list
+    const i = array.indexOf(v); if (i > -1) {array.splice(i, 1)}  // VER: define_list
   }  // VER: define_list
-  remove_by_value(cc, "b"); // VER: define_list
+  remove_by_value(cc, "b") // VER: define_list
   for (let i of cc) {  // VER: define_list
-    console.log(i); // z d   // VER: define_list
+    console.log(i) // z d   // VER: define_list
   }  // VER: define_list
   if (cc.indexOf("z") >= 0) {  // VER: define_list
-    console.log("z exists in list");  // VER: define_list
+    console.log("z exists in list")  // VER: define_list
   }  // VER: define_list
   // TODO: concat lists
 }
