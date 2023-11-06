@@ -12,6 +12,11 @@ Concurrency Primitives in GoLang
 		* `async` just isn't needed - Python Documentation [ThreadPoolExecutor Example](https://docs.python.org/3/library/concurrent.futures.html#threadpoolexecutor-example) multiple urls
 		* Discuss's FastAPI and Django
 	* [Notes on structured concurrency, or: Go statement considered harmful](https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/)
+* Concurrency and Parallelisation are different concepts
+	* Concurrency - quickly switching between multiple tasks to keep all the plates spinning
+		* one person laying bricks and mortar and taking a few phone calls throughout a day
+	* Parallelisation - doing multiple tasks at the same time
+		* 12 people laying bricks and mortaring at the same time with an overseer making phone calls
 
 
 * [Practical Example of Concurrency on Golang](https://articles.wesionary.team/practical-example-of-concurrency-on-golang-fc4609ea8ed1) - Go Routine, WaitGroups, Mutex, Channel
@@ -42,7 +47,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"sync"
 )
 
 func main() {
@@ -71,6 +75,13 @@ func getWebsite(website string) {
 
 ## With WaitGroup
 ```golang
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"sync"
+)
 
 var wg sync.WaitGroup
 
@@ -104,6 +115,13 @@ func getWebsite(website string) {
 
 ## Adding Mutex
 ```golang
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"sync"
+)
 
 var wg sync.WaitGroup
 var mut sync.Mutex
@@ -146,6 +164,14 @@ func getWebsite(website string) {
 ## Goroutines with Channel
 
 ```golang
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"sync"
+)
+
 
 func main() {
 
