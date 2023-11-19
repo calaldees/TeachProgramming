@@ -18,3 +18,7 @@ TODO:
     * Video/Poster presentation 10min
     * Employers focus on "working without knowing the answers" and "collaboration"
         * Manage oneself, experiment
+
+* [From Blocks to Professional Development – Thoughts on the Future of Educational Programming](https://dl.acm.org/doi/pdf/10.1145/3605468.3609785) Michael Kölling 2023
+    * https://stride-lang.net/
+
