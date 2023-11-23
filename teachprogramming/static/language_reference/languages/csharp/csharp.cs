@@ -20,7 +20,8 @@ using System.IO;                                                                
 using System.Collections.Generic;                                               // VER: define_map,list_comprehension,define_list
 using System.Linq;                                                              // VER: list_comprehension
 using System.Text.Json;  // TODO see json_data - not available in mono as it only up to dotnet.4.x
-using System.Net.Http;   // VER: http_request
+using System.Net.Http;
+using System.Diagnostics;   // VER: http_request,assertion
 
 public class Star { // VER: class
     public int x; // VER: class
@@ -487,6 +488,18 @@ public class Program {
     Console.WriteLine(p2.pets[1].name);  // VER: json_data_to_object
   }
 
+
+
+  void assertion() {
+    var name = "bob";
+    var count = 3;
+    Debug.Assert(name == "bob", $"I am expecting {{name}} to be 'bob'");  // ver: assertion
+    Debug.Assert(count >= 3);  // ver: assertion
+  }
+
+
+
+
   void sort() {
     // sort reverse with custom comparator
     // TODO:
@@ -584,6 +597,7 @@ public class Program
       dict_comprehension();
       json_data();
       json_data_to_object();
+      assertion();
       sort();
       http_request();
       http_request_json();
