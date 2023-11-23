@@ -22,7 +22,7 @@ import java.util.List;    // VER: list_comprehension
 import java.util.Arrays;  // VER: list_comprehension
 import java.util.ArrayList;    // VER: list_comprehension
 
-import java.util.stream.Collectors;   // VER: list_comprehension dict_comprehension
+import java.util.stream.Collectors;   // VER: list_comprehension,dict_comprehension
 import java.util.Map;    // VER: dict_comprehension
 import java.util.HashMap;    // VER: define_map
 import static java.util.Map.entry;   // VER: dict_comprehension
