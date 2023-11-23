@@ -2,6 +2,15 @@
 
 * [Deep learning to translate between programming languages](https://ai.facebook.com/blog/deep-learning-to-translate-between-programming-languages)
 
+* [Summary of Semantic Transfer in Programming Languages: Exploratory Study of Relative Novices](https://blog.teachcomputing.org/summary-of-semantic-transfer-in-programming-languages-exploratory-study-of-relative-novices/) dec 2020
+    * when a second language is encountered
+        * A carryover concept (similar meaning in both the old and new context)
+        * A changed concept (different meaning in the new context)
+        * A novel concept (completely new to the learner)
+
+Analogy? Students taught many lingustic languages at once to improve them all - they can say the name of farmyard animals in 4 languages, but can't hold a conversation in any of them.
+
+
 Alternate tutorials/cheatsheets
 -------------------
 

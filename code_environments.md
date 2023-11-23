@@ -19,7 +19,7 @@ Online Coding Environments
     * [OneCompiler.com](https://onecompiler.com/) pre-readline
     * [tutorialspoint.com/codingground](https://www.tutorialspoint.com/codingground.htm)
     * [csacademy.com/workspace/](https://csacademy.com/workspace/)
-    
+    * [editor.raspberrypi.org](https://editor.raspberrypi.org/) - python (with readline) and html 
     * [mycompiler.io](https://www.mycompiler.io/) pre-readline
     * [w3schools.com/tryit](https://www.w3schools.com/tryit/trycompiler.asp?filename=demo_python) no-readline
     * [dotnetfiddle.net](https://dotnetfiddle.net/) C# only

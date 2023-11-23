@@ -123,6 +123,19 @@ Chapter Concepts
 Real things don't score highly as year 13 AQA Projects
 
 
+Other
+-----
+
+* Average human capacity in computing/problem-solving. Time/Experience. Value (commercial?/personal?) Time is finite. 
+    * What do people 'need'(?) to know to provide value in this domain?
+    * are computing qualifications fit for purpose for the future?
+    * Future AI - is there the time for most people to understand the foundations of computing?
+        * Consider "programming skill getting rarer" decades of coding experience (as currently perceived) to be a thing of the past
+    * A lifetime of exploring programming problems means I can talk with young people about soliving a sudoku, huffman compression, rsa. I did not have that knowlege leaving university. 
+    * In 2005 students were crying out to learn to code. In 2020 they hate being forced to code, it's hard and abstract and no real value (without decades of effort/time and most are not willing to invest)
+* Access to high quality information/resources (that are up to date) has been solved. There are more skills computing people in the world now than in 1990. THe key ingredient is "personal interest" which is a requirement for investing "time". Young people are pulled from pillar to post and are stretched for time. Time is the number one ingredient
+
+
 Activities
 ----------
 
@@ -189,7 +202,8 @@ Profetional tooling practical
     containers
     tests
 
-Multi langauge
+Multi language?
+ - Analogy? Students taught many lingustic languages at once to improve them all - they can say the name of farmyard animals in 4 languages, but can't hold a conversation in any of them.
 
 
 Theory conveyed by practical

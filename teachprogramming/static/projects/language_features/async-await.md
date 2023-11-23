@@ -2,6 +2,9 @@ Async + await and the Event Loop
 --------------------------------
 
 * See [[concurrency]]
+* Further reading
+    * [henriqueinonhe/promises-training](https://github.com/henriqueinonhe/promises-training/)
+        * > Practice working with promises through a curated collection of interactive challenges. This repository provides a platform to refine your skills, complete with automated tests to to give you instant feedback and validate your progress. 
 
 javascript
 ```javascript
