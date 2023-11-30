@@ -40,6 +40,7 @@ def on_received_number(receivedNumber):
         iWin()
     if receivedNumber == 6:
         iDraw()
+    basic.pause(1000)
     clearHand()
 radio.on_received_number(on_received_number)
 
