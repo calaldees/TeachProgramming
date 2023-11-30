@@ -14,6 +14,12 @@ Analogy? Students taught many lingustic languages at once to improve them all - 
 Alternate tutorials/cheatsheets
 -------------------
 
+
+* https://tools.withcode.uk/quickref/
+* [Code-cademy - All Cheatsheets](https://www.codecademy.com/resources/cheatsheets/all)
+    * e.g. https://www.codecademy.com/learn/learn-python-3/modules/learn-python3-hello-world/cheatsheet
+
+
 https://blog.withcode.uk/2021/09/gcse-computer-science-resource-updated-to-include-ocr-exam-reference-language/
 https://tools.withcode.uk/quickref/
 
