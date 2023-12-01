@@ -3,15 +3,19 @@ Network Disco Lights + Remote Control
 
 School activity for KS3, KS4, KS5.
 
-
-### Principle
-
-* Apply/Practical first - to give context - then discuss dissect/understand
-* Real industry tools
+See [Teacher Notes](#teacher-notes) section below
 
 * Projects
   * Project 1: Network Disco Light
   * Project 2: Remote Control (Chrome-cast clone)
+
+
+Setup
+-----
+
+### Server
+
+* [channelServer](https://github.com/calaldees/channelServer)
 
 
 <style>
@@ -45,7 +49,7 @@ function updateScreenColor(r,g,b) {
 ```
 * Open `disco.html` in a web browser
 * Replace `localhost` with URL your teacher gives you
-* Run the program after each addition by refreshing your browser `ctrl + r`
+* Run the program after each addition by refreshing your browser `ctrl`+`r` or `F5`
 
 ## Random Screen Color
 ```diff
@@ -316,6 +320,14 @@ Version Control and Documentation
 
 Teacher Notes
 =============
+
+Pedagogic Principles
+--------------------
+
+(Why the activity is structured this way)
+
+* Apply/Practical first - to give context - then discuss dissect/understand
+* Real industry tools
 
 
 Keywords
