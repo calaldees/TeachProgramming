@@ -1,6 +1,12 @@
 Security Projects
 =================
 
+* [gchq/CyberChef](https://github.com/gchq/CyberChef)
+  * > The Cyber Swiss Army Knife - a web app for encryption, encoding, compression and data analysis 
+  * Amazing! RSA! Data Decoding - I need to explore this more
+  * https://github.com/mattnotmax/cyberchef-recipes
+  * https://www.gaijin.at/en/infos/cyberchef-recipes
+
 * [temp-mail.org](https://temp-mail.org/)
     * Web readonly view of received mail
 * [shodan.io](https://www.shodan.io/)
