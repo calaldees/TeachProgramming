@@ -30,4 +30,9 @@ https://cheatsheetseries.owasp.org/
 
 
 
+* https://security.stackexchange.com/questions/36358/decrypt-from-cipher-text-encrypted-using-rsa
+  * Use `openssl` to encode and decode rsa
+  * `$ openssl enc -in ciphertext -out binarytext -d -a`
+  * `$ openssl rsautl -decrypt -in binarytext -out plaintext -inkey private.pem`
+
 

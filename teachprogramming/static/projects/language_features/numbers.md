@@ -37,3 +37,8 @@ Number.MAX_SAFE_INTEGER+1 === Number.MAX_SAFE_INTEGER+2
 ```
 
 
+Dynamic Vs Static Langauges
+===========================
+
+* [How Many Lines of C it Takes to Execute a + b in Python?](https://codeconfessions.substack.com/p/cpython-dynamic-dispatch-internals) - Understand the mechanics of dynamic dispatch implementation in CPython
+    * Amazing breakdown of the `c` files responsible for numeric operations

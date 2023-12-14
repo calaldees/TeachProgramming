@@ -243,6 +243,12 @@ const renderer_functions = {clear, iframe, youtube, image, media, speak, text}
 ```
 Explain use `---` as split character. Don't use `:` because this is a legal character in urls
 
+### ScreenID? (Advanced)
+
+Use URL to reuse the same client with a range of screen names
+* `window.location.hash.replace("#","")`
+* `(new URLSearchParams(window.location.search)).get("key")`
+
 
 `control.html`
 --------------
@@ -311,7 +317,7 @@ window.addEventListener('pointermove', (event)=>{
 Version Control and Documentation
 ---------------------------------
 
-`control.html` + `display.html` comited to same repo with a `README.md` describing how to launch server and use.
+`control.html` + `display.html` commit'ed to same repo with a `README.md` describing how to launch server and use.
 
 
 ---
@@ -371,7 +377,7 @@ Activities
   * setup WS_URL variable beforehand
   * 16:9 screen split in half
     * Plain text editor
-      * `ctrl + s`
+      * `ctrl + s`g
     * Web browser (chrome/firefox)
       * `ctrl + r` or `F5`
     * ![disco_student_dev_example.gif](disco_student_dev_example.gif)
