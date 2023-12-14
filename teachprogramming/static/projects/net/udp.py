@@ -18,4 +18,4 @@ sock.sendto(b"Hello, World!", addr)
 sock.bind(addr)
 while True:
     data, addr = sock.recvfrom(1024)
-    print("received message: %s" % data)
+    print(f"received bytes: {data}")

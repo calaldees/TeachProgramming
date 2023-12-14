@@ -525,6 +525,13 @@ public class Program {
 
   }
 
+  void network_udp_send() {
+    // TODO https://stackoverflow.com/q/20038943/3356840  // VER: network_udp_send
+  }
+  void network_udp_recv() {
+    // TODO https://stackoverflow.com/q/20038943/3356840  // VER: network_udp_recv
+  }
+
 
 /*
 Named params
@@ -601,6 +608,8 @@ public class Program
       sort();
       http_request();
       http_request_json();
+      network_udp_send();
+      network_udp_recv();
   }
   public static void Main(string[] args) {new Program();}
 }
