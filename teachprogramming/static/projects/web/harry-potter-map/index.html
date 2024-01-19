@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
+    <title>Map</title>
+
+    <style>
+    </style>
+</head>
+<body>
+    <h1>Map</h1>
+    
+<script type="module">
+
+const urlParams = new URLSearchParams(window.location.search);
+const name = urlParams.get('name') || "Unknown"
+const websocket_url = urlParams.get('websocket_url') || `${window.location.protocol.startsWith("https")?"wss":"ws"}://${window.location.host}/ws`
+
+const socket = new WebSocket(websocket_url)
+//socket.addEventListener("open", open)
+socket.addEventListener("message", (msg)=>{
+    console.log("got: " + msg.data)
+})
+
+const watchID = navigator.geolocation.watchPosition((position) => {
+    console.log("watchPosition", position.coords.latitude, position.coords.longitude)
+    socket.send(JSON.stringify({name, lat: position.coords.latitude, lon: position.coords.longitude}))
+})
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+if (SpeechRecognition) {
+    speechRecognition = new SpeechRecognition()
+    console.log("speechRecognition supported")
+}
+
+</script>
+</body>
+</html>
