@@ -43,8 +43,9 @@ Online Coding Environments
     * [jupyterhub.org](https://jupyterhub.org) python
     * [Google Colab](https://colab.research.google.com/notebooks/basic_features_overview.ipynb)
 * Full web IDE
-    * [gitpod.io](https://gitpod.io/) - social login or github required
-    * codespaces?
+    * https://github.com/calaldees/VSCodeOnlineExample
+        * [gitpod.io](https://gitpod.io/) - social login or github required
+        * [codespaces](https://github.com/codespaces/)?
     * [vscode.dev](https://vscode.dev/) full VS code in browser - no login - interesting!
         * [vscode-code-runner-for-web](https://github.com/formulahendry/vscode-code-runner-for-web) - extension to run python code in browser
 * other
