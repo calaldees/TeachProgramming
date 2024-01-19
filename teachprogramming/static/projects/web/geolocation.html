@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
+    <title>geolocation</title>
+
+    <style>
+    /* styles here */
+    html, body, textarea {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+    }
+    </style>
+
+    <!-- 
+    Additional scripts
+    <script src=""></script> 
+    -->
+</head>
+<body>
+
+    <textarea id="textarea"></textarea>
+
+<script type="module">
+
+const textarea = document.getElementsByTagName("textarea")[0]
+function log(...messages) {
+    const text = `${new Date()}: ${messages.join(',')}\n`
+    console.log(text)
+    textarea.value = textarea.value.slice(textarea.value.length-2048) + text
+    textarea.scrollTop = textarea.scrollHeight
+}
+
+navigator.geolocation.getCurrentPosition((position) => {
+    log("getCurrentPosition", position.coords.latitude, position.coords.longitude)
+})
+
+//const watchID = navigator.geolocation.watchPosition((position) => {
+//    log("watchPosition", position.coords.latitude, position.coords.longitude)
+//})
+//navigator.geolocation.clearWatch(watchID);
+
+//window.textarea = textarea
+log("init js")
+
+</script>
+
+<script type="module">
+//import mathjs from 'https://cdn.jsdelivr.net/npm/mathjs@12.2.1/+esm'  // https://www.jsdelivr.com/package/npm/mathjs
+import * as mathjs from 'https://esm.run/mathjs'
+
+
+const space1 = [[-1, 1], [-3, -1], [3, -2], [1, 2]];
+const space2 = [[2, 2], [2, 0], [4, 0], [4, 2]];
+
+
+function getAffineMatrix(space1, space2) {
+    const A = [];
+    for (let i = 0; i < 4; i++) {
+        const x = space1[i][0];
+        const y = space1[i][1];
+        const x_ = space2[i][0];
+        const y_ = space2[i][1];
+        A.push([x, y, 1, 0, 0, 0, -x * x_, -y * x_, -x_]);
+        A.push([0, 0, 0, x, y, 1, -x * y_, -y * y_, -y_]);
+    }
+
+    const matrixA = mathjs.matrix(A);
+    const vectorB = mathjs.matrix([
+        space2[0][0],
+        space2[0][1],
+        space2[1][0],
+        space2[1][1],
+        space2[2][0],
+        space2[2][1],
+        space2[3][0],
+        space2[3][1],
+    ]);
+
+    const matrixATranspose = mathjs.transpose(matrixA);
+    const matrixATAInverse = mathjs.inv(mathjs.multiply(matrixATranspose, matrixA));
+    const matrixATransposeB = mathjs.multiply(matrixATranspose, vectorB);
+
+    const resultVector = mathjs.multiply(matrixATAInverse, matrixATransposeB);
+
+    const affineMatrix = mathjs.matrix([
+        [resultVector.get([0]), resultVector.get([3]), resultVector.get([6])],
+        [resultVector.get([1]), resultVector.get([4]), resultVector.get([7])],
+        [resultVector.get([2]), resultVector.get([5]), resultVector.get([8])],
+    ]);
+
+    return affineMatrix;
+}
+
+const affineMatrix = getAffineMatrix(space1, space2);
+//console.log(affineMatrix);
+
+function transformCoordinates(x,y) {
+    const inputVector = mathjs.matrix([[x], [y], [1]])
+    const outputVector = mathjs.multiply(affineMatrix, inputVector)
+    return [outputVector.get([0, 0]), outputVector.get([1, 0])]
+}
+
+let [x, y] = transformCoordinates(0.1, -0.5)
+
+console.log(x,y)  // Output: 3.2611940298507465 0.25373134328358384
+
+
+
+/*
+
+--
+const matrixSpace1 = mathjs.matrix([
+    [x1, x2, x3, x4],
+    [y1, y2, y3, y4],
+    [1, 1, 1, 1],
+    [1, 1, 1, 1],
+])
+mathjs.inv(matrixSpace1) // Gives "RangeError: Matrix must be square (size: [3, 4])"
+
+--
+
+
+//let [x1, y1, x2, y2, x3, y3, x4, y4, x5, y5, x6, y6, x7, y7, x8, y8] = [3, 3, 3, 6, 6, 6, 6, 3, 0,  0, 0, 4, 4, 4, 4, 0]
+// let [x, y] = transformCoordinates(4, 4)
+
+const matrixSpace1 = mathjs.matrix([
+    [x1, x2, x3, x4],
+    [y1, y2, y3, y4],
+    [1, 1, 1, 1],
+])
+const matrixSpace2 = mathjs.matrix([
+    [x5, x6, x7, x8],
+    [y5, y6, y7, y8],
+    [1, 1, 1, 1],
+])
+const transformMatrix = mathjs.multiply(matrixSpace2, mathjs.inv(matrixSpace1))
+
+function transformCoordinates(x,y) {
+    const inputVector = mathjs.matrix([[x], [y],[1], [0]]) //
+    const outputVector = mathjs.multiply(transformMatrix, inputVector)
+    return [outputVector.get([0, 0]), outputVector.get([1, 0])]
+}
+
+let [x, y] = transformCoordinates(-0.1, -0.5)
+
+console.log(x,y)  // Output: 3.2611940298507465 0.25373134328358384
+*/
+</script>
+</body>
+</html>
