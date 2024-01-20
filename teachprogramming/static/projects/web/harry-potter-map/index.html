@@ -74,7 +74,7 @@ function drawFoot(x,y,angle,step_count) {
 const socket = new WebSocket(websocket_url)
 socket.addEventListener("message", (msg)=>{
     const data = JSON.parse(msg.data)
-    console.log("websocket", data)
+    //console.log("websocket", data)
 
     temp_count++                // temp
 
@@ -97,13 +97,32 @@ socket.addEventListener("message", (msg)=>{
 let message_count = 0
 const watchID = navigator.geolocation.watchPosition((position) => {
     console.log("watchPosition", position.coords.latitude, position.coords.longitude)
+    if (socket.readyState!=1) {return}
     socket.send(JSON.stringify({name, lat:position.coords.latitude, lon:position.coords.longitude, count:message_count++}))
 })
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+if (!SpeechRecognition) {console.error('SpeechRecognition unsupported')}
 if (SpeechRecognition) {
-    speechRecognition = new SpeechRecognition()
-    console.log("speechRecognition supported")
+    console.log("SpeechRecognition supported")
+    const recognition  = new SpeechRecognition()
+    recognition.continuous = false
+    recognition.lang = "en-UK"
+    recognition.interimResults = false
+    recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript
+        console.log('recognition', transcript, `Confidence: ${event.results[0][0].confidence}`)
+        // "I solemnly swear I am up to no good"
+        // "mischief managed"
+    }
+    recognition.onspeechstart = () => {
+        console.log('onspeechstart')
+    }
+    recognition.onspeechend = () => {
+        console.log('onspeechend')
+        recognition.stop()
+    }
+    recognition.start()
 }
 
 </script>
