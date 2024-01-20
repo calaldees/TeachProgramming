@@ -53,6 +53,7 @@ app = web.Application()
 app.add_routes([
         web.get('/', index),
         web.get('/ws', websocket_handler),
+        web.static('/static', './static'),
 ])
 app.on_startup.append(on_startup)
 app.on_shutdown.append(on_shutdown)

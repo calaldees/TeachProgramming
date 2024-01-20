@@ -6,21 +6,45 @@
     <title>Map</title>
 
     <style>
+        img, canvas {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        img {
+            object-fit: none;  /* contain, fill */
+        }
     </style>
 </head>
 <body>
     <h1>Map</h1>
-    
+    <img>
+    <canvas></canvas>
 <script type="module">
 
 const urlParams = new URLSearchParams(window.location.search);
 const name = urlParams.get('name') || "Unknown"
 const websocket_url = urlParams.get('websocket_url') || `${window.location.protocol.startsWith("https")?"wss":"ws"}://${window.location.host}/ws`
 
+document.getElementsByTagName('img')[0].src = urlParams.get('map') || "static/map.png"
+
+const canvas = document.getElementsByTagName('canvas')[0]
+canvas.width = window.innerWidth
+canvas.height = window.innerHeight
+const ctx = canvas.getContext('2d')
+
+let temp_count = 0
+ctx.fillStyle = 'red'
+
 const socket = new WebSocket(websocket_url)
 //socket.addEventListener("open", open)
 socket.addEventListener("message", (msg)=>{
-    console.log("got: " + msg.data)
+    console.log("websocket",JSON.parse(msg.data))
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.fillRect(temp_count*10, 100, 8,8)
+    temp_count++
 })
 
 const watchID = navigator.geolocation.watchPosition((position) => {
