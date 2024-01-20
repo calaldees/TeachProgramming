@@ -9,17 +9,26 @@
         img, canvas {
             width: 100%; height: 100%;
             position: absolute; top: 0; left: 0;
+            filter: blur(0.0em);
+            transition: filter 3s ease-out;
         }
         img {
             object-fit: none;  /* contain, fill */
         }
+        .disabled img, .disabled canvas {
+            /* opacity: 0; */
+            filter: blur(2em);
+        }
+
     </style>
 </head>
-<body>
+<body class=""><!-- class="disabled" -->
     <h1>Map</h1>
     <img>
     <canvas></canvas>
 <script type="module">
+
+const body = document.getElementsByTagName("body")[0]
 
 const urlParams = new URLSearchParams(window.location.search);
 const name = urlParams.get('name') || "Unknown"
@@ -101,10 +110,10 @@ const watchID = navigator.geolocation.watchPosition((position) => {
     socket.send(JSON.stringify({name, lat:position.coords.latitude, lon:position.coords.longitude, count:message_count++}))
 })
 
+
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
-if (!SpeechRecognition) {console.error('SpeechRecognition unsupported')}
-if (SpeechRecognition) {
-    console.log("SpeechRecognition supported")
+if (!SpeechRecognition) {console.error("SpeechRecognition unsupported")}
+if ( SpeechRecognition) {console.log  ("SpeechRecognition supported")
     const recognition  = new SpeechRecognition()
     recognition.continuous = false
     recognition.lang = "en-UK"
@@ -112,8 +121,14 @@ if (SpeechRecognition) {
     recognition.onresult = (event) => {
         const transcript = event.results[0][0].transcript
         console.log('recognition', transcript, `Confidence: ${event.results[0][0].confidence}`)
-        // "I solemnly swear I am up to no good"
-        // "mischief managed"
+
+        const phrases = [
+            "I solemnly swear I am up to no good",
+            "mischief managed",
+        ]
+        for (let phrase of phrases) {
+            if (transcript.indexOf(phrase)>=0) {body.classList.toggle("disabled")}
+        }
     }
     recognition.onspeechstart = () => {
         console.log('onspeechstart')
@@ -122,7 +137,7 @@ if (SpeechRecognition) {
         console.log('onspeechend')
         recognition.stop()
     }
-    recognition.start()
+    //recognition.start()
 }
 
 </script>
