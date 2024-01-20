@@ -38,12 +38,35 @@ const ctx = canvas.getContext('2d')
 let temp_count = 0     // Temp test
 ctx.fillStyle = 'red'  // Temp test
 
+export function* nextValueIterator(iterable) {
+    let previous_value = null
+    for (let i of iterable) {
+        if (previous_value==null) {previous_value=i; continue}
+        yield [previous_value, i]
+        previous_value = i
+    }
+    yield [previous_value, null]
+}
+
+function translate_geopos_to_imgpos(lat,lon) {
+    // TODO
+    return [temp_count*20+lat, 100+lon]    // temp
+    return [lat, lon]
+}
+function pos_pair_to_angle(x1,y1, x2,y2) {
+    // TODO
+    return temp_count/10  // temp
+    return 0
+}
+
 function drawFoot(x,y,angle,step_count) {
+    //ctx.fillRect(x, y, 8,8)
+    const scale = 0.5
     const t = ctx.getTransform()
     ctx.translate(x,y)
     ctx.rotate(angle)
-    if (step_count%2==0) {ctx.scale(-1, 1)} //ctx.translate(img_foot.width,0);
-    ctx.scale(0.5, 0.5)
+    if (step_count%2==0) {ctx.scale(-1, 1)} //ctx.translate(img_foot.width,0)
+    ctx.scale(scale, scale)
     ctx.drawImage(img_foot, -img_foot.width/2, -img_foot.height/2)
     ctx.setTransform(t)
 }
@@ -53,18 +76,20 @@ socket.addEventListener("message", (msg)=>{
     const data = JSON.parse(msg.data)
     console.log("websocket", data)
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height)  // Temp test
-    //ctx.fillRect(temp_count*10, 100, 8,8)             // Temp test
-    temp_count++                                      // Temp test
-    //drawFoot(temp_count*20, 100, temp_count/10)
-    let x_fake = temp_count*20
-    let y_fake = 100
+    temp_count++                // temp
 
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
     for (let [name, location_list] of Object.entries(data)) {
-        ctx.font = "16px serif"
-        ctx.fillText(name, x_fake, y_fake-16)
-        for (let location of location_list) {
-            drawFoot(x_fake+location.count*30, y_fake, temp_count/10, location.count)
+        let angle
+        for (let [location, next_location] of nextValueIterator(location_list)) {
+            let [x, y] = translate_geopos_to_imgpos(location.lat, location.lon)
+            if (next_location) {
+                angle = pos_pair_to_angle(x, y, ...translate_geopos_to_imgpos(next_location.lat, next_location.lon))
+            }
+            drawFoot(x, y, angle, location.count)
+            if (!next_location) {
+                ctx.font = "16px serif"; ctx.fillText(name, x, y-16)
+            }
         }
     }
 })
