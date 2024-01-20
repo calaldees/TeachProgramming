@@ -1,42 +1,48 @@
 import asyncio
 import json
+from collections import defaultdict
 
 from aiohttp import web, WSCloseCode, WSMsgType
 
+import logging
+log = logging.getLogger(__name__)
+
 websockets = set()
-data = {
-    'harry': {'lat':0, 'lon':0},
-}
+data = defaultdict(list)
+data['harry'] += [{'lat':0, 'lon':0},]
 
 async def websocket_handler(request):
     ws = web.WebSocketResponse()
     await ws.prepare(request)
     websockets.add(ws)
-    print('websocket connection open')
+    log.info('websocket connection open')
     async for msg in ws:
         if msg.type == WSMsgType.TEXT:
-            msg_data = json.loads(msg.data)
-            data[msg_data.get('name', 'Unknown')] = msg_data
+            msg = json.loads(msg.data)
+            name_items = data[msg.get('name', 'Unknown')]
+            name_items[:] = name_items[-2:]
+            name_items.append(msg)
         elif msg.type == WSMsgType.ERROR:
-            print('ws connection closed with exception %s' % ws.exception())
-    print('websocket connection closed')
+            log.error('ws connection closed with exception %s' % ws.exception())
+    log.info('websocket connection closed')
     websockets.remove(ws)
     return ws
 
 
 async def send_websocket_timed_state():
-    print("send_websocket_timed_state")
+    log.info("send_websocket_timed_state")
     while True:
-        #print(f'WebSockets: {len(websockets)}')
+        #log.info(f'WebSockets: {len(websockets)}')
+        data_str = json.dumps(data)
         for ws in tuple(websockets):
-            await ws.send_str(json.dumps(data))
-        await asyncio.sleep(1)
+            await ws.send_str(data_str)
+        await asyncio.sleep(2)
 
 async def on_startup(app):
-    print('on_startup')
+    log.info('on_startup')
     asyncio.create_task(send_websocket_timed_state())
 async def on_shutdown(app):
-    print('on_shutdown')
+    log.info('on_shutdown')
     for ws in tuple(websockets):
         await ws.close(code=WSCloseCode.GOING_AWAY, message='shutdown')
 
@@ -52,4 +58,5 @@ app.on_startup.append(on_startup)
 app.on_shutdown.append(on_shutdown)
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
     web.run_app(app, port=8000)
