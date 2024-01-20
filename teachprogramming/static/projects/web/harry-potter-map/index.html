@@ -111,33 +111,41 @@ const watchID = navigator.geolocation.watchPosition((position) => {
 })
 
 
+const phrases = [
+    "I solemnly swear I am up to no good",
+    "I solemnly swear I'm up to no good",
+    "mischief managed",
+]
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
 if (!SpeechRecognition) {console.error("SpeechRecognition unsupported")}
 if ( SpeechRecognition) {console.log  ("SpeechRecognition supported")
-    const recognition  = new SpeechRecognition()
-    recognition.continuous = false
-    recognition.lang = "en-UK"
-    recognition.interimResults = false
-    recognition.onresult = (event) => {
+    let recognition
+    function onSpeechResult(event) {
         const transcript = event.results[0][0].transcript
         console.log('recognition', transcript, `Confidence: ${event.results[0][0].confidence}`)
-
-        const phrases = [
-            "I solemnly swear I am up to no good",
-            "mischief managed",
-        ]
         for (let phrase of phrases) {
             if (transcript.indexOf(phrase)>=0) {body.classList.toggle("disabled")}
         }
     }
-    recognition.onspeechstart = () => {
-        console.log('onspeechstart')
+    function _start() {
+        if (recognition) {return}
+        recognition = new SpeechRecognition()
+        recognition.continuous = false
+        recognition.lang = "en-UK"
+        recognition.interimResults = false
+        recognition.onresult = onSpeechResult
+        recognition.onspeechstart = () => {console.log('onspeechstart')}
+        recognition.onspeechend = _stop
+        console.log("recognition.start()")
+        recognition.start()
     }
-    recognition.onspeechend = () => {
-        console.log('onspeechend')
-        recognition.stop()
+    function _stop() {
+        if (recognition) {console.log("recognition.stop()"); recognition.stop(); recognition=undefined;}
     }
-    //recognition.start()
+    body.addEventListener('keydown', _start)
+    body.addEventListener('mousedown', _start)
+    body.addEventListener('mouseup', _stop)
+    body.addEventListener('keyup', _stop)
 }
 
 </script>
