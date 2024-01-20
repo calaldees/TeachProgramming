@@ -7,11 +7,8 @@
 
     <style>
         img, canvas {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
+            width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0;
         }
         img {
             object-fit: none;  /* contain, fill */
@@ -30,26 +27,52 @@ const websocket_url = urlParams.get('websocket_url') || `${window.location.proto
 
 document.getElementsByTagName('img')[0].src = urlParams.get('map') || "static/map.png"
 
+const img_foot = new Image()
+img_foot.src = urlParams.get('foot') || "static/foot.png"
+
 const canvas = document.getElementsByTagName('canvas')[0]
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 const ctx = canvas.getContext('2d')
 
-let temp_count = 0
-ctx.fillStyle = 'red'
+let temp_count = 0     // Temp test
+ctx.fillStyle = 'red'  // Temp test
+
+function drawFoot(x,y,angle,step_count) {
+    const t = ctx.getTransform()
+    ctx.translate(x,y)
+    ctx.rotate(angle)
+    if (step_count%2==0) {ctx.scale(-1, 1)} //ctx.translate(img_foot.width,0);
+    ctx.scale(0.5, 0.5)
+    ctx.drawImage(img_foot, -img_foot.width/2, -img_foot.height/2)
+    ctx.setTransform(t)
+}
 
 const socket = new WebSocket(websocket_url)
-//socket.addEventListener("open", open)
 socket.addEventListener("message", (msg)=>{
-    console.log("websocket",JSON.parse(msg.data))
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ctx.fillRect(temp_count*10, 100, 8,8)
-    temp_count++
+    const data = JSON.parse(msg.data)
+    console.log("websocket", data)
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height)  // Temp test
+    //ctx.fillRect(temp_count*10, 100, 8,8)             // Temp test
+    temp_count++                                      // Temp test
+    //drawFoot(temp_count*20, 100, temp_count/10)
+    let x_fake = temp_count*20
+    let y_fake = 100
+
+    for (let [name, location_list] of Object.entries(data)) {
+        ctx.font = "16px serif"
+        ctx.fillText(name, x_fake, y_fake-16)
+        for (let location of location_list) {
+            drawFoot(x_fake+location.count*30, y_fake, temp_count/10, location.count)
+        }
+    }
 })
 
+let message_count = 0
 const watchID = navigator.geolocation.watchPosition((position) => {
     console.log("watchPosition", position.coords.latitude, position.coords.longitude)
-    socket.send(JSON.stringify({name, lat: position.coords.latitude, lon: position.coords.longitude}))
+    socket.send(JSON.stringify({name, lat:position.coords.latitude, lon:position.coords.longitude, count:message_count++}))
 })
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
