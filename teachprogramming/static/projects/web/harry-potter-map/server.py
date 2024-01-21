@@ -1,6 +1,7 @@
 import asyncio
 import json
 from collections import defaultdict
+import random
 
 from aiohttp import web, WSCloseCode, WSMsgType
 
@@ -9,7 +10,17 @@ log = logging.getLogger(__name__)
 
 websockets = set()
 data = defaultdict(list)
-data['harry'] += [{'lat':0, 'lon':0},]
+
+# Fake Harry - can be removed later
+data['Harry'] += [{'lat':100, 'lon':100, 'count':0},{'lat':120, 'lon':120, 'count':1}, {'lat':130, 'lon':130, 'count':2}]
+def move_fake_harry():
+    data['Harry'][:] = data['Harry'][-2:]
+    ii = dict(data['Harry'][-1])
+    ii['lat'] += random.randint(0,10)
+    ii['lon'] += random.randint(0,10)
+    ii['count'] += 1
+    data['Harry'].append(ii)
+
 
 async def websocket_handler(request):
     ws = web.WebSocketResponse()
@@ -28,11 +39,10 @@ async def websocket_handler(request):
     websockets.remove(ws)
     return ws
 
-
 async def send_websocket_timed_state():
     log.info("send_websocket_timed_state")
     while True:
-        #log.info(f'WebSockets: {len(websockets)}')
+        move_fake_harry()  # Temp - remove later
         data_str = json.dumps(data)
         for ws in tuple(websockets):
             await ws.send_str(data_str)
@@ -40,7 +50,8 @@ async def send_websocket_timed_state():
 
 async def on_startup(app):
     log.info('on_startup')
-    asyncio.create_task(send_websocket_timed_state())
+    task = asyncio.create_task(send_websocket_timed_state())
+    # TODO - if an exception is raised by the task, it never appears, it's gobbled up. Maybe set a default handler?
 async def on_shutdown(app):
     log.info('on_shutdown')
     for ws in tuple(websockets):
