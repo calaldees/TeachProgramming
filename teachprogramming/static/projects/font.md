@@ -24,6 +24,10 @@ Raster font network?
 * TODO
     * Make data to gif python exporter
     * Make image cutter to ascii codes
+* https://github.com/calaldees/mapOfComputing/blob/main/computing/typography.md
+    * [ZX Origins](https://damieng.com/typography/zx-origins) - 8x8 mono bitmap fonts
+    * [BitmapFonts](https://github.com/ianhan/BitmapFonts/blob/main/README.md)
+        * My collection of bitmap fonts pulled from various demoscene archives over the years
 * https://nfggames.com/games/fontmaker/lister.php
     * https://nfggames.com/games/fontmaker/index.php (with gradient!!! Cool!)
     * Apply gradient to white letters

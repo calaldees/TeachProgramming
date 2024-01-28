@@ -101,6 +101,13 @@ class Font():
         """
         https://nfggames.com/games/fontmaker/index.php
         https://nfggames.com/system/arcade/arcade.php/y-pabom/z-0/x-ABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890
+
+        todo
+        add support for
+        https://damieng.com/typography/zx-origins/
+        color overlay for 1bit images?
+        merging gradient and 2bit images?
+        create reuseable separate font file/helper for use with pygame surface
         """
         filename = Path(filename)
         # Download font if it does not exist
