@@ -110,7 +110,7 @@ class ConwayFactory():
             if line.startswith('#'):
                 continue
             if not width and not height:
-                width, height = map(int, re.search('x\s*=\s*(?P<x>\d+),\s*y\s*=\s*(?P<y>\d+)', line).groups())
+                width, height = map(int, re.search(r'x\s*=\s*(?P<x>\d+),\s*y\s*=\s*(?P<y>\d+)', line).groups())
                 continue
             for match in re.finditer(r'(?P<repeat>\d{0,4})(?P<char>[bo$!])', line):
                 repeats, cell = match.groups()

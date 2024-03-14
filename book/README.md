@@ -114,13 +114,22 @@ Chapter Concepts
 * Individual at the center - growth - aligned with business/curriculum
 * Most graduates if given a whiteboard pen can't converse with you
     * social skills (not sitting silently)
-* Hack time and culture - social pressure - how to manage this effectivly
-* Junior to senior? defention? framework? framework for progression? proposal? benchmark statements?
+* Hack time and culture - social pressure - how to manage this effectively
+* Junior to senior? definition? framework? framework for progression? proposal? benchmark statements?
     * investigate other frameworks
 * Feedback was missing in industry - left to own devices - daunting
-* one-to-ones with line manager - not wingesd - actions and timeframe - always talk about the long
+* one-to-ones with line manager - not whinges - actions and timeframe - always talk about the long
 
 Real things don't score highly as year 13 AQA Projects
+
+More chapters
+* Spear-phish the shit out them - keyloggers - why hands on security matters
+    * Build html email - links that are identifiable (path/query string)
+* Typing speed - not on the sylibus - diff, github, collaboration, code-review/merge
+* Creativity: microbit (escape room group), wearable (costume), demoscene greets
+    * why each activity works
+* Maruders map, demoscene greets, Chromecast clone (press the button whack a mole with people)
+* 
 
 
 Other
