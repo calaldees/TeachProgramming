@@ -1,3 +1,6 @@
+from itertools import chain
+import re
+
 class Sudoku3():
     COMPLETE_NUMBER_SET = frozenset(i+1 for i in range(9))
 
@@ -29,3 +32,21 @@ class Sudoku3():
     def valid_cell_values(self, i):
         return self.COMPLETE_NUMBER_SET - self.row(i//9) - self.col(i%9)- self.block(i//9//3, i%9//3)
 
+
+if __name__ == '__main__':
+        s = Sudoku3("""
+            var puzzle = [
+                [5,3,0,0,7,0,0,0,0],
+                [6,0,0,1,9,5,0,0,0],
+                [0,9,8,0,0,0,0,6,0],
+                [8,0,0,0,6,0,0,0,3],
+                [4,0,0,8,0,3,0,0,1],
+                [7,0,0,0,2,0,0,0,6],
+                [0,6,0,0,0,0,2,8,0],
+                [0,0,0,4,1,9,0,0,5],
+                [0,0,0,0,8,0,0,7,9]];
+        """)
+        print(s)
+        print()
+        s.solve()
+        print(s)
