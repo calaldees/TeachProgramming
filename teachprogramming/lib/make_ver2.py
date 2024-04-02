@@ -16,7 +16,7 @@ except ImportError:
 
 
 EXCLUDED_EXTENSIONS = frozenset({'ver', 'yaml', 'yml', 'txt', 'md', 'json', 'csproj', '', 'Makefile', 'Dockerfile', 
-    'editorconfig', 'cache'  # HACK - this is getting out of hand - we do a filescan() and get all files - csharp creates some cancer with bin/obj folders and I need a way to ignore them - for now I just hide rougue files here. Please remove this hack line and try to debug this properly
+    'editorconfig', 'cache',  # HACK - this is getting out of hand - we do a filescan() and get all files - csharp creates some cancer with bin/obj folders and I need a way to ignore them - for now I just hide rougue files here. Please remove this hack line and try to debug this properly
 })
 
 
@@ -26,18 +26,18 @@ def parse_legacy_version_data(data):
     ... VERNAME: base            base
     ... VERNAME: background      base,background
     ... VERNAME: copter          base,background,copter
-    ... VERNAME: paralax         base,background,paralax
-    ... VERNAME: colision_single base,background,copter,colision_single
-    ... VERNAME: colision_multi  base,background,copter,colision_single,colision_multi
-    ... VERNAME: level           base,background,copter,colision_single,level
-    ... VERNAME: physics         base,background,copter,colision_single,physics
-    ... VERNAME: full            base,background,copter,physics,colision_single,colision_multi,paralax,level
-    ... VERNAME: fish_full       base,background,copter,colision_single,fish_background
+    ... VERNAME: parallax         base,background,parallax
+    ... VERNAME: collision_single base,background,copter,collision_single
+    ... VERNAME: collision_multi  base,background,copter,collision_single,collision_multi
+    ... VERNAME: level           base,background,copter,collision_single,level
+    ... VERNAME: physics         base,background,copter,collision_single,physics
+    ... VERNAME: full            base,background,copter,physics,collision_single,collision_multi,parallax,level
+    ... VERNAME: fish_full       base,background,copter,collision_single,fish_background
     ... REPLACE: CopterLevel WITH FishLevel FOR fish_full
     ... REPLACE: ship.gif WITH fish.gif FOR fish_full
     ... ''')
     >>> ver.keys()
-    dict_keys(['base', 'background', 'copter', 'paralax', 'colision_single', 'colision_multi', 'level', 'physics', 'full', 'fish_full'])
+    dict_keys(['base', 'background', 'copter', 'parallax', 'collision_single', 'collision_multi', 'level', 'physics', 'full', 'fish_full'])
     >>> ver['copter']
     ('base', 'background', 'copter')
     """

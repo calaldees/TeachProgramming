@@ -1,103 +1,70 @@
 import pygame
-import math
+from animation_base_pygame import PygameBase
+import pathlib   # VER: parallax
 
-pygame.init()
-screen = pygame.display.set_mode((320, 240), pygame.SCALED | pygame.RESIZABLE)
-clock  = pygame.time.Clock()
+class CopterGame(PygameBase):
+    def __init__(self):
+        #self.background_image = pygame.image.load("images/CopterLevel1.gif")  # VER: background not parallax
+        self.background_color = (0, 0, 0, 0)
+        self.copter_image     = pygame.image.load("images/ship.gif")         # VER: copter
+        self.copter_collision_points = ((0,0),(32,9),(17,2),(22,12),(2,12))  # VER: collision_multi
+        self.level_color = (255, 255, 0, 255)                                # VER: level
+        self.level_number = 1                                                # VER: level
+        self.load_level()                                                    # VER: level
+        #self.reset()                                                         # VER: base not level
+        super().__init__(resolution=(320,240))
+    def load_level(self):                                                                         # VER: level
+        #self.background_image = pygame.image.load(f"images/CopterLevel{self.level_number}.gif")  # VER: level not parallax
+        self.background_images = [                                                               # VER: parallax
+            pygame.image.load(file)                                                              # VER: parallax
+            for file in sorted(pathlib.Path('images').glob(f"*CopterLevel{self.level_number}*")) # VER: parallax
+        ]                                                                                        # VER: parallax
+        self.reset()                                                                             # VER: level
+    def reset(self):
+        #pass                      # VER: base not background
+        self.background_x_pos = 0  # VER: background
+        self.copter_x_pos = 50     # VER: copter
+        self.copter_y_pos = 100    # VER: copter
+        self.copter_x_vel = 0  # VER: physics
+        self.copter_y_vel = 0  # VER: physics
+    def loop(self, screen, frame):
+        self.background_x_pos += 1   # VER: background
+                                     # VER: background
+        #if self.keys[pygame.K_SPACE]: self.copter_y_pos += -2  # VER: copter NOT physics
+        #else                        : self.copter_y_pos +=  1  # VER: copter NOT physics
+        if self.keys[pygame.K_UP   ]: self.copter_y_vel += -0.1 # VER: physics
+        if self.keys[pygame.K_DOWN ]: self.copter_y_vel +=  0.1 # VER: physics
+        if self.keys[pygame.K_LEFT ]: self.copter_x_vel += -0.1 # VER: physics HIDE
+        if self.keys[pygame.K_RIGHT]: self.copter_x_vel +=  0.1 # VER: physics HIDE
+                                                                # VER: copter
+        self.copter_x_vel  = self.copter_x_vel * 0.99  # VER: physics
+        self.copter_y_vel  = self.copter_y_vel * 0.99  # VER: physics
+        self.copter_y_vel += float(0.025)              # VER: physics
+        self.copter_x_pos += self.copter_x_vel         # VER: physics
+        self.copter_y_pos += self.copter_y_vel         # VER: physics
+                                                       # VER: physics
+        def safe_get_pixel(p):                                   # VER: collision_single
+            #try   : return self.background_image.get_at(p)   # VER: collision_single not parallax
+            try   : return self.background_images[0].get_at(p)   # VER: parallax
+            except: return None                                  # VER: collision_single
+        #point = (self.background_x_pos + int(self.copter_x_pos), int(self.copter_y_pos))  # VER: collision_single not collision_multi
+        for x, y in self.copter_collision_points:   # VER: collision_multi
+            point = (self.background_x_pos + int(self.copter_x_pos) + x, int(self.copter_y_pos) + y)  # VER: collision_multi
+            pixel = safe_get_pixel(point)           # VER: collision_single
+            if pixel == (255,255,255,255):          # VER: collision_single
+                pass                                # VER: collision_single
+            elif pixel == self.level_color:         # VER: level
+                self.level_number += 1              # VER: level
+                self.load_level()                   # VER: level
+            else:                                   # VER: collision_single
+                self.reset()                        # VER: collision_single
+                                                    # VER: collision_single
+        pygame.draw.rect(screen, self.background_color, (0,0)+screen.get_size())
+        #screen.blit(self.background_image, (-self.background_x_pos, 0))          # VER: background not parallax
+        for parallax_number, background_image in sorted(enumerate(self.background_images), reverse=True): # VER: parallax
+            screen.blit(background_image, (-self.background_x_pos/2**parallax_number, 0))                # VER: parallax
+                                                                                 # VER: copter
+        screen.blit(self.copter_image, (self.copter_x_pos, self.copter_y_pos))    # VER: copter
 
-class callByRef:
-    def __init__(self, **args):
-        for (key, value) in args.items():
-            setattr(self, key, value)
-variables = callByRef(
-    running           = True,
-    color_background  = (  0,   0,   0, 255),
-    color_exit        = (255, 255,   0, 255),                         # VER: level
-    level_number      = 1,                                            # VER: level
-    background_images = None,                                         # VER:                paralax
-    #background_image  = pygame.image.load("images/CopterLevel1.gif"), # VER: background not paralax
-    view_x_pos        = None,                                         # VER: background
-    copter_image      = pygame.image.load("images/ship.gif"), # VER: copter
-    copter_x_pos      = None,                                 # VER: copter
-    copter_y_pos      = None,                                 # VER: copter
-    copter_x_vel      = None, # VER: physics
-    copter_y_vel      = None, # VER: physics
-    copter_colision_points = [(0,0),(32,9),(17,2),(22,12),(2,12)], # VER: colision_multi
-)
-
-def load_level(level_number):                                                                                             # VER: level paralax
-    background_image = pygame.image.load("images/CopterLevel%s.gif" % level_number)                                       # VER: level not paralax
-    variables.background_images = []                                                                                      # VER: paralax
-    for layer in reversed(range(1,4)):                                                                                    # VER: paralax 
-        try   : variables.background_images.append(pygame.image.load("images/CopterLevel%d_layer%s.gif" % (level_number,layer))) # VER: paralax
-        except: pass                                                                                                      # VER: paralax
-    variables.background_images.append(pygame.image.load("images/CopterLevel%d.gif" % level_number))                      # VER: paralax
-                                                                                                                          # VER: paralax
-def reset():
-    #pass                                                  # VER: 1 not background
-    variables.view_x_pos        = 0                        # VER: background
-    variables.copter_x_pos      = 50.0                     # VER: copter
-    variables.copter_y_pos      = screen.get_height()/2    # VER: copter
-    variables.copter_x_vel      = 0.0                      # VER: physics
-    variables.copter_y_vel      = 0.0                      # VER: physics
-
-load_level(variables.level_number) # VER: level paralax
-reset()
-while variables.running:
-    clock.tick(60)
-    screen.fill(variables.color_background)
-    
-    variables.view_x_pos += 1                                               # VER: background
-    #background_rectangle   = variables.background_image.get_rect()         # VER: background not paralax
-    #background_rectangle.x = background_rectangle.x - variables.view_x_pos # VER: background not paralax
-    #screen.blit(variables.background_image, background_rectangle)          # VER: background not paralax
-    paralax_number = 1                                                      # VER: paralax
-    for background_image in variables.background_images:                    # VER: paralax
-        background_rectangle   = background_image.get_rect()                # VER: paralax
-        background_rectangle.x = background_rectangle.x - int(variables.view_x_pos/math.pow(2,len(variables.background_images)-paralax_number)) # VER: paralax
-        screen.blit(background_image, background_rectangle)                 # VER: paralax
-        paralax_number += 1                                                 # VER: paralax
-                                                                            # VER: background
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            variables.running = False
-    
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_ESCAPE    ]:
-        variables.running = False
-    #if keys[pygame.K_SPACE ]: variables.copter_y_pos += -2  # VER: copter NOT physics
-    #else                    : variables.copter_y_pos +=  1  # VER: copter NOT physics
-    if keys[pygame.K_UP    ]: variables.copter_y_vel += -0.1 # VER: physics
-    if keys[pygame.K_DOWN  ]: variables.copter_y_vel +=  0.1 # VER: physics
-    if keys[pygame.K_LEFT  ]: variables.copter_x_vel += -0.1 # VER: physics HIDE
-    if keys[pygame.K_RIGHT ]: variables.copter_x_vel +=  0.1 # VER: physics HIDE
-                                                             # VER: copter
-    variables.copter_x_vel  = variables.copter_x_vel * 0.99  # VER: physics
-    variables.copter_y_vel  = variables.copter_y_vel * 0.99  # VER: physics
-    variables.copter_y_vel += float(0.025)                   # VER: physics
-    variables.copter_x_pos += variables.copter_x_vel         # VER: physics
-    variables.copter_y_pos += variables.copter_y_vel         # VER: physics
-                                                             # VER: physics
-    copter_pos = (int(variables.copter_x_pos+variables.view_x_pos), int(variables.copter_y_pos)) # VER: colision_single
-    #with variables.copter_image.get_rect() as colision_rect:                                     # VER: colision_single not colision_multi
-        #colision_point = (colision_rect.width/2, colition_rect.height/2)                         # VER: colision_single not colision_multi
-    for colision_point in variables.copter_colision_points:                                      # VER: colision_multi
-        colision_point = (copter_pos[0]+colision_point[0], copter_pos[1]+colision_point[1])      # VER: colision_multi
-        try   : pixel = variables.background_images[-1].get_at(colision_point)                   # VER: colision_single
-        except: pixel = None                                                                     # VER: colision_single
-        if pixel and pixel == variables.color_exit:                                              # VER: level
-            variables.level_number += 1                                                          # VER: level
-            load_level(variables.level_number)                                                   # VER: level
-        if pixel and pixel != (255,255,255,255):                                                 # VER: colision_single
-            reset()                                                                              # VER: colision_single
-                                                                                                 # VER: colision_single
-    copter_rectangle = variables.copter_image.get_rect()  # VER: copter
-    #copter_rectangle.x = variables.copter_x_pos          # VER: copter NOT physics
-    #copter_rectangle.y = variables.copter_y_pos          # VER: copter NOT physics
-    copter_rectangle.x = int(variables.copter_x_pos)      # VER: pyhsics
-    copter_rectangle.y = int(variables.copter_y_pos)      # VER: pyhsics
-    screen.blit(variables.copter_image, copter_rectangle) # VER: copter
-                                                          # VER: copter
-    pygame.display.flip()
-
-pygame.quit()
+if __name__ == '__main__':
+    CopterGame().run()
