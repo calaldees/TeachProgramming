@@ -209,7 +209,8 @@ Copter
 * Download 
     * https://github.com/calaldees/TeachProgramming/blob/master/teachprogramming/static/projects/game/animation_base_pygame.py
 * Image Size
-    * Background (3000, 360)? - Copter (48, 20)?
+    * Background (3000, 360)? - Copter (48, 24)?
+* TODO: `gif` is a really bad idea because opening it to edit go whacky (as it's indexed colored)
 
 ```python
 import pygame
@@ -233,21 +234,26 @@ Background
 ----------
 
 ```diff
- from animation_base_pygame import PygameBase
- 
  class CopterGame(PygameBase):
      def __init__(self):
 +        self.background_image = pygame.image.load("images/CopterLevel1.gif")
          self.background_color = (0, 0, 0, 0)
-         self.reset()
-         super().__init__(resolution=(320,240))
+...
+         pygame.draw.rect(screen, self.background_color, (0,0)+screen.get_size())
++        screen.blit(self.background_image, (0, 0))
+```
+
+Background Move
+---------------
+
+```diff
      def reset(self):
 -        pass
 +        self.background_x_pos = 0
      def loop(self, screen, frame):
 +        self.background_x_pos += 1
-+
-         pygame.draw.rect(screen, self.background_color, (0,0)+screen.get_size())
+...
+-        screen.blit(self.background_image, (0, 0))
 +        screen.blit(self.background_image, (-self.background_x_pos, 0))
 ```
 
@@ -261,21 +267,27 @@ Copter
          self.background_color = (0, 0, 0, 0)
 +        self.copter_image     = pygame.image.load("images/ship.gif")
          self.reset()
-         super().__init__(resolution=(320,240))
+         super().__init__(resolution=(640,360))
      def reset(self):
          self.background_x_pos = 0
 +        self.copter_x_pos = 50
 +        self.copter_y_pos = 100
+...
+
+         screen.blit(self.background_image, (-self.background_x_pos, 0))
++        screen.blit(self.copter_image, (self.copter_x_pos, self.copter_y_pos))
++
+```
+
+Copter Move
+-----------
+
+```diff
      def loop(self, screen, frame):
          self.background_x_pos += 1
  
 +        if self.keys[pygame.K_SPACE]: self.copter_y_pos += -2
 +        else                        : self.copter_y_pos +=  1
-+
-         pygame.draw.rect(screen, self.background_color, (0,0)+screen.get_size())
-         screen.blit(self.background_image, (-self.background_x_pos, 0))
- 
-+        screen.blit(self.copter_image, (self.copter_x_pos, self.copter_y_pos))
 +
 ```
 
@@ -310,11 +322,13 @@ These can be attempted in any order.
 ### Level
 
 ```diff
+-        self.background_image = pygame.image.load("images/CopterLevel1.gif")
+...
 +        self.level_color = (255, 255, 0, 255)
 +        self.level_number = 1
 +        self.load_level()
 -        self.reset()
-         super().__init__(resolution=(320,240))
+         super().__init__(resolution=(640,360))
 +    def load_level(self):
 +        self.background_image = pygame.image.load(f"images/CopterLevel{self.level_number}.gif")
 +        self.reset()
