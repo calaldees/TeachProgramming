@@ -208,7 +208,8 @@ Copter
     * `pip install pygame`
 * Download 
     * https://github.com/calaldees/TeachProgramming/blob/master/teachprogramming/static/projects/game/animation_base_pygame.py
-
+* Image Size
+    * Background (3000, 360)? - Copter (48, 20)?
 
 ```python
 import pygame
@@ -218,7 +219,7 @@ class CopterGame(PygameBase):
     def __init__(self):
         self.background_color = (0, 0, 0, 0)
         self.reset()
-        super().__init__(resolution=(320,240))
+        super().__init__(resolution=(640,360))
     def reset(self):
         pass
     def loop(self, screen, frame):

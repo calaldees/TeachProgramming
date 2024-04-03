@@ -12,7 +12,7 @@ class CopterGame(PygameBase):
         self.level_number = 1                                                # VER: level
         self.load_level()                                                    # VER: level
         #self.reset()                                                         # VER: base not level
-        super().__init__(resolution=(320,240))
+        super().__init__(resolution=(640,360))
     def load_level(self):                                                                         # VER: level
         #self.background_image = pygame.image.load(f"images/CopterLevel{self.level_number}.gif")  # VER: level not parallax
         self.background_images = [                                                               # VER: parallax
