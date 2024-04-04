@@ -9,6 +9,18 @@
             height: 2em;
             border: 1px solid;
         }
+        .font_container {
+            width: 100%;
+            overflow-x: scroll;
+            background-color: black;
+        }
+        .font_container img {
+            image-rendering: pixelated; 
+            height: 128px;
+        }
+        .error {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -98,13 +110,34 @@
         </tr>
     </table>
 
-    <img src="static/font.gif">
+    <input id="INPUT_CHAR" type="text" placeholder="character">
+    <input id="INPUT_HEX" type="text" placeholder="hex_data">
+    <button id="BUTTON_SUBMIT">Submit</button>
 
-    <input type="text" id="hex_input">
-    <div id="out"></div>
+    <div id="error" class="error"></div>
 
+    <div class="font_container">
+        <img src="static/font.gif">
+    </div>
+    
+    <pre id="pre">
+        curl "http://localhost:8000/add_font?letter=a&data=55aa55aa55aa55aa"
+    </pre>
 
 <script type="module">
+
+    const ERROR = document.getElementById("error")
+    function error(obj) {
+        console.error(obj)
+        ERROR.textContent = obj  // kind of broken
+    }
+
+    const IMG_FONT = document.querySelector(".font_container img")
+    const IMG_FONT_SRC = IMG_FONT.src
+    function font_refresh() {
+        IMG_FONT.src = `${IMG_FONT_SRC}?${new Date()}`
+    }
+
     const nonHexRegex = new RegExp('[^0-9a-f]+', 'gi')
     export function cleanHexString(hex_string) {return hex_string.toLowerCase().replaceAll(nonHexRegex, "")}
     export function* hexToBytes(hex) {
@@ -114,18 +147,51 @@
         }
     }
 
-    const hex_input = document.getElementById("hex_input")
+    const INPUT_CHAR = document.getElementById("INPUT_CHAR")
+    const INPUT_HEX = document.getElementById("INPUT_HEX")
+    const BUTTON_SUBMIT = document.getElementById("BUTTON_SUBMIT")
+
+    function get_url() {
+        return `${window.location}/add_font?letter=${INPUT_CHAR.value}&data=${INPUT_HEX.value}`
+    }
+
+    function validate_data() {
+        BUTTON_SUBMIT.disabled = !(INPUT_HEX.value.length==16 && INPUT_CHAR.value.length==1)
+        BUTTON_SUBMIT.textContent = BUTTON_SUBMIT.disabled ? "" : "submit"
+
+        document.getElementById("pre").textContent = `curl "${get_url()}"`
+    }
+    validate_data()
+
+    INPUT_CHAR.addEventListener("input", (event)=>{
+        validate_data()
+    })
+
     const tds = document.querySelectorAll(".image_table td")
-    hex_input.addEventListener("input", (event)=>{
+    INPUT_HEX.addEventListener("input", (event)=>{
         for (let td of tds) {td.style=""}
         const data = [...hexToBytes(event.target.value)]
         for (let y=0 ; y<data.length ; y++) {
             for (let x=0 ; x<8 ; x++) {
                 const td = tds[(y*8)+(7-x)]
-                td.style = `background-color:${ (data[y] >> x) % 2 ? 'black':'white'}`
+                if (!td) {continue}
+                const active = (data[y] >> x) % 2
+                td.style = `background-color:${active?'black':'white'}`
             }
         }
+        validate_data()
     })
+    
+    BUTTON_SUBMIT.addEventListener("click", (event)=>{
+        console.log("sending", get_url())
+        fetch(url, {method: 'GET',})
+        .then(response => {
+            if (response.status != 200) {error(response)}
+            font_refresh()
+        })
+        .catch(error)
+    })
+
 </script>
 </body>
 </html>
