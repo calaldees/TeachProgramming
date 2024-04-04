@@ -186,7 +186,7 @@
     
     BUTTON_SUBMIT.addEventListener("click", (event)=>{
         console.log("sending", get_url())
-        fetch(url, {method: 'GET',})
+        fetch(get_url(), {method: 'GET',})
         .then(response => {
             if (response.status != 200) {error(response)}
             font_refresh()
