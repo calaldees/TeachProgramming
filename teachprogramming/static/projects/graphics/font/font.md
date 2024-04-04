@@ -28,11 +28,119 @@ Raster font network?
     * [ZX Origins](https://damieng.com/typography/zx-origins) - 8x8 mono bitmap fonts
     * [BitmapFonts](https://github.com/ianhan/BitmapFonts/blob/main/README.md)
         * My collection of bitmap fonts pulled from various demoscene archives over the years
-* https://nfggames.com/games/fontmaker/lister.php
-    * https://nfggames.com/games/fontmaker/index.php (with gradient!!! Cool!)
-    * Apply gradient to white letters
-    * 2color (on/off) - 4 color (transparent,gradient-passthrough,solid-color,shadow(50%transparent-gradient?))?
+    * [NFG's Arcade Font Engine](https://nfggames.com/games/fontmaker/lister.php)
+        * https://nfggames.com/games/fontmaker/index.php (with gradient!!! Cool!)
+        * Apply gradient to white letters
+        * 2color (on/off) - 4 color (transparent,gradient-passthrough,solid-color,shadow(50%transparent-gradient?))?
 * Demoscene "Greets" - code-alias - creativity
 
 * Raster fonts are not vector fonts
 * Edit a vector font?
+
+
+
+<style>
+@media print {
+    hr {display: none;}
+    h1 {page-break-before: always;}
+    h1:first-of-type {page-break-before: avoid;}
+}
+pre[class*="language-"] {background-color: #e7e7e7; border: 1px grey solid;} /* code blocks print visibly on paper*/
+.token.inserted {font-weight: bolder; color: green;}
+.token.deleted {text-decoration: line-through; color: red;}
+</style>
+
+---
+<hr style="page-break-after: always;"/>
+
+Fonts
+=====
+
+Draw character
+--------------
+
+```python
+import pygame
+from animation_base_pygame import PygameBase
+from pathlib import Path
+
+class PygameFont(PygameBase):
+    def __init__(self):
+        self.font = self.load_font()
+        super().__init__(resolution=(320,180))
+    def load_font(self, path_font=Path('font.gif')):
+        img = pygame.image.load(path_font)
+        return {chr(i): img.subsurface((i*8, 0, 8, 8)) for i in range(img.get_width()//8)}
+    def loop(self, screen, frame):
+        self.screen.blit(self.font["a"], (100, 100))
+
+if __name__ == '__main__':
+    PygameFont().run()
+```
+
+Draw string
+-----------
+
+```diff
++    def draw_font(self, text, x, y):
++        for i, letter in enumerate(text):
++            self.screen.blit(self.font[letter], (x+i*8, y))
+     def loop(self, screen, frame):
++        w, h = screen.get_size()
++        self.draw_font("abcde", frame%w, 50)
+         self.screen.blit(self.font["a"], (100, 100))
+```
+
+Automatic font download
+-----------------------
+
+```diff
+from pathlib import Path
++from urllib.request import urlopen
+...
+-    def load_font(self, path_font=Path('font.gif')):
++    def load_font(self, path_font=Path('font.gif'), url_font='http://localhost:8000/static/font.gif'):
++        if not path_font.exists():
++            with urlopen(url_font) as r, path_font.open(mode='wb') as f:
++                f.write(r.read())
+         img = pygame.image.load(path_font)
+```
+
+Draw sin wave
+-------------
+
+```diff
+ from urllib.request import urlopen
++import math
+
+...
++    def draw_font_wave(self, text, x, y):
++        for i, letter in enumerate(text):
++            _x = x+i*8
++            _y = y + math.sin(_x/50)*50
++            self.screen.blit(self.font[letter], (_x, _y))
+     def loop(self, screen, frame):
+...
+         self.draw_font("abcde", frame%width, 50)
++        self.draw_font_wave("abcde", frame%width, 110)
+```
+
+Super advanced font loader
+--------------------------
+
+(This is intended for Advanced GCSE and A-Level students)
+
+```python
+# https://damieng.com/typography/zx-origins/
+SEQUENCE_ZX_ORIGINS = """ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_£abcdefghijklmnopqrstuvwxyz{|}~©""" 
+#...
+    super().__init__(resolution=(320,180), color_background='white')
+#...
+    def load_font_advanced(self, path_font=Path('font.png'), seq=SEQUENCE_ZX_ORIGINS, w=8, h=8):
+        img = pygame.image.load(path_font)
+        ww, hh = img.get_size()
+        return {
+            seq[i]: img.subsurface(((i*w)%ww, ((i*w)//ww)*h, w, h))
+            for i in range((ww//w)*(hh//h))
+        }
+```
