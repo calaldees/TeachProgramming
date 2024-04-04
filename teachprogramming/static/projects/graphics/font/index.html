@@ -126,6 +126,8 @@
 
 <script type="module">
 
+    const urlParams = new URLSearchParams(window.location.search)
+
     const ERROR = document.getElementById("error")
     function error(obj) {
         console.error(obj)
@@ -152,11 +154,11 @@
     const BUTTON_SUBMIT = document.getElementById("BUTTON_SUBMIT")
 
     function get_url() {
-        return `${window.location}/add_font?letter=${INPUT_CHAR.value}&data=${INPUT_HEX.value}`
+        return `${window.location.origin}/add_font?letter=${INPUT_CHAR.value}&data=${INPUT_HEX.value}`
     }
 
     function validate_data() {
-        BUTTON_SUBMIT.disabled = !(INPUT_HEX.value.length==16 && INPUT_CHAR.value.length==1)
+        BUTTON_SUBMIT.disabled = !(INPUT_HEX.value.length==16 && INPUT_CHAR.value.length==1 && urlParams.get('allowSubmit'))
         BUTTON_SUBMIT.textContent = BUTTON_SUBMIT.disabled ? "" : "submit"
 
         document.getElementById("pre").textContent = `curl "${get_url()}"`
