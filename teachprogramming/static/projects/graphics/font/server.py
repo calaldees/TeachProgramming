@@ -44,7 +44,6 @@ app = web.Application()
 app.add_routes([
         web.get('/', index),
         web.get('/add_font', add_font),
-        #web.get('/ws', websocket_handler),
         web.static('/static', './static'),
 ])
 
