@@ -15,3 +15,6 @@ shell:
 		-u $(id -u):$(id -g) \
 		${DOCKER_IMAGE} \
 			/bin/sh
+
+font.png:
+	curl https://images.damieng.com/fonts/zx-origins/Prince.png -o font.png

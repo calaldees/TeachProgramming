@@ -121,7 +121,7 @@
     </div>
     
     <pre id="pre">
-        curl "http://localhost:8000/add_font?letter=a&data=55aa55aa55aa55aa"
+        curl "http://localhost:8000/add_font?char=a&data=55aa55aa55aa55aa"
     </pre>
 
 <script type="module">
@@ -154,7 +154,7 @@
     const BUTTON_SUBMIT = document.getElementById("BUTTON_SUBMIT")
 
     function get_url() {
-        return `${window.location.origin}/add_font?letter=${INPUT_CHAR.value}&data=${INPUT_HEX.value}`
+        return `${window.location.origin}/add_font?char=${INPUT_CHAR.value}&data=${INPUT_HEX.value}`
     }
 
     function validate_data() {

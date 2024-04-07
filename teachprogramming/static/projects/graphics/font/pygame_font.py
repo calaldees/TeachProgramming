@@ -67,13 +67,13 @@ class PygameFont(PygameBase):
             for i in range(min((ww//w)*(hh//h), len(seq)))
         }
     def draw_font(self, text, x, y):
-        for i, letter in enumerate(text):
-            self.screen.blit(self.font[letter], (x+i*8, y))
+        for i, char in enumerate(text):
+            self.screen.blit(self.font[char], (x+i*8, y))
     def draw_font_wave(self, text, x, y):
-        for i, letter in enumerate(text):
+        for i, char in enumerate(text):
             _x = x+i*8
             _y = y + math.sin(_x/50)*50
-            self.screen.blit(self.font[letter], (_x, _y))
+            self.screen.blit(self.font[char], (_x, _y))
     def loop(self, screen, frame):
         width, height = screen.get_size()
         self.screen.blit(self.font["A"], (100, 100))

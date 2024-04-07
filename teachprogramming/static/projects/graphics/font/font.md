@@ -83,8 +83,8 @@ Draw string
 
 ```diff
 +    def draw_font(self, text, x, y):
-+        for i, letter in enumerate(text):
-+            self.screen.blit(self.font[letter], (x+i*8, y))
++        for i, char in enumerate(text):
++            self.screen.blit(self.font[char], (x+i*8, y))
      def loop(self, screen, frame):
 +        w, h = screen.get_size()
 +        self.draw_font("abcde", frame%w, 50)
@@ -115,10 +115,10 @@ Draw sin wave
 
 ...
 +    def draw_font_wave(self, text, x, y):
-+        for i, letter in enumerate(text):
++        for i, char in enumerate(text):
 +            _x = x+i*8
 +            _y = y + math.sin(_x/50)*50
-+            self.screen.blit(self.font[letter], (_x, _y))
++            self.screen.blit(self.font[char], (_x, _y))
      def loop(self, screen, frame):
 ...
          self.draw_font("abcde", frame%width, 50)
@@ -132,7 +132,8 @@ Super advanced font loader
 
 ```python
 # https://damieng.com/typography/zx-origins/
-SEQUENCE_ZX_ORIGINS = """ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_£abcdefghijklmnopqrstuvwxyz{|}~©""" 
+# curl https://images.damieng.com/fonts/zx-origins/Prince.png -o font.png
+SEQUENCE_ZX_ORIGINS = """ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_£abcdefghijklmnopqrstuvwxyz{|}~©"""
 #...
     super().__init__(resolution=(320,180), color_background='white')
 #...
@@ -141,6 +142,6 @@ SEQUENCE_ZX_ORIGINS = """ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUV
         ww, hh = img.get_size()
         return {
             seq[i]: img.subsurface(((i*w)%ww, ((i*w)//ww)*h, w, h))
-            for i in range((ww//w)*(hh//h))
+            for i in range(min((ww//w)*(hh//h), len(seq)))
         }
 ```

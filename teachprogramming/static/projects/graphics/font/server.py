@@ -33,7 +33,7 @@ def put_image_data(img, data, offset_x):
 async def add_font(request):
     qs = {k:''.join(v) for k,v in parse_qs(request.query_string).items()}
     img = Image.open(PATH_FONT).convert(mode='RGBA') if PATH_FONT.exists() else Image.new('RGBA', (2048,8), (255,255,255,0))
-    put_image_data(img=img, data=hex_to_image_data(qs['data']), offset_x=ord(qs['letter'])*8)
+    put_image_data(img=img, data=hex_to_image_data(qs['data']), offset_x=ord(qs['char'])*8)
     img.save(PATH_FONT)
     return web.Response(text="add_font")
 
