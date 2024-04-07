@@ -51,8 +51,8 @@ SEQUENCE_ZX_ORIGINS = """ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUV
 
 class PygameFont(PygameBase):
     def __init__(self):
-        self.font = self.load_font()
-        super().__init__(resolution=(320,180))  #, color_background='white'
+        self.font = self.load_font_advanced()
+        super().__init__(resolution=(320,180), color_background='white')  #, color_background='white'
     def load_font(self, path_font=Path('font.gif'), url_font='http://localhost:8000/static/font.gif'):
         if not path_font.exists():
             with urlopen(url_font) as r, path_font.open(mode='wb') as f:
@@ -64,7 +64,7 @@ class PygameFont(PygameBase):
         ww, hh = img.get_size()
         return {
             seq[i]: img.subsurface(((i*w)%ww, ((i*w)//ww)*h, w, h))
-            for i in range((ww//w)*(hh//h))
+            for i in range(min((ww//w)*(hh//h), len(seq)))
         }
     def draw_font(self, text, x, y):
         for i, letter in enumerate(text):
