@@ -210,7 +210,6 @@ Copter
     * https://github.com/calaldees/TeachProgramming/blob/master/teachprogramming/static/projects/game/animation_base_pygame.py
 * Image Size
     * Background (3000, 360)? - Copter (48, 24)?
-* TODO: `gif` is a really bad idea because opening it to edit go whacky (as it's indexed colored)
 
 ```python
 import pygame
@@ -236,7 +235,7 @@ Background
 ```diff
  class CopterGame(PygameBase):
      def __init__(self):
-+        self.background_image = pygame.image.load("images/CopterLevel1.gif")
++        self.background_image = pygame.image.load("images/CopterLevel1.png")
          self.background_color = (0, 0, 0, 0)
 ...
          pygame.draw.rect(screen, self.background_color, (0,0)+screen.get_size())
@@ -263,9 +262,9 @@ Copter
 ```diff
  class CopterGame(PygameBase):
      def __init__(self):
-         self.background_image = pygame.image.load("images/CopterLevel1.gif")
+         self.background_image = pygame.image.load("images/CopterLevel1.png")
          self.background_color = (0, 0, 0, 0)
-+        self.copter_image     = pygame.image.load("images/ship.gif")
++        self.copter_image     = pygame.image.load("images/ship.png")
          self.reset()
          super().__init__(resolution=(640,360))
      def reset(self):
@@ -299,10 +298,11 @@ Collision Single
  
 +        def safe_get_pixel(p):
 +            try   : return self.background_image.get_at(p)
-+            except: return None
++            except: return (0,0,0,0)
 +        point = (self.background_x_pos + int(self.copter_x_pos), int(self.copter_y_pos))
 +        pixel = safe_get_pixel(point)
-+        if pixel == (255,255,255,255):
++        r,g,b,a = pixel
++        if a < 10:
 +            pass
 +        else:
 +            self.reset()
@@ -322,7 +322,7 @@ These can be attempted in any order.
 ### Level
 
 ```diff
--        self.background_image = pygame.image.load("images/CopterLevel1.gif")
+-        self.background_image = pygame.image.load("images/CopterLevel1.png")
 ...
 +        self.level_color = (255, 255, 0, 255)
 +        self.level_number = 1
@@ -330,10 +330,10 @@ These can be attempted in any order.
 -        self.reset()
          super().__init__(resolution=(640,360))
 +    def load_level(self):
-+        self.background_image = pygame.image.load(f"images/CopterLevel{self.level_number}.gif")
++        self.background_image = pygame.image.load(f"images/CopterLevel{self.level_number}.png")
 +        self.reset()
 ...
-             if pixel == (255,255,255,255):
+             if a < 10:
                  pass
 +            elif pixel == self.level_color:
 +                self.level_number += 1
@@ -375,7 +375,7 @@ These can be attempted in any order.
 
 ```diff
      def load_level(self):
--        self.background_image = pygame.image.load(f"images/CopterLevel{self.level_number}.gif")
+-        self.background_image = pygame.image.load(f"images/CopterLevel{self.level_number}.png")
 +        self.background_images = [
 +            pygame.image.load(file)
 +            for file in sorted(pathlib.Path('images').glob(f"*CopterLevel{self.level_number}*"))
@@ -398,13 +398,13 @@ These can be attempted in any order.
 ### Collision Multi
 
 ```diff
-         self.copter_image     = pygame.image.load("images/ship.gif")
+         self.copter_image     = pygame.image.load("images/ship.png")
 +        self.copter_collision_points = ((0,0),(32,9),(17,2),(22,12),(2,12))
          self.reset()
 ...
          def safe_get_pixel(p):
              try   : return self.background_image.get_at(p)
-             except: return None
+             except: return (0,0,0,0)
 -        point = (self.background_x_pos + int(self.copter_x_pos), int(self.copter_y_pos))
 +        for x, y in self.copter_collision_points:
 +            point = (self.background_x_pos + int(self.copter_x_pos) + x, int(self.copter_y_pos) + y)
