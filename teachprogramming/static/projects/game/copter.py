@@ -17,7 +17,7 @@ class CopterGame(PygameBase):
         #self.background_image = pygame.image.load(f"images/CopterLevel{self.level_number}.gif")  # VER: level not parallax
         self.background_images = [                                                               # VER: parallax
             pygame.image.load(file)                                                              # VER: parallax
-            for file in sorted(pathlib.Path('images').glob(f"*CopterLevel{self.level_number}*")) # VER: parallax
+            for file in sorted(pathlib.Path('images').glob(f"*CopterLevel{self.level_number}*.png")) # VER: parallax
         ]                                                                                        # VER: parallax
         self.reset()                                                                             # VER: level
     def reset(self):
@@ -46,12 +46,13 @@ class CopterGame(PygameBase):
         def safe_get_pixel(p):                                   # VER: collision_single
             #try   : return self.background_image.get_at(p)   # VER: collision_single not parallax
             try   : return self.background_images[0].get_at(p)   # VER: parallax
-            except: return None                                  # VER: collision_single
+            except: return (0,0,0,0)                             # VER: collision_single
         #point = (self.background_x_pos + int(self.copter_x_pos), int(self.copter_y_pos))  # VER: collision_single not collision_multi
         for x, y in self.copter_collision_points:   # VER: collision_multi
             point = (self.background_x_pos + int(self.copter_x_pos) + x, int(self.copter_y_pos) + y)  # VER: collision_multi
             pixel = safe_get_pixel(point)           # VER: collision_single
-            if pixel == (255,255,255,255):          # VER: collision_single
+            r,g,b,a = pixel                         # VER: collision_single
+            if a < 10:                              # VER: collision_single
                 pass                                # VER: collision_single
             elif pixel == self.level_color:         # VER: level
                 self.level_number += 1              # VER: level

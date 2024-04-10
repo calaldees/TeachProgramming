@@ -1,6 +1,6 @@
 <canvas id="canvas_element" width="640" height="360" style="image-rendering: pixelated; object-fit: contain; width:100%; max-width: 100%; height: 100%; max-height: 100%;">
 </canvas>
-<canvas id="canvas_colisions" width="640" height="360" style="display: none"></canvas><!-- // VER: collision_single -->
+<canvas id="canvas_collisions" width="640" height="360" style="display: none"></canvas><!-- // VER: collision_single -->
 <script>
     const canvas = document.getElementById('canvas_element');
     const context = canvas.getContext('2d');
@@ -32,8 +32,8 @@
         }
     }
 
-    const colisions_context = document.getElementById('canvas_colisions').getContext('2d'); // VER: collision_single
-    const copter_colision_points = [[0,0],[32,9],[17,2],[22,12],[2,12]];                    // VER: collision_multi
+    const collisions_context = document.getElementById('canvas_collisions').getContext('2d'); // VER: collision_single
+    const copter_collision_points = [[0,0],[32,9],[17,2],[22,12],[2,12]];                    // VER: collision_multi
                                                                                           // VER: collision_single
     const v = {
         "color_background": `rgba(0,0,0,255)`,
@@ -45,21 +45,21 @@
     v.copter_image = new Image();           // VER: copter
     v.copter_image.src = `images/ship.gif`; // VER: copter
     //v.background_image = new Image();                   // VER: background NOT level,parallax
-    //v.background_image.src = `images/CopterLevel1.gif`; // VER: background NOT level,parallax
+    //v.background_image.src = `images/CopterLevel1.png`; // VER: background NOT level,parallax
 
     function load_level(level_number) {                                         // VER: level
         //const level_number = 1;                                                  // VER: parallax NOT level
         //v.background_image = new Image();                                        // VER: level NOT parallax
-        //v.background_image.src = `images/CopterLevel${level_number}.gif`;        // VER: level NOT parallax
+        //v.background_image.src = `images/CopterLevel${level_number}.png`;        // VER: level NOT parallax
         const images = [new Image(), new Image(), new Image()];                    // VER: parallax
         v.background_images = images;                                              // VER: parallax
         function load_background_image(layer, filename) {                          // VER: parallax
             images[layer].onload = function() {images[layer] = this;}              // VER: parallax
             images[layer].src = filename;                                          // VER: parallax
         }                                                                          // VER: parallax
-        load_background_image(2, `images/CopterLevel${level_number}_layer2.gif`);  // VER: parallax
-        load_background_image(1, `images/CopterLevel${level_number}_layer1.gif`);  // VER: parallax
-        load_background_image(0, `images/CopterLevel${level_number}.gif`);         // VER: parallax
+        load_background_image(2, `images/CopterLevel${level_number}_layer2.png`);  // VER: parallax
+        load_background_image(1, `images/CopterLevel${level_number}_layer1.png`);  // VER: parallax
+        load_background_image(0, `images/CopterLevel${level_number}.png`);         // VER: parallax
         reset();                                                                // VER: level
     }                                                                           // VER: level
 
@@ -67,7 +67,7 @@
         init_keys();
         v.view_x_pos   =  0;                    // VER: background
         v.copter_x_pos = 50;                    // VER: copter
-        v.copter_y_pos = canvas.height / 2;     // VER: copter
+        v.copter_y_pos = 100;                   // VER: copter
         v.copter_x_vel =  0;                    // VER: physics
         v.copter_y_vel =  0;                    // VER: physics
     }
@@ -96,26 +96,26 @@
         v.copter_x_pos += v.copter_x_vel;          // VER: physics
         v.copter_y_pos += v.copter_y_vel;          // VER: physics
                                                                    // VER: copter
-        colisions_context.fillStyle = v.color_background;       // VER: collision_single
-        colisions_context.fillRect(0, 0, canvas.width, canvas.height);  // VER: collision_single
-        //colisions_context.drawImage(v.background_image, -v.view_x_pos, 0);  // VER: collision_single NOT parallax
-        colisions_context.drawImage(v.background_images[0], -v.view_x_pos, 0);  // VER: collision_single,parallax
+        collisions_context.clearRect(0, 0, canvas.width, canvas.height);  // VER: collision_single
+        //collisions_context.drawImage(v.background_image, -v.view_x_pos, 0);  // VER: collision_single NOT parallax
+        collisions_context.drawImage(v.background_images[0], -v.view_x_pos, 0);  // VER: collision_single,parallax
 
         //const point = [v.copter_image.width/2, v.copter_image.height/2]; // VER: collision_single NOT collision_multi
-        for (let point of copter_colision_points) {         // VER: collision_multi
-            const [r,g,b,a] = colisions_context.getImageData( // VER: collision_single
+        for (let point of copter_collision_points) {         // VER: collision_multi
+            const [r,g,b,a] = collisions_context.getImageData( // VER: collision_single
                 v.copter_x_pos+point[0],                      // VER: collision_single
                 v.copter_y_pos+point[1], 1, 1).data;          // VER: collision_single
             const pixel_color = `rgba(${r},${g},${b},${a})`;  // VER: collision_single
-            if (pixel_color == v.color_exit) {                  // VER: level
+            if (a < 10) {}                                    // VER: collision_single
+            else if (pixel_color == v.color_exit) {             // VER: level
                 alert("Next Level");                            // VER: level
                 load_level(++v.level_number);                   // VER: level
             }                                                   // VER: level
-            if (pixel_color != v.color_background) {                    // VER: collision_single
-                reset();                                                // VER: collision_single
-            }                                                           // VER: collision_single
-        }                                                               // VER: collision_multi
-                                                                        // VER: collision_single
+            else {                                            // VER: collision_single
+                reset();                                      // VER: collision_single
+            }                                                 // VER: collision_single
+        }                                                   // VER: collision_multi
+                                                              // VER: collision_single
         context.drawImage(                                                            // VER: copter
             v.copter_image, Math.round(v.copter_x_pos), Math.round(v.copter_y_pos),   // VER: copter
         );                                                                            // VER: copter
