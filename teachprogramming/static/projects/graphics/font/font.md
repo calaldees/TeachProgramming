@@ -29,7 +29,7 @@ Raster font network?
     * [BitmapFonts](https://github.com/ianhan/BitmapFonts/blob/main/README.md)
         * My collection of bitmap fonts pulled from various demoscene archives over the years
     * [NFG's Arcade Font Engine](https://nfggames.com/games/fontmaker/lister.php)
-        * https://nfggames.com/games/fontmaker/index.php (with gradient!!! Cool!)
+        * https://nfggames.com/games/fontmaker/ (with gradient!!! Cool!)
         * Apply gradient to white letters
         * 2color (on/off) - 4 color (transparent,gradient-passthrough,solid-color,shadow(50%transparent-gradient?))?
 * Demoscene "Greets" - code-alias - creativity
@@ -122,7 +122,7 @@ Draw sin wave
      def loop(self, screen, frame):
 ...
          self.draw_font("abcde", frame%width, 50)
-+        self.draw_font_wave("abcde", frame%width, 110)
++        self.draw_font_wave("abcde", frame%w, 110)
 ```
 
 Super advanced font loader
@@ -135,7 +135,10 @@ Super advanced font loader
 # curl https://images.damieng.com/fonts/zx-origins/Prince.png -o font.png
 SEQUENCE_ZX_ORIGINS = """ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_£abcdefghijklmnopqrstuvwxyz{|}~©"""
 #...
-    super().__init__(resolution=(320,180), color_background='white')
+-    self.font = self.load_font()
++    self.font = self.load_font_advanced()
+#...
+     super().__init__(resolution=(320,180), color_background='white')
 #...
     def load_font_advanced(self, path_font=Path('font.png'), seq=SEQUENCE_ZX_ORIGINS, w=8, h=8):
         img = pygame.image.load(path_font)
@@ -145,3 +148,7 @@ SEQUENCE_ZX_ORIGINS = """ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUV
             for i in range(min((ww//w)*(hh//h), len(seq)))
         }
 ```
+
+* https://damieng.com/typography/zx-origins
+* https://github.com/ianhan/BitmapFonts/
+* https://nfggames.com/games/fontmaker/ see: "All fonts on one page"
