@@ -1,113 +1,71 @@
 import math
-import io
-import struct
+from functools import partial
 
-import pygame
 
-from pygame_test import GameBase
+def oscillator_generator_8bit_unsigned(func, sample_frequency_hz, note_frequency_hz=440):
+    num_samples = int(sample_frequency_hz / note_frequency_hz * 2)  # number of samples for a full oscillation
+    return bytes(int((func(s/num_samples)+1) * 127) for s in range(num_samples))
 
-def sine(x):
-    """
-    >>> def _sine(x):
-    ...    return round(sine(x), 4)
-    >>> _sine(0)
-    0.0
-    >>> _sine(0.25)
-    1.0
-    >>> _sine(0.5)
-    0.0
-    >>> _sine(0.75)
-    -1.0
-    >>> _sine(1)
-    -0.0
-    """
-    return math.sin(x * math.pi * 2)
-def triangle(x):
-    """
-    >>> triangle(0)
-    -0.0
-    >>> triangle(0.25)
-    1.0
-    >>> triangle(0.5)
-    -0.0
-    >>> triangle(0.75)
-    -1.0
-    >>> triangle(1)
-    -0.0
-    """
-    return -(abs((((x+0.25)%1)*4) - 2) - 1)
-def sawtooth(x):
-    """
-    >>> sawtooth(0)
-    0.0
-    >>> sawtooth(0.25)
-    0.5
-    >>> sawtooth(0.5)
-    -1.0
-    >>> sawtooth(0.75)
-    -0.5
-    >>> sawtooth(1)
-    0.0
-    """
-    return (((x+0.5) * 2) % 2) - 1
-def square(x):
-    """
-    https://en.wikipedia.org/wiki/Square_wave
-    >>> square(0)
-    1.0
-    >>> square(0.25)
-    1.0
-    >>> square(0.5)
-    -1.0
-    >>> square(0.75)
-    -1.0
-    >>> square(1)
-    -1.0
-    """
-    return 1.0 if x < 0.5 else -1.0
-OSCILLATOR_TYPES = {
-    "sine": sine,
-    "square": square,
-    "sawtooth": sawtooth,
-    "triangle": triangle,
-    "custom": lambda p: p,
+OSCILLATOR_SAMPLES = {
+    name: oscillator_generator_8bit_unsigned(func, 22050)
+    for name, func in {
+        "sine": lambda x: math.sin(x * math.pi * 2),
+        "square": lambda x: 1.0 if x < 0.5 else -1.0,
+        "sawtooth": lambda x: (((x+0.5) * 2) % 2) - 1,
+        "triangle": lambda x: -(abs((((x+0.25)%1)*4) - 2) - 1),
+    }.items()
 }
-class Oscillator():
-    # consider cloning https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode
-    def __init__(self, frequency, _type="sine"):
-        self.frequency = frequency
-        self.f = OSCILLATOR_TYPES[_type]
-        self.o = io.BytesIO()
-    @property
-    def samples(self):
-        return self.o.getbuffer().nbytes / 2 # 2 bytes ber sample as 16bit
-    def add_full_oscillation(self, note=440):
-        oscillation_samples = int(self.frequency / note * 2)
-        for s in (int(self.f(s/oscillation_samples)*(pow(2, 16)-2)/2) for s in range(oscillation_samples)):
-            self.o.write(struct.pack('h', s))
 
-class Game(GameBase):
+def get_sample(sample, index, rate=1.0):
+    # TODO interpolation (expand and shrink)
+    return sample[index % len(sample)]
+
+def get_samples(sample_index, size, sample):
+    return bytes(map(partial(get_sample, sample), range(sample_index, sample_index+size)))
+
+import pyaudio
+class Audio():
     def __init__(self):
-        self.s = None
-        self.c = None
-        pygame.mixer.pre_init(frequency=44100, size=-16, channels=1, buffer=512)
+        self.pyaudio = pyaudio.PyAudio()
+        self.audio_frame = 0
+        self.audio_stream = self.pyaudio.open(format=pyaudio.paUInt8, channels=1, rate=22050, output=True, stream_callback=self.pyaudio_stream_callback)
+    def pyaudio_stream_callback(self, in_data, frame_count, time_info, status):
+        audio_bytes = get_samples(self.audio_frame, frame_count, OSCILLATOR_SAMPLES['sine'])
+        self.audio_frame += frame_count
+        return (audio_bytes, pyaudio.paContinue)
+    def quit(self):
+        self.audio_stream.close()
+        self.pyaudio.terminate()
+
+
+from animation_base_pygame import PygameBase
+class Game(PygameBase):
+    def __init__(self):
         super().__init__()
-        self.channel = pygame.mixer.Channel(0)
-        self.frequency, sample_bits, channels = pygame.mixer.get_init()
-        self.frame_samples = int(self.frequency / self.fps)
+        self.pyaudio = pyaudio.PyAudio()
+        self.audio_frame = 0
+        self.audio_stream = self.pyaudio.open(format=pyaudio.paUInt8, channels=1, rate=22050, output=True, stream_callback=self.pyaudio_stream_callback)
+    def pyaudio_stream_callback(self, in_data, frame_count, time_info, status):
+        audio_bytes = get_samples(self.audio_frame, frame_count, OSCILLATOR_SAMPLES['sine'])
+        self.audio_frame += frame_count
+        return (audio_bytes, pyaudio.paContinue)
+    def quit(self):
+        self.audio_stream.close()
+        self.pyaudio.terminate()
     def loop(self, screen, frame):
-        if frame == 10:
-            #ff = ((frame//60) % 7) + 1
-            #ff = 24
-            #tt = tuple(int((math.sin(i/ff)*128)+127) for i in range(self.frame_samples*60))
-            #self.channel.play(pygame.mixer.Sound(buffer=bytes(tt)))
-            o = Oscillator(self.frequency, _type="square")
-            #while (o.samples < self.frame_samples):
-            for i in range(1000):
-                o.add_full_oscillation(note=220)
-            self.channel.queue(pygame.mixer.Sound(buffer=o.o.getbuffer()))
-            #self.channel.play(pygame.mixer.Sound(buffer=bytes(tt)))
+        print(f"video_frame={frame} audio_frame={self.audio_frame}")
 
 
 if __name__ == '__main__':
-    Game().run()
+    #Game().run()
+
+    aa = Audio()
+    
+    #import signal
+    #def handler(signum, frame):
+    #    aa.quit()
+    #signal.signal(signal.SIGINT, handler)
+
+    import time
+    while aa.audio_stream.is_active():
+        time.sleep(0.1)

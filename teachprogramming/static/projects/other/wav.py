@@ -155,6 +155,7 @@ def play_pyaudio(o):
     try:
         import pyaudio
     except ImportError:
+        print("pyaudio not installed")
         return
 
     p = pyaudio.PyAudio()
@@ -167,6 +168,7 @@ def play_pyaudio(o):
     buffer = bytearray()
     def _callback(in_data, frame_count, time_info, status):
         nonlocal buffer
+        print(frame_count)
         target_bytes = frame_count * 2  #16bits
         while (len(buffer) + o.num_bytes) < target_bytes:
             o.add_full_oscillation()
