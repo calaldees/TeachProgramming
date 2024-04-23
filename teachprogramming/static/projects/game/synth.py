@@ -84,19 +84,24 @@ OSCILLATOR_SAMPLES = {
     }.items()
 }
 
-def get_frame(sample, index, rate=1.0):
-    # TODO interpolation (expand and shrink)
-    return sample[index % len(sample)]
+def get_frame(sample, index):
+    if index.is_integer:  # may be unneeded optimisation
+        return sample[index % len(sample)]
+    i = int(index)
+    a = sample[(i  )%len(sample)]
+    b = sample[(i+1)%len(sample)]
+    mix = index % 1
+    return (a*(1-mix))+(b*(mix))
 
 def get_sample_bytes(sample_index, size, sample):
     return bytes(map(partial(get_frame, sample), range(sample_index, sample_index+size)))
 
 def scale(data, size):
-    if len(data) == size:
+    if size == len(data):
         return data
     if size > len(data):
-        # upscale
-        return None
+        # upscale - linear interpolation
+        return bytes(int(get_frame(data, (i/size)*len(data))) for i in range(size))
     if size < len(data):
         # downscale
         return None
@@ -125,7 +130,7 @@ class Game(PygameBase):
         self.audio_frame = 0
         self.audio_stream = self.pyaudio.open(format=pyaudio.paUInt8, channels=1, rate=22050, output=True, stream_callback=self.pyaudio_stream_callback)
     def pyaudio_stream_callback(self, in_data, frame_count, time_info, status):
-        audio_bytes = get_samples(self.audio_frame, frame_count, OSCILLATOR_SAMPLES['sine'])
+        audio_bytes = get_sample_bytes(self.audio_frame, frame_count, OSCILLATOR_SAMPLES['sine'])
         self.audio_frame += frame_count
         return (audio_bytes, pyaudio.paContinue)
     def quit(self):
