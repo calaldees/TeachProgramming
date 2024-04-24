@@ -65,11 +65,12 @@ class Note():
 
 SAMPLE_FREQUENCY_HZ = 22050
 
-def num_samples(note_frequency_hz, sample_frequency_hz=SAMPLE_FREQUENCY_HZ):
-    return int(sample_frequency_hz / note_frequency_hz * 2)  # number of samples for a full oscillation
+def num_samples_for_full_oscillation(note_frequency_hz, sample_frequency_hz=SAMPLE_FREQUENCY_HZ):
+    # Anoyingly a full ossilation (one up + one down) is actually 2. So this makes a 220 wave when the input is 440
+    return int(sample_frequency_hz / note_frequency_hz * 2)
 
 def oscillator_generator_8bit_unsigned(func, note_frequency_hz=440):
-    s = num_samples(note_frequency_hz)
+    s = num_samples_for_full_oscillation(note_frequency_hz)
     return bytes(int((func(i/s)+1)*127) for i in range(s))
 
 OSCILLATOR_SAMPLES = {
@@ -84,9 +85,11 @@ OSCILLATOR_SAMPLES = {
     }.items()
 }
 
+# get_frame, get_sample_bytes and resample are not the correct approach.
+# I need to get functional with zero state
+# each frame should be a float size/width and should increment and be processed each frame
+
 def get_frame(sample, index):
-    if index.is_integer:  # may be unneeded optimisation
-        return sample[index % len(sample)]
     i = int(index)
     a = sample[(i  )%len(sample)]
     b = sample[(i+1)%len(sample)]
@@ -96,15 +99,14 @@ def get_frame(sample, index):
 def get_sample_bytes(sample_index, size, sample):
     return bytes(map(partial(get_frame, sample), range(sample_index, sample_index+size)))
 
-def scale(data, size):
-    if size == len(data):
-        return data
+def resample(data, size):
     if size > len(data):
         # upscale - linear interpolation
         return bytes(int(get_frame(data, (i/size)*len(data))) for i in range(size))
-    if size < len(data):
+    elif size < len(data):
         # downscale
-        return None
+        raise NotImplementedError()
+    return data
 #breakpoint()
 
 import pyaudio
