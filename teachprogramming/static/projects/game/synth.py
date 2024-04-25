@@ -3,6 +3,8 @@ import random
 from functools import partial
 import re
 
+
+
 class Note():
     """
     https://en.wikipedia.org/wiki/Scientific_pitch_notation
@@ -29,12 +31,17 @@ class Note():
         69
         >>> Note('G9').midi
         127
+        >>> Note([])
+        Traceback (most recent call last):
+        TypeError
         """
         if isinstance(note, int) or isinstance(note, str) and note.isdigit():
             self.midi = int(note)
-        else:
+        elif isinstance(note, str):
             note_str, octave = self.REGEX_NOTE.match(note.upper()).groups()
             self.midi = self.MIDI_C0 + (int(octave)*12) + self.LOOKUP_STR_NOTE[note_str]
+        else:
+            raise TypeError()
     def __str__(self):
         """
         >>> str(Note(0))
@@ -66,35 +73,142 @@ class Note():
 SAMPLE_FREQUENCY_HZ = 22050
 
 def num_samples_for_full_oscillation(note_frequency_hz, sample_frequency_hz=SAMPLE_FREQUENCY_HZ):
-    # Anoyingly a full ossilation (one up + one down) is actually 2. So this makes a 220 wave when the input is 440
+    # Annoyingly a full oscillation (one up + one down) is actually 2. So this makes a 220 wave when the input is 440
     return int(sample_frequency_hz / note_frequency_hz * 2)
 
-def oscillator_generator_8bit_unsigned(func, note_frequency_hz=440):
-    s = num_samples_for_full_oscillation(note_frequency_hz)
-    return bytes(int((func(i/s)+1)*127) for i in range(s))
+
+class Sample():
+    def __init__(self, name='', data=None, func=None, note_frequency_hz=440, loop=None):
+        assert bool(data) ^ bool(func)
+        if data:
+            self.data = data
+        if func:
+            self.data = self.oscillator_generator_8bit_unsigned(func, note_frequency_hz)
+        self.note_frequency_hz = note_frequency_hz
+    @staticmethod
+    def oscillator_generator_8bit_unsigned(func, note_frequency_hz:float=440):
+        s = num_samples_for_full_oscillation(note_frequency_hz)
+        return bytes(int((func(i/s)+1)*127) for i in range(s))
+    def _get_value_at(self, index:float):
+        """
+        >>> s = Sample(data=bytes((4,3,2,1,6)))
+        >>> s._get_value_at(1)
+        3
+        >>> s._get_value_at(1.5)
+        2.5
+        >>> s._get_value_at(3.5)
+        3.5
+        """
+        s = self.data
+        i = int(index)
+        a = s[(i  )%len(s)]
+        b = s[(i+1)%len(s)]
+        mix = index % 1
+        return (a*(1-mix))+(b*(mix))
+    def get_frame(self, i1:float, i2:float):
+        """
+        >>> s = Sample(data=bytes((4,3,2,1,6)))
+        >>> s.get_frame(1.0,2.0)
+        1.5
+        >>> s.get_frame(1.0,3.0)
+        2.5
+
+        >> s.get_frame(1,2)
+        1
+        """
+        return sum((
+            self._get_value_at(i1),
+            sum(self.data[i] for i in range(int(i1)+1, int(i2))),
+            self._get_value_at(i2),
+        ))/i2-i1
+    def resample(self, note_frequency_hz, size=None, start_frame=0):
+        data = 0
+        return Sample(self.name, data, note_frequency_hz=note_frequency_hz)
+
+
+def sine(x):
+    """
+    >>> def _sine(x):
+    ...    return round(sine(x), 4)
+    >>> _sine(0)
+    0.0
+    >>> _sine(0.25)
+    1.0
+    >>> _sine(0.5)
+    0.0
+    >>> _sine(0.75)
+    -1.0
+    >>> _sine(1)
+    -0.0
+    """
+    return math.sin(x * math.pi * 2)
+def triangle(x):
+    """
+    >>> triangle(0)
+    -0.0
+    >>> triangle(0.25)
+    1.0
+    >>> triangle(0.5)
+    -0.0
+    >>> triangle(0.75)
+    -1.0
+    >>> triangle(1)
+    -0.0
+    """
+    return -(abs((((x+0.25)%1)*4) - 2) - 1)
+def sawtooth(x):
+    """
+    >>> sawtooth(0)
+    0.0
+    >>> sawtooth(0.25)
+    0.5
+    >>> sawtooth(0.5)
+    -1.0
+    >>> sawtooth(0.75)
+    -0.5
+    >>> sawtooth(1)
+    0.0
+    """
+    return (((x+0.5) * 2) % 2) - 1
+def square(x):
+    """
+    https://en.wikipedia.org/wiki/Square_wave
+    >>> square(0)
+    1.0
+    >>> square(0.25)
+    1.0
+    >>> square(0.5)
+    1.0
+    >>> square(0.75)
+    -1.0
+    >>> square(1)
+    -1.0
+    """
+    return 1.0 if x <= 0.5 else -1.0
+    return float(-((round(x)*2)-1))  # branchless? which is faster? the float cast could be expensive
+def noise(x):
+    return random.random()*2-1
+
 
 OSCILLATOR_SAMPLES = {
-    name: oscillator_generator_8bit_unsigned(func)
+    name: Sample(func=func)
     # functions that take 0.0 to 1.0 input of progress though osculation and return -1.0 to +1.0 of wave
     for name, func in {
-        "sine": lambda x: math.sin(x * math.pi * 2),
-        "square": lambda x: 1.0 if x < 0.5 else -1.0,
-        "sawtooth": lambda x: (((x+0.5) * 2) % 2) - 1,
-        "triangle": lambda x: -(abs((((x+0.25)%1)*4) - 2) - 1),
-        "noise": lambda x: random.random()*2-1,
+        "sine": sine,
+        "square": square,
+        "sawtooth": sawtooth,
+        "triangle": triangle,
+        "noise": noise,
     }.items()
 }
+
+
+
 
 # get_frame, get_sample_bytes and resample are not the correct approach.
 # I need to get functional with zero state
 # each frame should be a float size/width and should increment and be processed each frame
 
-def get_frame(sample, index):
-    i = int(index)
-    a = sample[(i  )%len(sample)]
-    b = sample[(i+1)%len(sample)]
-    mix = index % 1
-    return (a*(1-mix))+(b*(mix))
 
 def get_sample_bytes(sample_index, size, sample):
     return bytes(map(partial(get_frame, sample), range(sample_index, sample_index+size)))
