@@ -3,6 +3,8 @@ import random
 from functools import partial
 import re
 
+#Something to consider https://sfxr.me/ online js sound effect generator
+
 
 
 class Note():
