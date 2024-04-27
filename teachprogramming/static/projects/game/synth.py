@@ -105,11 +105,16 @@ class Sample():
         i = int(index)
         a = s[(i  )%len(s)]
         b = s[(i+1)%len(s)]
-        mix = index % 1
-        return (a*(1-mix))+(b*(mix))
+        return (b-a)*(index%1) + a
+        #mix = index % 1
+        #return (a*(1-mix))+(b*(mix))
     def get_frame(self, i1:float, i2:float):
         """
         >>> s = Sample(data=bytes((4,3,2,1,5)))
+        >>> s.get_frame(1.0,1.0)
+        3.0
+        >>> s.get_frame(2.0,2.0)
+        2.0
         >>> s.get_frame(1.0,2.0)
         2.5
         >>> s.get_frame(1.0,3.0)
@@ -118,12 +123,18 @@ class Sample():
         3.0
         >>> s.get_frame(0.5,1.5)
         3.0
+        >>> s.get_frame(0.5,2.5)
+        2.5
         """
+        #breakpoint()
+        # I am disappointed that it's taking me so long to nail this ...
         return sum((
-            self.data[int(i1)]*(1-(i1%1)),
+            self._get_value_at(i1)*(1-(i1%1)),
+            #self.data[int(i1)]*(1-(i1%1)),
             sum(self.data[i] for i in range(int(i1)+1, int(i2))),
-            self.data[int(i2)]*(1-(i2%1)),
-        ))/((i2-i1)+1)
+            #self.data[int(i2)]*(1-(i2%1)),
+            self._get_value_at(i2)*(1-(i2%1)),
+        ))/(i2-i1+1)
     def resample(self, note_frequency_hz, size=None, start_frame=0):
         data = 0
         return Sample(self.name, data, note_frequency_hz=note_frequency_hz)
