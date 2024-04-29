@@ -91,14 +91,14 @@ class Sample():
     def oscillator_generator_8bit_unsigned(func, note_frequency_hz:float=440):
         s = num_samples_for_full_oscillation(note_frequency_hz)
         return bytes(int((func(i/s)+1)*127) for i in range(s))
-    def _get_value_at(self, index:float):
+    def get_value_at(self, index:float):
         """
         >>> s = Sample(data=bytes((4,3,2,1,6)))
-        >>> s._get_value_at(1)
+        >>> s.get_value_at(1)
         3
-        >>> s._get_value_at(1.5)
+        >>> s.get_value_at(1.5)
         2.5
-        >>> s._get_value_at(3.5)
+        >>> s.get_value_at(3.5)
         3.5
         """
         s = self.data
@@ -106,38 +106,6 @@ class Sample():
         a = s[(i  )%len(s)]
         b = s[(i+1)%len(s)]
         return (b-a)*(index%1) + a
-        #mix = index % 1
-        #return (a*(1-mix))+(b*(mix))
-    def get_frame(self, i1:float, i2:float):
-        """
-        >>> s = Sample(data=bytes((4,3,2,1,5)))
-        >>> s.get_frame(1.0,1.0)
-        3.0
-        >>> s.get_frame(2.0,2.0)
-        2.0
-        >>> s.get_frame(1.0,2.0)
-        2.5
-        >>> s.get_frame(1.0,3.0)
-        2.0
-        >>> s.get_frame(0.0,4.0)
-        3.0
-        >>> s.get_frame(0.5,1.5)
-        3.0
-        >>> s.get_frame(0.5,2.5)
-        2.5
-        """
-        #breakpoint()
-        # I am disappointed that it's taking me so long to nail this ...
-        return sum((
-            self._get_value_at(i1)*(1-(i1%1)),
-            #self.data[int(i1)]*(1-(i1%1)),
-            sum(self.data[i] for i in range(int(i1)+1, int(i2))),
-            #self.data[int(i2)]*(1-(i2%1)),
-            self._get_value_at(i2)*(1-(i2%1)),
-        ))/(i2-i1+1)
-    def resample(self, note_frequency_hz, size=None, start_frame=0):
-        data = 0
-        return Sample(self.name, data, note_frequency_hz=note_frequency_hz)
 
 
 def sine(x):
@@ -219,23 +187,32 @@ OSCILLATOR_SAMPLES = {
 
 
 
-# get_frame, get_sample_bytes and resample are not the correct approach.
-# I need to get functional with zero state
-# each frame should be a float size/width and should increment and be processed each frame
+#def get_sample_bytes(sample_index, size, sample):
+#    return bytes(map(partial(get_frame, sample), range(sample_index, sample_index+size)))
 
 
-def get_sample_bytes(sample_index, size, sample):
-    return bytes(map(partial(get_frame, sample), range(sample_index, sample_index+size)))
+class NoteSequence():
+    def __init__(self):
+        pass
+    def note_at(self, pos:float):
+        return (current, previous)
 
-def resample(data, size):
-    if size > len(data):
-        # upscale - linear interpolation
-        return bytes(int(get_frame(data, (i/size)*len(data))) for i in range(size))
-    elif size < len(data):
-        # downscale
-        raise NotImplementedError()
-    return data
-#breakpoint()
+
+class Channel():
+    def __init__(self, sample:Sample, notes:NoteSequence):
+        self.sample = sample
+        self.notes = notes
+    def get_pos(self, pos:float) -> int:
+        current, previous = self.notes.note_at(pos)
+        # get frame at exact play pos
+
+class Track():
+    def __init__(self):
+        self.bpm
+        self.channels = []
+    def frame_to_pos(self, frame) -> float:
+        return 0
+
 
 import pyaudio
 class Audio():
