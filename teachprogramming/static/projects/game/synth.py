@@ -2,6 +2,7 @@ import math
 import random
 from functools import partial
 import re
+from typing import NamedTuple
 
 #Something to consider https://sfxr.me/ online js sound effect generator
 
@@ -191,10 +192,21 @@ OSCILLATOR_SAMPLES = {
 #    return bytes(map(partial(get_frame, sample), range(sample_index, sample_index+size)))
 
 
+class TimedNote(NamedTuple):
+    start_pos: float
+    end_pos: float #or None
+    note: Note
+
+class TimedNotes(NamedTuple):
+    current: TimedNote # or None
+    previous: TimedNote # or None
+    next: TimedNote # or None
+
+
 class NoteSequence():
     def __init__(self):
-        pass
-    def note_at(self, pos:float):
+        self.notes
+    def note_at(self, pos:float) -> TimedNotes:
         return (current, previous)
 
 
@@ -202,9 +214,6 @@ class Channel():
     def __init__(self, sample:Sample, notes:NoteSequence):
         self.sample = sample
         self.notes = notes
-    def get_pos(self, pos:float) -> int:
-        current, previous = self.notes.note_at(pos)
-        # get frame at exact play pos
 
 class Track():
     def __init__(self):
