@@ -192,22 +192,13 @@ OSCILLATOR_SAMPLES = {
 #    return bytes(map(partial(get_frame, sample), range(sample_index, sample_index+size)))
 
 
-class TimedNote(NamedTuple):
+class TrackNote(NamedTuple):
     start_pos: float
     end_pos: float #or None
     note: Note
-
-class TimedNotes(NamedTuple):
-    current: TimedNote # or None
-    previous: TimedNote # or None
-    next: TimedNote # or None
-
-
-class NoteSequence():
-    def __init__(self):
-        self.notes
-    def note_at(self, pos:float) -> TimedNotes:
-        return (current, previous)
+    sample: Sample  # could be property of channel and not note? design decision
+    def __str__(self):
+        raise NotImplementedError()
 
 
 class Channel():
@@ -221,6 +212,8 @@ class Track():
         self.channels = []
     def frame_to_pos(self, frame) -> float:
         return 0
+    def notes_at(self, pos:float) -> tuple[TrackNote]:
+        return None
 
 
 import pyaudio
