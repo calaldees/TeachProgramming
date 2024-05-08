@@ -4,6 +4,9 @@ from functools import partial
 import re
 from typing import NamedTuple
 import typing as t
+import csv
+from pathlib import Path
+
 
 #Something to consider https://sfxr.me/ online js sound effect generator
 
@@ -81,7 +84,7 @@ class Note():
 SAMPLE_FREQUENCY_HZ = 22050
 
 def num_samples_for_full_oscillation(note_frequency_hz, sample_frequency_hz=SAMPLE_FREQUENCY_HZ):
-    # Annoyingly a full oscillation (one up + one down) is actually 2. So this makes a 220 wave when the input is 440
+    # Annoyingly a full oscillation (one up + one down) is actually 2hz. So the code (s_hz/n_hz*2) makes a 220 wave when the n_hz is 440
     return int(sample_frequency_hz / note_frequency_hz * 2)
 
 
@@ -209,18 +212,9 @@ class TrackNote():
     def value_at(self, pos:float):
         if pos < self.start_pos or pos > self.end_pos:
             return None
-        relative_pos = pos-self.start_pos
-        return self.sample.get_value_at(
-            # This is the real maths bit - how we move the samples position based on sample.hz and note.hz
-            # work it though on paper
-            #self.note.hz
-            #self.sample.hz
-            #relative_pos
-        )
+        return self.sample.get_value_at((pos-self.start_pos)/(self.sample.hz/self.note.hz))
 
 
-import csv
-from pathlib import Path
 
 class Track():
     @staticmethod
@@ -253,9 +247,20 @@ class Player():
     def __init__(self, track:Track):
         self.track = track
     def frame_to_pos(self, frame) -> float:
+        # TODO take into account bpm
         return 0
     def values_at(self, pos:float) -> tuple[int]:  # actually tuple[int or None] - ready for mixing!
+        # there is something not quite right here - the pos relates to bpm - so need to think about note.value_at
         return tuple(note.value_at(pos) for note in self.track.notes_at(int(pos)))
+    def get_sample_bytes(self, frame, frame_count):
+        return bytes(
+            self.mix(self.values_at(self.frame_to_pos(_frame)))
+            for _frame in range(frame, frame+frame_count)
+        )
+    @staticmethod
+    def mix(values):
+        values = tuple(filter(None, values))
+        return int(sum(values)/len(values))
 
 
 tt = Track.from_file(Path('synth.csv'))
