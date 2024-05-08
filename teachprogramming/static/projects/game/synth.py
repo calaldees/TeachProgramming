@@ -68,6 +68,7 @@ class Note():
     @property
     def hz(self):
         """
+        see wikipedia article for formula
         >>> Note(69).hz
         440.0
         >>> Note(70).hz
@@ -86,15 +87,19 @@ def num_samples_for_full_oscillation(note_frequency_hz, sample_frequency_hz=SAMP
 
 class Sample():
     @staticmethod
-    def from_oscillator(func, note_frequency_hz:float=440):
+    def from_oscillator(func, hz:float=440):
         #def oscillator_generator_8bit_unsigned(func, note_frequency_hz:float=440):
-        s = num_samples_for_full_oscillation(note_frequency_hz)
+        s = num_samples_for_full_oscillation(hz)
         data = bytes(int((func(i/s)+1)*127) for i in range(s))
-        return Sample(data, note_frequency_hz=note_frequency_hz, loop=True)
-
-    def __init__(self, data, note_frequency_hz=440, loop=None):
+        return Sample(data, hz=hz, loop=True)
+    @staticmethod
+    def from_file(p:Path):
+        #with p.open(mode='b') as f:
+        #    return Sample(f.read())
+        return Sample(p.read_bytes())
+    def __init__(self, data:bytes, hz:float=440, loop:bool=False):
         self.data = data
-        self.note_frequency_hz = note_frequency_hz
+        self.hz = hz
     def get_value_at(self, index:float):
         """
         >>> s = Sample(bytes((4,3,2,1,6)))
@@ -190,33 +195,29 @@ OSCILLATOR_SAMPLES = {
 
 
 
-
-#def get_sample_bytes(sample_index, size, sample):
-#    return bytes(map(partial(get_frame, sample), range(sample_index, sample_index+size)))
-
-
-#class TrackNote(NamedTuple):
-#    start_pos: float
-#    end_pos: float #or None
-#    note: Note
-#    sample: Sample  # could be property of channel and not note? design decision
 class TrackNote():
     def __init__(self, start_pos:int, end_pos:int, note:Note, sample:Sample=None):
-        self.start_pos = start_pos
-        self.end_pos = end_pos
-        self.note = note
-        self.sample = sample
+        self.start_pos:int = start_pos
+        self.end_pos:int = end_pos
+        self.note:Note = note
+        self.sample:Sample = sample
     def __str__(self) -> str:
         # "C#4 13 .."  tracker style
         raise NotImplementedError()
     def __repr__(self) -> str:
         return f'{self.note}'  # TODO: fixed width?
+    def value_at(self, pos:float):
+        if pos < self.start_pos or pos > self.end_pos:
+            return None
+        relative_pos = pos-self.start_pos
+        return self.sample.get_value_at(
+            # This is the real maths bit - how we move the samples position based on sample.hz and note.hz
+            # work it though on paper
+            #self.note.hz
+            #self.sample.hz
+            #relative_pos
+        )
 
-
-class Channel():
-    def __init__(self, sample:Sample, notes:t.Sequence):
-        self.sample = sample
-        self.notes = notes
 
 import csv
 from pathlib import Path
@@ -253,6 +254,8 @@ class Player():
         self.track = track
     def frame_to_pos(self, frame) -> float:
         return 0
+    def values_at(self, pos:float) -> tuple[int]:  # actually tuple[int or None] - ready for mixing!
+        return tuple(note.value_at(pos) for note in self.track.notes_at(int(pos)))
 
 
 tt = Track.from_file(Path('synth.csv'))
