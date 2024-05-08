@@ -3,6 +3,7 @@ import random
 from functools import partial
 import re
 from typing import NamedTuple
+import typing as t
 
 #Something to consider https://sfxr.me/ online js sound effect generator
 
@@ -37,11 +38,14 @@ class Note():
         >>> Note([])
         Traceback (most recent call last):
         TypeError
+        >>> Note('Not a note')
+        Traceback (most recent call last):
+        TypeError
         """
         if isinstance(note, int) or isinstance(note, str) and note.isdigit():
             self.midi = int(note)
-        elif isinstance(note, str):
-            note_str, octave = self.REGEX_NOTE.match(note.upper()).groups()
+        elif isinstance(note, str) and (match:=self.REGEX_NOTE.match(note.upper())):
+            note_str, octave = match.groups()
             self.midi = self.MIDI_C0 + (int(octave)*12) + self.LOOKUP_STR_NOTE[note_str]
         else:
             raise TypeError()
@@ -202,9 +206,10 @@ class TrackNote(NamedTuple):
 
 
 class Channel():
-    def __init__(self, sample:Sample, notes:NoteSequence):
+    def __init__(self, sample:Sample, notes:t.Sequence):
         self.sample = sample
         self.notes = notes
+
 
 class Track():
     def __init__(self):
@@ -215,6 +220,17 @@ class Track():
     def notes_at(self, pos:float) -> tuple[TrackNote]:
         return None
 
+import csv
+from pathlib import Path
+def sequence_loader(f:Path):
+    with f.open() as csvfile:
+        csv_reader = csv.reader(csvfile)
+        for row, notes in enumerate(csv_reader):
+            notes = tuple(map(Note, notes))
+            print(f'{row} {notes}')
+
+#sequence_loader(Path('synth.csv'))
+#breakpoint()
 
 import pyaudio
 class Audio():
