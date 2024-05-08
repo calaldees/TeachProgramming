@@ -17,38 +17,38 @@ class Note():
     LOOKUP_STR_NOTE = {text: note for note, text in LOOKUP_NOTE_STR.items()}
     MIDI_C0 = 12
     REGEX_NOTE = re.compile(r'([ABCDEFG]#?)(-?\d{1,2})')
-    def __init__(self, note):
+    @classmethod
+    def parse(cls, note):
         """
-        >>> Note(60).midi
+        >>> Note.parse(60).midi
         60
-        >>> Note('60').midi
+        >>> Note.parse('60').midi
         60
-        >>> Note('C-1').midi
+        >>> Note.parse('C-1').midi
         0
-        >>> Note('C0').midi
+        >>> Note.parse('C0').midi
         12
-        >>> Note('C4').midi
+        >>> Note.parse('C4').midi
         60
-        >>> Note('C#4').midi
+        >>> Note.parse('C#4').midi
         61
-        >>> Note('A4').midi
+        >>> Note.parse('A4').midi
         69
-        >>> Note('G9').midi
+        >>> Note.parse('G9').midi
         127
-        >>> Note([])
-        Traceback (most recent call last):
-        TypeError
-        >>> Note('Not a note')
-        Traceback (most recent call last):
-        TypeError
+
+        >>> Note.parse('^^')
+        '^^'
         """
         if isinstance(note, int) or isinstance(note, str) and note.isdigit():
-            self.midi = int(note)
-        elif isinstance(note, str) and (match:=self.REGEX_NOTE.match(note.upper())):
+            return Note(int(note))
+        elif isinstance(note, str) and (match:=cls.REGEX_NOTE.match(note.upper())):
             note_str, octave = match.groups()
-            self.midi = self.MIDI_C0 + (int(octave)*12) + self.LOOKUP_STR_NOTE[note_str]
-        else:
-            raise TypeError()
+            return Note(cls.MIDI_C0 + (int(octave)*12) + cls.LOOKUP_STR_NOTE[note_str])
+        return note
+    def __init__(self, midi):
+        assert isinstance(midi, int) and midi>=0 and midi<=127
+        self.midi = midi
     def __str__(self):
         """
         >>> str(Note(0))
@@ -85,20 +85,19 @@ def num_samples_for_full_oscillation(note_frequency_hz, sample_frequency_hz=SAMP
 
 
 class Sample():
-    def __init__(self, name='', data=None, func=None, note_frequency_hz=440, loop=None):
-        assert bool(data) ^ bool(func)
-        if data:
-            self.data = data
-        if func:
-            self.data = self.oscillator_generator_8bit_unsigned(func, note_frequency_hz)
-        self.note_frequency_hz = note_frequency_hz
     @staticmethod
-    def oscillator_generator_8bit_unsigned(func, note_frequency_hz:float=440):
+    def from_oscillator(func, note_frequency_hz:float=440):
+        #def oscillator_generator_8bit_unsigned(func, note_frequency_hz:float=440):
         s = num_samples_for_full_oscillation(note_frequency_hz)
-        return bytes(int((func(i/s)+1)*127) for i in range(s))
+        data = bytes(int((func(i/s)+1)*127) for i in range(s))
+        return Sample(data, note_frequency_hz=note_frequency_hz, loop=True)
+
+    def __init__(self, data, note_frequency_hz=440, loop=None):
+        self.data = data
+        self.note_frequency_hz = note_frequency_hz
     def get_value_at(self, index:float):
         """
-        >>> s = Sample(data=bytes((4,3,2,1,6)))
+        >>> s = Sample(bytes((4,3,2,1,6)))
         >>> s.get_value_at(1)
         3
         >>> s.get_value_at(1.5)
@@ -178,7 +177,7 @@ def noise(x):
 
 
 OSCILLATOR_SAMPLES = {
-    name: Sample(func=func)
+    name: Sample.from_oscillator(func)
     # functions that take 0.0 to 1.0 input of progress though osculation and return -1.0 to +1.0 of wave
     for name, func in {
         "sine": sine,
@@ -196,13 +195,22 @@ OSCILLATOR_SAMPLES = {
 #    return bytes(map(partial(get_frame, sample), range(sample_index, sample_index+size)))
 
 
-class TrackNote(NamedTuple):
-    start_pos: float
-    end_pos: float #or None
-    note: Note
-    sample: Sample  # could be property of channel and not note? design decision
-    def __str__(self):
+#class TrackNote(NamedTuple):
+#    start_pos: float
+#    end_pos: float #or None
+#    note: Note
+#    sample: Sample  # could be property of channel and not note? design decision
+class TrackNote():
+    def __init__(self, start_pos:int, end_pos:int, note:Note, sample:Sample=None):
+        self.start_pos = start_pos
+        self.end_pos = end_pos
+        self.note = note
+        self.sample = sample
+    def __str__(self) -> str:
+        # "C#4 13 .."  tracker style
         raise NotImplementedError()
+    def __repr__(self) -> str:
+        return f'{self.note}'  # TODO: fixed width?
 
 
 class Channel():
@@ -210,27 +218,45 @@ class Channel():
         self.sample = sample
         self.notes = notes
 
-
-class Track():
-    def __init__(self):
-        self.bpm
-        self.channels = []
-    def frame_to_pos(self, frame) -> float:
-        return 0
-    def notes_at(self, pos:float) -> tuple[TrackNote]:
-        return None
-
 import csv
 from pathlib import Path
-def sequence_loader(f:Path):
-    with f.open() as csvfile:
-        csv_reader = csv.reader(csvfile)
-        for row, notes in enumerate(csv_reader):
-            notes = tuple(map(Note, notes))
-            print(f'{row} {notes}')
 
-#sequence_loader(Path('synth.csv'))
-#breakpoint()
+class Track():
+    @staticmethod
+    def from_file(p:Path):
+        with p.open() as f:
+            meta = f.readline()  # todo - parse meta first line
+            return Track(rows=tuple(tuple(map(Note.parse, row)) for row in csv.reader(f)))
+    @staticmethod
+    def _Notes_to_TrackNotes(rows: tuple[tuple[Note]]) -> tuple[tuple[TrackNote]]:
+        active_notes = [None] * 8  # HACK - hard code to 8 channels max
+        def _active_note(row:int, channel:int, note:Note):
+            if active_notes[channel]:
+                active_notes[channel].end_pos = row
+            if isinstance(note, Note):
+                active_notes[channel] = TrackNote(start_pos=row, end_pos=row, note=note)
+            if note == "^^":
+                active_notes[channel] = None
+            return active_notes[channel]
+        return tuple(
+            tuple(_active_note(row, channel, note) for channel, note in enumerate(notes))
+            for row, notes in enumerate(rows)
+        )
+    def __init__(self, rows:tuple[tuple[Note]], bpm=90):
+        self.bpm = bpm
+        self.rows = self._Notes_to_TrackNotes(rows)
+    def notes_at(self, pos:int) -> tuple[TrackNote]:
+        return self.rows[pos%len(self.rows)]
+
+class Player():
+    def __init__(self, track:Track):
+        self.track = track
+    def frame_to_pos(self, frame) -> float:
+        return 0
+
+
+tt = Track.from_file(Path('synth.csv'))
+breakpoint()
 
 import pyaudio
 class Audio():
