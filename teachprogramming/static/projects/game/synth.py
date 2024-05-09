@@ -52,6 +52,8 @@ class Note():
     def __init__(self, midi):
         assert isinstance(midi, int) and midi>=0 and midi<=127
         self.midi = midi
+    def __eq__(self, obj):
+        return isinstance(obj, Note) and obj.midi == self.midi
     def __str__(self):
         """
         >>> str(Note(0))
@@ -224,6 +226,14 @@ class Track():
             return Track(rows=tuple(tuple(map(Note.parse, row)) for row in csv.reader(f)))
     @staticmethod
     def _Notes_to_TrackNotes(rows: tuple[tuple[Note]]) -> tuple[tuple[TrackNote]]:
+        """
+        >>> nn = Track._Notes_to_TrackNotes((
+        ...     tuple(map(Note.parse, ('A4', 'C4', 'F4', None))),
+        ...     tuple(map(Note.parse, ('C4', '^^', 'G4', None))),
+        ...     tuple(map(Note.parse, ('^^', 'None', '^^', None))),
+        ... ))
+        >>> nn[0][0].note = Note.parse('A4')
+        """
         active_notes = [None] * 8  # HACK - hard code to 8 channels max
         def _active_note(row:int, channel:int, note:Note):
             if active_notes[channel]:
@@ -244,11 +254,22 @@ class Track():
         return self.rows[pos%len(self.rows)]
 
 class Player():
-    def __init__(self, track:Track):
+    def __init__(self, track:Track, SAMPLE_FREQUENCY_HZ:int=22050):
         self.track = track
+        self.SAMPLE_FREQUENCY_HZ = SAMPLE_FREQUENCY_HZ
     def frame_to_pos(self, frame) -> float:
-        # TODO take into account bpm
-        return 0
+        """
+        >>> class MockTrack():
+        ...    bpm = 120
+        >>> p = Player(MockTrack)
+        >>> p.frame_to_pos(0)
+        0.0
+        >>> p.frame_to_pos(22050)
+        2.0
+        >>> p.frame_to_pos(44100)
+        4.0
+        """
+        return frame/self.SAMPLE_FREQUENCY_HZ/60*self.track.bpm
     def values_at(self, pos:float) -> tuple[int]:  # actually tuple[int or None] - ready for mixing!
         # there is something not quite right here - the pos relates to bpm - so need to think about note.value_at
         return tuple(note.value_at(pos) for note in self.track.notes_at(int(pos)))
@@ -264,7 +285,7 @@ class Player():
 
 
 tt = Track.from_file(Path('synth.csv'))
-breakpoint()
+#breakpoint()
 
 import pyaudio
 class Audio():
