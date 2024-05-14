@@ -1,4 +1,11 @@
 ## -*- coding: utf-8 -*-
+
+# This is crazy old project
+# Could be reworked with 
+# https://www.rapidseedbox.com/blog/snscrape
+# https://github.com/JustAnotherArchivist/snscrape " A social networking service scraper in Python "
+
+
 import os
 import re
 import datetime

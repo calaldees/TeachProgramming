@@ -92,17 +92,14 @@ def num_samples_for_full_oscillation(note_frequency_hz, sample_frequency_hz=SAMP
 
 class Sample():
     @staticmethod
-    def from_oscillator(func, hz:float=440):
-        #def oscillator_generator_8bit_unsigned(func, note_frequency_hz:float=440):
+    def from_oscillator(func, hz:float=440, sample_frequency_hz:int=SAMPLE_FREQUENCY_HZ):
         s = num_samples_for_full_oscillation(hz)
         data = bytes(int((func(i/s)+1)*127) for i in range(s))
-        return Sample(data, hz=hz, loop=True)
+        return Sample(data, hz=hz, sample_frequency_hz=sample_frequency_hz, loop=True)
     @staticmethod
-    def from_file(p:Path):
-        #with p.open(mode='b') as f:
-        #    return Sample(f.read())
-        return Sample(p.read_bytes())
-    def __init__(self, data:bytes, hz:float=440, loop:bool=False):
+    def from_file(p:Path, **kwargs):
+        return Sample(p.read_bytes(), **kwargs)
+    def __init__(self, data:bytes, hz:float=440, sample_frequency_hz:int=SAMPLE_FREQUENCY_HZ, loop:bool=False):
         self.data = data
         self.hz = hz
     def get_value_at(self, index:float):
@@ -186,7 +183,7 @@ def noise(x):
     return random.random()*2-1
 
 
-OSCILLATOR_SAMPLES = {
+SAMPLES = {
     name: Sample.from_oscillator(func)
     # functions that take 0.0 to 1.0 input of progress though osculation and return -1.0 to +1.0 of wave
     for name, func in {
@@ -196,6 +193,11 @@ OSCILLATOR_SAMPLES = {
         "triangle": triangle,
         "noise": noise,
     }.items()
+} | {
+    name: Sample.from_file(name)
+    for name in map(Path, (
+        'piano-everlast.raw',
+    ))
 }
 
 
@@ -223,6 +225,7 @@ class Track():
     def from_file(p:Path):
         with p.open() as f:
             meta = f.readline()  # todo - parse meta first line
+            # maybe the first row of the CSV is a base64 encoded sample for each channel?
             return Track(rows=tuple(tuple(map(Note.parse, row)) for row in csv.reader(f)))
     @staticmethod
     def _Notes_to_TrackNotes(rows: tuple[tuple[Note]]) -> tuple[tuple[TrackNote]]:
@@ -285,6 +288,7 @@ class Player():
 
 
 tt = Track.from_file(Path('synth.csv'))
+# TODO: Consider live reloading of track edit - filewatch
 #breakpoint()
 
 import pyaudio
@@ -294,7 +298,7 @@ class Audio():
         self.audio_frame = 0
         self.audio_stream = self.pyaudio.open(format=pyaudio.paUInt8, channels=1, rate=SAMPLE_FREQUENCY_HZ, output=True, stream_callback=self.pyaudio_stream_callback)
     def pyaudio_stream_callback(self, in_data, frame_count, time_info, status):
-        audio_bytes = get_sample_bytes(self.audio_frame, frame_count, OSCILLATOR_SAMPLES['sine'])
+        audio_bytes = get_sample_bytes(self.audio_frame, frame_count, SAMPLES['sine'])
         self.audio_frame += frame_count
         return (audio_bytes, pyaudio.paContinue)
     def quit(self):
@@ -310,7 +314,7 @@ class Game(PygameBase):
         self.audio_frame = 0
         self.audio_stream = self.pyaudio.open(format=pyaudio.paUInt8, channels=1, rate=22050, output=True, stream_callback=self.pyaudio_stream_callback)
     def pyaudio_stream_callback(self, in_data, frame_count, time_info, status):
-        audio_bytes = get_sample_bytes(self.audio_frame, frame_count, OSCILLATOR_SAMPLES['sine'])
+        audio_bytes = get_sample_bytes(self.audio_frame, frame_count, SAMPLES['sine'])
         self.audio_frame += frame_count
         return (audio_bytes, pyaudio.paContinue)
     def quit(self):
