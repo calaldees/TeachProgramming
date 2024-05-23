@@ -194,8 +194,8 @@ SAMPLES = {
         "noise": noise,
     }.items()
 } | {
-    name: Sample.from_file(name)
-    for name in map(Path, (
+    path.stem: Sample.from_file(path)
+    for path in map(Path, (
         'piano-everlast.raw',
     ))
 }
@@ -203,7 +203,7 @@ SAMPLES = {
 
 
 class TrackNote():
-    def __init__(self, start_pos:int, end_pos:int, note:Note, sample:Sample=None):
+    def __init__(self, start_pos:int, end_pos:int, note:Note, sample:Sample=SAMPLES['piano-everlast']):
         self.start_pos:int = start_pos
         self.end_pos:int = end_pos
         self.note:Note = note
@@ -275,7 +275,7 @@ class Player():
         return frame/self.SAMPLE_FREQUENCY_HZ/60*self.track.bpm
     def values_at(self, pos:float) -> tuple[int]:  # actually tuple[int or None] - ready for mixing!
         # there is something not quite right here - the pos relates to bpm - so need to think about note.value_at
-        return tuple(note.value_at(pos) for note in self.track.notes_at(int(pos)))
+        return tuple(note.value_at(pos) for note in self.track.notes_at(int(pos)) if note)
     def get_sample_bytes(self, frame, frame_count):
         return bytes(
             self.mix(self.values_at(self.frame_to_pos(_frame)))
@@ -284,10 +284,10 @@ class Player():
     @staticmethod
     def mix(values):
         values = tuple(filter(None, values))
-        return int(sum(values)/len(values))
+        return int(sum(values)/len(values)) if values else 0
 
 
-tt = Track.from_file(Path('synth.csv'))
+#tt = Track.from_file(Path('synth.csv'))
 # TODO: Consider live reloading of track edit - filewatch
 #breakpoint()
 
@@ -297,17 +297,19 @@ class Audio():
         self.pyaudio = pyaudio.PyAudio()
         self.audio_frame = 0
         self.audio_stream = self.pyaudio.open(format=pyaudio.paUInt8, channels=1, rate=SAMPLE_FREQUENCY_HZ, output=True, stream_callback=self.pyaudio_stream_callback)
+        self.player = Player(Track.from_file(Path('synth2.csv')))
     def pyaudio_stream_callback(self, in_data, frame_count, time_info, status):
-        audio_bytes = get_sample_bytes(self.audio_frame, frame_count, SAMPLES['sine'])
+        audio_bytes = self.player.get_sample_bytes(self.audio_frame, frame_count)
         self.audio_frame += frame_count
-        return (audio_bytes, pyaudio.paContinue)
+        return (audio_bytes, pyaudio.paContinue if audio_bytes else pyaudio.paComplete)
     def quit(self):
         self.audio_stream.close()
         self.pyaudio.terminate()
 
 
-from animation_base_pygame import PygameBase
-class Game(PygameBase):
+#from animation_base_pygame import PygameBase
+#class Game(PygameBase):
+class Game():
     def __init__(self):
         super().__init__()
         self.pyaudio = pyaudio.PyAudio()
