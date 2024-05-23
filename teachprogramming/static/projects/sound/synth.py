@@ -203,7 +203,7 @@ SAMPLES = {
 
 
 class TrackNote():
-    def __init__(self, start_pos:int, end_pos:int, note:Note, sample:Sample=SAMPLES['sine']):
+    def __init__(self, start_pos:int, end_pos:int, note:Note, sample:Sample=SAMPLES['piano-everlast']):
         self.start_pos:int = start_pos
         self.end_pos:int = end_pos
         self.note:Note = note
@@ -216,7 +216,6 @@ class TrackNote():
     def is_playing(self, pos):
         return pos >= self.start_pos and pos <= self.end_pos
     def value_at(self, pos:float):
-        # PROBLEM - We dont have bpm or sample rate of player - this is wrong
         return self.sample.get_value_at((pos-self.start_pos)/(self.sample.hz/self.note.hz))
 
 
@@ -274,11 +273,24 @@ class Player():
         4.0
         """
         return frame/self.SAMPLE_FREQUENCY_HZ/60*self.track.bpm
+    def pos_to_seconds(self, pos:float):
+        """
+        >>> class MockTrack():
+        ...    bpm = 120
+        >>> p = Player(MockTrack)
+        >>> p.pos_to_seconds(2)
+        1
+        """
+        return pos*(60/self.track.bpm)
     def values_at(self, frame:int) -> tuple[int]:  # actually tuple[int or None] - ready for mixing
         # there is something not quite right here - the pos relates to bpm - so need to think about note.value_at
+        #breakpoint()
         pos = self.frame_to_pos(frame)
         return tuple(
-            note.value_at(xxx)
+            note.sample.get_value_at(
+                (self.pos_to_seconds(pos-note.start_pos)/(note.sample.hz/note.note.hz))*self.SAMPLE_FREQUENCY_HZ
+            )
+            #note.value_at(xxx)
             for note in self.track.notes_at(int(pos))
             if note and note.is_playing(pos)
         )
