@@ -203,7 +203,7 @@ SAMPLES = {
 
 
 class TrackNote():
-    def __init__(self, start_pos:int, end_pos:int, note:Note, sample:Sample=SAMPLES['piano-everlast']):
+    def __init__(self, start_pos:int, end_pos:int, note:Note, sample:Sample=SAMPLES['sine']):
         self.start_pos:int = start_pos
         self.end_pos:int = end_pos
         self.note:Note = note
@@ -212,10 +212,11 @@ class TrackNote():
         # "C#4 13 .."  tracker style
         raise NotImplementedError()
     def __repr__(self) -> str:
-        return f'{self.note}'  # TODO: fixed width?
+        return f'{self.__class__.__name__}{self.note}'  # TODO: fixed width?
+    def is_playing(self, pos):
+        return pos >= self.start_pos and pos <= self.end_pos
     def value_at(self, pos:float):
-        if pos < self.start_pos or pos > self.end_pos:
-            return None
+        # PROBLEM - We dont have bpm or sample rate of player - this is wrong
         return self.sample.get_value_at((pos-self.start_pos)/(self.sample.hz/self.note.hz))
 
 
@@ -273,12 +274,17 @@ class Player():
         4.0
         """
         return frame/self.SAMPLE_FREQUENCY_HZ/60*self.track.bpm
-    def values_at(self, pos:float) -> tuple[int]:  # actually tuple[int or None] - ready for mixing!
+    def values_at(self, frame:int) -> tuple[int]:  # actually tuple[int or None] - ready for mixing
         # there is something not quite right here - the pos relates to bpm - so need to think about note.value_at
-        return tuple(note.value_at(pos) for note in self.track.notes_at(int(pos)) if note)
+        pos = self.frame_to_pos(frame)
+        return tuple(
+            note.value_at(xxx)
+            for note in self.track.notes_at(int(pos))
+            if note and note.is_playing(pos)
+        )
     def get_sample_bytes(self, frame, frame_count):
         return bytes(
-            self.mix(self.values_at(self.frame_to_pos(_frame)))
+            self.mix(self.values_at(_frame))
             for _frame in range(frame, frame+frame_count)
         )
     @staticmethod
