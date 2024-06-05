@@ -4,6 +4,7 @@ Book
 Mad idea - consolidate my resources and ideas in some form of publishing.
 I think I need to start with a book proposal.
 
+* [HelloWorld article submission](https://forms.monday.com/forms/eeff279cc865bf55901a9a0bf5c722d0?r=use1)
 * Bloomsbury [Submitting a Book Proposal](https://www.bloomsbury.com/uk/discover/bloomsbury-academic/authors/submitting-a-book-proposal/)
 * https://httcs.online/
 * https://www.johncattbookshop.com/pages/submissions
