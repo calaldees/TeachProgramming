@@ -51,3 +51,38 @@ for y in range(image_src.height):
 
 image_des.show()
 #image_des.save('elavation_uk.png')
+
+# Extension
+
+def temp():
+    data = (
+        # name, height, color
+        ('level7', 220, (0, 255, 0)),
+        ('level6', 190, (0, 220, 0)),
+        ('level1', SEA_LEVEL_BASE, (0, 75, 0)),
+        ('sea', 0, (0, 0, 255)),
+    )
+
+    LEVEL_7 = 220
+    LEVEL_6 = 190
+    LEVEL_5 = 150
+    LEVEL_4 = 100
+    LEVEL_3 = 40
+    LEVEL_2 = 35
+    LEVEL_1 = 30
+
+    # for x in (1,2,3):
+
+    # for x, y in ((1,'a'),(2,'b'),(3,'c')):
+
+    # for item in ((1,'a'),(2,'b'),(3,'c')):
+    #     x = item[0]
+    #     y = item[1]
+
+
+    # for level_tuple in data:
+    #     name = level_tuple[0]
+    #     height = level_tuple[1]
+    #     color = level_tuple[2]
+    #     if land_height >= height:
+    #         break

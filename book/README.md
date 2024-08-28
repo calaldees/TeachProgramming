@@ -144,6 +144,10 @@ Other
     * A lifetime of exploring programming problems means I can talk with young people about soliving a sudoku, huffman compression, rsa. I did not have that knowlege leaving university. 
     * In 2005 students were crying out to learn to code. In 2020 they hate being forced to code, it's hard and abstract and no real value (without decades of effort/time and most are not willing to invest)
 * Access to high quality information/resources (that are up to date) has been solved. There are more skills computing people in the world now than in 1990. THe key ingredient is "personal interest" which is a requirement for investing "time". Young people are pulled from pillar to post and are stretched for time. Time is the number one ingredient
+  * Expanding on that
+    * 1 Time (The number number number 1)
+    * 2 IQ (not repeat the same pattern a million times and change nothing). Asks self: How can Eddie Van Halen do that and I cant
+    * 3 Talk to other humans - be able to ask questions. Seek out others interested in similar things
 
 
 Activities
@@ -270,4 +274,4 @@ Y2? working with others
     * >  As a subject that is often considered vocational in nature, computing students also need to demonstrate standard skills of employability, which lacks an overall infrastructure (Fincher & Finlay, Reference Fincher and Finlay2016)
     * > “The spirit and style of student assessment defines the de facto curriculum.”  Rowntree (Reference Rowntree1977) 
 
-Concept: "Localised assessment" combined with "authentic assessment"
+Concept: "Localized assessment"(traditional) combined with "authentic assessment" (wider+real)
