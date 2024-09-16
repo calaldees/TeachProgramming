@@ -473,3 +473,12 @@ Point 2:
 634090000
 187060905
 ```
+
+
+Sudoku Implementation
+=====================
+
+Tree search
+
+See regex hex puzzle! A similar technique could be used?
+https://mathspp.com/blog/problems/regex-crossword

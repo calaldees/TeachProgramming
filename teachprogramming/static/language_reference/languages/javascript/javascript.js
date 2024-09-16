@@ -5,9 +5,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript   // VER: help
 
 node my_file.js  // VER: run
 <script>CODE</script>  in html and opened in web browser // VER: run
+alias node="docker run --rm -it --volume ${PWD}:/temp/ --workdir=/temp/ node $1"
 */
 
-fs = require('fs');
+fs = require('fs')
 
 /*
 console = {
@@ -19,11 +20,26 @@ console = {
 //------------------------------------------------------------------------------
 
 function hello_world() {
-  console.log("Hello World");     // VER: hello_world
+  console.log("Hello World")     // VER: hello_world
 }
 
 function read_line_from_console() {
-  // in browser?  prompt("Please enter your name", "Harry Potter");
+  // in browser?  prompt("Please enter your name", "Harry Potter");   // VER: read_line_from_console
+
+  //const fileStream = fs.createReadStream('input.txt');      // VER: read_line_from_console
+  const rl = require('readline').createInterface({            // VER: read_line_from_console
+    input: process.stdin, //or fileStream                     // VER: read_line_from_console
+    output: process.stdout,                                   // VER: read_line_from_console
+    terminal: false,                                          // VER: read_line_from_console
+  })                                                          // VER: read_line_from_console
+  async function input() {for await (const line of rl) {return line}}  // VER: read_line_from_console
+  (async () =>{                                               // VER: read_line_from_console
+      //for await (const line of rl) {console.log("Echo> " + line)}
+      console.log("Say somethiong: ")                         // VER: read_line_from_console
+      const answer = await input()                            // VER: read_line_from_console
+      console.log(`You answered ${answer}`)                   // VER: read_line_from_console
+  })()                                                        // VER: read_line_from_console
+
 }
 
 function comment() {

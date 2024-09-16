@@ -42,3 +42,12 @@ Dynamic Vs Static Langauges
 
 * [How Many Lines of C it Takes to Execute a + b in Python?](https://codeconfessions.substack.com/p/cpython-dynamic-dispatch-internals) - Understand the mechanics of dynamic dispatch implementation in CPython
     * Amazing breakdown of the `c` files responsible for numeric operations
+* [](https://www.trickster.dev/post/lesser-known-parts-of-python-standard-library/)
+  * 'did you know' article about python that has an interesting example
+  * ```
+    >>> 1.2 + 2.2
+    3.4000000000000004
+    
+    >>> from decimal import *
+    >>> one_point_two = Decimal('1.2')
+    ```
