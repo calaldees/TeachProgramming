@@ -1,10 +1,12 @@
 DOCKER_IMAGE:=site
-DOCKER_RUN:=docker run --workdir /app/ --volume ${PWD}:/app/ --volume ${PWD}/../static:/static/ ${DOCKER_IMAGE}
+DOCKER_RUN:=docker run -it --workdir /app/ --volume ${PWD}:/app/ --volume ${PWD}/../static:/static/ --publish 8000:8000 ${DOCKER_IMAGE}
 
 run_local: static/PatienceDiff.js
 	python3 -m pdb -c continue   api.py ../static/projects/ ../static/language_reference/languages/
 	# http://localhost:8000/static/index.html
 	# http://localhost:8000/api/v1/language_reference.json
+run_docker: 
+	${DOCKER_RUN} python3 -m pdb -c continue api.py /static/projects/ /static/language_reference/languages/
 
 build_local:
 	python3 api.py ../static/projects/ ../static/language_reference/languages/ --export
