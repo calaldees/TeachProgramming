@@ -6,11 +6,15 @@ After Unit2
 * Hash
 * Sudoku
     * Edge detection and OCR?
-* Huffman
+* Huffman -> GZIP -> LZ(pointers/dict) + Huffman + RLE
 * VoxelSpace
 * PageRank
 * BlockChain
 * RSA (key pairs)
+* Create/Apply `diff`
+  * Different diffing algorithms
+  * `patch -i yourcoworkers.diff`
+* If you know what Hash, Blockchain and Diff are, you can make git
 * FFT
 * DNS (UDP)
 * Genetic Algorithms
@@ -20,7 +24,8 @@ After Unit2
     * 2D
     * 3D
     * Red/Cyan
-
+* Sync/Sampler Tracker?
+* Serialize/Deserialize nested object structures
 
 
 * Software Engineering

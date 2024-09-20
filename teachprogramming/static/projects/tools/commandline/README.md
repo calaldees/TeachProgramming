@@ -2,7 +2,6 @@ CommandLine Exercises
 =====================
 
 * https://github.com/onceupon/Bash-Oneliner
-* 
 
 find | xargs
 get cookie from browser - export use in `curl`
@@ -37,7 +36,7 @@ netcat
 forward x11
 
 
-diff files
+diff files and apply
 
 append
 
@@ -60,3 +59,5 @@ pipe into pyhton program with std.in and output to std.out via netcat to another
 Video encoding?
 
 SSL from commandline?
+
+rsa key encode/decode?

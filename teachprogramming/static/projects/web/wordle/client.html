@@ -20,16 +20,14 @@
 
 export function assertEquals(comparison_tuples) {for (let [a, b] of comparison_tuples) {console.assert(a == b, `${a} should-equal ${b}`)}}
 export function assertEqualsObject(comparison_tuples) {return assertEquals(comparison_tuples.map(v => v.map(JSON.stringify)))}
-export const hasIterationProtocol = variable => variable !== null && Symbol.iterator in Object(variable);
 export function randomItem(array) {return array[Math.floor(Math.random()*array.length)]}
+export const hasIterationProtocol = variable => variable !== null && Symbol.iterator in Object(variable);
 function h(type, params, children) {
     const el = document.createElement(type)
     for (let [k,v] of Object.entries(params)) {el[k] = v}
-    if (typeof(children)==="string") {el.appendChild(document.createTextNode(children))}
-    else if (hasIterationProtocol(children)) {
-        for (let c of children) {el.append(c)}
-    }
-    else if (children) {el.appendChild(children)}
+    if      (typeof(children)==="string"   ) {el.appendChild(document.createTextNode(children))}
+    else if (hasIterationProtocol(children)) {for (let c of children) {el.append(c)}}
+    else if (children                      ) {el.appendChild(children)}
     return el
 }
 
