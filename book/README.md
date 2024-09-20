@@ -36,12 +36,22 @@ Chapter Concepts
     * What is missing
         * Is computing for everyone
         * Most people cant do shit all with a computer (really) - 
+          * 
         * Most people don't know how the world works. Do they need to? DNS? Cookie? Why WiFi6 is better for power. Privacy?
         * Computing is power
-        * What's not in the curriculum - IDE's, collaboration, diff
+        * What's not in the curriculum - IDE's, collaboration, diff, general automation
+          * https://www.princes-trust.org.uk/about-us/news-views/decoding-digital-skills-gap-report
+          * Most people of working age don't have them - this has significant cost to the economy
+          * https://www.nngroup.com/articles/computer-skill-levels/
+            * https://www.oecd.org/en/about/programmes/piaac.html Dec 2024
+          * AI not useful if they cant get data to it
         * GUI's suck
+          * Move things, cant automate, cant reproduce, cant describe,
+          * People can't use gui's because they can't type fast enough.
+          * Exploration takes longer?
         * What is difficult to teach - networks
         * What stops computing teachers doing this - time, skill
+          * most people need help with just understanding googledocs and styles
         * Verbal reasoning
             * can't explain the problem, cant explain the goal
         * Focus (the mobile distraction)
