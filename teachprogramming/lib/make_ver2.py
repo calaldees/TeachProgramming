@@ -6,7 +6,7 @@ from pathlib import Path
 from types import MappingProxyType
 from contextlib import contextmanager
 import io
-
+from textwrap import dedent
 
 # Using the old `make_ver` under the hood as a transition. It needs re-writing
 try:  # pytest has it one one, running from the cmdline another ?? wha?
@@ -77,24 +77,24 @@ def _testfiles():
         with open(filename, 'wt', encoding='utf8') as filehandle:
            _ = filehandle.write(data)
         filenames.add(filename)
-    write_file('test.py', '''
-print('Hello World')
-print('Hello Test')  # VER: test4
-''')
-    write_file('test.js', '''
-console.log("Hello World")    // VER: hello_world
-''')
-    write_file('Test.java', '''
-public class Test {                          // VER: test1
-    public Test() {                          // VER: test2
-        System.out.println("Hello World");   // VER: hello_world
-    }                                        // VER: test2
-    public static void main(String[] args) {new Test();}  // VER: test2
-}  // VER: test1
-''')
-    write_file('test.ver', '''
-VERNAME: base           base
-''')
+    write_file('test.py', dedent('''
+        print('Hello World')
+        print('Hello Test')  # VER: test4
+    '''))
+    write_file('test.js', dedent('''
+        console.log("Hello World")    // VER: hello_world
+    '''))
+    write_file('Test.java', dedent('''
+        public class Test {                          // VER: test1
+            public Test() {                          // VER: test2
+                System.out.println("Hello World");   // VER: hello_world
+            }                                        // VER: test2
+            public static void main(String[] args) {new Test();}  // VER: test2
+        }  // VER: test1
+    '''))
+    write_file('test.ver', dedent('''
+        VERNAME: base           base
+    '''))
     yield filenames
     td.cleanup()
 

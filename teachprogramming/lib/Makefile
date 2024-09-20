@@ -1,5 +1,11 @@
 DOCKER_IMAGE:=site
-DOCKER_RUN:=docker run -it --workdir /app/ --volume ${PWD}:/app/ --volume ${PWD}/../static:/static/ --publish 8000:8000 ${DOCKER_IMAGE}
+DOCKER_RUN:=docker run -it --rm \
+	--workdir /app/ \
+	--volume ${PWD}:/app/ \
+	--volume ${PWD}/../static:/static/ \
+	--publish 8000:8000 \
+	--env PYTHONPATH=./ \
+	${DOCKER_IMAGE}
 
 run_local: static/PatienceDiff.js
 	python3 -m pdb -c continue   api.py ../static/projects/ ../static/language_reference/languages/
@@ -19,8 +25,10 @@ build_and_upload: build
 static/PatienceDiff.js:
 	cd static ; curl https://raw.githubusercontent.com/jonTrent/PatienceDiff/dev/PatienceDiff.js -O
 
-test:
+test_local:
 	PYTHONPATH=./ pytest --doctest-modules
+test_docker:
+	${DOCKER_RUN} pytest --doctest-modules
 
 docker:
 	docker build --tag ${DOCKER_IMAGE} .
