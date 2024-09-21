@@ -58,10 +58,15 @@ def extract_versions_from_data(data):
     ... function abc(x,y,z) {  // VER: test1
     ...     return x + y + z;  //    VER:          test2
     ... }  // VER: test1
+    ... VER: test1,test4
     ... '''))
-    ['test1', 'test2', 'test3']
+    ['test1', 'test2', 'test3', 'test4']
     """
-    return {match.group('ver') for match in RE_VER.finditer(data)}
+    return set(filter(bool, (
+        s.strip() for s in chain.from_iterable(
+            match.group('ver').split(',') for match in RE_VER.finditer(data)
+        )
+    )))
 
 
 
