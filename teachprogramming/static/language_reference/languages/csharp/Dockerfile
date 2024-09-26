@@ -3,11 +3,17 @@
 # an absolute joke of a process
 # https://softchris.github.io/pages/dotnet-dockerize.html#create-a-dockerignore-file
 
-FROM mcr.microsoft.com/dotnet/sdk
+
+# https://medium.com/@jeroenverhaeghe/creating-smaller-and-more-secure-docker-images-for-net-core-8c74101e9027
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine
+#FROM mcr.microsoft.com/dotnet/sdk:latest
+#FROM mcr.microsoft.com/dotnet/sdk
+#FROM bitnami/dotnet:latest  ?
 
 WORKDIR /app/
 
-COPY * ./
+COPY . .
 CMD dotnet run
 
 #FROM mcr.microsoft.com/dotnet/sdk:2.0

@@ -46,7 +46,7 @@ public class Java {
   void hello_world() {
     // // Must be in file named `HelloWorld.java`                               // VER: hello_world
     //public class HelloWorld {                                                 // VER: hello_world
-      //public static void main(String[] args) {new HelloWorld()}               // VER: hello_world
+      //public static void main(String[] args) {new HelloWorld();}              // VER: hello_world
       //public HelloWorld() {                                                   // VER: hello_world
           System.out.println("Hello World");                                    // VER: hello_world
       //}                                                                       // VER: hello_world
@@ -67,7 +67,9 @@ public class Java {
     String username = "Betty";                                                  // VER: define_variables
     Double distance = 3.14;                                                     // VER: define_variables
     Boolean email_errors = true;                                                // VER: define_variables
-    String multiline = """a b""";                                               // VER: define_variables
+    String multiline = """
+    a b
+    """;                                               // VER: define_variables   // pain in the ass, MUST be multiline string
     System.out.println(count);
     System.out.println(username);
     System.out.println(distance);

@@ -362,9 +362,63 @@ class Version(str):
 
 class VersionModel():
     r"""
-    >>> data = io.StringIO(dedent('''
-    ...     import java.util.stream.Collectors;   // VER: list_comprehension,dict_comprehension
+    >>> java = io.StringIO(dedent('''
+    ...     import java.util.stream.Collectors;             // VER: list_comprehension,dict_comprehension
+    ...     import static java.util.Map.entry;              // VER: dict_comprehension
+    ...     public class Java {
+    ...         public static void main(String[] args) {new Java();}
+    ...         public Java() {
+    ...             hello_world();
+    ...             arithmetic();
+    ...         }
+    ...         void hello_world() {
+    ...             // // Must be in file named `HelloWorld.java`                    // VER: hello_world
+    ...             //public class HelloWorld {                                      // VER: hello_world
+    ...                 //public static void main(String[] args) {new HelloWorld();} // VER: hello_world
+    ...                 //public HelloWorld() {                                      // VER: hello_world
+    ...                     System.out.println("Hello World");                       // VER: hello_world
+    ...                 //}                                                          // VER: hello_world
+    ...             //}                                                              // VER: hello_world
+    ...         }
+    ...         void list_comprehension() {
+    ...             List<Integer> data1 = new ArrayList<>(Arrays.asList(new Integer[]{1,2,3,4,5,6})); // VER: list_comprehension
+    ...         }
+    ...         void dict_comprehension() {
+    ...             Map<String,Integer> data3 = Map.ofEntries(  //  VER: dict_comprehension
+    ...                 entry("a", 1),                          //  VER: dict_comprehension
+    ...                 entry("b", 2)                           //  VER: dict_comprehension
+    ...             );                                          //  VER: dict_comprehension
+    ...         }
+    ...     }
     ... '''))
+    >>> vm = VersionModel(java, LANGUAGES['java'])
+
+    >>> vm.version.keys()
+    {'list_comprehension', 'dict_comprehension', 'hello_world'}
+
+    >>> vm.version['hello_world']
+    '''// Must be in file named `HelloWorld.java`
+    public class HelloWorld {
+        public static void main(String[] args) {new HelloWorld();}
+        public HelloWorld() {
+            System.out.println("Hello World");
+        }
+    }
+
+    >>> vm.version['list_comprehension']
+    '''
+    import java.util.stream.Collectors;
+        List<Integer> data1 = new ArrayList<>(Arrays.asList(new Integer[]{1,2,3,4,5,6}));
+    '''
+
+    >>> vm.version['dict_comprehension']
+    '''
+    import java.util.stream.Collectors;
+        Map<String,Integer> data3 = Map.ofEntries(
+            entry("a", 1),
+            entry("b", 2)
+        );
+    '''
 
     """
 
@@ -383,8 +437,5 @@ class VersionModel():
         self.lines = tuple(map(parse_line, source))
 
     @cached_property
-    def versions(self) -> Iterable[Version]:
-        """
-        find and report all version strings in entire model
-        """
-        raise NotImplementedError('replace extract_versions_from_data')
+    def version(self) -> dict[str, str]:
+        return MappingProxyType({})
