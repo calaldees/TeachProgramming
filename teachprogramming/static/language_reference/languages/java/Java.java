@@ -1,5 +1,5 @@
 /*
-Java 15  // VER: title
+Java 23  // VER: title
 https://www.oracle.com/uk/java/technologies/javase-downloads.html  // VER: download
 Java SE (Standard Edition) JDK (Java Development Kit)                       // VER: download
 http://java.sun.com/docs/books/tutorial/                                    // VER: help
@@ -67,10 +67,7 @@ public class Java {
     String username = "Betty";                                                  // VER: define_variables
     Double distance = 3.14;                                                     // VER: define_variables
     Boolean email_errors = true;                                                // VER: define_variables
-    String multiline = """
-    a 
-    b
-    """;  // TODO: multiline   // VER: define_variables
+    String multiline = """a b""";                                               // VER: define_variables
     System.out.println(count);
     System.out.println(username);
     System.out.println(distance);
@@ -452,6 +449,12 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
 }
 
 /*
+
+* Templates are dead
+  * [JEP 465: String Templates (Third Preview)](https://openjdk.org/jeps/465)
+  * [There will be no String Template in JDK 23.](https://www.reddit.com/r/java/comments/1bxck72/there_will_be_no_string_template_in_jdk_23/)
+    * > So, to be clear: there will be no string template feature, even with --enable-preview, in JDK 23.
+
 
 https://howtodoinjava.com/java-8-tutorial/
 

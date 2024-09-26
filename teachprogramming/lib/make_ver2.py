@@ -15,6 +15,7 @@ except ImportError:
     from .make_ver import make_ver  # TODO: deprecate and reimplement
 
 
+# Deprecated: Remove
 EXCLUDED_EXTENSIONS = frozenset({'ver', 'yaml', 'yml', 'txt', 'md', 'json', 'csproj', '', 'Makefile', 'Dockerfile', 
     'editorconfig', 'cache',  # HACK - this is getting out of hand - we do a filescan() and get all files - csharp creates some cancer with bin/obj folders and I need a way to ignore them - for now I just hide rougue files here. Please remove this hack line and try to debug this properly
 })
@@ -49,7 +50,9 @@ def parse_legacy_version_data(data):
         for match in RE_VERNAME.finditer(data)
     })
 
+
 RE_VER = re.compile(r'VER:\s*(?P<ver>.*?)(\s+|$)(NOT\s*(?P<ver_exclude>.*?(\s+|$)))?', flags=re.IGNORECASE)
+#@_deprecated(remove='To be replaced with VersionModel')
 def extract_versions_from_data(data):
     r"""
     >>> sorted(extract_versions_from_data('''
@@ -128,7 +131,7 @@ class ProjectVersions():
         self.data  # generate cache on object creation
 
     @cached_property
-    def langauges(self):
+    def languages(self):
         return frozenset(self.files.keys()) - frozenset({'txt',}) - EXCLUDED_EXTENSIONS
 
     @cached_property
@@ -144,7 +147,7 @@ class ProjectVersions():
         raise Exception('no version information')
 
     #@lru_cache?
-    def langauge(self, language):
+    def language(self, language):
         return MappingProxyType({
             ver_name: '\n'.join(
                 make_ver(
@@ -159,7 +162,7 @@ class ProjectVersions():
 
     @cached_property
     def data(self):
-        return MappingProxyType({l: self.langauge(l) for l in self.langauges})
+        return MappingProxyType({l: self.language(l) for l in self.languages})
 
 
 
@@ -221,6 +224,18 @@ class LanguageVersions():
     ]
 
     def __init__(self, filenames):
+        """
+        Concept:
+            `/java/main_stuff.java`
+            `/java/graphics_stuff.java`
+            `/java/network_stuff.java`
+        are amalgamated/concatenated into `self.files['java']`
+        This means that we can have
+            `hello_world`
+            `draw_sqaure`
+            `get_http`
+        defined in different files but still available as a version
+        """
         def _amalgamate_files_with_same_extension(acc, f):
             with f.open(encoding='utf8') as _f:
                 acc[f.suffix.strip('.')] += _f.read()
@@ -235,7 +250,7 @@ class LanguageVersions():
         self.data  # generate cache on object creation
 
     @cached_property
-    def langauges(self):
+    def languages(self):
         return frozenset(self.files.keys()) - EXCLUDED_EXTENSIONS
 
     @cached_property
@@ -255,7 +270,7 @@ class LanguageVersions():
         return MappingProxyType({
             ver: '\n'.join(
                 make_ver(
-                    io.StringIO(self.files[language]), 
+                    io.StringIO(self.files[language]),
                     ver_path=ver,
                     lang=language,
                     process_additional_metafiles=False,
@@ -266,4 +281,110 @@ class LanguageVersions():
 
     @cached_property
     def data(self):
-        return MappingProxyType({l: self.langauge(l) for l in self.langauges})
+        return MappingProxyType({l: self.langauge(l) for l in self.languages})
+
+
+from typing import NamedTuple, Iterable, Self
+
+class Comment(NamedTuple):
+    comment_start: str
+    comment_end: str = ''
+    #@cached_property
+    @property
+    def regex_ver(self):
+        """
+        >>> test_py1 = '''print('helloworld') # VER: 1|2|3 # More comments'''
+        >>> test_py2 = '''print('helloworld') # VER: 1|2|3#More comments'''
+        >>> test_py3 = '''print('helloworld') #VER:1|2|3'''
+        >>> Comment(r'#').regex_ver.search(test_py1)['ver']
+        '1|2|3'
+        >>> Comment(r'#').regex_ver.search(test_py2)['ver']
+        '1|2|3'
+        >>> Comment(r'#').regex_ver.search(test_py3)['ver']
+        '1|2|3'
+
+        >>> test_js1 = '''console.log('helloworld') // VER: 1|2|3 // More comments'''
+        >>> test_js2 = '''console.log('helloworld') // VER: 1|2|3//More comments'''
+        >>> test_js3 = '''console.log('helloworld') //VER:1|2|3'''
+        >>> Comment(r'//').regex_ver.search(test_js1)['ver']
+        '1|2|3'
+        >>> Comment(r'//').regex_ver.search(test_js2)['ver']
+        '1|2|3'
+        >>> Comment(r'//').regex_ver.search(test_js3)['ver']
+        '1|2|3'
+        
+        >>> test_html1 = '''<a href=""> <!-- VER: 1|2|3 --><!-- more comments -->'''
+        >>> test_html2 = '''<a href=""><!-- VER: 1|2|3--><!--more comments-->'''
+        >>> test_html3 = '''<a href=""><!--VER:1|2|3-->'''
+        >>> Comment(r'<!--',r'-->').regex_ver.search(test_html1)['ver']
+        '1|2|3'
+        >>> Comment(r'<!--',r'-->').regex_ver.search(test_html2)['ver']
+        '1|2|3'
+        >>> Comment(r'<!--',r'-->').regex_ver.search(test_html3)['ver']
+        '1|2|3'
+
+        >>> test_css1 = '''   border-radius: 4px; /* VER:1|2|3 */  '''
+        >>> Comment(r'/*','*/').regex_ver.search(test_css1)['ver']
+        '1|2|3'
+
+        """
+        return re.compile(r'''(?P<ver_remove>{comment_start}\s*VER:\s*(?P<ver>.+?)\s*)($|{comment_end})'''.format(comment_start=re.escape(self.comment_start), comment_end=re.escape(self.comment_end or self.comment_start)), flags=re.IGNORECASE)
+
+COMMENTS_STYLE_C = (Comment(r'//'), Comment(r'/*',r'*/'))
+COMMENTS_STYLE_PYTHON = (Comment(r'#'),)
+
+class Language(NamedTuple):
+    name: str
+    ext: Iterable[str]
+    comments: Iterable[Comment]
+LANGUAGES: MappingProxyType[str, Language] = MappingProxyType({
+    language_ext: language 
+    for language in map(lambda l: Language(*l), (
+        ('python',('py',),COMMENTS_STYLE_PYTHON),
+        ('javascript',('js',),COMMENTS_STYLE_C),
+        ('html5/javascript',('html',),(Comment(r'<!--',r'-->'),)+COMMENTS_STYLE_C),
+        ('java',('java',),COMMENTS_STYLE_C),
+        ('visual basic',('vb',),(Comment(r"'"),)),
+        ('php',('php'),COMMENTS_STYLE_PYTHON),
+        ('c',('c',),COMMENTS_STYLE_C),
+        ('c++',('cpp',),COMMENTS_STYLE_C),
+        ('ruby',('rb',),COMMENTS_STYLE_PYTHON),
+        ('csharp',('cs',),COMMENTS_STYLE_C),
+        ('lua',('lua',),(Comment(r'--'),)),
+        ('golang',('go',),COMMENTS_STYLE_C),
+        # txt  =   '#',
+    ))
+    for language_ext in language.ext
+})
+
+class Version(str):
+    pass
+
+class VersionModel():
+    r"""
+    >>> data = io.StringIO(dedent('''
+    ...     import java.util.stream.Collectors;   // VER: list_comprehension,dict_comprehension
+    ... '''))
+
+    """
+
+    @classmethod
+    def from_path(cls: Self, path: str|Path) -> Self:
+        path = Path(path)
+        language = LANGUAGES.get(path.suffix.strip('.'))
+        assert language, f'Language unknown: {path.suffix}. Valid languages are {LANGUAGES.keys()}'
+        with path.open() as source:
+            return cls(source, language)
+
+    def __init__(self, source: io.IOBase, language: Language):
+        self.language = language
+        def parse_line(line: str) -> str:
+            return line
+        self.lines = tuple(map(parse_line, source))
+
+    @cached_property
+    def versions(self) -> Iterable[Version]:
+        """
+        find and report all version strings in entire model
+        """
+        raise NotImplementedError('replace extract_versions_from_data')
