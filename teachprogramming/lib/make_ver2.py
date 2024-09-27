@@ -1,6 +1,6 @@
 import re
 from itertools import chain
-from functools import cached_property, reduce
+from functools import cached_property, reduce, lru_cache
 from collections import defaultdict
 from pathlib import Path
 from types import MappingProxyType
@@ -266,7 +266,7 @@ class LanguageVersions():
         ))
         return [ver for ver in self.VERSION_ORDER if ver in self_versions_set] + sorted(self_versions_set - version_order_set)
 
-    def langauge(self, language):
+    def language(self, language):
         return MappingProxyType({
             ver: '\n'.join(
                 make_ver(
@@ -281,54 +281,14 @@ class LanguageVersions():
 
     @cached_property
     def data(self):
-        return MappingProxyType({l: self.langauge(l) for l in self.languages})
+        return MappingProxyType({l: self.language(l) for l in self.languages})
 
 
 from typing import NamedTuple, Iterable, Self
 
 class Comment(NamedTuple):
-    comment_start: str
-    comment_end: str = ''
-    #@cached_property
-    @property
-    def regex_ver(self):
-        """
-        >>> test_py1 = '''print('helloworld') # VER: 1|2|3 # More comments'''
-        >>> test_py2 = '''print('helloworld') # VER: 1|2|3#More comments'''
-        >>> test_py3 = '''print('helloworld') #VER:1|2|3'''
-        >>> Comment(r'#').regex_ver.search(test_py1)['ver']
-        '1|2|3'
-        >>> Comment(r'#').regex_ver.search(test_py2)['ver']
-        '1|2|3'
-        >>> Comment(r'#').regex_ver.search(test_py3)['ver']
-        '1|2|3'
-
-        >>> test_js1 = '''console.log('helloworld') // VER: 1|2|3 // More comments'''
-        >>> test_js2 = '''console.log('helloworld') // VER: 1|2|3//More comments'''
-        >>> test_js3 = '''console.log('helloworld') //VER:1|2|3'''
-        >>> Comment(r'//').regex_ver.search(test_js1)['ver']
-        '1|2|3'
-        >>> Comment(r'//').regex_ver.search(test_js2)['ver']
-        '1|2|3'
-        >>> Comment(r'//').regex_ver.search(test_js3)['ver']
-        '1|2|3'
-        
-        >>> test_html1 = '''<a href=""> <!-- VER: 1|2|3 --><!-- more comments -->'''
-        >>> test_html2 = '''<a href=""><!-- VER: 1|2|3--><!--more comments-->'''
-        >>> test_html3 = '''<a href=""><!--VER:1|2|3-->'''
-        >>> Comment(r'<!--',r'-->').regex_ver.search(test_html1)['ver']
-        '1|2|3'
-        >>> Comment(r'<!--',r'-->').regex_ver.search(test_html2)['ver']
-        '1|2|3'
-        >>> Comment(r'<!--',r'-->').regex_ver.search(test_html3)['ver']
-        '1|2|3'
-
-        >>> test_css1 = '''   border-radius: 4px; /* VER:1|2|3 */  '''
-        >>> Comment(r'/*','*/').regex_ver.search(test_css1)['ver']
-        '1|2|3'
-
-        """
-        return re.compile(r'''(?P<ver_remove>{comment_start}\s*VER:\s*(?P<ver>.+?)\s*)($|{comment_end})'''.format(comment_start=re.escape(self.comment_start), comment_end=re.escape(self.comment_end or self.comment_start)), flags=re.IGNORECASE)
+    start: str
+    end: str = ''
 
 COMMENTS_STYLE_C = (Comment(r'//'), Comment(r'/*',r'*/'))
 COMMENTS_STYLE_PYTHON = (Comment(r'#'),)
@@ -393,34 +353,120 @@ class VersionModel():
     ... '''))
     >>> vm = VersionModel(java, LANGUAGES['java'])
 
-    >>> vm.version.keys()
-    {'list_comprehension', 'dict_comprehension', 'hello_world'}
+    >>> sorted(vm.version.keys())
+    ['dict_comprehension', 'hello_world', 'list_comprehension']
 
-    >>> vm.version['hello_world']
-    '''// Must be in file named `HelloWorld.java`
-    public class HelloWorld {
-        public static void main(String[] args) {new HelloWorld();}
-        public HelloWorld() {
-            System.out.println("Hello World");
-        }
-    }
+    >>> print(vm.version['hello_world'])
+            // Must be in file named `HelloWorld.java`
+            public class HelloWorld {
+                public static void main(String[] args) {new HelloWorld();}
+                public HelloWorld() {
+                    System.out.println("Hello World");
+                }
+            }
 
-    >>> vm.version['list_comprehension']
-    '''
+    >>> print(vm.version['list_comprehension'])
     import java.util.stream.Collectors;
-        List<Integer> data1 = new ArrayList<>(Arrays.asList(new Integer[]{1,2,3,4,5,6}));
-    '''
+            List<Integer> data1 = new ArrayList<>(Arrays.asList(new Integer[]{1,2,3,4,5,6}));
 
-    >>> vm.version['dict_comprehension']
-    '''
+    >>> print(vm.version['dict_comprehension'])
     import java.util.stream.Collectors;
-        Map<String,Integer> data3 = Map.ofEntries(
-            entry("a", 1),
-            entry("b", 2)
-        );
-    '''
+    import static java.util.Map.entry;
+            Map<String,Integer> data3 = Map.ofEntries(
+                entry("a", 1),
+                entry("b", 2)
+            );
 
     """
+
+    class Line(NamedTuple):
+        line: str
+        line_without_ver: str
+        versions: frozenset[Version]
+
+    @staticmethod
+    @lru_cache
+    def regex_ver(comment: Comment) -> re.Pattern:
+        """
+        >>> regex_ver = VersionModel.regex_ver
+
+        >>> c = Comment(r'#')
+        >>> test_py1 = '''print('helloworld') # VER: 1|2|3 # More comments'''
+        >>> test_py2 = '''print('helloworld') # VER: 1|2|3#More comments'''
+        >>> test_py3 = '''print('helloworld') #VER:1|2|3'''
+        >>> regex_ver(c).search(test_py1)['ver']
+        '1|2|3'
+        >>> regex_ver(c).search(test_py2)['ver']
+        '1|2|3'
+        >>> regex_ver(c).search(test_py3)['ver']
+        '1|2|3'
+
+        >>> c = Comment(r'//')
+        >>> test_js1 = '''console.log('helloworld') // VER: 1|2|3 // More comments'''
+        >>> test_js2 = '''console.log('helloworld') // VER: 1|2|3//More comments'''
+        >>> test_js3 = '''console.log('helloworld') //VER:1|2|3'''
+        >>> regex_ver(c).search(test_js1)['ver']
+        '1|2|3'
+        >>> regex_ver(c).search(test_js2)['ver']
+        '1|2|3'
+        >>> regex_ver(c).search(test_js3)['ver']
+        '1|2|3'
+
+        >>> c = Comment(r'<!--',r'-->')
+        >>> test_html1 = '''<a href=""> <!-- VER: 1|2|3 --><!-- more comments -->'''
+        >>> test_html2 = '''<a href=""><!-- VER: 1|2|3--><!--more comments-->'''
+        >>> test_html3 = '''<a href=""><!--VER:1|2|3-->'''
+        >>> regex_ver(c).search(test_html1)['ver']
+        '1|2|3'
+        >>> regex_ver(c).search(test_html2)['ver']
+        '1|2|3'
+        >>> regex_ver(c).search(test_html3)['ver']
+        '1|2|3'
+
+        >>> c = Comment(r'/*','*/')
+        >>> test_css1 = '''   border-radius: 4px; /* VER:1|2|3 */  '''
+        >>> regex_ver(c).search(test_css1)['ver']
+        '1|2|3'
+        """
+        return re.compile(
+            r'''(?P<ver_remove>{comment_start}\s*VER:\s*(?P<ver>.+?)\s*)($|{comment_end})'''.format(
+                comment_start=re.escape(comment.start),
+                comment_end=re.escape(comment.end or comment.start)
+            ), flags=re.IGNORECASE)
+
+    @staticmethod
+    @lru_cache
+    def regex_first_line_comment(comment) -> re.Pattern:
+        """
+        """
+        return re.compile(
+            r'''^(\s*){comment_start}\s*(.*)'''.format(
+                comment_start=re.escape(comment.start)
+            ), flags=re.IGNORECASE)
+    @classmethod
+    def remove_first_line_comment(cls, line, comment):
+        """
+        >>> VersionModel.remove_first_line_comment('    #  x=x+1', Comment('#'))
+        '    x=x+1'
+        >>> VersionModel.remove_first_line_comment('    ## Real comment # Again', Comment('#'))
+        '    # Real comment # Again'
+        """
+        return cls.regex_first_line_comment(comment).sub(r'\1\2', line, count=1)
+
+    @staticmethod
+    def _parse_ver(ver) -> frozenset[Version]:
+        return frozenset((Version(v.strip()) for v in ver.split(',')))
+
+    def _parse_line(self, line: str) -> Line:
+        line_without_ver = line
+        versions = frozenset()
+        for comment in self.language.comments:
+            if match := self.regex_ver(comment).search(line):
+                versions = self._parse_ver(match['ver'])
+                line_without_ver = line.replace(match['ver_remove'], '').rstrip()
+                line_without_ver = self.remove_first_line_comment(line_without_ver, comment)
+                break
+        return self.Line(line, line_without_ver, versions)
 
     @classmethod
     def from_path(cls: Self, path: str|Path) -> Self:
@@ -432,10 +478,15 @@ class VersionModel():
 
     def __init__(self, source: io.IOBase, language: Language):
         self.language = language
-        def parse_line(line: str) -> str:
-            return line
-        self.lines = tuple(map(parse_line, source))
+        self.lines = tuple(map(self._parse_line, source))
 
     @cached_property
     def version(self) -> dict[str, str]:
-        return MappingProxyType({})
+        def _reducer(acc, line):
+            for version in line.versions:
+                acc[version].append(line.line_without_ver)
+            return acc
+        return MappingProxyType({
+            version: "\n".join(lines)
+            for version, lines in reduce(_reducer, self.lines, defaultdict(list)).items()
+        })

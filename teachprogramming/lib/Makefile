@@ -28,7 +28,7 @@ static/PatienceDiff.js:
 test_local:
 	PYTHONPATH=./ pytest --doctest-modules
 test_docker:
-	${DOCKER_RUN} pytest --doctest-modules
+	${DOCKER_RUN} pytest --doctest-modules -s --pdb
 
 docker:
 	docker build --tag ${DOCKER_IMAGE} .
