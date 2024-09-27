@@ -266,18 +266,8 @@ class LanguageVersions():
         ))
         return [ver for ver in self.VERSION_ORDER if ver in self_versions_set] + sorted(self_versions_set - version_order_set)
 
-    def language(self, language):
-        return MappingProxyType({
-            ver: '\n'.join(
-                make_ver(
-                    io.StringIO(self.files[language]),
-                    ver_path=ver,
-                    lang=language,
-                    process_additional_metafiles=False,
-                )
-            )
-            for ver in self.versions
-        })
+    def language(self, language) -> MappingProxyType[str, str]:
+        return VersionModel(io.StringIO(self.files[language]), LANGUAGES[language]).versions
 
     @cached_property
     def data(self):
@@ -305,7 +295,7 @@ LANGUAGES: MappingProxyType[str, Language] = MappingProxyType({
         ('html5/javascript',('html',),(Comment(r'<!--',r'-->'),)+COMMENTS_STYLE_C),
         ('java',('java',),COMMENTS_STYLE_C),
         ('visual basic',('vb',),(Comment(r"'"),)),
-        ('php',('php'),COMMENTS_STYLE_PYTHON),
+        ('php',('php',),COMMENTS_STYLE_PYTHON),
         ('c',('c',),COMMENTS_STYLE_C),
         ('c++',('cpp',),COMMENTS_STYLE_C),
         ('ruby',('rb',),COMMENTS_STYLE_PYTHON),
@@ -353,10 +343,10 @@ class VersionModel():
     ... '''))
     >>> vm = VersionModel(java, LANGUAGES['java'])
 
-    >>> sorted(vm.version.keys())
+    >>> sorted(vm.versions.keys())
     ['dict_comprehension', 'hello_world', 'list_comprehension']
 
-    >>> print(vm.version['hello_world'])
+    >>> print(vm.versions['hello_world'])
             // Must be in file named `HelloWorld.java`
             public class HelloWorld {
                 public static void main(String[] args) {new HelloWorld();}
@@ -365,11 +355,11 @@ class VersionModel():
                 }
             }
 
-    >>> print(vm.version['list_comprehension'])
+    >>> print(vm.versions['list_comprehension'])
     import java.util.stream.Collectors;
             List<Integer> data1 = new ArrayList<>(Arrays.asList(new Integer[]{1,2,3,4,5,6}));
 
-    >>> print(vm.version['dict_comprehension'])
+    >>> print(vm.versions['dict_comprehension'])
     import java.util.stream.Collectors;
     import static java.util.Map.entry;
             Map<String,Integer> data3 = Map.ofEntries(
@@ -481,7 +471,7 @@ class VersionModel():
         self.lines = tuple(map(self._parse_line, source))
 
     @cached_property
-    def version(self) -> dict[str, str]:
+    def versions(self) -> dict[str, str]:
         def _reducer(acc, line):
             for version in line.versions:
                 acc[version].append(line.line_without_ver)
