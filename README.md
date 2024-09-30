@@ -1,6 +1,25 @@
 TeachProgramming
 ================
 
+TL;DR
+-----
+
+Hosted example:
+https://computingteachers.uk/static/langauge_reference.html#py
+
+### Language Cheat sheet local build and serve
+
+```bash
+cd teachprogramming/lib && make
+```
+
+* Language files are in `teachprogramming/static/language_reference/languages`
+    * https://github.com/calaldees/TeachProgramming/tree/master/teachprogramming/static/language_reference/languages
+* Example of version tagging
+    * https://github.com/calaldees/TeachProgramming/blob/master/teachprogramming/static/language_reference/languages/java/Java.java
+
+
+
 History
 -------
 
@@ -16,10 +35,10 @@ Many of the code examples did not actually work. They had never been through a c
 Eventually these code snippets made their way into runnable code files. The concept to build the cheat sheet from these was never completed.
 
 
-The Plan
+The Plan (2015?ish)
 --------
 
-This repo is a mess. The pyramid webserver project needs to be disposed of.
+This repo is a mess.
 The new plan is to make a data API that can serve all of the versions of the programs (as complete programs or diffs) so that they can be rendered (hopefully trivially) by a frontend.
 The same technology that can show incremental bits of games in multiple languages could also be used for the generating the cheat sheet.
 
@@ -29,6 +48,16 @@ Step 2: consider how to display the data (online or printable)
 I'm not going to start a whole new repository because I think the journey is reasonably interesting.
 I will move this repo out into an organization so that other can collaborate on it.
 I will move it once it's been tidied up a bit.
+
+
+The Plan (2023?ish)
+-------------------
+
+This repo has morphed into a whole host of project notes, exercises, book ideas. 
+It's become a dumping ground for loose teaching bits that have no documentation.
+This needs to be consolidated into some kind of narrative and useable project, but for now, it's just a dumping ground.
+
+
 
 Other similar projects?
 -----------------------
