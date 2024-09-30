@@ -62,8 +62,8 @@ class LanguageReferenceResource():
         self.lv = LanguageVersions(fast_scan(path))
     def on_get(self, request, response):        
         response.media = {
-            'versions': self.lv.versions,
-            'languages': self.lv.data,
+            'versions': self.lv.all_versions,
+            'languages': self.lv.languages,
         }
         response.status = falcon.HTTP_200
 

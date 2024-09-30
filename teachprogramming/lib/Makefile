@@ -7,28 +7,31 @@ DOCKER_RUN:=docker run -it --rm \
 	--env PYTHONPATH=./ \
 	${DOCKER_IMAGE}
 
+serve_static: build_static
+	open http://localhost:8000/static/
+	python3 -m http.server
+build_static: build_docker
+	${DOCKER_RUN} python3 api.py /static/projects/ /static/language_reference/languages/ --export
+build_and_upload: build_static
+	scp -r ./api/v1 computingteachers.uk:computingteachers.uk/api
+	scp -r ./static computingteachers.uk:computingteachers.uk
+
+run_docker:
+	${DOCKER_RUN} python3 -m pdb -c continue api.py /static/projects/ /static/language_reference/languages/
+test_docker:
+	${DOCKER_RUN} pytest --doctest-modules -s --pdb
+
+build_static_local:
+	python3 api.py ../static/projects/ ../static/language_reference/languages/ --export
 run_local: static/PatienceDiff.js
 	python3 -m pdb -c continue   api.py ../static/projects/ ../static/language_reference/languages/
 	# http://localhost:8000/static/index.html
 	# http://localhost:8000/api/v1/language_reference.json
-run_docker: 
-	${DOCKER_RUN} python3 -m pdb -c continue api.py /static/projects/ /static/language_reference/languages/
-
-build_local:
-	python3 api.py ../static/projects/ ../static/language_reference/languages/ --export
-build: docker
-	${DOCKER_RUN} python3 api.py /static/projects/ /static/language_reference/languages/ --export
-build_and_upload: build
-	scp -r ./api/v1 computingteachers.uk:computingteachers.uk/api
-	scp -r ./static computingteachers.uk:computingteachers.uk
+test_local:
+	PYTHONPATH=./ pytest --doctest-modules
 
 static/PatienceDiff.js:
 	cd static ; curl https://raw.githubusercontent.com/jonTrent/PatienceDiff/dev/PatienceDiff.js -O
 
-test_local:
-	PYTHONPATH=./ pytest --doctest-modules
-test_docker:
-	${DOCKER_RUN} pytest --doctest-modules -s --pdb
-
-docker:
+build_docker:
 	docker build --tag ${DOCKER_IMAGE} .

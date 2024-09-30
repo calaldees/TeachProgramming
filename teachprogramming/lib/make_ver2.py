@@ -7,6 +7,10 @@ from types import MappingProxyType
 from contextlib import contextmanager
 import io
 from textwrap import dedent
+from typing import NamedTuple, Iterable, Self
+
+
+### KILL THESE!!!
 
 # Using the old `make_ver` under the hood as a transition. It needs re-writing
 try:  # pytest has it one one, running from the cmdline another ?? wha?
@@ -72,6 +76,44 @@ def extract_versions_from_data(data):
     )))
 
 
+### END KILL
+
+
+class Version(str):
+    pass
+
+class Comment(NamedTuple):
+    start: str
+    end: str = ''
+
+COMMENTS_STYLE_C = (Comment(r'//'), Comment(r'/*',r'*/'))
+COMMENTS_STYLE_PYTHON = (Comment(r'#'),)
+
+class Language(NamedTuple):
+    name: str
+    ext: Iterable[str]
+    comments: Iterable[Comment]
+LANGUAGES: MappingProxyType[str, Language] = MappingProxyType({
+    language_ext: language
+    for language in map(lambda l: Language(*l), (
+        ('python',('py',),COMMENTS_STYLE_PYTHON),
+        ('javascript',('js',),COMMENTS_STYLE_C),
+        ('html5/javascript',('html',),(Comment(r'<!--',r'-->'),)+COMMENTS_STYLE_C),
+        ('java',('java',),COMMENTS_STYLE_C),
+        ('visual basic',('vb',),(Comment(r"'"),)),
+        ('php',('php',),COMMENTS_STYLE_PYTHON),
+        ('c',('c',),COMMENTS_STYLE_C),
+        ('c++',('cpp',),COMMENTS_STYLE_C),
+        ('ruby',('rb',),COMMENTS_STYLE_PYTHON),
+        ('csharp',('cs',),COMMENTS_STYLE_C),
+        ('lua',('lua',),(Comment(r'--'),)),
+        ('golang',('go',),COMMENTS_STYLE_C),
+        # txt  =   '#',
+    ))
+    for language_ext in language.ext
+})
+
+
 
 
 @contextmanager
@@ -110,7 +152,7 @@ def _testfiles():
 
 class ProjectVersions():
     r"""
-    make_ver2
+    TODO: REFACTOR FOR make_ver2 -> deprecate make_ver
 
     read in a project and have all permutations of that project in an object
     We can lazily evaluate each version
@@ -172,9 +214,9 @@ class LanguageVersions():
     >>> with _testfiles() as filenames:
     ...     l = LanguageVersions(filenames)
 
-    >>> l.versions
-    ['hello_world', 'test1', 'test2', 'test4']
-    >>> l.data['py']['test4']
+    >>> l.all_versions
+    ('hello_world', 'test1', 'test2', 'test4')
+    >>> l.languages['py']['test4']
     "print('Hello Test')"
     """
 
@@ -236,79 +278,30 @@ class LanguageVersions():
             `get_http`
         defined in different files but still available as a version
         """
-        def _amalgamate_files_with_same_extension(acc, f):
-            with f.open(encoding='utf8') as _f:
-                acc[f.suffix.strip('.')] += _f.read()
+        def _amalgamate_files_with_same_extension(acc, path):
+            acc[path.suffix.strip('.')].append(path.read_text('utf-8'))
             return acc
-        self.files = MappingProxyType(dict(
-            reduce(
+        self.files = MappingProxyType({
+            ext: "\n".join(file_content_list)
+            for ext, file_content_list in reduce(
                 _amalgamate_files_with_same_extension,
                 map(Path, filenames),
-                defaultdict(str)
-            )
-        ))
-        self.data  # generate cache on object creation
+                defaultdict(list),
+            ).items()
+        })
 
     @cached_property
-    def languages(self):
-        return frozenset(self.files.keys()) - EXCLUDED_EXTENSIONS
+    def languages(self) -> dict[str, MappingProxyType[Version, str]]:
+        return MappingProxyType({
+            language: VersionModel(io.StringIO(self.files.get(language)), LANGUAGES[language]).versions 
+            for language in LANGUAGES.keys()
+        })
 
-    @cached_property
-    def versions(self):
-        """
-        extract all files for VER markers in all files
-        Each vername is a standalone version
-        """
-        version_order_set = frozenset(self.VERSION_ORDER)
-        self_versions_set = frozenset(chain.from_iterable(
-            extract_versions_from_data(data)
-            for data in self.files.values()
-        ))
-        return [ver for ver in self.VERSION_ORDER if ver in self_versions_set] + sorted(self_versions_set - version_order_set)
+    @property
+    def all_versions(self):
+        versions = frozenset(chain.from_iterable(version_data.keys() for version_data in self.languages.values()))
+        return tuple(v for v in self.VERSION_ORDER if v in versions) + tuple(sorted(v for v in versions if v not in self.VERSION_ORDER))
 
-    def language(self, language) -> MappingProxyType[str, str]:
-        return VersionModel(io.StringIO(self.files[language]), LANGUAGES[language]).versions
-
-    @cached_property
-    def data(self):
-        return MappingProxyType({l: self.language(l) for l in self.languages})
-
-
-from typing import NamedTuple, Iterable, Self
-
-class Comment(NamedTuple):
-    start: str
-    end: str = ''
-
-COMMENTS_STYLE_C = (Comment(r'//'), Comment(r'/*',r'*/'))
-COMMENTS_STYLE_PYTHON = (Comment(r'#'),)
-
-class Language(NamedTuple):
-    name: str
-    ext: Iterable[str]
-    comments: Iterable[Comment]
-LANGUAGES: MappingProxyType[str, Language] = MappingProxyType({
-    language_ext: language 
-    for language in map(lambda l: Language(*l), (
-        ('python',('py',),COMMENTS_STYLE_PYTHON),
-        ('javascript',('js',),COMMENTS_STYLE_C),
-        ('html5/javascript',('html',),(Comment(r'<!--',r'-->'),)+COMMENTS_STYLE_C),
-        ('java',('java',),COMMENTS_STYLE_C),
-        ('visual basic',('vb',),(Comment(r"'"),)),
-        ('php',('php',),COMMENTS_STYLE_PYTHON),
-        ('c',('c',),COMMENTS_STYLE_C),
-        ('c++',('cpp',),COMMENTS_STYLE_C),
-        ('ruby',('rb',),COMMENTS_STYLE_PYTHON),
-        ('csharp',('cs',),COMMENTS_STYLE_C),
-        ('lua',('lua',),(Comment(r'--'),)),
-        ('golang',('go',),COMMENTS_STYLE_C),
-        # txt  =   '#',
-    ))
-    for language_ext in language.ext
-})
-
-class Version(str):
-    pass
 
 class VersionModel():
     r"""
