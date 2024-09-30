@@ -1,3 +1,5 @@
+# TODO: BROKEN - REMOVE This trash
+
 #CI_COMMIT_REF_NAME   ?= $(shell git symbolic-ref --short -q HEAD)
 #CI_COMMIT_SHORT_SHA  ?= $(shell git rev-parse HEAD | cut -c 1-8)
 

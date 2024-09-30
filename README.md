@@ -10,7 +10,10 @@ https://computingteachers.uk/static/langauge_reference.html#py
 ### Language Cheat sheet local build and serve
 
 ```bash
+# serve
 cd teachprogramming/lib && make
+# (optional) watch them all run
+cd teachprogramming/static/language_reference && make
 ```
 
 * Language files are in `teachprogramming/static/language_reference/languages`

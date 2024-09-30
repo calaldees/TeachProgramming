@@ -384,7 +384,7 @@ def network_udp_send():
   sock.sendto(b"Hello, World!", addr)                      # ver: network_upd_send
 def network_udp_recv():
   # see `sock` from send`               # ver: network_upd_recv
-  sock.bind(addr)                       # ver: network_udp_recv
+  #sock.bind(addr)                       # ver: network_udp_recv
   #while True:                           # ver: network_udp_recv
   while False:
     data, addr = sock.recvfrom(1024)    # ver: network_udp_recv
@@ -447,6 +447,7 @@ def function_named_defaults():
 
 def debugger():
   # breakpoint()   # ver: debugger
+  pass
 
 # cool bits
 # a,b = b, a   # swap 
