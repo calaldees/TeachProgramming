@@ -21,6 +21,8 @@ class FileCollection():
                 dir.startswith('_'),
                 dir.startswith('cgi'),
                 dir.startswith('.'),
+                dir == 'bin',
+                dir == 'obj',
             ))
         for root, dirs, files in path.walk():
             dirs = filter(_exclude_dir, dirs)

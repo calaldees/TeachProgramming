@@ -116,6 +116,8 @@ def _testfiles():
     td.cleanup()
 
 
+class VersionPath():
+    pass  # TODO
 
 class ProjectVersions():
     r"""
@@ -133,26 +135,26 @@ class ProjectVersions():
     #"\nprint('Hello World')"
     """
     def __init__(self, files):
-        self.files = MappingProxyType({
+        self.files_by_ext = MappingProxyType({
             f.suffix.strip('.'): f.open(encoding='utf8').read()
             for f in files
         })
         self.data  # generate cache on object creation
 
-    @cached_property
+    @property
     def languages(self):
-        return frozenset(self.files.keys())
+        return frozenset(self.files_by_ext.keys())
 
     @cached_property
-    def versions(self):
+    def versions(self) -> MappingProxyType[Version, VersionPath]:
         """
         Parse versions from .ver or .yaml file
         """
-        file_exts = set(self.files.keys())
+        file_exts = frozenset(self.files_by_ext.keys())
         if {'yaml', 'yml'} & file_exts:
             raise NotImplementedError('yaml version file format not implemented')
         if {'ver',} & file_exts:
-            return parse_legacy_version_data(self.files['ver'])
+            return parse_legacy_version_data(self.files_by_ext['ver'])
         raise Exception('no version information')
 
     #@lru_cache?
@@ -259,14 +261,14 @@ class LanguageVersions():
         })
 
     @cached_property
-    def languages(self) -> dict[str, MappingProxyType[Version, str]]:
+    def languages(self) ->  MappingProxyType[str, MappingProxyType[Version, str]]:
         return MappingProxyType({
             language: VersionModel(io.StringIO(self.files.get(language)), LANGUAGES[language]).versions 
             for language in LANGUAGES.keys()
         })
 
     @property
-    def all_versions(self):
+    def all_versions(self) -> Iterable[Version]:
         versions = frozenset(chain.from_iterable(version_data.keys() for version_data in self.languages.values()))
         return tuple(v for v in self.VERSION_ORDER if v in versions) + tuple(sorted(v for v in versions if v not in self.VERSION_ORDER))
 
