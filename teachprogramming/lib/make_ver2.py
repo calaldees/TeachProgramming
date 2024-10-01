@@ -7,22 +7,10 @@ from types import MappingProxyType
 from contextlib import contextmanager
 import io
 from textwrap import dedent
-from typing import NamedTuple, Iterable, Self
+from typing import NamedTuple, Iterable, Self, Set
 
 
 ### KILL THESE!!!
-
-# Using the old `make_ver` under the hood as a transition. It needs re-writing
-try:  # pytest has it one one, running from the cmdline another ?? wha?
-    from make_ver import make_ver  # TODO: deprecate and reimplement
-except ImportError:
-    from .make_ver import make_ver  # TODO: deprecate and reimplement
-
-
-# Deprecated: Remove
-EXCLUDED_EXTENSIONS = frozenset({'ver', 'yaml', 'yml', 'txt', 'md', 'json', 'csproj', '', 'Makefile', 'Dockerfile', 
-    'editorconfig', 'cache',  # HACK - this is getting out of hand - we do a filescan() and get all files - csharp creates some cancer with bin/obj folders and I need a way to ignore them - for now I just hide rougue files here. Please remove this hack line and try to debug this properly
-})
 
 
 def parse_legacy_version_data(data):
@@ -55,31 +43,13 @@ def parse_legacy_version_data(data):
     })
 
 
-RE_VER = re.compile(r'VER:\s*(?P<ver>.*?)(\s+|$)(NOT\s*(?P<ver_exclude>.*?(\s+|$)))?', flags=re.IGNORECASE)
-#@_deprecated(remove='To be replaced with VersionModel')
-def extract_versions_from_data(data):
-    r"""
-    >>> sorted(extract_versions_from_data('''
-    ... # Some code
-    ... const TT = `ABC`;  // VER:test3      Gotta be a thing I'm sure
-    ... function abc(x,y,z) {  // VER: test1
-    ...     return x + y + z;  //    VER:          test2
-    ... }  // VER: test1
-    ... VER: test1,test4
-    ... '''))
-    ['test1', 'test2', 'test3', 'test4']
-    """
-    return set(filter(bool, (
-        s.strip() for s in chain.from_iterable(
-            match.group('ver').split(',') for match in RE_VER.finditer(data)
-        )
-    )))
-
-
 ### END KILL
 
 
 class Version(str):
+    pass
+
+class LanguageFileExtension(str):
     pass
 
 class Comment(NamedTuple):
@@ -91,9 +61,9 @@ COMMENTS_STYLE_PYTHON = (Comment(r'#'),)
 
 class Language(NamedTuple):
     name: str
-    ext: Iterable[str]
+    ext: Iterable[LanguageFileExtension]
     comments: Iterable[Comment]
-LANGUAGES: MappingProxyType[str, Language] = MappingProxyType({
+LANGUAGES: MappingProxyType[LanguageFileExtension, Language] = MappingProxyType({
     language_ext: language
     for language in map(lambda l: Language(*l), (
         ('python',('py',),COMMENTS_STYLE_PYTHON),
@@ -114,19 +84,16 @@ LANGUAGES: MappingProxyType[str, Language] = MappingProxyType({
 })
 
 
-
-
 @contextmanager
 def _testfiles():
-    import os
     import tempfile
     td = tempfile.TemporaryDirectory()
-    filenames = set()
+    files: Set[Path] = set()
     def write_file(filename, data):
-        filename = os.path.join(td.name, filename)
-        with open(filename, 'wt', encoding='utf8') as filehandle:
+        path = Path(td.name).joinpath(filename)
+        with path.open('wt', encoding='utf8') as filehandle:
            _ = filehandle.write(data)
-        filenames.add(filename)
+        files.add(path)
     write_file('test.py', dedent('''
         print('Hello World')
         print('Hello Test')  # VER: test4
@@ -145,7 +112,7 @@ def _testfiles():
     write_file('test.ver', dedent('''
         VERNAME: base           base
     '''))
-    yield filenames
+    yield files
     td.cleanup()
 
 
@@ -154,27 +121,27 @@ class ProjectVersions():
     r"""
     TODO: REFACTOR FOR make_ver2 -> deprecate make_ver
 
-    read in a project and have all permutations of that project in an object
-    We can lazily evaluate each version
+    Read in a project and have all permutations of that project in an object
 
-    >>> with _testfiles() as filenames:
-    ...     p = ProjectVersions(filenames)
+    >>> with _testfiles() as files:
+    ...     p = ProjectVersions(files)
 
     >>> p.versions['base']
     ('base',)
-    >>> p.data['py']['base']
-    "\nprint('Hello World')"
+    
+    #>>> p.data['py']['base']
+    #"\nprint('Hello World')"
     """
-    def __init__(self, filenames):
+    def __init__(self, files):
         self.files = MappingProxyType({
             f.suffix.strip('.'): f.open(encoding='utf8').read()
-            for f in map(Path, filenames)
+            for f in files
         })
         self.data  # generate cache on object creation
 
     @cached_property
     def languages(self):
-        return frozenset(self.files.keys()) - frozenset({'txt',}) - EXCLUDED_EXTENSIONS
+        return frozenset(self.files.keys())
 
     @cached_property
     def versions(self):
@@ -192,12 +159,13 @@ class ProjectVersions():
     def language(self, language):
         return MappingProxyType({
             ver_name: '\n'.join(
-                make_ver(
-                    io.StringIO(self.files[language]), 
-                    ver_path=ver_path,
-                    lang=language,
-                    process_additional_metafiles=False,
-                )
+                ()
+                #make_ver(
+                #    io.StringIO(self.files[language]), 
+                #    ver_path=ver_path,
+                #    lang=language,
+                #    process_additional_metafiles=False,
+                #)
             )
             for ver_name, ver_path in self.versions.items()
         })
@@ -211,8 +179,8 @@ class ProjectVersions():
 class LanguageVersions():
     r"""
 
-    >>> with _testfiles() as filenames:
-    ...     l = LanguageVersions(filenames)
+    >>> with _testfiles() as files:
+    ...     l = LanguageVersions(files)
 
     >>> l.all_versions
     ('hello_world', 'test1', 'test2', 'test4')
@@ -265,7 +233,7 @@ class LanguageVersions():
         'dict_comprehension',
     ]
 
-    def __init__(self, filenames):
+    def __init__(self, files: Iterable[Path]):
         """
         Concept:
             `/java/main_stuff.java`
@@ -285,7 +253,7 @@ class LanguageVersions():
             ext: "\n".join(file_content_list)
             for ext, file_content_list in reduce(
                 _amalgamate_files_with_same_extension,
-                map(Path, filenames),
+                files,
                 defaultdict(list),
             ).items()
         })

@@ -1,65 +1,57 @@
-import os
-import re
 import logging
 from pathlib import Path
-from typing import NamedTuple
 from functools import cached_property
+from typing import Iterable, Generator
 
 import falcon
 
 import _falcon_helpers
-from make_ver2 import ProjectVersions, LanguageVersions
+from make_ver2 import ProjectVersions, LanguageVersions, LANGUAGES
 
 log = logging.getLogger(__name__)
 
 
-# Fastscan
-
-def _default_exclude_filter(f):
-    return any((
-        f.name.startswith('.') or f.name.startswith('_'),
-        f.name == 'cgi-bin',
-        Path(f).suffix in {'.exe', '.class', '.dll'},
-    ))
-def _default_select_filter(f):
-    #if f.name.endswith('.ver'):
-    return True
-def fast_scan(root, path=None, exclude_filter=_default_exclude_filter, select_filter=_default_select_filter):
-    path = path or ''
-    for f in os.scandir(os.path.join(root, path)):
-        if exclude_filter(f):
-            continue
-        if f.is_file() and select_filter(f):
-            yield f
-        if f.is_dir():
-            yield from fast_scan(root, os.path.join(path, f.name), exclude_filter=exclude_filter, select_filter=select_filter)
+LANGUAGE_EXTENSIONS = frozenset((*LANGUAGES.keys(), *('ver',)))
 
 class FileCollection():
-    def __init__(self, path):
-        self.path = path
-        self.files = tuple(Path(f.path) for f in fast_scan(path))
-    #@cached_property
-    #def file_list(self):
-    #    return tuple(str(f.relative_to(self.path)) for f in self.files)
+    @staticmethod
+    def walk_language_files(path: Path):  #  -> Generator[Path]
+        def _exclude_dir(dir: str):
+            return any((
+                dir.startswith('_'),
+                dir.startswith('cgi'),
+                dir.startswith('.'),
+            ))
+        for root, dirs, files in path.walk():
+            dirs = filter(_exclude_dir, dirs)
+            for file in map(root.joinpath, files):
+                if file.suffix.strip('.') in LANGUAGE_EXTENSIONS:
+                    yield file
+
+    def __init__(self, path: str | Path):
+        self.path = Path(path)
+        self.files = tuple(self.walk_language_files(self.path))
     @cached_property
-    def projects(self):
-        return {str(f.relative_to(self.path)).replace('.ver','') for f in self.files if f.suffix == '.ver'}
-    def project_files(self, project):
-        return {str(f) for f in self.files if f'{project}.' in str(f)}
+    def project_names(self) -> Iterable[str]:
+        return {
+            str(f.relative_to(self.path)).replace('.ver','')
+            for f in self.files
+            if f.suffix == '.ver'
+        }
+    def project_files(self, project_name: str) -> Iterable[Path]:
+        return {f for f in self.files if project_name == f.stem}
 
 
 # Request Handler --------------------------------------------------------------
 
 class IndexResource():
     def on_get(self, request, response):
-        #response.media = {'hello': 'world'}
-        #response.status = falcon.HTTP_200
         raise falcon.HTTPFound('/static/index.html')
 
 class LanguageReferenceResource():
-    def __init__(self, path):
-        self.files = FileCollection(path)
-        self.lv = LanguageVersions(fast_scan(path))
+    def __init__(self, path: str | Path):
+        self.files = FileCollection(path).files
+        self.lv = LanguageVersions(self.files)
     def on_get(self, request, response):        
         response.media = {
             'versions': self.lv.all_versions,
@@ -68,19 +60,19 @@ class LanguageReferenceResource():
         response.status = falcon.HTTP_200
 
 class ProjectListResource():
-    def __init__(self, path):
-        self.files = FileCollection(path)
+    def __init__(self, path: str | Path):
+        self.project_names = FileCollection(path).project_names
     def on_get(self, request, response):
-        response.media = {'projects': self.files.projects}
+        response.media = {'projects': self.project_names}
         response.status = falcon.HTTP_200
 class ProjectResource():
-    def __init__(self, path):
-        self.files = FileCollection(path)
+    def __init__(self, path: str | Path):
+        self.file_collection = FileCollection(path)
     #def on_index(self, request, response):
     #    response.media = {'projects': self.files.projects}
     #    response.status = falcon.HTTP_200
-    def on_get(self, request, response, path):
-        pv = ProjectVersions(self.files.project_files(path))
+    def on_get(self, request, response, project_name: str):
+        pv = ProjectVersions(self.file_collection.project_files(project_name))
         response.media = {
             'versions': pv.versions,
             'languages': pv.data,
