@@ -148,13 +148,13 @@ class ProjectVersions():
     """
     def __init__(self, files):
         self.files_by_ext = MappingProxyType({
-            f.suffix.strip('.'): f.open(encoding='utf8').read()
+            LanguageFileExtension(f.suffix.strip('.')): f.open(encoding='utf8').read()
             for f in files
         })
         self.data  # generate cache on object creation
 
     @property
-    def languages(self):
+    def languages(self) -> frozenset[LanguageFileExtension]:
         return frozenset(self.files_by_ext.keys())
 
     @cached_property
@@ -170,7 +170,7 @@ class ProjectVersions():
         raise Exception('no version information')
 
     #@lru_cache?
-    def language(self, language: Language) -> MappingProxyType[Version, str] :
+    def language(self, language: Language) -> MappingProxyType[Version, str]:
         return MappingProxyType({
             ver_name: '\n'.join(
                 ()
@@ -185,7 +185,7 @@ class ProjectVersions():
         })
 
     @cached_property
-    def data(self):
+    def data(self) -> MappingProxyType[LanguageFileExtension, MappingProxyType[Version, str]]:
         return MappingProxyType({l: self.language(l) for l in self.languages})
 
 
