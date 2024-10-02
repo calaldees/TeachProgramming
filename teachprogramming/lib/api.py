@@ -1,7 +1,6 @@
 import logging
 from pathlib import Path
-from functools import cached_property
-from typing import Iterable, Generator
+from typing import Iterable
 
 import falcon
 
@@ -21,8 +20,7 @@ class FileCollection():
                 dir.startswith('_'),
                 dir.startswith('cgi'),
                 dir.startswith('.'),
-                dir == 'bin',
-                dir == 'obj',
+                dir in ('bin', 'obj'),
             ))
         for root, dirs, files in path.walk():
             dirs = filter(_exclude_dir, dirs)
@@ -33,16 +31,6 @@ class FileCollection():
     def __init__(self, path: str | Path):
         self.path = Path(path)
         self.files = tuple(self.walk_language_files(self.path))
-    @cached_property
-    def project_names(self) -> Iterable[str]:
-        return {
-            str(f.relative_to(self.path)).replace('.ver','')
-            for f in self.files
-            if f.suffix == '.ver'
-        }
-    def project_files(self, project_name: str) -> Iterable[Path]:
-        return {f for f in self.files if project_name == f.stem}
-
 
 # Request Handler --------------------------------------------------------------
 
@@ -52,9 +40,8 @@ class IndexResource():
 
 class LanguageReferenceResource():
     def __init__(self, path: str | Path):
-        self.files = FileCollection(path).files
-        self.lv = LanguageVersions(self.files)
-    def on_get(self, request, response):        
+        self.lv = LanguageVersions(FileCollection(path).files)
+    def on_get(self, request, response):
         response.media = {
             'versions': self.lv.all_versions,
             'languages': self.lv.languages,
@@ -63,10 +50,15 @@ class LanguageReferenceResource():
 
 class ProjectListResource():
     def __init__(self, path: str | Path):
-        self.project_names = FileCollection(path).project_names
+        self.project_names = tuple(
+            str(f.relative_to(path)).replace('.ver','')
+            for f in FileCollection(path).files
+            if f.suffix == '.ver'
+        )
     def on_get(self, request, response):
         response.media = {'projects': self.project_names}
         response.status = falcon.HTTP_200
+
 class ProjectResource():
     def __init__(self, path: str | Path):
         self.file_collection = FileCollection(path)
@@ -74,12 +66,18 @@ class ProjectResource():
     #    response.media = {'projects': self.files.projects}
     #    response.status = falcon.HTTP_200
     def on_get(self, request, response, project_name: str):
-        pv = ProjectVersions(self.file_collection.project_files(project_name))
+        pv = ProjectVersions(self.project_files(project_name))
         response.media = {
             'versions': pv.versions,
             'languages': pv.data,
         }
         response.status = falcon.HTTP_200
+    def project_files(self, project_name: str) -> Iterable[Path]:
+        def _filter_file(f):
+            relative_path = f.relative_to(self.file_collection.path)
+            return project_name == str(relative_path.parent.joinpath(relative_path.stem))
+        return tuple(filter(_filter_file, self.file_collection.files))
+
 
 # Setup App -------------------------------------------------------------------
 

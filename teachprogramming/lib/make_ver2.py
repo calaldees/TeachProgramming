@@ -115,6 +115,18 @@ def _testfiles():
     yield files
     td.cleanup()
 
+"""
+    if variables.player2_x_pos<=0                  : variables.player2_x_pos = screen.get_width() -1 # VER: player2,wrap
+
+        var g = variables.grid;                                                            // VER: block_move,mines
+                        //if (block_name!=undefined) {                                // VER: blocks not images,mines
+
+//v.background_image = new Image();                   // VER: background NOT level,parallax
+
+        //collisions_context.drawImage(v.background_image, -v.view_x_pos, 0);  // VER: collision_single NOT parallax
+        collisions_context.drawImage(v.background_images[0], -v.view_x_pos, 0);  // VER: collision_single,parallax
+"""
+
 
 class VersionPath():
     pass  # TODO
