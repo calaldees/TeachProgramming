@@ -10,6 +10,8 @@ from textwrap import dedent
 from typing import NamedTuple, Iterable, Self, Set
 
 
+from make_ver import make_ver
+
 ### KILL THESE!!!
 
 
@@ -155,7 +157,7 @@ class ProjectVersions():
 
     @property
     def languages(self) -> frozenset[LanguageFileExtension]:
-        return frozenset(self.files_by_ext.keys())
+        return frozenset(self.files_by_ext.keys()) - frozenset(('ver',))
 
     @cached_property
     def versions(self) -> MappingProxyType[Version, VersionPath]:
@@ -170,16 +172,15 @@ class ProjectVersions():
         raise Exception('no version information')
 
     #@lru_cache?
-    def language(self, language: Language) -> MappingProxyType[Version, str]:
+    def language(self, language: LanguageFileExtension) -> MappingProxyType[Version, str]:
         return MappingProxyType({
             ver_name: '\n'.join(
-                ()
-                #make_ver(
-                #    io.StringIO(self.files_by_ext[language]), 
-                #    ver_path=ver_path,
-                #    lang=language,
-                #    process_additional_metafiles=False,
-                #)
+                make_ver(
+                    io.StringIO(self.files_by_ext[language]), 
+                    ver_path=ver_path,
+                    lang=language,
+                    process_additional_metafiles=False,
+                )
             )
             for ver_name, ver_path in self.versions.items()
         })
