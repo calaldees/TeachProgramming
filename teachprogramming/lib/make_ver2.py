@@ -7,7 +7,8 @@ from types import MappingProxyType
 from contextlib import contextmanager
 import io
 from textwrap import dedent
-from typing import NamedTuple, Iterable, Self, Set
+from typing import NamedTuple, Iterable, Self, Set, TypedDict, Sequence
+import json
 
 
 from make_ver import make_ver
@@ -47,9 +48,43 @@ def parse_legacy_version_data(data):
 
 ### END KILL
 
+def load_version_data(source: io.IOBase):
+    data = json.load(source)
 
 class Version(str):
+    # TODO: this may need to support multiple sets
+    # AND OR EXCLUDE HIDE
     pass
+class VersionDescription(TypedDict):
+    name: str
+    parent: str
+    mutations: None | Iterable[re.Pattern]  # TODO: Incomplete (previously replacements)
+class Versions(TypedDict):
+    versions: MappingProxyType[str, VersionDescription]
+
+def parse_version_data(data: Versions):
+    """
+    >>> data = {'versions': {
+    ...     'base': {'patents': []},
+    ...     'background': {'patents': ['base']},
+    ...     'copter': {'patents': ['background']},
+    ...     'collision_single': {'patents': ['copter']},
+    ...     'collision_multi': {'patents': ['collision_single']},
+    ...     'level': {'patents': ['collision_single']},
+    ...     'physics': {'patents': ['collision_single']},
+    ...     'parallax': {'patents': ['level']},
+    ...     'full': {'patents': ['parallax', 'physics', 'collision_multi']},
+    ...     'fish': {
+    ...         'patents': ['fish_background', 'collision_single'], 
+    ...         'mutations': [
+    ...             {'type': 'replace', 'match':'CopterLevel', 'replacement':'FishLevel'},
+    ...             {'type': 'replace', 'match':'ship.gif', 'replacement':'fish.gif'},
+    ...         ]
+    ...     },
+    ... }}
+    """
+    raise NotImplementedError()
+
 
 class LanguageFileExtension(str):
     pass
@@ -120,13 +155,16 @@ def _testfiles():
 """
     if variables.player2_x_pos<=0                  : variables.player2_x_pos = screen.get_width() -1 # VER: player2,wrap
 
-        var g = variables.grid;                                                            // VER: block_move,mines
+        var g = variables.grid;                                               // VER: block_move,mines   OR?
                         //if (block_name!=undefined) {                                // VER: blocks not images,mines
 
 //v.background_image = new Image();                   // VER: background NOT level,parallax
 
         //collisions_context.drawImage(v.background_image, -v.view_x_pos, 0);  // VER: collision_single NOT parallax
-        collisions_context.drawImage(v.background_images[0], -v.view_x_pos, 0);  // VER: collision_single,parallax
+        collisions_context.drawImage(v.background_images[0], -v.view_x_pos, 0);  // VER: collision_single,parallax    AND?
+
+        if self.keys[pygame.K_LEFT ]: self.copter_x_vel += -0.1 # VER: physics HIDE
+        if self.keys[pygame.K_RIGHT]: self.copter_x_vel +=  0.1 # VER: physics HIDE
 """
 
 
@@ -421,6 +459,10 @@ class VersionModel():
 
     @staticmethod
     def _parse_ver(ver) -> frozenset[Version]:
+        """
+        TODO: HIDE (replace with '???') NOT?
+        'block_move,mines' AND, OR
+        """
         return frozenset((Version(v.strip()) for v in ver.split(',')))
 
     @classmethod
