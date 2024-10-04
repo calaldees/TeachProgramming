@@ -1,4 +1,6 @@
 # https://github.com/KilledByAPixel/LittleJS
+# https://killedbyapixel.github.io/LittleJS/examples/box2d/
+# https://js13kgames.com/2024/games/data-warrior-13kb-limit
 
 serve: game.js littlejs.min.js tiles.png
 	python3 -m http.server

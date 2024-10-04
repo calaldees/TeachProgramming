@@ -64,23 +64,23 @@ class Versions(TypedDict):
 
 def parse_version_data(data: Versions):
     """
-    >>> data = {'versions': {
-    ...     'base': {'patents': []},
-    ...     'background': {'patents': ['base']},
-    ...     'copter': {'patents': ['background']},
-    ...     'collision_single': {'patents': ['copter']},
-    ...     'collision_multi': {'patents': ['collision_single']},
-    ...     'level': {'patents': ['collision_single']},
-    ...     'physics': {'patents': ['collision_single']},
-    ...     'parallax': {'patents': ['level']},
-    ...     'full': {'patents': ['parallax', 'physics', 'collision_multi']},
-    ...     'fish': {
-    ...         'patents': ['fish_background', 'collision_single'], 
-    ...         'mutations': [
-    ...             {'type': 'replace', 'match':'CopterLevel', 'replacement':'FishLevel'},
-    ...             {'type': 'replace', 'match':'ship.gif', 'replacement':'fish.gif'},
+    >>> data ={"versions": {
+    ...     "base": {"patents": []},
+    ...     "background": {"patents": ["base"]},
+    ...     "copter": {"patents": ["background"]},
+    ...     "collision_single": {"patents": ["copter"]},
+    ...     "collision_multi": {"patents": ["collision_single"]},
+    ...     "level": {"patents": ["collision_single"]},
+    ...     "physics": {"patents": ["collision_single"]},
+    ...     "parallax": {"patents": ["level"]},
+    ...     "full": {"patents": ["parallax", "physics", "collision_multi"]},
+    ...     "fish": {
+    ...         "patents": ["fish_background", "collision_single"], 
+    ...         "mutations": [
+    ...             {"type": "replace", "match":"CopterLevel", "replacement":"FishLevel"},
+    ...             {"type": "replace", "match":"ship.gif", "replacement":"fish.gif"}
     ...         ]
-    ...     },
+    ...     }
     ... }}
     """
     raise NotImplementedError()

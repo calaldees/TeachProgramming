@@ -56,3 +56,9 @@ console.log(bb)
 
 Problem: The language is not consistent. We have to study the language documentation to understand if a language has side effects
 See ES2023 for array mutability
+
+Further Reading
+---------------
+
+* Elixer: [Serialization is the Secret](https://www.zachdaniel.dev/p/serialization-is-the-secret)
+  * Rebinding is not mutation
