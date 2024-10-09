@@ -13,10 +13,17 @@ import json
 
 from make_ver import make_ver
 
+
+class Version(str):
+    # TODO: this may need to support multiple sets
+    # AND OR EXCLUDE HIDE
+    pass
+
+type VersionPath = frozenset[Version]
+
 ### KILL THESE!!!
 
-
-def parse_legacy_version_data(data):
+def parse_legacy_version_data(data) -> MappingProxyType[Version, VersionPath]:
     r"""
     >>> ver = parse_legacy_version_data('''
     ... VERNAME: base            base
@@ -45,46 +52,68 @@ def parse_legacy_version_data(data):
         for match in RE_VERNAME.finditer(data)
     })
 
-
-### END KILL
-
 def load_version_data(source: io.IOBase):
     data = json.load(source)
 
-class Version(str):
-    # TODO: this may need to support multiple sets
-    # AND OR EXCLUDE HIDE
-    pass
-class VersionDescription(TypedDict):
-    name: str
-    parent: str
-    mutations: None | Iterable[re.Pattern]  # TODO: Incomplete (previously replacements)
-class Versions(TypedDict):
-    versions: MappingProxyType[str, VersionDescription]
+### END KILL
 
-def parse_version_data(data: Versions):
+
+class VersionDescription(TypedDict):
+    name: Version
+    parent: Version
+    mutations: None | Iterable[re.Pattern]  # TODO: Incomplete (previously replacements)
+class _Versions(TypedDict):
+    versions: MappingProxyType[Version, VersionDescription]
+
+class Versions():
     """
-    >>> data ={"versions": {
-    ...     "base": {"patents": []},
-    ...     "background": {"patents": ["base"]},
-    ...     "copter": {"patents": ["background"]},
-    ...     "collision_single": {"patents": ["copter"]},
-    ...     "collision_multi": {"patents": ["collision_single"]},
-    ...     "level": {"patents": ["collision_single"]},
-    ...     "physics": {"patents": ["collision_single"]},
-    ...     "parallax": {"patents": ["level"]},
-    ...     "full": {"patents": ["parallax", "physics", "collision_multi"]},
+    >>> data = {"versions": {
+    ...     "base": {"parents": []},
+    ...     "background": {"parents": ["base"]},
+    ...     "copter": {"parents": ["background"]},
+    ...     "collision_single": {"parents": ["copter"]},
+    ...     "collision_multi": {"parents": ["collision_single"]},
+    ...     "level": {"parents": ["collision_single"]},
+    ...     "physics": {"parents": ["collision_single"]},
+    ...     "parallax": {"parents": ["level"]},
+    ...     "full": {"parents": ["parallax", "physics", "collision_multi"]},
     ...     "fish": {
-    ...         "patents": ["fish_background", "collision_single"], 
+    ...         "parents": ["fish_background", "collision_single"],
     ...         "mutations": [
     ...             {"type": "replace", "match":"CopterLevel", "replacement":"FishLevel"},
     ...             {"type": "replace", "match":"ship.gif", "replacement":"fish.gif"}
     ...         ]
     ...     }
     ... }}
-    """
-    raise NotImplementedError()
+    >>> versions = Versions(data)
+    >>> sorted(versions.resolve_versions(Version('full')))
+    ['background', 'base', 'collision_multi', 'collision_single', 'copter', 'full', 'level', 'parallax', 'physics']
+    >>> sorted(versions.resolve_versions(Version('collision_single')))
+    ['background', 'base', 'collision_single', 'copter']
 
+    >>> versions.version_paths['copter']
+    frozenset({'background', 'base', 'copter'})
+    """
+    def __init__(self, versions: _Versions):
+        self.versions = versions['versions']
+
+    def resolve_versions(self, *versions: Iterable[Version]) -> VersionPath:
+        versions_to_resolve = set(versions)
+        versions_resolved = set()
+        while versions_to_resolve and (version := versions_to_resolve.pop()):
+            target_version_description = self.versions.get(version)
+            versions_resolved.add(version)
+            if target_version_description:
+                versions_to_resolve |= set(target_version_description['parents'])
+                versions_to_resolve -= versions_resolved
+        return frozenset(versions_resolved)
+
+    @cached_property
+    def version_paths(self) -> MappingProxyType[Version, VersionPath]:
+        return MappingProxyType({
+            version: self.resolve_versions(version)
+            for version in self.versions.keys()
+        })
 
 class LanguageFileExtension(str):
     pass
@@ -146,9 +175,14 @@ def _testfiles():
             public static void main(String[] args) {new Test();}  // VER: test2
         }  // VER: test1
     '''))
-    write_file('test.ver', dedent('''
-        VERNAME: base           base
+    write_file('test.json', dedent('''
+        {"versions": {
+            "base": {"parents": []}
+        }}
     '''))
+    #write_file('test.ver', dedent('''
+    #    VERNAME: base           base
+    #'''))
     yield files
     td.cleanup()
 
@@ -168,9 +202,6 @@ def _testfiles():
 """
 
 
-class VersionPath():
-    pass  # TODO
-
 class ProjectVersions():
     r"""
     TODO: REFACTOR FOR make_ver2 -> deprecate make_ver
@@ -181,8 +212,8 @@ class ProjectVersions():
     ...     p = ProjectVersions(files)
 
     >>> p.versions['base']
-    ('base',)
-    
+    frozenset({'base'})
+
     #>>> p.data['py']['base']
     #"\nprint('Hello World')"
     """
@@ -195,7 +226,7 @@ class ProjectVersions():
 
     @property
     def languages(self) -> frozenset[LanguageFileExtension]:
-        return frozenset(self.files_by_ext.keys()) - frozenset(('ver',))
+        return frozenset(self.files_by_ext.keys()) - frozenset(('ver', 'json', 'yaml', 'yml'))
 
     @cached_property
     def versions(self) -> MappingProxyType[Version, VersionPath]:
@@ -207,6 +238,8 @@ class ProjectVersions():
             raise NotImplementedError('yaml version file format not implemented')
         if {'ver',} & file_exts:
             return parse_legacy_version_data(self.files_by_ext['ver'])
+        if {'json',} & file_exts:
+            return Versions(_Versions(json.loads(self.files_by_ext['json']))).version_paths
         raise Exception('no version information')
 
     #@lru_cache?
@@ -214,7 +247,7 @@ class ProjectVersions():
         return MappingProxyType({
             ver_name: '\n'.join(
                 make_ver(
-                    io.StringIO(self.files_by_ext[language]), 
+                    io.StringIO(self.files_by_ext[language]),
                     ver_path=ver_path,
                     lang=language,
                     process_additional_metafiles=False,
