@@ -7,7 +7,7 @@ from types import MappingProxyType
 from contextlib import contextmanager
 import io
 from textwrap import dedent
-from typing import NamedTuple, Iterable, Self, Set, TypedDict, Sequence
+from typing import NamedTuple, Iterable, Set, TypedDict
 import json
 
 
@@ -18,7 +18,6 @@ class Version(str):
     # TODO: this may need to support multiple sets
     # AND OR EXCLUDE HIDE
     pass
-
 type VersionPath = frozenset[Version]
 
 ### KILL THESE!!!
@@ -149,12 +148,25 @@ LANGUAGES: MappingProxyType[LanguageFileExtension, Language] = MappingProxyType(
     for language_ext in language.ext
 })
 
+
+class VersionEvaluator():
+    """
+    TODO: HIDE (replace with '???') NOT?
+    'block_move,mines' AND, OR
+    """
+    def __init__(self, version_str: str):
+        self.versions = frozenset((Version(v.strip()) for v in version_str.split(',')))
+
+    def __call__(self, version_path: VersionPath) -> bool:
+        raise NotImplementedError()
+        return any(version in self.versions for version in version_path)
+
 class VersionModel():
 
     class Line(NamedTuple):
         line: str
         line_without_ver: str
-        versions: VersionPath
+        version_evaluator: VersionEvaluator
 
     @staticmethod
     @lru_cache
@@ -225,22 +237,14 @@ class VersionModel():
         """
         return cls._regex_first_line_comment(comment).sub(r'\1\2', line, count=1)
 
-    @staticmethod
-    def _parse_ver(ver) -> VersionPath:
-        """
-        TODO: HIDE (replace with '???') NOT?
-        'block_move,mines' AND, OR
-        """
-        return frozenset((Version(v.strip()) for v in ver.split(',')))
-
     @classmethod
     def _parse_line(cls, language: Language, line: str) -> Line:
         for comment in language.comments:
             if match := cls.regex_ver(comment).search(line):
                 line_without_ver = line.replace(match['ver_remove'], '').rstrip()
                 line_without_ver = cls._remove_first_line_comment(line_without_ver, comment)
-                return cls.Line(line=line, line_without_ver=line_without_ver, versions=cls._parse_ver(match['ver']))
-        return cls.Line(line=line, line_without_ver=line, versions=frozenset())
+                return cls.Line(line=line, line_without_ver=line_without_ver, version_evaluator=VersionEvaluator(match['ver']))
+        return cls.Line(line=line, line_without_ver=line, version_evaluator=VersionEvaluator(''))
 
     def __init__(self, source: io.IOBase, language: Language):
         self.lines = tuple(map(partial(self._parse_line, language), source))
@@ -512,7 +516,7 @@ class LanguageVersions():
         """
         lines = VersionModel(source, language).lines
         def _reducer(acc: defaultdict[Version, list[str]], line: VersionModel.Line) -> defaultdict[Version, list[str]]:
-            for version in line.versions:
+            for version in line.version_evaluator.versions:
                 acc[version].append(line.line_without_ver)
             return acc
         return MappingProxyType({
