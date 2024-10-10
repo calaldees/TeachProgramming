@@ -91,8 +91,8 @@ class Versions():
     >>> sorted(versions.resolve_versions(Version('collision_single')))
     ['background', 'base', 'collision_single', 'copter']
 
-    >>> versions.version_paths['copter']
-    frozenset({'background', 'base', 'copter'})
+    >>> sorted(versions.version_paths['copter'])
+    ['background', 'base', 'copter']
     """
     def __init__(self, versions: _Versions):
         self.versions = versions['versions']
@@ -148,6 +148,102 @@ LANGUAGES: MappingProxyType[LanguageFileExtension, Language] = MappingProxyType(
     ))
     for language_ext in language.ext
 })
+
+class VersionModel():
+
+    class Line(NamedTuple):
+        line: str
+        line_without_ver: str
+        versions: VersionPath
+
+    @staticmethod
+    @lru_cache
+    def regex_ver(comment: Comment) -> re.Pattern:
+        """
+        >>> regex_ver = VersionModel.regex_ver
+
+        >>> c = Comment(r'#')
+        >>> test_py1 = '''print('helloworld') # VER: 1|2|3 # More comments'''
+        >>> test_py2 = '''print('helloworld') # VER: 1|2|3#More comments'''
+        >>> test_py3 = '''print('helloworld') #VER:1|2|3'''
+        >>> regex_ver(c).search(test_py1)['ver']
+        '1|2|3'
+        >>> regex_ver(c).search(test_py2)['ver']
+        '1|2|3'
+        >>> regex_ver(c).search(test_py3)['ver']
+        '1|2|3'
+
+        >>> c = Comment(r'//')
+        >>> test_js1 = '''console.log('helloworld') // VER: 1|2|3 // More comments'''
+        >>> test_js2 = '''console.log('helloworld') // VER: 1|2|3//More comments'''
+        >>> test_js3 = '''console.log('helloworld') //VER:1|2|3'''
+        >>> regex_ver(c).search(test_js1)['ver']
+        '1|2|3'
+        >>> regex_ver(c).search(test_js2)['ver']
+        '1|2|3'
+        >>> regex_ver(c).search(test_js3)['ver']
+        '1|2|3'
+
+        >>> c = Comment(r'<!--',r'-->')
+        >>> test_html1 = '''<a href=""> <!-- VER: 1|2|3 --><!-- more comments -->'''
+        >>> test_html2 = '''<a href=""><!-- VER: 1|2|3--><!--more comments-->'''
+        >>> test_html3 = '''<a href=""><!--VER:1|2|3-->'''
+        >>> regex_ver(c).search(test_html1)['ver']
+        '1|2|3'
+        >>> regex_ver(c).search(test_html2)['ver']
+        '1|2|3'
+        >>> regex_ver(c).search(test_html3)['ver']
+        '1|2|3'
+
+        >>> c = Comment(r'/*','*/')
+        >>> test_css1 = '''   border-radius: 4px; /* VER:1|2|3 */  '''
+        >>> regex_ver(c).search(test_css1)['ver']
+        '1|2|3'
+        """
+        return re.compile(
+            r'''(?P<ver_remove>{comment_start}\s*VER:\s*(?P<ver>.+?)\s*)($|{comment_end})'''.format(
+                comment_start=re.escape(comment.start),
+                comment_end=re.escape(comment.end or comment.start)
+            ), flags=re.IGNORECASE)
+
+    @staticmethod
+    @lru_cache
+    def _regex_first_line_comment(comment) -> re.Pattern:
+        """
+        """
+        return re.compile(
+            r'''^(\s*){comment_start}\s*(.*)'''.format(
+                comment_start=re.escape(comment.start)
+            ), flags=re.IGNORECASE)
+    @classmethod
+    def _remove_first_line_comment(cls, line, comment):
+        """
+        >>> VersionModel._remove_first_line_comment('    #  x=x+1', Comment('#'))
+        '    x=x+1'
+        >>> VersionModel._remove_first_line_comment('    ## Real comment # Again', Comment('#'))
+        '    # Real comment # Again'
+        """
+        return cls._regex_first_line_comment(comment).sub(r'\1\2', line, count=1)
+
+    @staticmethod
+    def _parse_ver(ver) -> VersionPath:
+        """
+        TODO: HIDE (replace with '???') NOT?
+        'block_move,mines' AND, OR
+        """
+        return frozenset((Version(v.strip()) for v in ver.split(',')))
+
+    @classmethod
+    def _parse_line(cls, language: Language, line: str) -> Line:
+        for comment in language.comments:
+            if match := cls.regex_ver(comment).search(line):
+                line_without_ver = line.replace(match['ver_remove'], '').rstrip()
+                line_without_ver = cls._remove_first_line_comment(line_without_ver, comment)
+                return cls.Line(line=line, line_without_ver=line_without_ver, versions=cls._parse_ver(match['ver']))
+        return cls.Line(line=line, line_without_ver=line, versions=frozenset())
+
+    def __init__(self, source: io.IOBase, language: Language):
+        self.lines = tuple(map(partial(self._parse_line, language), source))
 
 
 @contextmanager
@@ -344,176 +440,78 @@ class LanguageVersions():
             ).items()
         })
 
-    @cached_property
-    def languages(self) ->  MappingProxyType[str, MappingProxyType[Version, str]]:
-        return MappingProxyType({
-            language: VersionModel.build_versions(io.StringIO(self.files.get(language)), LANGUAGES[language])
-            for language in LANGUAGES.keys()
-        })
-
     @property
     def all_versions(self) -> Iterable[Version]:
         versions = frozenset(chain.from_iterable(version_data.keys() for version_data in self.languages.values()))
         return tuple(v for v in self.VERSION_ORDER if v in versions) + tuple(sorted(v for v in versions if v not in self.VERSION_ORDER))
 
+    @cached_property
+    def languages(self) ->  MappingProxyType[str, MappingProxyType[Version, str]]:
+        return MappingProxyType({
+            language: self._build_versions(io.StringIO(self.files.get(language)), LANGUAGES[language])
+            for language in LANGUAGES.keys()
+        })
 
-class VersionModel():
-    r"""
-    >>> java = io.StringIO(dedent('''
-    ...     import java.util.stream.Collectors;             // VER: list_comprehension,dict_comprehension
-    ...     import static java.util.Map.entry;              // VER: dict_comprehension
-    ...     public class Java {
-    ...         public static void main(String[] args) {new Java();}
-    ...         public Java() {
-    ...             hello_world();
-    ...             arithmetic();
-    ...         }
-    ...         void hello_world() {
-    ...             // // Must be in file named `HelloWorld.java`                    // VER: hello_world
-    ...             //public class HelloWorld {                                      // VER: hello_world
-    ...                 //public static void main(String[] args) {new HelloWorld();} // VER: hello_world
-    ...                 //public HelloWorld() {                                      // VER: hello_world
-    ...                     System.out.println("Hello World");                       // VER: hello_world
-    ...                 //}                                                          // VER: hello_world
-    ...             //}                                                              // VER: hello_world
-    ...         }
-    ...         void list_comprehension() {
-    ...             List<Integer> data1 = new ArrayList<>(Arrays.asList(new Integer[]{1,2,3,4,5,6})); // VER: list_comprehension
-    ...         }
-    ...         void dict_comprehension() {
-    ...             Map<String,Integer> data3 = Map.ofEntries(  //  VER: dict_comprehension
-    ...                 entry("a", 1),                          //  VER: dict_comprehension
-    ...                 entry("b", 2)                           //  VER: dict_comprehension
-    ...             );                                          //  VER: dict_comprehension
-    ...         }
-    ...     }
-    ... '''))
-    >>> versions = VersionModel.build_versions(java, LANGUAGES['java'])
+    @classmethod
+    def _build_versions(cls, source: io.IOBase, language: Language) -> MappingProxyType[Version, str]:
+        r"""
+        >>> java = io.StringIO(dedent('''
+        ...     import java.util.stream.Collectors;             // VER: list_comprehension,dict_comprehension
+        ...     import static java.util.Map.entry;              // VER: dict_comprehension
+        ...     public class Java {
+        ...         public static void main(String[] args) {new Java();}
+        ...         public Java() {
+        ...             hello_world();
+        ...             arithmetic();
+        ...         }
+        ...         void hello_world() {
+        ...             // // Must be in file named `HelloWorld.java`                    // VER: hello_world
+        ...             //public class HelloWorld {                                      // VER: hello_world
+        ...                 //public static void main(String[] args) {new HelloWorld();} // VER: hello_world
+        ...                 //public HelloWorld() {                                      // VER: hello_world
+        ...                     System.out.println("Hello World");                       // VER: hello_world
+        ...                 //}                                                          // VER: hello_world
+        ...             //}                                                              // VER: hello_world
+        ...         }
+        ...         void list_comprehension() {
+        ...             List<Integer> data1 = new ArrayList<>(Arrays.asList(new Integer[]{1,2,3,4,5,6})); // VER: list_comprehension
+        ...         }
+        ...         void dict_comprehension() {
+        ...             Map<String,Integer> data3 = Map.ofEntries(  //  VER: dict_comprehension
+        ...                 entry("a", 1),                          //  VER: dict_comprehension
+        ...                 entry("b", 2)                           //  VER: dict_comprehension
+        ...             );                                          //  VER: dict_comprehension
+        ...         }
+        ...     }
+        ... '''))
+        >>> versions = LanguageVersions._build_versions(java, LANGUAGES['java'])
 
-    >>> sorted(versions.keys())
-    ['dict_comprehension', 'hello_world', 'list_comprehension']
+        >>> sorted(versions.keys())
+        ['dict_comprehension', 'hello_world', 'list_comprehension']
 
-    >>> print(versions['hello_world'])
-            // Must be in file named `HelloWorld.java`
-            public class HelloWorld {
-                public static void main(String[] args) {new HelloWorld();}
-                public HelloWorld() {
-                    System.out.println("Hello World");
+        >>> print(versions['hello_world'])
+                // Must be in file named `HelloWorld.java`
+                public class HelloWorld {
+                    public static void main(String[] args) {new HelloWorld();}
+                    public HelloWorld() {
+                        System.out.println("Hello World");
+                    }
                 }
-            }
 
-    >>> print(versions['list_comprehension'])
-    import java.util.stream.Collectors;
-            List<Integer> data1 = new ArrayList<>(Arrays.asList(new Integer[]{1,2,3,4,5,6}));
+        >>> print(versions['list_comprehension'])
+        import java.util.stream.Collectors;
+                List<Integer> data1 = new ArrayList<>(Arrays.asList(new Integer[]{1,2,3,4,5,6}));
 
-    >>> print(versions['dict_comprehension'])
-    import java.util.stream.Collectors;
-    import static java.util.Map.entry;
-            Map<String,Integer> data3 = Map.ofEntries(
-                entry("a", 1),
-                entry("b", 2)
-            );
-
-    """
-
-    class Line(NamedTuple):
-        line: str
-        line_without_ver: str
-        versions: frozenset[Version]
-
-    @staticmethod
-    @lru_cache
-    def regex_ver(comment: Comment) -> re.Pattern:
+        >>> print(versions['dict_comprehension'])
+        import java.util.stream.Collectors;
+        import static java.util.Map.entry;
+                Map<String,Integer> data3 = Map.ofEntries(
+                    entry("a", 1),
+                    entry("b", 2)
+                );
         """
-        >>> regex_ver = VersionModel.regex_ver
-
-        >>> c = Comment(r'#')
-        >>> test_py1 = '''print('helloworld') # VER: 1|2|3 # More comments'''
-        >>> test_py2 = '''print('helloworld') # VER: 1|2|3#More comments'''
-        >>> test_py3 = '''print('helloworld') #VER:1|2|3'''
-        >>> regex_ver(c).search(test_py1)['ver']
-        '1|2|3'
-        >>> regex_ver(c).search(test_py2)['ver']
-        '1|2|3'
-        >>> regex_ver(c).search(test_py3)['ver']
-        '1|2|3'
-
-        >>> c = Comment(r'//')
-        >>> test_js1 = '''console.log('helloworld') // VER: 1|2|3 // More comments'''
-        >>> test_js2 = '''console.log('helloworld') // VER: 1|2|3//More comments'''
-        >>> test_js3 = '''console.log('helloworld') //VER:1|2|3'''
-        >>> regex_ver(c).search(test_js1)['ver']
-        '1|2|3'
-        >>> regex_ver(c).search(test_js2)['ver']
-        '1|2|3'
-        >>> regex_ver(c).search(test_js3)['ver']
-        '1|2|3'
-
-        >>> c = Comment(r'<!--',r'-->')
-        >>> test_html1 = '''<a href=""> <!-- VER: 1|2|3 --><!-- more comments -->'''
-        >>> test_html2 = '''<a href=""><!-- VER: 1|2|3--><!--more comments-->'''
-        >>> test_html3 = '''<a href=""><!--VER:1|2|3-->'''
-        >>> regex_ver(c).search(test_html1)['ver']
-        '1|2|3'
-        >>> regex_ver(c).search(test_html2)['ver']
-        '1|2|3'
-        >>> regex_ver(c).search(test_html3)['ver']
-        '1|2|3'
-
-        >>> c = Comment(r'/*','*/')
-        >>> test_css1 = '''   border-radius: 4px; /* VER:1|2|3 */  '''
-        >>> regex_ver(c).search(test_css1)['ver']
-        '1|2|3'
-        """
-        return re.compile(
-            r'''(?P<ver_remove>{comment_start}\s*VER:\s*(?P<ver>.+?)\s*)($|{comment_end})'''.format(
-                comment_start=re.escape(comment.start),
-                comment_end=re.escape(comment.end or comment.start)
-            ), flags=re.IGNORECASE)
-
-    @staticmethod
-    @lru_cache
-    def _regex_first_line_comment(comment) -> re.Pattern:
-        """
-        """
-        return re.compile(
-            r'''^(\s*){comment_start}\s*(.*)'''.format(
-                comment_start=re.escape(comment.start)
-            ), flags=re.IGNORECASE)
-    @classmethod
-    def _remove_first_line_comment(cls, line, comment):
-        """
-        >>> VersionModel._remove_first_line_comment('    #  x=x+1', Comment('#'))
-        '    x=x+1'
-        >>> VersionModel._remove_first_line_comment('    ## Real comment # Again', Comment('#'))
-        '    # Real comment # Again'
-        """
-        return cls._regex_first_line_comment(comment).sub(r'\1\2', line, count=1)
-
-    @staticmethod
-    def _parse_ver(ver) -> frozenset[Version]:
-        """
-        TODO: HIDE (replace with '???') NOT?
-        'block_move,mines' AND, OR
-        """
-        return frozenset((Version(v.strip()) for v in ver.split(',')))
-
-    @classmethod
-    def _parse_line(cls, language: Language, line: str) -> Line:
-        line_without_ver = line
-        versions = frozenset()
-        for comment in language.comments:
-            if match := cls.regex_ver(comment).search(line):
-                versions = cls._parse_ver(match['ver'])
-                line_without_ver = line.replace(match['ver_remove'], '').rstrip()
-                line_without_ver = cls._remove_first_line_comment(line_without_ver, comment)
-                break
-        return cls.Line(line, line_without_ver, versions)
-
-    @classmethod
-    def build_versions(cls: Self, source: io.IOBase, language: Language) -> MappingProxyType[Version, str]:
-        lines = tuple(map(partial(cls._parse_line, language), source))
-        def _reducer(acc: defaultdict[Version, list[str]], line: cls.Line) -> defaultdict[Version, list[str]]:
+        lines = VersionModel(source, language).lines
+        def _reducer(acc: defaultdict[Version, list[str]], line: VersionModel.Line) -> defaultdict[Version, list[str]]:
             for version in line.versions:
                 acc[version].append(line.line_without_ver)
             return acc
@@ -522,10 +520,10 @@ class VersionModel():
             for version, lines in reduce(_reducer, lines, defaultdict(list[str])).items()
         })
 
-    @classmethod
-    def build_versions_from_path(cls: Self, path: str | Path) -> MappingProxyType[Version, str]:
-        path = Path(path)
-        language = LANGUAGES.get(path.suffix.strip('.'))
-        assert language, f'Language unknown: {path.suffix}. Valid languages are {LANGUAGES.keys()}'
-        with path.open() as source:
-            return cls.build_versions(source, language)
+    # @classmethod
+    # def build_versions_from_path(cls: Self, path: str | Path) -> MappingProxyType[Version, str]:
+    #     path = Path(path)
+    #     language = LANGUAGES.get(path.suffix.strip('.'))
+    #     assert language, f'Language unknown: {path.suffix}. Valid languages are {LANGUAGES.keys()}'
+    #     with path.open() as source:
+    #         return cls._build_versions(source, language)
