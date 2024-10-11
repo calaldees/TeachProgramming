@@ -177,6 +177,13 @@ class VersionEvaluator():
     >>> VersionEvaluator('collision_single parallax NOT_ AND_')(frozenset(('base','collision_single','parallax')))
     False
 
+    >>> VersionEvaluator('block_move mines OR_')(frozenset(('base',)))
+    False
+    >>> VersionEvaluator('block_move mines OR_')(frozenset(('base','block_move')))
+    True
+    >>> VersionEvaluator('block_move mines OR_')(frozenset(('base','mines')))
+    True
+
     """
     def __init__(self, version_str: str = ''):
         version_str = version_str.replace(',',' ')
