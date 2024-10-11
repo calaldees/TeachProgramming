@@ -7,7 +7,7 @@ from types import MappingProxyType
 from contextlib import contextmanager
 import io
 from textwrap import dedent
-from typing import NamedTuple, Iterable, Set, TypedDict
+from typing import NamedTuple, Iterable, Set, TypedDict, Sequence
 import json
 
 
@@ -153,12 +153,25 @@ class VersionEvaluator():
     """
     TODO: HIDE (replace with '???') NOT?
     'block_move,mines' AND, OR
+
+    if variables.player2_x_pos<=0                  : variables.player2_x_pos = screen.get_width() -1 # VER: player2,wrap
+
+    var g = variables.grid;                                               // VER: block_move,mines   OR?
+            //if (block_name!=undefined) {                                // VER: blocks not images,mines
+
+    //v.background_image = new Image();                   // VER: background NOT level,parallax
+
+    //collisions_context.drawImage(v.background_image, -v.view_x_pos, 0);  // VER: collision_single NOT parallax
+    collisions_context.drawImage(v.background_images[0], -v.view_x_pos, 0);  // VER: collision_single,parallax    AND?
+
+    if self.keys[pygame.K_LEFT ]: self.copter_x_vel += -0.1 # VER: physics HIDE
+    if self.keys[pygame.K_RIGHT]: self.copter_x_vel +=  0.1 # VER: physics HIDE
     """
-    def __init__(self, version_str: str):
-        self.versions = frozenset((Version(v.strip()) for v in version_str.split(',')))
+    def __init__(self, version_str: str = ''):
+        # TODO: could be property of version from evaluator
+        self.versions: VersionPath = frozenset((Version(v.strip()) for v in version_str.split(',')))
 
     def __call__(self, version_path: VersionPath) -> bool:
-        raise NotImplementedError()
         return any(version in self.versions for version in version_path)
 
 class VersionModel():
@@ -243,8 +256,16 @@ class VersionModel():
             if match := cls.regex_ver(comment).search(line):
                 line_without_ver = line.replace(match['ver_remove'], '').rstrip()
                 line_without_ver = cls._remove_first_line_comment(line_without_ver, comment)
-                return cls.Line(line=line, line_without_ver=line_without_ver, version_evaluator=VersionEvaluator(match['ver']))
-        return cls.Line(line=line, line_without_ver=line, version_evaluator=VersionEvaluator(''))
+                return cls.Line(
+                    line=line,
+                    line_without_ver=line_without_ver,
+                    version_evaluator=VersionEvaluator(match['ver'])
+                )
+        return cls.Line(
+            line=line,
+            line_without_ver=line,
+            version_evaluator=VersionEvaluator()
+        )
 
     def __init__(self, source: io.IOBase, language: Language):
         self.lines = tuple(map(partial(self._parse_line, language), source))
@@ -285,22 +306,6 @@ def _testfiles():
     #'''))
     yield files
     td.cleanup()
-
-"""
-    if variables.player2_x_pos<=0                  : variables.player2_x_pos = screen.get_width() -1 # VER: player2,wrap
-
-        var g = variables.grid;                                               // VER: block_move,mines   OR?
-                        //if (block_name!=undefined) {                                // VER: blocks not images,mines
-
-//v.background_image = new Image();                   // VER: background NOT level,parallax
-
-        //collisions_context.drawImage(v.background_image, -v.view_x_pos, 0);  // VER: collision_single NOT parallax
-        collisions_context.drawImage(v.background_images[0], -v.view_x_pos, 0);  // VER: collision_single,parallax    AND?
-
-        if self.keys[pygame.K_LEFT ]: self.copter_x_vel += -0.1 # VER: physics HIDE
-        if self.keys[pygame.K_RIGHT]: self.copter_x_vel +=  0.1 # VER: physics HIDE
-"""
-
 
 class ProjectVersions():
     r"""
@@ -368,6 +373,7 @@ class LanguageVersions():
     >>> with _testfiles() as files:
     ...     l = LanguageVersions(files)
 
+    `hello_world` is in the VERSION_ORDER and so will come first, then the rest are then ordered
     >>> l.all_versions
     ('hello_world', 'test1', 'test2', 'test4')
     >>> l.languages['py']['test4']
@@ -445,7 +451,7 @@ class LanguageVersions():
         })
 
     @property
-    def all_versions(self) -> Iterable[Version]:
+    def all_versions(self) -> Sequence[Version]:
         versions = frozenset(chain.from_iterable(version_data.keys() for version_data in self.languages.values()))
         return tuple(v for v in self.VERSION_ORDER if v in versions) + tuple(sorted(v for v in versions if v not in self.VERSION_ORDER))
 
@@ -515,8 +521,15 @@ class LanguageVersions():
                 );
         """
         lines = VersionModel(source, language).lines
+        # We build a dict incrementally with the versions from each line.
+        # This is not the way ProjectVersions works.
+        # Perhaps we can get a list of all versions and then run the version evaluator for each line to include it?
+        # The process below is definitely efficient to build, but I wonder if a single code path for versions would be neater and cleaner
+        # For now LanguageVersions feels like it's own case, but it feels weird because `VER:` lines are used for different things in different ways
         def _reducer(acc: defaultdict[Version, list[str]], line: VersionModel.Line) -> defaultdict[Version, list[str]]:
             for version in line.version_evaluator.versions:
+                if not version:  # Lines with not explicitly tagged with a version are not considered in LanguageVersions
+                    continue
                 acc[version].append(line.line_without_ver)
             return acc
         return MappingProxyType({
