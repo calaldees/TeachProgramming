@@ -13,7 +13,42 @@ import operator
 import inspect
 
 
-from make_ver import make_ver
+@contextmanager
+def _testfiles():
+    import tempfile
+    td = tempfile.TemporaryDirectory()
+    files: Set[Path] = set()
+    def write_file(filename, data):
+        path = Path(td.name).joinpath(filename)
+        with path.open('wt', encoding='utf8') as filehandle:
+           _ = filehandle.write(data)
+        files.add(path)
+    write_file('test.py', dedent('''
+        print('Hello World')
+        print('Hello Test')  # VER: test4
+    '''))
+    write_file('test.js', dedent('''
+        console.log("Hello World")    // VER: hello_world
+    '''))
+    write_file('Test.java', dedent('''
+        public class Test {                          // VER: test1
+            public Test() {                          // VER: test2
+                System.out.println("Hello World");   // VER: hello_world
+            }                                        // VER: test2
+            public static void main(String[] args) {new Test();}  // VER: test2
+        }  // VER: test1
+    '''))
+    write_file('test.json', dedent('''
+        {"versions": {
+            "": {"parents": []}
+        }}
+    '''))
+    #write_file('test.ver', dedent('''
+    #    VERNAME: base           base
+    #'''))
+    yield files
+    td.cleanup()
+
 
 
 class Version(str):
@@ -69,8 +104,8 @@ class _Versions(TypedDict):
 class Versions():
     """
     >>> data = {"versions": {
-    ...     "base": {"parents": []},
-    ...     "background": {"parents": ["base"]},
+    ...     "": {"parents": []},
+    ...     "background": {"parents": [""]},
     ...     "copter": {"parents": ["background"]},
     ...     "collision_single": {"parents": ["copter"]},
     ...     "collision_multi": {"parents": ["collision_single"]},
@@ -88,12 +123,12 @@ class Versions():
     ... }}
     >>> versions = Versions(data)
     >>> sorted(versions.resolve_versions(Version('full')))
-    ['background', 'base', 'collision_multi', 'collision_single', 'copter', 'full', 'level', 'parallax', 'physics']
+    ['', 'background', 'collision_multi', 'collision_single', 'copter', 'full', 'level', 'parallax', 'physics']
     >>> sorted(versions.resolve_versions(Version('collision_single')))
-    ['background', 'base', 'collision_single', 'copter']
+    ['', 'background', 'collision_single', 'copter']
 
     >>> sorted(versions.version_paths['copter'])
-    ['background', 'base', 'copter']
+    ['', 'background', 'copter']
     """
     def __init__(self, versions: _Versions):
         self.versions = versions['versions']
@@ -101,7 +136,7 @@ class Versions():
     def resolve_versions(self, *versions: Iterable[Version]) -> VersionPath:
         versions_to_resolve = set(versions)
         versions_resolved = set()
-        while versions_to_resolve and (version := versions_to_resolve.pop()):
+        while versions_to_resolve and ((version := versions_to_resolve.pop()) is not None):
             target_version_description = self.versions.get(version)
             versions_resolved.add(version)
             if target_version_description:
@@ -154,21 +189,6 @@ LANGUAGES: MappingProxyType[LanguageFileExtension, Language] = MappingProxyType(
 class VersionEvaluator():
     """
     TODO: HIDE (replace with '???') NOT?
-    'block_move,mines' AND, OR
-
-    if variables.player2_x_pos<=0                  : variables.player2_x_pos = screen.get_width() -1 # VER: player2,wrap
-
-    var g = variables.grid;                                               // VER: block_move,mines   OR?
-            //if (block_name!=undefined) {                                // VER: blocks not images,mines
-
-    //v.background_image = new Image();                   // VER: background NOT level,parallax
-
-    //collisions_context.drawImage(v.background_image, -v.view_x_pos, 0);  // VER: collision_single NOT parallax
-    collisions_context.drawImage(v.background_images[0], -v.view_x_pos, 0);  // VER: collision_single,parallax    AND?
-
-    if self.keys[pygame.K_LEFT ]: self.copter_x_vel += -0.1 # VER: physics HIDE
-    if self.keys[pygame.K_RIGHT]: self.copter_x_vel +=  0.1 # VER: physics HIDE
-
 
     >>> VersionEvaluator('collision_single')(frozenset(('base','collision_single','parallax')))
     True
@@ -183,13 +203,14 @@ class VersionEvaluator():
     True
     >>> VersionEvaluator('block_move mines OR_')(frozenset(('base','mines')))
     True
-
     """
     def __init__(self, version_str: str = ''):
         version_str = version_str.replace(',',' ')
         self.tokens = tuple(filter(None, map(lambda v: v.strip(), version_str.split(' '))))
 
     def __call__(self, version_path: VersionPath) -> bool:
+        if not version_path:
+            return False
         stack = []
         for token in self.tokens:
             if _operator := getattr(operator, token.lower(), None):
@@ -301,64 +322,25 @@ class VersionModel():
     def __init__(self, source: io.IOBase, language: Language):
         self.lines = tuple(map(partial(self._parse_line, language), source))
 
-
-@contextmanager
-def _testfiles():
-    import tempfile
-    td = tempfile.TemporaryDirectory()
-    files: Set[Path] = set()
-    def write_file(filename, data):
-        path = Path(td.name).joinpath(filename)
-        with path.open('wt', encoding='utf8') as filehandle:
-           _ = filehandle.write(data)
-        files.add(path)
-    write_file('test.py', dedent('''
-        print('Hello World')
-        print('Hello Test')  # VER: test4
-    '''))
-    write_file('test.js', dedent('''
-        console.log("Hello World")    // VER: hello_world
-    '''))
-    write_file('Test.java', dedent('''
-        public class Test {                          // VER: test1
-            public Test() {                          // VER: test2
-                System.out.println("Hello World");   // VER: hello_world
-            }                                        // VER: test2
-            public static void main(String[] args) {new Test();}  // VER: test2
-        }  // VER: test1
-    '''))
-    write_file('test.json', dedent('''
-        {"versions": {
-            "base": {"parents": []}
-        }}
-    '''))
-    #write_file('test.ver', dedent('''
-    #    VERNAME: base           base
-    #'''))
-    yield files
-    td.cleanup()
-
 class ProjectVersions():
     r"""
-    TODO: REFACTOR FOR make_ver2 -> deprecate make_ver
-
     Read in a project and have all permutations of that project in an object
 
     >>> with _testfiles() as files:
     ...     p = ProjectVersions(files)
 
-    >>> p.versions['base']
-    frozenset({'base'})
+    >>> p.versions['']
+    frozenset({''})
 
-    #>>> p.data['py']['base']
-    #"\nprint('Hello World')"
+    >>> p.data['py']['']
+    "\nprint('Hello World')"
     """
     def __init__(self, files):
         self.files_by_ext = MappingProxyType({
             LanguageFileExtension(f.suffix.strip('.')): f.open(encoding='utf8').read()
             for f in files
         })
-        self.data  # generate cache on object creation
+        #self.data  # generate cache on object creation
 
     @property
     def languages(self) -> frozenset[LanguageFileExtension]:
@@ -380,16 +362,14 @@ class ProjectVersions():
 
     #@lru_cache?
     def language(self, language: LanguageFileExtension) -> MappingProxyType[Version, str]:
+        lines = VersionModel(io.StringIO(self.files_by_ext[language]), LANGUAGES[language]).lines
         return MappingProxyType({
-            ver_name: '\n'.join(
-                make_ver(
-                    io.StringIO(self.files_by_ext[language]),
-                    ver_path=ver_path,
-                    lang=language,
-                    process_additional_metafiles=False,
-                )
+            version_name: '\n'.join(
+                line.line_without_ver
+                for line in lines
+                if line.version_evaluator(version_path)
             )
-            for ver_name, ver_path in self.versions.items()
+            for version_name, version_path in self.versions.items()
         })
 
     @cached_property
