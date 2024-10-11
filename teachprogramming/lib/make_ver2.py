@@ -9,6 +9,8 @@ import io
 from textwrap import dedent
 from typing import NamedTuple, Iterable, Set, TypedDict, Sequence
 import json
+import operator
+import inspect
 
 
 from make_ver import make_ver
@@ -166,13 +168,35 @@ class VersionEvaluator():
 
     if self.keys[pygame.K_LEFT ]: self.copter_x_vel += -0.1 # VER: physics HIDE
     if self.keys[pygame.K_RIGHT]: self.copter_x_vel +=  0.1 # VER: physics HIDE
+
+
+    >>> VersionEvaluator('collision_single')(frozenset(('base','collision_single','parallax')))
+    True
+    >>> VersionEvaluator('collision_single parallax NOT_ AND_')(frozenset(('base','collision_single')))
+    True
+    >>> VersionEvaluator('collision_single parallax NOT_ AND_')(frozenset(('base','collision_single','parallax')))
+    False
+
     """
     def __init__(self, version_str: str = ''):
-        # TODO: could be property of version from evaluator
-        self.versions: VersionPath = frozenset((Version(v.strip()) for v in version_str.split(',')))
+        version_str = version_str.replace(',',' ')
+        self.tokens = tuple(filter(None, map(lambda v: v.strip(), version_str.split(' '))))
 
     def __call__(self, version_path: VersionPath) -> bool:
-        return any(version in self.versions for version in version_path)
+        stack = []
+        for token in self.tokens:
+            if _operator := getattr(operator, token.lower(), None):
+                param_count = len(inspect.signature(_operator).parameters)
+                result = _operator(*(stack.pop() for i in range(param_count)))
+                stack.append(result)
+            else:
+                stack.append(token in version_path)
+        assert len(stack) == 1, f"After evaluation of version_path, we should have a single value {self.tokens=} {version_path=}"
+        return stack.pop()
+
+    @cached_property
+    def versions(self) -> VersionPath:
+        return frozenset(token for token in self.tokens if not hasattr(operator, token))
 
 class VersionModel():
 
