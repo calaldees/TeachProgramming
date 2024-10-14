@@ -42,7 +42,7 @@ import java.util.HashSet;    // VER: define_set
 public class Java {
 
   Scanner console = new Scanner(System.in);                                     // VER: read_line_from_console
-    
+
   void hello_world() {
     // // Must be in file named `HelloWorld.java`                               // VER: hello_world
     //public class HelloWorld {                                                 // VER: hello_world
@@ -52,7 +52,7 @@ public class Java {
       //}                                                                       // VER: hello_world
     //}                                                                         // VER: hello_world
   }
-    
+
   void read_line_from_console() {
     String username = console.nextLine();                                       // VER: read_line_from_console
   }
@@ -69,7 +69,7 @@ public class Java {
     Boolean email_errors = true;                                                // VER: define_variables
     String multiline = """
     a b
-    """;                                               // VER: define_variables   // pain in the ass, MUST be multiline string
+    """; // Java multiline MUST be multiline string. So this is difficult to put in the cheat sheet
     System.out.println(count);
     System.out.println(username);
     System.out.println(distance);

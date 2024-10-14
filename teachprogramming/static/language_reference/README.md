@@ -14,6 +14,9 @@ Analogy? Students taught many lingustic languages at once to improve them all - 
 Alternate tutorials/cheatsheets
 -------------------
 
+* [Python Beginner Cheat Sheet: 19 Keywords Every Coder Must Know](https://blog.finxter.com/python-cheat-sheet/)
+  * Big article with lots of cheat sheets.
+  * Looks like it was written by an AI?
 
 * https://tools.withcode.uk/quickref/
 * [Code-cademy - All Cheatsheets](https://www.codecademy.com/resources/cheatsheets/all)

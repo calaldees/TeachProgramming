@@ -482,3 +482,9 @@ Tree search
 
 See regex hex puzzle! A similar technique could be used?
 https://mathspp.com/blog/problems/regex-crossword
+
+Other implementations
+=====================
+
+* [Suduku in one line](https://dfns.dyalog.com/n_sudoku.htm)
+  * Problem description and notation for solution
