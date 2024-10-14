@@ -24,11 +24,12 @@ def _testfiles():
            _ = filehandle.write(data)
         files.add(path)
     write_file('test.py', dedent('''
-        print('Hello World')
-        print('Hello Test')  # VER: test4
+        print('Hello Test')
+        print('Hello World')  # VER: hello_world
     '''))
     write_file('test.js', dedent('''
         console.log("Hello World")    // VER: hello_world
+        //console.log("Hello Test")    // VER: test4
     '''))
     write_file('Test.java', dedent('''
         public class Test {                          // VER: test1
@@ -40,7 +41,11 @@ def _testfiles():
     '''))
     write_file('test.json', dedent('''
         {"versions": {
-            "": {"parents": []}
+            "": {"parents": []},
+            "test1": {"parents": [""]},
+            "test2": {"parents": ["test1"]},
+            "hello_world": {"parents": ["test2"]},
+            "test4": {"parents": []}
         }}
     '''))
     #write_file('test.ver', dedent('''
@@ -206,7 +211,7 @@ class VersionEvaluator():
     """
     def __init__(self, version_str: str = ''):
         version_str = version_str.replace(',',' ')
-        self.tokens = tuple(filter(None, map(lambda v: v.strip(), version_str.split(' '))))
+        self.tokens = tuple(filter(None, map(lambda v: v.strip(), version_str.split(' ')))) or ('',)
 
     def __call__(self, version_path: VersionPath) -> bool:
         if not version_path:
@@ -329,11 +334,15 @@ class ProjectVersions():
     >>> with _testfiles() as files:
     ...     p = ProjectVersions(files)
 
-    >>> p.versions['']
-    frozenset({''})
+    >>> sorted(p.versions['hello_world'])
+    ['', 'hello_world', 'test1', 'test2']
 
-    >>> p.data['py']['']
-    "\nprint('Hello World')"
+    >>> print(p.data['java']['test2'])
+    public class Test {
+        public Test() {
+        }
+        public static void main(String[] args) {new Test();}
+    }
     """
     def __init__(self, files):
         self.files_by_ext = MappingProxyType({
@@ -363,6 +372,7 @@ class ProjectVersions():
     #@lru_cache?
     def language(self, language: LanguageFileExtension) -> MappingProxyType[Version, str]:
         lines = VersionModel(io.StringIO(self.files_by_ext[language]), LANGUAGES[language]).lines
+        #breakpoint()
         return MappingProxyType({
             version_name: '\n'.join(
                 line.line_without_ver
@@ -387,8 +397,8 @@ class LanguageVersions():
     `hello_world` is in the VERSION_ORDER and so will come first, then the rest are then ordered
     >>> l.all_versions
     ('hello_world', 'test1', 'test2', 'test4')
-    >>> l.languages['py']['test4']
-    "print('Hello Test')"
+    >>> l.languages['js']['test4']
+    'console.log("Hello Test")'
     """
 
     VERSION_ORDER = [  # TODO: these should be moved eventually
