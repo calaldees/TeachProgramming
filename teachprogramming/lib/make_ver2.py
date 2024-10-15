@@ -93,9 +93,6 @@ def parse_legacy_version_data(data) -> MappingProxyType[Version, VersionPath]:
         for match in RE_VERNAME.finditer(data)
     })
 
-def load_version_data(source: io.IOBase):
-    data = json.load(source)
-
 ### END KILL
 
 
@@ -213,6 +210,9 @@ class VersionEvaluator():
         version_str = version_str.replace(',',' ')
         self.tokens = tuple(filter(None, map(lambda v: v.strip(), version_str.split(' ')))) or ('',)
 
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.tokens=})"
+
     def __call__(self, version_path: VersionPath) -> bool:
         if not version_path:
             return False
@@ -307,8 +307,17 @@ class VersionModel():
         """
         return cls._regex_first_line_comment(comment).sub(r'\1\2', line, count=1)
 
+    @staticmethod
+    def remove_new_lines(line):
+        return re.sub('[\n\r]', '', line)
+
     @classmethod
     def _parse_line(cls, language: Language, line: str) -> Line:
+        r"""
+        >>> VersionModel._parse_line(LANGUAGES['py'], "    print('Hello World')  #  VER:  test1 test2 AND_\n\r")
+        Line(line="    print('Hello World')  #  VER:  test1 test2 AND_", line_without_ver="    print('Hello World')", version_evaluator=VersionEvaluator(self.tokens=('test1', 'test2', 'AND_')))
+        """
+        line = cls.remove_new_lines(line)
         for comment in language.comments:
             if match := cls.regex_ver(comment).search(line):
                 line_without_ver = line.replace(match['ver_remove'], '').rstrip()
@@ -338,6 +347,7 @@ class ProjectVersions():
     ['', 'hello_world', 'test1', 'test2']
 
     >>> print(p.data['java']['test2'])
+    <BLANKLINE>
     public class Test {
         public Test() {
         }
@@ -363,10 +373,10 @@ class ProjectVersions():
         file_exts = frozenset(self.files_by_ext.keys())
         if {'yaml', 'yml'} & file_exts:
             raise NotImplementedError('yaml version file format not implemented')
-        if {'ver',} & file_exts:
-            return parse_legacy_version_data(self.files_by_ext['ver'])
         if {'json',} & file_exts:
             return Versions(_Versions(json.loads(self.files_by_ext['json']))).version_paths
+        if {'ver',} & file_exts:
+            return parse_legacy_version_data(self.files_by_ext['ver'])
         raise Exception('no version information')
 
     #@lru_cache?
