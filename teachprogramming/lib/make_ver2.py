@@ -160,7 +160,7 @@ class Comment(NamedTuple):
     start: str
     end: str = ''
 
-COMMENTS_STYLE_C = (Comment(r'//'), Comment(r'/*',r'*/'))
+COMMENTS_STYLE_C = (Comment(r'/*',r'*/'), Comment(r'//'))
 COMMENTS_STYLE_PYTHON = (Comment(r'#'),)
 
 class Language(NamedTuple):
@@ -209,6 +209,14 @@ class VersionEvaluator():
     def __init__(self, version_str: str = ''):
         version_str = version_str.replace(',',' ')
         self.tokens = tuple(filter(None, map(lambda v: v.strip(), version_str.split(' ')))) or ('',)
+        # !!! WIP TEMP HACKs: to allow migration from old `make_ver` !!! REMOVE THIS SHIT!
+        self.tokens = tuple(t for t in self.tokens if t.lower()!='hide')
+        if len(self.tokens) == 3 and self.tokens[1].lower() == 'not':
+            self.tokens = (self.tokens[0], self.tokens[2], 'NOT_', 'AND_')
+        if len(self.tokens) == 4 and self.tokens[1].lower() == 'not':
+            self.tokens = (self.tokens[0], self.tokens[2], 'NOT_', self.tokens[3], 'NOT_', 'OR_', 'AND_')  # probably a ballzup
+        if len(self.tokens) == 2 and 'AND_' not in self.tokens and 'NOT_' not in self.tokens and 'OR_' not in self.tokens:
+                self.tokens = self.tokens + ('AND_',)
 
     def __repr__(self):
         return f"{self.__class__.__name__}({self.tokens=})"
@@ -220,7 +228,10 @@ class VersionEvaluator():
         for token in self.tokens:
             if _operator := getattr(operator, token.lower(), None):
                 param_count = len(inspect.signature(_operator).parameters)
-                result = _operator(*(stack.pop() for i in range(param_count)))
+                try:
+                    result = _operator(*(stack.pop() for i in range(param_count)))
+                except IndexError:
+                    raise Exception(f'{self.__class__.__name__} Out of tokens {self.tokens=} {version_path=}')
                 stack.append(result)
             else:
                 stack.append(token in version_path)
@@ -317,6 +328,7 @@ class VersionModel():
         >>> VersionModel._parse_line(LANGUAGES['py'], "    print('Hello World')  #  VER:  test1 test2 AND_\n\r")
         Line(line="    print('Hello World')  #  VER:  test1 test2 AND_", line_without_ver="    print('Hello World')", version_evaluator=VersionEvaluator(self.tokens=('test1', 'test2', 'AND_')))
         """
+        #print(f'_parse_line {language.name} {line[:10]}')
         line = cls.remove_new_lines(line)
         for comment in language.comments:
             if match := cls.regex_ver(comment).search(line):
