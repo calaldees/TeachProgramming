@@ -13,6 +13,14 @@ import operator
 import inspect
 
 
+def _json_dumps(obj):
+    if isinstance(obj, (dict, MappingProxyType)):
+        return dict(obj)
+    if isinstance(obj, (set,frozenset)):
+        return tuple(obj)
+    return obj
+
+
 @contextmanager
 def _testfiles():
     import tempfile
@@ -131,6 +139,8 @@ class Versions():
 
     >>> sorted(versions.version_paths['copter'])
     ['', 'background', 'copter']
+
+    >>> json_data = json.dumps(versions.version_paths, default=_json_dumps)
     """
     def __init__(self, versions: _Versions):
         self.versions = versions['versions']
@@ -215,7 +225,7 @@ class VersionEvaluator():
             self.tokens = (self.tokens[0], self.tokens[2], 'NOT_', 'AND_')
         if len(self.tokens) == 4 and self.tokens[1].lower() == 'not':
             self.tokens = (self.tokens[0], self.tokens[2], 'NOT_', self.tokens[3], 'NOT_', 'OR_', 'AND_')  # probably a ballzup
-        if len(self.tokens) == 2 and 'AND_' not in self.tokens and 'NOT_' not in self.tokens and 'OR_' not in self.tokens:
+        if len(self.tokens) == 2 and 'list_comprehension' not in self.tokens and 'AND_' not in self.tokens and 'NOT_' not in self.tokens and 'OR_' not in self.tokens:
                 self.tokens = self.tokens + ('AND_',)
 
     def __repr__(self):

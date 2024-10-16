@@ -26,7 +26,7 @@ def update_json_handlers(app):
     def _json_dumps(obj):
         if isinstance(obj, (dict, MappingProxyType)):
             return dict(obj)
-        if isinstance(obj, set):
+        if isinstance(obj, (set,frozenset)):
             return tuple(obj)
         return obj
     media_handlers = {

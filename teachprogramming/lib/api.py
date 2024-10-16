@@ -10,7 +10,7 @@ from make_ver2 import ProjectVersions, LanguageVersions, LANGUAGES
 log = logging.getLogger(__name__)
 
 
-LANGUAGE_EXTENSIONS = frozenset((*LANGUAGES.keys(), *('ver',)))
+LANGUAGE_EXTENSIONS = frozenset((*LANGUAGES.keys(), *('ver', 'json')))
 
 class FileCollection():
     @staticmethod
@@ -51,9 +51,9 @@ class LanguageReferenceResource():
 class ProjectListResource():
     def __init__(self, path: str | Path):
         self.project_names = tuple(
-            str(f.relative_to(path)).replace('.ver','')
+            str(f.relative_to(path)).replace('.ver','').replace('.json','')
             for f in FileCollection(path).files
-            if f.suffix == '.ver'
+            if f.suffix in {'.ver', '.json'}
         )
     def on_get(self, request, response):
         response.media = {'projects': self.project_names}

@@ -1,0 +1,18 @@
+{"versions": {
+    "": {"parents": []},
+    "background": {"parents": [""]},
+    "copter": {"parents": ["background"]},
+    "collision_single": {"parents": ["copter"]},
+    "collision_multi": {"parents": ["collision_single"]},
+    "level": {"parents": ["collision_single"]},
+    "physics": {"parents": ["collision_single"]},
+    "parallax": {"parents": ["level"]},
+    "full": {"parents": ["parallax", "physics", "collision_multi"]},
+    "fish": {
+        "parents": ["fish_background", "collision_single"],
+        "mutations": [
+            {"type": "replace", "match":"CopterLevel", "replacement":"FishLevel"},
+            {"type": "replace", "match":"ship.gif", "replacement":"fish.gif"}
+        ]
+    }
+}}
