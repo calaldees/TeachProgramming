@@ -5,17 +5,19 @@
     <title>TeachProgramming</title>
 
     <!-- https://github.com/kpdecker/jsdiff -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/4.0.2/diff.min.js"></script>
+    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/4.0.2/diff.min.js"></script>-->
     <!--
-        only supports Myers diff algorithm in browser - I want patience or histogram 
+        only supports Myers diff algorithm in browser - I want patience or histogram
         Consider moving to https://github.com/jonTrent/PatienceDiff and manually styling html output
         diff2html may not be needed - diff can be manually styled https://github.com/kpdecker/jsdiff/issues/198#issuecomment-615167141
     -->
-    <script type="text/javascript" src="PatienceDiff.js"></script>
+    <!-- <script type="text/javascript" src="PatienceDiff.js"></script> -->
 
     <!-- https://github.com/rtfpessoa/diff2html#mandatory-html-resource-imports -->
+    <!--
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html-ui.min.js"></script>
+    -->
 
 </head>
 <body>
@@ -72,20 +74,22 @@ function renderProject(data) {
         if (!_version_code) {continue;}
         let prev = '';  // Dirty Dirty Hack - always diff previous version (and hope they are in the correct order)
         for (const [version, code] of Object.entries(_version_code)) {
-            const diff = Diff.createTwoFilesPatch("file", "file", prev, code)
+            //const diff = Diff.createTwoFilesPatch("file", "file", prev, code)
             //const diff = patienceDiffStr(prev, code)  // This is currently not in the right format for diff2html to display - consider moving to manual rendering/styling of this diff
 
             hostElement.insertAdjacentHTML('beforeend', `<h3>${version}</h3>`)
             const pre = document.createElement('pre')
             pre.append(document.createTextNode(code))
-            pre.append("\n\n")
-            pre.append(document.createTextNode(diff))
+            //pre.append("\n\n")
+            //pre.append(document.createTextNode(diff))
             hostElement.append(pre);
 
+            /*
             const div = document.createElement('div')
             hostElement.append(div)
             const diff2htmlUi = new Diff2HtmlUI(div, diff,{ drawFileList: true, matching: 'lines' })
             diff2htmlUi.draw()
+            */
 
             prev = code; // DIRTY! DIRTY HACK!
         }

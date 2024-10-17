@@ -10,7 +10,7 @@ from make_ver2 import ProjectVersions, LanguageVersions, LANGUAGES
 log = logging.getLogger(__name__)
 
 
-LANGUAGE_EXTENSIONS = frozenset((*LANGUAGES.keys(), *('ver', 'json')))
+LANGUAGE_EXTENSIONS = frozenset((*LANGUAGES.keys(), *('ver.json',)))
 
 class FileCollection():
     @staticmethod
@@ -25,7 +25,7 @@ class FileCollection():
         for root, dirs, files in path.walk():
             dirs = filter(_exclude_dir, dirs)
             for file in map(root.joinpath, files):
-                if file.suffix.strip('.') in LANGUAGE_EXTENSIONS:
+                if ''.join(file.suffixes).strip('.') in LANGUAGE_EXTENSIONS:
                     yield file
 
     def __init__(self, path: str | Path):
@@ -51,9 +51,9 @@ class LanguageReferenceResource():
 class ProjectListResource():
     def __init__(self, path: str | Path):
         self.project_names = tuple(
-            str(f.relative_to(path)).replace('.ver','').replace('.json','')
+            str(f.relative_to(path)).replace('.ver.json','')
             for f in FileCollection(path).files
-            if f.suffix in {'.ver', '.json'}
+            if ''.join(f.suffixes) in {'.ver.json',}
         )
     def on_get(self, request, response):
         response.media = {'projects': self.project_names}
@@ -68,14 +68,14 @@ class ProjectResource():
     def on_get(self, request, response, project_name: str):
         pv = ProjectVersions(self.project_files(project_name))
         response.media = {
-            'versions': pv.versions,
-            'languages': pv.data,
+            'versions': {'paths': pv.versions.paths, 'parents': pv.versions.parents},
+            'languages': pv.languages,
         }
         response.status = falcon.HTTP_200
     def project_files(self, project_name: str) -> Iterable[Path]:
         def _filter_file(f):
             relative_path = f.relative_to(self.file_collection.path)
-            return project_name == str(relative_path.parent.joinpath(relative_path.stem))
+            return project_name == str(relative_path.parent.joinpath(relative_path.name.removesuffix(''.join(f.suffixes))))
         return tuple(filter(_filter_file, self.file_collection.files))
 
 
@@ -89,6 +89,9 @@ def create_wsgi_app(project_path=None, language_path=None, **kwargs):
     app.add_route(r'/api/v1/projects.json', ProjectListResource(project_path))
     _falcon_helpers.add_sink(app, r'/api/v1/projects/', ProjectResource(project_path), func_path_normalizer=_falcon_helpers.func_path_normalizer_no_extension)
     _falcon_helpers.update_json_handlers(app)
+    # TODO: Currently unable to drop into debugger on error - investigate?
+    # https://falcon.readthedocs.io/en/stable/api/app.html#falcon.App.add_error_handler
+    # add_error_handler(exception, handler=None)
     return app
 
 # Export ----------------------------------------------------------------------

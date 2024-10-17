@@ -70,39 +70,6 @@ class Version(str):
     pass
 type VersionPath = frozenset[Version]
 
-### KILL THESE!!!
-
-def parse_legacy_version_data(data) -> MappingProxyType[Version, VersionPath]:
-    r"""
-    >>> ver = parse_legacy_version_data('''
-    ... VERNAME: base            base
-    ... VERNAME: background      base,background
-    ... VERNAME: copter          base,background,copter
-    ... VERNAME: parallax         base,background,parallax
-    ... VERNAME: collision_single base,background,copter,collision_single
-    ... VERNAME: collision_multi  base,background,copter,collision_single,collision_multi
-    ... VERNAME: level           base,background,copter,collision_single,level
-    ... VERNAME: physics         base,background,copter,collision_single,physics
-    ... VERNAME: full            base,background,copter,physics,collision_single,collision_multi,parallax,level
-    ... VERNAME: fish_full       base,background,copter,collision_single,fish_background
-    ... REPLACE: CopterLevel WITH FishLevel FOR fish_full
-    ... REPLACE: ship.gif WITH fish.gif FOR fish_full
-    ... ''')
-    >>> ver.keys()
-    dict_keys(['base', 'background', 'copter', 'parallax', 'collision_single', 'collision_multi', 'level', 'physics', 'full', 'fish_full'])
-    >>> ver['copter']
-    ('base', 'background', 'copter')
-    """
-    RE_VERNAME = re.compile(r'VERNAME:\s*(?P<vername>.*?)\s+(?P<versions>.*?)(\s+|$)', flags=re.IGNORECASE)
-    # TODO: implement REPLACE
-    #RE_REPLACE = re.compile(r'REPLACE:\s*(?P<replace>.*?)\s*WITH\s*(?P<replacement>.*?)\s*FOR\s*(?P<ver_names>.*?)(\s+|$)', flags=re.IGNORECASE)
-    return MappingProxyType({
-        match.group('vername'): tuple(v.strip() for v in match.group('versions').split(','))
-        for match in RE_VERNAME.finditer(data)
-    })
-
-### END KILL
-
 
 class VersionDescription(TypedDict):
     name: Version
@@ -137,10 +104,13 @@ class Versions():
     >>> sorted(versions.resolve_versions(Version('collision_single')))
     ['', 'background', 'collision_single', 'copter']
 
-    >>> sorted(versions.version_paths['copter'])
+    >>> sorted(versions.paths['copter'])
     ['', 'background', 'copter']
 
-    >>> json_data = json.dumps(versions.version_paths, default=_json_dumps)
+    >>> versions.parents
+    mappingproxy({'': None, 'background': '', 'copter': 'background', 'collision_single': 'copter', 'collision_multi': 'collision_single', 'level': 'collision_single', 'physics': 'collision_single', 'parallax': 'level', 'full': None, 'fish': None})
+
+    >>> json_data = json.dumps(versions.paths, default=_json_dumps)
     """
     def __init__(self, versions: _Versions):
         self.versions = versions['versions']
@@ -157,10 +127,17 @@ class Versions():
         return frozenset(versions_resolved)
 
     @cached_property
-    def version_paths(self) -> MappingProxyType[Version, VersionPath]:
+    def paths(self) -> MappingProxyType[Version, VersionPath]:
         return MappingProxyType({
             version: self.resolve_versions(version)
             for version in self.versions.keys()
+        })
+
+    @cached_property
+    def parents(self) -> MappingProxyType[Version, Version]:
+        return MappingProxyType({
+            version: version_data['parents'][0] if len(version_data.get('parents', tuple())) == 1 else None
+            for version, version_data in self.versions.items()
         })
 
 class LanguageFileExtension(str):
@@ -365,10 +342,10 @@ class ProjectVersions():
     >>> with _testfiles() as files:
     ...     p = ProjectVersions(files)
 
-    >>> sorted(p.versions['hello_world'])
+    >>> sorted(p.versions.paths['hello_world'])
     ['', 'hello_world', 'test1', 'test2']
 
-    >>> print(p.data['java']['test2'])
+    >>> print(p.languages['java']['test2'])
     <BLANKLINE>
     public class Test {
         public Test() {
@@ -378,45 +355,42 @@ class ProjectVersions():
     """
     def __init__(self, files):
         self.files_by_ext = MappingProxyType({
-            LanguageFileExtension(f.suffix.strip('.')): f.open(encoding='utf8').read()
+            LanguageFileExtension(''.join(f.suffixes).strip('.')): f.open(encoding='utf8').read()
             for f in files
         })
         #self.data  # generate cache on object creation
 
     @property
-    def languages(self) -> frozenset[LanguageFileExtension]:
-        return frozenset(self.files_by_ext.keys()) - frozenset(('ver', 'json', 'yaml', 'yml'))
+    def _languages(self) -> frozenset[LanguageFileExtension]:
+        return frozenset(self.files_by_ext.keys()) - frozenset(('ver', 'json', 'yaml', 'yml', 'ver.json'))
 
     @cached_property
-    def versions(self) -> MappingProxyType[Version, VersionPath]:
+    def versions(self) -> Versions:
         """
         Parse versions from .ver or .yaml file
         """
         file_exts = frozenset(self.files_by_ext.keys())
         if {'yaml', 'yml'} & file_exts:
             raise NotImplementedError('yaml version file format not implemented')
-        if {'json',} & file_exts:
-            return Versions(_Versions(json.loads(self.files_by_ext['json']))).version_paths
-        if {'ver',} & file_exts:
-            return parse_legacy_version_data(self.files_by_ext['ver'])
+        if {'ver.json',} & file_exts:
+            return Versions(_Versions(json.loads(self.files_by_ext['ver.json'])))
         raise Exception('no version information')
 
     #@lru_cache?
     def language(self, language: LanguageFileExtension) -> MappingProxyType[Version, str]:
         lines = VersionModel(io.StringIO(self.files_by_ext[language]), LANGUAGES[language]).lines
-        #breakpoint()
         return MappingProxyType({
             version_name: '\n'.join(
                 line.line_without_ver
                 for line in lines
                 if line.version_evaluator(version_path)
             )
-            for version_name, version_path in self.versions.items()
+            for version_name, version_path in self.versions.paths.items()
         })
 
     @cached_property
-    def data(self) -> MappingProxyType[LanguageFileExtension, MappingProxyType[Version, str]]:
-        return MappingProxyType({l: self.language(l) for l in self.languages})
+    def languages(self) -> MappingProxyType[LanguageFileExtension, MappingProxyType[Version, str]]:
+        return MappingProxyType({l: self.language(l) for l in self._languages})
 
 
 
@@ -492,7 +466,7 @@ class LanguageVersions():
         defined in different files but still available as a version
         """
         def _amalgamate_files_with_same_extension(acc, path):
-            acc[path.suffix.strip('.')].append(path.read_text('utf-8'))
+            acc[''.join(path.suffixes).strip('.')].append(path.read_text('utf-8'))
             return acc
         self.files = MappingProxyType({
             ext: "\n".join(file_content_list)
