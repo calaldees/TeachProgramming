@@ -17,7 +17,8 @@ build_and_upload: build_static
 	scp -r ./static computingteachers.uk:computingteachers.uk
 
 run_docker:
-	${DOCKER_RUN} python3 -m pdb -c continue api.py /static/projects/ /static/language_reference/languages/
+	${DOCKER_RUN} python3 api.py /static/projects/ /static/language_reference/languages/
+	# -m pdb -c continue
 test_docker:
 	${DOCKER_RUN} pytest --doctest-modules -s --pdb
 

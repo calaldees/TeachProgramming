@@ -70,6 +70,7 @@ class ProjectResource():
         response.media = {
             'versions': {'paths': pv.versions.paths, 'parents': pv.versions.parents},
             'languages': pv.languages,
+            'diffs': pv.diffs,
         }
         response.status = falcon.HTTP_200
     def project_files(self, project_name: str) -> Iterable[Path]:

@@ -1,16 +1,18 @@
-import re
+from types import MappingProxyType
+from typing import NamedTuple, Iterable, Set, TypedDict, Sequence
+from textwrap import dedent
+from contextlib import contextmanager
 from itertools import chain
 from functools import cached_property, reduce, lru_cache, partial
 from collections import defaultdict
 from pathlib import Path
-from types import MappingProxyType
-from contextlib import contextmanager
+from difflib import unified_diff
 import io
-from textwrap import dedent
-from typing import NamedTuple, Iterable, Set, TypedDict, Sequence
+import re
 import json
 import operator
 import inspect
+
 
 
 def _json_dumps(obj):
@@ -47,7 +49,7 @@ def _testfiles():
             public static void main(String[] args) {new Test();}  // VER: test2
         }  // VER: test1
     '''))
-    write_file('test.json', dedent('''
+    write_file('test.ver.json', dedent('''
         {"versions": {
             "": {"parents": []},
             "test1": {"parents": [""]},
@@ -352,13 +354,23 @@ class ProjectVersions():
         }
         public static void main(String[] args) {new Test();}
     }
+
+    >>> print(p.diffs['java']['test2'])
+    --- test1
+    +++ test2
+    @@ -1,3 +1,6 @@
+    <BLANKLINE>
+     public class Test {
+    +    public Test() {
+    +    }
+    +    public static void main(String[] args) {new Test();}
+     }
     """
     def __init__(self, files):
         self.files_by_ext = MappingProxyType({
             LanguageFileExtension(''.join(f.suffixes).strip('.')): f.open(encoding='utf8').read()
             for f in files
         })
-        #self.data  # generate cache on object creation
 
     @property
     def _languages(self) -> frozenset[LanguageFileExtension]:
@@ -376,7 +388,6 @@ class ProjectVersions():
             return Versions(_Versions(json.loads(self.files_by_ext['ver.json'])))
         raise Exception('no version information')
 
-    #@lru_cache?
     def language(self, language: LanguageFileExtension) -> MappingProxyType[Version, str]:
         lines = VersionModel(io.StringIO(self.files_by_ext[language]), LANGUAGES[language]).lines
         return MappingProxyType({
@@ -391,6 +402,20 @@ class ProjectVersions():
     @cached_property
     def languages(self) -> MappingProxyType[LanguageFileExtension, MappingProxyType[Version, str]]:
         return MappingProxyType({l: self.language(l) for l in self._languages})
+
+    def diff(self, language: LanguageFileExtension) -> MappingProxyType[Version, str]:
+        return MappingProxyType({
+            version: "\n".join(unified_diff(
+                self.language(language)[parent].split("\n"),
+                self.language(language)[version].split("\n"),
+                fromfile=parent, tofile=version, n=2, lineterm=''))
+            for version, parent in self.versions.parents.items()
+            if parent
+        })
+
+    @cached_property
+    def diffs(self) -> MappingProxyType[LanguageFileExtension, MappingProxyType[Version, str]]:
+        return MappingProxyType({l: self.diff(l) for l in self._languages})
 
 
 
