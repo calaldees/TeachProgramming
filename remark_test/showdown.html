@@ -3,7 +3,15 @@
 	<head>
 		<meta charset="utf-8" />
 		<link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
-		<!-- // https://github.com/showdownjs/showdown -->
+		<!--
+		https://github.com/showdownjs/showdown
+		http://showdownjs.com/
+		http://demo.showdownjs.com/
+		https://github.com/SH20RAJ/showdown-extensions?tab=readme-ov-file
+		TODO: investigate  https://github.com/Bloggify/showdown-highlight#readme
+		?
+		https://cdnjs.cloudflare.com/ajax/libs/showdown/<version tag>/showdown.min.js
+		-->
 		<script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
 	</head>
 	<body>
@@ -21,6 +29,7 @@
 							tables: true,
 							tasklists: true,
 							openLinksInNewWindow: true,
+							ghCodeBlocks: true,
 							// https://github.com/showdownjs/showdown#valid-options
 						},)
 						$el.innerHTML = converter.makeHtml(markdown_data)
