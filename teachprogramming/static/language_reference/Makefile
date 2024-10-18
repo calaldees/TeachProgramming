@@ -6,7 +6,7 @@ PATH_LANGAUGES := languages
 # Main -------------------------------------------------------------------------
 
 build_and_run:
-	docker-compose up --build
+	docker compose up --build
 
 assert_language_output:
 	python3 assert_language_output.py

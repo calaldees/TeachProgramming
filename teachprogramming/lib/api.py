@@ -83,7 +83,7 @@ class ProjectResource():
 # Setup App -------------------------------------------------------------------
 
 def create_wsgi_app(project_path=None, language_path=None, **kwargs):
-    app = falcon.API()
+    app = falcon.App()
     app.add_route(r'/', IndexResource())
     app.add_static_route(r'/static', str(Path('static').resolve()))
     app.add_route(r'/api/v1/language_reference.json', LanguageReferenceResource(language_path))

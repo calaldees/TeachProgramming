@@ -35,7 +35,7 @@ Workshop
     * Write down the technical terms - consolidate as group
 7. Look at `docker-compose.yml`
     * Q: What is this file doing?
-8. Run `docker-compose up`
+8. Run `docker compose up`
     * visit `:8001` `:8002` `:8003` `:8004`
     * Look at the terminal log
     * Q: What is `docker-compose`?

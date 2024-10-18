@@ -1,0 +1,43 @@
+name: deploy_language_referemce
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - '.github/workflows/deploy_website.yml'
+      - 'teachprogramming/lib/**'
+      - 'teachprogramming/static/language_reference/**'
+
+jobs:
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+
+      - name: compile_and_run_languages
+        run: (cd teachprogramming/static/language_reference && make build_and_run)
+
+      - name: build_static
+        run: (cd teachprogramming/lib && make build_static)
+
+      - name: scp_api
+        uses: appleboy/scp-action@master
+        with:
+            host: computingteachers.uk
+            username: computingteachers
+            key: ${{ secrets.DEPLOY_SSH_KEY }}
+            source: "teachprogramming/lib/api/v1"
+            strip_components: 3
+            target: "computingteachers.uk/api"
+
+      - name: scp_static
+        uses: appleboy/scp-action@master
+        with:
+            host: computingteachers.uk
+            username: computingteachers
+            key: ${{ secrets.DEPLOY_SSH_KEY }}
+            source: "teachprogramming/lib/static"
+            strip_components: 2
+            target: "computingteachers.uk"

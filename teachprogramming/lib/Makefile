@@ -1,17 +1,18 @@
 DOCKER_IMAGE:=site
-DOCKER_RUN:=docker run -it --rm \
+_DOCKER_RUN:=docker run --rm \
 	--workdir /app/ \
 	--volume ${PWD}:/app/ \
 	--volume ${PWD}/../static:/static/ \
 	--publish 8000:8000 \
-	--env PYTHONPATH=./ \
-	${DOCKER_IMAGE}
+	--env PYTHONPATH=./
+DOCKER_RUN:=${_DOCKER_RUN} -it ${DOCKER_IMAGE}
+DOCKER_RUN_no_tty:=${_DOCKER_RUN} ${DOCKER_IMAGE}
 
 serve_static: build_static
 	open http://localhost:8000/static/
 	python3 -m http.server
 build_static: build_docker
-	${DOCKER_RUN} python3 api.py /static/projects/ /static/language_reference/languages/ --export
+	${DOCKER_RUN_no_tty} python3 api.py /static/projects/ /static/language_reference/languages/ --export
 build_and_upload: build_static
 	scp -r ./api/v1 computingteachers.uk:computingteachers.uk/api
 	scp -r ./static computingteachers.uk:computingteachers.uk
