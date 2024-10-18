@@ -66,71 +66,37 @@ function h(type, params, children) {
 }
 
 
-
-//const QUERY_STRING_project = 'project';
-//const urlParams = new URLSearchParams(window.location.search);
-
-const navigationElement = document.getElementById('navigation');
-const mainElement = document.getElementById('main') || document.getElementsByTagName('body').item(0);
+const navigationElement = document.getElementById('navigation')
+const mainElement = document.getElementById('main') || document.getElementsByTagName('body').item(0)
 
 let _data;
-window.onhashchange = function() {
-    renderLanguageReference(_data);
-}
+window.onhashchange = function() {renderLanguageReference(_data)}
 
 function renderLanguageReference(data) {
-    const languages = window.location.hash.replace('#','').split(',').filter((i)=>typeof(i)==="string" && i.length);
+    const languages = window.location.hash.replace('#','').split(',').filter((i)=>typeof(i)==="string" && i.length)
 
     // Clear existing html
-    navigationElement.innerHTML = '';
-    mainElement.innerHTML = '';
+    navigationElement.innerHTML = ''
+    mainElement.innerHTML = ''
 
     // Build navigation
-    function nav_a(language, languages) {
-        const a = document.createElement('a');
-        a.href = `#${languages.join(",")}`;
-        a.textContent = language;
-        return a;
+    function language_link(language) {
+        const _languages = languages.indexOf(language) < 0 ? languages.concat([language]) : languages.filter((i)=>i!=language)
+        return `#${_languages.join(",")}`
     }
-    for (let language of Object.keys(data.languages)) {
-        navigationElement.appendChild(nav_a(
-            language,
-            languages.indexOf(language) < 0 ? languages.concat([language]) : languages.filter((i)=>i!=language),
-        ));
-    }
+    navigationElement.appendChild(h('div', {}, Object.keys(data.languages).map(
+        language => h('a', {href: language_link(language)}, language))
+    ))
 
     // Build Table
-    const table = document.createElement('table');
+    mainElement.appendChild(h('table',{},[
+        h('thead',{},[h('th',{},''), ...languages.map(language=>h('th',{},language))]),
+        ...data.versions.map(version_row=>h('tr',{},[
+            h('td',{},version_row.replaceAll('_',' ')),
+            ...languages.map(language=>h('td',{},h('pre',{},data.languages[language][version_row])))
+        ]))
+    ]))
 
-    const table_headings = document.createElement('thead');
-    //const table_headings_ = document.createElement('thead');
-    //document.createElement('tr');
-
-    table_headings.appendChild(document.createElement('th'));
-    for (let language of languages) {
-        const table_heading = document.createElement('th');
-        table_heading.textContent = language;
-        table_headings.appendChild(table_heading);
-    }
-    table.appendChild(table_headings);
-
-    for (let version_row of data.versions) {
-        const table_row = document.createElement('tr');
-        const table_row_name = document.createElement('td');
-        table_row_name.textContent = version_row.replaceAll('_',' ');
-        table_row.appendChild(table_row_name);
-        for (let language of languages) {
-            const code = data.languages[language];
-            const table_cell = document.createElement('td');
-            const pre = document.createElement('pre');
-            pre.append(document.createTextNode(code[version_row]));
-            table_cell.append(pre);
-            table_row.appendChild(table_cell);
-        }
-        table.appendChild(table_row);
-    }
-
-    mainElement.appendChild(table);
 }
 
 
