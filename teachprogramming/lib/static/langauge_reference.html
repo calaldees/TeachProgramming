@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8" />
     <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
-    <title>TeachProgramming</title>
+    <title>LanguageReference</title>
     <style>
         #source {
             position: absolute;
@@ -37,11 +37,11 @@
             #navigation, #source {  /* and (min-width: 500px) */
                 display: none;
             }
-            table { 
+            table {
                 page-break-inside:auto;
             }
             tr {
-                page-break-inside:avoid; 
+                page-break-inside:avoid;
                 page-break-after:auto;
             }
         }
@@ -52,6 +52,19 @@
 <div id="navigation"></div>
 <div id="main"></div>
 <script type="module">
+
+// core.js
+// https://github.com/calaldees/libs/blob/9a7dbeea6d34240e13e9d684a8388519bb00885c/es6/core.js#L455
+const hasIterationProtocol = variable => variable !== null && Symbol.iterator in Object(variable)
+function h(type, params, children) {
+    const el = document.createElement(type)
+    for (let [k,v] of Object.entries(params)) {el[k] = v}
+    if      (typeof(children)==="string"   ) {el.appendChild(document.createTextNode(children))}
+    else if (hasIterationProtocol(children)) {for (let c of children) {el.append(c)}}
+    else if (children                      ) {el.appendChild(children)}
+    return el
+}
+
 
 
 //const QUERY_STRING_project = 'project';
@@ -89,11 +102,10 @@ function renderLanguageReference(data) {
     // Build Table
     const table = document.createElement('table');
 
-    
     const table_headings = document.createElement('thead');
     //const table_headings_ = document.createElement('thead');
     //document.createElement('tr');
-    
+
     table_headings.appendChild(document.createElement('th'));
     for (let language of languages) {
         const table_heading = document.createElement('th');
