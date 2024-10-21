@@ -30,55 +30,32 @@ const urlParams = new URLSearchParams(window.location.search);
 const hostElement = document.getElementById('main') || document.getElementsByTagName('body').item(0);
 
 
-function renderProjects(data) {
-    const projects = data.projects;
-    const elementContainer = document.createElement('div');
-    for (const project of projects) {
-        const _urlParams = new URLSearchParams(urlParams);
-        _urlParams.append(QUERY_STRING_project, project);
-        elementContainer.insertAdjacentHTML('beforeend', `<li><a href="${window.location.pathname}?${_urlParams.toString()}">${project}</a></li>`);
+function renderProjects(projects) {
+    function _hrefProject(project) {
+        const _urlParams = new URLSearchParams(urlParams)
+        _urlParams.append(QUERY_STRING_project, project)
+        return `${window.location.pathname}?${_urlParams.toString()}`
     }
-    hostElement.appendChild(elementContainer);
+    return h('div', {}, projects.map(project=>h('li',{},h('a',{href: _hrefProject(project)},project))))
 }
 
 function renderProject(data) {
-    const e = hostElement;
-    for (const [language, _version_code] of Object.entries(data.languages)) {
-        e.insertAdjacentHTML('beforeend', `<h2>${language}</h2>`);
-        if (!_version_code) {continue;}
-        let prev = '';  // Dirty Dirty Hack - always diff previous version (and hope they are in the correct order)
-        for (const [version, code] of Object.entries(_version_code)) {
-            //const diff = Diff.createTwoFilesPatch("file", "file", prev, code)
-            //const diff = patienceDiffStr(prev, code)  // This is currently not in the right format for diff2html to display - consider moving to manual rendering/styling of this diff
-
-            hostElement.insertAdjacentHTML('beforeend', `<h3>${version}</h3>`)
-            const pre = document.createElement('pre')
-            pre.append(document.createTextNode(code))
-            //pre.append("\n\n")
-            //pre.append(document.createTextNode(diff))
-            hostElement.append(pre);
-
-            /*
-            const div = document.createElement('div')
-            hostElement.append(div)
-            const diff2htmlUi = new Diff2HtmlUI(div, diff,{ drawFileList: true, matching: 'lines' })
-            diff2htmlUi.draw()
-            */
-
-            prev = code; // DIRTY! DIRTY HACK!
-        }
-    }
+    return h('div',{},Object.entries(data.languages).map(
+        ([language, _version_code])=>[h('h2',{},language), ...(!_version_code?[]:
+            Object.entries(_version_code).map(([version, code])=>[h('h3',{},version), h('pre',{},code)]).flat()
+        )]
+    ).flat())
 }
 
 if (urlParams.has(QUERY_STRING_project)) {
     fetch(`/api/v1/projects/${urlParams.get(QUERY_STRING_project)}.json`)
         .then(response => response.json())
-        .then(renderProject)
+        .then(data=>hostElement.appendChild(renderProject(data)))
     .catch(err => console.error(err))
 } else {
     fetch('/api/v1/projects.json')
         .then(response => response.json())
-        .then(renderProjects)
+        .then(data=>hostElement.appendChild(renderProjects(data.projects)))
     .catch(err => console.error(err))
 }
 
