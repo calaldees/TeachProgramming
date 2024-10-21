@@ -253,7 +253,10 @@ function define_list() {
   if (cc.indexOf("z") >= 0) {  // VER: define_list
     console.log("z exists in list")  // VER: define_list
   }  // VER: define_list
-  // TODO: concat lists
+  dd = ["d", "e"]  // VER: define_list
+  ee = cc.concat(dd)  // VER: define_list
+  JSON.stringify(ee) === JSON.stringify(["a","b","c","d","e"])  // VER: define_list
+  dd.every((v,i)=> v === ee[i])   // faster than stringify - https://stackoverflow.com/a/42186143/3356840
 }
 
 
