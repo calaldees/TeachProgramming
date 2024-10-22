@@ -493,7 +493,7 @@ public class Program {
   void assertion() {
     var name = "bob";
     var count = 3;
-    Debug.Assert(name == "bob", $"I am expecting {{name}} to be 'bob'");  // ver: assertion
+    Debug.Assert(name == "bob", $"Expecting {{name}} to be 'bob'");  // ver: assertion
     Debug.Assert(count >= 3);  // ver: assertion
   }
 
