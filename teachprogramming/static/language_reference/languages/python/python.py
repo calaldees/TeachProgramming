@@ -186,9 +186,14 @@ def define_list():
     print(i)  # z d           # VER: define_list
   if "z" in cc:               # VER: define_list
     print("z exists in list") # VER: define_list
-  dd = ["d", "e"]             # VER: define_list
-  ee = cc + dd                # VER: define_list
-  ee == ["a","b","c","d","e"] # VER: define_list
+
+def list_operations():
+  cc = ["a", "b", "c"]        # VER: list_operations
+  dd = ["d", "e"]             # VER: list_operations
+  ee = cc + dd                # VER: list_operations
+  if ee == ["a","b","c","d","e"]: # VER: list_operations
+    print("The same")             # VER: list_operations
+  # TODO: Slice                   # VER: list_operations
 
 
 def define_2d_arrays():

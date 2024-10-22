@@ -253,10 +253,17 @@ function define_list() {
   if (cc.indexOf("z") >= 0) {  // VER: define_list
     console.log("z exists in list")  // VER: define_list
   }  // VER: define_list
-  dd = ["d", "e"]  // VER: define_list
-  ee = cc.concat(dd)  // VER: define_list
-  JSON.stringify(ee) === JSON.stringify(["a","b","c","d","e"])  // VER: define_list
+}
+
+function list_operations() {
+  let cc = ["a", "b", "c"]  // VER: list_operations
+  let dd = ["d", "e"]  // VER: list_operations
+  ee = cc.concat(dd)  // VER: list_operations
+  if (JSON.stringify(ee) === JSON.stringify(["a","b","c","d","e"])) {  // VER: list_operations
+    console.log("the same") // VER: list_operations
+  }  // VER: list_operations
   dd.every((v,i)=> v === ee[i])   // faster than stringify - https://stackoverflow.com/a/42186143/3356840
+  // TODO: Slice    // VER: list_operations
 }
 
 
