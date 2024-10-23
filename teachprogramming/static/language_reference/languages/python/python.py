@@ -429,7 +429,7 @@ def file_binary():
 def assertion():
   name = "bob"
   count = 3
-  assert name == "bob", f"I am expecting {name} to be 'bob'"  # ver: assertion
+  assert name == "bob", f"Expecting {name} to be 'bob'"  # ver: assertion
   assert count >= 3  # ver: assertion
 
 def sort():

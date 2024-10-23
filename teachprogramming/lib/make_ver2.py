@@ -410,7 +410,7 @@ class ProjectVersions():
                 self.language(language)[version].split("\n"),
                 fromfile=parent, tofile=version, n=2, lineterm=''))
             for version, parent in self.versions.parents.items()
-            if parent
+            if parent is not None
         })
 
     @cached_property

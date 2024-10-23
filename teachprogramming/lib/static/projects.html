@@ -40,12 +40,30 @@ function renderProjects(projects) {
 }
 
 function renderProject(data) {
+    return h('div',{},Object.keys(data.languages).map(language=>[
+        h('h2',{},language),
+        ...Object.entries(data.versions.parents).map(([version, parent_version])=>[
+            h('h3',{},version),
+            h('pre',{classList: 'diff'}, data.diffs[language] && data.diffs[language][version]),
+            h('pre',{classList: 'full'}, data.languages[language] && data.languages[language][version]),
+        ]).flat()
+    ]).flat())
+}
+
+function renderProjectBasic(data) {
     return h('div',{},Object.entries(data.languages).map(
         ([language, _version_code])=>[h('h2',{},language), ...(!_version_code?[]:
-            Object.entries(_version_code).map(([version, code])=>[h('h3',{},version), h('pre',{},code)]).flat()
+            Object.entries(_version_code).map(([version, code])=>[
+                h('h3',{},version),
+                h('pre',{},code),
+                h('pre',{},data.diffs[language][version])
+            ]).flat()
         )]
     ).flat())
 }
+
+// Consider CSS toggle
+//  https://blog.logrocket.com/advanced-guide-css-toggle-pseudo-class/
 
 if (urlParams.has(QUERY_STRING_project)) {
     fetch(`/api/v1/projects/${urlParams.get(QUERY_STRING_project)}.json`)

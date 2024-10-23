@@ -488,3 +488,5 @@ Other implementations
 
 * [Suduku in one line](https://dfns.dyalog.com/n_sudoku.htm)
   * Problem description and notation for solution
+* [Sudoku in python packaging](https://github.com/konstin/sudoku-in-python-packaging)
+  * package dependencies have requirements - we can use that chaining to solve sudoku
