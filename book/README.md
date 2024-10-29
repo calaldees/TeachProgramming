@@ -90,11 +90,12 @@ Chapter Concepts
     * Creativity - what end of the trumpet to blow into - self directed
     * Equipment - cost? access? schools? portable?
         * Space
+        * Scavenge old computers for linux (kind of difficult now)
     * Ongoing skill development
         * Constant (show have time - self directed)
         * CS graduates that don't know CS
     * Assessment
-        * Test center, verbal presentation, digital artifact not suffect
+        * Test center, verbal presentation. because digital artifact are not suffect (citation - I know I have some)
         * leadership (assessed in PE)
         * real national qualification
         * function -> function that calls a function, iteration -> nested iteration
@@ -117,8 +118,8 @@ Chapter Concepts
 
 * A lens of computing for a path to actualisation of ideas
 * What industry can learn from formal education - what formal education can learn from industry
-    * https://helloworld.raspberrypi.org/articles/what-can-computing-educators-learn-from-industry
-        * todo
+    * https://web.archive.org/web/20230127040416/https://helloworld.raspberrypi.org/articles/what-can-computing-educators-learn-from-industry
+        * todo .. it kind of says nothing?
 * [Popular education in Sweden: much more than you wanted to know](https://www.lesswrong.com/posts/tjxgbovwc5Ft7wrtc/popular-education-in-sweden-much-more-than-you-wanted-to-1)
     * > Folkbildningsrörelsen: that is the name we have for this movement of self-organized study groups, resource centers, maker spaces, public lectures, and free retreats for personal development. 
 * "Conversational programmers"
@@ -194,7 +195,7 @@ manipulate date (scrabble around in excel, get data from a souce and refine/comb
 automate actions (create scrips, links things together, trigger dataflow)
 autonimously create something (most people are give a constrained task)
 
-to get to a level above you need 100's and hundreds of challenge hours
+to get to a level above you need 360 guided learning hours and probably more
 in year 7,8,9 they get 30 hours a year maximum
 A GCSE is 60 hours
 
@@ -287,3 +288,10 @@ Y2? working with others
     * > “The spirit and style of student assessment defines the de facto curriculum.”  Rowntree (Reference Rowntree1977) 
 
 Concept: "Localized assessment"(traditional) combined with "authentic assessment" (wider+real)
+
+Other
+-------
+
+* [Being Raised by the Internet](https://jimmyhmiller.github.io/raised) - Giving young people linux cd
+* [Children should be allowed to get bored, expert says](https://www.bbc.co.uk/news/education-21895704) BBC March 2023
+* [Exams: Fake AI Students vs. Real Students](https://www.teachertoolkit.co.uk/2024/10/03/ai-score-higher/)

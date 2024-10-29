@@ -44,8 +44,8 @@ function renderProject(data) {
         h('h2',{},language),
         ...Object.entries(data.versions.parents).map(([version, parent_version])=>[
             h('h3',{},version),
-            h('pre',{classList: 'diff'}, data.diffs[language] && data.diffs[language][version]),
-            h('pre',{classList: 'full'}, data.languages[language] && data.languages[language][version]),
+            h('pre',{classList: 'diff'}, data.diffs[language][version]),
+            h('pre',{classList: 'full'}, data.languages[language][version]),
         ]).flat()
     ]).flat())
 }
