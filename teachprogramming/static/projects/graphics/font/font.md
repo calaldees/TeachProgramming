@@ -1,14 +1,61 @@
 Font Project
 ============
 
-Create a class raster font using image encoding to hex, http post requests (command line?), html viewer (channelServer), output as png, use it
+Create a class raster font using image encoding to hex, http post requests (command line?), html viewer (channelServer), output as png, use font in their own programs
+
+* use `Makefile` to run `docker` container on server/ip that young people can access
+* visit http://??? and start making a font
+  * using `curl`
+  * print out `template.odt` with lookup table
+* Look at `python`/`pygame` snippets below for loading font
+
+* https://github.com/calaldees/mapOfComputing/blob/main/computing/typography.md
+    * [ZX Origins](https://damieng.com/typography/zx-origins) - 8x8 mono bitmap fonts
+    * [BitmapFonts](https://github.com/ianhan/BitmapFonts/blob/main/README.md)
+        * My collection of bitmap fonts pulled from various demoscene archives over the years
+    * [NFG's Arcade Font Engine](https://nfggames.com/games/fontmaker/lister.php)
+        * https://nfggames.com/games/fontmaker/ (with gradient!!! Cool!)
+        * Apply gradient to white letters
+        * 2color (on/off) - 4 color (transparent,gradient-passthrough,solid-color,shadow(50%transparent-gradient?))?
+* Demoscene "Greets" - code-alias - creativity
+
+### TODO
+* Raster fonts are not vector fonts
+* Edit a vector font?
+
+---
+
+Template
+========
+
+| | | | | | | | |
+|-|-|-|-|-|-|-|-|
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+| | | | | | | | |
+
+| | |
+|-|-|
+0000 = 0 = 0 | 1000 = 8 = 8
+0001 = 1 = 1 | 1001 = 9 = 9
+0010 = 2 = 2 | 1010 = a = 10
+0011 = 3 = 3 | 1011 = b = 11
+0100 = 4 = 4 | 1100 = c = 12
+0101 = 5 = 5 | 1101 = d = 13
+0110 = 6 = 6 | 1110 = e = 14
+0111 = 7 = 7 | 1111 = f = 15
 
 
-Raster font network?
-===================
+---
+
+OLD
+===
 * Concept for encoding a character from a raster font set in hex and sending that to a DB via an http api
 * Teacher projects fontset on html5 display
-
 * [fontLiveView.html](./fontLiveView.html)
     * use channelServer
 * use channelServer http get - url components
@@ -24,18 +71,6 @@ Raster font network?
 * TODO
     * Make data to gif python exporter
     * Make image cutter to ascii codes
-* https://github.com/calaldees/mapOfComputing/blob/main/computing/typography.md
-    * [ZX Origins](https://damieng.com/typography/zx-origins) - 8x8 mono bitmap fonts
-    * [BitmapFonts](https://github.com/ianhan/BitmapFonts/blob/main/README.md)
-        * My collection of bitmap fonts pulled from various demoscene archives over the years
-    * [NFG's Arcade Font Engine](https://nfggames.com/games/fontmaker/lister.php)
-        * https://nfggames.com/games/fontmaker/ (with gradient!!! Cool!)
-        * Apply gradient to white letters
-        * 2color (on/off) - 4 color (transparent,gradient-passthrough,solid-color,shadow(50%transparent-gradient?))?
-* Demoscene "Greets" - code-alias - creativity
-
-* Raster fonts are not vector fonts
-* Edit a vector font?
 
 
 
