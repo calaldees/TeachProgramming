@@ -277,15 +277,15 @@ Y2? working with others
             * Indentify inputs/outputs, funcitons, reational operators
     * [AP Computer Science Principles](https://apcentral.collegeboard.org/courses/ap-computer-science-principles/course) (Advanced Placement - pursue college-level studies while still in high school) [spec-pdf](https://apcentral.collegeboard.org/media/pdf/ap-computer-science-principles-course-and-exam-description.pdf)
         * for (High School == 6th form) to access content for (College (freshman) == University Year 1)
-    
 
 * [From Blocks to Professional Development – Thoughts on the Future of Educational Programming](https://dl.acm.org/doi/10.1145/3605468.3609785) Kölling 2023
-    * > block-based systems built around structure editors almost exclusively used for early programming instruction to young learners, 
-      > and professional environments that use text-based languages and are edited at character level. 
+    * > block-based systems built around structure editors almost exclusively used for early programming instruction to young learners,
+      > and professional environments that use text-based languages and are edited at character level.
       > Here, we argue that combining the two approaches into a single system can have benefits. We discuss frame-based editing, a combination of text and blocks, and its potential to improve the landscape of programming education
+
 * The Cambridge Handbook of Computing Education Research [14 - Assessment and Plagiarism](https://www.cambridge.org/core/books/cambridge-handbook-of-computing-education-research/assessment-and-plagiarism/E77348A0456C3B352F317DFF7D9F5361)
     * >  As a subject that is often considered vocational in nature, computing students also need to demonstrate standard skills of employability, which lacks an overall infrastructure (Fincher & Finlay, Reference Fincher and Finlay2016)
-    * > “The spirit and style of student assessment defines the de facto curriculum.”  Rowntree (Reference Rowntree1977) 
+    * > “The spirit and style of student assessment defines the de facto curriculum.”  Rowntree (Reference Rowntree1977)
 
 Concept: "Localized assessment"(traditional) combined with "authentic assessment" (wider+real)
 
