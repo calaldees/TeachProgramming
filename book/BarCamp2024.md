@@ -28,6 +28,8 @@ Preface: Computing Education Sux
     * 3 months of network theory
     * (Neither of those are relevant to the young persons)
   * The Computing GCSE is not relevant to most young people
+    * [Number of girls in England taking computing GCSE plummets, study finds](https://www.theguardian.com/technology/article/2024/jun/27/number-of-girls-in-england-taking-computing-gcse-plummets-study-finds)
+      * > Introduction of new syllabus may be reason number of girls taking subject more than halved in eight years, academics say
 * Q: So what is important for young people?
   * The grand answer: Self actualization and altering the world though self action and building something
   * The simple answer: Choose to build shit
@@ -53,6 +55,7 @@ The only way to get the exposure (time) and challenge (appropriate difficulty) i
 * [Children should be allowed to get bored, expert says](https://www.bbc.co.uk/news/education-21895704) BBC March 2023
   * To develop autonomy and creativity
   * We have robbed our young people of this opportunity
+* [Teenagers who watch screens in free time 'do worse in GCSEs'](https://www.theguardian.com/education/2015/sep/04/teenagers-who-watch-screens-in-free-time-do-worse-in-gcses)
 
 ### Learner Autonomy
 
@@ -89,6 +92,7 @@ Who can sit for hours and hours in a seat doing stuff they are told to do?
 
 ### Stop using ...
 
+* Realtime manipuation of state - you can see and feel your code manifest into reality ... but
 * 'Games' to teach programming
   * The entirety of all of computing ... and the only think you can think of that has worth is trivially using it for entertainment. Thats lame.
   * Focusing on games alienate some demographics and trivializes the discipline.
