@@ -30,7 +30,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const hostElement = document.getElementById('main') || document.getElementsByTagName('body').item(0);
 
 
-function renderProjects(projects) {
+function renderProjectList(projects) {
     function _hrefProject(project) {
         const _urlParams = new URLSearchParams(urlParams)
         _urlParams.append(QUERY_STRING_project, project)
@@ -44,22 +44,17 @@ function renderProject(data) {
         h('h2',{},language),
         ...Object.entries(data.versions.parents).map(([version, parent_version])=>[
             h('h3',{},version),
-            h('pre',{classList: 'diff'}, data.diffs[language][version]),
+            h('pre',{classList: 'diff'}, renderDiff(data.diffs[language][version])),
             h('pre',{classList: 'full'}, data.languages[language][version]),
         ]).flat()
     ]).flat())
 }
 
-function renderProjectBasic(data) {
-    return h('div',{},Object.entries(data.languages).map(
-        ([language, _version_code])=>[h('h2',{},language), ...(!_version_code?[]:
-            Object.entries(_version_code).map(([version, code])=>[
-                h('h3',{},version),
-                h('pre',{},code),
-                h('pre',{},data.diffs[language][version])
-            ]).flat()
-        )]
-    ).flat())
+function renderDiff(diff) {
+    if (!diff) {return}
+    return h('code',{},diff.split("\n").map(line=>
+        h('span',{classList:["line", line.startsWith("+")?"add":""]},line+"\n")
+    ))
 }
 
 // Consider CSS toggle
@@ -73,7 +68,7 @@ if (urlParams.has(QUERY_STRING_project)) {
 } else {
     fetch('/api/v1/projects.json')
         .then(response => response.json())
-        .then(data=>hostElement.appendChild(renderProjects(data.projects)))
+        .then(data=>hostElement.appendChild(renderProjectList(data.projects)))
     .catch(err => console.error(err))
 }
 
