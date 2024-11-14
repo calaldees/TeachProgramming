@@ -4,6 +4,11 @@
     <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
     <title>Project</title>
 
+    <style>
+        .add {color: green;}
+        .remove {color: red; text-decoration: line-through;}
+        .lineNum {user-select: none;}
+    </style>
 
 </head>
 <body>
@@ -52,9 +57,14 @@ function renderProject(data) {
 
 function renderDiff(diff) {
     if (!diff) {return}
-    return h('code',{},diff.split("\n").map(line=>
-        h('span',{classList:["line", line.startsWith("+")?"add":""]},line+"\n")
-    ))
+    return h('code',{},diff.split("\n").map(line=>[
+        h('span',{className:"lineNum"},"100 "),
+        h('span',{className:[
+            "line",
+            line.startsWith("+")?"add":"",
+            line.startsWith("-")?"remove":"",
+        ].filter(x=>x).join(" ")},line+"\n"),
+    ]).flat())
 }
 
 // Consider CSS toggle
