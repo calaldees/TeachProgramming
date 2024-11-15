@@ -55,16 +55,22 @@ function renderProject(data) {
     ]).flat())
 }
 
+const REGEX_DIFF_SEGMENT = /@@ (?<back>[-+]\d+,\d+) (?<forward>[-+]\d+,\d+) @@\n(?<code>.*?)(?=$|\n@@)/sg
 function renderDiff(diff) {
     if (!diff) {return}
-    return h('code',{},diff.split("\n").map(line=>[
-        h('span',{className:"lineNum"},"100 "),
-        h('span',{className:[
-            "line",
-            line.startsWith("+")?"add":"",
-            line.startsWith("-")?"remove":"",
-        ].filter(x=>x).join(" ")},line+"\n"),
-    ]).flat())
+    //for (let dd of diff.matchAll(REGEX_DIFF_SEGMENT)) {}
+    function renderDiffSub(code_segment, lineNums) {
+        console.log(lineNums)
+        return h('code',{},code_segment.split("\n").map(line=>[
+            h('span',{className:"lineNum"},"100 "),
+            h('span',{className:[
+                "line",
+                line.startsWith("+")?"add":"",
+                line.startsWith("-")?"remove":"",
+            ].filter(x=>x).join(" ")},line+"\n"),
+        ]).flat())
+    }
+    return [...diff.matchAll(REGEX_DIFF_SEGMENT)].map(match=>renderDiffSub(match.groups.code, match.groups.forward))
 }
 
 // Consider CSS toggle
