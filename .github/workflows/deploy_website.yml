@@ -22,18 +22,6 @@ jobs:
       - name: build_static
         run: (cd teachprogramming/lib && make build_static)
 
-      - name: scp_api
-        uses: appleboy/scp-action@master
-        timeout-minutes: 1
-        with:
-            host: computingteachers.uk
-            username: computingteachers
-            key: ${{ secrets.DEPLOY_SSH_KEY }}
-            source: "teachprogramming/lib/api/v1"
-            strip_components: 3
-            target: "computingteachers.uk/api"
-            command_timeout: 1m
-
       - name: scp_static
         uses: appleboy/scp-action@master
         timeout-minutes: 1
@@ -45,3 +33,17 @@ jobs:
             strip_components: 2
             target: "computingteachers.uk"
             command_timeout: 1m
+            overwrite: true
+
+      - name: scp_api
+        uses: appleboy/scp-action@master
+        timeout-minutes: 1
+        with:
+            host: computingteachers.uk
+            username: computingteachers
+            key: ${{ secrets.DEPLOY_SSH_KEY }}
+            source: "teachprogramming/lib/api/v1"
+            strip_components: 3
+            target: "computingteachers.uk/api"
+            command_timeout: 1m
+            overwrite: true
