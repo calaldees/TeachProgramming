@@ -36,10 +36,9 @@ jobs:
             overwrite: true
 
       # scp conenctions in rapid successon fail .. let's cool off.
-      - name: Sleep for 10 seconds
-        uses: jakejarvis/wait-action@master
+      - uses: GuillaumeFalourd/wait-sleep-action@v1
         with:
-          time: '10s'
+          time: '30s'
 
       - name: scp_api
         uses: appleboy/scp-action@master
