@@ -35,6 +35,12 @@ jobs:
             command_timeout: 1m
             overwrite: true
 
+      # scp conenctions in rapid successon fail .. let's cool off.
+      - name: Sleep for 10 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '10s'
+
       - name: scp_api
         uses: appleboy/scp-action@master
         timeout-minutes: 1
