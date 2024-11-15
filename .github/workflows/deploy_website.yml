@@ -24,6 +24,7 @@ jobs:
 
       - name: scp_api
         uses: appleboy/scp-action@master
+        timeout-minutes: 1
         with:
             host: computingteachers.uk
             username: computingteachers
@@ -31,9 +32,11 @@ jobs:
             source: "teachprogramming/lib/api/v1"
             strip_components: 3
             target: "computingteachers.uk/api"
+            command_timeout: 1m
 
       - name: scp_static
         uses: appleboy/scp-action@master
+        timeout-minutes: 1
         with:
             host: computingteachers.uk
             username: computingteachers
@@ -41,3 +44,4 @@ jobs:
             source: "teachprogramming/lib/static"
             strip_components: 2
             target: "computingteachers.uk"
+            command_timeout: 1m
