@@ -5,7 +5,8 @@
     <title>Project</title>
 
     <style>
-        .add {color: green;}
+        code {border: 1px solid darkgrey; margin:1em; display: block; background-color: lightgray;}
+        .add {color: green; font-weight: bolder;}
         .remove {color: red; text-decoration: line-through;}
         .lineNum {user-select: none;}
     </style>
@@ -27,7 +28,17 @@ function h(type, params, children) {
     else if (children                      ) {el.appendChild(children)}
     return el
 }
-
+function* range(target, start=0, step=1) {for (let i=start ; i<target ; i+=step) {yield i;}}
+function assertEquals(comparison_tuples) {
+    for (let [a, b] of comparison_tuples) {
+        //console.debug(a, b)
+        if (! (a==b)) {throw `${a} should-equal ${b}`}
+        console.assert(a == b, `${a} should-equal ${b}`)  // this does nothing! It prints nothing .. I don't know why. A: Assertions are not enabled by default?
+    }
+}
+function assertEqualsObject(comparison_tuples) {
+    return assertEquals(comparison_tuples.map(v => v.map(JSON.stringify)))
+}
 
 
 const QUERY_STRING_project = 'project';
@@ -50,31 +61,44 @@ function renderProject(data) {
         ...Object.entries(data.versions.parents).map(([version, parent_version])=>[
             h('h3',{},version),
             h('pre',{classList: 'diff'}, renderDiff(data.diffs[language][version])),
-            h('pre',{classList: 'full'}, data.languages[language][version]),
+            h('pre',{classList: 'full'}, renderCodeFull(data.languages[language][version])),
         ]).flat()
     ]).flat())
 }
 
-const REGEX_DIFF_SEGMENT = /@@ (?<back>[-+]\d+,\d+) (?<forward>[-+]\d+,\d+) @@\n(?<code>.*?)(?=$|\n@@)/sg
+function pad_line_number(lineNum, length=3) {
+    return [...range(length)].reverse().map(i=>{
+        const s = lineNum/Math.pow(10,i)
+        return s<1?" ":Math.floor(s)%10
+    }).join("")
+}
+assertEquals([
+    [pad_line_number(123),"123"],
+    [pad_line_number(987),"987"],
+    [pad_line_number(55) ," 55"],
+    [pad_line_number(10) ," 10"],
+    [pad_line_number(3)  ,"  3"],
+])
+
+const REGEX_DIFF_SEGMENT = /@@ [-+](?<line_start_old>\d+),(?<lines_changed_old>\d+) [-+](?<line_start_new>\d+),(?<lines_changed_new>\d+) @@\n(?<code>.*?)(?=$|\n@@)/sg
+function renderDiffSub(code_segment, start_line) {
+    return h('code',{},code_segment.split("\n").map(line=>[
+        h('span',{className:"lineNum"},`${pad_line_number(start_line++)} `),
+        h('span',{className:[
+            "line",
+            line.startsWith("+")?"add":"",
+            line.startsWith("-")?"remove":"",
+        ].filter(x=>x).join(" ")},line+"\n"),
+    ]).flat())
+}
 function renderDiff(diff) {
     if (!diff) {return}
-    //for (let dd of diff.matchAll(REGEX_DIFF_SEGMENT)) {}
-    function renderDiffSub(code_segment, lineNums) {
-        console.log(lineNums)
-        return h('code',{},code_segment.split("\n").map(line=>[
-            h('span',{className:"lineNum"},"100 "),
-            h('span',{className:[
-                "line",
-                line.startsWith("+")?"add":"",
-                line.startsWith("-")?"remove":"",
-            ].filter(x=>x).join(" ")},line+"\n"),
-        ]).flat())
-    }
-    return [...diff.matchAll(REGEX_DIFF_SEGMENT)].map(match=>renderDiffSub(match.groups.code, match.groups.forward))
+    return [...diff.matchAll(REGEX_DIFF_SEGMENT)].map(match=>renderDiffSub(match.groups.code, match.groups.line_start_new))
 }
-
-// Consider CSS toggle
+// Consider CSS toggle for full code
 //  https://blog.logrocket.com/advanced-guide-css-toggle-pseudo-class/
+function renderCodeFull(code) {return renderDiffSub(code,1)}
+
 
 if (urlParams.has(QUERY_STRING_project)) {
     fetch(`/api/v1/projects/${urlParams.get(QUERY_STRING_project)}.json`)
