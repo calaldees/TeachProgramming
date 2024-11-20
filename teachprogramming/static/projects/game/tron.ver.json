@@ -1,0 +1,10 @@
+{"versions": {
+    "": {"parents": []},
+    "line": {"parents": [""]},
+    "input": {"parents": ["line"]},
+    "collide": {"parents": ["input"]},
+    "player2":{"parents": ["collide"]},
+    "wrap": {"parents": ["collide"]},
+    "player2_wrap": {"parents": ["player2", "wrap", "wrap2"]},
+    "max": {"parents": ["collide"]}
+}}

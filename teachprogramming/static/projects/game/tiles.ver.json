@@ -1,0 +1,11 @@
+{"versions": {
+    "": {"parents": []},
+    "player": {"parents": [""]},
+    "blocks": {"parents": ["player"]},
+    "blocks_random": {"parents": ["blocks"]},
+    "limit": {"parents": ["blocks"]},
+    "eat": {"parents": ["limit"]},
+    "images": {"parents": ["blocks"]},
+    "block_move": {"parents": ["blocks"]},
+    "full": {"parents": ["blocks_random", "block_move", "limit", "images"]}
+}}
