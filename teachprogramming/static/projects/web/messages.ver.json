@@ -1,0 +1,9 @@
+{"versions": {
+    "": {"parents": []},
+    "textarea": {"parents": [""]},
+    "save_message": {"parents": ["textarea"]},
+    "show_messages": {"parents": ["save_message"]},
+    "username": {"parents": ["show_messages"]},
+    "login": {"parents": ["username"]},
+    "logout": {"parents": ["login"]}
+}}

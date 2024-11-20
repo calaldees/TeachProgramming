@@ -1,0 +1,11 @@
+{"versions": {
+    "": {"parents": []},
+    "draw_pixel": {"parents": [""]},
+    "draw_line": {"parents": ["draw_pixel"]},
+    "network": {"parents": ["draw_line"]},
+    "draw_line_network": {"parents": ["network"]},
+    "select_color_keys": {},
+    "paint_images": {},
+    "erasor": {},
+    "text": {}
+}}
