@@ -5,6 +5,7 @@
     <title>Project</title>
 
     <style>
+        .hidden {display: none;}
         code {border: 1px solid darkgrey; margin:1em; display: block; background-color: lightgray;}
         .add {color: green; font-weight: bolder;}
         .remove {color: red; text-decoration: line-through;}
@@ -60,8 +61,9 @@ function renderProject(data) {
         h('h2',{},language),
         ...Object.entries(data.versions.parents).map(([version, parent_version])=>[
             h('h3',{},version),
-            h('pre',{classList: 'diff'}, renderDiff(data.diffs[language][version])),
-            h('pre',{classList: 'full'}, renderCodeFull(data.languages[language][version])),
+            h('pre',{className: 'diff'}, renderDiff(data.diffs[language][version])),
+            h('button',{onclick: element=>element.srcElement.nextElementSibling.classList.toggle('hidden')},'full'),
+            h('pre',{className: 'full, hidden'}, renderCodeFull(data.languages[language][version])),
         ]).flat()
     ]).flat())
 }
