@@ -7,9 +7,9 @@
     <style>
         .hidden {display: none;}
         code {border: 1px solid darkgrey; margin:1em; display: block; background-color: lightgray;}
-        .add {color: green; font-weight: bolder;}
-        .remove {color: red; text-decoration: line-through;}
-        .lineNum {user-select: none;}
+        code .add {color: green; font-weight: bolder;}
+        code .remove {color: red; text-decoration: line-through;}
+        code .lineNum {user-select: none;}
     </style>
 
 </head>
@@ -41,32 +41,7 @@ function assertEqualsObject(comparison_tuples) {
     return assertEquals(comparison_tuples.map(v => v.map(JSON.stringify)))
 }
 
-
-const QUERY_STRING_project = 'project';
-const urlParams = new URLSearchParams(window.location.search);
-const hostElement = document.getElementById('main') || document.getElementsByTagName('body').item(0);
-
-
-function renderProjectList(projects) {
-    function _hrefProject(project) {
-        const _urlParams = new URLSearchParams(urlParams)
-        _urlParams.append(QUERY_STRING_project, project)
-        return `${window.location.pathname}?${_urlParams.toString()}`
-    }
-    return h('div', {}, projects.map(project=>h('li',{},h('a',{href: _hrefProject(project)},project))))
-}
-
-function renderProject(data) {
-    return h('div',{},Object.keys(data.languages).map(language=>[
-        h('h2',{},language),
-        ...Object.entries(data.versions.parents).map(([version, parent_version])=>[
-            h('h3',{},version),
-            h('pre',{className: 'diff'}, renderDiff(data.diffs[language][version])),
-            h('button',{onclick: element=>element.srcElement.nextElementSibling.classList.toggle('hidden')},'full'),
-            h('pre',{className: 'full, hidden'}, renderCodeFull(data.languages[language][version])),
-        ]).flat()
-    ]).flat())
-}
+// ---
 
 function pad_line_number(lineNum, length=3) {
     return [...range(length)].reverse().map(i=>{
@@ -81,6 +56,37 @@ assertEquals([
     [pad_line_number(10) ," 10"],
     [pad_line_number(3)  ,"  3"],
 ])
+
+// -----------------------------------------------------------------------------
+
+const QUERY_STRING_project = 'project';
+const urlParams = new URLSearchParams(window.location.search);
+const hostElement = document.getElementById('main') || document.getElementsByTagName('body').item(0);
+
+// Render List -----------------------------------------------------------------
+
+function renderProjectList(projects) {
+    function _hrefProject(project) {
+        const _urlParams = new URLSearchParams(urlParams)
+        _urlParams.append(QUERY_STRING_project, project)
+        return `${window.location.pathname}?${_urlParams.toString()}`
+    }
+    return h('div', {}, projects.map(project=>h('li',{},h('a',{href: _hrefProject(project)},project))))
+}
+
+// Render Project --------------------------------------------------------------
+
+function renderProject(data) {
+    return h('div',{},Object.keys(data.languages).map(language=>[
+        h('h2',{},language),
+        ...Object.entries(data.versions.parents).map(([version, parent_version])=>[
+            h('h3',{},version),
+            h('pre',{className: 'diff'}, renderDiff(data.diffs[language][version])),
+            h('button',{onclick: element=>element.srcElement.nextElementSibling.classList.toggle('hidden')},'full'),
+            h('pre',{className: 'full, hidden'}, renderCodeFull(data.languages[language][version])),
+        ]).flat()
+    ]).flat())
+}
 
 const REGEX_DIFF_SEGMENT = /@@ [-+](?<line_start_old>\d+),(?<lines_changed_old>\d+) [-+](?<line_start_new>\d+),(?<lines_changed_new>\d+) @@\n(?<code>.*?)(?=$|\n@@)/sg
 function renderDiffSub(code_segment, start_line) {
@@ -97,10 +103,10 @@ function renderDiff(diff) {
     if (!diff) {return}
     return [...diff.matchAll(REGEX_DIFF_SEGMENT)].map(match=>renderDiffSub(match.groups.code, match.groups.line_start_new))
 }
-// Consider CSS toggle for full code
-//  https://blog.logrocket.com/advanced-guide-css-toggle-pseudo-class/
 function renderCodeFull(code) {return renderDiffSub(code,1)}
 
+
+// Data Fetch ------------------------------------------------------------------
 
 if (urlParams.has(QUERY_STRING_project)) {
     fetch(`/api/v1/projects/${urlParams.get(QUERY_STRING_project)}.json`)
