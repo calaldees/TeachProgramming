@@ -14,7 +14,6 @@
 
 </head>
 <body>
-<h1>Projects</h1>
 <div id="main"></div>
 <script type="module">
 
@@ -81,9 +80,15 @@ function renderProject(data) {
         h('h2',{},language),
         ...Object.entries(data.versions.parents).map(([version, parent_version])=>[
             h('h3',{},version),
-            h('pre',{className: 'diff'}, renderDiff(data.diffs[language][version])),
-            h('button',{onclick: element=>element.srcElement.nextElementSibling.classList.toggle('hidden')},'full'),
-            h('pre',{className: 'full, hidden'}, renderCodeFull(data.languages[language][version])),
+            ...(version ? [
+                // render diff
+                h('pre',{className: 'diff'}, renderDiff(data.diffs[language][version])),
+                h('button',{onclick: element=>element.srcElement.nextElementSibling.classList.toggle('hidden')},'full'),
+                h('pre',{className: 'full, hidden'}, renderCodeFull(data.languages[language][version])),
+            ]:[
+                // base version renders full starting point without diff
+                h('pre',{className: 'full'}, renderCodeFull(data.languages[language][version])),
+            ])
         ]).flat()
     ]).flat())
 }
