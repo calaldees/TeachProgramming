@@ -33,7 +33,7 @@ class CanvasAnimationBase {
         if (!this.audio) {
             this.audio = new Audio()
             document.body.appendChild(this.audio)
-        }        
+        }
         this.audio.addEventListener("loadeddata", (e) => {
             this.audio.play()
         })

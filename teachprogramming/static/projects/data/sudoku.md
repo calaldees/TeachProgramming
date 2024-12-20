@@ -12,8 +12,6 @@ the types of things students would do in academic sessions.
 potential career paths after graduating.
 
 
-Bexley Grammar School Careers and University Fair - Monday 28th March
-
 
 Demonstration of Automation
 ---------------------------
@@ -41,7 +39,7 @@ Cost
 How much do you cost?
 
 * Clean water
-* electricity for cooking
+* electricity for cooking (The national grid)
 * Water disposal
 * Waste disposal
 * Food
@@ -56,6 +54,7 @@ How much do you cost?
 * Mining metals from the ground, extracting oils, making plastics, glass and microchips to make a ipad
 * The cost of building you live in
 * The cost of all the people that had educated you since you were born
+* Cost of maintaining the roads/pavements for all cars+trucks
 
 
 

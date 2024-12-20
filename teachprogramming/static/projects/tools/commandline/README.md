@@ -1,6 +1,9 @@
 CommandLine Exercises
 =====================
 
+bash, terminal, command line, commandline, shell
+
+
 * https://github.com/onceupon/Bash-Oneliner
 
 find | xargs
@@ -14,6 +17,10 @@ alias
 
 function
 
+netcat
+diff
+gzip
+rsa??
 
 Print the first line of each file in a folder
 
@@ -48,6 +55,9 @@ magic mime
 
 convert pdf to text
 xls to csv
+
+pandoc in docker alias
+ffmpeg in docker alias
 
 screen for multiprocess
 
