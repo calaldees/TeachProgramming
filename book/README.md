@@ -295,3 +295,25 @@ Other
 * [Being Raised by the Internet](https://jimmyhmiller.github.io/raised) - Giving young people linux cd
 * [Children should be allowed to get bored, expert says](https://www.bbc.co.uk/news/education-21895704) BBC March 2023
 * [Exams: Fake AI Students vs. Real Students](https://www.teachertoolkit.co.uk/2024/10/03/ai-score-higher/)
+
+TODO
+----
+
+Read
+* [Principles of Educational Programming Language Design](https://infedu.vu.lt/journal/INFEDU/article/797/info)  Michael Kölling   2024
+    * > why is this still an area of fundamental disagreement among educators?
+    * > discuss the relative benefits of pedagogical languages vs. industry languages and articulate why every generation of learners needs their own language.
+* [hacker news comments](https://news.ycombinator.com/item?id=42427428)
+  * a lot of pushback about the article - we simply dont know how to teach programming
+  * I find the core position of the author unconvincing - that is, the author advocates for non-professional languages for beginners, instead using languages designed specifically for teaching. The main argument put forward in favor of professional languages is crossover: if a student learns a language in class, they may be able to use that language professionally. The author then argues against that main point.
+
+I think students should be taught in "professional" languages, but crossover is not my main reason. Rather, it's that professional languages have an enormous corpus of examples that students can look up. If a student is learning on a teaching language without much adoption, there's just not much else a student can do but use the materials that part of the course. Teaching languages don't let students expand their universe of examples.
+
+I agree with the author's point about real insight coming on learning the second (and third, etc.) language and systems. But I don't find it as a compelling point in favor of teaching languages - quite the opposite. To me it means there's no need to obsess over first languages.
+
+
+* [How to Design Programs](https://htdp.org/)
+    * > Not using commercial languages - developing a language to express things from scratch. (Sounds bonkers - I need to read more)
+    * [the design rationale for How to Design Programs in the form of essays](https://felleisen.org/matthias/OnHtDP/index.html)
+    * [Developing Developers](https://felleisen.org/matthias/Thoughts/Developing_Developers.html) Matthias Felleisen
+        [hacker news comments](https://news.ycombinator.com/item?id=42440922)
