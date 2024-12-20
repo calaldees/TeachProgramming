@@ -186,6 +186,13 @@ function convert_string_to_integer_and_back() {
   console.log(String(sum));                 // VER: convert_string_to_integer_and_back
 }
 
+function convert_char_to_int() {
+  let ascii = "A".charCodeAt(0)          // VER: convert_char_to_int
+  let char = String.fromCharCode(ascii)  // VER: convert_char_to_int
+  console.log(char)
+}
+
+
 function convert_double_to_string_and_back() {
   let f = Number("3.1415");   // VER: convert_double_to_string_and_back
   console.log(String(f));         // VER: convert_double_to_string_and_back
@@ -572,6 +579,7 @@ function main() {
   string_concatenation();
   convert_string_to_integer_and_back();
   convert_double_to_string_and_back();
+  convert_char_to_int()
   function_with_return_value();
   list_comprehension();
   dict_comprehension();

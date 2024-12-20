@@ -139,6 +139,11 @@ def convert_string_to_integer_and_back():
   sum = 5 + int('5')                      # VER: convert_string_to_integer_and_back
   print(str(sum))                         # VER: convert_string_to_integer_and_back
 
+def convert_char_to_int():
+  ascii = ord("A")   # VER: convert_char_to_int
+  char = chr(ascii)  # VER: convert_char_to_int
+  print(char)
+
 
 def convert_double_to_string_and_back():
   pass
@@ -480,6 +485,9 @@ if __name__ == "__main__":
   for_each_loop()
   file_write()
   #file_read()
+  string_concatenation()
+  convert_string_to_integer_and_back()
+  convert_char_to_int()
   #function()
   function_with_return_value()
   function_with_param_function()
