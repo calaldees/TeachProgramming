@@ -389,18 +389,6 @@ def network_tcp_send():
   pass  # TODO    # ver: network_tcp_send
 def network_tcp_recv():
   pass  # TODO    # ver: network_tcp_recv
-def network_udp_send():
-  import socket                                            # ver: network_upd_send
-  addr = ("127.0.0.1", 5005)                               # ver: network_upd_send
-  sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # ver: network_upd_send
-  sock.sendto(b"Hello, World!", addr)                      # ver: network_upd_send
-def network_udp_recv():
-  # see `sock` from send`               # ver: network_upd_recv
-  #sock.bind(addr)                       # ver: network_udp_recv
-  #while True:                           # ver: network_udp_recv
-  while False:
-    data, addr = sock.recvfrom(1024)    # ver: network_udp_recv
-    print(f"received bytes: {data}")    # ver: network_udp_recv
 
 import urllib.request                                 # ver: http_request
 def urllib_request(*args, **kwargs):                  # ver: http_request
@@ -505,8 +493,6 @@ if __name__ == "__main__":
   commandline_args()
   network_tcp_send()
   network_tcp_recv()
-  network_udp_send()
-  network_udp_recv()
   http_request()
   http_request_json()
   file_binary()
