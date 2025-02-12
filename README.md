@@ -83,6 +83,8 @@ https://github.com/algorithm-archivists/algorithm-archive
 * [textframe.app](https://textframe.app/)
     * Text documentation commentary with animated/tweened preview inline
     * A similar concept to my projects
+* [I wrote a screenplay for a programming language introduction, then wrote a program to turn that into a motion comic](https://jan.miksovsky.com/posts/2025/01-22-motion-comic-origami-introduction)
+    * Tutorials as comic books - automated
 
 ### Multiple languages
 * [exercism.org](https://exercism.org/)

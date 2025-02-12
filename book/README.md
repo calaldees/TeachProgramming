@@ -304,12 +304,15 @@ Read
     * > why is this still an area of fundamental disagreement among educators?
     * > discuss the relative benefits of pedagogical languages vs. industry languages and articulate why every generation of learners needs their own language.
 * [hacker news comments](https://news.ycombinator.com/item?id=42427428)
-  * a lot of pushback about the article - we simply dont know how to teach programming
-  * I find the core position of the author unconvincing - that is, the author advocates for non-professional languages for beginners, instead using languages designed specifically for teaching. The main argument put forward in favor of professional languages is crossover: if a student learns a language in class, they may be able to use that language professionally. The author then argues against that main point.
+    * a lot of pushback about the article - we simply dont know how to teach programming
+    * I find the core position of the author unconvincing - that is, the author advocates for non-professional languages for beginners, instead using languages designed specifically for teaching. The main argument put forward in favor of professional languages is crossover: if a student learns a language in class, they may be able to use that language professionally. The author then argues against that main point.
+    * I think students should be taught in "professional" languages, but crossover is not my main reason. Rather, it's that professional languages have an enormous corpus of examples that students can look up. If a student is learning on a teaching language without much adoption, there's just not much else a student can do but use the materials that part of the course. Teaching languages don't let students expand their universe of examples.
+    * I agree with the author's point about real insight coming on learning the second (and third, etc.) language and systems. But I don't find it as a compelling point in favor of teaching languages - quite the opposite. To me it means there's no need to obsess over first languages.
+* [Hedy](https://www.hedy.org/) - Textual Programming for the classroom (in a range of spoken languages)
+    * [HN: Hedy links](https://news.ycombinator.com/item?id=42838584)
 
-I think students should be taught in "professional" languages, but crossover is not my main reason. Rather, it's that professional languages have an enormous corpus of examples that students can look up. If a student is learning on a teaching language without much adoption, there's just not much else a student can do but use the materials that part of the course. Teaching languages don't let students expand their universe of examples.
-
-I agree with the author's point about real insight coming on learning the second (and third, etc.) language and systems. But I don't find it as a compelling point in favor of teaching languages - quite the opposite. To me it means there's no need to obsess over first languages.
+Analogy - teaching Latin to better understand English?
+With spoken languages - the real insight is from the 3rd or 4th language
 
 
 * [How to Design Programs](https://htdp.org/)
@@ -317,3 +320,54 @@ I agree with the author's point about real insight coming on learning the second
     * [the design rationale for How to Design Programs in the form of essays](https://felleisen.org/matthias/OnHtDP/index.html)
     * [Developing Developers](https://felleisen.org/matthias/Thoughts/Developing_Developers.html) Matthias Felleisen
         [hacker news comments](https://news.ycombinator.com/item?id=42440922)
+
+* [OECD Survey](https://www.oecd.org/en/about/programmes/piaac.html) of adult skills
+    * [Survey of Adult Skills](https://www.oecd.org/en/publications/survey-of-adult-skills-2023_3639d1e2-en.html) 2023
+    * > human capital theory
+    * linking education and skills with economic outcomes
+    * Qualifications are problematic because
+        * > Educational qualifications certify only the knowledge and skills developed through a course of study. As a result, they provide information only about a subset of the skills of an individual
+        * > Skills can be lost as well as maintained and enhanced over time.
+        * > The quality of education and training offered at different levels of the education and training system can vary considerably between countries and, within countries, over time. Thus, the level of knowledge and skills certified by a qualification of ostensibly the same type and level may vary widely.
+    * [Do Adults Have the Skills They Need to Thrive in a Changing World?](https://www.oecd.org/en/publications/do-adults-have-the-skills-they-need-to-thrive-in-a-changing-world_b263dc5d-en.html)
+        * Finland secondary school students are better than Chile with masters
+    * [Adults, Computers and Problem Solving](https://www.oecd.org/en/publications/adults-computers-and-problem-solving_9789264236844-en.html) 2015
+
+
+* [Rules for Writing Software Tutorials](https://refactoringenglish.com/chapters/rules-for-software-tutorials/) 2025
+    * Most software tutorials are tragically flawed.
+
+* [Op-ed: Northeastern’s redesign of the Khoury curriculum abandons the fundamentals of computer science](https://huntnewsnu.com/82511/editorial/op-eds/op-ed-northeasterns-redesign-of-the-khoury-curriculum-abandons-the-fundamentals-of-computer-science/) 2025 Boston USA
+    * [HN Comments](https://news.ycombinator.com/item?id=42655283) 2025
+    * > The “code swap” at the end of the semester, where students are required to build upon other students code, is one of the assignments students struggle most with — but it teaches them how to work in a codebase written by someone else
+      > Watering down the curriculum would not benefit these students. Is the purpose of a university to hand out grades or to educate students?
+    * [Olin Shivers](https://www.khoury.northeastern.edu/~shivers/)
+        * [Fundamentals of Computer Science 1 ("Fundies 1") at Northeastern University’s Khoury College.](https://course.khoury.northeastern.edu/cs2500/)
+
+https://github.com/s-macke?tab=repositories
+https://github.com/s-macke/concepts-of-programming-languages
+
+* Principles
+    * Work on code with someone
+    * Work on code after someone
+
+
+* John Carmack
+    * Complexity of the tooling - why doom-modding was so popular (find doom aniversary interview video with remoemo and carmak)
+    * Consider tracker for disecting and making music over a full DAW
+
+* text languages
+    * problems with brackets
+        * 4 of them `{([<`
+        * They are used to mean a range of different things
+            * Python `()` - tuples (immutable), maths/logic order of evaluation, generator, function params
+            * javascript `{}`, Define and object, code block, destructuring, importing
+            * `[]` used for defining and access - same for lists defined with `[]` but also dicts defined with `{}`
+    * Quotes
+        * 3 of them `"'` and backtick
+        * trebble-quotes? escaping?
+
+
+* Learners love external visitors
+    * But this is not the same as curriculum progress. It's very easy to be 'entertained' by a guest speaker but not necessarily make progress
+    * Students feel they are 'worth the time' to visit

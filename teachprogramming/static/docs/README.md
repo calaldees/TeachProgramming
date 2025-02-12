@@ -555,3 +555,15 @@ Isaac Computer Science [Program Design](https://isaaccomputerscience.org/topics/
 Learning by refactoring - not learning by example
 https://github.com/lsmor/snake-fury
 
+
+Creativity
+----------
+
+* [The Art of Code - Dylan Beattie](https://youtu.be/6avJHaC3C2U)
+* [Keynote by Dylan Beattie: Computational Creativity (EN) – INNOQ Technology Day](https://www.youtube.com/watch?v=FeD3DSn1gIs)
+    * [technology changes the world - is a spellcheck cheating](https://youtu.be/FeD3DSn1gIs?t=266) 8min
+    * [ode to spell check](https://youtu.be/FeD3DSn1gIs?t=791) 1min
+    * [movies effects deepfakes section 230](https://youtu.be/FeD3DSn1gIs?t=838) 15in
+    * [kinght trading - whos fault?](https://youtu.be/FeD3DSn1gIs?t=1815) 5min
+    * [recruitment amazon sexist bias twiiter face 10% white male](https://youtu.be/FeD3DSn1gIs?t=2053) 5min
+* [Guitar-oke](https://dylanbeattie.net/2022/09/19/the-road-to-guitaraoke-part-1-vamp-chordino-imagesharp-ffmpeg.html)

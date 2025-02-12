@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 
+# WARNING: Don't use this!
+# This is here for property
+# I wrote a websocket server from scratch as a learning exercise
+# This has been superseded by https://github.com/calaldees/channelServer/
+
 import re
 import hashlib, base64
 import threading, time
