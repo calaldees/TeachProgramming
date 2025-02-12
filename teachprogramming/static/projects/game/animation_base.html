@@ -49,19 +49,9 @@ class CanvasAnimationBase {
         this.mouse_x = 0
         this.mouse_y = 0
         this.canvas.addEventListener('mousemove', (e) => {
-            // js/web has behavior where the display area may not fill the window
-            // I sat down with a piece of paper for over an hour to work this out
-            let [y_offset, x_offset] = [0, 0]
-            let [canvas_display_width, canvas_display_height] = [window.innerWidth, window.innerHeight]
-            if (this.canvas_aspect_ratio > this.window_aspect_ratio) {
-                canvas_display_height = window.innerWidth / this.canvas_aspect_ratio  // window is taller
-                y_offset = (window.innerHeight - canvas_display_height) / 2
-            } else {
-                canvas_display_width = window.innerHeight * this.canvas_aspect_ratio  // window is wider
-                x_offset = (window.innerWidth - canvas_display_width) / 2
-            }
-            this.mouse_x = ((e.layerX-x_offset)/(window.innerWidth-(x_offset*2)))*this.w
-            this.mouse_y = ((e.layerY-y_offset)/(window.innerHeight-(y_offset*2)))*this.h
+            const r = e.target.getBoundingClientRect()
+            this.mouse_x = Math.floor((e.clientX - r.left) / (this.canvas.clientWidth/this.canvas.width))
+            this.mouse_y = Math.floor((e.clientY - r.top ) / (this.canvas.clientHeight/this.canvas.height))
         }, true)
 
         this.frame = 0
