@@ -6,7 +6,10 @@
 
 # https://medium.com/@jeroenverhaeghe/creating-smaller-and-more-secure-docker-images-for-net-core-8c74101e9027
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine
+# https://hub.docker.com/r/microsoft/dotnet-sdk
+#  This says there is an alpine container, but I can't see how they are named
+FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine
+#FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine
 #FROM mcr.microsoft.com/dotnet/sdk:latest
 #FROM mcr.microsoft.com/dotnet/sdk
 #FROM bitnami/dotnet:latest  ?

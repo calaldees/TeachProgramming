@@ -18,8 +18,8 @@ try {  // VER: network_udp_send,network_udp_recv
     System.out.println("Bound to: " + sock.getLocalSocketAddress());  // VER: network_udp_send
 
     //sock.bind(new InetSocketAddress("0.0.0.0", 5005));                      // VER: network_udp_recv
+    byte[] buf = new byte[1024];                                          // VER: network_udp_recv
     while (true) {                                                            // VER: network_udp_recv
-        byte[] buf = new byte[1024];                                          // VER: network_udp_recv
         DatagramPacket packet = new DatagramPacket(buf, buf.length);          // VER: network_udp_recv
         sock.receive(packet);                                                 // VER: network_udp_recv
         String msg = new String(packet.getData(), 0, packet.getLength());     // VER: network_udp_recv
