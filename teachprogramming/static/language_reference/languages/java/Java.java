@@ -412,13 +412,6 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     }
 */
 
-  public void network_udp_send() {
-    // TODO https://www.baeldung.com/udp-in-java   // VER: network_udp_send
-  }
-  public void network_udp_recv() {
-    // TODO https://www.baeldung.com/udp-in-java   // VER: network_udp_recv
-  }
-
 
   //----------------------------------------------------------------------------
 

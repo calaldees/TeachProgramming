@@ -67,7 +67,10 @@ def if_statement():
 
 
 def if_statement_more():
-  # Not or # VER: more_if INCOMPLETE
+  """
+  Not or  INCOMPLETE
+  VER: more_if
+  """
   pass
 
 

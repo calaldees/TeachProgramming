@@ -14,6 +14,7 @@ from pathlib import Path
 
 class Note():
     """
+    todo: make this a namedtuple? that way its immutable and can be joined with `+`?
     https://en.wikipedia.org/wiki/Scientific_pitch_notation
     """
     LOOKUP_NOTE_STR = {0: 'C', 1: 'C#', 2: 'D', 3: 'D#', 4: 'E', 5: 'F', 6: 'F#', 7: 'G', 8: 'G#', 9: 'A', 10: 'A#', 11: 'B'}
@@ -104,6 +105,12 @@ class Sample():
         self.hz = hz
     def get_value_at(self, index:float):
         """
+        todo: move this out to player? that way we can have linear (this) or nearest neighbor
+        ? Consider Instruments with attack and decay and loops. Maybe instruments have a attr:Sample
+        Maybe get value at should be replaced by get_values?
+        Returning a range could allow for cubic interpolation?
+        I still think the interpolation function should probably be elsewhere.
+
         >>> s = Sample(bytes((4,3,2,1,6)))
         >>> s.get_value_at(1)
         3
@@ -209,7 +216,7 @@ class TrackNote():
         self.note:Note = note
         self.sample:Sample = sample
     def __str__(self) -> str:
-        # "C#4 13 .."  tracker style
+        # "C#4 13 .."  tracker style - fixed width
         raise NotImplementedError()
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}{self.note}'  # TODO: fixed width?
@@ -301,6 +308,7 @@ class Player():
         )
     @staticmethod
     def mix(values):
+        # todo: `statistics.fmean` https://stackoverflow.com/a/9039992/3356840
         values = tuple(filter(None, values))
         return int(sum(values)/len(values)) if values else 0
 

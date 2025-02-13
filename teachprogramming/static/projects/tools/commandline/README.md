@@ -27,6 +27,13 @@ Print the first line of each file in a folder
 SQL dump strip inserts to table with grep
 
 
+
+```bash
+# see http headers with `nc`
+nc -l 8000
+open http://localhost:8000/MyRequest?id=test
+```
+
 Nc as a chat tool!
 ```
 # From server A:
@@ -35,6 +42,21 @@ $ sudo nc -l 80
 # e.g. telnet <server A IP address> 80
 # then type something in server B
 # and you will see the result in server A!
+```
+```bash
+# `nc -u` is NOT pure udp - there is a protocol happening under the hood - can't really be used for inspecting pure udp
+# for tcp `nc` seems to be fine?
+# https://help.ubidots.com/en/articles/937233-sending-tcp-udp-packets-using-netcat
+nc -u -l 5005
+nc -u 127.0.0.1 5005
+  #<type stuff>
+netstat | 5005  # does not work on my mac - can't see it
+```
+
+```bash
+# fine for sending - can't recv this way
+echo "hello3\n" > /dev/udp/127.0.0.1/5005
+
 ```
 
 netcat
