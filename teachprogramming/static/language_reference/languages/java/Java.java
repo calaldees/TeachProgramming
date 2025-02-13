@@ -437,8 +437,6 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     define_map();
     define_set();
     function_with_param_function();
-    network_udp_send();
-    network_udp_recv();
   }
 
 }
