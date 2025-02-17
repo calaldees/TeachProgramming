@@ -9,7 +9,7 @@ canvas.pack()
 
 def recv_msg(x1,y1,x2,y2):
     #canvas.delete(tkinter.ALL)
-    canvas.create_rectangle(x1,y1,x2,y2,outline="#F00", fill="#0F0")
+    canvas.create_rectangle(x1,y1,x2,y2, outline="#F00", fill="#0F0")
     canvas.update()
 
 def recv():
