@@ -113,3 +113,16 @@ root.mainloop()
 python3 udp_recv_tk.py
 python3 udp_send.py 100,100,200,200
 ```
+
+
+---
+
+Video?
+------
+
+Mad lad ...
+
+https://www.ffmpeg.org/doxygen/0.6/pixfmt_8h.html
+GRAY8
+https://github.com/superLimitBreak/mediaTimelineRenderer/blob/e99b8f421094efeaba2619dfc6c01a6ca0599d89/mediaTimelineRendererLib/renderer_video.py#L20
+

@@ -10,6 +10,7 @@ class TkAnimationBase():
         self.frames_per_second = frames_per_second
 
         self.root = tkinter.Tk()
+        self.root.resizable(False, False)
         self.canvas = tkinter.Canvas(self.root, width=width, height=height)
         self.canvas.pack()
 
@@ -52,6 +53,7 @@ class TkAnimationBase():
     def loop(self, canvas, frame):
         """
         http://zetcode.com/gui/tkinter/drawing/
+        https://tkdocs.com/tutorial/canvas.html
         """
         raise NotImplementedError('override loop method')
 
@@ -91,6 +93,7 @@ class TkDemo(TkAnimationBase):
             self.x += -1
         c.create_image(self.x, self.y, image=self.image, anchor=tkinter.NW)
 
+        # TODO: write frame as text at 0,0 (do this for all animation_bases)
         #print(self.input)
 
 if __name__ == '__main__':

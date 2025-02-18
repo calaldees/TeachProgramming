@@ -55,7 +55,7 @@ netstat | 5005  # does not work on my mac - can't see it
 
 ```bash
 # fine for sending - can't recv this way
-echo "hello3\n" > /dev/udp/127.0.0.1/5005
+echo "hello3" > /dev/udp/127.0.0.1/5005
 
 ```
 

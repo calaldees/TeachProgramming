@@ -25,8 +25,14 @@ for y in range(HEIGHT):
 def recv_msg(x,y,fill):
     #canvas.delete(tkinter.ALL)
     #print(f'{x=},{y=},{fill=}')
-    x, y = int(x), int(y)
-    canvas.create_rectangle(x*GRID_SIZE, y*GRID_SIZE, (x+1)*GRID_SIZE, (y+1)*GRID_SIZE, fill=fill)
+    x, y = int(x)*GRID_SIZE, int(y)*GRID_SIZE
+    if fill == 'X':
+        canvas.create_line(x,y,x+GRID_SIZE,y+GRID_SIZE, fill="red", width=4)
+        canvas.create_line(x,y+GRID_SIZE,x+GRID_SIZE,y, fill="red", width=4)
+    elif fill == 'O':
+        canvas.create_oval(x, y, x+GRID_SIZE, y+GRID_SIZE, outline='blue', width=4)
+    else:
+        canvas.create_rectangle(x, y, x+GRID_SIZE, y+GRID_SIZE, fill=fill)
     canvas.update()
 
 def recv():
