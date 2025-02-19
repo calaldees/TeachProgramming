@@ -14,7 +14,7 @@ class TicTacToe():
         try:
             self.sock.bind(('0.0.0.0', 5005))
         except OSError as ex:
-            print('cant bind socket - is another client is already running?')
+            print('cant bind socket - is another client is already running on this port?')
         self.addr_to = (addr_to, 5005)
 
         self.root = tkinter.Tk()

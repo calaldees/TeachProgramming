@@ -12,6 +12,11 @@ root.resizable(False, False)
 canvas = tkinter.Canvas(root, width=GRID_SIZE*WIDTH, height=GRID_SIZE*HEIGHT)
 canvas.pack()
 
+def mouse_click(event):
+    x, y = (event.x, event.y)
+    print(f'{x},{y}')
+root.bind('<ButtonPress>', mouse_click)
+
 #for x in range(WIDTH):
 #    canvas.create_line(x*GRID_SIZE, 0, x*GRID_SIZE, HEIGHT*GRID_SIZE, fill="black", width=4)
 #for y in range(HEIGHT):
