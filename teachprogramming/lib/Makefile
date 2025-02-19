@@ -11,6 +11,8 @@ DOCKER_RUN_no_tty:=${_DOCKER_RUN} ${DOCKER_IMAGE}
 serve_static: build_static
 	open http://localhost:8000/static/
 	python3 -m http.server
+build_docker:
+	docker build --tag ${DOCKER_IMAGE} .
 build_static: build_docker
 	${DOCKER_RUN_no_tty} python3 api.py /static/projects/ /static/language_reference/languages/ --export
 build_and_upload: build_static
@@ -31,9 +33,3 @@ run_local:
 	# http://localhost:8000/api/v1/language_reference.json
 test_local:
 	PYTHONPATH=./ pytest --doctest-modules
-
-static/PatienceDiff.js:
-	cd static ; curl https://raw.githubusercontent.com/jonTrent/PatienceDiff/dev/PatienceDiff.js -O
-
-build_docker:
-	docker build --tag ${DOCKER_IMAGE} .

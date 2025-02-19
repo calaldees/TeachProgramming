@@ -371,3 +371,9 @@ https://github.com/s-macke/concepts-of-programming-languages
 * Learners love external visitors
     * But this is not the same as curriculum progress. It's very easy to be 'entertained' by a guest speaker but not necessarily make progress
     * Students feel they are 'worth the time' to visit
+
+
+* Sequencing
+    * [PyFlo](https://pyflo.net/)
+        * Sequence of progamming constructs in a flowchart.
+        * Linked to progress and examples in python

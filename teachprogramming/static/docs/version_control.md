@@ -52,3 +52,9 @@ Version Control
 * Many online services support github integration `repl.it`, `hack.md`
 * `GitHub.com` and `GitLab.com` are just a websites - `git` is the version control system - you can use git without ever touching github
 * I have shown your the full command line use of git - there are many graphical tools to support this flow - can these concepts be used for students to collaborate?
+
+
+Other Guides
+------------
+
+* https://www.pluralsight.com/courses/code-school-mastering-github

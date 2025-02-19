@@ -121,3 +121,18 @@ Getting buy-in
                 * Ask them to explain the problem they are having to you
             4. Speak truth they can trust 
         https://www.youtube.com/watch?v=VtztfImcsBI
+
+
+Other related
+-------------
+
+* [Why I Love Coding](https://henrikwarne.com/2012/06/02/why-i-love-coding/)
+    *  The Mythical Man-Month by Fred Brooks.
+    1. The sheer joy of making things.
+    2. The pleasure of making things that are useful to other people.
+    3. The fascination of fashioning complex puzzle-like objects of interlocking moving parts, and watching them work in subtle cycles, playing out the consequences of principles built in from the beginning.
+    4. The joy of always learning, which springs from the non repeating nature of the task.
+    5. The delight of working in such a tractable medium. The programmer, like the poet, works only slightly removed from pure thought-stuff. He builds his castles in the air, from air, creating by exertion of imagination.
+    6. The expressiveness of code.
+* [These are the storytelling lessons I learned from Steve Jobs](https://www.fastcompany.com/90747313/steve-jobs-lessons-tony-fadell-build-book-excerpt)
+    * The story is more important than the product
