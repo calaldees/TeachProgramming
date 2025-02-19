@@ -1,0 +1,10 @@
+{"versions": {
+    "": {"parents": []},
+    "draw_grid": {"parents": [""]},
+    "recv": {"parents": ["draw_grid"]},
+    "recv_draw": {"parents": ["recv"]},
+    "mouse": {"parents": ["recv_draw"]},
+    "local_state": {"parents": ["mouse"]},
+    "2players": {"parents": ["local_state"]},
+    "commandline": {"parents": ["2players"]}
+}}
