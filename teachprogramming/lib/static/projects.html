@@ -6,10 +6,10 @@
 
     <style>
         .hidden {display: none;}
-        code {border: 1px solid darkgrey; margin:1em; display: block; background-color: lightgray;}
+        code {border: 1px solid darkgrey; margin:1em; display: block; background-color: #eee;}
         code .add {color: green; font-weight: bolder;}
         code .remove {color: red; text-decoration: line-through;}
-        code .lineNum {user-select: none;}
+        code .lineNum {user-select: none; background-color: lightgray;}
     </style>
 
 </head>
@@ -82,12 +82,12 @@ function renderProject(data) {
             h('h3',{},version),
             ...(version ? [
                 // render diff
-                h('pre',{className: 'diff'}, renderDiff(data.diffs[language][version])),
-                h('button',{onclick: element=>element.srcElement.nextElementSibling.classList.toggle('hidden')},'full'),
-                h('pre',{className: 'full, hidden'}, renderCodeFull(data.languages[language][version])),
+                h('pre',{class: 'diff'}, renderDiff(data.diffs[language][version])),
+                h('button',{action: 'toggle_next'},'full'),
+                h('pre',{class: 'full, hidden'}, renderCodeFull(data.languages[language][version])),
             ]:[
                 // base version renders full starting point without diff
-                h('pre',{className: 'full'}, renderCodeFull(data.languages[language][version])),
+                h('pre',{class: 'full'}, renderCodeFull(data.languages[language][version])),
             ])
         ]).flat()
     ]).flat())
@@ -96,8 +96,8 @@ function renderProject(data) {
 const REGEX_DIFF_SEGMENT = /@@ [-+](?<line_start_old>\d+),(?<lines_changed_old>\d+) [-+](?<line_start_new>\d+),(?<lines_changed_new>\d+) @@\n(?<code>.*?)(?=$|\n@@)/sg
 function renderDiffSub(code_segment, start_line) {
     return h('code',{},code_segment.split("\n").map(line=>[
-        h('span',{className:"lineNum"},`${pad_line_number(start_line++)} `),
-        h('span',{className:[
+        h('span',{class:"lineNum"},`${pad_line_number(start_line++)} `),
+        h('span',{class:[
             "line",
             line.startsWith("+")?"add":"",
             line.startsWith("-")?"remove":"",
@@ -117,6 +117,10 @@ if (urlParams.has(QUERY_STRING_project)) {
     fetch(`/api/v1/projects/${urlParams.get(QUERY_STRING_project)}.json`)
         .then(response => response.json())
         .then(data=>hostElement.appendChild(renderProject(data)))
+        .then(()=>{
+            for (let button of document.querySelectorAll(`button[action="toggle_next"]`)) {
+                button.addEventListener('click', (element)=>element.srcElement.nextElementSibling.classList.toggle('hidden'))
+            }})
     .catch(err => console.error(err))
 } else {
     fetch('/api/v1/projects.json')
