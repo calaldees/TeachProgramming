@@ -390,3 +390,9 @@ https://github.com/s-macke/concepts-of-programming-languages
 
 Analogy? Students taught many lingustic languages at once to improve them all - they can say the name of farmyard animals in 4 languages, but can't hold a conversation in any of them.
 Can the same be true for programming/coding?
+
+* [Money lessons without money: The financial literacy fallacy](https://anandsanwal.me/financial-literacy-fallacy/)
+    * You can't teach young people financial literacy in the classroom
+    * The principle of the article is good, but it misses practical reality. The article suggests young people starting a business. And also argues about teaching compound interest. There is no way a business for a few months or even years could convey longer term patterns. Especially as the money use will be very spikey.
+    * Some good links to a range of articles that inspired this article. Largely ragging on education for not being effective.
+

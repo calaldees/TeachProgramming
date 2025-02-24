@@ -84,6 +84,8 @@ Skills
 * Look at the colours of the brackets - indentation
 * Multiple terminals
 * Hotkeys to move tabs + run
+    * See more in mapOfComputing hotkeys
+* understand whitespace (and different newlines, tabs, spaces)
 * Get a small program that works - commit! -  add functionality - Read the errors
 * Devtools
     * Network (request response? cors?)

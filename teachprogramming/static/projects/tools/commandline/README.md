@@ -6,6 +6,8 @@ bash, terminal, command line, commandline, shell
 
 * https://github.com/onceupon/Bash-Oneliner
 
+xargs in general https://stackoverflow.com/questions/35589179/when-to-use-xargs-when-piping
+
 find | xargs
 get cookie from browser - export use in `curl`
 curl | jq

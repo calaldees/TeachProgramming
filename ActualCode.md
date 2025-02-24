@@ -136,3 +136,19 @@ Other related
     6. The expressiveness of code.
 * [These are the storytelling lessons I learned from Steve Jobs](https://www.fastcompany.com/90747313/steve-jobs-lessons-tony-fadell-build-book-excerpt)
     * The story is more important than the product
+* [YOU SHOULD START A COMPUTER CLUB IN THE PLACE THAT YOU LIVE](https://startacomputer.club/)
+    * [Recurse Center: Social rules ](https://www.recurse.com/social-rules)
+        * No well-actually’s
+            * > Alice: I just installed Linux on my computer!
+              > Bob: It’s actually called GNU/Linux.
+        * No feigned surprise
+            * > Dan: What’s the command line?
+              > Carol: Wait, you’ve never used the command line?
+        * No backseat driving
+            * > Bob: What’s the name of the string copy function?
+              > Alice: Strncpy.
+              > Eve: (from across the room) You should use strlcpy. It’s safer.
+        * No subtle -isms
+            * > Carol: Windows is hard to use.
+              > Bob: No way. Windows is so easy to use that even my mom can use it.
+
