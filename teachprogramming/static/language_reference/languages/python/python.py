@@ -195,6 +195,9 @@ def define_list():
   if "z" in cc:               # VER: define_list
     print("z exists in list") # VER: define_list
 
+  # TODO: last item of list
+  #  cc[-1]
+
 def list_operations():
   cc = ["a", "b", "c"]        # VER: list_operations
   dd = ["d", "e"]             # VER: list_operations
