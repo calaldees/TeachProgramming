@@ -2,7 +2,6 @@ import tkinter
 from math import floor
 import socket            # VER: recv
 import threading         # VER: recv
-import sys               # VER: commandline
 
 class TicTacToe():
     def __init__(self, grid_size=100, width=5, height=4, addr_to='127.0.0.1'):
@@ -77,7 +76,8 @@ class TicTacToe():
             self.draw_grid()      # VER: local_state
 
 if __name__ == '__main__':
+    import sys                         # VER: commandline
     if len(sys.argv) == 1:             # VER: commandline
         sys.argv.append('127.0.0.1')   # VER: commandline
     TicTacToe(addr_to=sys.argv[1])     # VER: commandline
-    #TicTacToe()                        # VER: NOT commandline
+    #TicTacToe()                        # VER: commandline NOT_

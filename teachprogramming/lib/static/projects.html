@@ -80,11 +80,12 @@ function renderProject(data) {
         h('h2',{},language),
         ...Object.entries(data.versions.parents).map(([version, parent_version])=>[
             h('h3',{},version),
-            ...(version ? [
+            h('div',{}, version ? [
                 // render diff
                 h('pre',{class: 'diff'}, renderDiff(data.diffs[language][version])),
-                h('button',{action: 'toggle_next'},'full'),
-                h('pre',{class: 'full, hidden'}, renderCodeFull(data.languages[language][version])),
+                h('button',{action: 'toggle_full'},'toggle full'),
+                h('button',{action: 'copy_full'},'copy full'),
+                h('pre',{class: 'full hidden'}, renderCodeFull(data.languages[language][version])),
             ]:[
                 // base version renders full starting point without diff
                 h('pre',{class: 'full'}, renderCodeFull(data.languages[language][version])),
@@ -111,6 +112,10 @@ function renderDiff(diff) {
 function renderCodeFull(code) {return renderDiffSub(code,1)}
 
 
+// Clipboard
+
+async function setClipboard(text) {await navigator.clipboard.write([new ClipboardItem({"text/plain": text})])}
+
 // Data Fetch ------------------------------------------------------------------
 
 if (urlParams.has(QUERY_STRING_project)) {
@@ -118,9 +123,19 @@ if (urlParams.has(QUERY_STRING_project)) {
         .then(response => response.json())
         .then(data=>hostElement.appendChild(renderProject(data)))
         .then(()=>{
-            for (let button of document.querySelectorAll(`button[action="toggle_next"]`)) {
-                button.addEventListener('click', (element)=>element.srcElement.nextElementSibling.classList.toggle('hidden'))
-            }})
+            for (let button of document.querySelectorAll(`button[action="toggle_full"]`)) {
+                button.addEventListener('click', (element)=>{
+                    element.srcElement.parentElement.querySelector('.full').classList.toggle('hidden')
+                })
+            }
+            for (let button of document.querySelectorAll(`button[action="copy_full"]`)) {
+                button.addEventListener('click', (element)=>{
+                    const full = element.srcElement.parentElement.querySelector('.full')
+                    const text = [...full.querySelectorAll('.line')].map(line=>line.textContent).join('')
+                    setClipboard(text)
+                })
+            }
+        })
     .catch(err => console.error(err))
 } else {
     fetch('/api/v1/projects.json')
