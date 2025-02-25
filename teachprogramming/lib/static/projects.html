@@ -9,7 +9,8 @@
         code {border: 1px solid darkgrey; margin:1em; display: block; background-color: #eee;}
         code .add {color: green; font-weight: bolder;}
         code .remove {color: red; text-decoration: line-through;}
-        code .lineNum {user-select: none; background-color: lightgray;}
+        code .lineNum {display: inline-block; user-select: none; background-color: lightgray;}
+        code .code {display: inline-block;}
     </style>
 
 </head>
@@ -96,14 +97,16 @@ function renderProject(data) {
 
 const REGEX_DIFF_SEGMENT = /@@ [-+](?<line_start_old>\d+),(?<lines_changed_old>\d+) [-+](?<line_start_new>\d+),(?<lines_changed_new>\d+) @@\n(?<code>.*?)(?=$|\n@@)/sg
 function renderDiffSub(code_segment, start_line) {
-    return h('code',{},code_segment.split("\n").map(line=>[
-        h('span',{class:"lineNum"},`${pad_line_number(start_line++)} `),
-        h('span',{class:[
-            "line",
-            line.startsWith("+")?"add":"",
-            line.startsWith("-")?"remove":"",
-        ].filter(x=>x).join(" ")},line+"\n"),
-    ]).flat())
+    return h('code',{}, [
+        h('div',{class:"lineNum"}, code_segment.split("\n").map(line=>
+            h('span',{},`${pad_line_number(start_line++)} \n`),
+        )),
+        h('div',{class:"code"   }, code_segment.split("\n").map(line=>
+            h('span',{
+                class:["line",line.startsWith("+")?"add":"",line.startsWith("-")?"remove":""].filter(x=>x).join(" ")
+            }, line+"\n"),
+        ))
+    ])
 }
 function renderDiff(diff) {
     if (!diff) {return}
@@ -122,6 +125,7 @@ if (urlParams.has(QUERY_STRING_project)) {
     fetch(`/api/v1/projects/${urlParams.get(QUERY_STRING_project)}.json`)
         .then(response => response.json())
         .then(data=>hostElement.appendChild(renderProject(data)))
+        // Setup element actions
         .then(()=>{
             for (let button of document.querySelectorAll(`button[action="toggle_full"]`)) {
                 button.addEventListener('click', (element)=>{
