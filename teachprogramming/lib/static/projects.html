@@ -7,10 +7,34 @@
     <style>
         .hidden {display: none;}
         code {border: 1px solid darkgrey; margin:1em; display: block; background-color: #eee;}
+        code div {display: inline-block;}
         code .add {color: green; font-weight: bolder;}
         code .remove {color: red; text-decoration: line-through;}
-        code .lineNum {display: inline-block; user-select: none; background-color: lightgray;}
-        code .code {display: inline-block;}
+        code .lineNum {user-select: none; background-color: lightgray;}
+        code .lineOp {user-select: none; }
+        /*
+        table.code {border: 1px solid darkgrey; margin:1em; display: block; background-color: #eee; border-spacing: 0;}
+        table.code .lineNum {user-select: none; background-color: lightgray;}
+        table.code .add {color: green; font-weight: bolder;}
+        table.code .remove {color: red; text-decoration: line-through;}
+        */
+        @media print {
+            @page {
+                margin: 1em;
+            }
+            h1 {page-break-before: always;}
+            h1:first-of-type {page-break-before: avoid;}
+
+            #navigation, #source {  /* and (min-width: 500px) */
+                display: none;
+            }
+            table {page-break-inside:auto;}
+            tr {
+                page-break-inside:avoid;
+                page-break-after:auto;
+            }
+        }
+
     </style>
 
 </head>
@@ -97,14 +121,25 @@ function renderProject(data) {
 
 const REGEX_DIFF_SEGMENT = /@@ [-+](?<line_start_old>\d+),(?<lines_changed_old>\d+) [-+](?<line_start_new>\d+),(?<lines_changed_new>\d+) @@\n(?<code>.*?)(?=$|\n@@)/sg
 function renderDiffSub(code_segment, start_line) {
+    /*
+    return h('table',{class:"code"},code_segment.split("\n").map(line=>h('tr',{},[
+        h('td',{class:"lineNum"},pad_line_number(start_line++)),
+        h('td',{class:"lineOp"},' '),
+        h('td',{
+            class:["line",line.startsWith("+")?"add":"",line.startsWith("-")?"remove":""].filter(x=>x).join(" ")
+        },line),
+    ])))
+    */
+    const lineOpClass = (line)=>[line.startsWith("+")?"add":"",line.startsWith("-")?"remove":""].filter(x=>x).join(" ")
     return h('code',{}, [
         h('div',{class:"lineNum"}, code_segment.split("\n").map(line=>
-            h('span',{},`${pad_line_number(start_line++)} \n`),
+            h('span',{},`${pad_line_number(line.startsWith("-")?'':start_line++)} \n`),
         )),
-        h('div',{class:"code"   }, code_segment.split("\n").map(line=>
-            h('span',{
-                class:["line",line.startsWith("+")?"add":"",line.startsWith("-")?"remove":""].filter(x=>x).join(" ")
-            }, line+"\n"),
+        h('div',{class:"lineOp"}, code_segment.split("\n").map(line=>
+            h('span',{class:lineOpClass(line)},`${line.substring(0,1)}\n`),
+        )),
+        h('div',{class:"code"}, code_segment.split("\n").map(line=>
+            h('span',{class: "line "+lineOpClass(line)}, `${line.substring(1)}\n`),
         ))
     ])
 }
@@ -112,7 +147,7 @@ function renderDiff(diff) {
     if (!diff) {return}
     return [...diff.matchAll(REGEX_DIFF_SEGMENT)].map(match=>renderDiffSub(match.groups.code, match.groups.line_start_new))
 }
-function renderCodeFull(code) {return renderDiffSub(code,1)}
+function renderCodeFull(code) {return renderDiffSub(code.split('\n').map(line=>" "+line).join("\n"),1)}
 
 
 // Clipboard
