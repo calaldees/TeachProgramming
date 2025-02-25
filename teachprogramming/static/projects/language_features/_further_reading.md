@@ -71,3 +71,8 @@ These will help you with your research task and serve as a refresher from some o
             * Scala.
             * Standard ML and OCaml.
             * Scheme.
+    * [Some programming language ideas](https://davidbos.me/posts/some_programming_language_ideas/)
+        * Here are some ideas for features in programming languages.
+        * Refinement types
+        * Type refinement + union types on C-like structs
+            * Refinement based function overloading

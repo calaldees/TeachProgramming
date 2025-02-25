@@ -12,6 +12,8 @@ find | xargs
 get cookie from browser - export use in `curl`
 curl | jq
 curl | htmlq
+curl | mdq
+curl | csvq
 | grep
 | unique
 
@@ -19,7 +21,7 @@ alias
 
 function
 
-netcat
+netcat -> nc
 diff
 gzip
 rsa??
