@@ -25,7 +25,7 @@
             h1 {page-break-before: always;}
             h1:first-of-type {page-break-before: avoid;}
 
-            #navigation, #source {  /* and (min-width: 500px) */
+            button {  /* and (min-width: 500px) */
                 display: none;
             }
             table {page-break-inside:auto;}
@@ -108,12 +108,15 @@ function renderProject(data) {
             h('div',{}, version ? [
                 // render diff
                 h('pre',{class: 'diff'}, renderDiff(data.diffs[language][version])),
-                h('button',{action: 'toggle_full'},'toggle full'),
                 h('button',{action: 'copy_full'},'copy full'),
+                h('button',{action: 'download', 'data-filename':"TODO"},'download'),
+                h('button',{action: 'toggle_full'},'toggle full'),
                 h('pre',{class: 'full hidden'}, renderCodeFull(data.languages[language][version])),
             ]:[
                 // base version renders full starting point without diff
                 h('pre',{class: 'full'}, renderCodeFull(data.languages[language][version])),
+                h('button',{action: 'copy_full'},'copy full'),
+                h('button',{action: 'download', 'data-filename':"TODO"},'download'),
             ])
         ]).flat()
     ]).flat())
