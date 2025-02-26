@@ -12,29 +12,15 @@
         code .remove {color: red; text-decoration: line-through;}
         code .lineNum {user-select: none; background-color: lightgray;}
         code .lineOp {user-select: none; }
-        /*
-        table.code {border: 1px solid darkgrey; margin:1em; display: block; background-color: #eee; border-spacing: 0;}
-        table.code .lineNum {user-select: none; background-color: lightgray;}
-        table.code .add {color: green; font-weight: bolder;}
-        table.code .remove {color: red; text-decoration: line-through;}
-        */
+
         @media print {
-            @page {
-                margin: 1em;
-            }
+            @page {margin: 1em;}
             h1 {page-break-before: always;}
             h1:first-of-type {page-break-before: avoid;}
-
-            button {  /* and (min-width: 500px) */
-                display: none;
-            }
             table {page-break-inside:auto;}
-            tr {
-                page-break-inside:avoid;
-                page-break-after:auto;
-            }
+            tr {page-break-inside:avoid; page-break-after:auto;}
+            button {display: none;}  /* and (min-width: 500px) */
         }
-
     </style>
 
 </head>
@@ -85,6 +71,7 @@ assertEquals([
 
 const QUERY_STRING_project = 'project';
 const urlParams = new URLSearchParams(window.location.search);
+const project_name = urlParams.get(QUERY_STRING_project)
 const hostElement = document.getElementById('main') || document.getElementsByTagName('body').item(0);
 
 // Render List -----------------------------------------------------------------
@@ -100,6 +87,8 @@ function renderProjectList(projects) {
 
 // Render Project --------------------------------------------------------------
 
+const filename = (project_name, language, version) => `${project_name}_${version}.${language}`
+
 function renderProject(data) {
     return h('div',{},Object.keys(data.languages).map(language=>[
         h('h2',{},language),
@@ -109,14 +98,14 @@ function renderProject(data) {
                 // render diff
                 h('pre',{class: 'diff'}, renderDiff(data.diffs[language][version])),
                 h('button',{action: 'copy_full'},'copy full'),
-                h('button',{action: 'download', 'data-filename':"TODO"},'download'),
+                h('button',{action: 'download'},'download'),
                 h('button',{action: 'toggle_full'},'toggle full'),
-                h('pre',{class: 'full hidden'}, renderCodeFull(data.languages[language][version])),
+                h('pre',{class: 'full hidden', 'data-filename': filename(project_name, language, version)}, renderCodeFull(data.languages[language][version])),
             ]:[
                 // base version renders full starting point without diff
-                h('pre',{class: 'full'}, renderCodeFull(data.languages[language][version])),
+                h('pre',{class: 'full', 'data-filename': filename(project_name, language, version)}, renderCodeFull(data.languages[language][version])),
                 h('button',{action: 'copy_full'},'copy full'),
-                h('button',{action: 'download', 'data-filename':"TODO"},'download'),
+                h('button',{action: 'download'},'download'),
             ])
         ]).flat()
     ]).flat())
@@ -124,15 +113,6 @@ function renderProject(data) {
 
 const REGEX_DIFF_SEGMENT = /@@ [-+](?<line_start_old>\d+),(?<lines_changed_old>\d+) [-+](?<line_start_new>\d+),(?<lines_changed_new>\d+) @@\n(?<code>.*?)(?=$|\n@@)/sg
 function renderDiffSub(code_segment, start_line) {
-    /*
-    return h('table',{class:"code"},code_segment.split("\n").map(line=>h('tr',{},[
-        h('td',{class:"lineNum"},pad_line_number(start_line++)),
-        h('td',{class:"lineOp"},' '),
-        h('td',{
-            class:["line",line.startsWith("+")?"add":"",line.startsWith("-")?"remove":""].filter(x=>x).join(" ")
-        },line),
-    ])))
-    */
     const lineOpClass = (line)=>[line.startsWith("+")?"add":"",line.startsWith("-")?"remove":""].filter(x=>x).join(" ")
     return h('code',{}, [
         h('div',{class:"lineNum"}, code_segment.split("\n").map(line=>
@@ -154,29 +134,42 @@ function renderCodeFull(code) {return renderDiffSub(code.split('\n').map(line=>"
 
 
 // Clipboard
-
 async function setClipboard(text) {await navigator.clipboard.write([new ClipboardItem({"text/plain": text})])}
+
+// Download
+function download(filename, text, mime="text/plain") {
+    const a = h('a',{
+        href: `data:${mime};charset=utf-8,${encodeURIComponent(text)}`,
+        download: filename,
+        style: 'display: none;'
+    },'')
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+}
 
 // Data Fetch ------------------------------------------------------------------
 
-if (urlParams.has(QUERY_STRING_project)) {
-    fetch(`/api/v1/projects/${urlParams.get(QUERY_STRING_project)}.json`)
+if (project_name) {
+    fetch(`/api/v1/projects/${project_name}.json`)
         .then(response => response.json())
         .then(data=>hostElement.appendChild(renderProject(data)))
         // Setup element actions
         .then(()=>{
-            for (let button of document.querySelectorAll(`button[action="toggle_full"]`)) {
-                button.addEventListener('click', (element)=>{
-                    element.srcElement.parentElement.querySelector('.full').classList.toggle('hidden')
-                })
+
+            function button_action_full(action, func_full) {
+                [...document.querySelectorAll(`button[action="${action}"]`)].map(
+                    button=>button.addEventListener('click', element=>{
+                        func_full(element.srcElement.parentElement.querySelector('.full'))
+                }))
             }
-            for (let button of document.querySelectorAll(`button[action="copy_full"]`)) {
-                button.addEventListener('click', (element)=>{
-                    const full = element.srcElement.parentElement.querySelector('.full')
-                    const text = [...full.querySelectorAll('.line')].map(line=>line.textContent).join('')
-                    setClipboard(text)
-                })
+            function full_to_text(full) {
+                return [...full.querySelectorAll('.line')].map(line=>line.textContent).join('')
             }
+
+            button_action_full("toggle_full", full=>full.classList.toggle('hidden'))
+            button_action_full("copy_full", full=>setClipboard(full_to_text(full)))
+            button_action_full("download", full=>download(full.dataset.filename,full_to_text(full)))
         })
     .catch(err => console.error(err))
 } else {
