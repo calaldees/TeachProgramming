@@ -14,7 +14,7 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine
 #FROM mcr.microsoft.com/dotnet/sdk
 #FROM bitnami/dotnet:latest  ?
 
-WORKDIR /app/
+WORKDIR /csharp/
 
 COPY . .
 CMD dotnet run
