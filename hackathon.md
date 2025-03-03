@@ -128,4 +128,5 @@ Suggestion:
 References
 ----------
 
-I was asked for advice on setting up a hackathon for girls with local schools and undergrads. I waxed lyrical about my advice and wrote this document.
+* 2024? I was asked for advice on setting up a hackathon for girls with local schools and undergrads. I waxed lyrical about my advice and wrote this document.
+* 2025 I was asked about running a hackathon and significantly enhanced this document
