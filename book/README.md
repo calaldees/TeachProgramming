@@ -396,3 +396,7 @@ Can the same be true for programming/coding?
     * The principle of the article is good, but it misses practical reality. The article suggests young people starting a business. And also argues about teaching compound interest. There is no way a business for a few months or even years could convey longer term patterns. Especially as the money use will be very spikey.
     * Some good links to a range of articles that inspired this article. Largely ragging on education for not being effective.
 
+
+* [SheCanCode](https://shecancode.io/)
+    * Women in tech community
+    * Tutorials?

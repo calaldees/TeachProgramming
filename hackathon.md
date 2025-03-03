@@ -39,6 +39,7 @@ This is my notes on what the pitfalls are and how to do it with some degree of s
     * Have a local community of people building projects (BarCamp)
     * going from zero to hack day is not possible
     * Quality - Your event is only as good as your attendees. Weak attendees == Weak event. This is not an event for "everyone". Trying to involve everyone blindly will create problems.
+    * Social media is good for raising the profile of your event, but it will not attract your skilled attendees. Your mindset should be a 'recruiting' skilled attendees. (look at the curriculum list below). If you can't find them, you need to make them, and that process could take years of support sessions before you run your first hackathon. Maybe your first hackathons are only with a small selected cohort of 12 people as a test?
 * You can have good intentions and have an inverse effect
     * coding is hard - "anyone can code" is bullshit. If you open up a hack day for everyone you could just demoralize the weak attendees
     * Unskilled attendees hurt the event - they provide distractions
@@ -50,9 +51,62 @@ This is my notes on what the pitfalls are and how to do it with some degree of s
 * Publish the results and have awards
     * Many young people use these days as CV material. Have a public website that describes each of the hacks and showcases them. This leads to the value of years of accolades enshrined on a page that can be linked to for years (see length in the game above)
     * When you judge the awards - it's not dragons den. Award creativity, skill, approach, passion
-    * It is NOT competitive. Participation is the key. I advise against awards like "Best in Show". I also advice against meaningless awards "Most likely to go to the moon". 
+    * It is NOT competitive. Participation is the key. I advise against awards like "Best in Show". I also advice against meaningless awards "Most likely to go to the moon".
         * Some ideas "Best Technology", "Best Team", "Local Hero's"
     * (One of the prizes I won once was an engineering day where we build HexaYerts and GridBeam furniture to put in the yert, solar power wiring and a composting toilet. Can you create prizes that further engagement)
+
+
+Hackathon Prerequisites/Curriculum
+-----------------------
+
+The description above got me think about what would actually be needed beyond the basics taught by normal computing courses (if statements, functions and for loops, etc)
+
+Here is a question - if you want a program to do anything and produce some meaningful output .. what do you need? You need to be able to:
+* work with data
+    * get data from somewhere
+        * (api's? files?) know what formats to work in
+        * input devices (events)
+    * store some data in some way (memory? disk? structure?)
+    * output data (charts? transcode? graphics? devices (rgb strips? speakers?))
+
+With that in mind, here is a of core skills to allow that to happen.
+
+* Git (required to collaborate - if you want ANYONE to be able to work in a team)
+    * push, pull, resolve merge conflicts
+* Data formats (and libraries to read+write them)
+    * csv, json
+* http (GET, POST)
+    * request headers and response
+    * query string, hash
+    * apis
+        * know how to pass an authentication token
+        * read docs autonomously (implement discord bots)
+    * Use a cookie
+* ssh rsa key generation (at least an understanding)
+    * Prerequisite for git setup
+* ssh, ftp (get file onto servers)
+* javascript
+    * fetch
+    * programmatic generation of html
+    * layout framework?
+* canvas drawing
+    * shapes from code
+* commandline tools to leverage data
+    * ffmpeg (video encoding/decoding)
+    * pandoc (document conversion)
+* graph generation
+    * on any platform (Plotly? Chart.js?)
+* encoding
+    * base64
+    * gzip
+* use of tcp and udp
+* use of structured database
+    * sqlite
+
+The list is huge. This takes years to acquire the core skills to produce anything meaningful.
+If you run a hackathon and 90% of your attendees can't do this, it's going to be a very weak hackathon.
+I would say that 50% of your attendees needs to have the capacity to create even simple pieces of software autonomously in a massively constrained time period.
+Realize what is required.
 
 
 References
