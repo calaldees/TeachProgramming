@@ -7,6 +7,7 @@ This is my notes on what the pitfalls are and how to do it with some degree of s
 * Prerequisites
     * Before you decide to run one - go to one (if you are not a technologist but an organizer, still attend and observe the event) - preferably 3 of them and speak to some of the attendees and organizers.
     * If you don't understand the event, how will you convince people to attend? If you do convince people to attend, they will probably have the wrong skill-set because you did not understand the event yourself.
+    * Understand the skills your attendees will need in able to produce something meaningful (see curriculum below)
 * Routes/Themes/Style
     * Creative route
         * Demo-scene Font greets
@@ -111,6 +112,17 @@ I would say that 50% of your attendees needs to have the capacity to create even
 Realize what is required.
 
 I you do not understand what the items are above, then you will not in a position to recruit the right people or be in position to help them build the relevant skills in preparation for the event.
+
+
+Suggestion:
+* Run a hackday in a constrained domain and seed a few workshops before hand. e.g.
+    1. run a few workshops on using rgb led strips and drawing graphics to a screen.
+    2. run a hackday with a theame to convey beautiful art/fun computer constrolled stuff around cccu to bring joy and wonder to somewhere on our campus.
+    * The winning teams will be given a small budget to actually install their creation on campus
+    * e.g.
+        * a christmass tree that plays music and changes color to the music
+            * [house example](https://www.youtube.com/watch?v=pWBjl-jPcVM)
+        * whenever anyone walks into a toilet it plays the mario bros entering a pipe sound effect
 
 
 References
