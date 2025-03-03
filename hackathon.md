@@ -72,37 +72,50 @@ Here is a question - if you want a program to do anything and produce some meani
 
 With that in mind, here is a of core skills to allow that to happen.
 
+### Essential skills
 * Git (required to collaborate - if you want ANYONE to be able to work in a team)
     * push, pull, resolve merge conflicts
-* Data formats (and libraries to read+write them)
-    * csv, json
-* http (GET, POST)
-    * request headers and response
-    * query string, hash
-    * apis
-        * know how to pass an authentication token
-        * read docs autonomously (implement discord bots)
-    * Use a cookie
-* ssh rsa key generation (at least an understanding)
-    * Prerequisite for git setup
-* ssh, ftp (get file onto servers)
+    * ssh rsa key generation (at least an understanding)
+        * Prerequisite for git setup
+* Data
+    * Data formats (and libraries to read+write them)
+        * csv, json
+* Network
+    * http (GET, POST)
+        * request headers and response
+        * url: subdomain, host, path, query string, hash
+        * apis
+            * know how to pass an authentication token
+            * read docs autonomously (implement discord bots)
+    * Use of at least one of tcp, udp, websockets
+* ftp (get files onto servers)
 * javascript
-    * fetch
+    * await fetch json
     * programmatic generation of html
-    * layout framework?
+    * events
 * canvas drawing
     * shapes from code
+* Import libraries
+    * Be able to search, install libraries and read documentation
+
+### Optional (very useful skills)
+* data
+    * use of structured database
+        * sqlite?
+    * use of google docs programmatically for free live datastore (great for quick hacks)
+* encoding
+    * base64
+    * gzip
+* web
+    * Use a cookie
+    * web layout framework (bootstrap - 12 col)
 * commandline tools to leverage data
     * ffmpeg (video encoding/decoding)
     * pandoc (document conversion)
 * graph generation
     * on any platform (Plotly? Chart.js?)
-* encoding
-    * base64
-    * gzip
-* use of tcp and udp
-* use of structured database
-    * sqlite
+* bash ssh and understanding of commandline
+
 
 The list is huge. This takes years to acquire the core skills to produce anything meaningful.
 You attendees need to at least know what most of these things are, even if they can't use them autonomously yet.
