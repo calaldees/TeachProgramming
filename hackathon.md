@@ -116,8 +116,9 @@ With that in mind, here is a of core skills to allow that to happen.
     * on any platform (Plotly? Chart.js?)
 * bash ssh and understanding of commandline
 
+### Commentary
 
-The list is huge. This takes years to acquire the core skills to produce anything meaningful.
+The skills list is huge. This takes years to acquire the core skills to produce anything meaningful.
 You attendees need to at least know what most of these things are, even if they can't use them autonomously yet.
 If you run a hackathon and 90% of your attendees can't do this, it's going to be a very weak hackathon.
 I would say that 50% of your attendees needs to have the capacity to create even simple pieces of software autonomously in a massively constrained time period.
@@ -127,7 +128,8 @@ Realize what is required.
 I you do not understand what the items are above, then you will not in a position to recruit the right people or be in position to help them build the relevant skills in preparation for the event.
 
 
-Suggestion:
+### Suggestion
+
 * Run a hackday in a constrained domain and seed a few workshops before hand. e.g.
     1. run a few workshops on using rgb led strips and drawing graphics to a screen.
     2. run a hackday with a theame to convey beautiful art/fun computer constrolled stuff around cccu to bring joy and wonder to somewhere on our campus.
