@@ -1,6 +1,7 @@
 # Inspired by
 # https://docs.pytest.org/en/stable/example/nonpython.html#yaml-plugin
 
+import re
 import json
 from pathlib import Path
 from typing import NamedTuple, Callable
@@ -46,6 +47,13 @@ BUILT_LANGUAGES = get_built_docker_language_runners()
 #   environ.get('TMPDIR') or environ.get('TEMP') or environ.get('TMP') or
 tempdir = Path('.').joinpath('_language_runner')
 tempdir.mkdir(exist_ok=True)
+def clear(path: Path):
+    # https://docs.python.org/3/library/pathlib.html#pathlib.Path.walk
+    for root, dirs, files in path.walk(top_down=False):
+        for name in files:
+            (root / name).unlink()
+        for name in dirs:
+            (root / name).rmdir()
 
 
 class ProjectItemSpec(NamedTuple):
@@ -90,10 +98,15 @@ def compile_test_python(spec: ProjectItemSpec):
     spec.exec_language(("python3", "-m", "py_compile", path_code_file.name))
 
 
-def compile_test_java(spec: ProjectItemSpec):
-    # java? rename file?
-    pass
+def get_java_main_classname(code: str) -> str:
+    if match := re.search(r'class (\w+?) .*public static void main', code, re.DOTALL):
+        return match.group(1)
+    raise Exception('unable to find top level classname for filename')
 
+def compile_test_java(spec: ProjectItemSpec):
+    path_code_file = tempdir.joinpath(get_java_main_classname(spec.code) + ".java")
+    path_code_file.write_text(spec.code)
+    spec.exec_language(("javac", path_code_file.name))
 
 def compile_test_csharp(spec: ProjectItemSpec):
     # csharp create manifest?
@@ -101,7 +114,10 @@ def compile_test_csharp(spec: ProjectItemSpec):
 
 
 LANGUAGES: MappingProxyType[str, Callable] = MappingProxyType(
-    {"py": compile_test_python}
+    {
+        "py": compile_test_python,
+        "java": compile_test_java,
+    }
 )
 
 
@@ -127,9 +143,8 @@ def pytest_collect_file(parent: pytest.Dir, file_path: Path):
 #        build_docker_language_runner(language)
 
 
-# TODO: correct hook for teardown
-#def pytest_teardown():
-#    tempdir.cleanup()
+def pytest_sessionfinish(session: pytest.Session, exitstatus: int):
+    clear(tempdir)
 
 
 class ProjectFile(pytest.File):
@@ -157,6 +172,7 @@ class ProjectItem(pytest.Item):
         if self.spec.language not in LANGUAGES.keys():
             raise pytest.skip.Exception(f"Unsupported language {self.spec.language}")
 
+        clear(tempdir)
         LANGUAGES[self.spec.language](self.spec)
 
         # https://stackoverflow.com/questions/66037780/how-do-i-require-fixtures-in-a-pytest-plugin
