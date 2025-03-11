@@ -17,7 +17,8 @@ log = logging.getLogger(__name__)
 PATH_PROJECTS = Path("projects").absolute()
 PATH_LANGUAGES = Path('languages').absolute()
 LOOKUP_LANGUAGE_FOLDER = MappingProxyType({
-    'py': 'python'
+    'py': 'python',
+    'cs': 'csharp',
 })
 
 
@@ -101,7 +102,7 @@ def get_java_main_classname(code: str) -> str:
     # utter mess - using regex to get this is poor form
     if match := re.search(r'class (\w+?) .*public static void main', code, re.DOTALL):
         return match.group(1)
-    raise Exception('unable to find top level classname for filename')
+    raise Exception('unable to find top level classname for filename', code)
 
 def compile_test_java(spec: ProjectItemSpec):
     path_code_file = tempdir.joinpath(get_java_main_classname(spec.code) + ".java")
@@ -110,13 +111,14 @@ def compile_test_java(spec: ProjectItemSpec):
 
 def compile_test_csharp(spec: ProjectItemSpec):
     # csharp create manifest?
-    pass
+    raise NotImplementedError('')
 
 
 LANGUAGES: MappingProxyType[str, Callable] = MappingProxyType(
     {
         "py": compile_test_python,
         "java": compile_test_java,
+        "cs": compile_test_csharp,
     }
 )
 
@@ -133,12 +135,11 @@ def pytest_ignore_collect(collection_path: Path, config: pytest.Config):
 
 def pytest_collect_file(parent: pytest.Dir, file_path: Path):
     if file_path.suffix == ".json":
-        file_path.name.endswith(".ver.json")
         return ProjectFile.from_parent(parent, path=file_path)
 
 
 def pytest_collection_modifyitems(session: pytest.Session, config: pytest.Config, items: list[pytest.Item]):
-    languages_selected = BUILT_LANGUAGES  # TODO: replace with getting selected languages from pytest_addoption
+    languages_selected = set(config.option.language or ()) or LANGUAGES.keys()
     items_deselected = tuple(
         item
         for item in items
@@ -147,13 +148,12 @@ def pytest_collection_modifyitems(session: pytest.Session, config: pytest.Config
     config.hook.pytest_deselected(items=items_deselected)
 
 
-def pytest_addoption(parser):
-    # TODO: add language selector
-    #parser.addoption("--skip-fixtures", default=None)
-    pass
+def pytest_addoption(parser: pytest.Parser, pluginmanager: pytest.PytestPluginManager):
+    parser.addoption("--language", default=None, help="Project languages to test", choices=LANGUAGES.keys(), action="extend", nargs="+", type=str)
 
 
 def pytest_collection_finish(session: pytest.Session):
+    # Build required language_runner containers
     languages_in_items = {
         item.spec.language
         for item in session.items
@@ -161,7 +161,7 @@ def pytest_collection_finish(session: pytest.Session):
     }
     language_runners_to_build = (languages_in_items - BUILT_LANGUAGES) & LANGUAGES.keys()
     for language in language_runners_to_build:
-        log.info("building language_runner container for: {language}")
+        print(f"docker build --tag language_runner:{language}")  #log.info
         build_docker_language_runner(language)
         BUILT_LANGUAGES.add(language)
 
@@ -195,7 +195,10 @@ class ProjectItem(pytest.Item):
         if self.spec.language not in LANGUAGES.keys():
             raise pytest.skip.Exception(f"Unsupported language {self.spec.language}")
 
-        clear(tempdir)
+        # If we clear the folder, there is some race hazard with mounting this in docker and the folder is not writeable
+        # A delay of 0.5 seconds solves most of this - but I don't want to slow the tests down
+        #clear(tempdir)
+        #sleep(0.5)
         LANGUAGES[self.spec.language](self.spec)
 
         # https://stackoverflow.com/questions/66037780/how-do-i-require-fixtures-in-a-pytest-plugin
