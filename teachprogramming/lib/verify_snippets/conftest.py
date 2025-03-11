@@ -154,8 +154,15 @@ def pytest_collection_modifyitems(session: pytest.Session, config: pytest.Config
     config.hook.pytest_deselected(items=items_deselected)
 
 
+def pytest_addoption(parser):
+    # TODO: add language selector
+    #parser.addoption("--skip-fixtures", default=None)
+    pass
+
+
 def pytest_collection_finish(session: pytest.Session):
     # TODO: get set of selected languages + build languages that we don't have containers for
+    # log.info("building language container for {language}")
     breakpoint()
     pass
 
