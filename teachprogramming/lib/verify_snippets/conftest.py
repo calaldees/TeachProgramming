@@ -7,10 +7,12 @@ from pathlib import Path
 from typing import NamedTuple, Callable
 from types import MappingProxyType
 import subprocess
-from os import environ
+import logging
 
 import pytest
 
+
+log = logging.getLogger(__name__)
 
 PATH_PROJECTS = Path("projects").absolute()
 PATH_LANGUAGES = Path('languages').absolute()
@@ -64,10 +66,6 @@ class ProjectItemSpec(NamedTuple):
     code: str
 
     def exec_language(self, language_args: tuple[str]):
-        #if self.language not in BUILT_LANGUAGES:
-        #    BUILT_LANGUAGES.add(self.language)
-        #    build_docker_language_runner(self.language)
-
         workdir = f"/{self.language}"
         docker_args = (
             "docker", "run", "--rm",
@@ -139,13 +137,8 @@ def pytest_collect_file(parent: pytest.Dir, file_path: Path):
         return ProjectFile.from_parent(parent, path=file_path)
 
 
-#def pytest_collected():
-#    # TODO: this is not a real name I need the docs to look it up
-#    for language in {test.spec.language for test in collected.tests}:
-#        build_docker_language_runner(language)
-
 def pytest_collection_modifyitems(session: pytest.Session, config: pytest.Config, items: list[pytest.Item]):
-    languages_selected = BUILT_LANGUAGES  # TODO: replace with getting selected languages from commandline
+    languages_selected = BUILT_LANGUAGES  # TODO: replace with getting selected languages from pytest_addoption
     items_deselected = tuple(
         item
         for item in items
@@ -161,10 +154,16 @@ def pytest_addoption(parser):
 
 
 def pytest_collection_finish(session: pytest.Session):
-    # TODO: get set of selected languages + build languages that we don't have containers for
-    # log.info("building language container for {language}")
-    breakpoint()
-    pass
+    languages_in_items = {
+        item.spec.language
+        for item in session.items
+        if hasattr(item, 'spec')
+    }
+    language_runners_to_build = (languages_in_items - BUILT_LANGUAGES) & LANGUAGES.keys()
+    for language in language_runners_to_build:
+        log.info("building language_runner container for: {language}")
+        build_docker_language_runner(language)
+        BUILT_LANGUAGES.add(language)
 
 
 def pytest_sessionfinish(session: pytest.Session, exitstatus: int):
