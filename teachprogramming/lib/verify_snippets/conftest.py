@@ -21,13 +21,15 @@ LOOKUP_LANGUAGE_FOLDER = MappingProxyType({
 
 def get_built_docker_language_runners() -> set[str]:
     result = subprocess.run(
-        ("docker", "images",  "--format", "json"), #"language_runner",
+        ("docker", "images", "language_runner", "--format", "json"),
         capture_output=True,
         timeout=5,
         text=True,
         check=True,
     )
     return {container['Tag'] for container in map(json.loads, filter(None, result.stdout.split('\n')))}
+
+BUILT_LANGUAGES = get_built_docker_language_runners()
 
 def build_docker_language_runner(language) -> subprocess.CompletedProcess:
     return subprocess.run(
@@ -38,7 +40,6 @@ def build_docker_language_runner(language) -> subprocess.CompletedProcess:
         check=True,
     )
 
-BUILT_LANGUAGES = get_built_docker_language_runners()
 
 # `tempdir` creates 'secure' temp folders.
 # These are not available to other users.
@@ -63,9 +64,9 @@ class ProjectItemSpec(NamedTuple):
     code: str
 
     def exec_language(self, language_args: tuple[str]):
-        if self.language not in BUILT_LANGUAGES:
-            BUILT_LANGUAGES.add(self.language)
-            build_docker_language_runner(self.language)
+        #if self.language not in BUILT_LANGUAGES:
+        #    BUILT_LANGUAGES.add(self.language)
+        #    build_docker_language_runner(self.language)
 
         workdir = f"/{self.language}"
         docker_args = (
@@ -99,6 +100,7 @@ def compile_test_python(spec: ProjectItemSpec):
 
 
 def get_java_main_classname(code: str) -> str:
+    # utter mess - using regex to get this is poor form
     if match := re.search(r'class (\w+?) .*public static void main', code, re.DOTALL):
         return match.group(1)
     raise Exception('unable to find top level classname for filename')
@@ -141,6 +143,21 @@ def pytest_collect_file(parent: pytest.Dir, file_path: Path):
 #    # TODO: this is not a real name I need the docs to look it up
 #    for language in {test.spec.language for test in collected.tests}:
 #        build_docker_language_runner(language)
+
+def pytest_collection_modifyitems(session: pytest.Session, config: pytest.Config, items: list[pytest.Item]):
+    languages_selected = BUILT_LANGUAGES  # TODO: replace with getting selected languages from commandline
+    items_deselected = tuple(
+        item
+        for item in items
+        if isinstance(item, ProjectItem) and item.spec.language not in languages_selected
+    )
+    config.hook.pytest_deselected(items=items_deselected)
+
+
+def pytest_collection_finish(session: pytest.Session):
+    # TODO: get set of selected languages + build languages that we don't have containers for
+    breakpoint()
+    pass
 
 
 def pytest_sessionfinish(session: pytest.Session, exitstatus: int):
