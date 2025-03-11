@@ -8,6 +8,7 @@ from typing import NamedTuple, Callable
 from types import MappingProxyType
 import subprocess
 import logging
+import shutil
 
 import pytest
 
@@ -16,33 +17,10 @@ log = logging.getLogger(__name__)
 
 PATH_PROJECTS = Path("projects").absolute()
 PATH_LANGUAGES = Path('languages').absolute()
-LOOKUP_LANGUAGE_FOLDER = MappingProxyType({
+LANGUAGE_TO_FOLDER_MAPPING = MappingProxyType({
     'py': 'python',
     'cs': 'csharp',
 })
-
-
-def get_built_docker_language_runners() -> set[str]:
-    result = subprocess.run(
-        ("docker", "images", "language_runner", "--format", "json"),
-        capture_output=True,
-        timeout=5,
-        text=True,
-        check=True,
-    )
-    return {container['Tag'] for container in map(json.loads, filter(None, result.stdout.split('\n')))}
-
-BUILT_LANGUAGES = get_built_docker_language_runners()
-
-def build_docker_language_runner(language) -> subprocess.CompletedProcess:
-    return subprocess.run(
-        ("docker", "build", PATH_LANGUAGES.joinpath(LOOKUP_LANGUAGE_FOLDER.get(language, language)), "--tag", f"language_runner:{language}"),
-        capture_output=True,
-        timeout=120,
-        text=True,
-        check=True,
-    )
-
 
 # `tempdir` creates 'secure' temp folders.
 # These are not available to other users.
@@ -60,13 +38,42 @@ def clear(path: Path):
             (root / name).rmdir()
 
 
+# Docker -----------------------------------------------------------------------
+
+def get_built_docker_language_runners() -> set[str]:
+    result = subprocess.run(
+        ("docker", "images", "language_runner", "--format", "json"),
+        capture_output=True,
+        timeout=5,
+        text=True,
+        check=True,
+    )
+    return {container['Tag'] for container in map(json.loads, filter(None, result.stdout.split('\n')))}
+
+BUILT_LANGUAGES_RUNNERS = get_built_docker_language_runners()
+
+def get_docker_folder_for_language(language: str) -> Path:
+    return PATH_LANGUAGES.joinpath(LANGUAGE_TO_FOLDER_MAPPING.get(language, language))
+
+def build_docker_language_runner(language) -> subprocess.CompletedProcess:
+    return subprocess.run(
+        ("docker", "build", get_docker_folder_for_language(language), "--tag", f"language_runner:{language}"),
+        capture_output=True,
+        timeout=120,
+        text=True,
+        check=True,
+    )
+
+
+# Project Compile --------------------------------------------------------------
+
 class ProjectItemSpec(NamedTuple):
     name: str
     language: str
     version: str
     code: str
 
-    def exec_language(self, language_args: tuple[str]):
+    def exec_language(self, language_args: tuple[str]=()):
         workdir = f"/{self.language}"
         docker_args = (
             "docker", "run", "--rm",
@@ -103,15 +110,21 @@ def get_java_main_classname(code: str) -> str:
     if match := re.search(r'class (\w+?) .*public static void main', code, re.DOTALL):
         return match.group(1)
     raise Exception('unable to find top level classname for filename', code)
-
 def compile_test_java(spec: ProjectItemSpec):
     path_code_file = tempdir.joinpath(get_java_main_classname(spec.code) + ".java")
     path_code_file.write_text(spec.code)
     spec.exec_language(("javac", path_code_file.name))
 
+
+def copy_cs_file_to_workdir(filename: str):
+    shutil.copyfile(get_docker_folder_for_language('cs').joinpath(filename), tempdir.joinpath(filename))
 def compile_test_csharp(spec: ProjectItemSpec):
-    # csharp create manifest?
-    raise NotImplementedError('')
+    copy_cs_file_to_workdir('main.csproj')
+    copy_cs_file_to_workdir('packages.log.json')
+    path_code_file = tempdir.joinpath(spec.name)
+    path_code_file.write_text(spec.code)
+    # TODO: edit `main.csproj` to point to top level cs class
+    spec.exec_language()  # The containers base command is already `dotnet run`
 
 
 LANGUAGES: MappingProxyType[str, Callable] = MappingProxyType(
@@ -159,11 +172,11 @@ def pytest_collection_finish(session: pytest.Session):
         for item in session.items
         if hasattr(item, 'spec')
     }
-    language_runners_to_build = (languages_in_items - BUILT_LANGUAGES) & LANGUAGES.keys()
+    language_runners_to_build = (languages_in_items - BUILT_LANGUAGES_RUNNERS) & LANGUAGES.keys()
     for language in language_runners_to_build:
         print(f"docker build --tag language_runner:{language}")  #log.info
         build_docker_language_runner(language)
-        BUILT_LANGUAGES.add(language)
+        BUILT_LANGUAGES_RUNNERS.add(language)
 
 
 def pytest_sessionfinish(session: pytest.Session, exitstatus: int):
