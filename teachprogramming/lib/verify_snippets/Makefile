@@ -1,6 +1,6 @@
 DOCKER_IMAGE:=language_runner:${language}
 DOCKER_RUN:=docker run --rm --workdir /${workdir} --volume ${PWD}/_language_runner:/${workdir}:rw
-DOCKER_SHELL:=${DOCKER_RUN} -it ${DOCKER_IMAGE} /bin/bash
+DOCKER_SHELL:=${DOCKER_RUN} -it ${DOCKER_IMAGE} /bin/sh
 
 
 test: projects languages

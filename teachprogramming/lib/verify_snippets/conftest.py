@@ -124,7 +124,8 @@ def compile_test_csharp(spec: ProjectItemSpec):
     path_code_file = tempdir.joinpath(spec.name)
     path_code_file.write_text(spec.code)
     # TODO: edit `main.csproj` to point to top level cs class
-    spec.exec_language()  # The containers base command is already `dotnet run`
+    # TODO: probably need to cleanup the other cs files or this might be contaminated from previous runs
+    spec.exec_language(('dotnet', 'build'))
 
 
 LANGUAGES: MappingProxyType[str, Callable] = MappingProxyType(
@@ -132,6 +133,8 @@ LANGUAGES: MappingProxyType[str, Callable] = MappingProxyType(
         "py": compile_test_python,
         "java": compile_test_java,
         "cs": compile_test_csharp,
+        #"php": ???
+        #"vb": ???
     }
 )
 
@@ -154,11 +157,14 @@ def pytest_collect_file(parent: pytest.Dir, file_path: Path):
 def pytest_collection_modifyitems(session: pytest.Session, config: pytest.Config, items: list[pytest.Item]):
     languages_selected = set(config.option.language or ()) or LANGUAGES.keys()
     items_deselected = tuple(
-        item
-        for item in items
+        item for item in items
         if isinstance(item, ProjectItem) and item.spec.language not in languages_selected
     )
     config.hook.pytest_deselected(items=items_deselected)
+    items[:] = tuple(
+        item for item in items
+        if isinstance(item, ProjectItem) and item.spec.language in languages_selected
+    )
 
 
 def pytest_addoption(parser: pytest.Parser, pluginmanager: pytest.PytestPluginManager):
