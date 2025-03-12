@@ -119,12 +119,12 @@ def compile_test_java(spec: ProjectItemSpec):
 def copy_cs_file_to_workdir(filename: str):
     shutil.copyfile(get_docker_folder_for_language('cs').joinpath(filename), tempdir.joinpath(filename))
 def compile_test_csharp(spec: ProjectItemSpec):
-    copy_cs_file_to_workdir('main.csproj')
-    copy_cs_file_to_workdir('packages.log.json')
+    # TODO: probably need to cleanup the other cs files or this might be contaminated from previous runs
+    #copy_cs_file_to_workdir('main.csproj')
+    # TODO: edit `main.csproj` to point to top level cs class
+    #copy_cs_file_to_workdir('packages.log.json')
     path_code_file = tempdir.joinpath(spec.name)
     path_code_file.write_text(spec.code)
-    # TODO: edit `main.csproj` to point to top level cs class
-    # TODO: probably need to cleanup the other cs files or this might be contaminated from previous runs
     spec.exec_language(('dotnet', 'build'))
 
 
@@ -211,8 +211,8 @@ class ProjectItem(pytest.Item):
         self.spec = spec
 
     def runtest(self):
-        if self.spec.language not in LANGUAGES.keys():
-            raise pytest.skip.Exception(f"Unsupported language {self.spec.language}")
+        #if self.spec.language not in LANGUAGES.keys():
+        #    raise pytest.skip.Exception(f"Unsupported language {self.spec.language}")
 
         # If we clear the folder, there is some race hazard with mounting this in docker and the folder is not writeable
         # A delay of 0.5 seconds solves most of this - but I don't want to slow the tests down
