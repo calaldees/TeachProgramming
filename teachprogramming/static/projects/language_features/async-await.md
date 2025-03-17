@@ -91,3 +91,9 @@ console.log(3)
 cy.get('textarea').type(text)
 // All the console.log happen instantly
 ```
+
+Further reading
+---------------
+
+* [How to Use Fetch with async/await](https://dmitripavlutin.com/javascript-fetch-async-await/)
+    * Concurrent fetches

@@ -400,3 +400,10 @@ Can the same be true for programming/coding?
 * [SheCanCode](https://shecancode.io/)
     * Women in tech community
     * Tutorials?
+
+* [Where are all the self-directed learners?](https://saigaddam.medium.com/where-are-all-the-self-directed-learners-ccfb2421e52c) 2025
+    * [HIRING: SOFTWARE DEVELOPER (2025)](https://web.archive.org/web/20250309141940/https://www.comini.in/hiring_soft_dev)
+        * > HIRING CHALLENGE: Find our recenter browser plugin (it is open-source). Understand what it is for and suggest an interesting and personally useful feature you can add to it. Go through the code and share a brief note on how you would go about building this feature, and why. Note: Send us an email once you have thought this through, have put together the design doc, and are ready to start coding.
+    * > 2,500 job applications. Fewer than 100 filled a form with open-ended questions. About 15 went on to complete a reasonably simple real-world challenge.
+    * > Like wild animals raised too long in captivity, our students have lost crucial survival skills for the real world. Our education system isn’t just failing them — it’s domesticating them into helplessness, training them for a life of being spoon-fed.
+    * not an accredited school in India - allows new approach - https://www.comini.in/learning-comini
