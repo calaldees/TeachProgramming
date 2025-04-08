@@ -97,3 +97,12 @@ Further reading
 
 * [How to Use Fetch with async/await](https://dmitripavlutin.com/javascript-fetch-async-await/)
     * Concurrent fetches
+
+
+---
+
+
+```python
+t.Callable[[URLParams], t.Awaitable[APIPayload]]
+```
+Explanation of t.Awaitable pattern https://stackoverflow.com/a/59177557/3356840
