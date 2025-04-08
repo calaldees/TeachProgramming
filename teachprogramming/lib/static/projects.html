@@ -102,7 +102,7 @@ function renderProject(data) {
                 h('button',{action: 'toggle_full'},'toggle full'),
                 h('button',{action: 'toggle_diff'},'toggle diff'),
                 h('pre',{class: 'full hidden', 'data-filename': filename(project_name, language, version)}, renderCodeFull(data.languages[language][version])),
-                h('pre',{class: 'diff_raw hidden'}, data.diffs[language][version]),
+                h('pre',{class: 'diff_raw hidden'}, h('code', {}, data.diffs[language][version])),
             ]:[
                 // base version renders full starting point without diff
                 h('pre',{class: 'full', 'data-filename': filename(project_name, language, version)}, renderCodeFull(data.languages[language][version])),
