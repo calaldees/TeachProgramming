@@ -100,7 +100,9 @@ function renderProject(data) {
                 h('button',{action: 'copy_full'},'copy full'),
                 h('button',{action: 'download'},'download'),
                 h('button',{action: 'toggle_full'},'toggle full'),
+                h('button',{action: 'toggle_diff'},'toggle diff'),
                 h('pre',{class: 'full hidden', 'data-filename': filename(project_name, language, version)}, renderCodeFull(data.languages[language][version])),
+                h('pre',{class: 'diff_raw hidden'}, data.diffs[language][version]),
             ]:[
                 // base version renders full starting point without diff
                 h('pre',{class: 'full', 'data-filename': filename(project_name, language, version)}, renderCodeFull(data.languages[language][version])),
@@ -157,19 +159,20 @@ if (project_name) {
         // Setup element actions
         .then(()=>{
 
-            function button_action_full(action, func_full) {
+            function button_action(action, selector, func) {
                 [...document.querySelectorAll(`button[action="${action}"]`)].map(
                     button=>button.addEventListener('click', element=>{
-                        func_full(element.srcElement.parentElement.querySelector('.full'))
+                        func(element.srcElement.parentElement.querySelector(selector))
                 }))
             }
             function full_to_text(full) {
                 return [...full.querySelectorAll('.line')].map(line=>line.textContent).join('')
             }
 
-            button_action_full("toggle_full", full=>full.classList.toggle('hidden'))
-            button_action_full("copy_full", full=>setClipboard(full_to_text(full)))
-            button_action_full("download", full=>download(full.dataset.filename,full_to_text(full)))
+            button_action("toggle_diff", ".diff_raw", diff=>diff.classList.toggle('hidden'))
+            button_action("toggle_full", ".full", full=>full.classList.toggle('hidden'))
+            button_action("copy_full"  , ".full", full=>setClipboard(full_to_text(full)))
+            button_action("download"   , ".full", full=>download(full.dataset.filename,full_to_text(full)))
         })
     .catch(err => console.error(err))
 } else {
