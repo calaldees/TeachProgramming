@@ -77,3 +77,9 @@ class GameDemo(PygameBase):
 
 if __name__ == '__main__':
     GameDemo().run()
+
+# mac install
+#  brew install virtualenv
+#  python3 -m venv my-venv
+#  my-venv/bin/pip install pygame
+#  my-venv/bin/python3 python_file_to_run.py

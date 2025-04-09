@@ -1,96 +1,56 @@
-import pygame
 import random
+import pygame
 
-#----------------------------------------
-# Pygame Setup
-#----------------------------------------
-pygame.init()     
-pygame.display.set_mode((640, 480))
-screen = pygame.display.get_surface()
-clock = pygame.time.Clock()
+from animation_base_pygame import PygameBase
 
-#----------------------------------------
-# Constants
-#----------------------------------------
-black = (0, 0, 0)
-white = (255, 255, 255)
-yellow = (255, 255, 0)
-
-max_size   = 30
-num_blocks = 50
-
-#----------------------------------------
-# Class's
-#----------------------------------------
-
-class Mass:
-    def __init__(self): #xpos, ypos, size
-        self.xpos  = 0 #xpos
-        self.ypos  = 0 #ypos
-        self.size  = 0 #size
-        self.x_vel = 0
-        self.y_vel = 0
-        self.size  = 0
-
-#----------------------------------------
-# Variables
-#----------------------------------------
-
-player = pygame.Rect(100,100,10,10)
-blocks = [Mass() for i in range(num_blocks)]
-
-time_elapsed = 0
-
-#----------------------------------------
-# Subroutines
-#----------------------------------------
-
-def reset():
-    for i in range(len(blocks)):
-        m = Mass()
-        m.x_pos = random.random() * screen.get_width()
-        m.y_pos = random.random() * screen.get_height()
-        m.size  = random.randint(0,max_size) + 5
-        blocks[i] = m
-    time_elapsed = 0
+BLACK = (0, 0, 0, 255)
 
 
-#----------------------------------------
-# Main Loop
-#----------------------------------------
+class Block:
+    x: float = 0
+    y: float = 0
+    size: int = 0
+    x_vel: float = 0
+    y_vel: float = 0
 
-reset()
-running = True
-while running:
-    clock.tick(60)
-    
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-            running = False
-        elif event.type == pygame.MOUSEMOTION:
-            player.x = event.pos[0]
-            player.y = event.pos[1]
-    
-    screen.fill(black)
-    
-    for m in blocks:
-        if m.x_pos<0 or m.x_pos > screen.get_width():
-            m.x_vel=-(m.x_vel/3)
-        if m.y_pos<0 or m.y_pos > screen.get_height():
-            m.y_vel=-(m.y_vel/3)
-        m.x_vel += -(m.x_pos-player.x)/m.size/500
-        m.y_vel += -(m.y_pos-player.y)/m.size/500
-        m.x_pos += m.x_vel
-        m.y_pos += m.y_vel
-        pygame.draw.rect(screen, yellow, pygame.Rect(m.x_pos, m.y_pos, m.size, m.size))
 
-    if not screen.get_at((player.x,player.y)) == black:
-        print("Score: %s" % time_elapsed)
-        reset()
-    
-    pygame.draw.rect(screen, white, player)
-    
-    time_elapsed += 1
-    
-    pygame.display.update()
-pygame.quit()
+class Gravity(PygameBase):
+    def __init__(self):
+        super().__init__(resolution=(640, 480))
+        self.MAX_BLOCK_SIZE = 30
+        self.NUM_BLOCKS = 50
+        self.reset()
+
+    def reset(self):
+        self.blocks = [Block() for i in range(self.NUM_BLOCKS)]
+        for b in self.blocks:
+            b.x = random.random() * self.screen.get_width()
+            b.y = random.random() * self.screen.get_height()
+            b.size = random.randint(0, self.MAX_BLOCK_SIZE) + 5
+        self.time_elapsed = 0
+
+    def loop(self, screen, frame):
+        width, height = screen.get_size()
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+
+        for b in self.blocks:
+            if b.x < 0 or b.x > width:
+                b.x_vel = -(b.x_vel / 3)
+            if b.y < 0 or b.y > height:
+                b.y_vel = -(b.y_vel / 3)
+            b.x_vel += -(b.x - mouse_x) / b.size / 500
+            b.y_vel += -(b.y - mouse_y) / b.size / 500
+            b.x += b.x_vel
+            b.y += b.y_vel
+            pygame.draw.rect(screen, "yellow", pygame.Rect(b.x, b.y, b.size, b.size))
+
+        if screen.get_at((mouse_x, mouse_y)) != BLACK:
+            print(f"Score: {self.time_elapsed}")
+            self.reset()
+
+        pygame.draw.rect(screen, "white", pygame.Rect(mouse_x - 2, mouse_y - 2, 4, 4))
+        self.time_elapsed += 1
+
+
+if __name__ == "__main__":
+    Gravity().run()
