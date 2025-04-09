@@ -52,8 +52,8 @@ class TkAnimationBase():
 
     def loop(self, canvas, frame):
         """
-        http://zetcode.com/gui/tkinter/drawing/
         https://tkdocs.com/tutorial/canvas.html
+        https://web.archive.org/web/20190302183420/http://zetcode.com/gui/tkinter/drawing/
         """
         raise NotImplementedError('override loop method')
 

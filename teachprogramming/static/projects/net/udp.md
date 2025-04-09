@@ -1,32 +1,40 @@
 UDP/IP
 ===
 
-* UDP/IP is subset (sort of misconception) TCP/IP. TCP is built on top of IP (not UDP)
-
-
-Mental Model
-------------
-
-* When sending UDP you send from a port (like a server), but a random port one is picked for you. Often in 5 digit range. This allows response
-
-```bash
-echo "hello" > /dev/udp/127.0.0.1/5005
-```
-
-
-`udp_send.py`
+## `udp_send.py`
 ```python
 import socket
-import sys
-
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
-data = sys.argv[1].encode('utf8')
 addr = ("127.0.0.1", 5005)
-sock.sendto(data, addr)
+
+sock.sendto('hello'.encode('utf8'), addr)
+```
+```python
+import socket
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+addr = ("127.0.0.1", 5005)
+
+import sys
+data = sys.argv[1]
+
+sock.sendto(data.encode('utf8'), addr)
+```
+```python
+import socket
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+addr = ("127.0.0.1", 5005)
+
+while data := input()
+    sock.sendto(data.encode('utf8'), addr)
+```
+bash commandline equivalent
+```bash
+echo "hello" > /dev/udp/127.0.0.1/5005
+# or
+nc -u 127.0.0.1 5005
 ```
 
-`udp_recv.py`
+## `udp_recv.py`
 ```python
 import socket
 
@@ -37,8 +45,12 @@ while True:
     data, addr = sock.recvfrom(1024)
     print(f"received bytes: {data} from {addr}")
 ```
+bash commandline equivalent
+```bash
+nc -u -l 5005
+```
 
-`udp_recv_tk.py`
+## `udp_recv_tk.py`
 ```python
 import socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -68,7 +80,7 @@ thread.start()
 root.mainloop()
 ```
 
-`udp_recv_tk2.py`
+## `udp_recv_tk2.py`
 ```python
 GRID_SIZE=80
 WIDTH=5
@@ -114,8 +126,32 @@ python3 udp_recv_tk.py
 python3 udp_send.py 100,100,200,200
 ```
 
+Resources
+---------
+
+* https://tkdocs.com/tutorial/canvas.html
+* http://zetcode.com/gui/tkinter/drawing/
+
 
 ---
+
+Mental Model
+------------
+
+* User Datagram Protocol UDP/IP
+    * connectionless
+    * No akc (acknowledgement)
+    * No guaranteed order
+* Transmission Control Protocol TCP/IP
+    * ack (will auto retry)
+    * Reorders
+* UDP/IP is subset (sort of misconception) TCP/IP. TCP is built on top of IP (not UDP)
+
+
+* When sending UDP you send from a port (like a server), but a random port one is `bind`ed for you. 5 digit? port.
+    * This allows sender to listen to responses
+* If `listen`ing, conventionally 4 digits port
+
 
 Video?
 ------

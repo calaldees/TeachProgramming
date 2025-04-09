@@ -21,6 +21,7 @@ class TicTacToe():
             self.sock.bind(('0.0.0.0', 5005))                          # VER: 2players
         except OSError as ex:                                          # VER: 2players
             print('cant bind socket - is another client is already running on this port?')  # VER: 2players
+            self.sock.sendto(b'', self.addr_to)              # VER: 2players
                                                                        # VER: recv
         thread = threading.Thread(target=self.recv)                    # VER: recv
         thread.daemon=True                                             # VER: recv
@@ -38,11 +39,12 @@ class TicTacToe():
                                                                                 # VER: mouse
     def mouse_click(self, event):                                               # VER: mouse
         x, y = floor(event.x/self.grid_size), floor(event.y/self.grid_size)     # VER: mouse
-        #self.sock.sendto(','.join(map(str,(x,y,self.fill))).encode('utf8'), self.addr_to)  # VER: mouse NOT local_state
+        data = ','.join(map(str,(x,y,self.fill))).encode('utf8')                # VER: mouse NOT local_state
         if (not any(self.grid)):                                                # VER: 2players
             self.fill = 'X'                                                     # VER: 2players
         self.grid[x+y*self.width] = self.fill                                   # VER: local_state
-        self.sock.sendto(','.join(self.grid).encode('utf8'), self.addr_to)      # VER: local_state
+        data = ','.join(self.grid).encode('utf8')                               # VER: local_state
+        self.sock.sendto(data, self.addr_to)                                    # VER: mouse
         self.draw_grid()                                                        # VER: local_state
                                                     # VER: draw_grid
     def draw_grid(self):                            # VER: draw_grid
@@ -67,8 +69,10 @@ class TicTacToe():
         while True:                                                 # VER: recv
             data, self.addr_to = self.sock.recvfrom(1024)           # VER: recv
             print(f"received bytes: {data} from {self.addr_to}")    # VER: recv
-            data = data.decode('utf8').strip().split(',')                       # VER: recv_draw
-                                                                                # VER: recv_draw
+            data = data.decode('utf8').strip().split(',')           # VER: recv_draw
+            if not any(data):                                       # VER: 2players
+                continue                                            # VER: 2players
+                                                                    # VER: recv_draw
             #x, y, fill = int(data[0]), int(data[1]), data[2]                    # VER: recv_draw NOT local_state
             #s = self.grid_size                                                  # VER: recv_draw NOT local_state
             #self.canvas.create_rectangle(x*s, y*s, (x+1)*s, (y+1)*s, fill=fill) # VER: recv_draw NOT local_state

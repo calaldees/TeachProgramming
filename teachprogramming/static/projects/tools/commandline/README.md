@@ -31,6 +31,11 @@ Print the first line of each file in a folder
 SQL dump strip inserts to table with grep
 
 
+NetCat
+------
+
+https://nc110.sourceforge.io/
+https://nmap.org/download#windows
 
 ```bash
 # see http headers with `nc`
