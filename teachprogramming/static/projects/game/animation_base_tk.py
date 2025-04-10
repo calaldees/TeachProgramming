@@ -25,6 +25,7 @@ class TkAnimationBase():
         def mouse_motion(event):
             self.mouse_x, self.mouse_y = (event.x, event.y)
         self.root.bind('<Motion>', mouse_motion)
+        self.root.protocol("WM_DELETE_WINDOW", lambda: self.input.add('Escape'))
 
         self.before_start()
         self.animation_thread()
