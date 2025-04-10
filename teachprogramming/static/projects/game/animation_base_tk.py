@@ -1,3 +1,5 @@
+import abc
+import typing as t
 import tkinter
 import time
 
@@ -6,7 +8,9 @@ import time
 # https://stackoverflow.com/questions/52375035/cropping-an-image-in-tkinter
 
 class TkAnimationBase():
-    def __init__(self, width=320, height=180, frames_per_second=60):
+    def __init__(self, width:int=320, height:int=180, frames_per_second:int=60):
+        self.width = width
+        self.height = height
         self.frames_per_second = frames_per_second
 
         self.root = tkinter.Tk()
@@ -44,13 +48,15 @@ class TkAnimationBase():
                 pass
         self.root.destroy()
 
+    @abc.abstractmethod
     def startup(self):
         """
         https://effbot.org/tkinterbook/tkinter-events-and-bindings.htm
         """
         pass
 
-    def loop(self, canvas, frame):
+    @abc.abstractmethod
+    def loop(self, canvas: tkinter.Canvas, frame:int):
         """
         https://tkdocs.com/tutorial/canvas.html
         https://web.archive.org/web/20190302183420/http://zetcode.com/gui/tkinter/drawing/

@@ -61,16 +61,19 @@ root = tkinter.Tk()
 canvas = tkinter.Canvas(root, width=512, height=512)
 canvas.pack()
 
-def recv_msg(x1,y1,x2,y2):
-    #canvas.delete(tkinter.ALL)
-    canvas.create_rectangle(x1,y1,x2,y2,outline="#F00", fill="#0F0")
+def recv_msg(x,y):
+    x, y = int(x), int(y)
+    canvas.create_rectangle(x, y, x+50, y+50, outline="#F00", fill="#0F0")
     canvas.update()
 
 def recv():
     while True:
         data, addr = sock.recvfrom(1024)
         print(f"received bytes: {data} from {addr}")
-        recv_msg(*data.decode('utf8').split(','))
+        try:
+            recv_msg(*data.decode('utf8').split(','))
+        except Exception as error:
+            print(error)
 
 import threading
 thread = threading.Thread(target=recv)
@@ -79,6 +82,14 @@ thread.start()
 
 root.mainloop()
 ```
+```python
+    #canvas.delete(tkinter.ALL)
+```
+```bash
+python3 udp_recv_tk.py
+python3 udp_send.py 100,100
+```
+
 
 ## `udp_recv_tk2.py`
 ```python
@@ -101,17 +112,19 @@ for x in range(WIDTH):
 for y in range(HEIGHT):
     canvas.create_line(0, y*GRID_SIZE, WIDTH*GRID_SIZE, y*GRID_SIZE, fill="black", width=4)
 
-
-def recv_msg(*args):
-    #canvas.delete(tkinter.ALL)
-    canvas.create_rectangle(*args, outline="#F00", fill="#0F0")
+def recv_msg(x,y,fill):
+    x, y = int(x)*GRID_SIZE, int(y)*GRID_SIZE
+    canvas.create_rectangle(x,y,x+GRID_SIZE,y+GRID_SIZE, fill=fill)
     canvas.update()
 
 def recv():
     while True:
         data, addr = sock.recvfrom(1024)
         print(f"received bytes: {data} from {addr}")
-        recv_msg(*data.decode('utf8').split(','))
+        try:
+            recv_msg(*data.decode('utf8').strip().split(','))
+        except Exception as ex:
+            print(ex)
 
 import threading
 thread = threading.Thread(target=recv)
@@ -119,11 +132,6 @@ thread.daemon=True
 thread.start()
 
 root.mainloop()
-```
-
-```bash
-python3 udp_recv_tk.py
-python3 udp_send.py 100,100,200,200
 ```
 
 Resources
