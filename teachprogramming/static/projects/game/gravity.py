@@ -1,56 +1,57 @@
 import random
-import pygame
+from animation_base_tk import TkAnimationBase
 
-from animation_base_pygame import PygameBase
+class Block:                                                                    # VER: single_block
+    x: float = 0                                                                # VER: single_block
+    y: float = 0                                                                # VER: single_block
+    size: int = 20                                                              # VER: single_block
+    x_vel: float = 0                                                            # VER: move_to_mouse
+    y_vel: float = 0                                                            # VER: move_to_mouse
+    def contains(self, mx, my):                                                 # VER: collision
+        s, x, y = self.size, self.x, self.y                                     # VER: collision
+        return mx>=x and mx<=x+s and my>=y and my<=y+s                          # VER: collision
 
-BLACK = (0, 0, 0, 255)
-
-
-class Block:
-    x: float = 0
-    y: float = 0
-    size: int = 0
-    x_vel: float = 0
-    y_vel: float = 0
-
-
-class Gravity(PygameBase):
+class Gravity(TkAnimationBase):
     def __init__(self):
-        super().__init__(resolution=(640, 480))
-        self.MAX_BLOCK_SIZE = 30
-        self.NUM_BLOCKS = 50
-        self.reset()
+        super().__init__(width=640, height=480)
+                                                                                # VER: single_block
+    def before_start(self):                                                     # VER: single_block
+        self.MIN_BLOCK_SIZE = 5                                                 # VER: random_start
+        self.MAX_BLOCK_SIZE = 35                                                # VER: random_start
+        self.NUM_BLOCKS = 50                                                    # VER: multiple_blocks
+        self.reset()                                                            # VER: single_block
 
-    def reset(self):
-        self.blocks = [Block() for i in range(self.NUM_BLOCKS)]
-        for b in self.blocks:
-            b.x = random.random() * self.screen.get_width()
-            b.y = random.random() * self.screen.get_height()
-            b.size = random.randint(0, self.MAX_BLOCK_SIZE) + 5
-        self.time_elapsed = 0
+    def reset(self):                                                            # VER: single_block
+        #self.blocks = [Block()]                                                # VER: single_block NOT multiple_blocks
+        self.blocks = [Block() for i in range(self.NUM_BLOCKS)]                 # VER: multiple_blocks
+        for b in self.blocks:                                                   # VER: random_start
+            b.size = random.randint(self.MIN_BLOCK_SIZE, self.MAX_BLOCK_SIZE)   # VER: random_start
+            b.x = random.random() * (self.width - b.size)                       # VER: random_start
+            b.y = random.random() * (self.height - b.size)                      # VER: random_start
+        self.time_elapsed = 0                                                   # VER: score
 
-    def loop(self, screen, frame):
-        width, height = screen.get_size()
-        mouse_x, mouse_y = pygame.mouse.get_pos()
+    def loop(self, canvas, frame):
+        mx, my = self.mouse_x, self.mouse_y
+                                                                                # VER: single_block
+        for b in self.blocks:                                                   # VER: single_block
+            if b.x < 0 or b.x > self.width-b.size:                              # VER: bounce
+                b.x_vel = -(b.x_vel / 3)                                        # VER: bounce
+            if b.y < 0 or b.y > self.height-b.size:                             # VER: bounce
+                b.y_vel = -(b.y_vel / 3)                                        # VER: bounce
+            b.x_vel += -(b.x - mx) / b.size / 500                               # VER: physics
+            b.y_vel += -(b.y - my) / b.size / 500                               # VER: physics
+            #b.x_vel = 1 if b.x<mx else -1                                      # VER: move_to_mouse NOT physics
+            #b.y_vel = 1 if b.y<my else -1                                      # VER: move_to_mouse NOT physics
+            b.x += b.x_vel                                                      # VER: move_to_mouse
+            b.y += b.y_vel                                                      # VER: move_to_mouse
+            canvas.create_rectangle(b.x, b.y, b.x+b.size, b.y+b.size, fill="#ff0")  # VER: single_block
 
-        for b in self.blocks:
-            if b.x < 0 or b.x > width:
-                b.x_vel = -(b.x_vel / 3)
-            if b.y < 0 or b.y > height:
-                b.y_vel = -(b.y_vel / 3)
-            b.x_vel += -(b.x - mouse_x) / b.size / 500
-            b.y_vel += -(b.y - mouse_y) / b.size / 500
-            b.x += b.x_vel
-            b.y += b.y_vel
-            pygame.draw.rect(screen, "yellow", pygame.Rect(b.x, b.y, b.size, b.size))
+        if any(b.contains(mx, my) for b in self.blocks):                        # VER: collision
+            print(f"Score: {self.time_elapsed}")                                # VER: score
+            self.reset()                                                        # VER: collision
+                                                                                # VER: collision
+        canvas.create_rectangle(mx-2, my-2, mx+2, my+2, fill="#fff")
+        self.time_elapsed += 1                                                  # VER: score
 
-        if screen.get_at((mouse_x, mouse_y)) != BLACK:
-            print(f"Score: {self.time_elapsed}")
-            self.reset()
-
-        pygame.draw.rect(screen, "white", pygame.Rect(mouse_x - 2, mouse_y - 2, 4, 4))
-        self.time_elapsed += 1
-
-
-if __name__ == "__main__":
-    Gravity().run()
+if __name__ == '__main__':
+    Gravity()

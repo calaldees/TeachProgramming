@@ -26,7 +26,7 @@ class TkAnimationBase():
             self.mouse_x, self.mouse_y = (event.x, event.y)
         self.root.bind('<Motion>', mouse_motion)
 
-        self.startup()
+        self.before_start()
         self.animation_thread()
         self.root.mainloop()
 
@@ -49,7 +49,7 @@ class TkAnimationBase():
         self.root.destroy()
 
     @abc.abstractmethod
-    def startup(self):
+    def before_start(self):
         """
         https://effbot.org/tkinterbook/tkinter-events-and-bindings.htm
         """
@@ -65,8 +65,8 @@ class TkAnimationBase():
 
 
 class TkDemo(TkAnimationBase):
-    def startup(self):
-        super().startup()
+    def before_start(self):
+        super().before_start()
         def click(event):
             print(event)
         self.canvas.bind("<Button>", click)

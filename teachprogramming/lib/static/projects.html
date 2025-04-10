@@ -93,7 +93,7 @@ function renderProject(data) {
     return h('div',{},Object.keys(data.languages).map(language=>[
         h('h2',{},language),
         ...Object.entries(data.versions.parents).map(([version, parent_version])=>[
-            h('h3',{},version),
+            h('h3',{},`${parent_version || ''} -> ${version}`),
             h('div',{}, version ? [
                 // render diff
                 h('pre',{class: 'diff'}, renderDiff(data.diffs[language][version])),
