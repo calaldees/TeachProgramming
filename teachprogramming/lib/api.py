@@ -76,7 +76,7 @@ class ProjectResource():
     def project_files(self, project_name: str) -> Iterable[Path]:
         def _filter_file(f):
             relative_path = f.relative_to(self.file_collection.path)
-            return project_name == str(relative_path.parent.joinpath(relative_path.name.removesuffix(''.join(f.suffixes))))
+            return str(relative_path.parent.joinpath(relative_path.name.removesuffix(''.join(f.suffixes)))).startswith(project_name)
         return tuple(filter(_filter_file, self.file_collection.files))
 
 
