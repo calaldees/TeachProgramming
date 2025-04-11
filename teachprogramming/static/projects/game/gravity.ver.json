@@ -3,10 +3,10 @@
     "single_block": {"parents": [""]},
     "move_to_mouse": {"parents": ["single_block"]},
     "random_start": {"parents": ["single_block"]},
-    "collision": {"parents": ["random_start"]},
-    "score": {"parents": ["collision"]},
+    "collision": {"parents": ["single_block"]},
     "multiple_blocks": {"parents": ["single_block"]},
     "physics": {"parents": ["move_to_mouse"]},
     "bounce": {"parents": ["physics"]},
+    "score": {"parents": ["collision"]},
     "full": {"parents": ["score", "multiple_blocks", "bounce"]}
 }}

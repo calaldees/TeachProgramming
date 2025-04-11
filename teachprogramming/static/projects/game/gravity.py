@@ -10,7 +10,7 @@ class Block:                                                                    
     def contains(self, mx, my):                                                 # VER: collision
         s, x, y = self.size, self.x, self.y                                     # VER: collision
         return mx>=x and mx<=x+s and my>=y and my<=y+s                          # VER: collision
-
+                                                                                # VER: single_block
 class Gravity(TkAnimationBase):
     def __init__(self):
         super().__init__(width=640, height=480)
@@ -29,7 +29,7 @@ class Gravity(TkAnimationBase):
             b.x = random.random() * (self.width - b.size)                       # VER: random_start
             b.y = random.random() * (self.height - b.size)                      # VER: random_start
         self.time_elapsed = 0                                                   # VER: score
-
+                                                                                # VER: single_block
     def loop(self, canvas, frame):
         mx, my = self.mouse_x, self.mouse_y
                                                                                 # VER: single_block
