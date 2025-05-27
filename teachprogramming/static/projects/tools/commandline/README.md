@@ -68,6 +68,13 @@ echo "hello3" > /dev/udp/127.0.0.1/5005
 
 ```
 
+
+netcat as a web server!
+```bash
+#!/bin/bash
+while :; do nc -l 80 < index.html; done
+```
+
 netcat
 
 

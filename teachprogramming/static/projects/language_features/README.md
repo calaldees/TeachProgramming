@@ -21,6 +21,7 @@ Features
         * See cheat sheet
     * Generic Types
         * (see in_a_row for csharp quick example)
+        * see ParamSpec in python
 * [[generic_collections]]
 * [[inheritance]]
 * import/library management
@@ -60,6 +61,7 @@ More
 
 * [[_evaluating_languages]]
 * [[_further_reading]]
+* [14 Advanced Python Features](https://blog.edward-li.com/tech/advanced-python-features/)
 
 Language specific reference
 ---------------------------

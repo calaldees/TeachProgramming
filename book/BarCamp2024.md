@@ -88,7 +88,8 @@ Who can sit for hours and hours in a seat doing stuff they are told to do?
 ### Identity Comes before skill
 
 * Example: "The guitar kid"
-
+* We get satisfaction from doing things we are good at
+  * todo (cite job satisfaction survey/research) - compounding identity
 
 ### Stop using ...
 

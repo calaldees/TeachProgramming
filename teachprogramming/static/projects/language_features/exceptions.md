@@ -16,3 +16,22 @@ else:
 
 Other forms of error handling
 Golang always returns an error
+
+
+---
+
+Rethrow from
+```python
+    except Exception as e:
+        raise RadioShowRepositoryError(
+            f'Error Fetching Radio show with ID {id_}'
+        ) from e
+```
+
+---
+
+* Exceptions blast through the type system
+* Can't be formally checked (no static analysis)
+* Values as errors
+  * (like GoLang - always returned)
+  * Union types? (python)

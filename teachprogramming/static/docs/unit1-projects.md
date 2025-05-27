@@ -340,6 +340,7 @@ Implement Conways game of life in ASCII text
 
 ### Grade A
 * Make the game playable for 2 players
+* Make UI to use mouse (A*)
 
 ### Techniques
 * This project is designed to get you to use 2D Arrays and Pseudo Code design

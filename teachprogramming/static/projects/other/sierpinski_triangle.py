@@ -2,6 +2,7 @@
 # https://stackoverflow.com/questions/1726698/code-golf-sierpinskis-triangle
 # https://twitter.com/CompSciFact/status/1785300824379318742
     # f(x,y) = (-(-(~(x | y)))) % 12
+# https://github.com/maximecb/Turing-Drawings
 
 def isPowerOfTwo(x):
     return (x & (x - 1)) == 0

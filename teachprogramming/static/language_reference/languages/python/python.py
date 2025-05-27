@@ -401,18 +401,18 @@ def urllib_request(*args, **kwargs):                  # ver: http_request
     request = urllib.request.Request(*args, **kwargs) # ver: http_request
     with urllib.request.urlopen(request) as response: # ver: http_request
         return response.read()                        # ver: http_request
-      
+
 def http_request():
   pass
 
 def http_request_json():
   import json                                           # ver: http_request_json
-  def fetch_json(url, data={}, method='GET'):           # ver: http_request_json
+  def fetch_json(url, data={}, headers={}, method='GET'): # ver: http_request_json
       return json.loads(urllib_request(                 # ver: http_request_json
         url,                                            # ver: http_request_json
         json.dumps(data).encode('utf8'),                # ver: http_request_json
         method=method,                                  # ver: http_request_json
-        headers={"Content-type": "application/json"}    # ver: http_request_json
+        headers={"Content-type": "application/json", **headers}    # ver: http_request_json
       ))                                                # ver: http_request_json
                                                         # ver: http_request_json
   from pprint import pprint                             # ver: http_request_json
@@ -420,6 +420,16 @@ def http_request_json():
     'https://jsonplaceholder.typicode.com/posts/1',     # ver: http_request_json
     method="GET"))                                      # ver: http_request_json
   #pprint(fetch_json('http://localhost:8000/item', {"user_id": "user1234", "keywords": ["hammer", "nails", "tools"], "description": "A hammer and nails set. In canterbury", "lat": 51.2798438, "lon": 1.0830275}, method='POST'))
+
+def base64_encode_decode():
+  # TODO:   # ver: base64_encode_decode
+  # Unsure if base64 should be in core - maybe like graphics this should be in a separate file
+  pass
+
+def compress():
+  # TODO:   # ver: compress
+  # Again: Unsure where this should go
+  pass
 
 def file_binary():
   pass   # TODO    # ver: file_binary

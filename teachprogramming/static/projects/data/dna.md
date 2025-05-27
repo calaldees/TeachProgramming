@@ -37,6 +37,7 @@ Activities
 
 Printout `dna1` and `dna2` generated from the code below.
 ```python
+# regex101.com
 import random
 import re
 random.seed(0)
@@ -48,6 +49,10 @@ print(dna1)
 print()
 print()
 print(dna2)
+
+defect = r'GTAC[AC].TT'
+print(re.search(defect, dna1))
+print(re.search(defect, dna2))
 ```
 
 * Which one has the genetic defect `GTAC[AC].TT`

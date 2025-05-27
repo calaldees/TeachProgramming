@@ -407,3 +407,57 @@ Can the same be true for programming/coding?
     * > 2,500 job applications. Fewer than 100 filled a form with open-ended questions. About 15 went on to complete a reasonably simple real-world challenge.
     * > Like wild animals raised too long in captivity, our students have lost crucial survival skills for the real world. Our education system isn’t just failing them — it’s domesticating them into helplessness, training them for a life of being spoon-fed.
     * not an accredited school in India - allows new approach - https://www.comini.in/learning-comini
+
+
+"Identity comes before skill"
+
+
+* [The language brain matters more for programming than the math brain?](https://massivesci.com/articles/programming-math-language-python-women-in-science/)
+    * Programming skill is IQ. You can learn it faster with good language skill. Both of these are no shock
+    * [HN Comments](https://news.ycombinator.com/item?id=43870969)
+
+Has anyone here actually read the paper? Heavily clickbait headline, completely exaggerating the study results, which themselves are not very rigorous (to be generous)
+
+Tiny sample size - 36 people completed
+
+Numeracy has R^2 = .27 Language has R^2 = .31
+
+They then run stepwise regression to determine variance contributions, seemingly ignoring their earlier results, and this leads to almost no contribution from numeracy. Why? Because they have ~10% shared variance and stepwise regression is greedy - will just take whatever you give it first.
+
+I can't mention this part enough. If you got a second, very similar language test, and added it to the model, you would _also_ find it has almost no unique variance added.
+
+Every thing they measure is incredibly noisy and they do not once attempt to deal with this. Human based reviewers, time-to-completion, etc.
+
+p-value for "language learning is more significant than numeracy" on the values they give (Steiger test) gives 0.772. Utterly insignificant.
+
+Also, to beat the point home, just think about the argument here: * Numeracy contributes 27% of variance
+
+* Language skills contribute 31% of variance
+
+* After regression step, numeracy contributes only 2% of unique variance. Because you added a correlated variable!
+
+Literacy (pedagogy explicit)
+--------
+
+* more advanced words - build vocabulary
+    * see TeacherEducation for more examples + extended description
+    * using `/` in work
+        * simple basic word / complex domain word
+        * Can also be used to join two concepts to convey more meaning
+            * e.g. "moved/collected here" - taken items from multiple sources and collated a new logical/related group here
+        * Give credit and comment where this is seen
+
+
+---
+
+* [How to Start a School With Your Friends](https://prigoose.substack.com/p/how-to-start-a-university)
+
+Spaced Repetition
+-----------------
+
+* [Spaced repetition memory system](https://notes.andymatuschak.org/Spaced_repetition_memory_system)
+    * Lots of references/links
+* [Spaced Repetition Systems Have Gotten Way Better](https://domenic.me/fsrs/)
+    * The maths behind our forgetting curve is flawed
+* [Ditching Obsidian and building my own](https://amberwilliams.io/blogs/building-my-own-pkms)
+
