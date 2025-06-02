@@ -69,6 +69,13 @@ Other similar projects?
 
 * see [language_reference/README.md](teachprogramming/static/language_reference/README.md)
 
+### Projects online IDE
+
+* [Tiki](https://tiki.li/)
+    * A visual custom learning language for entirely web based tutorial
+    * [HN Comments](https://news.ycombinator.com/item?id=44124808)
+    * [easylang.online](https://easylang.online/) - tiki is a fork?
+
 ### Projects (in steps)
 
 https://github.com/algorithm-archivists/algorithm-archive

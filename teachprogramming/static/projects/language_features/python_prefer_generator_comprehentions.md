@@ -1,4 +1,37 @@
 
+I am writing an article for a team of professional python programmers.
+
+I commonly see the following pattern
+```python
+def get_mylist(items):
+    mylist = []
+    for i in items:
+        if some_criteria(i):
+            mylist.append(some_transform(i))
+    return mylist
+```
+The pattern is creating an empty mutable collection, followed by incrementally adding to the mutable collection, and then finally returning the mutable type.
+
+I want to convey my thoughts on why this is bad pattern and suggest alternatives.
+
+A simple case refactor of the above pattern could be:
+```python
+def get_mylist(items: Iterable[T]) -> Sequence[T]:
+    return tuple(
+        some_transform(i)
+        for i in items
+        if some_criteria(i)
+    )
+```
+This helps with the top level collection being immutable.
+
+
+### Real example
+
+Sometimes the `some_transform` or `some_criteria` is implemented with multiple `if` statements or `match`.
+
+### Mutable original
+
 ```python
 def build_my_list_of_stuff(data) -> list[MyContent]:
     results: list[MyContent] = []
@@ -16,8 +49,7 @@ def build_my_list_of_stuff(data) -> list[MyContent]:
     return results
 ```
 
-This pattern is problematic because
-* It
+#### Possible simplistic refactor
 
 ```python
 ITEM_BUILDERS = {
@@ -32,21 +64,43 @@ def build_my_list_of_stuff(data) -> Sequence[MyContent]:
     )
 ```
 
-* I can choose my Sequence implementation type (in this case an immutable `tuple`, but this could be `set`)
-* The pattern is expandable with data structure (we can add new ways of processing without expanding a big case structure). This could even be modular at runtime if you're mad enough.
+### Prefer Immutable types over Mutable
+
+The benefits of the approach above:
+
+* The pattern is expandable with data structure (we can add new ways of processing without expanding a big match/case structure). This could even be modular at runtime if the complexity is required. It's potentially plugin-able.
 * Less room for weirdness - more understandable/grok-able
-    * Cognitively, we can see that this is a straight transform (List of things -> Transform -> New list of things). There are no surprises.
+    * Cognitively, we can see that this is a straight transform (List of things -> Transform -> New list of things). There are no surprises, special cases, odd control flows.
 * Using [Collections Abstract Base Classes](https://docs.python.org/3/library/collections.abc.html#collections-abstract-base-classes) as type hints, documents how this data is intended to be used in future
     * `Collection`, `Iterable`, `Sequence`, `MutableSequence`
+* I can choose implementation type (in my example above I used immutable `tuple`, but this could be `frozenset` depending on use case)
 
-* General rules:
-    * Prefer comprehensions over incrementally building mutable structures where possible
-    * Prefer immutable types over mutable variants where possible
-    * Prefer iterables in preference to collections where possible (unless you know you will need to traverse the collection multiple times)
-    * Try not to use logic (`if`, `case`) to express a data structures
 
-Arguments
-* I can just convert it at the end (use a `ll = [] ; ll.append('a')` then `tuple(ll)`). This feels like a waste of allocation. Why build 65,000 items and then traverse them again in memory to a new structure. That's uneeded
+### General rules (summary)
+
+* Prefer comprehensions over incrementally building mutable structures where possible
+* Prefer immutable types over mutable variants where possible
+* Prefer iterables in preference to collections where possible (unless you know you will need to traverse the collection multiple times)
+* Try not to use logic (`if`, `case`) to express a data structures - use lookups in preference
+
+
+### Arguments
+
+* Q: Could just convert it at the end? e.g `ll = [] ; ll.append('a')` then `tuple(ll)`? A: This feels like a waste of allocation. Why build 65,000 items and then traverse them again in memory to form a new structure. That's unneeded.
+
+
+
+### Side Quest: Generators vs Rendered Collections?
+
+We don't need to return a `Collection`. Could we return an `Iterable`/`Generator`
+
+* Generators process items 'as needed':
+    * Advantages:
+        1. We don't have the memory overhead of keeping all rendered items in memory before moving to the next stage of processing. 
+        2. We can chain generators together effectively
+    * Disadvantages:
+        * Debugging becomes harder
+        * We can only iterate though our generator once, that may not be desirable as we don't know what downstream operations may need to be performed.
 
 
 
@@ -234,9 +288,15 @@ def build_search_response(search_data) -> SearchResponse:
     return SearchResponse(results=tuple(map(_build_search_results, search_data)))
 ```
 
----
+Reduce Pattern
+==============
 
-Grouping with append pattern.
+
+
+Grouping Pattern
+================
+
+Grouping with append pattern?
 Consider ways of optimizing this, this is super common
 
 ```python
@@ -250,6 +310,10 @@ Consider ways of optimizing this, this is super common
         else:
             candidate_blocks.append(block)
 ```
+
+
+Other Examples
+==============
 
 karakara
 ```

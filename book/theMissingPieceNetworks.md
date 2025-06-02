@@ -61,3 +61,9 @@ Tools
     * Pattern: First joiner privileged
         * Allows development of client/server patterns without changing the client tooling (learning a whole new language api/pattern for server).
     * Web shit isn't blocked by most schools. CodeSpaces/GitPod can do this
+
+
+(Interest)
+----------
+
+* [Bill Gates’ Internet Tidal Wave Microsoft memo](https://dfarq.homeip.net/bill-gates-internet-tidal-wave-microsoft-memo/) 1995 (commentary 2025)

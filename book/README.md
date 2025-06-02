@@ -447,6 +447,13 @@ Literacy (pedagogy explicit)
             * e.g. "moved/collected here" - taken items from multiple sources and collated a new logical/related group here
         * Give credit and comment where this is seen
 
+(TODO: investigate TeacherEducation and port some vocab notes here.)
+Semantically
+Volumentrics
+nable to determine the flow that has lead to
+Seeing as we've verified that this was coming exclusivly from andorid clients, I suggest we proceed with the iOS rollout and monitor.
+I think the 400's are a validation error from malformed json made to the /blocks/ endpoint from android clients.
+
 
 ---
 
