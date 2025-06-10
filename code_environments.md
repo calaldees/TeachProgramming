@@ -76,17 +76,19 @@ Online Coding Environments
             * [tio.run](https://tio.run/)
 
 
-Skills
-------
+IDE Skills
+----------
 
-* Rearrange windows
+* Rearrange windows (left/right) terminal/ide
 * Block Indent + De-indent
 * Look at the colours of the brackets - indentation
 * Multiple terminals
 * Hotkeys to move tabs + run
     * See more in mapOfComputing hotkeys
 * understand whitespace (and different newlines, tabs, spaces)
+* 4 types of brackets and 3 types of quotes
 * Get a small program that works - commit! -  add functionality - Read the errors
-* Devtools
+* Run the autoformatter
+* Web Devtools
     * Network (request response? cors?)
     * JS console

@@ -45,7 +45,16 @@ Codespaces
 
 https://github.com/sherlock-project/sherlock
 
-
+```bash
+pip install .
+pipx install sherlock-project
+sherlock --timeout 5 --print-all calaldees
+gh codespace delete
+```
+Some false posetives
+Medium - followers
+Bandcamp - not happy
+Steam (I locked it down)
 
 
 Statistics
@@ -58,3 +67,6 @@ Alexa listening stats
 
 * [App - Global Player Account Sign Ups and Sign Ins](https://app.amplitude.com/analytics/globalplayer/dashboard/x9t47ool/edit/f3eiik5n)
 * [events per user of each feature-Cohort](https://app.amplitude.com/analytics/globalplayer/chart/2swz57p5)
+
+Disco
+-----

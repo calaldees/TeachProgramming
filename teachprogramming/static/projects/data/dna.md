@@ -20,7 +20,7 @@ The human genome is 3.2 billion pairs (gigabases)
 <details>
 <summary>How big?<summary>
 
-* 1 Billion is 1000 Million
+* 1 Billion is 1,000 Million
     * 1,000,000 * 1000 = 1,000,000,000 (9  zeros)
 * Circumference of the earth (equator) = 40,075 Killometers
     * 1 kilometers is 1000 meters
@@ -110,7 +110,7 @@ re.search(DEFECT, dna2)
 * https://en.wikipedia.org/wiki/UCSC_Genome_Browser
 
 * Browse the human genome
-    * [National Center for Biotechnology Information (ncbi)](https://www.ncbi.nlm.nih.gov/gdv/browser/genome/?chr=17&from=73060031&to=73970032&id=GCF_000001405.40)
+    * [NCBI Genome Data Viewer](https://www.ncbi.nlm.nih.gov/gdv/browser/genome/?chr=17&from=73060031&to=73970032&id=GCF_000001405.40) National Center for Biotechnology Information (ncbi)
     * [UCSC Genome Browser (web)](https://genome.ucsc.edu/)
     * [ensembl](http://www.ensembl.org/Homo_sapiens/Location/View?r=17:73514968-73515099;db=core)
 
@@ -127,3 +127,4 @@ More BioInformatics
     * [Semiglobal Alignment](http://rosalind.info/problems/smgb/)
 * [Sequencing your DNA with a USB dongle and open source code](https://stackoverflow.blog/2021/12/24/sequencing-your-dna-with-a-usb-dongle-and-open-source-code/)
 * [Download Complete Genomes](https://hgdownload.soe.ucsc.edu/downloads.html)
+* [](https://www.ncbi.nlm.nih.gov/guide/howto/dwn-genome/)

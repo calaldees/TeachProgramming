@@ -27,3 +27,8 @@ If you can sit down in a chair long enough and focus on something, you're probab
 
 We now have more CS graduates with on average lower IQ's and less personal interest 'studying' (a loose term) the subject. They are not able to put in the time required to reach a high level of skill in the domain. They are not capable of providing business value in this domain. The wont pay back their student loans, governments and academic institutions have just wasted these young peoples time and money.
 
+
+---
+
+See Professional citification
+
