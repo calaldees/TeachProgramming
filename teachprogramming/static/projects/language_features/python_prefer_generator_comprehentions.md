@@ -10,7 +10,10 @@ def get_mylist(items):
             mylist.append(some_transform(i))
     return mylist
 ```
-The pattern is creating an empty mutable collection, followed by incrementally adding to the mutable collection, and then finally returning the mutable type.
+The pattern is:
+1. creating an empty mutable collection
+2. incrementally adding to the mutable collection
+3. finally returning the mutable type
 
 I want to convey my thoughts on why this is bad pattern and suggest alternatives.
 
@@ -23,12 +26,15 @@ def get_mylist(items: Iterable[T]) -> Sequence[T]:
         if some_criteria(i)
     )
 ```
-This helps with the top level collection being immutable.
+This helps slightly with:
+* The top level collection being immutable
+* The output is typed with generics
 
 
-### Real example
+### Another example of a weak code pattern
 
-Sometimes the `some_transform` or `some_criteria` is implemented with multiple `if` statements or `match`.
+Sometimes the `some_transform` or `some_criteria` are more complicated;
+possible multiple `if` statements or `match`, possibly nested loops or function calls..
 
 ### Example of the original approach - Mutable List appending
 
@@ -49,6 +55,10 @@ def build_my_list_of_stuff(data) -> list[MyContent]:
     return results
 ```
 
+* In describing our loop/logic we've contaminated the iteration with lots of weighty syntax and additional indentation.
+* We have multiple appends. Dependeing on the cylomatic complexity and layout, it's not clear that all paths result in an append.
+* There could be returns, continues or breaks in the flow.
+
 #### Possible simplistic refactor
 
 ```python
@@ -64,47 +74,60 @@ def build_my_list_of_stuff(data) -> Sequence[MyContent]:
     )
 ```
 
+* The loop remains concise and focused. I can now identify the other processing (map/filter) operations and dig further.
+
+
 ### Prefer Immutable types over Mutable
 
-The benefits of the approach above:
+There is more to discuss, but at this point I can describe some observations ...
 
-* The pattern is expandable with data structure (we can add new ways of processing without expanding a big match/case structure). This could even be modular at runtime if the complexity is required. It's potentially plugin-able.
+
+* The pattern is expandable with data structure (we can add new ways of processing without expanding a match/case structure with additional indentation and the weight of extra cases).
+    * Bonus: `ITEM_BUILDERS` could even be modular at runtime if the complexity is required. It's potentially plugin-able. (looking further; using a module level dict is also not a brilliant pattern. Suggest a `register` function or decorator to register processing)
 * Less room for weirdness - more understandable/grok-able
-    * Cognitively, we can see that this is a straight transform (List of things -> Transform -> New list of things). There are no surprises, special cases, odd control flows.
+    * Cognitively, we can see that this is a transform (List of things -> Transform -> New list of things). There are no surprises, special cases, odd control flows.
     * Each append, extend, or mutation step introduces implicit state, increasing the risk of side-effects, especially if:
         * The function grows beyond the simple loop.
         * A future refactor introduces early return or continue, creating subtle bugs.
 * Using [Collections Abstract Base Classes](https://docs.python.org/3/library/collections.abc.html#collections-abstract-base-classes) as type hints, documents how this data is intended to be used in future
-    * `Collection`, `Iterable`, `Sequence`, `MutableSequence`
+    * `Collection`, `Iterable`, `Sequence`, `MutableSequence`, `Set` (Note how all intention of mutability collections are clearly labeled in the type name)
 * I can choose implementation type (in my example above I used immutable `tuple`, but this could be `frozenset` depending on use case)
-* Harder to Test in Isolation
+* Potential for test in isolation
     * Incremental construction ties the creation and accumulation logic together. You can't easily extract or test the transformation logic independently.
 * Reuse Is Harder
     * When using comprehensions or generator-based patterns, you can extract the transform/filter logic into reusable functions or pipelines. With mutable accumulation, reuse often involves manually re-copying loop+append patterns.
 * Thread-Safety / Concurrency Pitfalls
-    * While not always relevant, shared mutable state can lead to subtle bugs in concurrent code. Favoring immutability minimizes this class of issues entirely.
+    * While not always relevant, mutable state can lead to subtle bugs in concurrent code. Favoring immutability minimizes this class of issue entirely.
+* If you must incrementally construct a mutable collection consider using `reduce()` as this names/signposts the pattern correctly for other developers and prevents some of the weird/surprising cases of early escapes, etc.
+    * The reducer function is unit testable (see test isolation above)
 
 
 ### General rules (summary)
 
 * Prefer comprehensions over incrementally building mutable structures where possible
+    * Keep iteration logic tight
 * Prefer Immutable types over mutable variants where possible
 * Prefer Set's if order is not important. This helps document/hint at how this data is intended to be used
-* In order of precedence prefer `Iterable`/`Generator` > `Collection` > `Sequence/Set`
-    * A `Collection` is `Iterable` and can be iterated over multiple times
-    * I would prefer to explicitly return `Generator` rather than masking a Generator as an `Iterable` because they can't be iterated over multiple times
+* In order of precedence prefer `Collection[T]`or`Generator[T]` > `Sequence/Set/Mapping` > `MutableSequence/MutableMapping/MutableSet` > `ImplementationType` when possible
+    * Prefer `Collection[T]`or`Generator[T]` over `Iterable` in most cases
+        * Don't mask a `Generator` as an `Iterable`. This can't be iterated over multiple times and obscures this constraint to others.
 * Try not to use logic (`if`, `match/case`) to express a data structures - use lookups in preference
+    * See Sam's argument that expands on this:
+        * > Prefer polymorphism if you expect the number of types to increase, prefer switch if you expect the number of operations on those types to increase.
+* When incremental mutable construction is required, use the `reduce` pattern for clarity
 
 
 ### Arguments
 
-* Q: Could just convert it at the end? e.g `ll = [] ; ll.append('a')` then `tuple(ll)`? A: This feels like a waste of allocation. Why build 65,000 items and then traverse them again in memory to form a new structure. That's unneeded.
-
+* Q: Could just convert it at the end? e.g `ll = [] ; ll.append('a')` then `tuple(ll)`?
+    * A: This feels like a waste of allocation. Why build 65,000 items and then traverse them again in memory to form a new structure. That's unneeded.
+* Q: I don't see how this helps composition? I'm still returning a collection and now I've had to spend more time typing types that I don't think bring value. A `list` is simpler
+    * A: Composition is hard(er) in python, see below for some chaining ideas
 
 
 ### Side Quest: Generators vs Rendered Collections?
 
-We may not need to return a `Collection`. Could we return an `Iterable`/`Generator`? 
+We may not need to return a `Collection`. Could we return an `Iterable`/`Generator`?
 * Generators process items 'as needed':
     * Advantages:
         1. We don't have the memory overhead of keeping all rendered items in memory before moving to the next stage of processing. 
@@ -114,7 +137,7 @@ We may not need to return a `Collection`. Could we return an `Iterable`/`Generat
         * We can only iterate though our generator once, that may not be desirable as we don't know what downstream operations may need to be performed.
 
 
-Chaining
+Chaining/Composing in python (My experiment)
 --------
 
 Inspired by Java (Streams) and C# (Linq)
@@ -129,12 +152,20 @@ tuple(map(filter(group((map(source))))))
 #                                  ^^^^^ !? I hate this .. I hate you python .. why do you do this to us!
 ```
 
-https://github.com/calaldees/libs/blob/336ff630a69c38447b6f29dabcab9964e8b48b11/python3/calaldees/iterator.py#L45
-
-If plain javascript can do this in the core language
+If dirty little plain javascript can do this in the core language
 ```javascript
 [1,2,3,4,5].map(i=>i+1).filter(i=>i>3)
 ```
+
+
+https://github.com/calaldees/libs/blob/336ff630a69c38447b6f29dabcab9964e8b48b11/python3/calaldees/iterator.py#L45
+
+I've used this in audio decode streaming (bytes to 16bit/24bit audio ints) and cryptographic demo processing of incoming stream (input encrypted --- output decrypted)
+
+
+### Chains - can you go too far?
+
+Frameworks like RxJava encourage long pipelines/chains. When used to the extreem they can make data processing inflexible and difficult to debug. As with all patterns then can be abused/misused.
 
 
 Reduce Pattern
