@@ -1,4 +1,4 @@
-Prefer generator comprehensions or immutable collections over incrementally creating mutable collections
+Prefer 'immutable collections'/'generator comprehensions' over 'incrementally constructing mutable collections'
 ======
 
 I commonly see the following pattern
@@ -56,8 +56,8 @@ def build_my_list_of_stuff(data) -> list[MyContent]:
 ```
 
 * In describing our loop/logic we've contaminated the iteration with lots of weighty syntax and additional indentation.
-* We have multiple appends. Dependeing on the cylomatic complexity and layout, it's not clear that all paths result in an append.
-* There could be returns, continues or breaks in the flow.
+* We have multiple `append`s. Depending on the cyclomatic complexity and layout, it's not clear that all paths result in an append.
+* There could be `return`s, `continue`s or `break`s in the flow.
 
 #### Possible simplistic refactor
 
@@ -81,7 +81,6 @@ def build_my_list_of_stuff(data) -> Sequence[MyContent]:
 
 There is more to discuss, but at this point I can describe some observations ...
 
-
 * The pattern is expandable with data structure (we can add new ways of processing without expanding a match/case structure with additional indentation and the weight of extra cases).
     * Bonus: `ITEM_BUILDERS` could even be modular at runtime if the complexity is required. It's potentially plugin-able. (looking further; using a module level dict is also not a brilliant pattern. Suggest a `register` function or decorator to register processing)
 * Less room for weirdness - more understandable/grok-able
@@ -91,7 +90,10 @@ There is more to discuss, but at this point I can describe some observations ...
         * A future refactor introduces early return or continue, creating subtle bugs.
 * Using [Collections Abstract Base Classes](https://docs.python.org/3/library/collections.abc.html#collections-abstract-base-classes) as type hints, documents how this data is intended to be used in future
     * `Collection`, `Iterable`, `Sequence`, `MutableSequence`, `Set` (Note how all intention of mutability collections are clearly labeled in the type name)
-* I can choose implementation type (in my example above I used immutable `tuple`, but this could be `frozenset` depending on use case)
+    * `collection.abc` are correct. `typing` uses the same abstract names, but is wrong!
+        * `typing.Set` is mutable `collection.abc.Set` is immutable
+        * I know I spoke at a previous workgroup about `import typing as t` -> `t.Set`. I was talking in old world terms; `typing` is deprecated in favor of `collection.abc`.
+* I can choose my collection implementation type (in my example above I used immutable `tuple`, but this could be `frozenset` depending on use case)
 * Potential for test in isolation
     * Incremental construction ties the creation and accumulation logic together. You can't easily extract or test the transformation logic independently.
 * Reuse Is Harder
@@ -137,13 +139,16 @@ We may not need to return a `Collection`. Could we return an `Iterable`/`Generat
         * We can only iterate though our generator once, that may not be desirable as we don't know what downstream operations may need to be performed.
 
 
-Chaining/Composing in python (My experiment)
+Chaining/Composing in python (My untyped old experiment)
 --------
 
-Inspired by Java (Streams) and C# (Linq)
-
-My dumb old python experiment without typing.
-Chaining iterators into reuseable pipelines
+* Other languages
+    * Java (Streams)
+        * https://docs.oracle.com/en/java/javase/22/core/filter-processes-streams.html
+    * C# (Linq)
+        * https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.select
+        * c sharp elevated these to language keywords
+            * https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/select-clause
 
 
 ```python
@@ -152,11 +157,14 @@ tuple(map(filter(group((map(source))))))
 #                                  ^^^^^ !? I hate this .. I hate you python .. why do you do this to us!
 ```
 
-If dirty little plain javascript can do this in the core language
+If dirty little plain javascript can do this in the core language, then python needs to sort itself out.
 ```javascript
 [1,2,3,4,5].map(i=>i+1).filter(i=>i>3)
 ```
 
+
+My dumb old python experiment without typing.
+Chaining iterators into reuseable pipelines
 
 https://github.com/calaldees/libs/blob/336ff630a69c38447b6f29dabcab9964e8b48b11/python3/calaldees/iterator.py#L45
 
@@ -165,7 +173,7 @@ I've used this in audio decode streaming (bytes to 16bit/24bit audio ints) and c
 
 ### Chains - can you go too far?
 
-Frameworks like RxJava encourage long pipelines/chains. When used to the extreem they can make data processing inflexible and difficult to debug. As with all patterns then can be abused/misused.
+Frameworks like RxJava encourage long pipelines/chains. When used to the extreme they can make data processing inflexible and difficult to debug. As with all patterns then can be abused/misused.
 
 
 Reduce Pattern
