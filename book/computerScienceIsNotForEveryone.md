@@ -1,3 +1,6 @@
+'Anyone can code' considered harmful
+====================================
+
 This is not an argument against education. This is an argument against misplaced education.
 
 * Not everyone 'needs' to code
@@ -22,7 +25,7 @@ If you can sit down in a chair long enough and focus on something, you're probab
 * [Honest and Elitist Thoughts on Why Computers Were More Fun Before](https://www.datagubbe.se/aficion/) - Computers were more fun when they weren't for everyone.
 * YouTube [Software engineering is NOT for everybody.](https://www.youtube.com/watch?v=KrboWpmD1pA) CodeJesus 2025
 * ["Learn to Code" Backfires Spectacularly as Comp-Sci Majors Suddenly Have Sky-High Unemployment](https://futurism.com/computer-science-majors-high-unemployment-rate) "Every kid with a laptop thinks they're the next Zuckerberg."
-
+CS Must Be GateKept codejesus video
 
 
 We now have more CS graduates with on average lower IQ's and less personal interest 'studying' (a loose term) the subject. They are not able to put in the time required to reach a high level of skill in the domain. They are not capable of providing business value in this domain. The wont pay back their student loans, governments and academic institutions have just wasted these young peoples time and money.
@@ -30,5 +33,5 @@ We now have more CS graduates with on average lower IQ's and less personal inter
 
 ---
 
-See Professional citification
+See [[cirtificationVsAcademia]]
 

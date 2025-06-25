@@ -8,3 +8,5 @@ What do the two look like?
 Why our education structure is currently not fit for purpose in this domain
 
 (Finish)
+
+Why CS must be gatekept

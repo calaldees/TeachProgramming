@@ -32,6 +32,11 @@ Language
 Project Ideas
 -------------
 
+* [](https://tixy.land/)
+    * Graphical way to look at code on an x,y,time grid
+    * Super interesting - investigate the thinking about how/why this was made
+* Lift throughput simulator concept?
+
 * Mastermind
 * Password strength checker
 * 

@@ -97,3 +97,18 @@ def add_two(x: float, y: float) -> float:
     '''Add two numbers together.'''
     return x + y
 ```
+
+```python
+from typing import Awaitable, Callable, ParamSpec, TypeVar
+
+T = TypeVar("T")
+P = ParamSpec("P")
+
+
+def decorator(fn: Callable[P, Awaitable[T]]) -> Callable[P, Awaitable[T]]:
+    async def decorated(*args: P.args, **kwargs: P.kwargs) -> T:
+        return await fn(*args, **kwargs)
+
+    return decorated
+```
+https://stackoverflow.com/a/71132186/3356840

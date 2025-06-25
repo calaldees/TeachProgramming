@@ -4,7 +4,8 @@ Async + await and the Event Loop
 * See [[concurrency]]
 * Further reading
     * [henriqueinonhe/promises-training](https://github.com/henriqueinonhe/promises-training/)
-        * > Practice working with promises through a curated collection of interactive challenges. This repository provides a platform to refine your skills, complete with automated tests to to give you instant feedback and validate your progress. 
+        * > Practice working with promises through a curated collection of interactive challenges. This repository provides a platform to refine your skills, complete with automated tests to to give you instant feedback and validate your progress.
+    * [Python behind the scenes #12: how async/await works in Python](https://tenthousandmeters.com/blog/python-behind-the-scenes-12-how-asyncawait-works-in-python/)
 
 javascript
 ```javascript
@@ -106,3 +107,23 @@ Further reading
 t.Callable[[URLParams], t.Awaitable[APIPayload]]
 ```
 Explanation of t.Awaitable pattern https://stackoverflow.com/a/59177557/3356840
+
+
+---
+
+
+Prior to Python 3.5 (when async def was introduced), you would define coroutines using a generator-based approach with @asyncio.coroutine and yield from:
+```python
+@asyncio.coroutine
+def my_coroutine():
+    yield from some_async_thing()
+```
+But from Python 3.5 onwards, this was replaced with:
+```python
+async def my_coroutine():
+    await some_async_thing()
+```
+So while async def isn’t syntactic sugar for an exact expression, conceptually it:
+* Creates a function that returns a coroutine object.
+* Automatically implements __await__.
+* Must be awaited (or run via event loop) to do anything useful.
