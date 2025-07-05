@@ -72,6 +72,7 @@ So the people teaching Computing often can't create software to solve a real wol
 Teachers and parents are the people that can create the experiences and environment that young people need to grown in computing.
 
 This book is aimed at semi experienced Computing teachers that feel something is lacking in the current education environment and want ideas to break the cookie cutter mould. Teachers wishing to push beyond mediocre and become exceptional.
+Secondary school Computing, though through to degree level have the same foundations. I consider the growth of actual computing skill largely agnostic of age. The maturity of the learners may change your approach.
 This book may also be useful for technical parents that want to convey more powerful concepts, but are unsure of the steps to get there.
 
 I'm aware that most professional teachers are not software engineers (nor should they be). I intend to offer teachers guidance with 'authentic'(ish) applications/experiences to link the abstract computing curriculums into practical meaningful projects/activities/outcomes.

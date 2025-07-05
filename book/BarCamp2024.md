@@ -33,6 +33,7 @@ Preface: Computing Education Sux
 * Q: So what is important for young people?
   * The grand answer: Self actualization and altering the world though self action and building something
   * The simple answer: Choose to build shit
+  * The refined anser: 'Authentic Participation'
 
 ### Qualifications vs Certification
 
@@ -44,10 +45,11 @@ Preface: Computing Education Sux
 Solution (Part 1 or 2): The intangible fluffy stuff
 ----------------------
 
-* Not everyone can code and should code. There are way better things long term they can work towards that are more useful.
-* Everyone should enjoy building something with autonomy (and that something may be with code)
+* Not everyone can code and should code.
+* There are way better things long term they can work towards that are more useful.
+* Everyone should enjoy building/engaging something with autonomy (and that something may be with code)
 
-The only way to get the exposure (time) and challenge (appropriate difficulty) is self direction
+The only way to get the exposure (time) and challenge (appropriate difficulty) is 'self direction'
 
 
 ### Children should be bored
@@ -65,7 +67,7 @@ Learner Autonomy rather than 74+ exercises in order.
 I failed - experiment over lockdown. 52 weeks. 2 motivated learners. I layed out a fantastic 52 weeks of perfect progression. I failed to take into account autonomy. If all a learner does is move on to exercise 37 out of 78, it does not work.
 Only a small minority of people can access education presented in a cold linear fashion.
 
-Q: What demographic/characteristics can access this education?
+Q: What demographic/characteristics of people that can access mainstream 'mandated' education?
 
 <details>
 
@@ -91,13 +93,14 @@ Who can sit for hours and hours in a seat doing stuff they are told to do?
 * We get satisfaction from doing things we are good at
   * todo (cite job satisfaction survey/research) - compounding identity
 
-### Stop using ...
+### Stop using 'Games' as a vehicle for education
 
-* Realtime manipuation of state - you can see and feel your code manifest into reality ... but
 * 'Games' to teach programming
   * The entirety of all of computing ... and the only think you can think of that has worth is trivially using it for entertainment. Thats lame.
   * Focusing on games alienate some demographics and trivializes the discipline.
-  * e.g. my [[dna]] activity
+* Realtime manipulation of state (simulation?) is good - you can see and feel your code manifest into reality
+* Better example (authentic)
+  * my [[dna]] activity
 
 
 Solution (Part 2 of 2): The tangible stuff
@@ -112,7 +115,7 @@ Students need a framework to:
 It has to be something an 11 year old can do. and scale to 18+
 
 
-* Complexity (11 years old + can use this same grid)
+* Measuring Complexity (11 years old + can use this same grid)
 	* Have you used a variable?
 	* Have you used a function?
 	* Have you used one paramiter?
@@ -127,7 +130,7 @@ It has to be something an 11 year old can do. and scale to 18+
 * > “The spirit and style of student assessment defines the de facto curriculum.”  Rowntree (Reference Rowntree1977)
 
 Why is networks always only taught as theory?
-Use Dig, whois, bitwise xor a subnet mask, use curl -vvv, send UDP packets
+Use `dig`, `whois`, bitwise xor a subnet mask, use `curl` -vvv, send `udp` packets
 The multisocket server
 
 
@@ -137,12 +140,12 @@ The multisocket server
 
 ### Typing speed
 
-* You cant engage with coding if you cant use a keyboard. You need a keyboard because you need 4 different types of brackets and quotes.
+* You cant engage with coding if you cant use a keyboard. You need a keyboard because you need 4 different types of brackets and 3 different quotes. Symbols `|` `^`
 * Touch screen keyboard are not sufficient. Drag and drop is not sufficient. Audio transcription is not sufficient.
 * Every week, measure your number (Year 7 to Year 9?) (I only know one school that does this)
+* Without fluency in your tool, you can't use it to think
 
 ### Pair Programming
-
 
 * If you can say it or write it, your don't know it
 * Equal access to machine (2 keyboards)
