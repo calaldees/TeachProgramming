@@ -20,17 +20,13 @@ explicit
 
 Explain why you should do it one way over another
 
-
-(In another section)
-You can't use, read, watch, someone else's content. It does not work.
-Rule: You MUST generate your own content. Your own notes. Your own code. Your own tutorials. Your own examples. This portfolio is what can be reviewed. You also rewrite from your notes. multiple generations. Keep them all.
-I think the only way for this is paper. It's the only thing free of distractions. The only thing thats truly personal (you could photograph your paper notes for a friend, but it's largely meaningless)
-
+[[paperNotes]]
 
 Banned Words
 ------------
-Just, Simply, Basicly So, Um (even in writing)
-It (fully qualify)
+* Just, Simply, Basically, (even in writing)
+* (verbally) So, Um
+* 'It' (please fully qualify)
 
 https://github.com/calaldees/teacherEducation/blob/acbc846eddf56268305380145fb6ee91e04cdf46/teacherEducation/presentations.md?plain=1#L182
 

@@ -1,50 +1,108 @@
-Perception: VR, AR, CyberSecurity/Hacking, YouTune, 'The Cloud', Social Media
-Non existant or abstract at lower levels
-
-Degrees offer this!
-Foundations again - and you know what, most entrants can't do it
-
-Music degree without playing an instument
-An art degree without a portfolio
-
-80% have to pass. OFS office for students
-So the entrants have no computing prerequestits - they are a bum on a seat that yields £30,000 and 80% of them have to pass
-
-Grade inflation
-38% firsts degree 2021
-
-A Level computing 7%
-
-Degrees are not trusted by employers
+Academia Vs Certification
+-------------------------
 
 
-A-Levels are understood
-A-Levels are a national sport that every entrant is participating in
+Academia or Certification
+-------------------------
 
 
 
-
-TODO:
-* [More Students Are Turning Away From College and Toward Apprenticeships](https://www.wsj.com/articles/more-students-are-turning-away-from-college-and-toward-apprenticeships-15f3a05d) Wall Street Journal
-* [Role of professional associations in preparing, recruiting, and retaining computing professionals](https://dl.acm.org/doi/10.1145/1982143.1982174)
-* [Academic degrees and professional certification](https://ieeexplore.ieee.org/abstract/document/1366120) 2004
-    * > we discuss general professional certifications and compare and contrast them with a bachelor's degree to help decide which is most appropriate.
-* [Motivation and Strategies for Effective Inclusion of Cloud Solution Provider Certifications in Computing Curricula](https://dl.acm.org/doi/abs/10.1145/3571785.3574128)
-* [From Knowledge-based to Competency-based Computing Education: Future Directions](https://ieeexplore.ieee.org/abstract/document/9274288) 2020
-* [Investigating Academia-Industry Gap for Data Science Jobs and Curriculum](https://ieeexplore.ieee.org/abstract/document/9655894)
-* [Skills, Certifications, or Degrees: What Companies Demand for Entry-Level Cybersecurity Jobs](https://eric.ed.gov/?id=EJ1246234) 2020
-* [Educating Cyber Professionals: A View from Academia, the Private Sector, and Government](https://doi.org/10.1109/MSP.2012.36) 2002
-* [SKYNET: A platform for maximizing career opportunities](https://eds.s.ebscohost.com/eds/detail/detail?vid=0&sid=fc2e2359-d15d-4e7d-b017-d3dd3783ef47%40redis&bdata=JkF1dGhUeXBlPWNvb2tpZSxpcCxzaGliJnNpdGU9ZWRzLWxpdmUmc2NvcGU9c2l0ZQ%3d%3d#AN=edseee.9487581&db=edseee) 2021
-* [Communications education and training: expanding the student experience [Guest Editorial]](https://doi.org/10.1109/MCOM.2014.6979958) 2014
+Academia + Citification
+-----------------------
 
 
-* [What Skills Do CS Grads Need?: Colleges And Employers Disagree.](https://dl.acm.org/doi/10.1145/3545947.3576369)
-    * Video/Poster presentation 10min
-    * Employers focus on "working without knowing the answers" and "collaboration"
-        * Manage oneself, experiment
 
-* [From Blocks to Professional Development – Thoughts on the Future of Educational Programming](https://dl.acm.org/doi/pdf/10.1145/3605468.3609785) Michael Kölling 2023
-    * https://stride-lang.net/
+---
+
+In compting qualifications
+Everyone is trying to push their own version of the coolaid
+There own brand
+There own assessment
+
+Universities - stop re-inventing shit!
+Use certifications as your assessment
+Setup as. Pearson Test Centre - get external revenue
+
+NCCE Citification to check teachers knowledge
+They had their own assessment scheme, and people to administrate it. What a waste of time and resources. And did the people that got the certificate feel they knew the full GCSE spec; No because it wasn't the GCSE.
+Just use the GCSE?!
 
 
-* [Redesigning Learning Spaces and Credentials for 21st-Century Emerging Tech Careers](https://www.learntechlib.org/p/215853/)
+---
+
+Institutions
+Stop making new forms of final qualification/citification/assessment
+It's a waste of your time
+Existing system exist
+
+As a teacher focus on assessment that helps the lerner grow
+
+---
+
+Poor did not have access to infroamtion
+Libraryies
+We now have the internet they have access to information
+They don't have the attention and personal feedback - they have chatgpt and llms they have the best intantainious feedback.
+Are they smarter and more informed .. no
+
+
+None of this makes a difference ... 
+IQ or G .. is that all it is
+
+[[praise]]
+No; we tell young people they are clever it disarms them
+(Similar principle to complementing women on their looks - it's substanceless praise)
+
+
+
+The four ingredients
+IQ/G + focus + mentor (role model / environment / leader) + peers/network/social
+
+
+
+Single minded stuborn focus - unrelating focus - focus to a point where they young perseon cant see the value in anything else, engagement is the most important thing
+
+
+So what's the most important factor?
+
+I think all 4 are more or less equal in importance
+You can largely get by with being exceptional/advanced at two of them
+But if you can bingo hit all 4 like a jackpot - the fruit machine just keeps on giving
+
+What can be done to enhance some of these?
+In the outcome of a single individual the most important factor in the individual learner
+A teacher has influence over 3 out of the 4 pillars.
+Teachers are the single biggest catalyst for an explosion of achivement,
+
+I think it's more common to have a solo exceptional teacher then it is to have a great teaching team. The problem is alignment.
+Unless the team are truly aligned [[alignment]]
+The more members of staff you add, the higher the chance that they are not aligned.
+
+
+Teaching and Probational Software Engineering are two separate professions.
+We can't expect teachers to be able to build software.
+We can't expect engineers to be able to teach.
+Teachers need to be guided and supported with activities and patterns.
+My goal is to give an example path
+
+Many learners will never get to experience a great mentor
+Mainly because structurally, the wrong incentives are in place for education establishments.
+
+
+
+Practice your scales
+
+
+At university level
+You separate the assessor/certifyer from the teacher - I think this is important.
+Removes bias, clear separation
+
+
+Pointless little gerble wheel jobs
+
+
+Olympiad - see where you are
+Hack day - see where you are
+
+3 months to do one simple example
+You have 3 hours to it for real

@@ -36,3 +36,6 @@ Learners need to brought/explained on the journey of why the education path has 
         * AS=30pages -> 4 sheets A4 or A2=60pages -> 8 sheets of A4
 
 
+### Alignment of teaching team
+
+* 

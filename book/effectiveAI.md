@@ -14,3 +14,11 @@ Given code
 
 
 It's all 
+
+
+
+* [Your Brain on ChatGPT: Accumulation of Cognitive Debt when Using an AI Assistant for Essay Writing Task](https://www.media.mit.edu/publications/your-brain-on-chatgpt/) MIT 2025
+    * Most people know this
+
+Future pipeline problem
+Less skilled programmers in the future?

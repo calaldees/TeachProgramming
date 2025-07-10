@@ -21,9 +21,13 @@ Open the laptop
 
 ---
 
-Explicit focus
+Spaced repetition
 
-Signal to others and yourself
 
-shut the door
-Put on the headphones
+https://notes.andymatuschak.org/Spaced_repetition_memory_system
+
+* [Spaced Repetition Systems Have Gotten Way Better](https://domenic.me/fsrs/) 2025
+    * Called 'FSRS' algorithm (Jarrett Ye) 
+    * [Anki](https://apps.ankiweb.net/) supports FSRS
+    * What is the best frequency - we know more now
+    * Graph of learning from large amounts of data
