@@ -33,3 +33,8 @@ https://github.com/calaldees/teacherEducation/blob/acbc846eddf56268305380145fb6e
 
 Effective Writing for Software Engineers: Michael Lynch 2025
 Passive voice considered harmful
+
+
+---
+
+in Computing Programming language literacy is Computing Literacy - it's the language of computers - do you speak it?

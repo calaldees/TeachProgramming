@@ -4,6 +4,8 @@ CommandLine Exercises
 bash, terminal, command line, commandline, shell
 
 
+* [Scrimba CommandLine Basics](https://scrimba.com/command-line-basics-c08b87ogl0)
+
 * https://github.com/onceupon/Bash-Oneliner
 
 xargs in general https://stackoverflow.com/questions/35589179/when-to-use-xargs-when-piping
@@ -25,6 +27,7 @@ netcat -> nc
 diff
 gzip
 rsa??
+tmux (for multi pane)
 
 Print the first line of each file in a folder
 

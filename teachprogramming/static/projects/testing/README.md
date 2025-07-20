@@ -78,3 +78,8 @@ pytest enables `...` by default
 
 * For multiline strings consider
     * https://docs.python.org/3/library/textwrap.html#textwrap.dedent
+
+
+TODO:
+[ast-grep](https://ast-grep.github.io/)
+Grep with structural understanding of programming languages. Could be useful for auto marking

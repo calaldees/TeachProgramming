@@ -9,3 +9,8 @@ see [knowlege-organisers]teacherEducation (mind mapping can be a waste, guide wi
 !!! teacher-action
 Teachers should monitor the progress of ongoing written notes - although these are not formally assessed, missing notes are a flag for concern. Track with RedAmberGreen?
 [[assessment]]
+
+
+
+Journals?
+https://www.tes.com/magazine/teaching-learning/general/why-our-trust-ditched-exercise-books
