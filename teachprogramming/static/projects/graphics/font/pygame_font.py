@@ -14,7 +14,7 @@ class PygameBase():
         frame = 0
         self.running = True
         while self.running:
-            self.clock.tick(self.fps)
+            pygame.display.flip()
             self.keys = pygame.key.get_pressed()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT or self.keys[pygame.K_ESCAPE]:
@@ -26,11 +26,11 @@ class PygameBase():
             self.screen.fill(self.color_background)
             try:
                 self.loop(self.screen, frame)
-            except:
+            except Exception:
                 import traceback; traceback.print_exc()
                 self.running = False
-            pygame.display.flip()
             frame += 1
+            self.clock.tick(self.fps)
         self.quit()
         pygame.quit()
     def loop(self, screen, frame):

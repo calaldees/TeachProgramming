@@ -35,18 +35,18 @@ class TkAnimationBase():
         frame = 0
         time_start = time.time()
         while 'Escape' not in self.input:
+            self.canvas.update()
+            try:
+                self.canvas.delete(tkinter.ALL)
+            except tkinter.TclError:
+                pass
             self.canvas.create_rectangle(0, 0, self.canvas.winfo_width(), self.canvas.winfo_height(), outline="#000", fill="#000")
             self.loop(self.canvas, frame)
-            self.canvas.update()
             frame += 1
             time_next_frame = frame / self.frames_per_second
             time_elapsed = time.time() - time_start
             time_sleep = time_next_frame - time_elapsed
             time.sleep(max(0, time_sleep))
-            try:
-                self.canvas.delete(tkinter.ALL)
-            except tkinter.TclError:
-                pass
         self.root.destroy()
 
     @abc.abstractmethod
