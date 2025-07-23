@@ -16,5 +16,5 @@ shell:
 		${DOCKER_IMAGE} \
 			/bin/sh
 
-font.png:
-	curl https://images.damieng.com/fonts/zx-origins/Prince.png -o font.png
+font.webp:
+	curl https://img.damieng.com/fonts/ch8-previews/Pristine.webp -o font.webp

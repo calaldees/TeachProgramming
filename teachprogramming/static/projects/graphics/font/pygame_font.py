@@ -44,7 +44,8 @@ class PygameBase():
 from pathlib import Path
 from urllib.request import urlopen
 import math
-
+import random
+random.seed(0)
 
 # https://damieng.com/typography/zx-origins/pristine
 SEQUENCE_ZX_ORIGINS = """ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_£abcdefghijklmnopqrstuvwxyz{|}~©""" # https://damieng.com/typography/zx-origins/
@@ -54,6 +55,7 @@ class PygameFont(PygameBase):
         #self.font = self.load_font()
         self.font = self.load_font_advanced()
         #super().__init__(resolution=(320,180))
+        self.random_ys = tuple(random.randint(0, 180) for i in range(10))
         super().__init__(resolution=(320,180), color_background='white')
     def load_font(self, path_font=Path('font.gif'), url_font='http://localhost:8000/static/font.gif'):
         if not path_font.exists():
@@ -61,7 +63,7 @@ class PygameFont(PygameBase):
                 f.write(r.read())
         img = pygame.image.load(path_font)
         return {chr(i): img.subsurface((i*8, 0, 8, 8)) for i in range(img.get_width()//8)}
-    def load_font_advanced(self, path_font=Path('font.png'), seq=SEQUENCE_ZX_ORIGINS, w=8, h=8):
+    def load_font_advanced(self, path_font=Path('font.webp'), seq=SEQUENCE_ZX_ORIGINS, w=8, h=8):
         img = pygame.image.load(path_font)
         ww, hh = img.get_size()
         return {
@@ -71,17 +73,26 @@ class PygameFont(PygameBase):
     def draw_font(self, text, x, y):
         for i, char in enumerate(text):
             self.screen.blit(self.font[char], (x+i*8, y))
-    def draw_font_wave(self, text, x, y):
-        for i, char in enumerate(text):
-            _x = x+i*8
-            _y = y + math.sin(_x/50)*50
-            self.screen.blit(self.font[char], (_x, _y))
     def loop(self, screen, frame):
         width, height = screen.get_size()
         self.screen.blit(self.font["A"], (100, 100))
         self.draw_font("abcde", frame%width, 50)
         self.draw_font_wave("abcde", frame%width, 110)
+        #self.horizontal_scroll_stateless_branchless(frame, width)
 
+    def draw_font_wave(self, text, x, y):
+        for i, char in enumerate(text):
+            _x = x+i*8
+            _y = y + math.sin(_x/50)*50
+            self.screen.blit(self.font[char], (_x, _y))
+
+    def horizontal_scroll_stateless_branchless(self, frame, width):
+        names = ['me', 'me2', 'me3']
+        index = (frame // width) % len(names)
+        x = frame % width
+        y = self.random_ys[index]
+        name = names[index]
+        self.draw_font(name, x, y)
 
 if __name__ == '__main__':
     PygameFont().run()
