@@ -25,13 +25,13 @@ class PygameFont(PygameBase):
         self.font = self.load_font_advanced()                                   # ver: load_font_advance
         #super().__init__(resolution=(320,180))                                 # ver: load_font_advance NOT_
         super().__init__(resolution=(320,180), color_background='white')        # ver: load_font_advance
-
+                                                                                # ver: bounce_text
         #self.bounce_text = BounceText(                                         # ver: bounce_text NOT bounce_text_multi
         self.bounce_texts = tuple(                                              # ver: bounce_text_multi
             BounceText(                                                         # ver: bounce_text_multi
                 text=text,                                                      # ver: bounce_text_multi
-                #text='Bounce',                                                 # ver: bounce_text NOT bounce_text_multi
-                x=50, y=50, inc_x=1, inc_y=0,                                  # ver: bounce_text NOT bounce_text_random
+                #text='DVD Bounce',                                             # ver: bounce_text NOT bounce_text_multi
+                #x=50, y=50, inc_x=1, inc_y=0,                                 # ver: bounce_text NOT bounce_text_random
                 x=random.randint(0, self.width - (len(text)*8)),                # ver: bounce_text_random
                 y=random.randint(0, self.height - 8),                           # ver: bounce_text_random
                 inc_x=random.choice((1,-1)),                                    # ver: bounce_text_random
@@ -41,6 +41,7 @@ class PygameFont(PygameBase):
         )                                                                       # ver: bounce_text
                                                                                 # ver: bounce_text
         self.random_ys = tuple(random.randint(0, self.height) for i in range(10)) # ver: list_scroll_x
+                                                                                # ver: download_font
     def download_if_not_exist(self, url):                                       # ver: download_font
         path = Path(Path(url).name)                                             # ver: download_font
         if not path.exists():                                                   # ver: download_font
@@ -48,7 +49,7 @@ class PygameFont(PygameBase):
             with urlopen(url) as r, path.open(mode='wb') as f:                  # ver: download_font
                 f.write(r.read())                                               # ver: download_font
         return path                                                             # ver: download_font
-                                                                                # ver: download_font
+
     def load_font(self):
         #path = 'font.gif'                                                      # ver: download_font NOT_
         path = self.download_if_not_exist('http://localhost:8000/static/font.gif') # ver: download_font
@@ -57,7 +58,7 @@ class PygameFont(PygameBase):
             chr(i): img.subsurface((i*8, 0, 8, 8))
             for i in range(img.get_width()//8)
         }
-
+                                                                                # ver: load_font_advance
     def load_font_advanced(self):                                               # ver: load_font_advance
         path = self.download_if_not_exist('https://img.damieng.com/fonts/ch8-previews/Babyteeth.webp') # ver: load_font_advance
         img = pygame.image.load(path)                                           # ver: load_font_advance
@@ -67,29 +68,21 @@ class PygameFont(PygameBase):
             seq[i]: img.subsurface(((i*w)%ww, ((i*w)//ww)*h, w, h))             # ver: load_font_advance
             for i in range(min((ww//w)*(hh//h), len(seq)))                      # ver: load_font_advance
         }                                                                       # ver: load_font_advance
-                                                                                # ver: load_font_advance
+                                                                                # ver: draw_string
     #def draw_font(self, text, x, y):                                           # ver: draw_string NOT draw_scale
-    def draw_font(self, text, x, y, factor=1):                                  # ver: draw_scale
+    def draw_font(self, text, x, y, scale=1):                                   # ver: draw_scale
         for i, char in enumerate(text):                                         # ver: draw_string
             #self.screen.blit(self.font[char], (x+i*8, y))                      # ver: draw_string NOT draw_scale
-            char_img = pygame.transform.scale_by(self.font[char], factor)       # ver: draw_scale
-            self.screen.blit(char_img, (x+i*8*factor, y))                       # ver: draw_scale
-                                                                                # ver: draw_string
+            char_img = pygame.transform.scale_by(self.font[char], scale)        # ver: draw_scale
+            self.screen.blit(char_img, (x+i*8*scale, y))                        # ver: draw_scale
+                                                                                # ver: draw_wave
     def draw_font_wave(self, text, x, y):                                       # ver: draw_wave
         for i, char in enumerate(text):                                         # ver: draw_wave
             _x = x+i*8                                                          # ver: draw_wave
             _y = y + math.sin(_x/50)*50                                         # ver: draw_wave
             self.screen.blit(self.font[char], (_x, _y))                         # ver: draw_wave
-                                                                                # ver: draw_wave
-    def loop(self, screen, frame):
-        self.screen.blit(self.font["A"], (100, 100))
-        self.draw_font("abcde", frame % self.width, 50)                         # ver: draw_string
-        self.draw_font("Big Text!", 40, 30, factor=2)                           # ver: draw_scale
-        self.draw_font_wave("abcde", frame % self.width, 110)                   # ver: draw_wave
-        self.move_bounce_text()                                                 # ver: bounce_text
-        self.horizontal_scroll_stateless_branchless(frame)                      # ver: list_scroll_x
                                                                                 # ver: bounce_text
-    def move_bounce_text(self):                                                 # ver: bounce_text
+    def draw_bounce_text(self):                                                 # ver: bounce_text
             #b = self.bounce_text                                               # ver: bounce_text NOT bounce_text_multi
         for b in self.bounce_texts:                                             # ver: bounce_text_multi
             b.x += b.inc_x                                                      # ver: bounce_text_move_x
@@ -100,14 +93,30 @@ class PygameFont(PygameBase):
             if b.y < 0 or b.y > self.height-8:                                  # ver: bounce_text_y
                 b.inc_y = -b.inc_y                                              # ver: bounce_text_y
             self.draw_font(b.text, b.x, b.y)                                    # ver: bounce_text
-                                                                                # ver: bounce_text
+                                                                                # ver: list_scroll_x
     def horizontal_scroll_stateless_branchless(self, frame):                    # ver: list_scroll_x
-        names = ['', 'me2', 'me3']                                              # ver: list_scroll_x
+        names = ['name1', 'name2', 'name3']                                     # ver: list_scroll_x
         index = (frame // self.width) % len(names)                              # ver: list_scroll_x
         x = frame % self.width                                                  # ver: list_scroll_x
         y = self.random_ys[index]                                               # ver: list_scroll_x
         name = names[index]                                                     # ver: list_scroll_x
         self.draw_font(name, x, y)                                              # ver: list_scroll_x
+                                                                                # ver: circle
+    def circle(self, frame, text, radius=50, x=100, y=100, letter_space=0.2):   # ver: circle
+        for i, letter in enumerate(text):                                       # ver: circle
+            angle = (-frame/50) + (i*-letter_space)                             # ver: circle
+            _x = math.sin(angle) * radius                                       # ver: circle
+            _y = math.cos(angle) * radius                                       # ver: circle
+            self.screen.blit(self.font[letter], (x+_x, y+_y))                   # ver: circle
+
+    def loop(self, screen, frame):
+        self.screen.blit(self.font["A"], (100, 100))
+        self.draw_font("abcde", frame % self.width, 50)                         # ver: draw_string
+        self.draw_font("Big Text!", 40, 30, factor=2)                           # ver: draw_scale
+        self.draw_font_wave("abcde", frame % self.width, 110)                   # ver: draw_wave
+        self.draw_bounce_text()                                                 # ver: bounce_text
+        self.horizontal_scroll_stateless_branchless(frame)                      # ver: list_scroll_x
+        self.circle(frame, 'hello')                                             # ver: circle
 
 if __name__ == '__main__':
     PygameFont().run()
