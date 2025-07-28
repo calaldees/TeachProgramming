@@ -1,4 +1,6 @@
 import pygame
+from functools import cached_property
+
 
 class PygameBase():
     def __init__(self, title="pg", resolution=(320,180), fps=60, color_background='black'):
@@ -8,7 +10,7 @@ class PygameBase():
         self.clock = pygame.time.Clock()
         self.fps = fps
         self.color_background = color_background
-    def run(self):
+    def run(self) -> None:
         frame = 0
         self.running = True
         while self.running:
@@ -31,10 +33,16 @@ class PygameBase():
             self.clock.tick(self.fps)
         self.quit()
         pygame.quit()
-    def loop(self, screen, frame):
+    def loop(self, screen, frame) -> None:
         raise NotImplementedError('override loop method')
     def quit(self):
         pass  # override to shutdown
+    @cached_property
+    def width(self) -> int:
+        return self.screen.get_width()
+    @cached_property
+    def height(self) -> int:
+        return self.screen.get_height()
 
 
 class GameDemo(PygameBase):

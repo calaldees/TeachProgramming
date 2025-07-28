@@ -1,6 +1,8 @@
 Font Project
 ============
 
+Demoscene "Greets" - code-alias - creativity
+
 Create a class raster font using image encoding to hex, http post requests (command line?), html viewer (channelServer), output as png, use font in their own programs
 
 * use `Makefile` to run `docker` container on server/ip that young people can access
@@ -9,21 +11,18 @@ Create a class raster font using image encoding to hex, http post requests (comm
   * print out `template.odt` with lookup table
 * Look at `python`/`pygame` snippets below for loading font
 
-* https://github.com/calaldees/mapOfComputing/blob/main/computing/typography.md
-    * [ZX Origins](https://damieng.com/typography/zx-origins) - 8x8 mono bitmap fonts
-    * [BitmapFonts](https://github.com/ianhan/BitmapFonts/blob/main/README.md)
-        * My collection of bitmap fonts pulled from various demoscene archives over the years
-    * [NFG's Arcade Font Engine](https://nfggames.com/games/fontmaker/lister.php)
-        * https://nfggames.com/games/fontmaker/ (with gradient!!! Cool!)
-        * Apply gradient to white letters
-        * 2color (on/off) - 4 color (transparent,gradient-passthrough,solid-color,shadow(50%transparent-gradient?))?
-* Demoscene "Greets" - code-alias - creativity
+
+### Sin
+
+https://mathsbot.com/printables/axes
+1 page A4
+Y = 1 to -1
+X = 0 to 10
 
 ### TODO
 * Raster fonts are not vector fonts
 * Edit a vector font?
 
----
 
 Template
 ========
@@ -52,28 +51,6 @@ Template
 
 ---
 
-OLD
-===
-* Concept for encoding a character from a raster font set in hex and sending that to a DB via an http api
-* Teacher projects fontset on html5 display
-* [fontLiveView.html](./fontLiveView.html)
-    * use channelServer
-* use channelServer http get - url components
-* Database?
-    * Connect to channelServer and 'append to file' the items that are sent
-* Export to PNG? ASCII order?
-    * https://www.ascii-code.com/
-    * symbols 32-47 + 58-64 + 91-96 + 123-126
-    * 0 == 48
-    * A == 65
-    * a == 97
-    * 0-255 array as empty 8x8 images, then a loader to put chars in correct ascii locations? 3 images(or rows?)0-9,A-Z,a-z
-* TODO
-    * Make data to gif python exporter
-    * Make image cutter to ascii codes
-
-
-
 <style>
 @media print {
     hr {display: none;}
@@ -97,14 +74,14 @@ Draw character
 ```python
 import pygame
 from animation_base_pygame import PygameBase
-from pathlib import Path
 
 class PygameFont(PygameBase):
     def __init__(self):
         self.font = self.load_font()
         super().__init__(resolution=(320,180))
-    def load_font(self, path_font=Path('font.gif')):
-        img = pygame.image.load(path_font)
+    def load_font(self):
+        path = 'font.gif'
+        img = pygame.image.load(path)
         return {chr(i): img.subsurface((i*8, 0, 8, 8)) for i in range(img.get_width()//8)}
     def loop(self, screen, frame):
         self.screen.blit(self.font["a"], (100, 100))
@@ -122,7 +99,7 @@ Draw string
 +            self.screen.blit(self.font[char], (x+i*8, y))
      def loop(self, screen, frame):
 +        w, h = screen.get_size()
-+        self.draw_font("abcde", frame%w, 50)
++        self.draw_font("abcde", frame % w, 50)
          self.screen.blit(self.font["a"], (100, 100))
 ```
 
@@ -130,15 +107,25 @@ Automatic font download
 -----------------------
 
 ```diff
-from pathlib import Path
-+from urllib.request import urlopen
+ from animation_base_pygame import PygameBase
++from pathlib import Path
++from urllib.request import urlopen, Request
+
+class PygameFont(PygameBase):
 ...
--    def load_font(self, path_font=Path('font.gif')):
-+    def load_font(self, path_font=Path('font.gif'), url_font='http://localhost:8000/static/font.gif'):
-+        if not path_font.exists():
-+            with urlopen(url_font) as r, path_font.open(mode='wb') as f:
++    def download_if_not_exist(self, url):
++        path = Path(Path(url).name)
++        if not path.exists():
++            url = Request(url, headers={'User-Agent': 'curl'})
++            with urlopen(url) as r, path.open(mode='wb') as f:
 +                f.write(r.read())
-         img = pygame.image.load(path_font)
++        return path
++
+     def load_font(self):
+-        path = 'font.gif'
++        path = self.download_if_not_exist('http://localhost:8000/static/font.gif')
+         img = pygame.image.load(path)
+
 ```
 
 Draw sin wave
@@ -151,39 +138,95 @@ Draw sin wave
 ...
 +    def draw_font_wave(self, text, x, y):
 +        for i, char in enumerate(text):
-+            _x = x+i*8
++            _x = x + i*8
 +            _y = y + math.sin(_x/50)*50
 +            self.screen.blit(self.font[char], (_x, _y))
      def loop(self, screen, frame):
 ...
-         self.draw_font("abcde", frame%width, 50)
-+        self.draw_font_wave("abcde", frame%w, 110)
+         self.draw_font("abcde", frame % width, 50)
++        self.draw_font_wave("abcde", frame % w, 110)
 ```
 
-Super advanced font loader
---------------------------
+Draw Scale
+----------
 
-(This is intended for Advanced GCSE and A-Level students)
-
-```python
-# https://damieng.com/typography/zx-origins/
-# curl https://images.damieng.com/fonts/zx-origins/Prince.png -o font.png
-SEQUENCE_ZX_ORIGINS = """ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_£abcdefghijklmnopqrstuvwxyz{|}~©"""
-#...
--    self.font = self.load_font()
-+    self.font = self.load_font_advanced()
-#...
-     super().__init__(resolution=(320,180), color_background='white')
-#...
-    def load_font_advanced(self, path_font=Path('font.png'), seq=SEQUENCE_ZX_ORIGINS, w=8, h=8):
-        img = pygame.image.load(path_font)
-        ww, hh = img.get_size()
-        return {
-            seq[i]: img.subsurface(((i*w)%ww, ((i*w)//ww)*h, w, h))
-            for i in range(min((ww//w)*(hh//h), len(seq)))
-        }
+```diff
+-    def draw_font(self, text, x, y):
++    def draw_font(self, text, x, y, factor=1):
+         for i, char in enumerate(text):
+-            self.screen.blit(self.font[char], (x+i*8, y))
++            char_img = pygame.transform.scale_by(self.font[char], factor)
++            self.screen.blit(char_img, (x+i*8*factor, y))
 ```
 
+
+Advanced Font Loader
+--------------------
+
+(Handles wrapping of characters in source image)
+
+```diff
++SEQUENCE_DAMIENG = """ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_£abcdefghijklmnopqrstuvwxyz{|}~©"""
+
+ class PygameFont(PygameBase):
+    def __init__(self):
+-        self.font = self.load_font()
++        self.font = self.load_font_advanced()
+-        super().__init__(resolution=(320,180))
++        super().__init__(resolution=(320,180), color_background='white')
+...
++    def load_font_advanced(self):
++        path = self.download_if_not_exist('https://img.damieng.com/fonts/ch8-previews/Babyteeth.webp')
++        img = pygame.image.load(path)
++        w, h, seq = 8, 8, SEQUENCE_DAMIENG
++        ww, hh = img.get_size()
++        return {
++            seq[i]: img.subsurface(((i*w)%ww, ((i*w)//ww)*h, w, h))
++            for i in range(min((ww//w)*(hh//h), len(seq)))
++        }
+```
 * https://damieng.com/typography/zx-origins
 * https://github.com/ianhan/BitmapFonts/
 * https://nfggames.com/games/fontmaker/ see: "All fonts on one page"
+
+
+More
+====
+
+* https://github.com/calaldees/mapOfComputing/blob/main/computing/typography.md
+    * [ZX Origins](https://damieng.com/typography/zx-origins) - 8x8 mono bitmap fonts
+    * [BitmapFonts](https://github.com/ianhan/BitmapFonts/blob/main/README.md)
+        * My collection of bitmap fonts pulled from various demoscene archives over the years
+    * [NFG's Arcade Font Engine](https://nfggames.com/games/fontmaker/lister.php)
+        * https://nfggames.com/games/fontmaker/ (with gradient!!! Cool!)
+        * Apply gradient to white letters
+        * 2color (on/off) - 4 color (transparent,gradient-passthrough,solid-color,shadow(50%transparent-gradient?))?
+
+
+Notes
+=====
+
+The filename from url is janky. A better solution is more complex
+https://stackoverflow.com/questions/18727347/how-to-extract-a-filename-from-a-url-and-append-a-word-to-it
+
+
+OLD (to be removed?)
+===
+* Concept for encoding a character from a raster font set in hex and sending that to a DB via an http api
+* Teacher projects fontset on html5 display
+* [fontLiveView.html](./fontLiveView.html)
+    * use channelServer
+* use channelServer http get - url components
+* Database?
+    * Connect to channelServer and 'append to file' the items that are sent
+* Export to PNG? ASCII order?
+    * https://www.ascii-code.com/
+    * symbols 32-47 + 58-64 + 91-96 + 123-126
+    * 0 == 48
+    * A == 65
+    * a == 97
+    * 0-255 array as empty 8x8 images, then a loader to put chars in correct ascii locations? 3 images(or rows?)0-9,A-Z,a-z
+* TODO
+    * Make data to gif python exporter
+    * Make image cutter to ascii codes
+

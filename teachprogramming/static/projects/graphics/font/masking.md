@@ -1,6 +1,16 @@
 Font Masking
 ============
 
+
+Looking at
+https://nfggames.com/games/fontmaker/lister.php
+
+Many of the fonts are actually 3 values
+* transparent
+* body (color 1)
+* outline/shadow (color 2)
+I think many of the fonts can be recreated with primary and secondary surface
+
 TODO: upgrade the font hex loader to 2bit (4 color) per pixel?
 Maybe just two hex grids for the same character == 2 masks
 Or The gif can have 2 colors? and an editor can be used?
