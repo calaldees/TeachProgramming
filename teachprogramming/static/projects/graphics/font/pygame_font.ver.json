@@ -6,7 +6,9 @@
     "draw_wave": {"parents": ["draw_string"]},
     "draw_scale": {"parents": ["draw_string"]},
     "bounce_text": {"parents": ["draw_string"]},
-    "bounce_text_x": {"parents": ["bounce_text"]},
+    "bounce_text_random": {"parents": ["bounce_text"]},
+    "bounce_text_move_x": {"parents": ["bounce_text_random"]},
+    "bounce_text_x": {"parents": ["bounce_text_random"]},
     "bounce_text_y": {"parents": ["bounce_text_x"]},
     "bounce_text_multi": {"parents": ["bounce_text_y"]},
     "list_scroll_x": {"parents": ["draw_string"]}

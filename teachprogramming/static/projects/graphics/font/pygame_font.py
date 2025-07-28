@@ -4,7 +4,7 @@ from animation_base_pygame import PygameBase
 from pathlib import Path                                                        # ver: download_font
 from urllib.request import urlopen, Request                                     # ver: download_font
 import math                                                                     # ver: draw_wave
-import random                                                                   # ver: bounce_text
+import random                                                                   # ver: bounce_text_random
 
 ## https://damieng.com/typography/zx-origins/                                   # ver: load_font_advance
 SEQUENCE_DAMIENG = """ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_£abcdefghijklmnopqrstuvwxyz{|}~©"""  # ver: load_font_advance
@@ -31,10 +31,11 @@ class PygameFont(PygameBase):
             BounceText(                                                         # ver: bounce_text_multi
                 text=text,                                                      # ver: bounce_text_multi
                 #text='Bounce',                                                 # ver: bounce_text NOT bounce_text_multi
-                x=random.randint(0, self.width - (len(text)*8)),                # ver: bounce_text
-                y=random.randint(0, self.height - 8),                           # ver: bounce_text
-                inc_x=random.choice((1,-1)),                                    # ver: bounce_text
-                inc_y=random.choice((1,-1)),                                    # ver: bounce_text
+                x=50, y=50, inc_x=1, inc_y=0,                                  # ver: bounce_text NOT bounce_text_random
+                x=random.randint(0, self.width - (len(text)*8)),                # ver: bounce_text_random
+                y=random.randint(0, self.height - 8),                           # ver: bounce_text_random
+                inc_x=random.choice((1,-1)),                                    # ver: bounce_text_random
+                inc_y=random.choice((1,-1)),                                    # ver: bounce_text_random
             )                                                                   # ver: bounce_text_multi
             for text in ('Allan', 'Dale', 'Monika')                             # ver: bounce_text_multi
         )                                                                       # ver: bounce_text
@@ -52,7 +53,10 @@ class PygameFont(PygameBase):
         #path = 'font.gif'                                                      # ver: download_font NOT_
         path = self.download_if_not_exist('http://localhost:8000/static/font.gif') # ver: download_font
         img = pygame.image.load(path)
-        return {chr(i): img.subsurface((i*8, 0, 8, 8)) for i in range(img.get_width()//8)}
+        return {
+            chr(i): img.subsurface((i*8, 0, 8, 8))
+            for i in range(img.get_width()//8)
+        }
 
     def load_font_advanced(self):                                               # ver: load_font_advance
         path = self.download_if_not_exist('https://img.damieng.com/fonts/ch8-previews/Babyteeth.webp') # ver: load_font_advance
@@ -89,8 +93,8 @@ class PygameFont(PygameBase):
             #b = self.bounce_text                                               # ver: bounce_text NOT bounce_text_multi
         for b in self.bounce_texts:                                             # ver: bounce_text_multi
             b.x += b.inc_x                                                      # ver: bounce_text_move_x
-            b.y += b.inc_y                                                      # ver: bounce_text
-            b_width = len(b.text)*8                                             # ver: bounce_text
+            b.y += b.inc_y                                                      # ver: bounce_text_y
+            b_width = len(b.text)*8                                             # ver: bounce_text_x
             if b.x < 0 or b.x > self.width - b_width:                           # ver: bounce_text_x
                 b.inc_x = -b.inc_x                                              # ver: bounce_text_x
             if b.y < 0 or b.y > self.height-8:                                  # ver: bounce_text_y
