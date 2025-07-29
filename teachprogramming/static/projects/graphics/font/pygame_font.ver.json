@@ -5,6 +5,7 @@
     "load_font_advance": {"parents": [""]},
     "draw_wave": {"parents": [""]},
     "draw_scale": {"parents": ["draw_string"]},
+    "draw_scale_zoom": {"parents": ["draw_scale"]},
     "bounce_text": {"parents": ["draw_string"]},
     "bounce_text_random": {"parents": ["bounce_text"]},
     "bounce_text_move_x": {"parents": ["bounce_text"]},
@@ -12,5 +13,6 @@
     "bounce_text_y": {"parents": ["bounce_text_x"]},
     "bounce_text_multi": {"parents": ["bounce_text_y"]},
     "list_scroll_x": {"parents": ["draw_string"]},
-    "circle": {"parents": [""]}
+    "circle": {"parents": [""]},
+    "full": {"parents": ["", "circle", "list_scroll_x", "bounce_text_multi", "bounce_text_random", "draw_scale_zoom", "draw_wave", "load_font_advance", "download_font"]}
 }}

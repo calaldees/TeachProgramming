@@ -1,10 +1,10 @@
 import pygame
 from animation_base_pygame import PygameBase
-
+import math
 from pathlib import Path                                                        # ver: download_font
 from urllib.request import urlopen, Request                                     # ver: download_font
-import math                                                                     # ver: draw_wave
 import random                                                                   # ver: bounce_text_random
+random.seed(0)                                                                  # ver: bounce_text_random
 
 ## https://damieng.com/typography/zx-origins/                                   # ver: load_font_advance
 SEQUENCE_DAMIENG = """ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_£abcdefghijklmnopqrstuvwxyz{|}~©"""  # ver: load_font_advance
@@ -70,7 +70,7 @@ class PygameFont(PygameBase):
         }                                                                       # ver: load_font_advance
                                                                                 # ver: draw_string
     #def draw_font(self, text, x, y):                                           # ver: draw_string NOT draw_scale
-    def draw_font(self, text, x, y, scale=1):                                   # ver: draw_scale
+    def draw_font(self, text, x, y, scale=1.0):                                 # ver: draw_scale
         for i, char in enumerate(text):                                         # ver: draw_string
             #self.screen.blit(self.font[char], (x+i*8, y))                      # ver: draw_string NOT draw_scale
             char_img = pygame.transform.scale_by(self.font[char], scale)        # ver: draw_scale
@@ -112,7 +112,8 @@ class PygameFont(PygameBase):
     def loop(self, screen, frame):
         self.screen.blit(self.font["A"], (100, 100))
         self.draw_font("abcde", frame % self.width, 50)                         # ver: draw_string
-        self.draw_font("Big Text!", 40, 30, factor=2)                           # ver: draw_scale
+        #self.draw_font("Big Text!", 40, 30, scale=2)                           # ver: draw_scale NOT draw_scale_zoom
+        self.draw_font("Big Text!", 40, 30, scale=abs(math.sin(frame/100)*3))   # ver: draw_scale_zoom
         self.draw_font_wave("abcde", frame % self.width, 110)                   # ver: draw_wave
         self.draw_bounce_text()                                                 # ver: bounce_text
         self.horizontal_scroll_stateless_branchless(frame)                      # ver: list_scroll_x
