@@ -15,7 +15,7 @@
             background-color: black;
         }
         .font_container img {
-            image-rendering: pixelated; 
+            image-rendering: pixelated;
             height: 128px;
         }
         .error {
@@ -119,9 +119,28 @@
     <div class="font_container">
         <img src="static/font.gif">
     </div>
-    
+
     <pre id="pre">
         curl "http://localhost:8000/add_font?char=a&data=55aa55aa55aa55aa"
+    </pre>
+
+    <pre>
+        0000 = 0 = 0
+        0001 = 1 = 1
+        0010 = 2 = 2
+        0011 = 3 = 3
+        0100 = 4 = 4
+        0101 = 5 = 5
+        0110 = 6 = 6
+        0111 = 7 = 7
+        1000 = 8 = 8
+        1001 = 9 = 9
+        1010 = a = 10
+        1011 = b = 11
+        1100 = c = 12
+        1101 = d = 13
+        1110 = e = 14
+        1111 = f = 15
     </pre>
 
 <script type="module">
@@ -183,7 +202,7 @@
         }
         validate_data()
     })
-    
+
     BUTTON_SUBMIT.addEventListener("click", (event)=>{
         console.log("sending", get_url())
         fetch(get_url(), {method: 'GET',})
