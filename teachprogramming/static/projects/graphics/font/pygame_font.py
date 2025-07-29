@@ -7,7 +7,7 @@ import random                                                                   
 random.seed(0)                                                                  # ver: bounce_text_random
 
 ## https://damieng.com/typography/zx-origins/                                   # ver: load_font_advance
-SEQUENCE_DAMIENG = """ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_£abcdefghijklmnopqrstuvwxyz{|}~©"""  # ver: load_font_advance
+SEQUENCE_DAMIENG = r""" !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_£abcdefghijklmnopqrstuvwxyz{|}~©"""  # ver: load_font_advance
                                                                                 # ver: load_font_advance
 from dataclasses import dataclass                                               # ver: bounce_text
 @dataclass                                                                      # ver: bounce_text
