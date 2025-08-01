@@ -71,7 +71,7 @@ class ProjectResource():
             'versions': {
                 'paths': pv.versions.paths,
                 'parents': pv.versions.parents,
-                'titles_to_language_ext': {},
+                'titles_to_language_ext': pv.titles_to_language_mapping,
             },
             'full_per_version': pv.full_per_version,
             'diffs_per_version': pv.diff_per_version,

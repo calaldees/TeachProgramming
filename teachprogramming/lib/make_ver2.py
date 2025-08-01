@@ -389,6 +389,10 @@ class ProjectVersions():
             if stem_ext.ext not in EXCLUDE_EXTS
         )
 
+    @property
+    def titles_to_language_mapping(self) -> dict[str, str]:
+        return {str(s): s.ext for s in self._titles}
+
     @cached_property
     def versions(self) -> Versions:
         """
