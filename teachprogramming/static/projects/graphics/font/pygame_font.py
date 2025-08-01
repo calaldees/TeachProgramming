@@ -54,12 +54,10 @@ class PygameFont(PygameBase):
         #path = 'font.gif'                                                      # ver: download_font NOT_
         path = self.download_if_not_exist('http://localhost:8000/static/font.gif') # ver: download_font
         img = pygame.image.load(path)
-        return {
-            chr(i): img.subsurface((i*8, 0, 8, 8))
-            for i in range(img.get_width()//8)
-        }
+        return {chr(i): img.subsurface((i*8, 0, 8, 8)) for i in range(img.get_width()//8)}
                                                                                 # ver: load_font_advance
     def load_font_advanced(self):                                               # ver: load_font_advance
+        ## url = f'https://nfggames.com/system/arcade/arcade.php/y-{font_name}/z-{(size/8)-1}/x-{sequence}'  # ver: comment
         path = self.download_if_not_exist('https://img.damieng.com/fonts/ch8-previews/Babyteeth.webp') # ver: load_font_advance
         img = pygame.image.load(path)                                           # ver: load_font_advance
         w, h, seq = 8, 8, SEQUENCE_DAMIENG                                      # ver: load_font_advance
@@ -108,6 +106,8 @@ class PygameFont(PygameBase):
             _x = math.sin(angle) * radius                                       # ver: circle
             _y = math.cos(angle) * radius                                       # ver: circle
             self.screen.blit(self.font[letter], (x+_x, y+_y))                   # ver: circle
+    ##  # ver: comment
+    ## TODO: vertical scroller from multiline string?  # ver: comment
 
     def loop(self, screen, frame):
         self.screen.blit(self.font["A"], (100, 100))
