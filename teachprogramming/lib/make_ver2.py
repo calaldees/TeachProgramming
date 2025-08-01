@@ -366,30 +366,43 @@ class ProjectVersions():
     +    public static void main(String[] args) {new Test();}
      }
     """
+    class StemExt(NamedTuple):
+        stem: str
+        ext: LanguageFileExtension
+        def __str__(self) -> str:
+            return f'{self.ext}: {self.stem}'
     def __init__(self, files):
-        self.files_by_ext = MappingProxyType({
-            LanguageFileExtension(''.join(f.suffixes).strip('.')): f.open(encoding='utf8').read()
+        self.files_by_stem_ext = MappingProxyType({
+            self.StemExt(
+                f.stem,
+                LanguageFileExtension(''.join(f.suffixes).strip('.'))
+            ): f.open(encoding='utf8').read()
             for f in files
         })
 
     @property
-    def _languages(self) -> frozenset[LanguageFileExtension]:
-        return frozenset(self.files_by_ext.keys()) - frozenset(('ver', 'json', 'yaml', 'yml', 'ver.json'))
+    def _titles(self) -> frozenset[StemExt]:
+        EXCLUDE_EXTS = frozenset(('ver', 'json', 'yaml', 'yml', 'ver.json'))
+        return frozenset(
+            stem_ext
+            for stem_ext in self.files_by_stem_ext.keys()
+            if stem_ext.ext not in EXCLUDE_EXTS
+        )
 
     @cached_property
     def versions(self) -> Versions:
         """
         Parse versions from .ver or .yaml file
         """
-        file_exts = frozenset(self.files_by_ext.keys())
+        file_exts = frozenset(s.ext for s in self.files_by_stem_ext.keys())
         if {'yaml', 'yml'} & file_exts:
             raise NotImplementedError('yaml version file format not implemented')
         if {'ver.json',} & file_exts:
-            return Versions(_Versions(json.loads(self.files_by_ext['ver.json'])))
+            return Versions(_Versions(json.loads(next(iter(f for s, f in self.files_by_stem_ext.items() if s.ext == 'ver.json')))))
         raise Exception('no version information')
 
-    def language(self, language: LanguageFileExtension) -> MappingProxyType[Version, str]:
-        lines = VersionModel(io.StringIO(self.files_by_ext[language]), LANGUAGES[language]).lines
+    def full(self, title: StemExt) -> MappingProxyType[Version, str]:
+        lines = VersionModel(io.StringIO(self.files_by_stem_ext[title]), LANGUAGES[title.ext]).lines
         return MappingProxyType({
             version_name: '\n'.join(
                 line.line_without_ver
@@ -400,22 +413,22 @@ class ProjectVersions():
         })
 
     @cached_property
-    def languages(self) -> MappingProxyType[LanguageFileExtension, MappingProxyType[Version, str]]:
-        return MappingProxyType({l: self.language(l) for l in self._languages})
+    def full_per_version(self) -> MappingProxyType[str, MappingProxyType[Version, str]]:
+        return MappingProxyType({str(l): self.full(l) for l in self._titles})
 
-    def diff(self, language: LanguageFileExtension) -> MappingProxyType[Version, str]:
+    def diff(self, title: StemExt) -> MappingProxyType[Version, str]:
         return MappingProxyType({
             version: "\n".join(unified_diff(
-                self.language(language)[parent].split("\n"),
-                self.language(language)[version].split("\n"),
+                self.full(title)[parent].split("\n"),
+                self.full(title)[version].split("\n"),
                 fromfile=parent, tofile=version, n=2, lineterm=''))
             for version, parent in self.versions.parents.items()
             if parent is not None
         })
 
     @cached_property
-    def diffs(self) -> MappingProxyType[LanguageFileExtension, MappingProxyType[Version, str]]:
-        return MappingProxyType({l: self.diff(l) for l in self._languages})
+    def diff_per_version(self) -> MappingProxyType[str, MappingProxyType[Version, str]]:
+        return MappingProxyType({str(l): self.diff(l) for l in self._titles})
 
 
 

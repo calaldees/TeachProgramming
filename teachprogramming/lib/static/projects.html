@@ -87,25 +87,25 @@ function renderProjectList(projects) {
 
 // Render Project --------------------------------------------------------------
 
-const filename = (project_name, language, version) => `${project_name}_${version}.${language}`
+const filename = (title, version, language) => `${title}_${version}.${language || 'txt'}`
 
 function renderProject(data) {
-    return h('div',{},Object.keys(data.languages).map(language=>[
-        h('h2',{},language),
+    return h('div',{},Object.keys(data.full_per_version).map(title=>[
+        h('h2',{},title),
         ...Object.entries(data.versions.parents).map(([version, parent_version])=>[
             h('h3',{},`${parent_version || ''} -> ${version}`),
             h('div',{}, version ? [
                 // render diff
-                h('pre',{class: 'diff'}, renderDiff(data.diffs[language][version])),
+                h('pre',{class: 'diff'}, renderDiff(data.diffs_per_version[title][version])),
                 h('button',{action: 'copy_full'},'copy full'),
                 h('button',{action: 'download'},'download'),
                 h('button',{action: 'toggle_full'},'toggle full'),
                 h('button',{action: 'toggle_diff'},'toggle diff'),
-                h('pre',{class: 'full hidden', 'data-filename': filename(project_name, language, version)}, renderCodeFull(data.languages[language][version])),
-                h('pre',{class: 'diff_raw hidden'}, h('code', {}, data.diffs[language][version])),
+                h('pre',{class: 'full hidden', 'data-filename': filename(title, version, data.versions.titles_to_language_ext[title])}, renderCodeFull(data.full_per_version[title][version])),
+                h('pre',{class: 'diff_raw hidden'}, h('code', {}, data.diffs_per_version[title][version])),
             ]:[
                 // base version renders full starting point without diff
-                h('pre',{class: 'full', 'data-filename': filename(project_name, language, version)}, renderCodeFull(data.languages[language][version])),
+                h('pre',{class: 'full', 'data-filename': filename(title, version, data.versions.titles_to_language_ext[title])}, renderCodeFull(data.full_per_version[title][version])),
                 h('button',{action: 'copy_full'},'copy full'),
                 h('button',{action: 'download'},'download'),
             ])
