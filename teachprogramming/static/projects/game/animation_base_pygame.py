@@ -1,5 +1,17 @@
-import pygame
 from functools import cached_property
+
+try:
+    import pygame
+except ImportError:
+    # The instructions on Pygame site suck https://www.pygame.org/wiki/GettingStarted
+    # Python on windows can be installed in many different places and does not set a default path for `pip`
+    # https://stackoverflow.com/a/12333108/3356840
+    import subprocess
+    import sys
+    def install(name):
+        return subprocess.call([sys.executable, '-m', 'pip', 'install', name])
+    install('pygame')
+    import pygame
 
 
 class PygameBase():
