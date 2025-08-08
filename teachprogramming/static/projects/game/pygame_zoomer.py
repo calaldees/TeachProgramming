@@ -93,6 +93,7 @@ class Stars():
             _x = (s.x + (-frame * s.s)) % sf_w
             color = ( ((s.s/self.layers) * 255),) * 3
             pg.draw.line(sf, color, (_x, s.y), (_x - s.s, s.y))
+            # TODO: replace line with `set_at`? https://stackoverflow.com/a/10354667/3356840
 
 
 class Font():

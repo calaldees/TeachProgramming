@@ -43,3 +43,7 @@ Ideas
 * Fill
     * diagonal gradient
         * Cycle animation
+
+See
+https://www.pygame.org/docs/ref/mask.html#pygame.mask.Mask.to_surface
+https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation

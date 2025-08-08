@@ -53,7 +53,7 @@ class CopterGame(PygameBase):
             point = (self.background_x_pos + int(self.copter_x_pos) + x, int(self.copter_y_pos) + y)  # VER: collision_multi
             pixel = safe_get_pixel(point)           # VER: collision_single
             r,g,b,a = pixel                         # VER: collision_single
-            if a < 10:                              # VER: collision_single
+            if a < 128:                             # VER: collision_single
                 pass                                # VER: collision_single
             elif pixel == self.level_color:         # VER: level
                 self.level_number += 1              # VER: level

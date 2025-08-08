@@ -27,7 +27,7 @@
 class CanvasAnimationBase {
     constructor(canvas, fps=60) {
         this.canvas = canvas || document.getElementById('canvas')
-        this.context = this.canvas.getContext('2d')
+        this.context = this.canvas.getContext('2d')  // TODO? , { alpha: false }  https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas#turn_off_transparency
 
         this.audio = document.getElementById('audio')
         if (!this.audio) {

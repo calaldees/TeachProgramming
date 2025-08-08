@@ -102,6 +102,7 @@
 
         //const point = [v.copter_image.width/2, v.copter_image.height/2]; // VER: collision_single NOT collision_multi
         for (let point of copter_collision_points) {         // VER: collision_multi
+            // // TODO don't use collisions_context? try imageData instead? https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Pixel_manipulation_with_canvas  // VER: collision_single
             const [r,g,b,a] = collisions_context.getImageData( // VER: collision_single
                 v.copter_x_pos+point[0],                      // VER: collision_single
                 v.copter_y_pos+point[1], 1, 1).data;          // VER: collision_single

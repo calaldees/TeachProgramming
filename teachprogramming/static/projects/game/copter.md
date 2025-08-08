@@ -204,9 +204,9 @@ if __name__ == '__main__':
 Copter
 ======
 
-* Install PyGame 
+* Install PyGame
     * `pip install pygame`
-* Download 
+* Download
     * https://github.com/calaldees/TeachProgramming/blob/master/teachprogramming/static/projects/game/animation_base_pygame.py
 * Image Size
     * Background (3000, 360)? - Copter (48, 24)?
