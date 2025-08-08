@@ -28,6 +28,8 @@
 <div id="main"></div>
 <script type="module">
 
+const heading_encode = text => text.toLowerCase().replaceAll(/\W+/gi, '-')
+
 // core.js
 // https://github.com/calaldees/libs/blob/9a7dbeea6d34240e13e9d684a8388519bb00885c/es6/core.js#L455
 const hasIterationProtocol = variable => variable !== null && Symbol.iterator in Object(variable)
@@ -91,7 +93,7 @@ const filename = (title, version, language) => `${title}_${version}.${language |
 
 function renderProject(data) {
     return h('div',{},Object.keys(data.full_per_version).map(title=>[
-        h('h2',{},title),
+        h('h2',{id: heading_encode(title)},[document.createTextNode(title), h('a',{href: `#${heading_encode(title)}`},'¶')]),
         ...Object.entries(data.versions.parents).map(([version, parent_version])=>[
             h('h3',{},`${parent_version || ''} -> ${version}`),
             h('div',{}, version ? [
