@@ -61,6 +61,10 @@ A-Levels are a national sport that every entrant is participating in
 
 A Level Computing results - % of national cohort that got A's. 7% consistent. An employer knows what an 'A' means. Employers know that degrees are meaningless [citation]
 
+* [A review of standards in GCSE computer science](https://www.gov.uk/government/publications/a-review-of-standards-in-gcse-computer-science?ref=blog.teachcomputing.org) July 2024
+    * Just change the ground boundaries - make it easier so it fits the national curve of the other subjects
+
+
 Academic achievement does not == immediate employable skills.
 But academic achievement (when graded as a % nationally) does convey aptitude.
 If you can sit down in a chair long enough and focus on something, you're probably useful to an employer.
