@@ -17,7 +17,8 @@ const SEQUENCE_DAMIENG = ` !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTU
 
 class Font extends CanvasAnimationBase {
     constructor() {
-        super(undefined, 60, {background_color: 'white', width: 320, height: 180})  // ...arguments
+        super(undefined, 60, {background_color: 'white', width: 320, height: 180})
+        this.random_ys = [...range(10)].map((i)=>Math.floor(Math.random()*this.h))  // ver: list_scroll_x
     }
 
     async constructor_async() {
@@ -54,7 +55,13 @@ class Font extends CanvasAnimationBase {
             c.drawImage(this.font[char], _x, _y)                                // ver: draw_wave
         }
     }
-
+                                                                                // ver: list_scroll_x
+    horizontal_scroll_stateless_branchless(c, frame) {                          // ver: list_scroll_x
+        const names = ['name1', 'name2', 'name3']                               // ver: list_scroll_x
+        const i = Math.floor(frame / this.w) % names.length                     // ver: list_scroll_x
+        this.draw_font(c, names[i], frame % this.w, this.random_ys[i])          // ver: list_scroll_x
+    }                                                                           // ver: list_scroll_x
+                                                                                // ver: circle
     circle(c, frame, text, radius=50, x=100, y=100, letter_space=0.2) {         // ver: circle
         for (let [i, letter] of enumerate(text)) {                              // ver: circle
             const angle = (-frame/50) + (i*-letter_space)                       // ver: circle
@@ -70,11 +77,11 @@ class Font extends CanvasAnimationBase {
     draw(context, frame) {
         this.clear()
         const c = context
-        //debugger
         c.drawImage(this.font["A"], 100, 100)
         this.draw_font(c, "Hello", 100, 20)
         this.draw_font(c, "Big Text!", 40, 30, Math.abs(Math.sin(frame/100)*3)) // ver: draw_scale_zoom
         this.draw_font_wave(c, "abcde", frame % this.w, 110)                    // ver: draw_wave
+        this.horizontal_scroll_stateless_branchless(c, frame)                   // ver: list_scroll_x
         this.circle(c, frame, 'hello')                                          // ver: circle
     }
 }
