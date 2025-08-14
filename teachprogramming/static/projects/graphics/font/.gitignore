@@ -1,3 +1,4 @@
 font.*
 *.webp
 animation_base_pygame.py
+animation_base.js
