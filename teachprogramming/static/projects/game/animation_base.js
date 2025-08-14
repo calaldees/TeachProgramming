@@ -101,8 +101,6 @@ export class CanvasAnimationBase {
     }
 
     subsurface(img, x, y, width, height) {
-        debugger
-        if (!Boolean(width) || !Boolean(height)) {throw new Error()}
         const o = new OffscreenCanvas(width, height)
         const c = o.getContext("2d")
         c.drawImage(img, -x, -y)

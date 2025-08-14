@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
+</head>
+<body></body>
+<script type="module">
+import {CanvasAnimationBase} from './animation_base.js'
+
+function* range(target, start=0, step=1) {for (let i=start ; i<target ; i+=step) {yield i}}
+function* enumerate(iterable) {let count = 0; for (let item of iterable) {yield [count++, item]}}
+
+
+const SEQUENCE_DAMIENG = ` !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_£abcdefghijklmnopqrstuvwxyz{|}~©`  // ver: load_font_advance
+
+
+class Font extends CanvasAnimationBase {
+    constructor() {
+        super(...arguments)
+    }
+
+    async constructor_async() {
+        this.font = this.load_font_advance(await this.load_image("font", "font.webp"))
+    }
+
+    load_font = (img) => Object.fromEntries(
+        [...range(Math.floor(img.width/8))].map((i)=>[
+            String.fromCharCode(i), this.subsurface(img, i*8, 0, 8, 8)
+        ])
+    )
+
+    load_font_advance(img) {
+        const [w, h, seq] = [8, 8, SEQUENCE_DAMIENG]
+        const [ww, hh] = [img.width, img.height]
+        return Object.fromEntries(
+            [...range(Math.min(Math.floor(ww/w)*Math.floor(hh/h),seq.length))].map((i)=>[
+                seq[i], this.subsurface(img, (i*w)%ww, Math.floor((i*w)/ww)*h, w, h)
+            ])
+        )
+    }
+
+    draw_font(c, text, x, y, scale=1) {
+        for (let [i, char] of enumerate(text)) {
+            const img = this.font[char]
+            c.drawImage(img, x+i*8*scale, y, img.width*scale, img.height*scale)
+        }
+    }
+
+    draw_font_wave(c, text, x, y) {                                             // ver: draw_wave
+        for (let [i, char] of enumerate(text)) {                                // ver: draw_wave
+            const _x = x + i*8                                                  // ver: draw_wave
+            const _y = y + Math.floor(Math.sin(_x/50)*50)                       // ver: draw_wave
+            c.drawImage(this.font[char], _x, _y)                                // ver: draw_wave
+        }
+    }
+
+    circle(c, frame, text, radius=50, x=100, y=100, letter_space=0.2) {         // ver: circle
+        for (let [i, letter] of enumerate(text)) {                              // ver: circle
+            const angle = (-frame/50) + (i*-letter_space)                       // ver: circle
+            const _x = Math.floor(Math.sin(angle) * radius)                     // ver: circle
+            const _y = Math.floor(Math.cos(angle) * radius)                     // ver: circle
+            c.drawImage(this.font[letter], x+_x, y+_y)                          // ver: circle
+        }                                                                       // ver: circle
+    }                                                                           // ver: circle
+
+
+    model_inc(frame) {
+    }
+    draw(context, frame) {
+        this.clear()
+        const c = context
+        //debugger
+        c.drawImage(this.font["A"], 100, 100)
+        this.draw_font(c, "Hello", 100, 20)
+        //this.draw_font(c, "Big Text!", 40, 30, Math.abs(Math.sin(frame/100)*3)) // ver: draw_scale_zoom
+        this.draw_font_wave(c, "abcde", frame % this.w, 110)                    // ver: draw_wave
+        this.circle(c, frame, 'hello')                                          // ver: circle
+    }
+}
+
+const main = new Font()
+await main.constructor_async()
+main.setRunning(true)
+</script></html>
