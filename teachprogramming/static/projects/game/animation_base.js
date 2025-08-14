@@ -27,7 +27,7 @@ function createFullScreenCanvasElement({width=640, height=360, background_color=
 }
 
 export class CanvasAnimationBase {
-    constructor(canvas=undefined, fps=60, canvas_attrs={background_color: 'white'}) {
+    constructor(canvas=undefined, fps=60, canvas_attrs={background_color: 'black'}) {
         this.canvas = canvas || createFullScreenCanvasElement(canvas_attrs)
         this.context = this.canvas.getContext('2d', { alpha: true })
         // TODO: getContext('2d', { alpha: false }) https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas#turn_off_transparency

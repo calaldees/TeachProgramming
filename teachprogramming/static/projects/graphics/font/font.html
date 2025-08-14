@@ -17,7 +17,7 @@ const SEQUENCE_DAMIENG = ` !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTU
 
 class Font extends CanvasAnimationBase {
     constructor() {
-        super(...arguments)
+        super(undefined, 60, {background_color: 'white', width: 320, height: 180})  // ...arguments
     }
 
     async constructor_async() {
@@ -73,7 +73,7 @@ class Font extends CanvasAnimationBase {
         //debugger
         c.drawImage(this.font["A"], 100, 100)
         this.draw_font(c, "Hello", 100, 20)
-        //this.draw_font(c, "Big Text!", 40, 30, Math.abs(Math.sin(frame/100)*3)) // ver: draw_scale_zoom
+        this.draw_font(c, "Big Text!", 40, 30, Math.abs(Math.sin(frame/100)*3)) // ver: draw_scale_zoom
         this.draw_font_wave(c, "abcde", frame % this.w, 110)                    // ver: draw_wave
         this.circle(c, frame, 'hello')                                          // ver: circle
     }
