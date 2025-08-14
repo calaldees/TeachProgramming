@@ -1,7 +1,7 @@
 Error Handling
 ==============
 
-try catch
+try catch else
 ---------
 
 Kind of sucks - but is pervasive

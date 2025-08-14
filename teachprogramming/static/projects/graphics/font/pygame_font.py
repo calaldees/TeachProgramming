@@ -21,8 +21,9 @@ class BounceText():                                                             
                                                                                 # ver: bounce_text
 class PygameFont(PygameBase):
     def __init__(self):
-        #self.font = self.load_font()                                           # ver: load_font_advance NOT_
-        self.font = self.load_font_advanced()                                   # ver: load_font_advance
+        #self.font = self.load_font('font.gif')                                 # ver: download_font NOT_
+        #self.font = self.load_font('http://localhost:8000/static/font.gif')    # ver: download_font
+        self.font = self.load_font_advanced('https://img.damieng.com/fonts/ch8-previews/Babyteeth.webp')  # ver: load_font_advance
         #super().__init__(resolution=(320,180))                                 # ver: load_font_advance NOT_
         super().__init__(resolution=(320,180), color_background='white')        # ver: load_font_advance
                                                                                 # ver: bounce_text
@@ -50,15 +51,15 @@ class PygameFont(PygameBase):
                 f.write(r.read())                                               # ver: download_font
         return path                                                             # ver: download_font
 
-    def load_font(self):
-        #path = 'font.gif'                                                      # ver: download_font NOT_
-        path = self.download_if_not_exist('http://localhost:8000/static/font.gif') # ver: download_font
+    def load_font(self, url):                                                   # ver: download_font
+        path = self.download_if_not_exist(url)                                  # ver: download_font
+    #def load_font(self, path):                                                 # ver: download_font NOT_
         img = pygame.image.load(path)
         return {chr(i): img.subsurface((i*8, 0, 8, 8)) for i in range(img.get_width()//8)}
                                                                                 # ver: load_font_advance
-    def load_font_advanced(self):                                               # ver: load_font_advance
+    def load_font_advanced(self, url):                                               # ver: load_font_advance
         ## url = f'https://nfggames.com/system/arcade/arcade.php/y-{font_name}/z-{(size/8)-1}/x-{sequence}'  # ver: comment
-        path = self.download_if_not_exist('https://img.damieng.com/fonts/ch8-previews/Babyteeth.webp') # ver: load_font_advance
+        path = self.download_if_not_exist(url)                                  # ver: load_font_advance
         img = pygame.image.load(path)                                           # ver: load_font_advance
         w, h, seq = 8, 8, SEQUENCE_DAMIENG                                      # ver: load_font_advance
         ww, hh = img.get_size()                                                 # ver: load_font_advance
