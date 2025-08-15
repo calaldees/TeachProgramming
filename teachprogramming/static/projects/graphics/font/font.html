@@ -17,12 +17,12 @@ const SEQUENCE_DAMIENG = ` !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTU
 
 class Font extends CanvasAnimationBase {
     constructor() {
-        super(undefined, 60, {background_color: 'white', width: 320, height: 180})
+        super(undefined, 60, {background_color: 'black', width: 320, height: 180})
         this.random_ys = [...range(10)].map((i)=>Math.floor(Math.random()*this.h))  // ver: list_scroll_x
     }
 
     async constructor_async() {
-        this.font = this.load_font_advance(await this.load_image("font", "font.webp"))
+        this.font = this.load_font_advance(this.invert(await this.load_image("font", "font.webp")))
     }
 
     load_font = (img) => Object.fromEntries(
@@ -84,6 +84,8 @@ class Font extends CanvasAnimationBase {
         this.horizontal_scroll_stateless_branchless(c, frame)                   // ver: list_scroll_x
         this.circle(c, frame, 'hello')                                          // ver: circle
     }
+
+
 }
 
 const main = new Font()

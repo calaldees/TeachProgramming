@@ -26,20 +26,26 @@ function createFullScreenCanvasElement({width=640, height=360, background_color=
     return canvas
 }
 
+function createAudioElement() {
+    let audio = document.getElementById('audio')
+    if (!audio) {
+        audio = new Audio()
+        document.body.appendChild(this.audio)
+    }
+    audio.addEventListener("loadeddata", (e) => audio.play())
+    return audio
+    // https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement
+    //play_audio = (url) => {this.audio.src = url}
+}
+
 export class CanvasAnimationBase {
     constructor(canvas=undefined, fps=60, canvas_attrs={background_color: 'black'}) {
         this.canvas = canvas || createFullScreenCanvasElement(canvas_attrs)
         this.context = this.canvas.getContext('2d', { alpha: true })
         // TODO: getContext('2d', { alpha: false }) https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas#turn_off_transparency
 
-        this.audio = document.getElementById('audio')
-        if (!this.audio) {
-            this.audio = new Audio()
-            document.body.appendChild(this.audio)
-        }
-        this.audio.addEventListener("loadeddata", (e) => {
-            this.audio.play()
-        })
+        this.audio = createAudioElement()
+        this.play_audio = (url) => {this.audio.src = url}
 
         this.images = {}
 
@@ -100,18 +106,6 @@ export class CanvasAnimationBase {
         return promise
     }
 
-    subsurface(img, x, y, width, height) {
-        const o = new OffscreenCanvas(width, height)
-        const c = o.getContext("2d")
-        c.drawImage(img, -x, -y)
-        return o.transferToImageBitmap()
-    }
-
-    play_audio = (url) => {
-        // https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement
-        this.audio.src = url
-    }
-
     run = (time) => {
         if (this.keys_pressed.has("Escape")) {this.setRunning(false)}
         if (!time) {this.epoch = undefined}
@@ -123,6 +117,16 @@ export class CanvasAnimationBase {
         // TODO: Is it worth drawing to a backbuffer and drawing this backbuffer IMMEDIATELY on `.run`?
         if (this.running) {this.requestAnimationFrameId = requestAnimationFrame(this.run)}
     }
+
+    model_inc(frame) {
+        throw new Error("Not Implemented Error")
+    }
+    draw(context, frame) {
+        throw new Error("Not Implemented Error")
+    }
+
+    // Graphics Utils ----------------------------------------------------------
+
     drawLine(c, x1,y1,x2,y2,color='white',lineWidth=1) {
         c.strokeStyle = color
         c.lineWidth = lineWidth
@@ -132,11 +136,32 @@ export class CanvasAnimationBase {
         c.stroke()
     }
 
-    model_inc(frame) {
-        throw new Error("Not Implemented Error")
+    subsurface(img, x, y, width, height) {
+        const o = new OffscreenCanvas(width, height)
+        const c = o.getContext("2d")
+        c.drawImage(img, -x, -y)
+        return o.transferToImageBitmap()
     }
-    draw(context, frame) {
-        throw new Error("Not Implemented Error")
+
+    invert(img) {
+        const o1 = new OffscreenCanvas(img.width, img.height)
+        const c1 = o1.getContext("2d")
+        c1.drawImage(img, 0, 0)
+        // Invert image (but destroys transparency)
+        c1.globalCompositeOperation='difference'
+        c1.fillStyle='white'
+        c1.fillRect(0, 0, img.width, img.height)
+        // Mask
+        const o2 = new OffscreenCanvas(img.width, img.height)
+        const c2 = o2.getContext('2d')
+        c2.drawImage(img, 0, 0);
+        c2.globalCompositeOperation = 'source-in';
+        c2.fillStyle = 'black';
+        c2.fillRect(0, 0, img.width, img.height);
+        // Cut Mask out of Inverted image
+        c1.globalCompositeOperation = 'destination-in';
+        c1.drawImage(o2, 0, 0);
+        return o1.transferToImageBitmap()
     }
 
 }
