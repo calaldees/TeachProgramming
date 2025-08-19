@@ -6,7 +6,8 @@ Expanding on
 Age
 ---
 
-Illusion of self identifying "I'm good at this" "I enjoy this". It's an illusion. A con. A constructed misdirection, but as a useful one.
+[[age]]
+
 
 
 Space
@@ -54,3 +55,4 @@ Put on the headphones
 
 Ask for others to support you in your goals
 
+In an education environment. Suggest two computer rooms (next to each other. Proximity is vital!). Group space and focus space (silence; explicit)

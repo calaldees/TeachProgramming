@@ -22,3 +22,8 @@ It's all
 
 Future pipeline problem
 Less skilled programmers in the future?
+The current generation of programmers may be the last of the 'industry' skilled coders.
+Given that the future will be a very digital future, I feel that the foundation of Computing will still apply and be useful. I'm not what capacity it will be useful, but even if there are less people skilled in the domain, 
+
+
+vscode plugin progress - TODO

@@ -30,24 +30,39 @@ Just use the GCSE?!
 
 ---
 
-Institutions
+Dear Education Institutions,
 Stop making new forms of final qualification/citification/assessment
 It's a waste of your time
 Existing system exist
 
-As a teacher focus on assessment that helps the lerner grow
+As professional educators, focus on assessments that helps the lerner grow in the domains you need them to.
+You don't get to decide what those things are, because the foundations of Computing are the foundations of Computing.
+You need to focus on the 'How', not the 'What'
 
 ---
 
-Poor did not have access to infroamtion
-Libraryies
-We now have the internet they have access to information
-They don't have the attention and personal feedback - they have chatgpt and llms they have the best intantainious feedback.
+### Access to Information
+
+In the 1970's and 1980's, it was a commonly held belief that the 'poor' were poor because they did not have the opportunity to access information.
+Huge amount of funds were invested into public libraries.
+We now have the internet, everyone has unfettered access to the best information on the planet.
+Are they smarter and more informed .. no
+So it wasn't 'access to information' that was the problem.
+
+### Access to personalised feedback
+
+It must have been that there was no way of getting the right level of information and personalised feedback.
+So now we have LLM's that can provide personalised support and guidance. Instantaneous ongoing feedback 24 hours a day.
 Are they smarter and more informed .. no
 
+### Focus Space
 
-None of this makes a difference ... 
-IQ or G .. is that all it is
+'Access to Information' and 'Access to Personalised Feedback' do not seem to makes a difference ...
+So is it just IQ/G? I'm not so sure. It seems correlated.
+I think it's 'Environment and Expectation'
+It's really hard for young people to engage with a cognitively difficult task when there is no quiet space in the house. When there are siblings running in and out and the television(?)/phones-without-headphones is on.
+A smartphone and a bed is insufficient. If you don't have your own room with a door you can close with a desk in, you wont be able to progress. A young person must have access to focus space and a desk. In my carer I have asked students about their facilities at home, I have been surprised how many students don't have this. I would like to see some data (TODO).
+
 
 [[praise]]
 No; we tell young people they are clever it disarms them

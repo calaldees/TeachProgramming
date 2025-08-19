@@ -20,3 +20,4 @@ Trust
 
 For anyone in a leadership role, be it industry or teaching, the consistency of your character should be clear. Stop fake niceness, purposeful communication.
 Be emotionally consistant with your students/employees
+
