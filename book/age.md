@@ -1,5 +1,5 @@
 Age: When is too young?
-=======================
+-----------------------
 
 Summer code club workshops
 
