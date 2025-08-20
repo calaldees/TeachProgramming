@@ -1,15 +1,15 @@
 [TOC]
 
+Todo, every paragraph/(section) numbered.
+Formal documents have this, otherwise it's hard to reference them
+
 # Preface
 
 ![[preface]]
 
 # For Teachers
 
-Give learners the tools, don't hide stuff from them.
-Your mythical grand plan
-This is already failiure - I would 
-Give them chapters of this book to read. Explain to them why you have contructed the learning the way you have. What you are trying to exercise. Your learners are parteners in their learning, they are not second rate citizens
+Separating For Teachers and For Learners is already failure - I would
 
 ![[cirtificationVsAcademia]]
 ![[citification]]
@@ -19,7 +19,7 @@ Give them chapters of this book to read. Explain to them why you have contructed
 ![[frequencyNotDuration]]
 ![[balancedDiet]]
 ![[literacy]]
-![[praise]]
+![[trust]]
 ![[gamification]]
 ![[environment]]
 ![[cost]]
@@ -32,6 +32,9 @@ Give them chapters of this book to read. Explain to them why you have contructed
 
 # For Learners
 
+Giving students short sharp focused direction is important. The majority of this book is directed a teachers to create the environment. 
+Attitude and 
+
 ![[CodingTruths]]
 ![[metacognitionReview]]
 
@@ -39,3 +42,4 @@ Give them chapters of this book to read. Explain to them why you have contructed
 
 ![[hackathon]]
 ![[ActualCode]]
+![[securityPreventingComputing]]

@@ -64,7 +64,7 @@ It's really hard for young people to engage with a cognitively difficult task wh
 A smartphone and a bed is insufficient. If you don't have your own room with a door you can close with a desk in, you wont be able to progress. A young person must have access to focus space and a desk. In my carer I have asked students about their facilities at home, I have been surprised how many students don't have this. I would like to see some data (TODO).
 
 
-[[praise]]
+[[trust]]
 No; we tell young people they are clever it disarms them
 (Similar principle to complementing women on their looks - it's substanceless praise)
 

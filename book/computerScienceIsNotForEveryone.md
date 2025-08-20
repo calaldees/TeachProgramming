@@ -11,8 +11,8 @@ This is not an argument against education. This is an argument against misplaced
 
 It takes years of focus and skill to obtain a high enough level of skill to solve complex problems.
 Average people with average capability do not have the time in 3 years to build the required level of skill industry requires.
-Most people do not apply themselves full time during the course of a degree, they just turn up to lectures and 80% of them pass.
-They were not screened on entry to the university because the university is desperate for numbers to keep their courses alive.
+Most people do not apply themselves full time during the course of a degree, they just turn up to lectures and 80% of them pass (see OFS below).
+They were not screened on entry to the university because the university is desperate for numbers to keep their courses alive and every student == money.
 
 In the UK; The office for students will only allow a university to run a course if it has an 80%+ pass rate. [citation]
 No relevant GCSE's or A-Levels, accepted onto CS degrees.

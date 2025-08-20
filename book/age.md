@@ -47,7 +47,7 @@ But they didn't. All they did was copy the example, but making them feel like 't
 I am more interested in the young persons ability to persevere and focus than I am the output. Engagement == winning.
 The reality is "Look what you built (with guidance)"
 (This is the common education model of 'Zone of PCD')
-[[praise]]
+[[trust]]
 As your students mature, I would be more explicit about calling out 'what they did themselves' and 'what they did with support' and 'what they are currently unable to achieve'. You need to do this for your students to trust/respect your guidance. Always saying how 'good' they are gives them no direction.
 This subtle gradient is what separates expert practitioners from average practitioners.
 This can be called out explicitly with [[metacognitionReview]] tasks. What were you able to do yourself, what were you able to achive with support. What were the things you needed support with?

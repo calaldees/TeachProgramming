@@ -128,9 +128,9 @@ You attendees need to at least know what most of these things are, even if they 
 If you run a hackathon and 90% of your attendees can't do this, it's going to be a very weak hackathon.
 I would say that 50% of your attendees needs to have the capacity to create even simple pieces of software autonomously in a massively constrained time period.
 
-Realize what is required.
+I've been criticized about being unrealistic or misaligned with my tech list above. Some educators have questioned the validity of my suggestions as very few other institutions seem to agree on many of the items. I'm going to pull rank on this one. I am professional developer and hiring manager. I have created personal projects all my life and attended many hack days. I list these things because I can actually build things. I know what can be built. I know what young people are capable of. I know what I'm looking for when interviewing new developers. My suggested skills are largely in the right direction for 'Authentic Participation'.
 
-I you do not understand what the items are above, will you be able to recruit the right people or be in position to help them build the relevant skills in preparation for the event?
+If you do not understand what the items are above, you will be at a disadvantage when recruiting the right people and you be in a weak position to help learners build the relevant skills in preparation for the event.
 
 
 ### Suggestion
