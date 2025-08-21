@@ -25,6 +25,8 @@ Be emotionally consistant with your students/employees
 Teacher/Learner Parity - Partners in Learning
 ----------------------
 
+Separating For Teachers and For Learners is already failure - I would
+
 ### Teachers Should ...
 Give learners the tools, don't hide stuff from them.
 Your mythical grand plan is not a secret beyond there comprehension. It's not too much.
@@ -34,6 +36,7 @@ Your mythical grand plan is not a secret beyond there comprehension. It's not to
 
 ### Commentary
 
+I'm not going to write two books. One for the perpective and learners and one from the perspective of teachers. The teacher is the one with the experience knowlege and power to create the learning invironment and guide the patterns. Asking young people to raise their game by giving them a book on their attitude and education is unlikely to success, but giving them excerpts and pointing them at items is exceptionally useful. That is why this book has every paragraph numbered. They can be referenced.
 
 Give them chapters of this book to read. Explain to them why you have constructed the learning the way you have. What you are trying to exercise. Your learners are partners in their learning, they are not second rate citizens
 

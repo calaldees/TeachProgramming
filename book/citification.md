@@ -159,9 +159,3 @@ https://www.computer.org/product/education/associate-software-developer-certific
     Software Design
     Software Construction
     Software Testing
-
-
-Take A-Level as adult?
-
-Take modern GCSE's as an adult, but no Computing because it involves non-exam assessment or an online element
-https://passmygcse.co.uk/

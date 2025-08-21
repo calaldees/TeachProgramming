@@ -100,6 +100,19 @@ Teachers themselves are the best placed to judge if a particular method is effec
 My hope is that computing teachers can use this book as an idea/inspiration factory as a catalyst for their own teaching. Some of the concepts will resonate, some may not. Rather than prescribing doctrine; It is up to the reader to integrate the useful concepts into their own pallet of teaching.
 
 
+## Against the advice in this book
+
+Reality
+
+Scale. Most teachers are not as skilled or experienced
+Must be done to 10,000's of students
+
+NCCE Resources
+
+I don't know how to teach computing in every context.
+Again; I hope this a catalyst
+
+
 ## A future we know nothing about
 
 My mum was beside herself with tears. My spelling and handwriting were considered 'sub standard' when I was young. She worried about how I would ever be employed. She worried for my future. I said "Don't worry mum, I'll just use a spell checker" and she snapped "There wont always be a -king spell checker". Fast forward to the future workplace, there is always a spell checker.
