@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
+</head>
+<body></body>
+<script type="module">
+import {CanvasAnimationBase} from './animation_base.js'
+
+function* range(target, start=0, step=1) {for (let i=start ; i<target ; i+=step) {yield i}}
+function* enumerate(iterable) {let count = 0; for (let item of iterable) {yield [count++, item]}}
+function clear_object(o) {Object.keys(o).forEach(k => {delete o[k]})}
+
+
+const SEQUENCE_DAMIENG = ` !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_£abcdefghijklmnopqrstuvwxyz{|}~©`
+
+
+class Surface {
+    constructor(width, height) {
+        this._o = new OffscreenCanvas(width, height)
+        this._c = this._o.getContext("2d")
+        this._img = undefined
+    }
+    get c() {this._img = undefined; return this._c}
+    get img() {return this._img || (this._img = this._o.transferToImageBitmap())}
+}
+
+
+class Font {
+    constructor(img) {
+        this.font = this._load_font_advance(img)
+        this.char_cache = {}
+
+        this.background = new Surface(8, 8)
+        const bc = this.background.c
+        bc.fillStyle='green'
+        bc.fillRect(0, 0, img.width, img.height)
+    }
+
+    clear_cache() {
+        clear_object(this.char_cache)
+    }
+
+    _load_font_advance(img) {
+        const [w, h, seq] = [8, 8, SEQUENCE_DAMIENG]
+        const [ww, hh] = [img.width, img.height]
+        return Object.fromEntries(
+            [...range(Math.min(Math.floor(ww/w)*Math.floor(hh/h),seq.length))].map((i)=>[
+                seq[i], CanvasAnimationBase.subsurface(img, (i*w)%ww, Math.floor((i*w)/ww)*h, w, h)
+            ])
+        )
+    }
+
+    render_mask_img(mask, img) {
+        const s = new Surface(mask.width, mask.height)
+        s.c.drawImage(img, 0, 0)
+        s.c.globalCompositeOperation = 'destination-in';
+        s.c.drawImage(mask, 0, 0)
+        return s.img
+    }
+
+    draw_char_mask(c, char, x, y) {
+        let img
+        if (!(img = this.char_cache[char])) {
+            img = this.render_mask_img(this.font[char], this.background.img)
+            this.char_cache[char] = img
+        }
+        c.drawImage(img, x, y)
+    }
+
+    draw_font(c, text, x, y) {
+        for (let [i, char] of enumerate(text)) {
+            this.draw_char_mask(c, char, x+i*8, y)
+        }
+    }
+}
+
+
+class FontCanvas extends CanvasAnimationBase {
+    constructor() {
+        super(undefined, 60, {background_color: 'black', width: 320, height: 180})
+    }
+
+    async constructor_async() {
+        this.font = new Font(CanvasAnimationBase.invert(await this.load_image("font", "font.webp")))
+    }
+
+    model_inc(frame) {
+    }
+    draw(context, frame) {
+        this.font.clear_cache()
+        const bc = this.font.background.c
+        bc.fillStyle='green'; bc.fillRect(0,0,8,8);
+        let f = Math.abs(Math.floor(Math.sin(frame/64)*16))
+        CanvasAnimationBase.drawLine(bc,4+f%16,-4,-4,4+f%16,'#00FF00')
+
+        this.clear()
+        const c = context
+        this.font.draw_font(c, "Hello, What is this! OMG OMG", 20, 20)
+    }
+
+
+}
+
+const main = new FontCanvas()
+await main.constructor_async()
+main.setRunning(true)
+</script></html>

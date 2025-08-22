@@ -30,7 +30,7 @@ function createAudioElement() {
     let audio = document.getElementById('audio')
     if (!audio) {
         audio = new Audio()
-        document.body.appendChild(this.audio)
+        document.body.appendChild(audio)
     }
     audio.addEventListener("loadeddata", (e) => audio.play())
     return audio
@@ -127,7 +127,7 @@ export class CanvasAnimationBase {
 
     // Graphics Utils ----------------------------------------------------------
 
-    drawLine(c, x1,y1,x2,y2,color='white',lineWidth=1) {
+    static drawLine(c, x1,y1,x2,y2,color='white',lineWidth=1) {
         c.strokeStyle = color
         c.lineWidth = lineWidth
         c.beginPath()
@@ -136,21 +136,22 @@ export class CanvasAnimationBase {
         c.stroke()
     }
 
-    subsurface(img, x, y, width, height) {
+    static subsurface(img, x, y, width, height) {
         const o = new OffscreenCanvas(width, height)
         const c = o.getContext("2d")
         c.drawImage(img, -x, -y)
         return o.transferToImageBitmap()
     }
 
-    invert(img) {
+    static invert(img) {
         const o1 = new OffscreenCanvas(img.width, img.height)
         const c1 = o1.getContext("2d")
-        c1.drawImage(img, 0, 0)
         // Invert image (but destroys transparency)
+        c1.drawImage(img, 0, 0)
         c1.globalCompositeOperation='difference'
         c1.fillStyle='white'
         c1.fillRect(0, 0, img.width, img.height)
+
         // Mask
         const o2 = new OffscreenCanvas(img.width, img.height)
         const c2 = o2.getContext('2d')
@@ -158,6 +159,7 @@ export class CanvasAnimationBase {
         c2.globalCompositeOperation = 'source-in';
         c2.fillStyle = 'black';
         c2.fillRect(0, 0, img.width, img.height);
+
         // Cut Mask out of Inverted image
         c1.globalCompositeOperation = 'destination-in';
         c1.drawImage(o2, 0, 0);
