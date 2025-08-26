@@ -15,7 +15,7 @@ except ImportError:
 
 
 class PygameBase():
-    def __init__(self, title="pg", resolution=(320,180), fps=60, color_background='black'):
+    def __init__(self, title="pg", resolution=(480,270), fps=60, color_background='black'):
         pygame.init()
         pygame.display.set_caption(title)
         self.screen = pygame.display.set_mode(resolution, pygame.SCALED | pygame.RESIZABLE)

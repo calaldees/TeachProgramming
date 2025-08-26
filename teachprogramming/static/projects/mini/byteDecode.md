@@ -9,3 +9,8 @@ tt = """
 """
 print(bytes(map(int, filter(None, map(lambda i: i.strip().lstrip('0'), tt.split(" "))))).decode('utf8'))
 ```
+
+https://www.razor.co.uk/careers/vacancies/senior-python-engineer-with-ai
+
+data = '5f4dcc3b5aa765d61d8327deb882cf99'
+bytes.fromhex(data).decode('utf-8')

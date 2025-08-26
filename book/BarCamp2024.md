@@ -32,7 +32,7 @@ Preface: Computing Education Sux
       * > Introduction of new syllabus may be reason number of girls taking subject more than halved in eight years, academics say
 * Q: So what is important for young people?
   * The grand answer: Self actualization and altering the world though self action and building something
-  * The simple answer: Choose to build shit
+  * The simple answer: They choose to build shit
   * The refined anser: 'Authentic Participation'
 
 ### Qualifications vs Certification

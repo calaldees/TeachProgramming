@@ -1,4 +1,4 @@
-function createFullScreenCanvasElement({width=640, height=360, background_color='black'}={}) {
+function createFullScreenCanvasElement({width=480, height=270, background_color='black'}={}) {
     const body_style = `
         margin: 0;
         height: 100%;

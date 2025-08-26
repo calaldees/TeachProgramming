@@ -18,14 +18,57 @@ const SEQUENCE_DAMIENG = ` !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTU
 
 class Surface {
     constructor(width, height) {
-        this._o = new OffscreenCanvas(width, height)
-        this._c = this._o.getContext("2d")
+        if (!(Number.isInteger(width) && Number.isInteger(height))) {debugger}
+        console.assert(Number.isInteger(width) && Number.isInteger(height), "Surface must have int width/height")
+        this.o = new OffscreenCanvas(width, height)
+        this._c = this.o.getContext("2d")
         this._img = undefined
     }
+    get w() {return this.o.width}
+    get h() {return this.o.height}
     get c() {this._img = undefined; return this._c}
-    get img() {return this._img || (this._img = this._o.transferToImageBitmap())}
+    get img() {return this._img || (this._img = this.o.transferToImageBitmap())}
+    clear() {this.c.clearRect(0, 0, this.w, this.h)}
+    static isDimensionMatch(a, b) {return a.w==b.w && a.h==b.h}
+    static fromCanvas(canvas) {
+        const s = new Surface(canvas.width, canvas.height)
+        s.c.drawImage(canvas,0,0)
+        return s
+    }
 }
 
+
+class SurfaceMix {
+    /*
+    Mix two Surfaces
+       A       B     Mask   Output
+    |-----| |-----| |-----| |-----|
+    | a   | | b   | |OOOO/| | a  /|
+    |     | |     | |OOO/ | |   / |
+    |     |+|     |+|OO/  |=|  /  |
+    |     | |     | |O/   | | /   |
+    |   a | |   b | |/    | |/  b |
+    |-----| |-----| |-----| |-----|
+    A & B are mutated/modified/cut so they can be drawn to create the Output
+    */
+    constructor(surface_a, surface_b, mask) {
+        this.a = surface_a
+        this.b = surface_b
+        this.mask = mask || new Surface(this.a.w, this.a.h)
+        console.assert(Surface.isDimensionMatch(this.a, this.b), "Surfaces should match dimension")
+        console.assert(Surface.isDimensionMatch(this.a, this.mask), "Mask should match Surface dimension")
+    }
+    cut() {
+        this.a.c.save()
+        this.a.c.globalCompositeOperation = 'destination-in';
+        this.a.c.drawImage(this.mask.o, 0, 0)
+        this.a.c.restore()
+        this.b.c.save()
+        this.b.c.globalCompositeOperation = 'destination-out';
+        this.b.c.drawImage(this.mask.o, 0, 0)
+        this.b.c.restore()
+    }
+}
 
 class Font {
     constructor(img) {
@@ -63,7 +106,7 @@ class Font {
     draw_char_mask(c, char, x, y) {
         let img
         if (!(img = this.char_cache[char])) {
-            img = this.render_mask_img(this.font[char], this.background.img)
+            img = this.render_mask_img(this.font[char], this.background.o)
             this.char_cache[char] = img
         }
         c.drawImage(img, x, y)
@@ -79,25 +122,44 @@ class Font {
 
 class FontCanvas extends CanvasAnimationBase {
     constructor() {
-        super(undefined, 60, {background_color: 'black', width: 320, height: 180})
+        super(undefined, 60, {background_color: 'black', width: 480, height: 270})
+        this.a = Surface.fromCanvas(this.canvas)
+        this.b = Surface.fromCanvas(this.canvas)
+        this.mix = new SurfaceMix(this.a, this.b)
     }
 
     async constructor_async() {
-        this.font = new Font(CanvasAnimationBase.invert(await this.load_image("font", "font.webp")))
+        this.font = new Font(CanvasAnimationBase.invert(await this.load_image("font", "Babyteeth.webp")))
     }
 
     model_inc(frame) {
     }
     draw(context, frame) {
+
         this.font.clear_cache()
         const bc = this.font.background.c
         bc.fillStyle='green'; bc.fillRect(0,0,8,8);
-        let f = Math.abs(Math.floor(Math.sin(frame/64)*16))
+        let f = Math.abs(Math.floor(Math.sin(frame/64)*15))
         CanvasAnimationBase.drawLine(bc,4+f%16,-4,-4,4+f%16,'#00FF00')
 
+        this.a.clear()
+        this.font.draw_font(this.a.c, "Hello, What is this! OMG OMG", 20, 20)
+
+        this.b.clear()
+        this.b.c.fillStyle='grey'
+        this.b.c.fillRect(0,0,this.b.w,this.b.h)
+
+        this.mix.mask.clear()
+        this.mix.mask.c.fillStyle = 'white'
+        this.mix.mask.c.fillRect(0,0,frame%this.w,this.h)
+
+        this.mix.cut()
+
         this.clear()
-        const c = context
-        this.font.draw_font(c, "Hello, What is this! OMG OMG", 20, 20)
+        context.drawImage(this.a.o,0,0)
+        context.drawImage(this.b.o,0,0)
+
+        CanvasAnimationBase.drawLine(context, frame%this.w,0,frame%this.w,this.h,'white',4)
     }
 
 

@@ -22,7 +22,7 @@ _venv:
 	python3 -m venv _venv
 	_venv/bin/pip install pygame
 run_pygame_font: _venv animation_base_pygame.py
-	_venv/bin/python3 pygame_font.py
+	_venv/bin/python3 font_pygame.py
 
 animation_base.js:
 	ln -s ../../game/animation_base.js animation_base.js

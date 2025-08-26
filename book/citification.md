@@ -149,6 +149,8 @@ No Cirt, but made by big players
 
 Testing
 https://istqb.org/certifications/certified-tester-foundation-level-ctfl-v4-0/
+https://www.bcs.org/media/ilhdvwam/istqb-certified-tester-syllabus.pdf
+
 https://www.bcs.org/qualifications-and-certifications/certifications-for-professionals/software-testing-certifications/istqb-certified-tester-foundation-level/
 IEEE Computer Society https://www.computer.org/product/education/software-testing-course
 

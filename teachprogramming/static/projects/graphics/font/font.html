@@ -17,17 +17,17 @@ const SEQUENCE_DAMIENG = ` !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTU
 
 class Font extends CanvasAnimationBase {
     constructor() {
-        super(undefined, 60, {background_color: 'black', width: 320, height: 180})
+        super(undefined, 60, {background_color: 'black', width: 480, height: 270})
         this.random_ys = [...range(10)].map((i)=>Math.floor(Math.random()*this.h))  // ver: list_scroll_x
     }
 
     async constructor_async() {
-        this.font = this.load_font_advance(this.invert(await this.load_image("font", "font.webp")))
+        this.font = this.load_font_advance(CanvasAnimationBase.invert(await this.load_image("font", "font.webp")))
     }
 
     load_font = (img) => Object.fromEntries(
         [...range(Math.floor(img.width/8))].map((i)=>[
-            String.fromCharCode(i), this.subsurface(img, i*8, 0, 8, 8)
+            String.fromCharCode(i), CanvasAnimationBase.subsurface(img, i*8, 0, 8, 8)
         ])
     )
 
@@ -36,7 +36,7 @@ class Font extends CanvasAnimationBase {
         const [ww, hh] = [img.width, img.height]
         return Object.fromEntries(
             [...range(Math.min(Math.floor(ww/w)*Math.floor(hh/h),seq.length))].map((i)=>[
-                seq[i], this.subsurface(img, (i*w)%ww, Math.floor((i*w)/ww)*h, w, h)
+                seq[i], CanvasAnimationBase.subsurface(img, (i*w)%ww, Math.floor((i*w)/ww)*h, w, h)
             ])
         )
     }
