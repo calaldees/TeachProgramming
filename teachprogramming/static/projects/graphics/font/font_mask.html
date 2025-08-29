@@ -6,15 +6,9 @@
 </head>
 <body></body>
 <script type="module">
-import {CanvasAnimationBase} from './animation_base.js'
-
-function* range(target, start=0, step=1) {for (let i=start ; i<target ; i+=step) {yield i}}
-function* enumerate(iterable) {let count = 0; for (let item of iterable) {yield [count++, item]}}
-function clear_object(o) {Object.keys(o).forEach(k => {delete o[k]})}
-
-
-const SEQUENCE_DAMIENG = ` !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_£abcdefghijklmnopqrstuvwxyz{|}~©`
-
+import { enumerate, clear_object, fetch_text } from './core.js'
+import { CanvasAnimationBase, Gfx } from './animation_base.js'
+import { cut_font_chars_from_img, parse_font_unicode, SEQUENCE_DAMIENG } from './font_loader.js'
 
 class Surface {
     constructor(width, height) {
@@ -68,44 +62,42 @@ class SurfaceMix {
         this.b.c.drawImage(this.mask.o, 0, 0)
         this.b.c.restore()
     }
+    cut_and_draw(context) {
+        this.cut()
+        context.drawImage(this.a.o,0,0)
+        context.drawImage(this.b.o,0,0)
+    }
 }
 
+
 class Font {
-    constructor(img) {
-        this.font = this._load_font_advance(img)
+    constructor(font_char_img) {
+        this.font = font_char_img
         this.char_cache = {}
 
         this.background = new Surface(8, 8)
         const bc = this.background.c
         bc.fillStyle='green'
-        bc.fillRect(0, 0, img.width, img.height)
+        bc.fillRect(0, 0, bc.width, bc.height)
     }
 
     clear_cache() {
         clear_object(this.char_cache)
     }
 
-    _load_font_advance(img) {
-        const [w, h, seq] = [8, 8, SEQUENCE_DAMIENG]
-        const [ww, hh] = [img.width, img.height]
-        return Object.fromEntries(
-            [...range(Math.min(Math.floor(ww/w)*Math.floor(hh/h),seq.length))].map((i)=>[
-                seq[i], CanvasAnimationBase.subsurface(img, (i*w)%ww, Math.floor((i*w)/ww)*h, w, h)
-            ])
-        )
-    }
-
     render_mask_img(mask, img) {
         const s = new Surface(mask.width, mask.height)
+        s.c.save()
         s.c.drawImage(img, 0, 0)
         s.c.globalCompositeOperation = 'destination-in';
         s.c.drawImage(mask, 0, 0)
+        s.c.restore()
         return s.img
     }
 
     draw_char_mask(c, char, x, y) {
         let img
-        if (!(img = this.char_cache[char])) {
+        if (!(img = this.char_cache[char])) { // cache miss on font char
             img = this.render_mask_img(this.font[char], this.background.o)
             this.char_cache[char] = img
         }
@@ -129,7 +121,10 @@ class FontCanvas extends CanvasAnimationBase {
     }
 
     async constructor_async() {
-        this.font = new Font(CanvasAnimationBase.invert(await this.load_image("font", "Babyteeth.webp")))
+        this.font = new Font(cut_font_chars_from_img(Gfx.invert(await Gfx.load_image("Babyteeth.webp")), SEQUENCE_DAMIENG))
+        this.font = new Font(await parse_font_unicode(await fetch_text('zx-spectrum.yaff')))
+        //this.font2 = parse_font_text(fetch('amstrad_cpc.draw'))
+        //this.font3 = parse_font_text(fetch('bbc_micro.yaff'))
     }
 
     model_inc(frame) {
@@ -140,7 +135,7 @@ class FontCanvas extends CanvasAnimationBase {
         const bc = this.font.background.c
         bc.fillStyle='green'; bc.fillRect(0,0,8,8);
         let f = Math.abs(Math.floor(Math.sin(frame/64)*15))
-        CanvasAnimationBase.drawLine(bc,4+f%16,-4,-4,4+f%16,'#00FF00')
+        Gfx.drawLine(bc,4+f%16,-4,-4,4+f%16,'#00FF00')
 
         this.a.clear()
         this.font.draw_font(this.a.c, "Hello, What is this! OMG OMG", 20, 20)
@@ -153,16 +148,12 @@ class FontCanvas extends CanvasAnimationBase {
         this.mix.mask.c.fillStyle = 'white'
         this.mix.mask.c.fillRect(0,0,frame%this.w,this.h)
 
-        this.mix.cut()
-
         this.clear()
-        context.drawImage(this.a.o,0,0)
-        context.drawImage(this.b.o,0,0)
+        this.mix.cut_and_draw(context)
 
-        CanvasAnimationBase.drawLine(context, frame%this.w,0,frame%this.w,this.h,'white',4)
+
+        Gfx.drawLine(context, frame%this.w,0,frame%this.w,this.h,'white',4)
     }
-
-
 }
 
 const main = new FontCanvas()

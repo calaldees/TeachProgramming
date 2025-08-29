@@ -1,4 +1,6 @@
 *.gif
 *.webp
+*.draw
+*.yaff
 animation_base_pygame.py
 animation_base.js

@@ -525,6 +525,10 @@ function sort() {
   
 }
 
+function regex() {
+  // TODO
+}
+
 function assertion() {
   let name = "bob"
   let count = 3
@@ -597,6 +601,7 @@ function main() {
   split_strings();
   random_number();
   sort();
+  regex();
   assertion();
   http_request_json();
   debug();

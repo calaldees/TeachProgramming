@@ -1,3 +1,47 @@
+class Gfx {
+    static load_image(url) {return new Promise((resolve, reject)=>{
+        const img = new Image()
+        img.onload = () => resolve(img)
+        img.onerror = (e) => console.error(`image load failed ${url}`, e)
+        img.src = url
+    })}
+    static drawLine(c, x1,y1,x2,y2,color='white',lineWidth=1) {
+        c.strokeStyle = color
+        c.lineWidth = lineWidth
+        c.beginPath()
+        c.moveTo(x1, y1)
+        c.lineTo(x2, y2)
+        c.stroke()
+    }
+    static subsurface(img, x, y, width, height) {
+        // TODO: consider using https://developer.mozilla.org/en-US/docs/Web/API/Window/createImageBitmap
+        const o = new OffscreenCanvas(width, height)
+        const c = o.getContext("2d")
+        c.drawImage(img, -x, -y)
+        return o.transferToImageBitmap()
+    }
+    static invert(img) {
+        const o1 = new OffscreenCanvas(img.width, img.height)
+        const c1 = o1.getContext("2d")
+        // Invert image (but destroys transparency)
+        c1.drawImage(img, 0, 0)
+        c1.globalCompositeOperation='difference'
+        c1.fillStyle='white'
+        c1.fillRect(0, 0, img.width, img.height)
+        // Mask
+        const o2 = new OffscreenCanvas(img.width, img.height)
+        const c2 = o2.getContext('2d')
+        c2.drawImage(img, 0, 0);
+        c2.globalCompositeOperation = 'source-in';
+        c2.fillStyle = 'black';
+        c2.fillRect(0, 0, img.width, img.height);
+        // Cut Mask out of Inverted image
+        c1.globalCompositeOperation = 'destination-in';
+        c1.drawImage(o2, 0, 0);
+        return o1.transferToImageBitmap()
+    }
+}
+
 function createFullScreenCanvasElement({width=480, height=270, background_color='black'}={}) {
     const body_style = `
         margin: 0;
@@ -38,7 +82,7 @@ function createAudioElement() {
     //play_audio = (url) => {this.audio.src = url}
 }
 
-export class CanvasAnimationBase {
+class CanvasAnimationBase {
     constructor(canvas=undefined, fps=60, canvas_attrs={background_color: 'black'}) {
         this.canvas = canvas || createFullScreenCanvasElement(canvas_attrs)
         this.context = this.canvas.getContext('2d', { alpha: true })
@@ -91,20 +135,8 @@ export class CanvasAnimationBase {
         }
     }
 
-    load_image = (name, url) => {
-        let resolve_image_loaded = undefined
-        const promise = new Promise((resolve, reject) => {
-            resolve_image_loaded = resolve
-        })
-        const images = this.images
-        images[name] = new Image()
-        images[name].onload = function() {
-            images[name] = this
-            resolve_image_loaded(this)
-        }
-        images[name].src = url
-        return promise
-    }
+    // TODO! In making this async, many of the earlier examples will not function and need reworking
+    async load_image(name, url) {this.images[name] = await Gfx.load_image(url)}
 
     run = (time) => {
         if (this.keys_pressed.has("Escape")) {this.setRunning(false)}
@@ -125,45 +157,7 @@ export class CanvasAnimationBase {
         throw new Error("Not Implemented Error")
     }
 
-    // Graphics Utils ----------------------------------------------------------
-
-    static drawLine(c, x1,y1,x2,y2,color='white',lineWidth=1) {
-        c.strokeStyle = color
-        c.lineWidth = lineWidth
-        c.beginPath()
-        c.moveTo(x1, y1)
-        c.lineTo(x2, y2)
-        c.stroke()
-    }
-
-    static subsurface(img, x, y, width, height) {
-        const o = new OffscreenCanvas(width, height)
-        const c = o.getContext("2d")
-        c.drawImage(img, -x, -y)
-        return o.transferToImageBitmap()
-    }
-
-    static invert(img) {
-        const o1 = new OffscreenCanvas(img.width, img.height)
-        const c1 = o1.getContext("2d")
-        // Invert image (but destroys transparency)
-        c1.drawImage(img, 0, 0)
-        c1.globalCompositeOperation='difference'
-        c1.fillStyle='white'
-        c1.fillRect(0, 0, img.width, img.height)
-
-        // Mask
-        const o2 = new OffscreenCanvas(img.width, img.height)
-        const c2 = o2.getContext('2d')
-        c2.drawImage(img, 0, 0);
-        c2.globalCompositeOperation = 'source-in';
-        c2.fillStyle = 'black';
-        c2.fillRect(0, 0, img.width, img.height);
-
-        // Cut Mask out of Inverted image
-        c1.globalCompositeOperation = 'destination-in';
-        c1.drawImage(o2, 0, 0);
-        return o1.transferToImageBitmap()
-    }
-
 }
+
+
+export {Gfx, CanvasAnimationBase}

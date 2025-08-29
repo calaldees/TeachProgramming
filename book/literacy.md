@@ -16,6 +16,7 @@ https://github.com/calaldees/teacherEducation/blob/acbc846eddf56268305380145fb6e
 Secret Literacy: David Dido (citation)
 
 Paper
+
 explicit
 
 Explain why you should do it one way over another
@@ -38,3 +39,10 @@ Passive voice considered harmful
 ---
 
 in Computing Programming language literacy is Computing Literacy - it's the language of computers - do you speak it?
+
+
+    * Data Volumetrics, Permutations
+    * Assignment, selection, iteration, set, dictionary, array, call stack depth, stack, queue, cache invalidation, proxy
+    * Time Complexity, Parallelisation, Race hazard, Overloading of mathematical operators, Order of precedence, Wall Time, Worst case time complexity, 
+
+same as / does the same thing | functionally equivalent

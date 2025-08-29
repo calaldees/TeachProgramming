@@ -31,3 +31,10 @@ http.server: animation_base.js
 
 font.webp:
 	curl https://img.damieng.com/fonts/ch8-previews/Pristine.webp -o font.webp
+
+FONT_REPO:=https://raw.githubusercontent.com/robhagemans/hoard-of-bitfonts/refs/heads/master
+amstrad_cpc.draw:
+	curl -O ${FONT_REPO}/amstrad/amstrad_cpc.draw
+	curl -O ${FONT_REPO}/acorn/bbc/bbc_micro.yaff
+	curl -O ${FONT_REPO}/sinclair/zx-spectrum.yaff
+	curl -O ${FONT_REPO}/commodore/c64-c16-c128/c64.yaff
