@@ -8,7 +8,7 @@
 <script type="module">
 import { enumerate, clear_object, fetch_text } from './core.js'
 import { CanvasAnimationBase, Gfx } from './animation_base.js'
-import { cut_font_chars_from_img, parse_font_unicode, SEQUENCE_DAMIENG } from './font_loader.js'
+import { cut_font_chars_from_img, SEQUENCE_DAMIENG , parse_yaff, parse_draw, SEQUENCE_AMSTRAD} from './font_loader.js'
 
 class Surface {
     constructor(width, height) {
@@ -122,9 +122,10 @@ class FontCanvas extends CanvasAnimationBase {
 
     async constructor_async() {
         this.font = new Font(cut_font_chars_from_img(Gfx.invert(await Gfx.load_image("Babyteeth.webp")), SEQUENCE_DAMIENG))
-        this.font = new Font(await parse_font_unicode(await fetch_text('zx-spectrum.yaff')))
-        //this.font2 = parse_font_text(fetch('amstrad_cpc.draw'))
-        //this.font3 = parse_font_text(fetch('bbc_micro.yaff'))
+        //this.font = new Font(await parse_yaff('zx-spectrum.yaff'))
+        this.font = new Font(await parse_draw('amstrad_cpc.draw', SEQUENCE_AMSTRAD))
+        //this.font = new Font(await parse_yaff('bbc_micro.yaff'))
+        //this.font = new Font(await parse_yaff('c64.yaff'))
     }
 
     model_inc(frame) {
