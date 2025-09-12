@@ -1,9 +1,26 @@
 import { range, zip, fetch_text } from './core.js'
 import { Gfx } from './animation_base.js'
 
+
+function* remove_dupe_chars(arr) {
+    const seen = new Set()
+    for (let i of arr) {
+        // Skip variation selector VS15
+        // https://en.wikipedia.org/wiki/Variation_Selectors_(Unicode_block)
+        // https://www.codetable.net/decimal/65038
+        if (i.charCodeAt()==65038) {continue}
+        if (seen.has(i)) {yield undefined}
+        else {seen.add(i); yield i}
+    }
+}
+
 // From Img --------------------------------------------------------------------
 
-export const SEQUENCE_DAMIENG = ` !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_£abcdefghijklmnopqrstuvwxyz{|}~©`.replace('\n','')
+export const SEQUENCE_DAMIENG = `
+ !"#$%&'()*+,-./0123456789:;<=>?
+@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_
+£abcdefghijklmnopqrstuvwxyz{|}~©
+`.replaceAll('\n','')
 
 export function cut_font_chars_from_img(img, char_seq, w=8, h=8) {
     const [ww, hh] = [img.width, img.height]
@@ -44,17 +61,6 @@ export async function parse_yaff(filename) {
 
 // From text `draw`  -----------------------------------------------------------
 
-function* undefined_dupes(arr) {
-    const seen = new Set()
-    for (let i of arr) {
-        // Skip variation selector VS15
-        // https://en.wikipedia.org/wiki/Variation_Selectors_(Unicode_block)
-        // https://www.codetable.net/decimal/65038
-        if (i.charCodeAt()==65038) {continue}
-        if (seen.has(i)) {yield undefined}
-        else {seen.add(i); yield i}
-    }
-}
 function* extract_font_text_chars(text, foreground='@', background='.', width=8, height=8) {
     const REGEX_CHAR = new RegExp(String.raw`[${background}${foreground}]{${width*height}}`, "isg")
     for (let match of text.replaceAll(/\s/sg, '').matchAll(REGEX_CHAR)) {yield match[0]}
@@ -63,7 +69,7 @@ export async function parse_draw(filename, char_seq) {
     const [foreground, background, width, height] = ['#', '-', 8, 8]
     const text = await fetch_text(filename)
     return Object.fromEntries(zip(
-        undefined_dupes(char_seq),
+        remove_dupe_chars(char_seq),
         await Promise.all(
             [...extract_font_text_chars(text,foreground,background)]
             .map(c=>text_char_to_ImageData(c,foreground,width,height))
