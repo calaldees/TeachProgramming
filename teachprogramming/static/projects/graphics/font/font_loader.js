@@ -44,20 +44,50 @@ export async function parse_yaff(filename) {
 
 // From text `draw`  -----------------------------------------------------------
 
+function* undefined_dupes(arr) {
+    const seen = new Set()
+    for (let i of arr) {
+        // Skip variation selector VS15
+        // https://en.wikipedia.org/wiki/Variation_Selectors_(Unicode_block)
+        // https://www.codetable.net/decimal/65038
+        if (i.charCodeAt()==65038) {continue}
+        if (seen.has(i)) {yield undefined}
+        else {seen.add(i); yield i}
+    }
+}
 function* extract_font_text_chars(text, foreground='@', background='.', width=8, height=8) {
     const REGEX_CHAR = new RegExp(String.raw`[${background}${foreground}]{${width*height}}`, "isg")
     for (let match of text.replaceAll(/\s/sg, '').matchAll(REGEX_CHAR)) {yield match[0]}
 }
 export async function parse_draw(filename, char_seq) {
+    const [foreground, background, width, height] = ['#', '-', 8, 8]
     const text = await fetch_text(filename)
     return Object.fromEntries(zip(
-        char_seq,
+        undefined_dupes(char_seq),
         await Promise.all(
-            [...extract_font_text_chars(text)]
-            .map(c=>text_char_to_ImageData(c,'#',8,8))
+            [...extract_font_text_chars(text,foreground,background)]
+            .map(c=>text_char_to_ImageData(c,foreground,width,height))
             .map(i=>createImageBitmap(i)),
         )
     ))
 }
 
-export const SEQUENCE_AMSTRAD = String.raw`◻⎾⏊⏌⚡︎⊠✓⍾←→↓↑↡↲⊗⊙⊟◷◶◵◴⍻⎍⊣⧖⍿␦⊖◰◱◲◳!"#$%&’()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]↑_\`abcdefghijklmnopqrstuvwxyz{|}~  ▘▝▀▖▌▞▛▗▚▐▜▄▙▟█·╵╶└╷│┌├╴┘─┴┐┤┬┼^´¨£©¶§‘¼½¾±÷¬¿¡αβγδεθλμπσφψχωΣΩ🮠🮡🮣🮢🮧🮥🮦🮤🮨🮩🮮╳╱╲🮕▒▔▕▁▏◤◥◢◣🮎🮍🮏🮌🮜🮝🮞🮟☺☹♣♦♥♠○●□■♂♀♩♪☼🙭⭣⭠⭢▲▼▶◀🯆🯅𜱣🯈⭥⭤`
+// https://en.wikipedia.org/wiki/Amstrad_CPC_character_set
+export const SEQUENCE_AMSTRAD = `
+◻⎾⏊⏌⚡︎⊠✓⍾←→↓↑↡↲⊗⊙
+⊟◷◶◵◴⍻⎍⊣⧖⍿␦⊖◰◱◲◳
+ !"#$%&’()*+,-./
+0123456789:;<=>?
+@ABCDEFGHIJKLMNO
+PQRSTUVWXYZ[\\]↑_
+\`abcdefghijklmno
+pqrstuvwxyz{|}~⌫
+ ▘▝▀▖▌▞▛▗▚▐▜▄▙▟█
+ ·╵╶└╷│┌├╴┘─┴┐┤┬┼
+^´¨£©¶§‘¼½¾±÷¬¿¡
+αβγδεθλμπσφψχωΣΩ
+🮠🮡🮣🮢🮧🮥🮦🮤🮨🮩🮮╳╱╲🮕▒
+▔▕▁▏◤◥◢◣🮎🮍🮏🮌🮜🮝🮞🮟
+☺☹♣♦♥♠○●□■♂♀♩♪☼🚀
+🙭⭣⭠⭢▲▼▶◀🯆🯅𜱣🯈⭥⭤
+`.replaceAll('\n','')
