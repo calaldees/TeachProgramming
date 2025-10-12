@@ -150,7 +150,8 @@ e.g:
 
 My assumption is that we need to derive a 3x3 affine transform matrix to transform from coordinate space1 to coordinate space2.
 
-I am able to use `mathjs` in a browser by using
+I assume I will need a javascript library to assist?
+As a possibility; I can see that `mathjs` can be used in a browser as follows
 ```html
 <script type="module">
 import * as mathjs from 'https://esm.run/mathjs'
@@ -163,3 +164,25 @@ import * as mathjs from 'https://esm.run/mathjs'
 ```
 
 What code would I write to solve this problem?
+I'm assuming an interface something like
+```javascript
+function create_affine_transform_matrix(s1, s2) {
+    return  // 3x3 affine transform matrix
+}
+
+const space1 = [[-1,1],[-3,-1],[3,-2],[1,2]]
+const space2 = [[ 2,2],[ 2, 0],[4, 0],[4,2]]
+const transform_matrix = create_affine_transform_matrix(space1, space2)
+
+function transform_coord_space(transform_matrix, point1) {
+    // return point2
+}
+
+let point2 = transform_coord_space(space1, space2, [0.1,-0.5])
+// where `point2` is expected to be approximately [2,2]
+```
+
+GPT5
+----
+
+Win

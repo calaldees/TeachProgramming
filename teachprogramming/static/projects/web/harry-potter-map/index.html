@@ -19,132 +19,93 @@
             /* opacity: 0; */
             filter: blur(2em);
         }
-
     </style>
 </head>
 <body class=""><!-- class="disabled" -->
     <h1>Map</h1>
-    <img>
-    <canvas></canvas>
 <script type="module">
+import { build_transform_point_function } from './cord_translate.js'
+import { SpeechRecognitionWrapper } from './SpeechRecognitionWrapper.js'
 
-const body = document.getElementsByTagName("body")[0]
 
 const urlParams = new URLSearchParams(window.location.search);
 const name = urlParams.get('name') || "Unknown"
 const websocket_url = urlParams.get('websocket_url') || `${window.location.protocol.startsWith("https")?"wss":"ws"}://${window.location.host}/ws`
 
-document.getElementsByTagName('img')[0].src = urlParams.get('map') || "static/map.png"
+const img_map = document.createElement('img')
+document.body.appendChild(img_map)
+img_map.src = urlParams.get('map') || "static/map.png"
 
-const img_foot = new Image()
-img_foot.src = urlParams.get('foot') || "static/foot.png"
 
-const canvas = document.getElementsByTagName('canvas')[0]
+const canvas = document.createElement('canvas')
+document.body.appendChild(canvas)
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 const ctx = canvas.getContext('2d')
 
-let temp_count = 0     // Temp test
-ctx.fillStyle = 'red'  // Temp test
 
-export function* nextValueIterator(iterable) {
-    let previous_value = null
-    for (let i of iterable) {
-        if (previous_value==null) {previous_value=i; continue}
-        yield [previous_value, i]
-        previous_value = i
-    }
-    yield [previous_value, null]
+export function* enumerate(iterable) {
+    let count = 0
+    for (let item of iterable) {yield [count++, item]}
 }
 
-function translate_geopos_to_imgpos(lat,lon) {
-    // TODO
-    return [lat, lon]
-}
-function pos_pair_to_angle(x1,y1, x2,y2) {
-    return Math.atan2(y2-y1, x2-x1)
-}
 
-function drawFoot(x,y,angle,step_count) {
-    //ctx.fillRect(x, y, 8,8)
-    const scale = 0.5
-    const t = ctx.getTransform()
-    ctx.translate(x,y)
-    ctx.rotate(angle+Math.PI/2)
-    if (step_count%2==0) {ctx.scale( 1, 1); ctx.translate(-img_foot.width/2,0);} //ctx.translate(img_foot.width,0)
-    else                 {ctx.scale(-1, 1);}
-    ctx.scale(scale, scale)
-    ctx.drawImage(img_foot, -img_foot.width/2, -img_foot.height/2)
-    ctx.setTransform(t)
-}
+const translate_geopos_to_imgpos = build_transform_point_function(
+    [[  0,  0],[100,  0],[100,100],[  0,100]],
+    [[  0,  0],[200,  0],[200,200],[  0,200]],
+)
+
+// Connect WebSocket -----------------------------------------------------------
 
 const socket = new WebSocket(websocket_url)
-socket.addEventListener("message", (msg)=>{
-    const data = JSON.parse(msg.data)
-    //console.log("websocket", data)
 
-    temp_count++                // temp
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    for (let [name, location_list] of Object.entries(data)) {
-        let angle
-        for (let [location, next_location] of nextValueIterator(location_list)) {
-            let [x, y] = translate_geopos_to_imgpos(location.lat, location.lon)
-            if (next_location) {
-                angle = pos_pair_to_angle(x, y, ...translate_geopos_to_imgpos(next_location.lat, next_location.lon))
-            }
-            drawFoot(x, y, angle, location.count)
-            if (!next_location) {
-                ctx.font = "16px serif"; ctx.fillText(name, x, y-16)
-            }
-        }
-    }
-})
+// Send WebSocket GeoPos -------------------------------------------------------
 
 let message_count = 0
 const watchID = navigator.geolocation.watchPosition((position) => {
     console.log("watchPosition", position.coords.latitude, position.coords.longitude)
     if (socket.readyState!=1) {return}
-    socket.send(JSON.stringify({name, lat:position.coords.latitude, lon:position.coords.longitude, count:message_count++}))
+    socket.send(JSON.stringify({
+        name,
+        lat:position.coords.latitude,
+        lon:position.coords.longitude,
+        count:message_count++
+    }))
+})
+
+// Receive WebSocket GeoPos ----------------------------------------------------
+
+function draw_names_at_geopos_data(data) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    for (let [name, location_list] of Object.entries(data)) {
+        for (let [i, location] of enumerate(location_list)) {
+            const [x, y] = translate_geopos_to_imgpos([location.lat, location.lon])
+            // ctx.fillStyle = 'red'  // TODO: transparent the higher i is
+            ctx.fillRect(x, y, 8,8)
+            if (i==0) {  // Draw name above first location
+                ctx.font = "16px serif"
+                ctx.fillText(name, x, y-16)
+            }
+        }
+    }
+}
+
+socket.addEventListener("message", (msg)=>{
+    const data = JSON.parse(msg.data)
+    //console.log("websocket", data)
+    draw_names_at_geopos_data(data)
 })
 
 
+// Speech ----------------------------------------------------------------------
+
+const toggle_map = () => body.classList.toggle("disabled")
+
 const phrases = [
-    "I solemnly swear I am up to no good",
-    "I solemnly swear I'm up to no good",  // add 'that'?
-    "mischief managed",
+    {'keywords': ["I", "solemnly", "swear", "up", "no", "good"], 'func': toggle_map},
+    {'keywords': ["mischief", "managed"], 'func': toggle_map}
 ]
-const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
-if (!SpeechRecognition) {console.error("SpeechRecognition unsupported")}
-if ( SpeechRecognition) {console.log  ("SpeechRecognition supported")
-    let recognition
-    function onSpeechResult(event) {
-        const transcript = event.results[0][0].transcript
-        console.log('recognition', transcript, `Confidence: ${event.results[0][0].confidence}`)
-        for (let phrase of phrases) {
-            if (transcript.indexOf(phrase)>=0) {body.classList.toggle("disabled")}
-        }
-    }
-    function _start() {
-        if (recognition) {return}
-        recognition = new SpeechRecognition()
-        recognition.continuous = false
-        recognition.lang = "en-UK"
-        recognition.interimResults = false
-        recognition.onresult = onSpeechResult
-        recognition.onspeechstart = () => {console.log('onspeechstart')}
-        recognition.onspeechend = _stop
-        console.log("recognition.start()")
-        recognition.start()
-    }
-    function _stop() {
-        if (recognition) {console.log("recognition.stop()"); recognition.stop(); recognition=undefined;}
-    }
-    body.addEventListener('keydown', _start)
-    body.addEventListener('mousedown', _start)
-    body.addEventListener('mouseup', _stop)
-    body.addEventListener('keyup', _stop)
-}
+SpeechRecognitionWrapper(phrases)
 
 </script>
 </body>
