@@ -40,15 +40,16 @@ export function build_transform_point_function(space1, space2) {
 
 // Tests -----------------------------------------------------------------------
 
-export function assertEquals(comparison_tuples) {
-    for (let [a, b] of comparison_tuples) {
+export function assertEquals(...comparison_tuples) {
+    for (let t of comparison_tuples) {
+        let [a, b] = t
         if (! (a==b)) {throw `${a} should-equal ${b}`}
         console.assert(a == b, `${a} should-equal ${b}`)
         // `console.assert` does nothing! It prints nothing .. I don't know why. A: Assertions are not enabled by default?
     }
 }
-export function assertEqualsObject(comparison_tuples) {
-    return assertEquals(comparison_tuples.map(v => v.map(JSON.stringify)))
+export function assertEqualsObject(...comparison_tuples) {
+    return assertEquals(...comparison_tuples.map(v => v.map(JSON.stringify)))
 }
 
 //const H = create_projective_transform_matrix(
@@ -61,10 +62,22 @@ export function assertEqualsObject(comparison_tuples) {
 //console.assert(transform_point(H, [2.5,-1.5]), ??)
 
 
+// Scale 2x
 const test1 = build_transform_point_function(
     [[  0,  0],[100,  0],[100,100],[  0,100]],
     [[  0,  0],[200,  0],[200,200],[  0,200]],
 )
-assertEqualsObject([test1([  0,  0]),[  0,  0]])
-assertEqualsObject([test1([100,100]),[200,200]])
-assertEqualsObject([test1([ 50, 50]),[100,100]])
+assertEqualsObject(
+    [test1([  0,  0]), [  0,  0]],
+    [test1([100,100]), [200,200]],
+    [test1([ 50, 50]), [100,100]],
+)
+
+// Rotate the cords so we should get rotation 90deg
+const test2 = build_transform_point_function(
+    [[  0,  0],[100,  0],[100,100],[  0,100]],
+    [[100,  0],[100,100],[  0,100],[  0,  0],],
+)
+assertEqualsObject(
+    [test2([ 10, 10]), [ 90, 10]],
+)
