@@ -3,19 +3,23 @@ from functools import cached_property
 try:
     import pygame
 except ImportError:
+    print('Failed to import `pygame` - attempting automatic install')
     # The instructions on Pygame site suck https://www.pygame.org/wiki/GettingStarted
     # Python on windows can be installed in many different places and does not set a default path for `pip`
     # https://stackoverflow.com/a/12333108/3356840
     import subprocess
     import sys
-    def install(name):
+    def pip_install(name):
         return subprocess.call([sys.executable, '-m', 'pip', 'install', name])
-    install('pygame')
+    pip_install('pygame')
     import pygame
 
 
+RESOLUTION_1080x3 = (640,360)
+RESOLUTION_1080x4 = (480,270)
+
 class PygameBase():
-    def __init__(self, title="pg", resolution=(480,270), fps=60, color_background='black'):
+    def __init__(self, title="pg", resolution=RESOLUTION_1080x4, fps=60, color_background='black'):
         pygame.init()
         pygame.display.set_caption(title)
         self.screen = pygame.display.set_mode(resolution, pygame.SCALED | pygame.RESIZABLE)

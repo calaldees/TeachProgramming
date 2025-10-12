@@ -27,6 +27,10 @@ class CopterGame(PygameBase):
         self.copter_y_pos = 100    # VER: copter
         self.copter_x_vel = 0  # VER: physics
         self.copter_y_vel = 0  # VER: physics
+    def safe_get_background_pixel(self, p):                             # VER: collision_single
+        #try   : return self.background_image.get_at(p)      # VER: collision_single NOT parallax
+        try   : return self.background_images[0].get_at(p)   # VER: parallax
+        except: return (0,0,0,0)                             # VER: collision_single
     def loop(self, screen, frame):
         self.background_x_pos += 1   # VER: background
                                      # VER: background
@@ -43,15 +47,11 @@ class CopterGame(PygameBase):
         self.copter_x_pos += self.copter_x_vel         # VER: physics
         self.copter_y_pos += self.copter_y_vel         # VER: physics
                                                        # VER: physics
-        def safe_get_pixel(p):                                   # VER: collision_single
-            #try   : return self.background_image.get_at(p)   # VER: collision_single NOT parallax
-            try   : return self.background_images[0].get_at(p)   # VER: parallax
-            except: return (0,0,0,0)                             # VER: collision_single
         #if True:                                   # VER: collision_single NOT collision_multi
         for x, y in self.copter_collision_points:   # VER: collision_multi
             #point = (self.background_x_pos + int(self.copter_x_pos), int(self.copter_y_pos))  # VER: collision_single NOT collision_multi
             point = (self.background_x_pos + int(self.copter_x_pos) + x, int(self.copter_y_pos) + y)  # VER: collision_multi
-            pixel = safe_get_pixel(point)           # VER: collision_single
+            pixel = self.safe_get_background_pixel(point)  # VER: collision_single
             r,g,b,a = pixel                         # VER: collision_single
             if a < 128:                             # VER: collision_single
                 pass                                # VER: collision_single
