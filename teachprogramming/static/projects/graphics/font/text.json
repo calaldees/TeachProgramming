@@ -1,0 +1,21 @@
+{
+    "amstrad": {
+        "size": [40, 25],
+        "text_startup": " Amstrad 64K Microcomputer  (v1)\n ©1984 Amstrad Consumer Electronics plc\n           and Locomotive Software Ltd.\n BASIC 1.0\nReady",
+    "bbc": {
+        "resolution": [320,265],
+        "size": [40, 32],
+        "text_startup": "BBC Computer 32K\n\nAcorn DFS\n\nBASIC\n\n>",
+    },
+    "c64": {
+        "size": [40, 25],
+        "text_startup": "    **** COMMODORE 64 BASIC V2 ****\n 64K RAM SYSTEM 38911 BASIC BYTES FREE\nREADY.\n",
+    },
+    "spectrum": {
+        "size": [32, 24],
+        "text_startup": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n© 1982 Sinclair Research Ltd",
+    },
+    "ibm_pc": {
+        "text_startup": "Current date is Thu 01-01-1984\nEnter new date (mm-dd-yy):\nCurrent time is 00:00:00.34\nEnter new time:\n\n\nMicrosoft(R) MS-DOS(R)  Version 3.31\n             (C)Copyright Microsoft Corp 1981-1987\n\n\nA>",
+    },
+}

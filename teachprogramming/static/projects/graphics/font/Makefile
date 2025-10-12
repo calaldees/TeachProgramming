@@ -38,3 +38,5 @@ amstrad_cpc.draw:
 	curl -O ${FONT_REPO}/acorn/bbc/bbc_micro.yaff
 	curl -O ${FONT_REPO}/sinclair/zx-spectrum.yaff
 	curl -O ${FONT_REPO}/commodore/c64-c16-c128/c64.yaff
+#blob:https://github.com/850757b0-d62a-4f6a-a778-5e9931feaf5b
+#https://github.com/spacerace/romfont/blob/master/font-images/IBM_VGA_8x16.png
