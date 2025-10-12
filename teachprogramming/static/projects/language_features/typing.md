@@ -36,3 +36,9 @@ test: Json = {
 }
 test['c']['dd']['ccc']   # nested dicts reads fail the type checker
 ```
+
+---
+
+* [HN Comments: Python developers are embracing type hints (pyrefly.org)](https://news.ycombinator.com/item?id=45358841)
+    * Dynamic languages are all implementing types
+    * Static languages are sort of relaxing the types (with `var` etc)

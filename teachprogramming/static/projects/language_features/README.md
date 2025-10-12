@@ -56,6 +56,9 @@ Features
             * Metaclass!
 
 
+* [Rating 26 years of Java changes](https://neilmadden.blog/2025/09/12/rating-26-years-of-java-changes/)
+
+
 More
 -----
 
@@ -66,7 +69,7 @@ More
 Language specific reference
 ---------------------------
 
-http://es6-features.org/
+https://tc39.es/ecma262/multipage/#sec-intro
 
 
 Final Thoughts
@@ -78,3 +81,4 @@ Languages fall out of favour and new ones are always trying new ideas.
 > ... your scientists were so preoccupied with whether or not they could that they didn’t stop to think if they should.
 <sub>Jeff Goldblum - Jurassic Park</sub>
 
+https://github.com/zakirullin/cognitive-load?tab=readme-ov-file#feature-rich-languages
