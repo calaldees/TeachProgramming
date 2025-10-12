@@ -150,3 +150,7 @@ History
 
 * 2024? I was asked for advice on setting up a hackathon for girls with local schools and undergrads. I waxed lyrical about my advice and wrote this document.
 * 2025 I was asked about running a hackathon and significantly enhanced this document
+
+* https://web.archive.org/web/20250806021451/https://ccsu.co.uk/news/article/ccsu/Hackabury-2025-Hackathon-Games-Jam/
+* https://blogs.canterbury.ac.uk/cccuconnect/first-hackathon-delivered-measurable-value-for-business-partners/
+    * https://web.archive.org/web/20250717092807/https://blogs.canterbury.ac.uk/cccuconnect/first-hackathon-delivered-measurable-value-for-business-partners/
