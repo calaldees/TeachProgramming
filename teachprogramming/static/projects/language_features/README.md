@@ -7,6 +7,9 @@ Language Features
     * onecompiler.com
 * See also [language reference](https://computingteachers.uk/static/langauge_reference.html)
 
+* [Why Study Programming Languages](https://people.csail.mit.edu/rachit/post/why-study-programming-languages/)
+    * > Convenience is a function of knowledge, familiarity, and community. Usability is similarly ill-defined and hard to measure. And of course, none of these metrics really predict which languages are widely used or popular.
+    * > we create programming languages to experience new ideas; ideas that would have remained inaccessible had we stayed with the old languages
 
 Features
 --------
