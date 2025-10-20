@@ -14,3 +14,20 @@ Teachers are not professional network engineers or bioinfomations.
 The majority of computing teachers need guidance of pre-completed tasks that the teacher then adapts to their context.
 It is often hard for teachers to understand the pedagogical choices of the person that has constructed a leraning exiernece.
 Sometimes the creator of the task is a great 'network engineer' but has no understanding of the path to pre-requiste knowlege blar
+
+
+Separating Audiences
+--------------------
+
+Teachers
+Learners
+Leaders
+Parent/Guardian
+
+Separating these is a problem, because all are interlinked.
+* Why should a leader not read something for teachers?
+* Why should a learner not be aware of something for leaders?
+
+However, I think some points resonate with a particular group more.
+To help some readers get value swiftly, I've highlighted some points for a particular audience, but this does not mean it is irrelevant for others.
+I would rather not have this separation, but it does explicitly call out actions

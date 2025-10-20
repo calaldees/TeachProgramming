@@ -29,8 +29,17 @@ Equipment/Hardware/Tools
 ------------------------
 
 
+Physical manifestations of the students "Authentic Participation"
+
+Can we mount loads of tablets on the wall to display software?
+
+Arcade cabinet? (Just joystick - touch screen mouse)
+
+
 Focus
 -----
+
+Young people need to be guided to understand what focus is.
 
 ### Group space
 
@@ -45,14 +54,16 @@ If any of those steps are missing, your environment will not function as expecte
 
 
 
+
 ### Solo space: Deliberate practice
 Explicit focus
 
-Signal to others and yourself
+Signal to others and yourself - "This is focus time"
 
 shut the door
-Put on the headphones
+Put on the headphones (I don't think music helps. I think this reduces focus and trains dependence. There is the argument everyone is different, to a point, but I'm fairly adamant about this)
+Consider ear defenders for focus time. Explicit?
 
 Ask for others to support you in your goals
 
-In an education environment. Suggest two computer rooms (next to each other. Proximity is vital!). Group space and focus space (silence; explicit)
+In an education environment? Concept: two computer spaces (next to each other. Proximity is vital!). Group space and focus space (silence; explicit)

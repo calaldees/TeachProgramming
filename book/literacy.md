@@ -46,3 +46,13 @@ in Computing Programming language literacy is Computing Literacy - it's the lang
     * Time Complexity, Parallelisation, Race hazard, Overloading of mathematical operators, Order of precedence, Wall Time, Worst case time complexity, 
 
 same as / does the same thing | functionally equivalent
+
+
+* [The Grug Brained Developer](https://grugbrain.dev/) A layman's guide to thinking like the self-aware smol brained
+Have fun with language and understand the patterns
+Write like Grug to convey important points
+* [Just fucking use HTML](https://justfuckingusehtml.com/)
+    * [](https://motherfuckingwebsite.com/)
+    * [React Is Fucking Cool, You Dumbass](https://reactisfuckingcool.com/)
+
+
