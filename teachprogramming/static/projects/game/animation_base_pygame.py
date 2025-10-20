@@ -1,3 +1,10 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# dependencies = [
+#   "pygame",
+# ]
+# ///
+
 from functools import cached_property
 
 try:
