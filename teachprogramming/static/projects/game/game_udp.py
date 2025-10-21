@@ -1,9 +1,6 @@
 # uv run --with pygame game_udp.py
 from collections.abc import Set
 from typing import Tuple, NamedTuple
-import socket
-import threading
-import multiprocessing
 import logging
 import queue
 
@@ -44,16 +41,19 @@ class Ship():
         self.y_pos += self.y_vel
 
 
-class NetworkUDP():
+class NetworkThreadQueueUDP():
     class Addr(NamedTuple):
         host: str
         port: int
-    class UDPMessage(NamedTuple):
+    class Message(NamedTuple):
         data: bytes = b''
         addr_from: Tuple[str, int] = ('', 0)  # meant to be Addr, but cant
         def __bool__(self) -> bool: return bool(self.data)
     def __init__(self, addr_to='127.0.0.1', port=5005):
-        self.recv_queue: multiprocessing.Queue[NetworkUDP.UDPMessage] = multiprocessing.Queue()
+        import socket
+        import threading
+        import multiprocessing
+        self.recv_queue: multiprocessing.Queue[NetworkThreadQueueUDP.Message] = multiprocessing.Queue()
         self.addr_to = self.Addr(addr_to, port)
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         try:
@@ -65,16 +65,16 @@ class NetworkUDP():
         thread.start()
     def _recv_thread(self) -> None:
         while True:
-            self.recv_queue.put_nowait(self.UDPMessage(*self.sock.recvfrom(1024)))
+            self.recv_queue.put_nowait(self.Message(*self.sock.recvfrom(1024)))
     def send(self, data: bytes, addr_to: Addr | None = None) -> None:
         self.sock.sendto(data, addr_to or self.addr_to)
-    def get(self) -> UDPMessage:
+    def get(self) -> Message:
         try               : return self.recv_queue.get_nowait()
-        except queue.Empty: return self.UDPMessage()
+        except queue.Empty: return self.Message()
 
 
 class UDPDemo(PygameBase):
-    def __init__(self, network: NetworkUDP):
+    def __init__(self, network: NetworkThreadQueueUDP):
         self.network = network
         self.ship = Ship()
         super().__init__(resolution=(640,360))
@@ -94,4 +94,5 @@ class UDPDemo(PygameBase):
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
     import sys
-    UDPDemo(NetworkUDP(*sys.argv[1:])).run()
+    network = NetworkThreadQueueUDP(*sys.argv[1:])
+    UDPDemo(network).run()
