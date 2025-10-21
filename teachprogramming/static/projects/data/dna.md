@@ -126,5 +126,7 @@ More BioInformatics
     * [Transcribing DNA into RNA](http://rosalind.info/problems/rna/)
     * [Semiglobal Alignment](http://rosalind.info/problems/smgb/)
 * [Sequencing your DNA with a USB dongle and open source code](https://stackoverflow.blog/2021/12/24/sequencing-your-dna-with-a-usb-dongle-and-open-source-code/)
+* [How to sequence your DNA for <$2k](https://maxlangenkamp.substack.com/p/how-to-sequence-your-dna-for-2k) 2025
+    * for $1000: 13% human coverage (25% contamination with bacteria)
 * [Download Complete Genomes](https://hgdownload.soe.ucsc.edu/downloads.html)
 * [](https://www.ncbi.nlm.nih.gov/guide/howto/dwn-genome/)

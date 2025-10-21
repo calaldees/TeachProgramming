@@ -9,6 +9,9 @@ Local
 Online Coding Environments
 --------------------------
 
+(My list is out of date. This space is always moving forward. Link below has more ideas)
+https://github.com/EbookFoundation/free-programming-books/blob/main/more/free-programming-playgrounds.md
+
 * internal
     * [jupyterlite](https://github.com/jupyterlite/jupyterlite) [static html](https://jupyterlite.readthedocs.io/en/latest/_static/lab/index.html)
         * Python + JS completely in browser
