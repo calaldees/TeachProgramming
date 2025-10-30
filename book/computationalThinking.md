@@ -16,6 +16,7 @@ Educators that can't actually build software tend to emphasis the wrong foundati
 This leads to loss of trust (especially as learners become more advanced/capable in the later teenage years. They can sniff the bullshit and detach from education rather than just obeying continuous instructions).
 I would wager that "Computational Thinking" has been responsible for increased disengagement with Computing.
 I actually think it has done harm to the subject.
+This is another example of how education is abstracted from the rest of the world.
 
 I asked a table of professional developers, without context, "what is 'Computational Thinking'". None of them could answer. They got as far as "Thinking like a computer" and moved on to talking about the capabilities of AI.
 

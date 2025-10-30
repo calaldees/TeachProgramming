@@ -1,13 +1,13 @@
 Academia
 ========
 
-Perception: VR, AR, CyberSecurity/Hacking, YouTune, 'The Cloud', Social Media
+Perception: VR, AR, CyberSecurity/Hacking, YouTube, 'The Cloud', Social Media
 Non existant or abstract at lower levels
 
 Degrees offer this!
 Foundations again - and you know what, most entrants can't do it
 
-Music degree without playing an instument
+Music degree without playing an instrument
 An art degree without a portfolio
 
 80% have to pass. OFS office for students

@@ -9,6 +9,7 @@ This is my notes on what the pitfalls are and how to do it with some degree of s
     * If you don't understand the event, how will you convince people to attend? If you do convince people to attend, they will probably have the wrong skill-set because you did not understand the event yourself.
     * Understand the skills your attendees will need in able to produce something meaningful (see curriculum below)
 * Routes/Themes/Style
+    * (just having 'anything goes' is to vague. If groups are too disparate, Attendees will wonder about the value of the gathering and wonder if they should have just done it themselfs. There is no way for them to feel part of something bigger, or identify the skill that was demonstrated by the other teams because eveyone worked on very differnt domains.)
     * Creative route
         * Demo-scene Font greets
         * Demo-group Team
@@ -48,11 +49,13 @@ This is my notes on what the pitfalls are and how to do it with some degree of s
     * A related example
         * ICT club for girls in 2004 was just an embarrassment - purple spreadsheets about ponies.
 * If the event can run regularly for 3 years, you will have enough snowball momentum for work of mouth to attract more people. What could be important is the length of time the event has been established. Potentially you may have you first 2 years as a buildup for the 3rd+ year being productive.
-    * You know the winners (everyone wins because you've got a great set of awards). Contact them individually about the next event. Show you're aware of the hack they did. Make them feel valued and remember and that their contribution was important. You can have a template and notes from the previous year and back these out in an hour to 30 people.
+    * You know the attends from last year (everyone wins some kind of special mention/award because you gave a great set of awards). Contact them individually about the next event. Show you're aware of the hack they did. Make them feel valued and remember and that their contribution was important. You can have a template and notes from the previous year and back these out in an hour to 30 people.
+    * The longer your event runs, the more meaningful and prestige the event holds (both internal and external). Organizations should be aware of the long term horizon can actively fight to keep the pattern/event going.
+        * Can the organization commit to minimum of 3 years? can the organization name and identify a member of staff to be responsible. If that member of staff leaves, ensure there is a plan to pass the torch.
 * Publish the results and have awards
     * Many young people use these days as CV material. Have a public website that describes each of the hacks and showcases them. This leads to the value of years of accolades enshrined on a page that can be linked to for years (see length in the game above)
         * Have a plan for the long term support of these urls. It helps SEO and young people cite the achievement for years.
-    * When you judge the awards - it's not dragons den. Award creativity, skill, approach, passion
+    * When you judge the awards - it's not dragons den. Award creativity, skill, approach, passion. Make the special-mention/award/category mean something to the person receiving it.
     * It is NOT competitive. Participation is the key. I advise against awards like "Best in Show". I also advice against meaningless awards "Most likely to go to the moon".
         * Some ideas "Best Technology", "Best Team", "Local Hero's"
     * (One of the prizes I won once was an engineering day where we build HexaYerts and GridBeam furniture to put in the yert, solar power wiring and a composting toilet. Can you create prizes that further engagement)
@@ -132,6 +135,8 @@ I've been criticized about being unrealistic or misaligned with my tech list abo
 
 If you do not understand what the items are above, you will be at a disadvantage when recruiting the right people and you be in a weak position to help learners build the relevant skills in preparation for the event.
 
+Whenever I see an event being advertised with well meaning people smiling and saying "You don't have to be technical to get involved" this just detracts from what the event is aiming to achieve. I see this, and it's the death knoll of the event. If you want excellence, you need to identify and appreciate excellence. If you want it to be a social, inclusive and fun with some free food, that is a reasonable goal, but don't expect excellence.
+This attitude also detracts/devalues from the the young people that have put in significant effort to develop their skills, only to have a range of people just turn up and say "Anyone can do this and anyone can contribute". This undermines the significant difficulty and long term investment needed.
 
 ### Suggestion
 

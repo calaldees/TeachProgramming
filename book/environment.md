@@ -23,6 +23,7 @@ Posters? (not random posters of personal taste (bands/movies) or other unrelated
 * Cat's at keyboards
 * Digital signs, (flip dot display over door?), mario pipe sound when enter/exit? animated LED's
 * Slideshows of photos of the group working - have a way for people to add to this (conversations about appropriate)
+* lightup, things that move. Half done projects?
 
 
 Equipment/Hardware/Tools
@@ -67,3 +68,5 @@ Consider ear defenders for focus time. Explicit?
 Ask for others to support you in your goals
 
 In an education environment? Concept: two computer spaces (next to each other. Proximity is vital!). Group space and focus space (silence; explicit)
+
+

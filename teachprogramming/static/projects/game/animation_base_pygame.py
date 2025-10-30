@@ -5,6 +5,8 @@
 # ]
 # ///
 
+from abc import abstractmethod
+from typing import override, Tuple
 from functools import cached_property
 
 try:
@@ -26,7 +28,7 @@ RESOLUTION_1080x3 = (640,360)
 RESOLUTION_1080x4 = (480,270)
 
 class PygameBase():
-    def __init__(self, title="pg", resolution=RESOLUTION_1080x4, fps=60, color_background='black'):
+    def __init__(self, title: str="pg", resolution:Tuple[int,int]=RESOLUTION_1080x4, fps:int=60, color_background:str='black'):
         pygame.init()
         pygame.display.set_caption(title)
         self.screen = pygame.display.set_mode(resolution, pygame.SCALED | pygame.RESIZABLE)
@@ -56,7 +58,8 @@ class PygameBase():
             self.clock.tick(self.fps)
         self.quit()
         pygame.quit()
-    def loop(self, screen, frame) -> None:
+    @abstractmethod
+    def loop(self, screen: pygame.Surface, frame: int) -> None:
         raise NotImplementedError('override loop method')
     def quit(self):
         pass  # override to shutdown
@@ -74,6 +77,7 @@ class GameDemo(PygameBase):
         self.y = 100
         self.image = pygame.image.load('images/block.gif')
         super().__init__()
+
     def loop(self, screen, frame):
         s = screen
         width, height = s.get_size()
