@@ -18,7 +18,7 @@ In the UK; The office for students will only allow a university to run a course 
 No relevant GCSE's or A-Levels, accepted onto CS degrees.
 In 2021, 38% of all degree's across the country were awarded 1st class honors (grade inflation. 2010=15%, 2000=10%, 1990=5%) [citation]
 
-
+TODO: Add [[hackathon]] for environment that values young peoples skill and effort
 
 
 
