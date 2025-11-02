@@ -7,7 +7,7 @@
 <body></body>
 <script type="module">
 
-import {CanvasAnimationBase} from './animation_base.js'
+import {CanvasAnimationBase, Gfx} from './animation_base.js'
 
 class CanvasDemo extends CanvasAnimationBase {
     constructor() {
@@ -32,7 +32,7 @@ class CanvasDemo extends CanvasAnimationBase {
         c.fillRect(t, 10, 120, 80)
 
         t = frame % this.h
-        this.drawLine(c, t, t, t+10, t+10, 'red', 5)
+        Gfx.drawLine(c, t, t, t+10, t+10, 'red', 5)
 
         c.drawImage(this.images["block"], this.mouse_x, this.mouse_y)
 

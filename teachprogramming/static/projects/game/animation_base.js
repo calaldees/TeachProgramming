@@ -97,8 +97,9 @@ class CanvasAnimationBase {
 	    window.addEventListener("blur" , () => {this.setRunning(false)}, false)
 
         this.keys_pressed = new Set()
+        this.keys_released = new Set()  // ensure keys pressed always trigger for single frame
         window.addEventListener('keydown', (e) => this.keys_pressed.add(e.key), true)
-        window.addEventListener('keyup'  , (e) => this.keys_pressed.delete(e.key), true)
+        window.addEventListener('keyup'  , (e) => this.keys_released.add(e.key), true)
         this.mouse_x = 0
         this.mouse_y = 0
         this.canvas.addEventListener('mousemove', (e) => {
@@ -144,14 +145,20 @@ class CanvasAnimationBase {
         if (!this.epoch && time) {this.epoch = time - (this.frame * this.milliseconds_per_frame)}
         const frame = Math.floor((time - this.epoch) / this.milliseconds_per_frame)
         const draw_required = this.frame<frame;
-        for ( ; this.frame<frame ; this.frame++) {this.model_inc(this.frame)}
+        for ( ; this.frame<frame ; this.frame++) {
+            this.model_inc(this.frame)
+            if (this.keys_released.size) {
+                this.keys_pressed = this.keys_pressed.difference(this.keys_released)
+                this.keys_released.clear()
+            }
+        }
         if (draw_required) {this.draw(this.context, this.frame)}
         // TODO: Is it worth drawing to a backbuffer and drawing this backbuffer IMMEDIATELY on `.run`?
         if (this.running) {this.requestAnimationFrameId = requestAnimationFrame(this.run)}
     }
 
     model_inc(frame) {
-        throw new Error("Not Implemented Error")
+        //throw new Error("Not Implemented Error")
     }
     draw(context, frame) {
         throw new Error("Not Implemented Error")
@@ -160,4 +167,8 @@ class CanvasAnimationBase {
 }
 
 
-export {Gfx, CanvasAnimationBase}
+export {
+    Gfx,
+    createFullScreenCanvasElement,
+    CanvasAnimationBase,
+}

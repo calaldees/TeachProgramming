@@ -1,130 +1,61 @@
-<canvas id="canvas_element" width="640" height="360" style="image-rendering: pixelated; object-fit: contain; width:100%; max-width: 100%; height: 100%; max-height: 100%;">
-</canvas>
-<canvas id="canvas_collisions" width="640" height="360" style="display: none"></canvas><!-- VER: collision_single -->
-<script>
-    const canvas = document.getElementById('canvas_element');
-    const context = canvas.getContext('2d');
+<!DOCTYPE html><html>
+<head>
+    <meta charset="utf-8" />
+    <link id="favicon" rel="shortcut icon" type="image/png" href="data:image/png;base64,....==" />
+</head><body></body>
+<script type="module">
+import {CanvasAnimationBase, Gfx, createFullScreenCanvasElement} from './animation_base.js'
 
-    let paused;
-    function start() {paused = false; requestAnimationFrame(timerEvent);}
-    function pause() {paused = true;}
-
-    const keys = {
-        27: 'ESCAPE',
-        38: 'UP',    // VER: physics
-        40: 'DOWN',  // VER: physics
-        37: 'LEFT',  // VER: physics
-        39: 'RIGHT', // VER: physics
-        32: 'SPACE'
-    };
-    const keys_pressed = {};
-    function init_keys() {for (let key in keys) {keys_pressed[keys[key]]=false;}}
-    window.addEventListener('keydown', eventKeyDown, true);
-    window.addEventListener('keyup'  , eventKeyUp  , true);
-    function eventKeyDown(event) {
-        if (event.keyCode in keys) {
-            keys_pressed[keys[event.keyCode]]=true;  event.preventDefault();
+class Copter extends CanvasAnimationBase {
+    constructor() {
+        super(...arguments)
+        this.load_image("copter_image", "images/ship.gif")
+        this.level_number = 1
+        this.load_level()
+    }
+    load_level() {
+        this.load_image(`background_2`, `images/CopterLevel${this.level_number}_layer2.png`)
+        this.load_image(`background_1`, `images/CopterLevel${this.level_number}_layer1.png`)
+        this.load_image(`background_0`, `images/CopterLevel${this.level_number}.png`)
+        this.reset()
+    }
+    reset() {
+        this.background_x_pos = 0
+        this.copter_x_pos = 50
+        this.copter_y_pos = 100
+        this.copter_x_vel = 0
+        this.copter_y_vel = 0
+    }
+    model_inc(frame) {
+        this.background_x_pos += 1   // VER: background
+                                     // VER: background
+        //if (this.keys_pressed.has('Space')) {self.copter_y_pos += -2}  // VER: copter NOT physics
+        //else                                {self.copter_y_pos +=  1}  // VER: copter NOT physics
+        if (this.keys_pressed.has('ArrowUp'))    {this.copter_y_vel += -0.1} // VER: physics
+        if (this.keys_pressed.has('ArrowDown'))  {this.copter_y_vel +=  0.1} // VER: physics
+        if (this.keys_pressed.has('ArrowLeft'))  {this.copter_x_vel += -0.1} // VER: physics HIDE
+        if (this.keys_pressed.has('ArrowRight')) {this.copter_x_vel +=  0.1} // VER: physics HIDE
+                                                       // VER: copter
+        this.copter_x_vel  = this.copter_x_vel * 0.99  // VER: physics
+        this.copter_y_vel  = this.copter_y_vel * 0.99  // VER: physics
+        this.copter_y_vel += 0.025                     // VER: physics
+        this.copter_x_pos += this.copter_x_vel         // VER: physics
+        this.copter_y_pos += this.copter_y_vel         // VER: physics
+                                                       // VER: physics
+        //if (true) {                                  // VER: collision_single NOT collision_multi
+        if (true) {
+            // TODO: collision
         }
     }
-    function eventKeyUp(event) {
-        if (event.keyCode in keys) {
-            keys_pressed[keys[event.keyCode]]=false; event.preventDefault();
-        }
+    draw(context, frame) {
+        this.clear()
+        //context.drawImage(this.images['background_0'], -this.background_x_pos, 0)
+        for (let layer of [2,1,0]) { // VER: parallax
+            context.drawImage(this.images[`background_${layer}`], Math.round(-this.background_x_pos/Math.pow(2,layer)), 0) // VER: parallax
+        } // VER: parallax
+        context.drawImage(this.images['copter_image'], Math.round(this.copter_x_pos), Math.round(this.copter_y_pos)) // VER: copter
     }
+}
 
-    const collisions_context = document.getElementById('canvas_collisions').getContext('2d'); // VER: collision_single
-    const copter_collision_points = [[0,0],[32,9],[17,2],[22,12],[2,12]];                    // VER: collision_multi
-                                                                                          // VER: collision_single
-    const v = {
-        "color_background": `rgba(0,0,0,255)`,
-        //"color_background": `rgba(0,0,255,255)`,   // VER: fish_background
-        "color_exit"      : `rgba(255,255,0,255)`, // VER: level
-        "level_number"    : 1,                     // VER: level
-    };
-                                                    // VER: copter
-    v.copter_image = new Image();           // VER: copter
-    v.copter_image.src = `images/ship.gif`; // VER: copter
-    //v.background_image = new Image();                   // VER: background NOT level,parallax
-    //v.background_image.src = `images/CopterLevel1.png`; // VER: background NOT level,parallax
-
-    function load_level(level_number) {                                         // VER: level
-        //const level_number = 1;                                                  // VER: parallax NOT level
-        //v.background_image = new Image();                                        // VER: level NOT parallax
-        //v.background_image.src = `images/CopterLevel${level_number}.png`;        // VER: level NOT parallax
-        const images = [new Image(), new Image(), new Image()];                    // VER: parallax
-        v.background_images = images;                                              // VER: parallax
-        function load_background_image(layer, filename) {                          // VER: parallax
-            images[layer].onload = function() {images[layer] = this;}              // VER: parallax
-            images[layer].src = filename;                                          // VER: parallax
-        }                                                                          // VER: parallax
-        load_background_image(2, `images/CopterLevel${level_number}_layer2.png`);  // VER: parallax
-        load_background_image(1, `images/CopterLevel${level_number}_layer1.png`);  // VER: parallax
-        load_background_image(0, `images/CopterLevel${level_number}.png`);         // VER: parallax
-        reset();                                                                // VER: level
-    }                                                                           // VER: level
-
-    function reset() {
-        init_keys();
-        v.view_x_pos   =  0;                    // VER: background
-        v.copter_x_pos = 50;                    // VER: copter
-        v.copter_y_pos = 100;                   // VER: copter
-        v.copter_x_vel =  0;                    // VER: physics
-        v.copter_y_vel =  0;                    // VER: physics
-    }
-
-    function timerEvent() {
-        context.fillStyle = v.color_background;
-        context.fillRect(0, 0, canvas.width, canvas.height);
-
-        v.view_x_pos += 1                                                 // VER: background
-        //context.drawImage(v.background_image, -v.view_x_pos, 0);        // VER: background NOT parallax
-        for (let i=2 ; i>=0 ; i--) {                                      // VER: parallax
-            const offset_x = Math.round(v.view_x_pos / Math.pow(2, i));   // VER: parallax
-            context.drawImage(v.background_images[i], -offset_x, 0);      // VER: parallax
-        }                                                                 // VER: parallax
-                                                                          // VER: background
-        if (keys_pressed.ESCAPE) {pause(); reset();}
-        //if (keys_pressed.SPACE) {v.copter_y_pos+=-2;}   // VER: copter not physics
-        //else                    {v.copter_y_pos+= 1;}   // VER: copter not physics
-        if (keys_pressed.UP    ) {v.copter_y_vel += -0.1;} // VER: physics
-        if (keys_pressed.DOWN  ) {v.copter_y_vel +=  0.1;} // VER: physics
-        if (keys_pressed.LEFT  ) {v.copter_x_vel += -0.1;} // VER: physics HIDE
-        if (keys_pressed.RIGHT ) {v.copter_x_vel +=  0.1;} // VER: physics HIDE
-        v.copter_x_vel  = v.copter_x_vel * 0.99;   // VER: physics
-        v.copter_y_vel  = v.copter_y_vel * 0.99;   // VER: physics
-        v.copter_y_vel += 0.025;                   // VER: physics
-        v.copter_x_pos += v.copter_x_vel;          // VER: physics
-        v.copter_y_pos += v.copter_y_vel;          // VER: physics
-                                                                   // VER: copter
-        collisions_context.clearRect(0, 0, canvas.width, canvas.height);  // VER: collision_single
-        //collisions_context.drawImage(v.background_image, -v.view_x_pos, 0);  // VER: collision_single NOT parallax
-        collisions_context.drawImage(v.background_images[0], -v.view_x_pos, 0);  // VER: collision_single,parallax
-
-        //const point = [v.copter_image.width/2, v.copter_image.height/2]; // VER: collision_single NOT collision_multi
-        for (let point of copter_collision_points) {         // VER: collision_multi
-            // // TODO don't use collisions_context? try imageData instead? https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Pixel_manipulation_with_canvas  // VER: collision_single
-            const [r,g,b,a] = collisions_context.getImageData( // VER: collision_single
-                v.copter_x_pos+point[0],                      // VER: collision_single
-                v.copter_y_pos+point[1], 1, 1).data;          // VER: collision_single
-            const pixel_color = `rgba(${r},${g},${b},${a})`;  // VER: collision_single
-            if (a < 10) {}                                    // VER: collision_single
-            else if (pixel_color == v.color_exit) {             // VER: level
-                alert("Next Level");                            // VER: level
-                load_level(++v.level_number);                   // VER: level
-            }                                                   // VER: level
-            else {                                            // VER: collision_single
-                reset();                                      // VER: collision_single
-            }                                                 // VER: collision_single
-        }                                                   // VER: collision_multi
-                                                              // VER: collision_single
-        context.drawImage(                                                            // VER: copter
-            v.copter_image, Math.round(v.copter_x_pos), Math.round(v.copter_y_pos),   // VER: copter
-        );                                                                            // VER: copter
-
-        if (!paused) {requestAnimationFrame(timerEvent);}
-    }
-
-    load_level(v.level_number); // VER: level
-    //reset();                    // VER: base NOT level
-    start();
-</script>
+(new Copter(createFullScreenCanvasElement({width:640, height:360}))).setRunning(true)
+</script></html>
