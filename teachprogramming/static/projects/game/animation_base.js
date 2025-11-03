@@ -1,4 +1,5 @@
 class Gfx {
+    // async load_image
     static load_image(url) {return new Promise((resolve, reject)=>{
         const img = new Image()
         img.onload = () => resolve(img)
@@ -83,7 +84,12 @@ function createAudioElement() {
 }
 
 class CanvasAnimationBase {
-    constructor(canvas=undefined, fps=60, canvas_attrs={background_color: 'black'}) {
+    constructor({
+        canvas=undefined,
+        fps=60,
+        canvas_attrs={background_color: 'black'},
+        images={},  // passed async fetched images with `await Gfx.load_image('')`
+    }={}) {
         this.canvas = canvas || createFullScreenCanvasElement(canvas_attrs)
         this.context = this.canvas.getContext('2d', { alpha: true })
         // TODO: getContext('2d', { alpha: false }) https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas#turn_off_transparency
@@ -91,7 +97,7 @@ class CanvasAnimationBase {
         this.audio = createAudioElement()
         this.play_audio = (url) => {this.audio.src = url}
 
-        this.images = {}
+        this.images = Object.assign({}, images)
 
         window.addEventListener("focus", () => {this.setRunning(true)} , false)
 	    window.addEventListener("blur" , () => {this.setRunning(false)}, false)
@@ -109,10 +115,9 @@ class CanvasAnimationBase {
         }, true)
 
         this.frame = 0
-        this.milliseconds_per_frame = 1000/fps
-
-        //this.setRunning(true)  // race hazzard in starting?
+        this.milliseconds_per_frame = 1000/fps  // Not really `fps`, it's models per second and the draw will be as fast as this device will allow
     }
+    //this.setRunning(true)  // race hazzard in starting?
 
     get w() {return this.canvas.width}
     get h() {return this.canvas.height}
