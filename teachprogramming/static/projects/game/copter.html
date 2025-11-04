@@ -21,9 +21,9 @@ class Copter extends CanvasAnimationBase {
         this.load_image(`background_2`, `images/CopterLevel${this.level_number}_layer2.png`)  // VER: parallax
         this.load_image(`background_1`, `images/CopterLevel${this.level_number}_layer1.png`)  // VER: parallax
         this.load_image(`background_0`, `images/CopterLevel${this.level_number}.png`)  // VER: level
-        this._collisions_context = undefined                                           // VER: collision
+        this._collisions_context = undefined                                           // VER: collision_single
         this.reset()                                                                   // VER: level
-    }
+    }                                                                                  // VER: level
     reset() {
         this.background_x_pos = 0 // VER: background
         this.copter_x_pos = 50    // VER: copter
@@ -31,21 +31,21 @@ class Copter extends CanvasAnimationBase {
         this.copter_x_vel = 0     // VER: physics
         this.copter_y_vel = 0     // VER: physics
     }
-    generateOffscreenContext(img){      // VER: collision
-        const o = new OffscreenCanvas(img.width, img.height)  // VER: collision
-        const c = o.getContext("2d")    // VER: collision
-        c.drawImage(img, 0,0)           // VER: collision
-        return c                        // VER: collision
-    }                                   // VER: collision
-    get collisions_context() {          // VER: collision
-        if (this._collisions_context) {return this._collisions_context}         // VER: collision
-        if (this.images.background_0?.complete) {                               // VER: collision
-            return this._collisions_context = this.generateOffscreenContext(this.images.background_0) // VER: collision
-        }                                                                       // VER: collision
-    }                                                                           // VER: collision
-    safeGetBackgroundPixel(x,y) {                                               // VER: collision
-        return this.collisions_context?.getImageData(x+this.background_x_pos, y, 1, 1).data  // VER: collision
-    }                                                                           // VER: collision
+    generateOffscreenContext(img){      // VER: collision_single
+        const o = new OffscreenCanvas(img.width, img.height)  // VER: collision_single
+        const c = o.getContext("2d")    // VER: collision_single
+        c.drawImage(img, 0,0)           // VER: collision_single
+        return c                        // VER: collision_single
+    }                                   // VER: collision_single
+    get collisions_context() {          // VER: collision_single
+        if (this._collisions_context) {return this._collisions_context}         // VER: collision_single
+        if (this.images.background_0?.complete) {                               // VER: collision_single
+            return this._collisions_context = this.generateOffscreenContext(this.images.background_0) // VER: collision_single
+        }                                                                       // VER: collision_single
+    }                                                                           // VER: collision_single
+    safeGetBackgroundPixel(x,y) {                                               // VER: collision_single
+        return this.collisions_context?.getImageData(x+this.background_x_pos, y, 1, 1).data  // VER: collision_single
+    }                                                                           // VER: collision_single
     model_inc(frame) {
         this.background_x_pos += 1   // VER: background
                                      // VER: background
@@ -62,8 +62,8 @@ class Copter extends CanvasAnimationBase {
         this.copter_x_pos += this.copter_x_vel         // VER: physics
         this.copter_y_pos += this.copter_y_vel         // VER: physics
                                                        // VER: physics
-        for (let [x,y] of this.copter_collision_points) {   // VER: collision_multi
-        //if (true) {                                  // VER: collision_single NOT collision_multi
+        for (let [x,y] of this.copter_collision_points) {     // VER: collision_multi
+        //if (true) {                                         // VER: collision_single NOT collision_multi
             //const [r,g,b,a] = this.safeGetBackgroundPixel(this.copter_x_pos+x, this.copter_y_pos+y) // VER: collision_single NOT collision_multi
             const [r,g,b,a] = this.safeGetBackgroundPixel(this.copter_x_pos+x, this.copter_y_pos+y)   // VER: collision_multi
             const pixel_color = `rgba(${r},${g},${b},${a})`;  // VER: collision_single
@@ -73,7 +73,7 @@ class Copter extends CanvasAnimationBase {
                 this.load_level()                                 // VER: level
             }                                                     // VER: level
             else {this.reset()}                               // VER: collision_single
-        }
+        }                                                     // VER: collision_single
     }
     draw(context, frame) {
         this.clear()
