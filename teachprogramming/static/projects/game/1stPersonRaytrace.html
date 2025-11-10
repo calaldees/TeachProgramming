@@ -10,21 +10,16 @@ import {CanvasAnimationBase, Gfx} from './animation_base.js'
 
 function* range(target, start=0, step=1) {for (let i=start ; i<target ; i+=step) {yield i}}
 
-
 // https://paulbourke.net/geometry/pointlineplane/javascript.txt
 // line intercept math by Paul Bourke http://paulbourke.net/geometry/pointlineplane/
 // Determine the intersection point of two line segments - Return FALSE if the lines don't intersect
 function intersect(x1, y1, x2, y2, x3, y3, x4, y4) {
-	// Check if none of the lines are of length 0
-	if ((x1 === x2 && y1 === y2) || (x3 === x4 && y3 === y4)) {return false}
+	if ((x1===x2 && y1===y2) || (x3===x4 && y3===y4)) {return false}  // Check if none of the lines are of length 0
 	const denominator = ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1))
-	// Lines are parallel
-	if (denominator === 0) {return false}
+	if (denominator === 0) {return false}  // Lines are parallel
 	const ua = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / denominator
 	const ub = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / denominator
-	// is the intersection along the segments
-	if (ua < 0 || ua > 1 || ub < 0 || ub > 1) {return false}
-	// Return a object with the x and y coordinates of the intersection
+	if (ua < 0 || ua > 1 || ub < 0 || ub > 1) {return false}  // is the intersection along the segments
 	return [x1 + ua * (x2 - x1), y1 + ua * (y2 - y1)]  // return [x, y] of intersect point
 }
 function euclidean_distance(x1, y1, x2, y2) {
@@ -36,6 +31,8 @@ const WALLS = [
     [160,150,160,160],
     [160,160,150,160],
     [150,160,150,150],
+
+    [190,120,160,180],
 ]
 
 class RaytraceDemo extends CanvasAnimationBase {
@@ -46,12 +43,17 @@ class RaytraceDemo extends CanvasAnimationBase {
         this.camera_fov = Math.PI/2
         this.camera_angle = 0
         this.camera_draw_distance = 50
+        this.m = 0.5
+    }
+    move_camera(m) {
+        this.x += Math.cos(this.camera_angle+this.camera_fov/2) * m;
+        this.y += Math.sin(this.camera_angle+this.camera_fov/2) * m;
     }
     model_inc(frame) {
-        if (this.keys_pressed.has('ArrowUp'))    {this.y += -1}
-        if (this.keys_pressed.has('ArrowDown'))  {this.y +=  1}
-        if (this.keys_pressed.has('ArrowLeft'))  {this.x += -1}
-        if (this.keys_pressed.has('ArrowRight')) {this.x +=  1}
+        if (this.keys_pressed.has('ArrowUp')) {this.move_camera(this.m)}
+        if (this.keys_pressed.has('ArrowDown')) {this.move_camera(-this.m)}
+        if (this.keys_pressed.has('ArrowLeft'))  {this.camera_angle += -0.01}
+        if (this.keys_pressed.has('ArrowRight')) {this.camera_angle +=  0.01}
     }
     draw(context, frame) {
         this.clear()
@@ -62,7 +64,7 @@ class RaytraceDemo extends CanvasAnimationBase {
 
         c.strokeStyle = 'green'
         c.fillStyle = 'green'
-        const y_mid = this.h / 2
+        const y_mid = Math.floor(this.h / 2)
 
         const camera_pos = [this.x, this.y]
         const camera_angle_step_radians = this.camera_fov / this.w
@@ -74,24 +76,26 @@ class RaytraceDemo extends CanvasAnimationBase {
                 this.y + Math.sin(ray_angle) * this.camera_draw_distance,
             ]
             //Gfx.drawLine(c,...ray_line)  // debug draw: the ray from observer
-            //c.fillRect(ray_line[2],ray_line[3],1,1)  // debug draw: ray endpoint
+            c.fillRect(ray_line[2],ray_line[3],1,1)  // debug draw: ray endpoint
+
             const ray_wall_intersect_points = WALLS
                 .map(wall_line=>intersect(...wall_line, ...ray_line))
-                .filter(p=>p)
+                .filter(p=>p)  // remove all walls that did not cross the ray (most of them)
                 .sort((p1,p2)=>euclidean_distance(...camera_pos, ...p1) - euclidean_distance(...camera_pos, ...p2))
-                //.filter((p, i)=>i==0)
-                //.flat()
-            //for (let p of pp) {c.fillRect(...p,1,1)}
-            //console.log(pp)
+            //for (let p of ray_wall_intersect_points) {c.fillRect(...p,1,1)}
+
             if (!ray_wall_intersect_points.length) {continue}  // nothing to draw for this `x_draw`
             const closest_intersect_point_to_camera = ray_wall_intersect_points[0]
-            //c.fillRect(...closest_intersect_point_to_camera,1,1) // debug draw: intersect point to draw
+            c.fillRect(...closest_intersect_point_to_camera,1,1) // debug draw: intersect point to draw
             const distance_to_camera = Math.sqrt(euclidean_distance(...camera_pos, ...closest_intersect_point_to_camera))
 
-            const line_height = (1/distance_to_camera) * this.h
+            const distance_to_camera_perspective_fix = distance_to_camera * Math.cos(ray_angle - this.camera_angle - this.camera_fov/2) // Fisheye correction - https://github.com/vinibiavatti1/RayCastingTutorial/wiki/Fisheye-fix
+
+            const line_height = Math.floor((1/distance_to_camera_perspective_fix) * (this.h / 2))
+            // TODO: something to add here about vanishing point
             const d = Math.round((1-(distance_to_camera / this.camera_draw_distance)) * 255)
             c.strokeStyle = `rgba(${d},${d},${d},255)`
-            Gfx.drawLine(c, x_draw, Math.round(y_mid+(line_height/2)), x_draw, Math.round(y_mid-(line_height/2)))
+            Gfx.drawLine(c, x_draw, y_mid+line_height, x_draw, y_mid-line_height)
         }
 
         c.strokeStyle = 'red'

@@ -6,12 +6,11 @@ class Gfx {
         img.onerror = (e) => console.error(`image load failed ${url}`, e)
         img.src = url
     })}
-    static drawLine(c, x1,y1,x2,y2,color='white',lineWidth=1) {
-        c.strokeStyle = color
+    static drawLine(c, x1,y1,x2,y2,lineWidth=1) {
         c.lineWidth = lineWidth
         c.beginPath()
-        c.moveTo(x1, y1)
-        c.lineTo(x2, y2)
+        c.moveTo(Math.floor(x1)+0.5, Math.floor(y1)+0.5)
+        c.lineTo(Math.floor(x2)+0.5, Math.floor(y2)+0.5)
         c.stroke()
     }
     static subsurface(img, x, y, width, height) {
@@ -151,13 +150,27 @@ class CanvasAnimationBase {
         const frame = Math.floor((time - this.epoch) / this.milliseconds_per_frame)
         const draw_required = this.frame<frame;
         for ( ; this.frame<frame ; this.frame++) {
-            this.model_inc(this.frame)
+            try {
+                this.model_inc(this.frame)
+            }
+            catch (ex) {
+                debugger
+                console.error('model_error', ex)
+            }
             if (this.keys_released.size) {
                 this.keys_pressed = this.keys_pressed.difference(this.keys_released)
                 this.keys_released.clear()
             }
         }
-        if (draw_required) {this.draw(this.context, this.frame)}
+        if (draw_required) {
+            try {
+                this.draw(this.context, this.frame)
+            }
+            catch (ex) {
+                debugger
+                console.error('draw_error', ex)
+            }
+        }
         // TODO: Is it worth drawing to a backbuffer and drawing this backbuffer IMMEDIATELY on `.run`?
         if (this.running) {this.requestAnimationFrameId = requestAnimationFrame(this.run)}
     }
