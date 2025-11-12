@@ -158,7 +158,7 @@ class Tunnel():
 class Demo(GameBase):
     def __init__(self, resolution=(320,180)):
         self.zoomer = Zoomer()
-        self.stars = Stars(resolution[0]/2, resolution[1])
+        self.stars = Stars(resolution[0]//2, resolution[1])
         self.font = Font('images/font.png')
         self.tunnel = Tunnel()
         super().__init__(title='Demo', resolution=resolution, fps=60)
