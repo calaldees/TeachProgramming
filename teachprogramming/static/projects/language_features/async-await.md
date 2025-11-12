@@ -98,7 +98,26 @@ Further reading
 
 * [How to Use Fetch with async/await](https://dmitripavlutin.com/javascript-fetch-async-await/)
     * Concurrent fetches
-
+* [The Proper Way to Write Async Constructors in JavaScript](https://dev.to/somedood/the-proper-way-to-write-async-constructors-in-javascript-1o8c)
+    * Constructors can't be async
+    * [](https://stackoverflow.com/questions/43431550/how-can-i-invoke-asynchronous-code-within-a-constructor/50885340#50885340)
+```javascript
+async function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms))}
+class AsyncConstructor {
+    constructor(value) {
+        return (async () => {
+            await sleep(500)
+            this.value = value
+            return this
+        })()
+    }
+}
+(async () => {
+  console.log('Constructing...')
+  const obj = await new AsyncConstructor(123)
+  console.log('Done:', obj)
+})()
+```
 
 ---
 
