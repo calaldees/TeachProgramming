@@ -47,7 +47,7 @@ This is my notes on what the pitfalls are and how to do it with some degree of s
     * Unskilled attendees hurt the event - they provide distractions
     * Anyone that thinks "just run a hack day" is going to have a disappointing event and even put people off attending any future hack days organized by other people that might be good. Beware of the damage you can cause.
     * A related example
-        * ICT club for girls in 2004 was just an embarrassment - purple spreadsheets about ponies.
+        * CC4G - ICT club for girls in 2004 was just an embarrassment - purple spreadsheets about ponies
 * If the event can run regularly for 3 years, you will have enough snowball momentum for work of mouth to attract more people. What could be important is the length of time the event has been established. Potentially you may have you first 2 years as a buildup for the 3rd+ year being productive.
     * You know the attends from last year (everyone wins some kind of special mention/award because you gave a great set of awards). Contact them individually about the next event. Show you're aware of the hack they did. Make them feel valued and remember and that their contribution was important. You can have a template and notes from the previous year and back these out in an hour to 30 people.
     * The longer your event runs, the more meaningful and prestige the event holds (both internal and external). Organizations should be aware of the long term horizon can actively fight to keep the pattern/event going.

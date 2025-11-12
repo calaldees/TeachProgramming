@@ -9,7 +9,7 @@ Gamification
   * This is not developing intrinsic motivation and puts the leaner as a controlled subject rather than developing there own autonomy
   * I would consider this strategy over the long term dangerous.
 
-
+Robs children of their autonomy, creativity and curiosity
 
 
 https://replicube.xyz/

@@ -9,7 +9,7 @@ It's impossible to fit an entire concept into a few works, but I describe the et
 
 Many school computing curriculums feel abstract and disconnected from the digital world young people experience:
 * We teach: logic gates, bytes, for loops, network theory
-* Young people see: hacking, ai, social media, vr, 'The cloud'
+* Young people see: hacking, ai, social media(TikTok,YouTube), vr, 'The cloud', unreal5
 It's difficult for young people to see the relevance of the academic curriculums with the future skills they need for their lives.
 
 But these school curriculums do actually cover some of the fundamental foundations of computing, so why do young people feel so distant from them?
