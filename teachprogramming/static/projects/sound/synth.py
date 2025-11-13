@@ -1,7 +1,8 @@
 import csv
 from pathlib import Path
+from typing import Self
 
-from .music_base import Note, sawtooth, sine, square, triangle, noise
+from music_base import Note, sawtooth, sine, square, triangle, noise
 
 #Something to consider https://sfxr.me/ online js sound effect generator
 
@@ -90,12 +91,13 @@ class TrackNote():
 
 
 class Track():
-    @staticmethod
-    def from_file(p:Path):
+    @classmethod
+    def from_file(cls, p: Path) -> Self:
+        assert p.is_file
         with p.open() as f:
             meta = f.readline()  # todo - parse meta first line
             # maybe the first row of the CSV is a base64 encoded sample for each channel?
-            return Track(rows=tuple(tuple(map(Note.parse, row)) for row in csv.reader(f)))
+            return cls(rows=tuple(tuple(map(Note.parse, row)) for row in csv.reader(f)))
     @staticmethod
     def _Notes_to_TrackNotes(rows: tuple[tuple[Note]]) -> tuple[tuple[TrackNote]]:
         """
@@ -182,10 +184,10 @@ class Player():
 import pyaudio
 class Audio():
     def __init__(self):
-        self.pyaudio = pyaudio.PyAudio()
         self.audio_frame = 0
-        self.audio_stream = self.pyaudio.open(format=pyaudio.paUInt8, channels=1, rate=SAMPLE_FREQUENCY_HZ, output=True, stream_callback=self.pyaudio_stream_callback)
         self.player = Player(Track.from_file(Path('synth2.csv')))
+        self.pyaudio = pyaudio.PyAudio()
+        self.audio_stream = self.pyaudio.open(format=pyaudio.paUInt8, channels=1, rate=SAMPLE_FREQUENCY_HZ, output=True, stream_callback=self.pyaudio_stream_callback)
     def pyaudio_stream_callback(self, in_data, frame_count, time_info, status):
         audio_bytes = self.player.get_sample_bytes(self.audio_frame, frame_count)
         self.audio_frame += frame_count
@@ -215,6 +217,8 @@ class Game():
 
 
 if __name__ == '__main__':
+    # brew install portaudio
+    # uv run --with pyaudio -m pdb synth.py
     #Game().run()
 
     aa = Audio()

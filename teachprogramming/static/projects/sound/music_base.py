@@ -41,7 +41,9 @@ class Note():
         elif isinstance(note, str) and (match:=cls.REGEX_NOTE.match(note.upper())):
             note_str, octave = match.groups()
             return cls(cls.MIDI_C0 + (int(octave)*12) + cls.LOOKUP_STR_NOTE[note_str])
-        raise ValueError(f'Unable to parse {cls.__class__.__name__}: {note}')
+        return note
+        # TODO: we have multiple return types ... not nice ..
+        #raise ValueError(f'Unable to parse {cls.__class__.__name__}: {note}')
     def __init__(self, midi: int):
         assert isinstance(midi, int) and midi>=0 and midi<=127
         self.midi = midi
