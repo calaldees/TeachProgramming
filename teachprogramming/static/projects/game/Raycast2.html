@@ -32,6 +32,9 @@ class Line {
     }
     static from_array(x1,y1,x2,y2) {return new Line(new Point(x1,y1), new Point(x2,y2))}
     get to_array() {return [this.p1.x, this.p1.y, this.p2.x, this.p2.y]}
+
+    static _gradient(p1, p2) {return (p1.x-p2.x)/(p1.y-p2.y)}
+    get gradient() {this._gradient(this.p1, this.p2)}
     // https://paulbourke.net/geometry/pointlineplane/javascript.txt
     // line intercept math by Paul Bourke http://paulbourke.net/geometry/pointlineplane/
     // Determine the intersection point of two line segments - Return FALSE if the lines don't intersect
@@ -73,13 +76,46 @@ class Camera {
     }
 }
 
-const WALLS = [
-    Line.from_array(150,150,160,150),
-    Line.from_array(160,150,160,160),
-    Line.from_array(160,160,150,160),
-    Line.from_array(150,160,150,150),
+class TexturedLine {
+    constructor(line, texture, texture_width=1) {
+        this.line = line
+        this.texture = texture
+        this.texture_width = texture_width
+    }
+    getVerticalImageDataAt(p) {
+        if (this.line.gradient != this._gradient(this.line.p1, p)) {throw new Error('point is not on the line')}
+        const h = this.line.p1.distance(p)
+        const i = Math.floor((h % this.texture_width) * this.texture.width)
+        return this.texture.getImageData(i, 0, 1, this.texture.height)
+    }
+}
 
-    Line.from_array(190,120,160,180),
+function scaleImageData(image_data, height) {
+    return new ImageData([...range(height)].map((y)=>{
+        const d = Math.floor((y/height) * image_data.height) * 4
+        return image_data.slice(d,d+4)
+    }).flat(), 1, height)
+}
+function* fadeImageData(image_data, i) {
+
+}
+
+
+async function loadImageCanvas(path) {
+    return Gfx.generateOffscreenContextFromImage(await Gfx.load_image(path))
+    // .getImageData(i, 0, 1, 1).data  // get pixel from offscreen canvas
+}
+const IMAGE_DATA = {
+    wall: await loadImageCanvas('images/wall_texture.gif')
+}
+
+const WALLS = [
+    Line.from_array(150,150,160,150),// IMAGE_DATA.wall),
+    Line.from_array(160,150,160,160),// IMAGE_DATA.wall),
+    Line.from_array(160,160,150,160),// IMAGE_DATA.wall),
+    Line.from_array(150,160,150,150),// IMAGE_DATA.wall),
+
+    Line.from_array(190,120,160,180)//, IMAGE_DATA.wall),
 ]
 
 class RaytraceDemo extends CanvasAnimationBase {
@@ -140,5 +176,8 @@ class RaytraceDemo extends CanvasAnimationBase {
 
     }
 }
-(await new RaytraceDemo()).setRunning(true)
+
+
+
+(new RaytraceDemo()).setRunning(true)
 </script></html>

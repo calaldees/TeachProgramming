@@ -6,6 +6,14 @@ class Gfx {
         img.onerror = (e) => console.error(`image load failed ${url}`, e)
         img.src = url
     })}
+    static generateOffscreenContextFromImage(img) {
+        const o = new OffscreenCanvas(img.width, img.height)
+        const c = o.getContext("2d")
+        c.drawImage(img, 0,0)
+        return c
+        // for use with `.getImageData(x, y, 1, 1).data`
+    }
+
     static drawLine(c, x1,y1,x2,y2,lineWidth=1) {
         c.lineWidth = lineWidth
         c.beginPath()
