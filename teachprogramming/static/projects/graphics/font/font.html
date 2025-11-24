@@ -6,7 +6,7 @@
 </head>
 <body></body>
 <script type="module">
-import {CanvasAnimationBase} from './animation_base.js'
+import {CanvasAnimationBase, Gfx} from './animation_base.js'
 
 function* range(target, start=0, step=1) {for (let i=start ; i<target ; i+=step) {yield i}}
 function* enumerate(iterable) {let count = 0; for (let item of iterable) {yield [count++, item]}}
@@ -22,12 +22,12 @@ class Font extends CanvasAnimationBase {
     }
 
     async constructor_async() {
-        this.font = this.load_font_advance(CanvasAnimationBase.invert(await this.load_image("font", "font.webp")))
+        this.font = this.load_font_advance(Gfx.invert(await Gfx.load_image("font.webp")))
     }
 
     load_font = (img) => Object.fromEntries(
         [...range(Math.floor(img.width/8))].map((i)=>[
-            String.fromCharCode(i), CanvasAnimationBase.subsurface(img, i*8, 0, 8, 8)
+            String.fromCharCode(i), Gfx.subsurface(img, i*8, 0, 8, 8)
         ])
     )
 
@@ -36,7 +36,7 @@ class Font extends CanvasAnimationBase {
         const [ww, hh] = [img.width, img.height]
         return Object.fromEntries(
             [...range(Math.min(Math.floor(ww/w)*Math.floor(hh/h),seq.length))].map((i)=>[
-                seq[i], CanvasAnimationBase.subsurface(img, (i*w)%ww, Math.floor((i*w)/ww)*h, w, h)
+                seq[i], Gfx.subsurface(img, (i*w)%ww, Math.floor((i*w)/ww)*h, w, h)
             ])
         )
     }
@@ -77,7 +77,7 @@ class Font extends CanvasAnimationBase {
     draw(context, frame) {
         this.clear()
         const c = context
-        c.drawImage(this.font["A"], 100, 100)
+        //c.drawImage(this.font["A"], 100, 100)
         this.draw_font(c, "Hello", 100, 20)
         this.draw_font(c, "Big Text!", 40, 30, Math.abs(Math.sin(frame/100)*3)) // ver: draw_scale_zoom
         this.draw_font_wave(c, "abcde", frame % this.w, 110)                    // ver: draw_wave

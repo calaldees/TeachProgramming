@@ -25,7 +25,10 @@ Synamic languages - separate program
 # GitHub/python/typing/[Define a JSON type](https://github.com/python/typing/issues/182)
 #   Guido Says: "won't do - not needed" and closed the issue.
 type JsonPrimitives = str | int | float | bool | None
-type Json = Mapping[str, Json | JsonPrimitives] | Sequence[Json | JsonPrimitives]
+type JsonObject = Mapping[str, Json | JsonPrimitives]
+type JsonSequence = Sequence[Json | JsonPrimitives]
+type Json = JsonObject | JsonSequence
+
 
 # TEST EXAMPLE - creating is fine - reading is not (because we don't know the type)
 test: Json = {
@@ -34,7 +37,7 @@ test: Json = {
     'c': {'cc': 4, 'dd': {'ccc': ''}},
     'd': [1, 2.0, True, {}, []],
 }
-test['c']['dd']['ccc']   # nested dicts reads fail the type checker
+test['c']['dd']['ccc']   # access to nested dicts reads fail the type checker
 ```
 
 ---

@@ -29,6 +29,8 @@ class Line {
         if (!(p2 instanceof Point)) {throw new Error()}
         this.p1 = p1
         this.p2 = p2
+        // throw on zero length?
+        // pre-derive gradient
     }
     static from_array(x1,y1,x2,y2) {return new Line(new Point(x1,y1), new Point(x2,y2))}
     get to_array() {return [this.p1.x, this.p1.y, this.p2.x, this.p2.y]}
@@ -42,6 +44,7 @@ class Line {
     intersect = (line) => {
         const [x1, y1, x2, y2, x3, y3, x4, y4] = [...this.to_array, ...line.to_array]
         if ((x1===x2 && y1===y2) || (x3===x4 && y3===y4)) {return false}  // Check if none of the lines are of length 0
+        // Perhaps this zero length can be removed because `new Line(0,0,0,0)` would error
         const denominator = ((y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1))
         if (denominator === 0) {return false}  // Lines are parallel
         const ua = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / denominator
