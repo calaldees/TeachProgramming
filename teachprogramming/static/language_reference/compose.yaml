@@ -29,3 +29,6 @@ services:
     golang:
         build:
             context: ./languages/golang
+    rust:
+        build:
+            context: ./languages/rust
