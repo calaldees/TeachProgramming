@@ -171,6 +171,7 @@ LANGUAGES: MappingProxyType[LanguageFileExtension, Language] = MappingProxyType(
         ('csharp',('cs',),COMMENTS_STYLE_C),
         ('lua',('lua',),(Comment(r'--'),)),
         ('golang',('go',),COMMENTS_STYLE_C),
+        ('rust',('rs',),COMMENTS_STYLE_C),
         # txt  =   '#',
     ))
     for language_ext in language.ext
