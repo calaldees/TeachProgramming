@@ -1,3 +1,4 @@
+use std::collections::HashMap;  // VER: define_map
 
 //fn main() {               // VER: hello_world
 fn hello_world() {
@@ -94,6 +95,44 @@ fn define_list() {
 }
 
 
+fn define_map() {
+  let mut data = HashMap::from([ // VER: define_map
+    ("a", 1),                // VER: define_map
+    ("b", 2),                // VER: define_map
+  ]);                        // VER: define_map
+  println!("{:?}", data.get("b")); // prints 2  // VER: define_map
+  data.insert("c", 3);      // VER: define_map
+  data.remove("a");         // VER: define_map
+  for (k, v) in data.iter() {                   // VER: define_map
+    println!("Key: {k}, Value: {v}", k=k, v=v); // VER: define_map
+  }                                             // VER: define_map
+  if data.contains_key("d") {  // VER: define_map
+    println!("contains d");    // VER: define_map
+  }                            // VER: define_map
+}
+
+
+fn string_concatenation() {
+  let forename = "bob";
+  let surname = "jones";
+  let fullname = String::from(forename) + " " + surname; // VER: string_concatenation
+  let fullname2 = format!("{} {}",forename, surname);  // VER: string_concatenation
+  let fullname3 = "{forename} {surname}"               // VER: string_concatenation
+    .replace("{forename}", forename)                   // VER: string_concatenation
+    .replace("{surname}", surname);                    // VER: string_concatenation
+  println!("{}", fullname);
+}
+
+fn split_strings() {
+  let csv_line_test = "Jane,09/09/1989,Female,Blue";  // VER: split_strings
+  let line_split = csv_line_test.split(',').collect::<Vec<_>>(); // VER: split_strings
+  println!("{}", line_split[1]);                      // VER: split_strings
+  let csv_line_test2 = line_split.join(" : ");        // VER: split_strings
+  println!("{}", csv_line_test2);                     // VER: split_strings
+}
+
+
+
 fn main() {
   hello_world();
   comment();
@@ -102,4 +141,7 @@ fn main() {
   if_statement();
   define_fixed_array();
   define_list();
+  define_map();
+  string_concatenation();
+  split_strings();
 }
