@@ -17,7 +17,7 @@ import java.io.FileReader;                                                      
 
 import java.io.BufferedWriter; //Add at top of file                             // VER: file_write
 import java.io.FileWriter;                                                      // VER: file_write
- 
+
 import java.util.List;    // VER: list_comprehension
 import java.util.Arrays;  // VER: list_comprehension
 import java.util.ArrayList;    // VER: list_comprehension
@@ -25,7 +25,7 @@ import java.util.ArrayList;    // VER: list_comprehension
 import java.util.stream.Collectors;   // VER: list_comprehension,dict_comprehension
 import java.util.Map;    // VER: dict_comprehension
 import java.util.HashMap;    // VER: define_map
-import static java.util.Map.entry;   // VER: dict_comprehension
+import static java.util.Map.entry;   // VER: dict_comprehension,define_map
 
 import java.util.Set;    // VER: define_set
 import java.util.HashSet;    // VER: define_set
@@ -286,14 +286,11 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
 
   void list_comprehension() {
     // int[] i = new int[]{1,2,3,4}; Arrays.stream(i).collect(toList());
-    List<Integer> data1 = new ArrayList<>(Arrays.asList(new Integer[]{1,2,3,4,5,6}));          // VER: list_comprehension
-    List<Integer> data2 = data1.stream(                                         // VER: list_comprehension
-    ).filter(                                                                   // VER: list_comprehension
-      (i) -> i >= 3                                                             // VER: list_comprehension
-    ).map(                                                                      // VER: list_comprehension
-      (i) -> i * 2                                                              // VER: list_comprehension
-    ).collect(Collectors.toList());                                             // VER: list_comprehension
-
+    List<Integer> data1 = new ArrayList<>(Arrays.asList(new Integer[]{1,2,3,4,5,6})); // VER: list_comprehension
+    List<Integer> data2 = data1.stream()                                        // VER: list_comprehension
+      .filter((i) -> i >= 3)                                                    // VER: list_comprehension
+      .map((i) -> i * 2)                                                        // VER: list_comprehension
+      .collect(Collectors.toList());                                            // VER: list_comprehension
     System.out.println(data2);
   }
 
@@ -303,13 +300,10 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
       entry("b", 2),                                                            //  VER: dict_comprehension
       entry("c", 3)                                                             //  VER: dict_comprehension
     );                                                                          //  VER: dict_comprehension
-    Map<Integer, String> data4 = data3.entrySet().stream(                       //  VER: dict_comprehension
-    ).filter(                                                                   //  VER: dict_comprehension
-      (e) -> e.getValue() >= 2                                                  //  VER: dict_comprehension
-    ).map(                                                                      //  VER: dict_comprehension
-      (e) -> entry(e.getValue() + 10, e.getKey())                               //  VER: dict_comprehension
-    ).collect(Collectors.toMap((e)->e.getKey(), (e)->e.getValue()));            //  VER: dict_comprehension
-
+    Map<Integer, String> data4 = data3.entrySet().stream()                      //  VER: dict_comprehension
+      .filter((e) -> e.getValue() >= 2)                                         //  VER: dict_comprehension
+      .map   ((e) -> entry(e.getValue() + 10, e.getKey()))                      //  VER: dict_comprehension
+      .collect(Collectors.toMap((e)->e.getKey(), (e)->e.getValue()));           //  VER: dict_comprehension
     System.out.println(data4);
   }
 
@@ -318,7 +312,7 @@ try (BufferedWriter writer = Files.newBufferedWriter(path))
     Integer width = 3;
     Integer height = 3;
     Integer value = 1;
-                      
+
     Integer[][] grid1 = new Integer[width][height];   // VER: define_2d_arrays_with_nested_arrays
     for (var row: grid1) {Arrays.fill(row, value);}   // VER: define_2d_arrays_with_nested_arrays
     grid1[2][1] = 5;                                  // VER: define_2d_arrays_with_nested_arrays

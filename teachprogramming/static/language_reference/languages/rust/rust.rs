@@ -1,4 +1,6 @@
 use std::collections::HashMap;  // VER: define_map
+use std::collections::HashSet;  // VER: define_set
+
 
 //fn main() {               // VER: hello_world
 fn hello_world() {
@@ -56,6 +58,49 @@ fn if_statement() {
   else {                              // VER: if_statement
     println!("No");                   // VER: if_statement
   }                                   // VER: if_statement
+}
+
+fn for_loop() {
+  let data = [5,6,7];        // VER: for_loop
+  for i in 0..data.len() {   // VER: for_loop
+    println!("{}", data[i]); // VER: for_loop
+  }                          // VER: for_loop
+}
+
+fn while_loop() {
+  let mut count = 0;  // VER: while_loop
+  while count < 10 {  // VER: while_loop
+    println!("Count is {}", count);  // VER: while_loop
+    count = count + 2;  // VER: while_loop
+  }  // VER: while_loop
+}
+
+fn for_each_loop() {
+  let ff = ["a","b","c"]; // VER: for_each_loop
+  for f in ff {           // VER: for_each_loop
+    println!("{}", f);    // VER: for_each_loop
+  }                       // VER: for_each_loop
+}
+
+
+fn sayHello() {         // VER: function
+  println!("Hello");    // VER: function
+  println!("Goodbye");  // VER: function
+}                       // VER: function
+fn function() {
+  sayHello();           // VER: function
+}
+
+fn biggest(a: i32, b: i32) -> i32 {  // VER: function_with_return_value
+  if a > b {   // VER: function_with_return_value
+    return a;  // VER: function_with_return_value
+  } // VER: function_with_return_value
+  else { // VER: function_with_return_value
+    return b; // VER: function_with_return_value
+  } // VER: function_with_return_value
+}    // VER: function_with_return_value
+fn function_with_return_value() -> () {
+  println!("{}", biggest(1,2));  // VER: function_with_return_value
 }
 
 
@@ -131,6 +176,29 @@ fn split_strings() {
   println!("{}", csv_line_test2);                     // VER: split_strings
 }
 
+fn dict_comprehension() {
+  let data3 = HashMap::from([ //  VER: dict_comprehension
+    ("a", 1),                 //  VER: dict_comprehension
+    ("b", 2),                 //  VER: dict_comprehension
+    ("c", 3),                 //  VER: dict_comprehension
+  ]);                         //  VER: dict_comprehension
+  let data4 = data3.iter()    //  VER: dict_comprehension
+    .filter(|(&k,&v)| v>=2)   //  VER: dict_comprehension
+    .map(|(&k,&v)| (v+10,k))  //  VER: dict_comprehension
+    .collect::<HashMap<_,_>>();  //  VER: dict_comprehension
+  println!("{:?}", data4);    //  VER: dict_comprehension
+}
+
+fn define_set() {
+  let mut aa: HashSet<_> = vec![1,2,3].into_iter().collect(); // VER: define_set
+  let bb: HashSet<_> = vec![2,3,4].into_iter().collect();     // VER: define_set
+  let cc: HashSet<_> = vec![1,2].into_iter().collect();       // VER: define_set
+  println!("{:?}", aa.union(&bb).collect::<Vec<_>>());        // VER: define_set
+  println!("{:?}", aa.intersection(&bb).collect::<Vec<_>>()); // VER: define_set
+  println!("{:?}", aa.difference(&bb).collect::<Vec<_>>());   // VER: define_set
+  println!("{:?}", cc.is_subset(&aa));                        // VER: define_set
+  aa.insert(5);                                               // VER: define_set
+}
 
 
 fn main() {
@@ -139,9 +207,16 @@ fn main() {
   define_constants();
   arithmetic();
   if_statement();
+  for_loop();
+  while_loop();
+  for_each_loop();
+  function();
+  function_with_return_value();
   define_fixed_array();
   define_list();
   define_map();
   string_concatenation();
   split_strings();
+  dict_comprehension();
+  define_set();
 }

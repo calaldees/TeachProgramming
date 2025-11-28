@@ -368,7 +368,7 @@ def define_set():
   print(aa - cc)  # VER: define_set
   print(cc in aa) # VER: define_set
   aa.add(5)       # VER: define_set
-  
+
 
 def json_data():
   data = [                                     # VER: json_data
