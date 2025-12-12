@@ -1,11 +1,12 @@
+import sys
 import enum
-from typing import NamedTuple, Self, Callable
+from typing import NamedTuple, Self, Callable, Protocol, Any
 from collections.abc import Sequence,  MutableSequence, Mapping
 from functools import cached_property
 from pprint import pprint as pp
 import functools
 import logging
-
+from pathlib import Path
 
 log = logging.getLogger(__name__)
 
@@ -60,6 +61,34 @@ class TokenType(enum.StrEnum):
     VAR = enum.auto()
     WHILE = enum.auto()
 
+KEYWORDS = frozenset((
+    TokenType.AND,
+    TokenType.CLASS,
+    TokenType.ELSE,
+    TokenType.FALSE,
+    TokenType.FOR,
+    TokenType.IF,
+    TokenType.NIL,
+    TokenType.OR,
+    TokenType.PRINT,
+    TokenType.RETURN,
+    TokenType.SUPER,
+    TokenType.THIS,
+    TokenType.TRUE,
+    TokenType.VAR,
+    TokenType.WHILE,
+))
+OPERATORS_NUMERICAL = frozenset((
+    TokenType.MINUS,
+    TokenType.SLASH,
+    TokenType.STAR,
+    TokenType.PLUS,
+    TokenType.GREATER,
+    TokenType.GREATER_EQUAL,
+    TokenType.LESS,
+    TokenType.LESS_EQUAL,
+))
+
 # ------------------------------------------------------------------------------
 
 class TextLocation(NamedTuple):
@@ -81,6 +110,8 @@ class MutableTextLocation():
     @property
     def immutable(self) -> TextLocation:
         return TextLocation(self.line, self.col)
+    def __str__(self) -> str:
+        return str(self.immutable)
     def newLine(self):
         self.line += 1
         self.col = 0
@@ -162,24 +193,6 @@ def number(s: Scanner) -> wasConsumed:
             while s.peek().isdigit(): s.advance()
         s.addToken(TokenType.NUMBER, s.source[s.index_start:s.index_current])
 
-KEYWORDS = frozenset((
-    TokenType.AND,
-    TokenType.CLASS,
-    TokenType.ELSE,
-    TokenType.FALSE,
-    TokenType.FOR,
-    TokenType.IF,
-    TokenType.NIL,
-    TokenType.OR,
-    TokenType.PRINT,
-    TokenType.RETURN,
-    TokenType.SUPER,
-    TokenType.THIS,
-    TokenType.TRUE,
-    TokenType.VAR,
-    TokenType.WHILE,
-))
-
 def identifier(s: Scanner) -> wasConsumed:
     if s.peek().isalpha():
         while s.peek().isalnum(): s.advance()
@@ -203,9 +216,10 @@ DEFAULT_TOKEN_HANDLERS: Sequence[TokenHandler] = (
     *map(createDefaultTokenHandlerFor, ('!=', '==', '<=', '>=', '(', ')', '{', '}', ',', '.', '-', '+', ';', '*', '!', '>', '<', '=', '/'))
 )
 
+scanner: Callable[[str], Scanner] = functools.partial(Scanner, token_handlers=DEFAULT_TOKEN_HANDLERS)
 
 def test_scanner():
-    tokens = Scanner('thing = ("test" + 1.23) # This is a comment', DEFAULT_TOKEN_HANDLERS).tokens
+    tokens = scanner('thing = ("test" + 1.23) # This is a comment').tokens
     token_types = tuple(t.type for t in tokens)
     assert token_types == (
         TokenType.IDENTIFIER,
@@ -221,33 +235,36 @@ def test_scanner():
 
 # ------------------------------------------------------------------------------
 
-import abc
+#class (Protocol):
 
-class Expr(abc.ABC):
-    pass
-class Literal(Expr):
-    def __init__(self, literal: str|bool|None|int|float):
-        self.literal = literal
+
+type Number = int|float
+type PrimitiveValue = str|bool|None|Number
+class Literal():
+    def __init__(self, value: PrimitiveValue):
+        self.value = value
     def __str__(self) -> str:
-        return str(self.literal)
-class Unary(Expr):
-    def __init__(self, operator: Token, expression: Expr):
+        return str(self.value)
+class Unary():
+    def __init__(self, operator: Token, expression: 'Expr'):
         self.operator = operator
         self.expression = expression
     def __str__(self) -> str:
         return f'{self.operator.type.value}{self.expression}'
-class Binary(Expr):
-    def __init__(self, expression1: Expr, operator: Token, expression2: Expr):
+class Binary():
+    def __init__(self, expression1: 'Expr', operator: Token, expression2: 'Expr'):
         self.expression1 = expression1
         self.operator = operator
         self.expression2 = expression2
     def __str__(self) -> str:
         return ''.join(map(str, (self.expression1, self.operator.type.value, self.expression2)))
-class Grouping(Expr):
-    def __init__(self, expression: Expr):
+class Grouping():
+    def __init__(self, expression: 'Expr'):
         self.expression = expression
     def __str__(self) -> str:
         return f'({self.expression})'
+
+Expr = Literal | Unary | Binary | Grouping
 
 
 class Parser():
@@ -262,6 +279,7 @@ class Parser():
         try:
             return self.expression()
         except self.ParseError as pe:
+            log.exception('ParseError: TODO')
             return None
 
     @property
@@ -350,4 +368,162 @@ class Parser():
 def test_parser():
     tokens = Scanner('12.3 * (45 - "test") >= !10', DEFAULT_TOKEN_HANDLERS).tokens
     expr = Parser(tokens).parse
-    assert False
+    assert str(expr) == '12.3*(45-test)>=!10'
+
+
+# ------------------------------------------------------------------------------
+
+
+class Interpreter():
+
+    class RuntimeError(BaseException):
+        token: Token
+        def __init__(self, token: Token, message: str):
+            super().__init__(message)
+            self.token = token
+        @property
+        def message(self) -> str: return self.args[0]
+
+
+    def stringify(self, obj: Any) -> str:
+        if obj == None: return 'nil'
+        if isinstance(obj, (float,)):
+            text = str(obj)
+            if text.endswith(".0"):
+                #text = text.substring(0, text.length() - 2)
+                pass # TODO
+            return text
+        return str(obj)
+
+    def isEqual(self, a: Any, b: Any) -> bool:
+        if (a == None and b == None): return True
+        if (a == None): return False
+        return a == b
+
+    def isTruthy(self, obj: Any) -> bool:
+        match obj:
+            case None:
+                return False
+            case bool():
+                return obj
+            case _:
+                return True
+
+    def checkNumberOperand(self, operator: Token, operand: Any):
+        if isinstance(object, (float,)): return
+        raise RuntimeError(operator, "Operand must be a number.")
+    def checkNumberOperands(self, operator: Token, left: Any, right: Any):
+        if isinstance(left, (float,)) and isinstance(right, (float,)): return
+        raise RuntimeError(operator, "Operands must be numbers.")
+
+    def evaluateUnary(self, expr: Unary) -> PrimitiveValue:
+        right = self.evaluate(expr.expression)
+        match expr.operator.type:
+            case TokenType.MINUS:
+                self.checkNumberOperand(expr.operator, right)
+                return -float(right)
+            case TokenType.BANG:
+                return not self.isTruthy(right)
+        raise NotImplementedError()
+
+    def evaluateBinary(self, expr: Binary) -> PrimitiveValue:
+        left = self.evaluate(expr.expression1)
+        right = self.evaluate(expr.expression2)
+
+        match expr.operator.type:
+            case TokenType.PLUS:
+                if isinstance(left,(float,)) and isinstance(right, (float,)):
+                    return left + right
+                if isinstance(left, str) and isinstance(right, str):
+                    return ''.join((left, right))
+                raise RuntimeError(expr.operator, "Operands must be two numbers or two strings.")
+            case TokenType.MINUS:
+                self.checkNumberOperands(expr.operator, left, right)
+                return float(left) - float(right)
+            case TokenType.SLASH:
+                self.checkNumberOperands(expr.operator, left, right)
+                return float(left) / float(right)
+            case TokenType.STAR:
+                self.checkNumberOperands(expr.operator, left, right)
+                return float(left) * float(right)
+            case TokenType.GREATER:
+                self.checkNumberOperands(expr.operator, left, right)
+                return float(left) > float(right)
+            case TokenType.GREATER_EQUAL:
+                self.checkNumberOperands(expr.operator, left, right)
+                return float(left) >= float(right)
+            case TokenType.LESS:
+                self.checkNumberOperands(expr.operator, left, right)
+                return float(left) < float(right)
+            case TokenType.LESS_EQUAL:
+                self.checkNumberOperands(expr.operator, left, right)
+                return float(left) <= float(right)
+
+            case TokenType.BANG_EQUAL:
+                return not self.isEqual(left, right)
+            case TokenType.EQUAL_EQUAL:
+                return self.isEqual(left, right)
+
+            case _:
+                raise NotImplementedError()
+
+
+    def evaluate(self, expr: Expr) -> PrimitiveValue:
+        match expr:
+            case Literal():
+                return expr.value
+            case Grouping():
+                return self.evaluate(expr.expression)
+            case Unary():
+                return self.evaluateUnary(expr)
+            case Binary():
+                return self.evaluateBinary(expr)
+
+    def interpret(self, expression: Expr) -> None:
+        try:
+            value = self.evaluate(expression)
+            print(str(value))
+        except RuntimeError as error:
+            log.exception('RuntimeError - MORE TODO HERE')
+
+
+def test_interperet_evaluate_expression():
+    expr_str = '5 * 5'
+    value = Interpreter().evaluate(Parser(Scanner(expr_str, DEFAULT_TOKEN_HANDLERS).tokens).parse)
+    assert value == 10
+
+
+# ------------------------------------------------------------------------------
+
+
+class Lox:
+
+    def __init__(self):
+        self.interpreter = Interpreter()
+        self.hadError = False
+        self.hadRuntimeError = False
+
+    def report(self, message: str, location: TextLocation):
+        log.warning(f'[{location}] {message}')
+        self.hadError = True
+
+    def runtimeError(self, error: Interpreter.RuntimeError) -> None:
+        log.error(f"{error.message}\n[line {error.token.location}]")
+        self.hadRuntimeError = True
+
+    def run(self, source: str) -> None:
+        tokens = scanner(source).tokens
+        expr = Parser(tokens).parse
+        self.interpreter.evaluate(expr)
+
+
+if __name__ == '__main__':
+    lox = Lox()
+    if len(sys.argv) == 2 and (file := Path(sys.argv[1])):
+        lox.run(file.read_text())
+    else:
+        print('Lox REPL')
+        while _input := input('> '):
+            lox.run(_input)
+    if lox.hadError: sys.exit(65)
+    if lox.hadRuntimeError: sys.exit(75)
