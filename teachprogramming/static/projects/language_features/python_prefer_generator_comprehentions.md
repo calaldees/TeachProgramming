@@ -176,6 +176,45 @@ I've used this in audio decode streaming (bytes to 16bit/24bit audio ints) and c
 Frameworks like RxJava encourage long pipelines/chains. When used to the extreme they can make data processing inflexible and difficult to debug. As with all patterns then can be abused/misused.
 
 
+What about exceptions?
+---------------------
+
+Oh python .. you do make this hard ..
+The more I work with exceptions, the more I hate the pattern, they break program flow and destroy the type system.
+
+```python
+from collections.abc import Callable
+from typing import Type, Tuple
+
+type ExceptionTypes = Tuple[Type[BaseException]]
+
+
+def replace_exception[T](
+    original: Callable[[T], T],
+    default: T | None = None,
+    exception_types: ExceptionTypes = (Exception,),
+) -> Callable[[T], T | None]:
+    """
+    >>> timezone = 'timezone'
+    >>> def _build_block(b, another_param):
+    ...     if b == 'error':
+    ...         raise Exception('test')
+    ...     return b
+    >>> tuple(filter(None, map(replace_exception(lambda i: _build_block(i, timezone)), ['a','error','c'])))
+    ('a', 'c')
+
+    """
+    def _safe(t: T) -> T | None:
+        try:
+            return original(t)
+        except exception_types:
+            return default
+
+    return _safe
+
+```
+
+
 Reduce Pattern
 --------------
 
