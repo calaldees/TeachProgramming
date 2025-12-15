@@ -28,7 +28,7 @@ Network Communication
 
 * Reading and writing files
 * Sending a message over a network (UDP/TCP)
-(The unix creators cottoned on to this. Everything is a stream.)
+(The unix creators identified this in the design of `POSIX`. files and network are the same thing. Everything is a stream.)
 
 
 Why is this a revelation?

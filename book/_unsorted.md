@@ -468,3 +468,13 @@ Spaced Repetition
     * The maths behind our forgetting curve is flawed
 * [Ditching Obsidian and building my own](https://amberwilliams.io/blogs/building-my-own-pkms)
 
+
+Education
+----
+
+* Does appear to be important, but it's kind of ephemeral and we can't put our finger on what "good" is
+* [IQ differences of identical twins reared apart are significantly influenced by educational differences](https://www.sciencedirect.com/science/article/pii/S0001691825003853)
+
+---
+
+[Why Are 38 Percent of Stanford Students Saying They're Disabled?](https://reason.com/2025/12/04/why-are-38-percent-of-stanford-students-saying-theyre-disabled/) If you get into an elite college, you probably don't have a learning disability
