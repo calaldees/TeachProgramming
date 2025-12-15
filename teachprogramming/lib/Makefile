@@ -16,8 +16,11 @@ build_docker:
 build_static: build_docker
 	${DOCKER_RUN_no_tty} python3 api.py /static/projects/ /static/language_reference/languages/ --export
 build_and_upload: build_static
-	scp -r ./api/v1 computingteachers.uk:computingteachers.uk/api
-	scp -r ./static computingteachers.uk:computingteachers.uk
+	rsync static/ margay:~/www/www.computingteachers.uk/static/ -e ssh --archive --verbose --update --inplace --stats --compress --delete
+	rsync api/v1/ margay:~/www/www.computingteachers.uk/api/ -e ssh --archive --verbose --update --inplace --stats --compress --delete
+
+	#scp -r ./api/v1 computingteachers.uk:computingteachers.uk/api
+	#scp -r ./static computingteachers.uk:computingteachers.uk
 
 run_docker:
 	${DOCKER_RUN} python3 api.py /static/projects/ /static/language_reference/languages/
