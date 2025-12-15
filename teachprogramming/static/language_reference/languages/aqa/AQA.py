@@ -279,7 +279,7 @@ class Parser():
         try:
             return self.expression()
         except self.ParseError as pe:
-            log.exception('ParseError: TODO')
+            log.debug('Parser.ParseError')
             return None
 
     @property
@@ -307,7 +307,7 @@ class Parser():
         raise self.error(self.peek, error_message)
 
     def error(self, token: Token, error_message: str) -> 'Parser.ParseError':
-        log.error(f'{token.location} - {token.lexeme} - {error_message}')
+        log.error(f'{self.__class__.__name__}: {token.location} - {token.lexeme} - {error_message}')
         return self.ParseError()
     def synchronize(self) -> None:
         # humm ... sure this can be python-ed and simplified
@@ -411,10 +411,10 @@ class Interpreter():
 
     def checkNumberOperand(self, operator: Token, operand: Any):
         if isinstance(object, (float,)): return
-        raise RuntimeError(operator, "Operand must be a number.")
+        raise self.RuntimeError(operator, "Operand must be a number.")
     def checkNumberOperands(self, operator: Token, left: Any, right: Any):
         if isinstance(left, (float,)) and isinstance(right, (float,)): return
-        raise RuntimeError(operator, "Operands must be numbers.")
+        raise self.RuntimeError(operator, "Operands must be numbers.")
 
     def evaluateUnary(self, expr: Unary) -> PrimitiveValue:
         right = self.evaluate(expr.expression)
@@ -508,13 +508,15 @@ class Lox:
         self.hadError = True
 
     def runtimeError(self, error: Interpreter.RuntimeError) -> None:
-        log.error(f"{error.message}\n[line {error.token.location}]")
+        log.error(f"[{error.token.location}] {error.message}")
         self.hadRuntimeError = True
 
-    def run(self, source: str) -> None:
-        tokens = scanner(source).tokens
-        expr = Parser(tokens).parse
-        self.interpreter.evaluate(expr)
+    def run(self, source: str) -> PrimitiveValue:
+        if expr := Parser(scanner(source).tokens).parse:
+            try:
+                return self.interpreter.evaluate(expr)
+            except Interpreter.RuntimeError as ex:
+                self.runtimeError(ex)
 
 
 if __name__ == '__main__':
@@ -523,7 +525,12 @@ if __name__ == '__main__':
         lox.run(file.read_text())
     else:
         print('Lox REPL')
-        while _input := input('> '):
-            lox.run(_input)
+        try:
+            while _input := input('> '):
+                if output := lox.run(_input):
+                    print(lox.interpreter.stringify(output))
+        except (KeyboardInterrupt, EOFError):
+            print('')
     if lox.hadError: sys.exit(65)
     if lox.hadRuntimeError: sys.exit(75)
+    sys.exit()
