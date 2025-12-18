@@ -368,7 +368,7 @@ class Parser():
 def test_parser():
     tokens = Scanner('12.3 * (45 - "test") >= !10', DEFAULT_TOKEN_HANDLERS).tokens
     expr = Parser(tokens).parse
-    assert str(expr) == '12.3*(45-test)>=!10'
+    assert str(expr) == '12.3*(45.0-test)>=!10.0'
 
 
 # ------------------------------------------------------------------------------
@@ -490,7 +490,7 @@ class Interpreter():
 def test_interperet_evaluate_expression():
     expr_str = '5 * 5'
     value = Interpreter().evaluate(Parser(Scanner(expr_str, DEFAULT_TOKEN_HANDLERS).tokens).parse)
-    assert value == 10
+    assert value == 25.0
 
 
 # ------------------------------------------------------------------------------
