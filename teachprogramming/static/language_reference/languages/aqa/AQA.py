@@ -1,7 +1,7 @@
 import sys
 import enum
-from typing import NamedTuple, Self, Callable, Protocol, Any
-from collections.abc import Sequence,  MutableSequence, Mapping
+from typing import NamedTuple, Callable, Any
+from collections.abc import Sequence,  MutableSequence
 from functools import cached_property
 from pprint import pprint as pp
 import functools
@@ -100,7 +100,7 @@ class Token(NamedTuple):
     location: TextLocation
     lexeme: str
     type: TokenType
-    literal: str
+    literal: str | float
 class TokenError(NamedTuple):
     location: TextLocation
     message: str
@@ -142,7 +142,7 @@ class Scanner():
         return True
     def peek(self, offset:int=1) -> str:
         return self.source[self.index_current : min(self.index_current+offset, len(self.source))]
-    def addToken(self, type: TokenType, literal: str = '') -> None:
+    def addToken(self, type: TokenType, literal: str | float = '') -> None:
         self._tokens.append(Token(
             location=self.location.immutable,
             lexeme=self.source[self.index_start:self.index_current],
@@ -191,7 +191,7 @@ def number(s: Scanner) -> wasConsumed:
         if len(peek)==2 and peek[0] == '.' and peek[1].isdigit():
             s.advance()  # consume the '.'
             while s.peek().isdigit(): s.advance()
-        s.addToken(TokenType.NUMBER, s.source[s.index_start:s.index_current])
+        s.addToken(TokenType.NUMBER, float(s.source[s.index_start:s.index_current]))
 
 def identifier(s: Scanner) -> wasConsumed:
     if s.peek().isalpha():

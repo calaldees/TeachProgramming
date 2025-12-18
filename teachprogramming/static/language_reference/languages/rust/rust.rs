@@ -186,7 +186,7 @@ fn dict_comprehension() {
     .filter(|(&k,&v)| v>=2)   //  VER: dict_comprehension
     .map(|(&k,&v)| (v+10,k))  //  VER: dict_comprehension
     .collect::<HashMap<_,_>>();  //  VER: dict_comprehension
-  println!("{:?}", data4);    //  VER: dict_comprehension
+  println!("{:?}", data4);
 }
 
 fn define_set() {
