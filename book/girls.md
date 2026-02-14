@@ -52,7 +52,7 @@ Context
 * Stop using games to teach computing. (As an extra curricular engagement tool: sure! but not in your mainstream teaching)
     * If you do use games in your curriculum, use this VERY sparingly and explicitly call out the trivial nature of games (games are cool, but ultimately trivial)
 
-Games and Gamification should be removed
+Games (as a goal - ie making a game) and [[gamification]] don't help reveal wider use and context
 
 
 "You can have good intentions and have an inverse effect" (see hackathon)
@@ -121,3 +121,19 @@ https://dl.acm.org/citation.cfm?id=3366016
 * [Technology and sexuality – what's the connection? Addressing youth sexualities in efforts to increase girls' participation in computing](https://www.tandfonline.com/doi/abs/10.1080/17439884.2014.933847)
     * > Concerns about this under representation have sparked a wealth of educational efforts to promote girls’ participation in computing, but these programs have demonstrated limited impact on reversing current trends. This paper argues that this is, in part, because these programs tend to take a narrow view of their purpose, ignoring important factors that shape girls’ identities and education/career choices – not least broader narratives around gender, race, and sexuality.
     * TODO read
+
+
+* https://royalsociety.org/-/media/education/computing-in-schools/system-upgrade-required-report.pdf
+    * > Across Europe, the UK has the lowest percentage of girls interested in computer science subjects.
+    * > girls choose not to study computing qualifications is because they dislike computing
+    * > girls prefer the creative and people-focused elements of computing such as digital media, graphic design and animation
+    * > A broadening of the topics included in computing GCSE, with less emphasis on the technical elements
+    * > creativity can be integrated through open-ended assignments, and interactive hands-on elements can be used to show the relevance of computing and coding to digital media, which could increase girls’ motivation
+    * > Peer role models, such as older students who are studying computing, and female computing teachers, can be more effective than accomplished, but less relatable, role models in public life
+    * > only 8% of girls think computer science fits with their future self
+    * > Girls prioritise having a job that helps other people, however, they aren’t necessarily aware of the importance of computing skills to their desired roles.
+
+Context
+    * > Computing curricula and qualifications should be developed to ensure themes from science, arts and humanities are reflected in the content, allowing students to make links to other disciplines and increasing the awareness and understanding of the potential application of computing skills more broadly
+
+    * > Just 54% of computing hours taught in secondary schools are delivered by a teacher with a relevant post-A level qualification, which is substantially lower than other EBacc subjects

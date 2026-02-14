@@ -318,20 +318,10 @@ With spoken languages - the real insight is from the 3rd or 4th language
 * [How to Design Programs](https://htdp.org/)
     * > Not using commercial languages - developing a language to express things from scratch. (Sounds bonkers - I need to read more)
     * [the design rationale for How to Design Programs in the form of essays](https://felleisen.org/matthias/OnHtDP/index.html)
-    * [Developing Developers](https://felleisen.org/matthias/Thoughts/Developing_Developers.html) Matthias Felleisen
-        [hacker news comments](https://news.ycombinator.com/item?id=42440922)
-
-* [OECD Survey](https://www.oecd.org/en/about/programmes/piaac.html) of adult skills
-    * [Survey of Adult Skills](https://www.oecd.org/en/publications/survey-of-adult-skills-2023_3639d1e2-en.html) 2023
-    * > human capital theory
-    * linking education and skills with economic outcomes
-    * Qualifications are problematic because
-        * > Educational qualifications certify only the knowledge and skills developed through a course of study. As a result, they provide information only about a subset of the skills of an individual
-        * > Skills can be lost as well as maintained and enhanced over time.
-        * > The quality of education and training offered at different levels of the education and training system can vary considerably between countries and, within countries, over time. Thus, the level of knowledge and skills certified by a qualification of ostensibly the same type and level may vary widely.
-    * [Do Adults Have the Skills They Need to Thrive in a Changing World?](https://www.oecd.org/en/publications/do-adults-have-the-skills-they-need-to-thrive-in-a-changing-world_b263dc5d-en.html)
-        * Finland secondary school students are better than Chile with masters
-    * [Adults, Computers and Problem Solving](https://www.oecd.org/en/publications/adults-computers-and-problem-solving_9789264236844-en.html) 2015
+* [Developing Developers](https://felleisen.org/matthias/Thoughts/Developing_Developers.html) Matthias Felleisen Northeastern Univeristy
+    * [hacker news comments](https://news.ycombinator.com/item?id=42440922)
+    * > the first course uses a simple teaching language that is tailored to our goals. Follow-up courses explain how to apply the design principles to industrial programming languages,
+    * > Students find out that people write programs to inform other people of ideas. Working with compilers and interpreters also teaches them that these tools provide only shallow feedback. For true insight, they must turn to other people. Hence, students work in pairs from the very first day in class. Pair programming forces them to articulate their thoughts so that they can converse about programs.
 
 
 * [Rules for Writing Software Tutorials](https://refactoringenglish.com/chapters/rules-for-software-tutorials/) 2025
@@ -478,3 +468,11 @@ Education
 ---
 
 [Why Are 38 Percent of Stanford Students Saying They're Disabled?](https://reason.com/2025/12/04/why-are-38-percent-of-stanford-students-saying-theyre-disabled/) If you get into an elite college, you probably don't have a learning disability
+
+* [Visual Studio Code for Education](https://vscodeedu.com/) - Powering the next generation of developers
+    * [Launch announcement](https://www.microsoft.com/en-us/education/blog/2024/05/teach-computing-skills-with-visual-studio-code-for-education-new/)
+    * [courses](https://vscodeedu.com/courses/)
+    * Top boy Alan worked on this
+
+* [Dance Live](https://dancelive.co.uk/)
+    * THE BIG PRODUCTION EVENT FOR SCHOOLS AND COLLEGES!

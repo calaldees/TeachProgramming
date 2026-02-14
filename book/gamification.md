@@ -17,3 +17,11 @@ https://replicube.xyz/
 blooket
 I hate it, the focus is not the knowlege,
 It's like a advert, it just gets in the way
+
+
+It does help with
+* Making something regular/habit - but gamification can't be a long term habit, because when you reach 100% you need more sophisticated goals. You will just drift towards someone else's game-ified plan (probably an actual game rather than code)
+[[frequencyNotDuration]]
+
+
+There is no substitute for a human role model showing how the knowledge can be used.

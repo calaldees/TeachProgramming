@@ -3,7 +3,7 @@ Teacher/Learner Alignment
 
 ### Escape hatch's
 
-In the past, code was an completely human process. It took time, trial and error and understanding. There was no google to lookup a stack overflow solution. There was no LLM agent (see [[effectiveAI]]).
+In the past, code was an completely human process. It took time, trial and error and understanding. There was no google to lookup a stack overflow solution. There was no LLM agent (see [[ai]]).
 I call these easy, low hanging fruit solutions, 'escape hatches'.
 You had a reference manual and you had to think, try and ask others.
 This process lead to a generation that truly had to understand what the computer was doing.

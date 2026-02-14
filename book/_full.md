@@ -24,7 +24,7 @@ Formal documents have this, otherwise it's hard to reference them
 ![[1986]]
 ![[paperNotes]]
 ![[networks]]
-![[effectiveAI]]
+![[ai]]
 ![[computingIsATeamSport]]
 ![[assessment]]
 

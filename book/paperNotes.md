@@ -22,10 +22,28 @@ One sheet of handwritten A4 notes allowed - This prompts learners to distill all
 Borrowing others notes is fine, but copying them is of limited value. It is valuable however to consider what you may have missed? It's also perfectly acceptable to keep your notes to yourself. (Again explicitly call this out)
 The act of copying from generations of notes is valuable - what of these notes do I need? When you run out of paper-space, you have to write it all out again and thus reinforcing and constantly evaluating what information is needed
 
-Some might attack this as 'discriminatory'. Counter to 'I NEED to print them'.
+Some might attack this as 'discriminatory'. 'My handwriting is bad - I am disadvantaged'. Counter to 'I NEED to print them'.
 * Copy and paste is not the same conative process
 * Freeform allows for diagrams, links/lines
-* Can't write? Then just memorize it them, that's what the real exam will have.
+* No batteries, power outages, latency
+* Can't write?
+    * You still need to write on the exam paper anyway. And if you can't write on the exam paper and be legible to the examiner, then that has other downstream issues.
+    * Unless there is an extreme disability like missing a limb or mortor nurone desese, then writing is available and is a skill that should probably be improved
 * The purpose is not to chastise, the purpose is for the learner to see where they are.
 
 Nearer the real exam, you can have noteless mocks
+
+
+* [Wired: The End of Handwriting](https://www.wired.com/story/the-end-of-handwriting/)
+
+Paper augments working memory
+
+
+
+The Digital Delusion: How Classroom Technology Harms Our Kids’ Learning -- And How To Help Them Thrive Again
+3 Dec. 2025
+Jared Cooney Horvath
+> "Not anti-tech, but pro-learning. If you are an educator or a parent, you’ll want to read this book to understand how technology is changing education and changing children.”
+
+Stop Talking, Start Influencing: 12 Insights From Brain Science to Make Your Message Stick
+> The problem is that very few of us have ever been taught how to teach!

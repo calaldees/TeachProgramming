@@ -56,4 +56,4 @@ Explicit study?
 Is the literacy of computing.
 
 
-[[effectiveAI]]
+[[ai]]

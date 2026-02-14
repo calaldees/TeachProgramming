@@ -24,6 +24,10 @@ Degrees are not trusted by employers
 A-Levels are understood
 A-Levels are a national sport that every entrant is participating in
 
+2026 moving from Computer Science to Computing
+https://royalsociety.org/-/media/education/computing-in-schools/system-upgrade-required-report.pdf
+> Overall, there has been a 34% decline in entries across ICT and Computer Science GCSEs since 2015 (Figure 1a)5
+
 
 
 * https://analytics.ofqual.gov.uk/apps/Alevel/Outcomes/

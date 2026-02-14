@@ -6,6 +6,7 @@ Largely the punchline of the BarCamp 2024 talk
 
 #### Game-ification is counter to autonomy
 
+* [[gamification]] (insert?)
 * Game-ification of content erodes autonomy and should not be used
   * > You get 50 stars if you complete this exercise - you have 279 stars currently - your next level of silver is at 300 stars
   * This is not developing intrinsic motivation and puts the leaner as a controlled subject rather than developing there own autonomy
@@ -38,7 +39,7 @@ Many institutions to protect/safeguard their learners, lock down and restrict th
     * Access to github
     * ports other than 80 and 443
 
-* Supervising technitions need
+* Supervising technicians need
     * ability to reset machines as quickly as possible (sub 5min would be amazing)
     * If you really want to monitor the use of the network (optional)
         * Keep a log of the dns lookups matched to mac address's
@@ -55,6 +56,7 @@ All the components need to be cheap (almost disposeable) and replaceable
 
 The budget must facilitate this
 
+
 ### software
 
 As a school/university; You don't need to pay for software to teach computing.
@@ -63,4 +65,7 @@ Any restriction an institution makes by buying software, prevents young people f
 
 Understanding of the tools
 --------------------------
+
+
+Personal development environment - customizable - personal preference - ownership - speed of restore
 

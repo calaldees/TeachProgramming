@@ -26,4 +26,13 @@ The current generation of programmers may be the last of the 'industry' skilled 
 Given that the future will be a very digital future, I feel that the foundation of Computing will still apply and be useful. I'm not what capacity it will be useful, but even if there are less people skilled in the domain, 
 
 
+Effective use of AI for teachers
+--------------------------------
+
 vscode plugin progress - TODO
+
+
+---
+
+You can have the best AI training content ever.
+Ai can't be a [[rolemodel]] in the same way a human can.

@@ -12,3 +12,6 @@ From BarCamp 2024
 
 
 ![[age]]
+
+
+The importance of the teacher as a role model
