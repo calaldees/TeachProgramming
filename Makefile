@@ -1,8 +1,10 @@
-.PHONY: run
-run:
-	${MAKE} --directory teachprogramming/lib
+build_projects_local:
+	../language_reference/api.py \
+		--path_project teachprogramming/static/projects/ \
+ 		--path_export  .
 
-.PHONY: test
-test:
-	${MAKE} --directory teachprogramming/static/language_reference
-	${MAKE} --directory teachprogramming/lib/verify_snippets
+deploy: build_projects_local
+	rsync \
+		api/ \
+		margay:~/www/www.computingteachers.uk/api/ \
+		-e ssh --archive --verbose --update --inplace --stats --compress
