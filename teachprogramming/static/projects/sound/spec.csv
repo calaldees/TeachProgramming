@@ -1,0 +1,8 @@
+title=name of track,bpm=120,key=value
+piano,,,snare,hi-hat,synth_major,synth_minor,cowbell,saw,triangle
+base64encodedbytes,,base64encodedbytes,base64encodedbytes,base64encodedbytes,base64encodedbytes,base64encodedbytes,saw,triangle
+rate=\,key=value,,,,,,
+C-5,E-5,G-5,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+F-5,^^^,^^^,,,,,,,,

@@ -79,7 +79,7 @@ class Note():
         return 440*2**((self.midi-69)/12)
 
 
-def sine(x):
+def sine(x:float) -> float:
     """
     >>> def _sine(x):
     ...    return round(sine(x), 4)
@@ -95,7 +95,7 @@ def sine(x):
     -0.0
     """
     return math.sin(x * math.pi * 2)
-def triangle(x):
+def triangle(x:float) -> float:
     """
     >>> triangle(0)
     -0.0
@@ -109,7 +109,7 @@ def triangle(x):
     -0.0
     """
     return -(abs((((x+0.25)%1)*4) - 2) - 1)
-def sawtooth(x):
+def sawtooth(x:float) -> float:
     """
     >>> sawtooth(0)
     0.0
@@ -123,7 +123,7 @@ def sawtooth(x):
     0.0
     """
     return (((x+0.5) * 2) % 2) - 1
-def square(x):
+def square(x:float) -> float:
     """
     https://en.wikipedia.org/wiki/Square_wave
     >>> square(0)
@@ -139,5 +139,5 @@ def square(x):
     """
     return 1.0 if x <= 0.5 else -1.0
     return float(-((round(x)*2)-1))  # branchless? which is faster? the float cast could be expensive
-def noise(x):
+def noise(x) -> float:
     return random.random()*2-1
