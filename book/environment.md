@@ -70,3 +70,11 @@ Ask for others to support you in your goals
 In an education environment? Concept: two computer spaces (next to each other. Proximity is vital!). Group space and focus space (silence; explicit)
 
 
+
+
+* [Why Some Kids Learn 10x Faster Than Everyone Else (It’s Not What You Think) | Dr. Arif Khan](https://www.youtube.com/watch?v=Yeqk9MXzEmk)
+    * Personal pace
+    * Real world context
+    * Leaning is not in compartments
+    * Social contamination and performace anxiet (mixed ages remove comparisons)
+    * ability to learn indipendelty without external structure

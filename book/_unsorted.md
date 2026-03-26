@@ -318,7 +318,7 @@ With spoken languages - the real insight is from the 3rd or 4th language
 * [How to Design Programs](https://htdp.org/)
     * > Not using commercial languages - developing a language to express things from scratch. (Sounds bonkers - I need to read more)
     * [the design rationale for How to Design Programs in the form of essays](https://felleisen.org/matthias/OnHtDP/index.html)
-* [Developing Developers](https://felleisen.org/matthias/Thoughts/Developing_Developers.html) Matthias Felleisen Northeastern Univeristy
+* [Developing Developers](https://felleisen.org/matthias/Thoughts/Developing_Developers.html) Matthias Felleisen Northeastern Univeristy 2015
     * [hacker news comments](https://news.ycombinator.com/item?id=42440922)
     * > the first course uses a simple teaching language that is tailored to our goals. Follow-up courses explain how to apply the design principles to industrial programming languages,
     * > Students find out that people write programs to inform other people of ideas. Working with compilers and interpreters also teaches them that these tools provide only shallow feedback. For true insight, they must turn to other people. Hence, students work in pairs from the very first day in class. Pair programming forces them to articulate their thoughts so that they can converse about programs.
@@ -476,3 +476,4 @@ Education
 
 * [Dance Live](https://dancelive.co.uk/)
     * THE BIG PRODUCTION EVENT FOR SCHOOLS AND COLLEGES!
+    * [HelloWorld Article 2025](https://downloads.ctfassets.net/oshmmv7kdjgm/5TjFfXtCbkiXhSCcY9GXlb/3be291f3e58ff6d4bcc0e2141c649104/HW27.pdf#page=36)
