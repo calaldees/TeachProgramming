@@ -32,7 +32,8 @@ class CanvasDemo extends CanvasAnimationBase {
         c.fillRect(t, 10, 120, 80)
 
         t = frame % this.h
-        Gfx.drawLine(c, t, t, t+10, t+10, 'red', 5)
+        c.strokeStyle = 'red'
+        Gfx.drawLine(c, t, t, t+10, t+10, 5)
 
         c.drawImage(this.images["block"], this.mouse_x, this.mouse_y)
 
