@@ -17,18 +17,16 @@ class Line {
         this.y1 = y1
         this.x2 = x2
         this.y2 = y2
-        this._update()
+        //this._update()
     }
-    _update() {
-        this.dx = this.x1 - this.x2
-        this.dy = this.y1 - this.y2
-        this.dx_dy = this.dx / this.dy
-        this.dy_dx = this.dy / this.dx
-        //this.a_b_c = [this.y1-this.y2, this.x2-this.x1, this.x1*this.y2 - this.x2*this.y1]
-        this.a = this.y1-this.y2
-        this.b = this.x2-this.x1
-        this.c = this.x1*this.y2 - this.x2*this.y1
-    }
+    //_update() {
+    //    this.dx = this.x1 - this.x2
+    //    this.dy = this.y1 - this.y2
+    //    this.dx_dy = this.dx / this.dy
+    //    this.dy_dx = this.dy / this.dx
+    //    this.a_b_c = [this.y1-this.y2, this.x2-this.x1, this.x1*this.y2 - this.x2*this.y1]
+    //}
+    get vector() {return [this.y1-this.y2, this.x2-this.x1, this.x1*this.y2 - this.x2*this.y1]}
     get to_array() {return [this.x1, this.y1, this.x2, this.y2]}
     translate = (x,y) => {return new Line(this.x1-x, this.y1-y, this.x2-x, this.y2-y)}
 }
@@ -45,32 +43,19 @@ class Circle {
         return euclidean_distance < euclidean_overlap_radius
     }
     intersect = (line) => {
-        line = line.translate(this.x, this.y)
-        const [r, a, b, c] = [this.r, line.a, line.b, line.c]
+        // https://cp-algorithms.com/geometry/circle-line-intersection.html
+        const [a, b, c] = line.translate(this.x, this.y).vector
+        const c_c = c*c
+        const r_r = this.r*this.r
         const a_a_b_b = a*a + b*b
-        const c_c = c * c
-        const r_r = r * r
         const r_r_a_a_b_b = r_r * a_a_b_b
-        const [x0, y0] = [-a*c/a_a_b_b, -b*c/a_a_b_b]
-        /*
-        if (c_c > r_r_a_a_b_b + EPS) {
-            console.log("no points")
-            return
-        }
-        else if (Math.abs(c_c - r_r_a_a_b_b) < EPS) {
-            console.log("1 point", x0, y0)
-            return
-        }
-        else {
-        */
+        if (c_c > r_r_a_a_b_b + Number.EPSILON) {return}  // No intersect points
+        const [x0, y0] = [-a*c/a_a_b_b+this.x, -b*c/a_a_b_b+this.y]
+        if (Math.abs(c_c - r_r_a_a_b_b) < Number.EPSILON) {return} // console.log("1 point", x0, y0)
         const d = r_r - c_c/a_a_b_b
         const m = Math.sqrt(d/a_a_b_b)
         const [am, bm] = [a*m, b*m]
-        let line2 = new Line(x0+bm, y0-am, x0-bm, y0+am)
-        line2 = line2.translate(-this.x, -this.y)
-        //console.log("2 points", line2)
-        return line2
-
+        return [x0+bm, y0-am, x0-bm, y0+am]
     }
 }
 
@@ -110,8 +95,8 @@ function click(e) {
     let ii = c3.intersect(l)
     if (ii) {
         c.strokeStyle = 'red'
-        drawLine(c, ...ii.to_array)
-        console.log('yee', ii.to_array)
+        drawLine(c, ...ii)
+        console.log('yee', ii)
     }
 
 }
