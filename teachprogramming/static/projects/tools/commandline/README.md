@@ -33,6 +33,8 @@ Print the first line of each file in a folder
 
 SQL dump strip inserts to table with grep
 
+Consider 'push to talk' from device audio to push to a port and decode at the end? See [terminalphone](https://gitlab.com/here_forawhile/terminalphone) as a complete example using TOR
+
 
 NetCat
 ------

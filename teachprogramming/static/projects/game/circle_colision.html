@@ -44,14 +44,14 @@ class Circle {
     }
     intersect = (line) => {
         // https://cp-algorithms.com/geometry/circle-line-intersection.html
+        const r_r = this.r*this.r
         const [a, b, c] = line.translate(this.x, this.y).vector
         const c_c = c*c
-        const r_r = this.r*this.r
         const a_a_b_b = a*a + b*b
         const r_r_a_a_b_b = r_r * a_a_b_b
         if (c_c > r_r_a_a_b_b + Number.EPSILON) {return}  // No intersect points
         const [x0, y0] = [-a*c/a_a_b_b+this.x, -b*c/a_a_b_b+this.y]
-        if (Math.abs(c_c - r_r_a_a_b_b) < Number.EPSILON) {return} // console.log("1 point", x0, y0)
+        if (Math.abs(c_c - r_r_a_a_b_b) < Number.EPSILON) {return [x0, y0]} // console.log("1 point", x0, y0)
         const d = r_r - c_c/a_a_b_b
         const m = Math.sqrt(d/a_a_b_b)
         const [am, bm] = [a*m, b*m]

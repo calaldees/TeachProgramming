@@ -21,6 +21,7 @@ class Point {
     get to_array() {return [this.x, this.y]}
     euclidean_distance(p) {return Math.pow(this.x - p.x, 2) + Math.pow(this.y - p.y, 2)}
     distance(p) {return Math.sqrt(this.euclidean_distance(p))}
+    translate(p) {return new Point(this.x-px, this.y-p.y)}  // should the mutate?
 }
 
 class Line {
@@ -34,6 +35,8 @@ class Line {
     }
     static from_array(x1,y1,x2,y2) {return new Line(new Point(x1,y1), new Point(x2,y2))}
     get to_array() {return [this.p1.x, this.p1.y, this.p2.x, this.p2.y]}
+
+    translate(p) {return new Line(this.p1.translate(p), this.p2.translate(p))}  // should the mutate?
 
     static _gradient(p1, p2) {return (p1.x-p2.x)/(p1.y-p2.y)}
     get gradient() {this._gradient(this.p1, this.p2)}
