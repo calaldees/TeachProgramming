@@ -6,5 +6,7 @@
     "ball_hop": {"parents": ["click_count"]},
     "inside_ball": {"parents": ["ball_hop"]},
     "click_end": {"parents": ["inside_ball"]},
-    "time": {"parents": ["click_end"]}
+    "time": {"parents": ["click_end"]},
+    "network_score": {"parents": ["time"]},
+    "ball_hop_fix": {"parents": ["ball_hop"]}
 }}
