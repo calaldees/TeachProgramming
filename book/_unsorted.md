@@ -477,3 +477,8 @@ Education
 * [Dance Live](https://dancelive.co.uk/)
     * THE BIG PRODUCTION EVENT FOR SCHOOLS AND COLLEGES!
     * [HelloWorld Article 2025](https://downloads.ctfassets.net/oshmmv7kdjgm/5TjFfXtCbkiXhSCcY9GXlb/3be291f3e58ff6d4bcc0e2141c649104/HW27.pdf#page=36)
+
+
+* [Why Swedish Schools Are Bringing Back Books](https://undark.org/2026/04/01/sweden-schools-books/) 2026
+    * > Amid declining test scores, the country has pivoted away from screens and invested in back-to-basics school materials.
+    * > The goal is recalibration rather than reversal

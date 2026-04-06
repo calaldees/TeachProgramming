@@ -36,3 +36,6 @@ vscode plugin progress - TODO
 
 You can have the best AI training content ever.
 Ai can't be a [[rolemodel]] in the same way a human can.
+
+
+[Why Your Students Still Need to Learn to Program (Even with AI)](https://www.computingatschool.org.uk/forum-news-blogs/2026/march/why-your-students-still-need-to-learn-to-program-even-with-ai/)
