@@ -1,3 +1,10 @@
 {"versions": {
-    "": {"parents": []}
+    "": {"parents": []},
+    "reset": {"parents": [""]},
+    "click": {"parents": ["reset"]},
+    "click_count": {"parents": ["click"]},
+    "ball_hop": {"parents": ["click_count"]},
+    "inside_ball": {"parents": ["ball_hop"]},
+    "click_end": {"parents": ["inside_ball"]},
+    "time": {"parents": ["click_end"]}
 }}
