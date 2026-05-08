@@ -1,5 +1,5 @@
-Citification
-============
+Certification
+=============
 
 follows from [[academia]]
 

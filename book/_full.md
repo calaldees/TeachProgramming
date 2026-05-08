@@ -9,8 +9,8 @@ Formal documents have this, otherwise it's hard to reference them
 
 # For Teachers
 
-![[cirtificationVsAcademia]]
-![[citification]]
+![[certificationVsAcademia]]
+![[certification]]
 ![[academia]]
 ![[identityComesBeforeSkill]]
 ![[computerScienceIsNotForEveryone]]

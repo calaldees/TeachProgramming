@@ -567,3 +567,11 @@ Creativity
     * [kinght trading - whos fault?](https://youtu.be/FeD3DSn1gIs?t=1815) 5min
     * [recruitment amazon sexist bias twiiter face 10% white male](https://youtu.be/FeD3DSn1gIs?t=2053) 5min
 * [Guitar-oke](https://dylanbeattie.net/2022/09/19/the-road-to-guitaraoke-part-1-vamp-chordino-imagesharp-ffmpeg.html)
+
+
+---
+
+
+* [This image should be mandatory in beginner C programming classes](https://twitter.com/okonomiyonda/status/1539704488545492992) twitter pic
+    * int **, int *, int - cute pointing
+

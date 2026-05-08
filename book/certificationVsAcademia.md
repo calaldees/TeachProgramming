@@ -7,7 +7,7 @@ Academia or Certification
 
 
 
-Academia + Citification
+Academia + Certification
 -----------------------
 
 
