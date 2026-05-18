@@ -482,3 +482,9 @@ Education
 * [Why Swedish Schools Are Bringing Back Books](https://undark.org/2026/04/01/sweden-schools-books/) 2026
     * > Amid declining test scores, the country has pivoted away from screens and invested in back-to-basics school materials.
     * > The goal is recalibration rather than reversal
+
+
+---
+
+* [100DaysOfJava showing in Graph](https://mohibulsblog.netlify.app/java/100daysofjava/graph/)
+    * A map of 100 Java learning posts, connected by reading order, internal references, and shared topics.
