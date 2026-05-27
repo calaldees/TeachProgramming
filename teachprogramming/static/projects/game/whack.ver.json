@@ -8,5 +8,6 @@
     "click_end": {"parents": ["inside_ball"]},
     "time": {"parents": ["click_end"]},
     "network_score": {"parents": ["time"]},
-    "ball_hop_fix": {"parents": ["ball_hop"]}
+    "ball_hop_fix": {"parents": ["ball_hop"]},
+    "ball_image": {"parents": ["ball_hop_fix"]}
 }}

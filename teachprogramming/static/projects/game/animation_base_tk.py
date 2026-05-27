@@ -1,11 +1,20 @@
 import abc
-import typing as t
 import tkinter
 import time
 
 # TODO:
 # we need get sub images from an image - pygame has `subsurface`
 # https://stackoverflow.com/questions/52375035/cropping-an-image-in-tkinter
+
+# MacOS Zoom
+# Settings -> Zoom -> Use Keyboard shortcuts to zoom
+# Option + Cmd + `+`/`-`/`8`
+
+# Windows Zoom
+# Windows + `+`/`-`/`Esc`
+# Windows + Ctrl + M
+# Ctrl + Alt + Mousewheel
+# Ctrl + Alt + Arrows
 
 class TkAnimationBase():
     def __init__(self, width:int=320, height:int=180, frames_per_second:int=60):
@@ -60,7 +69,7 @@ class TkAnimationBase():
         pass
 
     @abc.abstractmethod
-    def loop(self, canvas: tkinter.Canvas, frame:int):
+    def loop(self, canvas: tkinter.Canvas, frame: int):
         """
         https://tkdocs.com/tutorial/canvas.html
         https://web.archive.org/web/20190302183420/http://zetcode.com/gui/tkinter/drawing/

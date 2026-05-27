@@ -19,6 +19,7 @@ class Whack():
         self.root.bind('<ButtonPress>', self.click)                             # VER: click
         self.click_count = 10                                                   # VER: reset
         self.ball_size = 20                                                     # VER: reset
+        self.image = tkinter.PhotoImage(file='images/block.gif')                # VER: ball_image
         self.reset()                                                            # VER: reset
         self.root.mainloop()
                                                                                 # VER: reset
@@ -36,10 +37,12 @@ class Whack():
                                                                                 # VER: ball_hop
         c = self.canvas                                                         # VER: ball_hop
         c.delete(tkinter.ALL)                                                   # VER: ball_hop
-        c.create_rectangle(                                                     # VER: ball_hop
+        c.create_image(                                                         # VER: ball_image
+        #c.create_rectangle(                                                    # VER: ball_hop NOT ball_image
             self.ball_x, self.ball_y,                                           # VER: ball_hop
-            self.ball_x+self.ball_size, self.ball_y+self.ball_size,             # VER: ball_hop
-            outline="#fb0", fill="#fb0"                                         # VER: ball_hop
+            #self.ball_x+self.ball_size, self.ball_y+self.ball_size,            # VER: ball_hop NOT ball_image
+            #outline="#fb0", fill="#fb0",                                       # VER: ball_hop NOT ball_image
+            image=self.image, anchor=tkinter.NW,                                # VER: ball_image
         )                                                                       # VER: ball_hop
         c.update()                                                              # VER: ball_hop
                                                                                 # VER: click
@@ -56,9 +59,9 @@ class Whack():
             print(f'Hit! {self.clicks}')                                        # VER: click_count
             self.ball_hop()                                                     # VER: ball_hop
             #self.canvas.create_rectangle(                                      # VER: click NOT ball_hop
-            #    event.x, event.y,                                              # VER: click NOT ball_hop
-            #    event.x+10, event.y+10,                                        # VER: click NOT ball_hop
-            #    outline="#fb0", fill="#fb0"                                    # VER: click NOT ball_hop
+                #event.x, event.y,                                              # VER: click NOT ball_hop
+                #event.x+10, event.y+10,                                        # VER: click NOT ball_hop
+                #outline="#fb0", fill="#fb0"                                    # VER: click NOT ball_hop
             #)                                                                  # VER: click NOT ball_hop
         else:                                                                   # VER: inside_ball
             print('Missed')                                                     # VER: inside_ball
