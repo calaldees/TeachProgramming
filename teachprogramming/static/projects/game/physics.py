@@ -1,6 +1,7 @@
 import math
 from collections.abc import Sequence
 from typing import NamedTuple, Self
+from itertools import chain
 
 import pygame
 
@@ -41,6 +42,8 @@ class Line():
         self.p2.translate(p)
     @staticmethod
     def _gradient(p1:Point, p2:Point) -> float:
+        if (p1.y==p2.y):
+            return math.inf
         return (p1.x-p2.x)/(p1.y-p2.y)
     @property
     def gradient(self) -> float:
@@ -48,6 +51,10 @@ class Line():
     @property
     def length(self) -> float:
         return self.p1.distance(self.p2)
+    @property
+    def angle(self) -> float:
+        # atan is wrong - we get inf ... this should be a smooth 0to1 radians
+        return math.atan(self.gradient)
     def intersect(self, line) -> Point | bool:
         """
         https://paulbourke.net/geometry/pointlineplane/javascript.txt
@@ -70,12 +77,7 @@ class Line():
 
 
 class Vector():
-    """
-    >>> v = Vector()
-    """
-    x: float
-    y: float
-    def __init__(self, x, y):
+    def __init__(self, x:float=0, y:float=0):
         self.x = x
         self.y = y
     def add(self, b: Self) -> None:
@@ -89,67 +91,112 @@ class Vector():
     def reset(self) -> None:
         self.x = 0
         self.y = 0
+    @classmethod
+    def from_angle(cls, angle: float, value: float) -> Self:
+        return cls(x=math.sin(angle)*value,y=math.cos(angle)*value)
+    def __neg__(self):
+        return Vector(-self.x, -self.y)
 
-class Mass(NamedTuple):
-    p: Point
-    f: Vector
-    m: float
+class Mass():
+    def __init__(self, p: Point, mass: float):
+        self.p = p
+        self.mass = mass
+        self.force = Vector()
+        self.vel = Vector()
     def add_force(self, f: Vector) -> None:
-        self.f.add(f)
+        self.force.add(f)
     def apply_force(self) -> None:
-        self.p.x += self.f.x
-        self.p.y += self.f.y
-        self.f.reset()
+        self.vel.x += self.force.x / self.mass
+        self.vel.y += self.force.y / self.mass
+        self.force.reset()
+        self.p.x += self.vel.x
+        self.p.y += self.vel.y
+
+class SpringMaterial(NamedTuple):
+    tension: float
+    compression: float
 
 class Spring():
-    a: Mass
-    b: Mass
-    initial_length: float
-    def __init__(self, a: Mass, b: Mass):
+    def __init__(self, a: Mass, b: Mass, mat: SpringMaterial):
         self.a = a
         self.b = b
+        self.mat = mat
         self.line = Line(a.p, b.p)
         self.initial_length = self.line.length
+    def apply_force(self) -> None:
+        length = self.line.length
+        length_factor = (length-self.initial_length)/self.initial_length
+        force_magnitude = (self.mat.tension if length > self.initial_length else self.mat.compression) * length_factor
+        force_vector = Vector.from_angle(self.line.angle, force_magnitude)
+        self.a.add_force(force_vector)
+        self.b.add_force(-force_vector)
 
+
+class Lattice(NamedTuple):
+    masses: Sequence[Mass]
+    springs: Sequence[Spring]
+
+    @classmethod
+    def build(
+        cls,
+        x_start:int, 
+        y_start:int, 
+        width:int, 
+        height:int, 
+        unit_length: float, 
+        unit_mass: float, 
+        mat: SpringMaterial,
+    ) -> Self:
+        m: Sequence[Mass] = tuple(
+            Mass(Point(x_start+(x*unit_length),y_start+(y*unit_length)), unit_mass)
+            for x in range(width+1)
+            for y in range(height+1)
+        )
+        def xy_to_i(x,y):
+            return x+y*(width+1)
+        s: Sequence[Spring] = tuple(chain.from_iterable(
+            (
+                Spring(m[xy_to_i(x  ,y  )], m[xy_to_i(x+1,y  )], mat), # top
+                Spring(m[xy_to_i(x+1,y  )], m[xy_to_i(x+1,y+1)], mat), # right
+                Spring(m[xy_to_i(x+1,y+1)], m[xy_to_i(x  ,y+1)], mat), # bottom
+                Spring(m[xy_to_i(x  ,y+1)], m[xy_to_i(x  ,y  )], mat), # left
+                Spring(m[xy_to_i(x  ,y  )], m[xy_to_i(x+1,y+1)], mat), # top-left to bottom-right
+                Spring(m[xy_to_i(x+1,y  )], m[xy_to_i(x  ,y+1)], mat), # top-right to bottom-left
+            )
+            for x in range(width)
+            for y in range(height)
+        ))
+        return cls(m,s)
 
 class GameDemo(PygameBase):
     def __init__(self):
-        self.x = 100
-        self.y = 100
-        # self.image = pygame.image.load('images/block.gif')
+        self.l = Lattice.build(100,100,3,3,10,1,SpringMaterial(1,1))
         super().__init__()
 
     def loop(self, screen, frame):
         s = screen
         width, height = s.get_size()
 
-        t = frame % width
-        pygame.draw.rect(s, pygame.Color("#f0b000"), (t, 10, 120, 80))
+        for mass in self.l.masses:
+            mass.add_force(Vector(0,mass.mass*0.01))  # Gravity
+            #mass.add_force(Vector(-mass.vel.x/300,-mass.vel.y/300))  # Air Viscosity
+        for mass in self.l.masses:
+            mass.apply_force()  # move all the masses with force - remove the accumulated force
+        for spring in self.l.springs:
+            spring.apply_force()
+        for mass in self.l.masses:
+            if mass.p.y > height:
+                mass.p.y = float(height)
+                mass.vel.y = -mass.vel.y * 0.8
 
-        t = frame % height
-        pygame.draw.line(s, pygame.Color("red"), (t, t), (t+10, t+10), 5)
+        c = pygame.Color("white")
+        for spring in self.l.springs:
+            pygame.draw.line(s, c, spring.a.p.to_array , spring.b.p.to_array, 1)
+        c = pygame.Color("yellow")
+        for mass in self.l.masses:
+            x, y = mass.p.to_array
+            pygame.draw.rect(s, c, (x-1, y-1, 3, 3))
 
-        mouse_x, mouse_y = pygame.mouse.get_pos()
-        # s.blit(self.image, (mouse_x, mouse_y))
-
-        if self.keys[pygame.K_UP]:
-            self.y += -1
-        if self.keys[pygame.K_DOWN]:
-            self.y += 1
-        if self.keys[pygame.K_RIGHT]:
-            self.x += 1
-        if self.keys[pygame.K_LEFT]:
-            self.x += -1
-        # s.blit(self.image, (self.x, self.y))
-
-
-        # Task DVD menu
-        # 1.) Square edged red rectangle - 50 50
-        # 2.) It moves automatically (in the x direction only)
-        # 3.) It bounces left and right from the edges of the screen
-        # 4.) DVD screensaver - bounces of top bottom left right
-        # 5.) Make the rectangle an image
-        # 6.) Remove any hard coded values for width/height/imagesize/etc
 
 if __name__ == '__main__':
     GameDemo().run()
