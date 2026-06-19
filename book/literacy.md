@@ -25,8 +25,15 @@ Explain why you should do it one way over another
 
 Banned Words
 ------------
-* Just, Simply, Basically, (even in writing)
-* (verbally) So, Um
+
+* You are a professional communicator
+    * You need to improve the way you speak
+    * You need to improve the way you write
+
+* Just, Simply, Basically, So (even in writing)
+* (verbally) 'Um', 'errr'
+    * [Speech disfluency](https://en.wikipedia.org/wiki/Speech_disfluency)
+    * https://doug.sh/posts/erm-a-local-cli-that-strips-ums-uhs-and-erms-from-speech/
 * 'It' (please fully qualify)
 
 https://github.com/calaldees/teacherEducation/blob/acbc846eddf56268305380145fb6ee91e04cdf46/teacherEducation/presentations.md?plain=1#L182

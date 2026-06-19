@@ -16,13 +16,18 @@ So the entrants have no computing prerequestits - they are a bum on a seat that 
 Grade inflation
 38% firsts degree 2021
 
-A Level computing 7%
+A Level computing 7% get A's
+* [Failing grades soar as professors see greater AI usage, dwindling math skills in UC Berkeley computer science classes](https://www.dailycal.org/news/campus/academics/failing-grades-soar-as-professors-see-greater-ai-usage-dwindling-math-skills-in-uc-berkeley/article_16fad0bf-02cb-4b8c-8d88-888ffd9f8608.html)
+    * > “I’m a strong, strong opponent of what Harvard is doing to say that only a fraction of students can earn A’s,” Garcia said. “I think you should have clear standards for what an A means, and then give tons of opportunity for people … to get to that A bar without lowering the standard. So everybody who’s curving is hiding that effect. It’s completely hiding that effect, and it’s pretending as if nothing’s wrong, and something is definitely wrong.”
+    * > more than 1,300 UC faculty in signing a petition calling for the reinstatement of ACT and SAT standardized testing scores for STEM admissions in the UC system. The petition and its accompanying open letter detail similar concerns with students’ mathematical preparation.
+    * > 'Confusion is the sweat of learning.' ... “A lot of students, I think, are not putting in the sweat.”
 
-Degrees are not trusted by employers
+We have the Computing GCSE! So A-Level grade should be higher because most students have spent 100 more hours engaging with Computing before starting the A-Level. But that effect is hidden with grade scaling. Or are students just not getting any better at Computing, even with the GCSE and more time?
 
+Degrees are not trusted by employers - there is no clear distinction of what a '1st' is.
 
 A-Levels are understood
-A-Levels are a national sport that every entrant is participating in
+A-Levels are a 'national competitive sport' that every entrant is participating in
 
 2026 moving from Computer Science to Computing
 https://royalsociety.org/-/media/education/computing-in-schools/system-upgrade-required-report.pdf

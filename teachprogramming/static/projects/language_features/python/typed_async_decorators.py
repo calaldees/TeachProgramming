@@ -1,16 +1,17 @@
 import asyncio
 
 #from typing import Awaitable, Callable, ParamSpec, TypeVar
+from functools import wraps
 from typing import Awaitable
 from collections.abc import Callable
 import logging
 
 
 def decorator[T,**P](fn: Callable[P, Awaitable[T]]) -> Callable[P, Awaitable[T]]:
+    @wraps(fn)
     async def decorated(*args: P.args, **kwargs: P.kwargs) -> T:
         logging.info(f'{fn.__name__} was called')
         return await fn(*args, **kwargs)
-
     return decorated
 
 

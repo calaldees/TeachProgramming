@@ -143,3 +143,9 @@ You have 3 hours to it for real
     * [Do Adults Have the Skills They Need to Thrive in a Changing World?](https://www.oecd.org/en/publications/do-adults-have-the-skills-they-need-to-thrive-in-a-changing-world_b263dc5d-en.html)
         * Finland secondary school students are better than Chile with masters
     * [Adults, Computers and Problem Solving](https://www.oecd.org/en/publications/adults-computers-and-problem-solving_9789264236844-en.html) 2015
+
+
+
+* IEE.org - [The Computer Science Degree Isn’t Dead](https://spectrum.ieee.org/computer-science-degree-isnt-dead) 2026
+    * Build something of value
+    * Learn to use AI tools effectively
