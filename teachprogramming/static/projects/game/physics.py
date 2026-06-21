@@ -2,6 +2,7 @@ import math
 from collections.abc import Sequence
 from typing import NamedTuple, Self
 from itertools import chain
+import operator
 
 import pygame
 
@@ -21,6 +22,9 @@ class Point():
     @property
     def to_array(self):
         return (self.x, self.y)
+    def set(self, p: Self) -> None:
+        self.x = p.x
+        self.y = p.y
     def translate(self, b: Self) -> None:
         self.x += b.x
         self.y += b.y
@@ -190,53 +194,54 @@ class Lattice(NamedTuple):
 
 class GameDemo(PygameBase):
     def __init__(self):
-        self.l = Lattice.build(100,100,3,3,10,1,SpringMaterial(1,1))
-        # m1 = Mass(Point(100,100), 10)
-        # m2 = Mass(Point(110,100), 10)
-        # self.l = Lattice(
-        #    masses=(m1,m2,),
-        #    springs=(Spring(m1,m2,SpringMaterial(1,1)),)
-        # )
-        # m2.p.x += 2
-        # m2.p.y += 2
+        self.l = Lattice.build(100,100,4,4,10,1,SpringMaterial(1,1))
+        self.mouse_anchor_spring: Spring | None = None
         super().__init__()
 
     def loop(self, screen, frame):
         s = screen
         width, height = s.get_size()
 
-        # m2 =self.l.masses[1]
-        # m2.p.x = 100 + math.sin(frame/60)*12
-        # m2.p.y = 100 + math.cos(frame/60)*12
-        # if self.keys[pygame.K_UP]:
-        #     m2.p.y += -1
-        # if self.keys[pygame.K_DOWN]:
-        #     m2.p.y += 1
-        # if self.keys[pygame.K_RIGHT]:
-        #     m2.p.x += 1
-        # if self.keys[pygame.K_LEFT]:
-        #     m2.p.x += -1
+        mouse_button_pressed = pygame.mouse.get_pressed()[0]
+        mouse_point = Point.from_array(*pygame.mouse.get_pos())
+        if mouse_button_pressed and not self.mouse_anchor_spring:
+            mouse_anchor_mass: Mass = next(iter(sorted(self.l.masses, key=lambda m: m.p.euclidean_distance(mouse_point))))
+            self.mouse_anchor_spring = Spring(Mass(mouse_point, 100) ,mouse_anchor_mass, SpringMaterial(1,0))
+        if mouse_button_pressed and self.mouse_anchor_spring:
+            self.mouse_anchor_spring.a.p.set(mouse_point)
+            self.mouse_anchor_spring.add_force()
+            c = pygame.Color("red")
+            pygame.draw.line(s, c, self.mouse_anchor_spring.a.p.to_array, self.mouse_anchor_spring.b.p.to_array, 1)
+        else:
+            self.mouse_anchor_spring = None
 
+
+        # Accumulate Forces
         for mass in self.l.masses:
             mass.add_force(Vector(0,mass.mass*0.01))  # Gravity
-            #mass.add_force(Vector(-mass.vel.x/300,-mass.vel.y/300))  # Air Viscosity
-            mass.vel.x *= 0.99
-            mass.vel.y *= 0.99
+            mass.vel.x *= 0.995  # Air Viscosity
+            mass.vel.y *= 0.995
         for spring in self.l.springs:
             spring.add_force()
+        # Draw Forces
         c = pygame.Color("green")
+        # for mass in self.l.masses:
+        #     pygame.draw.line(s, c, mass.p.to_array , (mass.p.x+(mass.force.x*20), mass.p.y+(mass.force.y*20)), 1)
+        # Apply Forces
         for mass in self.l.masses:
-            pygame.draw.line(s, c, mass.p.to_array , (mass.p.x+(mass.force.x*20), mass.p.y+(mass.force.y*20)), 1)
             mass.apply_force()  # move all the masses with force - remove the accumulated force
-            #mass.force.reset()
+        # Bounce off floor - flip vel.y
         for mass in self.l.masses:
             if mass.p.y > height:
                 mass.p.y = float(height)
                 mass.vel.y = -mass.vel.y * 0.8
+                mass.vel.x *= 0.9
 
+        # Draw Springs
         c = pygame.Color("white")
         for spring in self.l.springs:
             pygame.draw.line(s, c, spring.a.p.to_array , spring.b.p.to_array, 1)
+        # Draw Masses
         c = pygame.Color("yellow")
         for mass in self.l.masses:
             x, y = mass.p.to_array
