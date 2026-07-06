@@ -1,14 +1,17 @@
 AS-Level Computing: Projects
 ============================
 
-* [AQA A-Level Computing - Specification](https://filestore.aqa.org.uk/resources/computing/specifications/AQA-7516-7517-SP-2015.PDF)
-    * 180 guided learning hours == hours of tuition + directed hours of independent study
+* [AQA A-Level Computing - Specification](https://aqa.org.uk/7517)
+* Hours
+    * 180 guided learning hours (GLH) == hours of tuition + directed hours of independent study
+    * AS:180glh + A2:180glh == 360h (For comparison GCSE:120glh)
+    * 5 hours of direct classroom teaching per week per subject (30 weeks)
 
-* These are all the projects for the year 
+* All the projects for the AS year
 * Tasks can be attempted in any order (self directed/ownership)
 * Every task maps to theory specification
-* You may use any language for each task
-    * It is recommended that you use a minimum of 2 languages (one static, one dynamic)
+* You may use any programming language for each task
+    * Minimum use of 2 languages (one static, one dynamic)
 
 
 Training Tasks (Grade E)
@@ -17,7 +20,7 @@ Training Tasks (Grade E)
     * Extension: delay for 2 seconds on incorrect password
 2. Read a list of numbers from a file. Print the sum of all the numbers
 3. Create a program that counts from 0 to 30 missing out all numbers devisable by 4
-    * Program must only have one `print()` statement
+    * must only use one `print()` statement
 4. Create a program that reads a line from the user. If the line starts with `S`. Append that line to the bottom of a text file.
 5. Ask the user for 5 words. Print out a rubbish sentence putting between 10 and 20 of these words together
 6. Create a program that takes user input and converts a 12h time (e.g. `4:53pm`, `6:00am`) into into a 24h time (e.g. `16:53`, `06:00`)
@@ -32,7 +35,7 @@ Training Tasks (Grade E)
           ```
 9. Fibonacci Sequence: Generate the following sequence under 200. `1,1,2,3,5,8,13,21,etc`
     * Add the previous 2 numbers, e.g. 2+3=5 3+5=8
-10. Create a function that takes an array of strings of possible values and asks the user relatedly for one of these inputs, when it receives one of these correct/possible values, return this value
+10. Create a function that takes an array of strings of _possible values_ and asks the user repeatedly for one of these inputs, when it receives one of these correct/possible values, return this value
     * e.g `[proceed, abort, skip]`, `[yes, no, maybe]`
 
 
@@ -131,8 +134,8 @@ This project is designed to get you to understand
     10
 ```
 
-### Extension (GUI Experience)
-* In VB.NET
+### Extension (GUI Experience) (B Grade)
+* In Csharp or VB.NET (or other GUI based language)
     * Create a GUI calculator with buttons for each digit/operation.
         * each digit will append to a `display` textbox/string
 
@@ -222,7 +225,7 @@ Takes a string 'key' to rotate each letter.
 ```
 
 ### A Grade
-Operate Vigenere on a plain bytes and encode/decode a binary file
+Operate Vigenere on a plain bytes and encode/decode a binary file (can encode/decode images and sound files?)
 
 ### todo
 * [Vernam cipher](https://isaaccomputerscience.org/concepts/data_encrypt_vernam) (one-time pad) is key-length==message-length is unbreakable encryption
@@ -237,8 +240,10 @@ Write a program that converts strings from one number format to another.
 * 3Bit Grey Code (and vice versa) http://en.wikipedia.org/wiki/Grey_code
 
 ### Techniques
+
 * This project will assess Grey Codes, Suitable Test data and Algorithm design
-    * To convert to and from grey codes I suggest a lookup table and the use of a Linear Search.
+    * Do not use built in language tools (This is a one liner in most languages)
+    * To convert to and from grey codes I suggest a lookup table and the use of a Linear Search
 * Create automated tests for your code - use the `assert` statement - Do this before you code your solution
     * ```python
         assert bin2dec("11") == 3
@@ -452,4 +457,3 @@ Suggestions
     * use `assert` or [doctests](https://docs.python.org/3/library/doctest.html)
     * [Test Driven Development](https://en.wikipedia.org/wiki/Test-driven_development)
 * Know how to access your language standard library documentation
-

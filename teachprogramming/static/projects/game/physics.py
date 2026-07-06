@@ -69,7 +69,6 @@ class Line():
         if self.p1.y <= self.p2.y:
             angle += math.pi
         return angle
-        
     def intersect(self, line) -> Point | bool:
         """
         https://paulbourke.net/geometry/pointlineplane/javascript.txt
