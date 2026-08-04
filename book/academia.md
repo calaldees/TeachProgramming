@@ -44,6 +44,7 @@ https://royalsociety.org/-/media/education/computing-in-schools/system-upgrade-r
     * 150k places in Computing (related)
     * 60k Computer Science places (from ocr dude a few years ago) - most universities start again from scratch because they can't rely on compsci education in schools
     * (even with all the candidates and other BTEC pathways combined, 150k is massive! It's not an exageration to say that over half of the entrants do have a Level3 equivalent. They are starting form way back, which is why most degree's start from scratch again, because they can't guarantee the backgrounds of the entrnts. That says to me that their recruitment process is not sufficent (maybe deliberatly so, because they just don't care, 80% of them will pass anyway))
+* [One of University of California's most popular majors sees declines for first time since dot-com bust](https://archive.is/njxV1) Feb 2026
 * more
     * https://explore-education-statistics.service.gov.uk/find-statistics/education-and-training-statistics-for-the-uk
     * https://www.bcs.org/policy-and-influence/education/bcs-landscape-review-computing-qualifications-in-the-uk/england-computer-science-gcse-as-and-a-levels/ 2024

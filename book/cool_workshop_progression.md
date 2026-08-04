@@ -2,14 +2,19 @@ Workshops
 =========
 
 Cant tell kids high level concepts - show them
-Pretty narly idea of how to teach this - but it works
-Secretly you want to go in the ballpool - Especially if your on work time and are being paid.
+Pretty gnarly idea of how to teach this - but it works
+Secretly you want to go in the ball-pool - Especially if your on work time and are being paid.
 
 Disband the Myth
-  Learn to code = Load of bollox
-  -Adults don't have time
-  -Kids don't have focus
-  No few hours of workshop is a magic wand
+* Learn to code == Load of bollox
+  - Adults don't have time
+  - Kids don't have focus
+  * No few hours of workshop is a magic wand
+  * It's for planing the _seed of interest_, germinating that initial engagement and incubating. Analogy: Only 1, 2 or 3 eggs out of 100 will survive to adulthood. The pipeline, incubation structure and teacher effort must be there to support those few.
+
+Computing is the coolest thing that have ever happened. That needs to be conveyed/role-modelled by the adult in the room. They have to believe it, breath it, embody it, practice it.
+
+Code Kids Workshops are just child daycare. They are not long form enough to _teach_ anything. But they can convey a window into the world of Computing. One off workshops are entertaining and a sales-pitch for the discipline, but they are not _teaching_. They are too short for any meaningful progression.
 
 Approach
   - Reference

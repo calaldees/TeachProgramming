@@ -395,7 +395,7 @@ Project Documenting
 * Each project should take on average 2 weeks
 * For 4 projects the following documentation needs to be submitted
     * (The process will help you for all projects, but is not formally required)
-* Use these headings. Every word below is from the spec and needs to be used by you in the exa
+* Use these headings. Every word below is from the spec and needs to be used by you in the exam
 * 2 project submissions must be in a static language
 * 2 projects submissions be in a dynamic language
 

@@ -3,6 +3,8 @@ Certification
 
 follows from [[academia]]
 
+* [Do Certifications Matter?](https://blog.codinghorror.com/do-certifications-matter/) 2007 Jeff Altwood
+
 Language citification
 --------
 Java
@@ -30,6 +32,7 @@ Direct Tick - ~ Concept - X No
 * GoLang?
     * ?
 
+https://www.aqa.org.uk/subjects/computer-science/a-level/computer-science-7517/specification/specification-at-a-glance
 https://www.aqa.org.uk/subjects/computer-science/a-level/computer-science-7517/specification/subject-content
 
 
