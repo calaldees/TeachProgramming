@@ -1,4 +1,8 @@
+# CAUTION: python noBase is problematic because                                 # VER: warning
+#  !! functions cannot use assignment `=` operator on global variables !!       # VER: warning
+                                                                                # VER: warning
 import pygame
+import sys
 
 pygame.init()
 screen = pygame.display.set_mode((640,360), pygame.SCALED | pygame.RESIZABLE)
@@ -46,3 +50,6 @@ while True:
     screen.fill('black')
     screen.blit(background_image, (-background_x_pos, 0))                       # VER: background
     screen.blit(copter_image, (copter_x_pos, copter_y_pos))                     # VER: copter
+
+pygame.quit()  # fix for `Idle` on windows to kill subprocess
+sys.exit()
