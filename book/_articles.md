@@ -30,3 +30,15 @@ Titles of blog posts
     * Spec + Tasks + Engineering Activities + LanguageCheatSheet + 1PageA4Handwritten + ExamQuestions + PairProgrammingExplicit + CommandLineHotKeysKeyboard + VersionControl + FocusSpace(EarDefenders) + Network(as-first-class)
 * What is the failure case?
     * The worst possible outcome is that the young people you interacted with loose interest in Computing because of your presence
+* Don't Ask What They Want
+    * Learners don't know
+* The Holiday Code Club
+    * Is it learning?
+* == amount of time you can sit in a chair
+    * Different environment == they just want any distraction/release from being here
+* Audio and shared environment
+    * Profetional developers hate being interrupted
+* Development Environment
+    * pygame - gah!
+    * Laptop keyboards
+    * 
