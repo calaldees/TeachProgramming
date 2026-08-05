@@ -1,3 +1,9 @@
+TODO: Rework this!!
+
+https://pixlr.com/editor/
+
+-----
+
 Copter
 ======
 

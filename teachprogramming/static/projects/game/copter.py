@@ -4,7 +4,7 @@ import pathlib   # VER: parallax
 
 class CopterGame(PygameBase):
     def __init__(self):
-        #self.background_image = pygame.image.load("images/CopterLevel1.gif")  # VER: background NOT parallax
+        #self.background_image = pygame.image.load("images/CopterLevel1.png")  # VER: background NOT parallax
         self.background_color = (0, 0, 0, 0)
         self.copter_image     = pygame.image.load("images/ship.gif")         # VER: copter
         self.copter_collision_points = ((0,0),(32,9),(17,2),(22,12),(2,12))  # VER: collision_multi
@@ -14,7 +14,7 @@ class CopterGame(PygameBase):
         #self.reset()                                                         # VER: level NOT_
         super().__init__(resolution=(640,360))
     def load_level(self):                                                                         # VER: level
-        #self.background_image = pygame.image.load(f"images/CopterLevel{self.level_number}.gif")  # VER: level NOT parallax
+        #self.background_image = pygame.image.load(f"images/CopterLevel{self.level_number}.png")  # VER: level NOT parallax
         self.background_images = [                                                               # VER: parallax
             pygame.image.load(file)                                                              # VER: parallax
             for file in sorted(pathlib.Path('images').glob(f"*CopterLevel{self.level_number}*.png")) # VER: parallax
