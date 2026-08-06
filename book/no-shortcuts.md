@@ -1,6 +1,9 @@
 No Shortcuts
 ============
 
+* See
+    * [[cultivatingPerception]] merge?
+
 You have to actually like computers, programming and detail.
 If you just want the outcome of just being able to create stuff, you will never get there.
 

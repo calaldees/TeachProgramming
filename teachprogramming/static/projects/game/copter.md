@@ -1,6 +1,7 @@
 TODO: Rework this!!
 
 https://pixlr.com/editor/
+Only 3 saves! Gah!
 
 -----
 

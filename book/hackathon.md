@@ -20,21 +20,22 @@ This is my notes on what the pitfalls are and how to do it with some degree of s
         * Kent council data?
         * Geo-relevant?
 * Has to have meaningful output
-    * Not just duck-taping cardboard together or making a mockup from powerpoint slides
+    * Not just duck-taping cardboard together or making a mockup from powerpoint slides - actual code speaks
 * Need time to produce that meaningful output
     * This can't be done in 3 hours. Overnight of a weekend gives the minimum possible time to build anything
     * Sleeping bags under desks
     * Social - food pizzas in the evening - present on Sunday lunchtime to a wider set of spectators
-    * Stop the pests - don't let non skilled people wonder and distract the hackers from the focus of the event. Have the metal to ask people to move to the separate 'party room' or leave
+    * Stop the distractors - don't let non skilled people wonder and distract the hackers from the focus of the event. Have the metal to ask people to move to the separate 'party room' or leave
 * Prerequisite skills of attendees
     * If your attendees have never processed data before, never created a dynamic webpage, never xyz, then how will they learn all the skills to do that AND create something in the compressed time. It would be difficult to create the thing in that time period, let alone learn the skills as well
     * Demo implementations (to convey tech and what is possible):
         * Heatmap on maps
         * Google sheets for storage
     * You may need multiple months of crash course session leading up to the event to demo and develop skills for processing real data
-* Attendees need to know what the event is and have the concepts modeled/explained
+    * Attendees need to know something about the domain, so that when projects are demoed they can identify the skill/accomplishment. If your attendees don't have this minimum bar, they will just clap aimlessly/hollowly each time and it will feel meaningless to the participants.
+* Attendees need to know what the event is and have the concepts modelled/explained
     * Picking young people and expecting them to perform is foolish
-    * They need to see the output of a real hack day to see what's possible and whats expected
+    * They need to see the output of a real hack day to see what's possible and what's expected
     * You need 20% of your attendees minimum to know what they are doing and be role models for what is possible and model the approach
     * The reality is that most young people (even studying computing) will not have the skills required for this by just attending their course. Actually producing something practically in a constrained time and in a team is not the same as passing an exam or doing coursework.
     * The reason why people applaud and clap is because its genuinely impressive what people can do in 24 hours. If you don't have enough understanding of what development is, you won't know how amazing it is, you will just clap hollowly (or worse clap when the achievement is minimal). There is a real difference of an audience in awe and and just some hollow noise
@@ -47,8 +48,8 @@ This is my notes on what the pitfalls are and how to do it with some degree of s
     * Unskilled attendees hurt the event - they provide distractions
     * Anyone that thinks "just run a hack day" is going to have a disappointing event and even put people off attending any future hack days organized by other people that might be good. Beware of the damage you can cause.
     * A related example
-        * CC4G - ICT club for girls in 2004 was just an embarrassment - purple spreadsheets about ponies
-* If the event can run regularly for 3 years, you will have enough snowball momentum for work of mouth to attract more people. What could be important is the length of time the event has been established. Potentially you may have you first 2 years as a buildup for the 3rd+ year being productive.
+        * CC4G - ICT club for girls in 2004 was just an embarrassment - purple spreadsheets about ponies. (See [[girls]])
+* If the event can run regularly for 3 years, you will have enough snowball momentum for work of mouth to attract more people. What could be important is the length of time the event has been established. Potentially you may have you first 2 years as a build-up for the 3rd+ year being productive.
     * You know the attends from last year (everyone wins some kind of special mention/award because you gave a great set of awards). Contact them individually about the next event. Show you're aware of the hack they did. Make them feel valued and remember and that their contribution was important. You can have a template and notes from the previous year and back these out in an hour to 30 people.
     * The longer your event runs, the more meaningful and prestige the event holds (both internal and external). Organizations should be aware of the long term horizon can actively fight to keep the pattern/event going.
         * Can the organization commit to minimum of 3 years? can the organization name and identify a member of staff to be responsible. If that member of staff leaves, ensure there is a plan to pass the torch.
@@ -61,6 +62,9 @@ This is my notes on what the pitfalls are and how to do it with some degree of s
     * What if the young people had an experience with the supporting/sponsoring/judging companies
         * e.g. If you're a local railway provider - give the young people a day with a signal box operator and lunch with the mobile app development team
     * (One of the prizes I won once was an engineering day where we build HexaYerts and GridBeam furniture to put in the yert, solar power wiring and a composting toilet. Can you create prizes that further engagement)
+    * Most adults that see these public awards don't understand what they are, what matters is the community running the event genuinely identify and revere the skills, contributions and effort of the attendees
+* Organisers/Judges as [[rolemodel]]s: Perception of event by participants
+    * The young people attending the event will think the event is valuable and has purpose if the judges and organisers can also code and have a visible ethos/history/background in hacking/building/making/tinkering/delivering. Your judges and/or organisers should be role models. They should have visibly demonstrating their skills as mature top tier versions of what the attendees could become with time and effort. Young people can sniff bullshit. If the organisers are getting them to jump though such huge hoops and say "these are important and useful skills" yet don't spend the time and effort doing any such activity themselves, it feels hollow and hypocritical. Code speaks.
 
 
 Hackathon Prerequisites/Curriculum

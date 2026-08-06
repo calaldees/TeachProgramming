@@ -36,9 +36,10 @@ Titles of blog posts
     * Is it learning?
 * == amount of time you can sit in a chair
     * Different environment == they just want any distraction/release from being here
-* Audio and shared environment
-    * Profetional developers hate being interrupted
+* Noise Pollution, distractions and shared environment
+    * Probational developers hate being interrupted
 * Development Environment
     * pygame - gah!
     * Laptop keyboards
-    * 
+* The Goal
+    * Knowledge for the joy and discovery - not for employment - not for wider external validation
