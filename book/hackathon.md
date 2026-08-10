@@ -19,12 +19,13 @@ This is my notes on what the pitfalls are and how to do it with some degree of s
         * Canterbury council data?
         * Kent council data?
         * Geo-relevant?
-* Has to have meaningful output
+* Has to have meaningful output - code speaks
     * Not just duck-taping cardboard together or making a mockup from powerpoint slides - actual code speaks
 * Need time to produce that meaningful output
     * This can't be done in 3 hours. Overnight of a weekend gives the minimum possible time to build anything
     * Sleeping bags under desks
     * Social - food pizzas in the evening - present on Sunday lunchtime to a wider set of spectators
+* [[environment]]
     * Stop the distractors - don't let non skilled people wonder and distract the hackers from the focus of the event. Have the metal to ask people to move to the separate 'party room' or leave
 * Prerequisite skills of attendees
     * If your attendees have never processed data before, never created a dynamic webpage, never xyz, then how will they learn all the skills to do that AND create something in the compressed time. It would be difficult to create the thing in that time period, let alone learn the skills as well
@@ -175,7 +176,8 @@ History
 
 * 2024? I was asked for advice on setting up a hackathon for girls with local schools and undergrads. I waxed lyrical about my advice and wrote this document.
 * 2025 I was asked about running a hackathon and significantly enhanced this document
+* 2026 Still thinking about this. Added some notes about [[rolemodel]]s
 
 * https://web.archive.org/web/20250806021451/https://ccsu.co.uk/news/article/ccsu/Hackabury-2025-Hackathon-Games-Jam/
 * [CCCU: First Hackathon delivered measurable value for business partners](https://blogs.canterbury.ac.uk/cccuconnect/first-hackathon-delivered-measurable-value-for-business-partners/) 2025
-    * https://web.archive.org/web/20250717092807/https://blogs.canterbury.ac.uk/cccuconnect/first-hackathon-delivered-measurable-value-for-business-partners/
+    * Archive.org: 16 Jun 2025 [First Hackathon delivered measurable value for business partners](https://web.archive.org/web/20260103083333/https://blogs.canterbury.ac.uk/cccuconnect/first-hackathon-delivered-measurable-value-for-business-partners/)

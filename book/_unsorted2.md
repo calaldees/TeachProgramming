@@ -17,17 +17,6 @@ I need to cross reference all of this against
 
 ---
 
-* [Where the Humanities Aren’t in Crisis - An outlandish new venture in liberal education.](https://hedgehogreview.com/web-features/thr/posts/where-the-humanities-arent-in-crisis)
-    * > ZENA: the idea would be to cut through all the red tape: no grades, no credit, no degrees, no fees, no vice-presidents—even no climbing wall, if you can believe it.
-        > ME: What would the students get out of it then?
-        > ZENA: They’d study great things and cultivate the life of the mind.
-        > ME: OK . . . but what would I get out of it?
-        > ZENA: You’d also study great things and cultivate the life of the mind.
-        > ME: You mean we’d be focused on education—like, just because education is good?
-        > ZENA: Yes, exactly.
-        > ME: Wow, this is so crazy it just might work!
-
-
 > ‘Owning your own learning’ is at the heart of strong self-regulation and metacognition: setting learning goals, planning, monitoring and evaluating success in tasks links to those goals; forming effective schemata that take account of big-picture questions and themes that inform subsequent conscious rehearsal and elaboration.
 https://teacherhead.com/2019/01/10/revisiting-dylan-wiliams-five-brilliant-formative-assessment-strategies/ Tom Sherington
 * giving students access to long-term topic plans, the syllabus, the wide scope overview before diving down into the details;
@@ -362,11 +351,6 @@ Informal
 * [Findings from a Multi-year Study of CT in K-2 Students in Formal and Informal Settings](https://dl.acm.org/doi/epdf/10.1145/3304221.3325585) 2019
 
 
-Identity
---------
-
-* [A Grounded Theory of Computing Professional Identity Formation](https://dl.acm.org/doi/10.1145/3304221.3325598) 2019
-    * > we have limited knowledge of how computing professional identity develops
 
 
 Computer Adaptive Testing #CAT

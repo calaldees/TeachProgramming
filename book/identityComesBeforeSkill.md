@@ -15,3 +15,7 @@ From BarCamp 2024
 
 
 The importance of the teacher as a role model
+
+
+* [A Grounded Theory of Computing Professional Identity Formation](https://dl.acm.org/doi/10.1145/3304221.3325598) 2019
+    * > we have limited knowledge of how computing professional identity develops

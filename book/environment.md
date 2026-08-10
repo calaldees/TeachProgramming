@@ -3,6 +3,10 @@ Expanding on
 > Provide the fertile ground/foundations for the skills to grow
 
 
+* See
+    * [[no-shortcuts]] for Cultivating perception
+    * [[hackathon]]
+
 Age
 ---
 

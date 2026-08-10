@@ -1,8 +1,9 @@
-Coding Truths
-=============
+Learner Coding Truths
+=====================
 
 * All computers can do is compare 2 numbers (or a single character)
     * Everything you ever write always comes down to this
+    * ForLoops and If statements are actually the same thing (jump instruction)
 * Your confidence level wont change
     * It's part of you. Every time you get more competent, you can now conceptualize the complexity of more complex stuff
         * (I look at this list in wonder [List of algorithms](https://en.wikipedia.org/wiki/List_of_algorithms))
@@ -17,3 +18,5 @@ Coding Truths
     * The second to make a working solution (it's less than optimal, it get's actually used, you realize edge cases and interface issues)
     * The third to do it properly
 * Frequency is more important than duration
+    * Coding all day at a weekend is not the same as coding every morning and evening for 15min
+* Speak and write correct technical terminology

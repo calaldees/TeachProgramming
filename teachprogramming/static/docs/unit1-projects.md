@@ -243,7 +243,7 @@ Write a program that converts strings from one number format to another.
 
 * This project will assess Grey Codes, Suitable Test data and Algorithm design
     * Do not use built in language tools (This is a one liner in most languages)
-    * To convert to and from grey codes I suggest a lookup table and the use of a Linear Search
+    * To convert to and from grey codes I suggest a lookup table and the use of a Linear Search (or a map)
 * Create automated tests for your code - use the `assert` statement - Do this before you code your solution
     * ```python
         assert bin2dec("11") == 3
@@ -412,7 +412,7 @@ Project Documenting
         * Boundary/limit
         * Erroneous
     * Consider an average of 10 items of test data
-    * Write an automated test with `assert` or `doctests`
+    * Write automated tests with `assert` or `doctests`
     * DO NOT PROCEED TO DESIGN WITHOUT DOING THIS! SERIOUSLY! KNOW THE SPEC OF WHAT YOU ARE WRITING!
 * Design
     * Plan Code Solution - Algorithm design
@@ -442,7 +442,7 @@ Project Documenting
     * Check Solution
 
 
-Suggestions
+Suggestions (How to get actually good)
 -----------
 
 * Have a development flow where; view code and output on a single screen at the same time
@@ -452,7 +452,7 @@ Suggestions
 * Setup your IDE to use a linter
 * Use a debugger (not just `print`) (breakpoint, step into, step over, watch variable values)
 * Use version control
-* Write automated tests before you implement your feature/function
+* Write automated tests before you implement your feature/function (typically A Grade)
     * Write your tests as functions before you start
     * use `assert` or [doctests](https://docs.python.org/3/library/doctest.html)
     * [Test Driven Development](https://en.wikipedia.org/wiki/Test-driven_development)
