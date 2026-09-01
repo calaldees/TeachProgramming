@@ -488,3 +488,11 @@ Education
 
 * [100DaysOfJava showing in Graph](https://mohibulsblog.netlify.app/java/100daysofjava/graph/)
     * A map of 100 Java learning posts, connected by reading order, internal references, and shared topics.
+
+---
+
+* The difference between using technology to passive/consume rather than active/create
+* [Screen viewing time from age 1 to 8 years and subsequent academic performance and working memory](https://link.springer.com/article/10.1007/s12519-026-01046-1)
+    * > cumulative average screen viewing time was associated with lower academic performance but not working memory, with the strongest effect sizes seen for single screen viewing time occurring in early infancy.
+* Local screen app context tracker - no cloud - all local - plain text
+    * [ambient-context](https://github.com/dragthelake/ambient-context) - A menu bar app that keeps a written record of what you worked on.
