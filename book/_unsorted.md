@@ -496,3 +496,11 @@ Education
     * > cumulative average screen viewing time was associated with lower academic performance but not working memory, with the strongest effect sizes seen for single screen viewing time occurring in early infancy.
 * Local screen app context tracker - no cloud - all local - plain text
     * [ambient-context](https://github.com/dragthelake/ambient-context) - A menu bar app that keeps a written record of what you worked on.
+
+* [Teach Yourself Programming in Ten Years](https://www.norvig.com/21-days.html) Teach yourself something in 21 days. It's not really possible
+
+* [Computer Lessons](https://technicshistory.com/2026/06/06/computer-lessons/) 70's and 80's computer education
+    * > computer literacy is becoming a necessary tool as our Nation and the world moves into a new era of high technology… the ability to incorporate basic computer literacy into the skills of our young people could be the difference between a generation of occupational misfits or a rapid growth in productivity at all skill levels of our economy.
+
+* [CodeStream Studios](https://www.codestreamstudios.com/) Educating the new tech workforce
+    * An integreated coding teacher marking mega system
