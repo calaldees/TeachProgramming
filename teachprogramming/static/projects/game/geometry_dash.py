@@ -11,7 +11,7 @@ type LevelDataSlice = Sequence[str]
 type Tile = str
 
 
-def load_geometry_dash_levels(path: Path, width=120) -> LevelData:
+def load_levels(path: Path, width=120) -> LevelData:
     lines = []
     with path.open() as f:
         while line := f.readline():
@@ -28,10 +28,21 @@ def load_tiles(path: Path, seq: str, w: int, h: int = 0) -> Mapping[str, pygame.
         for i in range(min((ww//w)*(hh//h), len(seq)))
     }
 
+def rotate_image_center(img:pygame.image, x:float, y:float, angle:float) -> tuple[pygame.image, pygame.rectangle]:
+    rotated_image = pygame.transform.rotate(img, angle)
+    rotated_rect = rotated_image.get_rect()
+    rotate_offset_x = (rotated_rect.width-img.width)//2
+    rotate_offset_y = (rotated_rect.height-img.height)//2
+    rotated_rect.center = (img.width//2, img.height//2)
+    rotated_rect.x = x - rotate_offset_x
+    rotated_rect.y = y - rotate_offset_y
+    return (rotated_image, rotated_rect)
+
+
 
 class GeometryDash(PygameBase):
     def __init__(self):
-        self.level_data = load_geometry_dash_levels(Path('geometry_dash.txt'))
+        self.level_data = load_levels(Path('geometry_dash.txt'))
         self.tile_size = 32
         self.tiles = load_tiles(Path('geometry_dash.png'), '@^#_', self.tile_size)
 
@@ -106,15 +117,8 @@ class GeometryDash(PygameBase):
         x_scroll_backshift = self.tile_size - int(self.x) % self.tile_size
         self.draw_level(screen, screen_data, x_scroll_backshift)
 
-        rotated_image = pygame.transform.rotate(self.tiles['@'], self.rotation)
-        rotated_rect = rotated_image.get_rect()
-        rotate_offset = (rotated_rect.width-self.tile_size)//2
-        rotated_rect.center = (self.tile_size//2, self.tile_size//2)
-        rotated_rect.x = x_screen_offset - rotate_offset
-        rotated_rect.y = self.y - rotate_offset
-        #pygame.draw.rect(s, pygame.Color("#f00000"),rotated_rect)
-        s.blit(rotated_image, rotated_rect)
         #s.blit(self.tiles['@'], (x_draw_offset, self.y))
+        s.blit(*rotate_image_center(self.tiles['@'], x_screen_offset, self.y, self.rotation))
 
 
 if __name__ == '__main__':
