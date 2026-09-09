@@ -37,14 +37,18 @@ class GeometryDash(PygameBase):
 
         self.level: int = 0
 
-        self.speed: float = 1.21
+        self.speed: float = 1.0
+        self.jump_vel: float = -3.5
+        self.jump_vel_inc: float = 0.11
+        self.reset()
+
+        super().__init__(fps=120)
+
+    def reset(self) -> None:
         self.x: float = 0.0
         self.y: float = 100
         self.y_vel:float = 0
-        self.jump_vel: float = -10
         self.rotation:float = 0
-
-        super().__init__(fps=60)
 
     def data_slice_screen(self, level:int, x:float, lines_per_level:int=8) -> LevelDataSlice:
         level_width_tiles = len(self.level_data[0])
@@ -78,12 +82,16 @@ class GeometryDash(PygameBase):
         screen_data = self.data_slice_screen(self.level, self.x)
 
         x_tile = int(x_screen_offset)//self.tile_size
-        y_tile = int(self.y+self.tile_size)//self.tile_size
-        current_tile = screen_data[y_tile][x_tile]
-        if current_tile != ' ':
+        y_tile = int(self.y)//self.tile_size
+        if screen_data[y_tile+1][x_tile] != ' ':  # Title below
             pygame.draw.rect(s, pygame.Color("#f0b000"), (x_screen_offset, self.y, self.tile_size, self.tile_size))
-            y_tile  = int(self.y)//self.tile_size
             y_floor = y_tile * self.tile_size
+        if screen_data[y_tile][x_tile] != ' ':
+            self.y_vel = 0
+            #self.y = self.tile_size * y_tile+1
+            y_tile += 1
+        if screen_data[y_tile][x_tile+1] != ' ':  # tile_infront
+            self.reset()
         is_on_ground = (self.y >= y_floor)
         self.y = min(y_floor, self.y)
 
@@ -92,7 +100,7 @@ class GeometryDash(PygameBase):
             if self.keys[pygame.K_SPACE]:
                 self.y_vel = self.jump_vel
         else:
-            self.y_vel += 1
+            self.y_vel += self.jump_vel_inc
             self.rotation -= 4
 
         x_scroll_backshift = self.tile_size - int(self.x) % self.tile_size
@@ -103,6 +111,7 @@ class GeometryDash(PygameBase):
         rotated_rect.center = (self.tile_size//2, self.tile_size//2)
         rotated_rect.x = x_screen_offset
         rotated_rect.y = self.y
+        #pygame.draw.rect(s, pygame.Color("#f00000"),rotated_rect)
         s.blit(rotated_image, rotated_rect)
         #s.blit(self.tiles['@'], (x_draw_offset, self.y))
 
