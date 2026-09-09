@@ -37,16 +37,16 @@ class GeometryDash(PygameBase):
 
         self.level: int = 0
 
-        self.speed: float = 1.0
-        self.jump_vel: float = -3.5
-        self.jump_vel_inc: float = 0.11
+        self.speed: float = 2.5
+        self.jump_vel: float = -5
+        self.jump_vel_inc: float = 0.2
         self.reset()
 
-        super().__init__(fps=120)
+        super().__init__(fps=60)
 
     def reset(self) -> None:
         self.x: float = 0.0
-        self.y: float = 100
+        self.y: float = 150
         self.y_vel:float = 0
         self.rotation:float = 0
 
@@ -71,7 +71,7 @@ class GeometryDash(PygameBase):
         s = screen
 
         y_floor = self.height - self.tile_size
-        x_screen_offset = (self.width / self.tile_size) * self.speed * 4
+        x_screen_offset = 50 # (self.width / self.tile_size) * self.speed * 4
 
         self.x += self.speed
         self.y += self.y_vel
@@ -83,14 +83,14 @@ class GeometryDash(PygameBase):
 
         x_tile = int(x_screen_offset)//self.tile_size
         y_tile = int(self.y)//self.tile_size
-        if screen_data[y_tile+1][x_tile] != ' ':  # Title below
+        if screen_data[y_tile+1][x_tile] not in (' ', '^'):  # Title below
             pygame.draw.rect(s, pygame.Color("#f0b000"), (x_screen_offset, self.y, self.tile_size, self.tile_size))
             y_floor = y_tile * self.tile_size
-        if screen_data[y_tile][x_tile] != ' ':
+        if screen_data[y_tile][x_tile] not in (' ', '_'):
             self.y_vel = 0
             #self.y = self.tile_size * y_tile+1
             y_tile += 1
-        if screen_data[y_tile][x_tile+1] != ' ':  # tile_infront
+        if screen_data[y_tile][x_tile+1] not in (' ', '_'):  # tile_infront
             self.reset()
         is_on_ground = (self.y >= y_floor)
         self.y = min(y_floor, self.y)
