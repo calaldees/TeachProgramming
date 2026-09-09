@@ -9,6 +9,7 @@ from animation_base_pygame import PygameBase
 type LevelData = Sequence[str]
 type LevelDataSlice = Sequence[str]
 type Tile = str
+type Tiles = Mapping[str, pygame.Surface]
 
 
 def load_levels(path: Path, width=120) -> LevelData:
@@ -19,7 +20,7 @@ def load_levels(path: Path, width=120) -> LevelData:
     return lines
 
 
-def load_tiles(path: Path, seq: str, w: int, h: int = 0) -> Mapping[str, pygame.image]:
+def load_tiles(path: Path, seq: str, w: int, h: int = 0) -> Tiles:
     h = h or w
     img = pygame.image.load(path)
     ww, hh = img.get_size()
@@ -27,6 +28,20 @@ def load_tiles(path: Path, seq: str, w: int, h: int = 0) -> Mapping[str, pygame.
         seq[i]: img.subsurface(((i*w)%ww, ((i*w)//ww)*h, w, h))
         for i in range(min((ww//w)*(hh//h), len(seq)))
     }
+
+
+def draw_tiles(screen: pygame.Surface, tiles: Tiles, screen_data: LevelData, x:int, y:int) -> None:
+    t_reference = next(iter(tiles.values()))  # get first tile and extract the tile dimensions
+    tw, th = (t_reference.width, t_reference.height)
+    stw, sth = (screen.width//tw, screen.height//th)
+    tx, ty = (x//tw, y//th)
+    x_offset, y_offset = (x%tw, y%th)
+    for _y in range(sth+1):
+        for _x in range(stw+1):
+            t = screen_data[_y+ty][_x+tx]
+            if t == ' ': continue
+            screen.blit(tiles[t], ((_x*tw)-x_offset, (_y*th)-y_offset))
+
 
 def rotate_image_center(img:pygame.image, x:float, y:float, angle:float) -> tuple[pygame.image, pygame.rectangle]:
     rotated_image = pygame.transform.rotate(img, angle)
@@ -115,7 +130,8 @@ class GeometryDash(PygameBase):
             self.rotation -= 4
 
         x_scroll_backshift = self.tile_size - int(self.x) % self.tile_size
-        self.draw_level(screen, screen_data, x_scroll_backshift)
+        #self.draw_level(screen, screen_data, x_scroll_backshift)
+        draw_tiles(screen, self.tiles, self.level_data, int(self.x), 0)
 
         #s.blit(self.tiles['@'], (x_draw_offset, self.y))
         s.blit(*rotate_image_center(self.tiles['@'], x_screen_offset, self.y, self.rotation))
