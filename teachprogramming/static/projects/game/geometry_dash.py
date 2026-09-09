@@ -108,9 +108,10 @@ class GeometryDash(PygameBase):
 
         rotated_image = pygame.transform.rotate(self.tiles['@'], self.rotation)
         rotated_rect = rotated_image.get_rect()
+        rotate_offset = (rotated_rect.width-self.tile_size)//2
         rotated_rect.center = (self.tile_size//2, self.tile_size//2)
-        rotated_rect.x = x_screen_offset
-        rotated_rect.y = self.y
+        rotated_rect.x = x_screen_offset - rotate_offset
+        rotated_rect.y = self.y - rotate_offset
         #pygame.draw.rect(s, pygame.Color("#f00000"),rotated_rect)
         s.blit(rotated_image, rotated_rect)
         #s.blit(self.tiles['@'], (x_draw_offset, self.y))
