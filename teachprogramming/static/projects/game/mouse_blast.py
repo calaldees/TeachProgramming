@@ -59,8 +59,6 @@ class MouseBlast(PygameBase):
         self.y: float = self.screen.height
 
     def loop(self, screen, frame):
-        s = screen
-
         if self.keys[pygame.K_w]: self.y-=1
         if self.keys[pygame.K_s]: self.y+=1
         if self.keys[pygame.K_a]: self.x-=1
@@ -72,11 +70,11 @@ class MouseBlast(PygameBase):
         screen_y = self.y-(screen.height//2) + (mouse_y-(screen.height//2))
         draw_tiles(screen, self.tiles, self.level_data, screen_x, screen_y)
 
-        screen_x, screen_y = (self.x-screen_x, self.y-screen_y)
-        pygame.draw.rect(s, pygame.Color("#f0b000"), (screen_x, screen_y, 5, 5))
-        pygame.draw.rect(s, pygame.Color("#f00000"), (mouse_x, mouse_y, 5, 5))
+        player_x, player_y = (self.x-screen_x, self.y-screen_y)
+        pygame.draw.rect(screen, pygame.Color("#f0b000"), (player_x, player_y, 5, 5))
+        pygame.draw.rect(screen, pygame.Color("#f00000"), (mouse_x, mouse_y, 5, 5))
         if fire:
-            pygame.draw.line(s, pygame.Color("#00ffff"), (screen_x, screen_y), (mouse_x, mouse_y), 1)
+            pygame.draw.line(screen, pygame.Color("#00ffff"), (player_x, player_y), (mouse_x, mouse_y), 1)
 
 if __name__ == '__main__':
     MouseBlast().run()
