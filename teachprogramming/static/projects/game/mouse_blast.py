@@ -92,17 +92,21 @@ class MouseBlast(PygameBase):
         self.reset()
 
     def reset(self) -> None:
-        self.x: float = self.screen.width
-        self.y: float = self.screen.height
+        self.x: float = 100
+        self.y: float = 100
         self.bullets: MutableSequence[Bullet] = []
 
     def loop(self, screen, frame):
+        past_x, past_y = self.x, self.y
         if self.keys[pygame.K_w]: self.y-=1
         if self.keys[pygame.K_s]: self.y+=1
         if self.keys[pygame.K_a]: self.x-=1
         if self.keys[pygame.K_d]: self.x+=1
         mouse_x, mouse_y = pygame.mouse.get_pos()
         fire = self.keys[pygame.K_SPACE]
+
+        if self.tiles.get_tile(int(self.x), int(self.y)) != ' ':
+            self.x, self.y = past_x, past_y
 
         screen_x = self.x - (screen.width //2) + (mouse_x-(screen.width //2))
         screen_y = self.y - (screen.height//2) + (mouse_y-(screen.height//2))
