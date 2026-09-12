@@ -2,11 +2,11 @@ import math
 from collections.abc import Sequence
 from typing import NamedTuple, Self
 from itertools import chain
-import operator
 
 import pygame
 
 from animation_base_pygame import PygameBase
+
 
 class Point():
     x: float
@@ -16,6 +16,8 @@ class Point():
         self.y = y
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}({self.x},{self.y})'
+    def __eq__(self, b: Self) -> bool:
+        return isinstance(b, self.__class__) and self.x == b.x and self.y == b.y
     @classmethod
     def from_array(cls, x:float, y:float) -> Self:
         return cls(x, y)
@@ -32,6 +34,7 @@ class Point():
         return pow(self.x - p.x, 2) + pow(self.y - p.y, 2)
     def distance(self, p) -> float:
         return math.sqrt(self.euclidean_distance(p))
+
 
 class Line():
     def __init__(self, p1: Point, p2: Point):
@@ -61,6 +64,7 @@ class Line():
         return self.p1.distance(self.p2)
     @property
     def angle(self) -> float:
+        # Lines have two angles p1->p2 and p2->p1 ... humm
         dx_dy = self.dx_dy
         if dx_dy==math.inf and self.p1.x > self.p2.x:
             # This is a weird special case I don't understand
@@ -68,7 +72,10 @@ class Line():
         angle = math.atan(dx_dy)
         if self.p1.y <= self.p2.y:
             angle += math.pi
-        return angle
+        return angle  #% (math.pi*2)  # Does this need normalising?
+    def angle_diff(self, b: Self) -> float:
+        # Normalise the common join point? (or throw error?)
+        raise NotImplementedError()
     def intersect(self, line) -> Point | bool:
         """
         https://paulbourke.net/geometry/pointlineplane/javascript.txt
@@ -100,10 +107,13 @@ class Vector():
     def to_array(self) -> Sequence[float]:
         return (self.x, self.y)
     def add(self, b: Self) -> None:
+        self.__add__(b)
+    def __add__(self, b: Self) -> Self:
         self.x += b.x
         self.y += b.y
+        return self
     def __iadd__(self, b: Self) -> Self:
-        self.add(b)
+        self.__add__(b)
         return self
     # def __add__(a: Self, b: Self) -> Self:
     #    return None
@@ -116,12 +126,13 @@ class Vector():
     def __neg__(self):
         return Vector(-self.x, -self.y)
 
+
 class Mass():
-    def __init__(self, p: Point, mass: float):
+    def __init__(self, p: Point, mass: float, vel: Vector = Vector()):
         self.p = p
         self.mass = mass
         self.force = Vector()
-        self.vel = Vector()
+        self.vel = Vector() + vel
     def add_force(self, f: Vector) -> None:
         self.force.add(f)
     def apply_force(self) -> None:
@@ -131,9 +142,11 @@ class Mass():
         self.p.x += self.vel.x
         self.p.y += self.vel.y
 
+
 class SpringMaterial(NamedTuple):
     tension: float
     compression: float
+
 
 class Spring():
     def __init__(self, a: Mass, b: Mass, mat: SpringMaterial):
@@ -149,10 +162,30 @@ class Spring():
         force_magnitude = length_factor * force_mat
         # positive = line is longer = apply force to attract masses
         # negative = line is shorter = apply force to repl masses
-        angle = self.line.angle
+        angle = self.line.angle  # TODO:? This may not be correct? this relies on the order the lines are created p1->p2
         force_vector = Vector.from_angle(angle, force_magnitude)
         self.a.add_force(-force_vector)
         self.b.add_force(force_vector)
+
+
+class SpringJoinMaterial(NamedTuple):
+    tension: float
+    compression: float
+
+
+class SpringJoin(NamedTuple):
+    a: Spring
+    b: Spring
+    mat: SpringJoinMaterial
+    initial_angle: float
+
+
+class SpringJoins(NamedTuple):  # Preserve angle with force
+    mass: Mass
+    joins: Sequence[SpringJoin]
+    @classmethod
+    def from_springs(cls, springs: Spring) -> Self:
+        raise NotImplementedError()
 
 
 class Lattice(NamedTuple):
@@ -162,12 +195,12 @@ class Lattice(NamedTuple):
     @classmethod
     def build(
         cls,
-        x_start:int, 
-        y_start:int, 
-        width:int, 
-        height:int, 
-        unit_length: float, 
-        unit_mass: float, 
+        x_start:int,
+        y_start:int,
+        width:int,
+        height:int,
+        unit_length: float,
+        unit_mass: float,
         mat: SpringMaterial,
     ) -> Self:
         m: Sequence[Mass] = tuple(
@@ -191,7 +224,8 @@ class Lattice(NamedTuple):
         ))
         return cls(m,s)
 
-class GameDemo(PygameBase):
+
+class Physics(PygameBase):
     def __init__(self):
         self.l = Lattice.build(100,100,4,4,10,1,SpringMaterial(1,1))
         self.mouse_anchor_spring: Spring | None = None
@@ -248,4 +282,4 @@ class GameDemo(PygameBase):
 
 
 if __name__ == '__main__':
-    GameDemo().run()
+    Physics().run()
