@@ -6,6 +6,7 @@
     "collision_multi": {"parents": ["collision_single"]},
     "level": {"parents": ["collision_single"]},
     "physics": {"parents": ["collision_single"]},
+    "physics_flap": {"parents": ["collision_single"]},
     "parallax": {"parents": ["level"]},
     "full": {"parents": ["parallax", "physics", "collision_multi"]},
     "fish": {
