@@ -1,0 +1,6 @@
+{"versions": {
+    "": {"parents": []},
+    "keys_move": {"parents": [""]},
+    "keys_direction": {"parents": ["keys_move"]},
+    "collision":{"parents": ["keys_move"]}
+}}
