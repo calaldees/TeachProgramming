@@ -1,3 +1,8 @@
+# Newer
+# Python 3.15 - @contextmanager supports async and sync methods
+# https://blog.changs.co.uk/python-315-features-that-didnt-make-the-headlines.html
+
+
 import asyncio
 
 #from typing import Awaitable, Callable, ParamSpec, TypeVar

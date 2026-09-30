@@ -229,6 +229,8 @@ def reducer():
 reduce(reducer, collection, {})
 ```
 
+* [Anecdotally, programmers dislike "reduce"](https://evanhahn.com/posts/2026-09-13-programmers-dislike-reduce/)
+
 
 Grouping Pattern
 ----------------
