@@ -71,14 +71,16 @@ https://royalsociety.org/-/media/education/computing-in-schools/system-upgrade-r
 
 A Level Computing results - % of national cohort that got A's. 7% consistent. An employer knows what an 'A' means. Employers know that degrees are meaningless [citation]
 
-* [A review of standards in GCSE computer science](https://www.gov.uk/government/publications/a-review-of-standards-in-gcse-computer-science?ref=blog.teachcomputing.org) July 2024
+* [A review of standards in GCSE computer science](https://www.gov.uk/government/publications/a-review-of-standards-in-gcse-computer-science) July 2024
     * Just change the ground boundaries - make it easier so it fits the national curve of the other subjects
 
 
 Academic achievement does not == immediate employable skills.
 But academic achievement (when graded as a % nationally) does convey aptitude.
 If you can sit down in a chair long enough and focus on something, you're probably useful to an employer.
-If you cant prove/manifest that via academic qualification or portfolio of projects, you will struggle to be employed in the domain.
+Can you be given a difficult task, work though it and follow instructions.
+If you can not prove/manifest your work ethos via your academic qualification (or portfolio of projects), you will struggle to be employed in the domain.
+So although 'Academic achievement != immediate employable skills', the reality is 'Academic achievement (somewhat)== employable'
 
 
 
