@@ -3,9 +3,8 @@
 # https://www.smspower.org/uploads/Maps/KungFuKid-SMS-Round1.png
 
 from collections.abc import Sequence, Mapping
-from typing import NamedTuple, Self
+from typing import NamedTuple
 import enum
-from functools import reduce
 
 import pygame
 
@@ -102,8 +101,8 @@ player_key_mapping_to_input: Mapping[pygame.key, Input] = {
     pygame.K_DOWN: Input.DOWN,
     pygame.K_RIGHT: Input.RIGHT,
     pygame.K_LEFT: Input.LEFT,
-    pygame.K_SPACE: Input.JUMP,
-    pygame.K_LCTRL: Input.ATTACK,
+    pygame.K_z: Input.JUMP,
+    pygame.K_x: Input.ATTACK,
 }
 
 
@@ -133,24 +132,29 @@ class CharStateTransformer:
             s ^= ActionState.STAND
         if ActionState.WALK in s and not ((Input.LEFT | Input.RIGHT) & i):
             s = ActionState.STAND
-        if (ActionState.ATTACK in s and Input.ATTACK not in i) or (ActionState.ATTACK not in s and Input.ATTACK in i):
+        if (ActionState.ATTACK in s and Input.ATTACK not in i) or (
+            ActionState.ATTACK not in s and Input.ATTACK in i
+        ):
             s ^= ActionState.ATTACK
-        # TODO: cant WALK and ATTACK
-        #if ActionState.WALK in s and ActionState.ATTACK in s:
-        #    s ^= ActionState.WALK
-        #    s |= ActionState.STAND
-        if Input.LEFT in i:
-            if ActionState.STAND in s:
-                s = ActionState.WALK
-            p = c.p + Point(-1, 0)
-            d = SpriteDirection.LEFT
-        if Input.RIGHT in i:
-            if ActionState.STAND in s:
-                s = ActionState.WALK
-            p = c.p + Point(1, 0)
-            d = SpriteDirection.RIGHT
+        if ActionState.ATTACK in s and ActionState.WALK in s:
+            s ^= ActionState.WALK
+            s |= ActionState.STAND
+        if (Input.LEFT | Input.RIGHT) & i and (
+            ActionState.STAND in s and ActionState.ATTACK not in s
+        ):
+            s = ActionState.WALK
+        # LEFT or RIGHT
+        if (ActionState.AIR | ActionState.WALK) & s:
+            if Input.LEFT in i:
+                p = c.p + Point(-1, 0)
+                d = SpriteDirection.LEFT
+            if Input.RIGHT in i:
+                p = c.p + Point(1, 0)
+                d = SpriteDirection.RIGHT
+        # Check FALL (only when walking)
         if ActionState.WALK in s:
             pass  # TODO check standing on ground else transition to air
+        # Fall
         if ActionState.AIR in c.s:
             p = p + Point(0, 1)
             if p.y > 144:
@@ -192,6 +196,8 @@ while True:
     # screen.blit(walk_frames[(frame//16)%len(walk_frames)], (100, 144))
 
     input = keys_to_input(player_key_mapping_to_input, keys)
+    # if frame == 120:
+    #    breakpoint()
     chars[0] = char_transformer.transform(chars[0], input)
 
     for char in chars:
